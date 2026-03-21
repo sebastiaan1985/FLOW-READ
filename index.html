@@ -777,6 +777,18 @@ body.kids .oog-timer-num { color:#ff6b6b; }
 .dyx-btn:hover { background: rgba(255,255,255,.07); color: var(--text); }
 .dyx-btn.actief { background: rgba(124,111,247,.15); color: var(--accent); border-color: rgba(124,111,247,.4); }
 
+/* Speler indicator in header */
+.speler-indicator {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 12px 5px 6px; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(135deg, rgba(224,112,0,.15), rgba(240,192,0,.12));
+  border: 1px solid rgba(224,112,0,.3);
+  transition: all .2s; white-space: nowrap; flex-shrink: 0;
+}
+.speler-indicator:hover { background: linear-gradient(135deg, rgba(224,112,0,.25), rgba(240,192,0,.2)); border-color: rgba(224,112,0,.5); }
+.speler-avatar { font-size: 1.2rem; line-height: 1; }
+.speler-naam { font-size: 12px; font-weight: 600; color: #e07000; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
+
 /* Panel */
 #dyx-panel {
   position: fixed; top: 0; right: -360px; width: 340px; height: 100vh;
@@ -958,6 +970,10 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   </nav>
   <button class="kids-toggle-btn" id="kids-toggle-btn" onclick="toggleKids()">🎨 Kids modus</button>
   <button class="dyx-btn" id="dyx-open-btn" onclick="dyxOpenPanel()">🔤 Dyslexie</button>
+  <div class="speler-indicator" id="speler-indicator" onclick="toon('avontuur', document.querySelector('nav button:last-child'))" style="display:none">
+    <span class="speler-avatar" id="speler-avatar"></span>
+    <span class="speler-naam" id="speler-naam"></span>
+  </div>
 </header>
 
 <!-- Kleur-overlay -->
@@ -2011,6 +2027,18 @@ const ALLE_BADGES = [
 let avProfiel = null;
 let gekozenAvatar = '🦊';
 
+function updateSpelerIndicator() {
+  const el = document.getElementById('speler-indicator');
+  if (!el) return;
+  if (avProfiel) {
+    document.getElementById('speler-avatar').textContent = avProfiel.avatar || '🦊';
+    document.getElementById('speler-naam').textContent = avProfiel.naam || 'Speler';
+    el.style.display = 'flex';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
 // ─── MULTI-PROFIEL OPSLAG ─────────────────────────────────
 // av_profielen = array van profiel-objecten
 // av_actief    = index van huidig ingelogd profiel (-1 = niemand)
@@ -2045,6 +2073,7 @@ function avLaad() {
   const profielen = avGetProfielen();
   if (idx >= 0 && profielen[idx]) {
     avProfiel = profielen[idx];
+    updateSpelerIndicator();
     avToonDash();
   } else {
     avKiesScherm();
@@ -2054,6 +2083,7 @@ function avLaad() {
 // ─── KIES-SCHERM ──────────────────────────────────────────
 function avKiesScherm() {
   avSetActief(-1); avProfiel = null;
+  updateSpelerIndicator();
   const profielen = avGetProfielen();
   const grid = document.getElementById('av-kies-grid');
   grid.innerHTML = profielen.map((p, i) => {
@@ -2084,6 +2114,7 @@ function avInloggen(idx) {
   avSla();
   // Kids modus automatisch op basis van leeftijd
   if (avProfiel.leeftijd && avProfiel.leeftijd <= 12) setKidsModus(true);
+  updateSpelerIndicator();
   avToonDash();
 }
 
