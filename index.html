@@ -342,6 +342,42 @@ textarea:focus { border-color: rgba(124,111,247,.5); }
   font-variant-numeric: tabular-nums;
 }
 
+/* ── BEGINTEST ────────────────────────────────────────────── */
+.begintest-stap { display: none; }
+.begintest-stap.actief { display: block; animation: fadeIn .3s ease; }
+.begintest-passage {
+  background: #fefcf8; color: #1a1a1a; padding: 28px 32px;
+  border-radius: var(--radius); font-size: 17px; line-height: 1.9;
+  font-family: 'Georgia', serif; max-height: 420px; overflow-y: auto;
+  margin: 16px 0; border: 1px solid rgba(0,0,0,.1);
+}
+.begintest-result-card {
+  background: linear-gradient(135deg, var(--card), var(--surface));
+  border: 1px solid var(--border2); border-radius: var(--radius);
+  padding: 28px; text-align: center; margin: 20px 0;
+}
+.begintest-big-num {
+  font-size: 3rem; font-weight: 800; line-height: 1.1;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.begintest-label { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.begintest-meter { display: flex; gap: 20px; justify-content: center; margin: 20px 0; }
+.begintest-meter-item { text-align: center; }
+.begintest-reco {
+  background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.25);
+  border-radius: var(--radius); padding: 20px; margin-top: 16px; text-align: left;
+}
+.begintest-reco h4 { color: var(--green); margin-bottom: 8px; }
+.begintest-reco li { font-size: 14px; margin-bottom: 6px; color: var(--text); list-style: none; }
+.begintest-reco li::before { content: '✓ '; color: var(--green); font-weight: 700; }
+.begintest-intro-card {
+  background: linear-gradient(135deg, rgba(124,111,247,.08), rgba(56,200,240,.08));
+  border: 1px solid rgba(124,111,247,.2); border-radius: var(--radius);
+  padding: 24px; text-align: center; margin: 20px 0;
+}
+.begintest-intro-card .icon-big { font-size: 3rem; margin-bottom: 12px; }
+
 /* ── BEGRIP ───────────────────────────────────────────────── */
 #begrip-section { display: none; }
 .vraag { margin-bottom: 16px; }
@@ -788,6 +824,27 @@ body.kids .oog-timer-num { color:#ff6b6b; }
 .speler-indicator:hover { background: linear-gradient(135deg, rgba(224,112,0,.25), rgba(240,192,0,.2)); border-color: rgba(224,112,0,.5); }
 .speler-avatar { font-size: 1.2rem; line-height: 1; }
 .speler-naam { font-size: 12px; font-weight: 600; color: #e07000; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
+.speler-streak { font-size: 11px; font-weight: 700; color: #e07000; white-space: nowrap; }
+.speler-xp-mini { display: flex; align-items: center; gap: 5px; }
+.speler-xp-track { width: 50px; height: 4px; background: rgba(255,255,255,.12); border-radius: 999px; overflow: hidden; }
+.speler-xp-fill { height: 100%; background: linear-gradient(90deg, #e07000, #f0c000); border-radius: 999px; transition: width .4s; }
+.speler-xp-label { font-size: 10px; color: #e07000; font-weight: 700; white-space: nowrap; }
+
+/* Achievement popup */
+.achievement-popup {
+  position: fixed; top: 20px; right: 20px; z-index: 9999;
+  background: linear-gradient(135deg, #fff8e7, #ffeec8);
+  border: 2px solid #f0c040; border-radius: 16px;
+  padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 12px 40px rgba(240,160,0,.35);
+  animation: achPopIn .4s ease, achPopOut .4s ease 3s forwards;
+  font-family: 'Comic Neue', cursive; color: #3a2000;
+}
+@keyframes achPopIn { from { transform: translateX(120%); opacity:0; } to { transform: translateX(0); opacity:1; } }
+@keyframes achPopOut { from { transform: translateX(0); opacity:1; } to { transform: translateX(120%); opacity:0; } }
+.achievement-popup .ach-icon { font-size: 2rem; }
+.achievement-popup .ach-text { font-size: 14px; font-weight: 700; }
+.achievement-popup .ach-sub { font-size: 12px; color: #8b5e3c; }
 
 /* Panel */
 #dyx-panel {
@@ -958,6 +1015,7 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 <header>
   <div class="logo">Snel<span>Lees</span> Trainer</div>
   <nav>
+    <button onclick="toon('begintest', this)"><span class="icon">🎯</span> Begintest</button>
     <button class="active" onclick="toon('rsvp', this)"><span class="icon">⚡</span> RSVP</button>
     <button onclick="toon('chunk', this)"><span class="icon">📖</span> Chunks</button>
     <button onclick="toon('oog', this)"><span class="icon">👁</span> Oogbeweging</button>
@@ -973,6 +1031,11 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   <div class="speler-indicator" id="speler-indicator" onclick="toon('avontuur', document.querySelector('nav button:last-child'))" style="display:none">
     <span class="speler-avatar" id="speler-avatar"></span>
     <span class="speler-naam" id="speler-naam"></span>
+    <span class="speler-streak" id="speler-streak" style="display:none">🔥<span id="speler-streak-num">0</span></span>
+    <div class="speler-xp-mini" id="speler-xp-mini" style="display:none">
+      <div class="speler-xp-track"><div class="speler-xp-fill" id="speler-xp-fill"></div></div>
+      <span class="speler-xp-label" id="speler-xp-lbl">Lv 1</span>
+    </div>
   </div>
 </header>
 
@@ -1084,6 +1147,108 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 </div>
 
 <main>
+
+<!-- ── DAGELIJKSE UITDAGING BANNER ─────────────────────── -->
+<div id="daguitdaging-banner" class="card" style="display:none;margin-bottom:16px;border-left:3px solid var(--accent2);padding:14px 18px">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px">Uitdaging van de dag</div>
+      <div id="daguitdaging-tekst" style="font-size:14px;margin-top:4px"></div>
+    </div>
+    <span id="daguitdaging-status" class="wpm-badge"></span>
+  </div>
+</div>
+
+<!-- ── BEGINTEST ──────────────────────────────────────────── -->
+<div id="screen-begintest" class="screen">
+  <div class="page-title">Begintest</div>
+  <div class="page-sub">Meet uw leessnelheid en begripsniveau als startpunt voor uw training.</div>
+
+  <!-- Stap 0: Intro -->
+  <div id="bt-stap-intro" class="begintest-stap actief">
+    <div class="begintest-intro-card">
+      <div class="icon-big">📖</div>
+      <h2 style="margin-bottom:8px">Ontdek jouw leesniveau!</h2>
+      <p style="color:var(--muted);max-width:500px;margin:0 auto 20px">
+        Je krijgt een kort stukje tekst te lezen. Lees het op je normale tempo — niet te snel, niet te langzaam.
+        Daarna beantwoord je een paar vragen over wat je gelezen hebt.
+      </p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
+        <div class="card" style="padding:12px 18px;text-align:center;min-width:120px">
+          <div style="font-size:1.5rem">⏱</div>
+          <div style="font-size:12px;color:var(--muted)">Stap 1</div>
+          <div style="font-size:13px;font-weight:600">Lees de tekst</div>
+        </div>
+        <div class="card" style="padding:12px 18px;text-align:center;min-width:120px">
+          <div style="font-size:1.5rem">❓</div>
+          <div style="font-size:12px;color:var(--muted)">Stap 2</div>
+          <div style="font-size:13px;font-weight:600">Beantwoord vragen</div>
+        </div>
+        <div class="card" style="padding:12px 18px;text-align:center;min-width:120px">
+          <div style="font-size:1.5rem">📊</div>
+          <div style="font-size:12px;color:var(--muted)">Stap 3</div>
+          <div style="font-size:13px;font-weight:600">Bekijk je score</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="begintestStart()" style="font-size:1rem;padding:12px 32px">Start de test</button>
+    </div>
+    <div id="bt-vorige-result" style="display:none;margin-top:16px">
+      <div class="card" style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:13px;color:var(--muted)">Jouw laatste resultaat</div>
+          <div style="font-size:16px;font-weight:700"><span id="bt-vorig-wpm">—</span> WPM · <span id="bt-vorig-begrip">—</span>% begrip</div>
+        </div>
+        <span class="wpm-badge" id="bt-vorig-datum">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stap 1: Lezen -->
+  <div id="bt-stap-lezen" class="begintest-stap">
+    <div class="card" style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-size:14px;font-weight:600">Lees onderstaande tekst op je eigen tempo</div>
+      <div style="font-size:14px;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums" id="bt-timer">0:00</div>
+    </div>
+    <div class="begintest-passage" id="bt-passage"></div>
+    <div class="btn-row" style="justify-content:center">
+      <button class="btn btn-primary" onclick="begintestKlaar()" style="font-size:1rem;padding:12px 32px">Klaar met lezen!</button>
+    </div>
+  </div>
+
+  <!-- Stap 2: Vragen -->
+  <div id="bt-stap-vragen" class="begintest-stap">
+    <div class="card" style="padding:14px 18px;margin-bottom:16px">
+      <div style="font-size:14px;font-weight:600">Beantwoord de vragen over wat je net las</div>
+    </div>
+    <div id="bt-vragen-lijst"></div>
+    <div class="btn-row" style="justify-content:center">
+      <button class="btn btn-primary" onclick="begintestControleer()" style="font-size:1rem;padding:12px 32px">Controleer antwoorden</button>
+    </div>
+  </div>
+
+  <!-- Stap 3: Resultaat -->
+  <div id="bt-stap-resultaat" class="begintest-stap">
+    <div class="begintest-result-card">
+      <div style="font-size:1.2rem;margin-bottom:16px;color:var(--muted)" id="bt-resultaat-tekst">Je resultaat</div>
+      <div class="begintest-meter">
+        <div class="begintest-meter-item">
+          <div class="begintest-big-num" id="bt-res-wpm">—</div>
+          <div class="begintest-label">Woorden per minuut</div>
+        </div>
+        <div class="begintest-meter-item">
+          <div class="begintest-big-num" id="bt-res-begrip">—</div>
+          <div class="begintest-label">% begrip</div>
+        </div>
+      </div>
+      <div id="bt-niveau-badge" class="score-badge" style="margin-bottom:16px">—</div>
+    </div>
+    <div class="begintest-reco" id="bt-reco"></div>
+    <div class="btn-row mt2" style="justify-content:center;gap:12px">
+      <button class="btn btn-primary" onclick="begintestNaarTraining()">Start met trainen!</button>
+      <button class="btn btn-ghost" onclick="begintestStart()">Opnieuw testen</button>
+    </div>
+  </div>
+</div>
 
 <!-- ── RSVP ─────────────────────────────────────────────── -->
 <div id="screen-rsvp" class="screen active">
@@ -1330,6 +1495,11 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
     <button class="btn btn-ghost" onclick="document.getElementById('file-input').click()">📁 .txt bestand</button>
     <input type="file" id="file-input" accept=".txt" style="display:none" onchange="laadBestand(this)">
   </div>
+  <div class="flex" style="margin-bottom:10px;gap:10px">
+    <input class="text-input" id="url-input" placeholder="https://... (plak een link naar een artikel)" style="flex:1;margin-bottom:0">
+    <button class="btn btn-ghost" id="url-ophalen-btn" onclick="laadVanUrl()">🌐 Ophalen</button>
+  </div>
+  <div id="url-status" style="font-size:13px;color:var(--muted);margin-bottom:10px"></div>
   <textarea id="custom-text" placeholder="Plak hier je tekst…"></textarea>
   <div class="flex mt" style="justify-content:space-between;align-items:center">
     <span id="woord-tel" style="font-size:13px;color:var(--muted)"></span>
@@ -1553,6 +1723,162 @@ function toon(id, btn) {
   if (id === 'stats') toonStats();
   if (id === 'tekst') toonBibliotheek();
   if (id === 'oog') setTimeout(resizeCanvas, 50);
+  if (id === 'begintest') begintestInit();
+}
+
+// ─── BEGINTEST ────────────────────────────────────────────────────────────
+const BEGINTEST_TEKST = `Het menselijk brein is een wonderlijk orgaan. Elke seconde verwerkt het miljoenen signalen van onze zintuigen. Wanneer we lezen, volgen onze ogen geen vloeiende lijn over de pagina. In plaats daarvan maken ze kleine sprongen, saccades genoemd. Tussen deze sprongen staan de ogen even stil om informatie op te nemen. Dit noemen wetenschappers fixaties.
+
+Een gemiddelde lezer maakt ongeveer vier fixaties per regel tekst. Snelle lezers maken er maar twee of drie. Het verschil zit niet alleen in de snelheid van de oogbewegingen, maar vooral in hoeveel woorden er per fixatie worden verwerkt. Een geoefend lezer kan drie tot vijf woorden tegelijk opnemen, terwijl een langzame lezer vaak woord voor woord leest.
+
+Interessant genoeg heeft de leessnelheid weinig te maken met intelligentie. Het is een vaardigheid die iedereen kan trainen. Onderzoekers aan de universiteit van Cambridge ontdekten dat regelmatige oefening de leessnelheid met dertig tot vijftig procent kan verhogen, zonder dat het begrip vermindert.
+
+De sleutel tot sneller lezen is het verminderen van subvocalisatie. Dit is de gewoonte om woorden in gedachten uit te spreken terwijl je leest. Hoewel dit bij moeilijke teksten nuttig kan zijn, vertraagt het de leessnelheid aanzienlijk bij eenvoudige passages. Door bewust te oefenen met het onderdrukken van deze innerlijke stem, kun je een aanzienlijke snelheidswinst behalen.`;
+
+const BEGINTEST_VRAGEN = [
+  { vraag: 'Hoe noemen wetenschappers de kleine sprongen die onze ogen maken bij het lezen?',
+    correct: 'Saccades', fouten: ['Fixaties', 'Regressies'] },
+  { vraag: 'Hoeveel fixaties maakt een gemiddelde lezer per regel?',
+    correct: 'Ongeveer vier', fouten: ['Ongeveer twee', 'Ongeveer acht'] },
+  { vraag: 'Hoeveel woorden kan een geoefend lezer tegelijk opnemen per fixatie?',
+    correct: 'Drie tot vijf', fouten: ['Eén tot twee', 'Zes tot tien'] },
+  { vraag: 'Wat is subvocalisatie?',
+    correct: 'Woorden in gedachten uitspreken tijdens het lezen', fouten: ['Hardop voorlezen', 'Woorden overslaan bij het lezen'] },
+  { vraag: 'Met hoeveel procent kan regelmatige oefening de leessnelheid verhogen?',
+    correct: 'Dertig tot vijftig procent', fouten: ['Tien tot twintig procent', 'Honderd procent'] },
+];
+
+let btStartTijd = null;
+let btTimerInterval = null;
+let btGemetenWpm = 0;
+
+function begintestInit() {
+  // Show previous result if exists
+  const baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null');
+  const el = document.getElementById('bt-vorige-result');
+  if (baseline) {
+    el.style.display = 'block';
+    document.getElementById('bt-vorig-wpm').textContent = baseline.wpm;
+    document.getElementById('bt-vorig-begrip').textContent = baseline.begrip;
+    document.getElementById('bt-vorig-datum').textContent = baseline.datum || '—';
+  } else {
+    el.style.display = 'none';
+  }
+  btToonStap('intro');
+}
+
+function btToonStap(stap) {
+  document.querySelectorAll('.begintest-stap').forEach(s => s.classList.remove('actief'));
+  document.getElementById('bt-stap-' + stap).classList.add('actief');
+}
+
+function begintestStart() {
+  btToonStap('lezen');
+  document.getElementById('bt-passage').textContent = BEGINTEST_TEKST;
+  btStartTijd = Date.now();
+  clearInterval(btTimerInterval);
+  const timerEl = document.getElementById('bt-timer');
+  btTimerInterval = setInterval(() => {
+    const sec = Math.floor((Date.now() - btStartTijd) / 1000);
+    timerEl.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+  }, 200);
+}
+
+function begintestKlaar() {
+  clearInterval(btTimerInterval);
+  const seconden = (Date.now() - btStartTijd) / 1000;
+  const woordTelling = BEGINTEST_TEKST.trim().split(/\s+/).length;
+  btGemetenWpm = Math.round((woordTelling / seconden) * 60);
+
+  // Build questions
+  const lijst = document.getElementById('bt-vragen-lijst');
+  lijst.innerHTML = BEGINTEST_VRAGEN.map((v, i) => {
+    const opties = [v.correct, ...v.fouten].sort(() => Math.random() - 0.5);
+    return `<div class="vraag card" style="padding:16px;margin-bottom:12px">
+      <div class="vraag-q">${i + 1}. ${v.vraag}</div>
+      ${opties.map((o, j) => `<label><input type="radio" name="bt-v${i}" value="${o}"> ${o}</label>`).join('')}
+    </div>`;
+  }).join('');
+  btToonStap('vragen');
+}
+
+function begintestControleer() {
+  let goed = 0;
+  BEGINTEST_VRAGEN.forEach((v, i) => {
+    const gekozen = document.querySelector(`input[name="bt-v${i}"]:checked`);
+    const labels = document.querySelectorAll(`input[name="bt-v${i}"]`);
+    labels.forEach(inp => {
+      const lbl = inp.parentElement;
+      if (inp.value === v.correct) lbl.classList.add('correct');
+      else if (inp.checked) lbl.classList.add('wrong');
+      inp.disabled = true;
+    });
+    if (gekozen && gekozen.value === v.correct) goed++;
+  });
+
+  const begrip = Math.round((goed / BEGINTEST_VRAGEN.length) * 100);
+  const wpm = btGemetenWpm;
+
+  // Determine level
+  let niveau, niveauKleur;
+  if (wpm < 150) { niveau = 'Beginner'; niveauKleur = '#f06292'; }
+  else if (wpm < 250) { niveau = 'Gemiddeld'; niveauKleur = '#e07000'; }
+  else if (wpm < 400) { niveau = 'Gevorderd'; niveauKleur = '#38c8f0'; }
+  else { niveau = 'Snellezer'; niveauKleur = '#34d399'; }
+
+  // Save baseline
+  const datum = new Date().toLocaleDateString('nl-NL');
+  localStorage.setItem('begintest_baseline', JSON.stringify({ wpm, begrip, datum }));
+  voltooiDaguitdaging('begintest');
+
+  // Show results after brief delay
+  setTimeout(() => {
+    document.getElementById('bt-res-wpm').textContent = wpm;
+    document.getElementById('bt-res-begrip').textContent = begrip;
+    document.getElementById('bt-niveau-badge').textContent = niveau;
+    document.getElementById('bt-niveau-badge').style.background = niveauKleur;
+
+    // Personalized text
+    const snelTekst = wpm < 150 ? 'Je leest nog wat langzaam, maar daar gaan we verandering in brengen!'
+      : wpm < 250 ? 'Je leest op een gemiddeld tempo. Er zit nog veel ruimte voor groei!'
+      : wpm < 400 ? 'Goed bezig! Je leest al boven gemiddeld.'
+      : 'Indrukwekkend! Je bent al een snelle lezer.';
+    const begripTekst = begrip >= 80 ? 'Je begrip is uitstekend.'
+      : begrip >= 60 ? 'Je begrip is redelijk. Focus eerst op begrip, dan op snelheid.'
+      : 'Je begrip kan beter. Begin met langzamer lezen en bouw dan snelheid op.';
+    document.getElementById('bt-resultaat-tekst').textContent = snelTekst + ' ' + begripTekst;
+
+    // Recommendations
+    const startWpm = begrip >= 60 ? Math.round(wpm * 1.15) : Math.round(wpm * 0.9);
+    const reco = document.getElementById('bt-reco');
+    reco.innerHTML = `<h4>Aanbevolen startinstellingen</h4><ul>
+      <li>Start RSVP op <b>${startWpm} WPM</b></li>
+      <li>Begin met <b>${wpm < 200 ? '1 woord' : '2 woorden'}</b> per flash</li>
+      <li>Chunk grootte: <b>${wpm < 200 ? '2-3' : '3-4'}</b> woorden</li>
+      <li>Doe elke dag <b>${wpm < 200 ? '10' : '15'}</b> minuten oefenen</li>
+      ${begrip < 60 ? '<li>Focus eerst op het <b>Chunks</b> scherm voor beter begrip</li>' : ''}
+      ${wpm < 200 ? '<li>Probeer de <b>Oogtraining</b> om je ogen sneller te maken</li>' : ''}
+    </ul>`;
+
+    btToonStap('resultaat');
+  }, 600);
+}
+
+function begintestNaarTraining() {
+  const baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null');
+  if (baseline) {
+    const startWpm = baseline.begrip >= 60 ? Math.round(baseline.wpm * 1.15) : Math.round(baseline.wpm * 0.9);
+    document.getElementById('wpm-slider').value = startWpm;
+    document.getElementById('wpm-val').textContent = startWpm;
+  }
+  toon('rsvp', document.querySelectorAll('nav button')[1]);
+}
+
+// Auto-show begintest for first-time visitors
+function checkBegintestEersteKeer() {
+  if (!localStorage.getItem('begintest_baseline') && !localStorage.getItem('snellees_stats')) {
+    toon('begintest', document.querySelector('nav button:first-child'));
+  }
 }
 
 // ─── RSVP ─────────────────────────────────────────────────────────────────
@@ -1586,7 +1912,7 @@ function rsvpTick() {
   const wpm = +document.getElementById('wpm-slider').value;
   const chunk = +document.getElementById('rsvp-chunk').value;
   const delay = (60000 / wpm) * chunk;
-  if (rsvpIdx >= rsvpWoorden.length) { rsvpStop(); slaaSessieOp(wpm, rsvpWoorden.length); return; }
+  if (rsvpIdx >= rsvpWoorden.length) { rsvpStop(); slaaSessieOp(wpm, rsvpWoorden.length); voltooiDaguitdaging('rsvp'); return; }
   const slice = rsvpWoorden.slice(rsvpIdx, rsvpIdx + chunk).join(' ');
   const el = document.getElementById('rsvp-word');
   el.style.opacity = 0;
@@ -1630,7 +1956,7 @@ function chunkTick() {
     chunkStop();
     const elapsed = (Date.now() - chunkStart_t) / 60000;
     slaaSessieOp(Math.round(chunkWds.length / elapsed), chunkWds.length);
-    toonBegrip(); return;
+    voltooiDaguitdaging('chunk'); toonBegrip(); return;
   }
   const slice = chunkWds.slice(chunkIdx, chunkIdx + cs);
   const midden = Math.floor(slice.length / 2);
@@ -1804,6 +2130,33 @@ function laadBestand(input) {
   const r = new FileReader();
   r.onload = e => { document.getElementById('custom-text').value = e.target.result; telWoorden(); };
   r.readAsText(f);
+}
+
+async function laadVanUrl() {
+  const url = document.getElementById('url-input').value.trim();
+  if (!url) return;
+  const status = document.getElementById('url-status');
+  const btn = document.getElementById('url-ophalen-btn');
+  status.textContent = '⏳ Bezig met ophalen...';
+  btn.disabled = true;
+  try {
+    const resp = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(url));
+    if (!resp.ok) throw new Error('Kon pagina niet ophalen');
+    const html = await resp.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    doc.querySelectorAll('script,style,nav,header,footer,aside,form,iframe,noscript').forEach(e => e.remove());
+    const container = doc.querySelector('article') || doc.querySelector('main') || doc.body;
+    let tekst = container.textContent.replace(/\s+/g, ' ').trim();
+    if (tekst.length < 50) throw new Error('Te weinig tekst gevonden op deze pagina');
+    const titel = doc.querySelector('title')?.textContent?.trim() || new URL(url).hostname;
+    document.getElementById('custom-text').value = tekst;
+    document.getElementById('tekst-naam').value = titel;
+    telWoorden();
+    status.innerHTML = '<span style="color:var(--green)">✓ Tekst opgehaald! Klik "Opslaan" om toe te voegen.</span>';
+  } catch(e) {
+    status.innerHTML = '<span style="color:var(--pink)">❌ ' + e.message + '</span>';
+  }
+  btn.disabled = false;
 }
 
 function telWoorden() {
@@ -2034,8 +2387,31 @@ function updateSpelerIndicator() {
     document.getElementById('speler-avatar').textContent = avProfiel.avatar || '🦊';
     document.getElementById('speler-naam').textContent = avProfiel.naam || 'Speler';
     el.style.display = 'flex';
+    // XP bar
+    const xpMini = document.getElementById('speler-xp-mini');
+    const xpFill = document.getElementById('speler-xp-fill');
+    const xpLbl = document.getElementById('speler-xp-lbl');
+    if (xpMini) {
+      const xp = avProfiel.xp || 0;
+      const level = Math.floor(xp / 100) + 1;
+      const pct = (xp % 100);
+      xpFill.style.width = pct + '%';
+      xpLbl.textContent = 'Lv ' + level;
+      xpMini.style.display = 'flex';
+    }
+    // Streak
+    const streakEl = document.getElementById('speler-streak');
+    if (streakEl && avProfiel.streak > 0) {
+      document.getElementById('speler-streak-num').textContent = avProfiel.streak;
+      streakEl.style.display = 'inline';
+    } else if (streakEl) {
+      streakEl.style.display = 'none';
+    }
+    // Daily challenge banner
+    updateDaguitdaging();
   } else {
     el.style.display = 'none';
+    document.getElementById('daguitdaging-banner').style.display = 'none';
   }
 }
 
@@ -2196,7 +2572,13 @@ function avUpdateDash() {
   document.getElementById('av-stat-sterren').textContent = p.totaleSterren;
 
   // Badges controleren
+  const oudeBadges = [...(p.badges || [])];
   p.badges = ALLE_BADGES.filter(b => b.check(p)).map(b => b.id);
+  const nieuweBadges = p.badges.filter(id => !oudeBadges.includes(id));
+  nieuweBadges.forEach(id => {
+    const b = ALLE_BADGES.find(x => x.id === id);
+    if (b) toonAchievement(b.icon, b.naam);
+  });
   document.getElementById('av-stat-badges').textContent = p.badges.length;
 
   // Wereld-kaarten
@@ -2486,8 +2868,14 @@ function avEinde() {
   else p.voltooid.push({w:avState.wi,l:avState.li,sterren});
 
   controleerStreak();
+  const oudeBadges2 = [...(p.badges || [])];
   p.badges = ALLE_BADGES.filter(b=>b.check(p)).map(b=>b.id);
+  p.badges.filter(id => !oudeBadges2.includes(id)).forEach(id => {
+    const b = ALLE_BADGES.find(x => x.id === id);
+    if (b) toonAchievement(b.icon, b.naam);
+  });
   avSla();
+  updateSpelerIndicator();
 
   const sterStr = avSterrenStr(sterren);
   const berichten = [
@@ -2540,6 +2928,29 @@ avLaad();
 
 let kidsModus = localStorage.getItem('kids_modus') === '1';
 
+const KIDS_LABELS = {
+  rsvp:      { nav:'Flitswoorden',  titel:'Flitswoorden',            sub:'Woorden flitsen op het scherm. Lees ze zo snel als je kunt!' },
+  chunk:     { nav:'Woordgroepen',   titel:'Woordgroepen Lezen',      sub:'Lees een paar woorden tegelijk. Zo word je steeds sneller!' },
+  oog:       { nav:'Oogtraining',    titel:'Oogtraining',             sub:'Volg de bal met je ogen. Goed voor sneller lezen!' },
+  perifeer:  { nav:'Breed Kijken',   titel:'Breed Kijken',            sub:'Kijk naar het midden en probeer de woorden aan de zijkant te lezen!' },
+  papier:    { nav:'Samen Lezen',    titel:'Samen Lezen',             sub:'Leer hoe je sneller kunt lezen op papier!' },
+  tekst:     { nav:'Verhalen',       titel:'Mijn Verhalen',           sub:'Kies een verhaal of voeg je eigen tekst toe!' },
+  stats:     { nav:'Mijn Score',     titel:'Mijn Score',              sub:'Bekijk hoe goed je het doet!' },
+  dyslexie:  { nav:'Woordspel',      titel:'Woordspel',               sub:'Lees het woord en kies het juiste antwoord. Hoe meer sterren, hoe beter!' },
+  begintest: { nav:'Hoe snel lees jij?', titel:'Hoe Snel Lees Jij?',  sub:'Lees een stukje tekst en ontdek hoe snel jij al leest!' },
+};
+const VOLW_LABELS = {
+  rsvp:      { nav:'RSVP',           titel:'RSVP — Woord voor Woord',     sub:'Elk woord verschijnt op hetzelfde punt. Geen oogbewegingen nodig — maximale leessnelheid.' },
+  chunk:     { nav:'Chunks',         titel:'Chunk Lezen',                  sub:'Lees woordgroepen in één oogopslag. Vergroot uw blikveld stap voor stap.' },
+  oog:       { nav:'Oogbeweging',    titel:'Oogbewegingstraining',         sub:'Volg de bal met uw ogen. Vergroot uw blikveld en verminder onbewust terugspringen (regressie).' },
+  perifeer:  { nav:'Perifeer',       titel:'Perifeer Zien',               sub:'Fixeer op het rode kruis. Probeer de woorden aan de zijkanten te lezen zonder uw ogen te bewegen.' },
+  papier:    { nav:'Papier',         titel:'Papier Lees Training',        sub:'Leer technieken voor fysieke tekst. De gidsaanwijzer-methode is bewezen effectief.' },
+  tekst:     { nav:'Tekst laden',    titel:'Tekst Bibliotheek',           sub:'Sla teksten op en gebruik ze direct in RSVP, Chunks en Papier. De actieve tekst wordt overal gebruikt.' },
+  stats:     { nav:'Statistieken',   titel:'Uw Voortgang',                sub:'Alle sessies worden lokaal opgeslagen in uw browser.' },
+  dyslexie:  { nav:'Dyslexie Spel',  titel:'🌈 Dyslexie Leesavontuur',   sub:'Lees het woord goed en kies het juiste antwoord. Hoe meer sterren, hoe beter! Speciaal lettertype helpt letters uit elkaar houden.' },
+  begintest: { nav:'Begintest',      titel:'Begintest',                    sub:'Meet uw leessnelheid en begripsniveau als startpunt voor uw training.' },
+};
+
 function kidsToepassen() {
   document.body.classList.toggle('kids', kidsModus);
   const btn = document.getElementById('kids-toggle-btn');
@@ -2548,6 +2959,31 @@ function kidsToepassen() {
     btn.textContent = kidsModus ? '🎨 Kids aan' : '🎨 Kids modus';
   }
   localStorage.setItem('kids_modus', kidsModus ? '1' : '0');
+
+  // Swap nav labels and page titles/subs
+  const labels = kidsModus ? KIDS_LABELS : VOLW_LABELS;
+  document.querySelectorAll('nav button').forEach(b => {
+    const m = b.getAttribute('onclick')?.match(/toon\('(\w+)'/);
+    if (!m) return;
+    const id = m[1];
+    const lbl = labels[id];
+    if (!lbl) return;
+    // Replace text after icon span
+    const icon = b.querySelector('.icon');
+    if (icon) {
+      const bold = b.querySelector('b');
+      if (bold) { bold.textContent = lbl.nav; }
+      else { b.innerHTML = ''; b.appendChild(icon); b.append(' ' + lbl.nav); }
+    }
+    // Update page title and sub
+    const screen = document.getElementById('screen-' + id);
+    if (screen) {
+      const t = screen.querySelector('.page-title');
+      const s = screen.querySelector('.page-sub');
+      if (t) t.textContent = lbl.titel;
+      if (s) s.textContent = lbl.sub;
+    }
+  });
 }
 
 function toggleKids() {
@@ -2581,6 +3017,72 @@ function showConfetti(x, y) {
       `border-radius:${Math.random()>.5?'50%':'3px'};`;
     document.body.appendChild(el);
     setTimeout(() => el.remove(), (duur + delay) * 1000 + 100);
+  }
+}
+
+// ─── ACHIEVEMENT POPUP ────────────────────────────────────
+function toonAchievement(icon, naam) {
+  const el = document.createElement('div');
+  el.className = 'achievement-popup';
+  el.innerHTML = `<span class="ach-icon">${icon}</span><div><div class="ach-text">Badge verdiend!</div><div class="ach-sub">${naam}</div></div>`;
+  document.body.appendChild(el);
+  if (kidsModus) showConfetti(80, 10);
+  setTimeout(() => el.remove(), 3500);
+}
+
+// ─── DAGELIJKSE UITDAGING ─────────────────────────────────
+const DAGELIJKSE_UITDAGINGEN = [
+  { beschrijving: 'Lees 1 tekst met RSVP', type: 'rsvp' },
+  { beschrijving: 'Voltooi 1 Chunk leessessie', type: 'chunk' },
+  { beschrijving: 'Doe 3 minuten oogtraining', type: 'oog' },
+  { beschrijving: 'Speel 1 ronde van het Dyslexie Spel', type: 'dyslexie' },
+  { beschrijving: 'Lees een tekst op Papier modus', type: 'papier' },
+  { beschrijving: 'Oefen 2 minuten Breed Kijken', type: 'perifeer' },
+  { beschrijving: 'Doe de Begintest (opnieuw)', type: 'begintest' },
+];
+
+function getDaguitdaging() {
+  const nu = new Date().toDateString();
+  let data = JSON.parse(localStorage.getItem('daily_challenge') || '{}');
+  if (data.datum !== nu) {
+    const idx = new Date().getDate() % DAGELIJKSE_UITDAGINGEN.length;
+    data = { datum: nu, idx, voltooid: false };
+    localStorage.setItem('daily_challenge', JSON.stringify(data));
+  }
+  return { ...DAGELIJKSE_UITDAGINGEN[data.idx], voltooid: data.voltooid };
+}
+
+function voltooiDaguitdaging(type) {
+  const data = JSON.parse(localStorage.getItem('daily_challenge') || '{}');
+  const uitdaging = DAGELIJKSE_UITDAGINGEN[data.idx];
+  if (uitdaging && uitdaging.type === type && !data.voltooid) {
+    data.voltooid = true;
+    localStorage.setItem('daily_challenge', JSON.stringify(data));
+    updateDaguitdaging();
+    toonAchievement('🎯', 'Daguitdaging voltooid!');
+    // Bonus XP
+    if (avProfiel) {
+      avProfiel.xp = (avProfiel.xp || 0) + 15;
+      avSla();
+      updateSpelerIndicator();
+    }
+  }
+}
+
+function updateDaguitdaging() {
+  const banner = document.getElementById('daguitdaging-banner');
+  if (!banner) return;
+  if (!avProfiel) { banner.style.display = 'none'; return; }
+  const uitdaging = getDaguitdaging();
+  banner.style.display = 'block';
+  document.getElementById('daguitdaging-tekst').textContent = uitdaging.beschrijving;
+  const status = document.getElementById('daguitdaging-status');
+  if (uitdaging.voltooid) {
+    status.textContent = '✓ Klaar!';
+    status.style.background = 'var(--green)';
+  } else {
+    status.textContent = 'Open';
+    status.style.background = '';
   }
 }
 
@@ -2619,6 +3121,7 @@ function oogStartMetTimer() {
       document.getElementById('oog-timer-lbl').textContent = '✅ Sessie voltooid! Goed gedaan!';
       document.getElementById('oog-timer-num').textContent = '0';
       if (kidsModus) showConfetti(50, 30);
+      voltooiDaguitdaging('oog');
       return;
     }
     oogTimerResterend--;
@@ -2980,6 +3483,7 @@ function gameEinde() {
   document.getElementById('antwoord-grid').innerHTML = '';
   document.getElementById('game-feedback').textContent = '';
   document.getElementById('game-progress-bar').style.width = '100%';
+  voltooiDaguitdaging('dyslexie');
 }
 
 function gameStop() {
@@ -2998,6 +3502,10 @@ function updateGameUI() {
   const sterren = gameScore >= 90 ? 5 : gameScore >= 60 ? 4 : gameScore >= 40 ? 3 : gameScore >= 20 ? 2 : gameScore > 0 ? 1 : 0;
   document.getElementById('game-sterren').textContent = '⭐'.repeat(sterren) + '☆'.repeat(5-sterren);
 }
+
+// ─── AUTO BEGINTEST VOOR NIEUWE GEBRUIKERS ────────────────
+setTimeout(checkBegintestEersteKeer, 300);
+
 </script>
 </body>
 </html>
