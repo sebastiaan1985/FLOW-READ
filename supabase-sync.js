@@ -34,37 +34,45 @@ let _huidigeGebruiker = null;
 let _syncTimer = null;
 
 // ── VOORKOM FLASH VAN ONBEVEILIGDE CONTENT ──────────────────────────────────
-// Verberg de body direct totdat auth is gecontroleerd
+// Verberg de body kort totdat auth is gecontroleerd
 (function() {
+  // Alleen verbergen op app-pagina's, NIET op login.html
+  if (window.location.pathname.includes('login')) return;
   const s = document.createElement('style');
   s.id = 'auth-hide';
-  s.textContent = 'body{opacity:0!important;pointer-events:none!important;transition:opacity .3s ease}';
+  s.textContent = 'body{opacity:0!important;transition:opacity .3s ease}';
   document.head.appendChild(s);
+  // Veiligheids-fallback: na 3 seconden ALTIJD tonen (voorkomt zwart scherm)
+  setTimeout(_toonApp, 3000);
 })();
 
 function _toonApp() {
   const s = document.getElementById('auth-hide');
-  if (s) { document.body.style.opacity = '1'; setTimeout(() => s.remove(), 350); }
+  if (s) s.remove();
 }
 
 // ── AUTH BEWAKER ──────────────────────────────────────────────────────────────
 // Als de gebruiker niet ingelogd is én geen gast: stuur naar login
 async function _checkAuth() {
-  if (sessionStorage.getItem('gast_modus') === '1') { _toonApp(); return; } // Gast: altijd ok
+  try {
+    if (sessionStorage.getItem('gast_modus') === '1') { _toonApp(); return; }
 
-  const { data: { session } } = await _sb.auth.getSession();
-  if (!session) {
-    window.location.href = 'login.html';
-    return; // Niet _toonApp() — we gaan weg
+    const { data: { session } } = await _sb.auth.getSession();
+    if (!session) {
+      window.location.href = 'login.html';
+      return;
+    }
+    _huidigeGebruiker = session.user;
+    await _laadVanCloud();
+    _toonGebruikerHeader();
+
+    if (typeof _herlaadAppState === 'function') _herlaadAppState();
+
+    _toonApp();
+  } catch (e) {
+    console.error('Auth check mislukt:', e);
+    _toonApp(); // Bij fout: toon de app toch (beter dan zwart scherm)
   }
-  _huidigeGebruiker = session.user;
-  await _laadVanCloud();
-  _toonGebruikerHeader();
-
-  // Herinitialiseer de app-state na het laden van clouddata
-  if (typeof _herlaadAppState === 'function') _herlaadAppState();
-
-  _toonApp(); // Pas NU de app tonen
 }
 
 // ── DATA LADEN VAN SUPABASE ────────────────────────────────────────────────────
