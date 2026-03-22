@@ -33,15 +33,29 @@ const SYNC_KEYS = [
 let _huidigeGebruiker = null;
 let _syncTimer = null;
 
+// ── VOORKOM FLASH VAN ONBEVEILIGDE CONTENT ──────────────────────────────────
+// Verberg de body direct totdat auth is gecontroleerd
+(function() {
+  const s = document.createElement('style');
+  s.id = 'auth-hide';
+  s.textContent = 'body{opacity:0!important;pointer-events:none!important;transition:opacity .3s ease}';
+  document.head.appendChild(s);
+})();
+
+function _toonApp() {
+  const s = document.getElementById('auth-hide');
+  if (s) { document.body.style.opacity = '1'; setTimeout(() => s.remove(), 350); }
+}
+
 // ── AUTH BEWAKER ──────────────────────────────────────────────────────────────
 // Als de gebruiker niet ingelogd is én geen gast: stuur naar login
 async function _checkAuth() {
-  if (sessionStorage.getItem('gast_modus') === '1') return; // Gast: altijd ok
+  if (sessionStorage.getItem('gast_modus') === '1') { _toonApp(); return; } // Gast: altijd ok
 
   const { data: { session } } = await _sb.auth.getSession();
   if (!session) {
     window.location.href = 'login.html';
-    return;
+    return; // Niet _toonApp() — we gaan weg
   }
   _huidigeGebruiker = session.user;
   await _laadVanCloud();
@@ -49,6 +63,8 @@ async function _checkAuth() {
 
   // Herinitialiseer de app-state na het laden van clouddata
   if (typeof _herlaadAppState === 'function') _herlaadAppState();
+
+  _toonApp(); // Pas NU de app tonen
 }
 
 // ── DATA LADEN VAN SUPABASE ────────────────────────────────────────────────────
