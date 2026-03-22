@@ -3340,6 +3340,17 @@ function setFeedback(goed, antwoord='') {
   if (goed && kidsModus) showConfetti(50, 40);
 }
 
+// ─── DAGELIJKSE UITDAGING DATA (moet voor avLaad staan) ───
+const DAGELIJKSE_UITDAGINGEN = [
+  { beschrijving: 'Lees 1 tekst met RSVP', type: 'rsvp' },
+  { beschrijving: 'Voltooi 1 Chunk leessessie', type: 'chunk' },
+  { beschrijving: 'Doe 3 minuten oogtraining', type: 'oog' },
+  { beschrijving: 'Speel 1 ronde van het Dyslexie Spel', type: 'dyslexie' },
+  { beschrijving: 'Lees een tekst op Papier modus', type: 'papier' },
+  { beschrijving: 'Oefen 2 minuten Breed Kijken', type: 'perifeer' },
+  { beschrijving: 'Doe de Begintest (opnieuw)', type: 'begintest' },
+];
+
 // ─── INIT ─────────────────────────────────────────────────
 avLaad();
 
@@ -3463,16 +3474,6 @@ function toonAchievement(icon, naam) {
 }
 
 // ─── DAGELIJKSE UITDAGING ─────────────────────────────────
-const DAGELIJKSE_UITDAGINGEN = [
-  { beschrijving: 'Lees 1 tekst met RSVP', type: 'rsvp' },
-  { beschrijving: 'Voltooi 1 Chunk leessessie', type: 'chunk' },
-  { beschrijving: 'Doe 3 minuten oogtraining', type: 'oog' },
-  { beschrijving: 'Speel 1 ronde van het Dyslexie Spel', type: 'dyslexie' },
-  { beschrijving: 'Lees een tekst op Papier modus', type: 'papier' },
-  { beschrijving: 'Oefen 2 minuten Breed Kijken', type: 'perifeer' },
-  { beschrijving: 'Doe de Begintest (opnieuw)', type: 'begintest' },
-];
-
 function getDaguitdaging() {
   const nu = new Date().toDateString();
   let data = JSON.parse(localStorage.getItem('daily_challenge') || '{}');
@@ -3681,7 +3682,7 @@ function dyxToepassen() {
   const root = document.documentElement.style;
 
   // Aan/uit knop stijl
-  document.getElementById('dyx-open-btn').classList.toggle('actief', dyx.aan);
+  document.getElementById('dyx-open-btn')?.classList.toggle('actief', dyx.aan);
 
   // Body class
   body.classList.toggle('dyx-aan', dyx.aan);
@@ -4425,6 +4426,7 @@ function _herlaadAppState() {
   vulRsvpDropdown();
   laadRsvpTekst();
   avLaad();
+  kidsModus = localStorage.getItem('kids_modus') === '1'; // herlaad na cloud sync
   kidsToepassen();
   dyxLaad();
 }

@@ -3118,6 +3118,7 @@ function _herlaadAppState() {
   vulRsvpDropdown();
   laadRsvpTekst();
   avLaad();
+  kidsModus = localStorage.getItem('kids_modus') === '1'; // herlaad na cloud sync
   kidsToepassen();
   dyxLaad();
 }
