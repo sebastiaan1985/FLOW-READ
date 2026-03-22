@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wachtwoord resetten — SnelLees Trainer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #08081a;
+  --surface: #10102a;
+  --card:    #15153a;
+  --border:  rgba(255,255,255,.08);
+  --accent:  #7c6ff7;
+  --accent2: #38c8f0;
+  --text:    #e8e8f5;
+  --muted:   #7070a0;
+  --error:   #f06292;
+  --success: #34d399;
+}
+
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.video-bg {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(1.15);
+  min-width: 100%; min-height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.video-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(8, 8, 26, 0.55);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+  animation: slideUp .4s ease;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.logo span { font-weight: 300; }
+
+.tagline {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.form-group { margin-bottom: 16px; }
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-bottom: 7px;
+}
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+input:focus {
+  border-color: rgba(124,111,247,.5);
+  box-shadow: 0 0 0 3px rgba(124,111,247,.1);
+}
+input::placeholder { color: var(--muted); }
+
+.btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), #5b4fd4);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+  margin-top: 8px;
+  letter-spacing: .2px;
+}
+.btn:hover { opacity: .9; }
+.btn:active { transform: scale(.99); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.msg {
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  display: none;
+}
+.msg.error   { background: rgba(240,98,146,.12); border: 1px solid rgba(240,98,146,.3); color: var(--error); display: block; }
+.msg.success { background: rgba(52,211,153,.1);  border: 1px solid rgba(52,211,153,.25); color: var(--success); display: block; }
+
+.spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.back-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+.back-link:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<video class="video-bg" autoplay muted loop playsinline>
+  <source src="Premium_SaaS_Login_Background_Animation.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<div class="card">
+  <div class="logo">Snel<span>Lees</span> Trainer</div>
+  <div class="tagline">Kies een nieuw wachtwoord</div>
+
+  <div id="msg" class="msg"></div>
+
+  <div class="form-group">
+    <label>Nieuw wachtwoord</label>
+    <input type="password" id="new-pw" placeholder="Minimaal 6 tekens" autocomplete="new-password">
+  </div>
+  <div class="form-group">
+    <label>Wachtwoord herhalen</label>
+    <input type="password" id="new-pw2" placeholder="Herhaal je wachtwoord" autocomplete="new-password">
+  </div>
+
+  <button class="btn" id="reset-btn" onclick="resetWachtwoord()">Wachtwoord opslaan</button>
+
+  <a href="login.html" class="back-link">Terug naar inloggen</a>
+</div>
+
+<script>
+const SUPABASE_URL  = 'https://hmxrwvxfmhsfgfubcpwb.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhteHJ3dnhmbWhzZmdmdWJjcHdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwOTMxMTQsImV4cCI6MjA4OTY2OTExNH0.2Xc-4R_MsBkLAK0q-ZW95tnxcNKorDgxzt77YrboNtM';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+function toonMsg(tekst, type = 'error') {
+  const el = document.getElementById('msg');
+  el.textContent = tekst;
+  el.className = 'msg' + (tekst ? ' ' + type : '');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') resetWachtwoord();
+});
+
+async function resetWachtwoord() {
+  const pw  = document.getElementById('new-pw').value;
+  const pw2 = document.getElementById('new-pw2').value;
+
+  if (!pw)           { toonMsg('Vul een nieuw wachtwoord in.'); return; }
+  if (pw.length < 6) { toonMsg('Wachtwoord moet minimaal 6 tekens zijn.'); return; }
+  if (pw !== pw2)    { toonMsg('Wachtwoorden komen niet overeen.'); return; }
+
+  const btn = document.getElementById('reset-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Bezig...';
+  toonMsg('');
+
+  const { error } = await sb.auth.updateUser({ password: pw });
+
+  if (error) {
+    toonMsg('Er ging iets mis: ' + error.message);
+    btn.disabled = false;
+    btn.textContent = 'Wachtwoord opslaan';
+  } else {
+    toonMsg('Wachtwoord gewijzigd! Je wordt doorgestuurd...', 'success');
+    setTimeout(() => window.location.href = 'index.html', 1500);
+  }
+}
+</script>
+</body>
+</html>

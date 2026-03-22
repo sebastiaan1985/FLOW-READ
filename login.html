@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inloggen — SnelLees Trainer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #08081a;
+  --surface: #10102a;
+  --card:    #15153a;
+  --border:  rgba(255,255,255,.08);
+  --accent:  #7c6ff7;
+  --accent2: #38c8f0;
+  --text:    #e8e8f5;
+  --muted:   #7070a0;
+  --radius:  14px;
+  --error:   #f06292;
+  --success: #34d399;
+}
+
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Video achtergrond — iets ingezoomd om watermark te verbergen */
+.video-bg {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(1.15);
+  min-width: 100%; min-height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Donkere overlay over de video voor leesbaarheid */
+.video-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(8, 8, 26, 0.55);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+  animation: slideUp .4s ease;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.logo span { font-weight: 300; }
+
+.tagline {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  background: var(--card);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 28px;
+  gap: 4px;
+}
+.tab {
+  flex: 1;
+  padding: 9px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab.active {
+  background: rgba(124,111,247,.2);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px rgba(124,111,247,.3);
+}
+
+/* Form */
+.form-group { margin-bottom: 16px; }
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-bottom: 7px;
+}
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+input:focus {
+  border-color: rgba(124,111,247,.5);
+  box-shadow: 0 0 0 3px rgba(124,111,247,.1);
+}
+input::placeholder { color: var(--muted); }
+
+.btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), #5b4fd4);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+  margin-top: 8px;
+  letter-spacing: .2px;
+}
+.btn:hover { opacity: .9; }
+.btn:active { transform: scale(.99); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.btn-guest {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-guest:hover {
+  border-color: rgba(255,255,255,.2);
+  color: var(--text);
+}
+
+/* Feedback messages */
+.msg {
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  display: none;
+}
+.msg.error   { background: rgba(240,98,146,.12); border: 1px solid rgba(240,98,146,.3); color: var(--error); display: block; }
+.msg.success { background: rgba(52,211,153,.1);  border: 1px solid rgba(52,211,153,.25); color: var(--success); display: block; }
+
+.spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.wachtwoord-vergeten {
+  text-align: right;
+  margin-top: 8px;
+}
+.wachtwoord-vergeten a {
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+.wachtwoord-vergeten a:hover { color: var(--accent); }
+
+.form-panel { display: none; }
+.form-panel.active { display: block; }
+</style>
+</head>
+<body>
+
+<video class="video-bg" autoplay muted loop playsinline>
+  <source src="Premium_SaaS_Login_Background_Animation.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<div class="card">
+  <div class="logo">Snel<span>Lees</span> Trainer</div>
+  <div class="tagline">Log in om je voortgang op te slaan op alle apparaten</div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('login')">Inloggen</button>
+    <button class="tab" onclick="switchTab('registreer')">Registreren</button>
+  </div>
+
+  <div id="msg" class="msg"></div>
+
+  <!-- LOGIN -->
+  <div id="panel-login" class="form-panel active">
+    <div class="form-group">
+      <label>E-mailadres</label>
+      <input type="email" id="login-email" placeholder="jouw@email.nl" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label>Wachtwoord</label>
+      <input type="password" id="login-pw" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <div class="wachtwoord-vergeten">
+      <a href="#" onclick="resetWachtwoord(); return false;">Wachtwoord vergeten?</a>
+    </div>
+    <button class="btn" id="login-btn" onclick="login()">Inloggen</button>
+  </div>
+
+  <!-- REGISTREER -->
+  <div id="panel-registreer" class="form-panel">
+    <div class="form-group">
+      <label>E-mailadres</label>
+      <input type="email" id="reg-email" placeholder="jouw@email.nl" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label>Wachtwoord</label>
+      <input type="password" id="reg-pw" placeholder="Minimaal 6 tekens" autocomplete="new-password">
+    </div>
+    <div class="form-group">
+      <label>Wachtwoord herhalen</label>
+      <input type="password" id="reg-pw2" placeholder="••••••••" autocomplete="new-password">
+    </div>
+    <button class="btn" id="reg-btn" onclick="registreer()">Account aanmaken</button>
+  </div>
+
+  <div class="divider">of</div>
+  <button class="btn-guest" onclick="doorgaanAlsGast()">Doorgaan zonder account</button>
+</div>
+
+<script>
+// ── SUPABASE CONFIG ──────────────────────────────────────────
+// Vervang deze waarden met jouw Supabase project-URL en anon key
+// Te vinden in: Supabase Dashboard → Settings → API
+const SUPABASE_URL  = 'https://hmxrwvxfmhsfgfubcpwb.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhteHJ3dnhmbWhzZmdmdWJjcHdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwOTMxMTQsImV4cCI6MjA4OTY2OTExNH0.2Xc-4R_MsBkLAK0q-ZW95tnxcNKorDgxzt77YrboNtM';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// ── CONTROLEER AL INGELOGD ───────────────────────────────────
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    window.location.href = 'index.html';
+  }
+})();
+
+// ── UI HELPERS ───────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'registreer' && i === 1));
+  });
+  document.getElementById('panel-login').classList.toggle('active', tab === 'login');
+  document.getElementById('panel-registreer').classList.toggle('active', tab === 'registreer');
+  toonMsg('');
+}
+
+function toonMsg(tekst, type = 'error') {
+  const el = document.getElementById('msg');
+  el.textContent = tekst;
+  el.className = 'msg' + (tekst ? ' ' + type : '');
+}
+
+function setLaden(btnId, laden) {
+  const btn = document.getElementById(btnId);
+  btn.disabled = laden;
+  btn.innerHTML = laden
+    ? '<span class="spinner"></span> Bezig...'
+    : (btnId === 'login-btn' ? 'Inloggen' : 'Account aanmaken');
+}
+
+// ── ENTER KEY SUPPORT ────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const loginActief = document.getElementById('panel-login').classList.contains('active');
+  if (loginActief) login();
+  else registreer();
+});
+
+// ── LOGIN ────────────────────────────────────────────────────
+async function login() {
+  const email = document.getElementById('login-email').value.trim();
+  const pw    = document.getElementById('login-pw').value;
+  if (!email || !pw) { toonMsg('Vul e-mail en wachtwoord in.'); return; }
+
+  setLaden('login-btn', true);
+  toonMsg('');
+
+  const { error } = await sb.auth.signInWithPassword({ email, password: pw });
+
+  if (error) {
+    toonMsg(vertaalFout(error.message));
+    setLaden('login-btn', false);
+  } else {
+    toonMsg('Ingelogd! Je wordt doorgestuurd...', 'success');
+    setTimeout(() => window.location.href = 'index.html', 800);
+  }
+}
+
+// ── REGISTREER ───────────────────────────────────────────────
+async function registreer() {
+  const email = document.getElementById('reg-email').value.trim();
+  const pw    = document.getElementById('reg-pw').value;
+  const pw2   = document.getElementById('reg-pw2').value;
+
+  if (!email || !pw) { toonMsg('Vul alle velden in.'); return; }
+  if (pw !== pw2)    { toonMsg('Wachtwoorden komen niet overeen.'); return; }
+  if (pw.length < 6) { toonMsg('Wachtwoord moet minimaal 6 tekens zijn.'); return; }
+
+  setLaden('reg-btn', true);
+  toonMsg('');
+
+  const { error } = await sb.auth.signUp({ email, password: pw });
+
+  if (error) {
+    toonMsg(vertaalFout(error.message));
+    setLaden('reg-btn', false);
+  } else {
+    toonMsg('Account aangemaakt! Je bent nu ingelogd.', 'success');
+    setTimeout(() => window.location.href = 'index.html', 800);
+  }
+}
+
+// ── WACHTWOORD RESET ─────────────────────────────────────────
+async function resetWachtwoord() {
+  const email = document.getElementById('login-email').value.trim();
+  if (!email) { toonMsg('Vul eerst je e-mailadres in.'); return; }
+
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + '/reset-wachtwoord.html'
+  });
+
+  if (error) toonMsg(vertaalFout(error.message));
+  else toonMsg('Reset-link verstuurd! Check je inbox.', 'success');
+}
+
+// ── GAST MODE ────────────────────────────────────────────────
+function doorgaanAlsGast() {
+  sessionStorage.setItem('gast_modus', '1');
+  window.location.href = 'index.html';
+}
+
+// ── FOUT VERTALINGEN ─────────────────────────────────────────
+function vertaalFout(msg) {
+  if (msg.includes('Invalid login'))        return 'E-mail of wachtwoord klopt niet.';
+  if (msg.includes('Email not confirmed'))  return 'Bevestig eerst je e-mailadres.';
+  if (msg.includes('already registered'))   return 'Dit e-mailadres is al in gebruik.';
+  if (msg.includes('User already registered')) return 'Dit e-mailadres is al in gebruik.';
+  if (msg.includes('Password should be'))   return 'Wachtwoord moet minimaal 6 tekens zijn.';
+  if (msg.includes('Unable to validate'))   return 'Ongeldig e-mailadres.';
+  if (msg.includes('rate limit'))           return 'Te veel pogingen. Wacht even en probeer opnieuw.';
+  if (msg.includes('Network'))              return 'Geen verbinding. Controleer je internet.';
+  return 'Er is een fout opgetreden. Probeer opnieuw.';
+}
+</script>
+</body>
+</html>
