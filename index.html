@@ -345,6 +345,18 @@ select option { background: #1a1a40; }
   transition: opacity .15s; letter-spacing: .5px;
 }
 
+/* ── HOME KAARTEN ─────────────────────────────────────────── */
+.home-kaart {
+  display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+  padding: 16px; border-radius: var(--radius); border: 1px solid var(--border);
+  background: var(--card); cursor: pointer; transition: all .2s;
+  color: var(--text); width: 100%;
+}
+.home-kaart:hover { border-color: rgba(124,111,247,.4); background: rgba(124,111,247,.07); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.home-kaart-icon { font-size: 1.8rem; margin-bottom: 8px; }
+.home-kaart-titel { font-size: .9rem; font-weight: 700; margin-bottom: 4px; }
+.home-kaart-sub { font-size: .75rem; color: var(--muted); line-height: 1.4; }
+
 /* ── TIPS ─────────────────────────────────────────────────── */
 .tip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 620px) { .tip-grid { grid-template-columns: 1fr; } }
@@ -696,6 +708,7 @@ textarea:focus { border-color: rgba(124,111,247,.5); }
   font-family: 'Comic Neue', cursive; font-size: 1.15rem; font-weight: 700;
   cursor: pointer; white-space: nowrap; animation: drijf linear forwards;
   border: 2px solid rgba(255,255,255,.6); transition: transform .1s;
+  color: #0a2a4a; text-shadow: none;
 }
 .vanger-bubble:hover { transform: scale(1.1); }
 .vanger-bubble.raak { animation: pop .3s ease; }
@@ -1207,7 +1220,10 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 
   <div class="sidebar-section"><div class="sidebar-section-title">Test & Start</div></div>
   <nav id="sidebar-nav-test">
+    <button onclick="sidebarNav('home')" data-screen="home" class="active"><span class="icon">🏠</span> Home</button>
     <button onclick="sidebarNav('begintest')" data-screen="begintest"><span class="icon">🎯</span> Begintest</button>
+    <button onclick="sidebarNav('leestest')" data-screen="leestest"><span class="icon">📏</span> Leestest</button>
+    <button onclick="sidebarNav('stats')" data-screen="stats"><span class="icon">📊</span> Statistieken</button>
   </nav>
 
   <div class="sidebar-section"><div class="sidebar-section-title">Training</div></div>
@@ -1228,7 +1244,6 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   <div class="sidebar-section"><div class="sidebar-section-title">Beheer</div></div>
   <nav id="sidebar-nav-manage">
     <button onclick="sidebarNav('tekst')" data-screen="tekst"><span class="icon">📂</span> Tekst laden</button>
-    <button onclick="sidebarNav('stats')" data-screen="stats"><span class="icon">📊</span> Statistieken</button>
   </nav>
 
   <div class="sidebar-bottom">
@@ -1371,6 +1386,73 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   </div>
 </div>
 
+<!-- ── START / HOME ───────────────────────────────────────── -->
+<div id="screen-home" class="screen active">
+  <div style="text-align:center;padding:32px 20px 20px">
+    <div style="font-size:3rem;margin-bottom:8px">📖⚡</div>
+    <h1 style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px">SnelLees Trainer</h1>
+    <p style="color:var(--muted);font-size:.95rem;max-width:420px;margin:0 auto 28px">Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.</p>
+  </div>
+
+  <!-- Snelle toegang kaarten -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px">
+    <button class="home-kaart" onclick="sidebarNav('rsvp')">
+      <div class="home-kaart-icon">⚡</div>
+      <div class="home-kaart-titel">RSVP Lezen</div>
+      <div class="home-kaart-sub">Woord voor woord — verhoog je snelheid</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('leestest')">
+      <div class="home-kaart-icon">📏</div>
+      <div class="home-kaart-titel">Leestest</div>
+      <div class="home-kaart-sub">Lees een tekst, meet je WPM + begrip</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('chunk')">
+      <div class="home-kaart-icon">📖</div>
+      <div class="home-kaart-titel">Chunk Lezen</div>
+      <div class="home-kaart-sub">Woordgroepen in één oogopslag</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('oog')">
+      <div class="home-kaart-icon">👁</div>
+      <div class="home-kaart-titel">Oogtraining</div>
+      <div class="home-kaart-sub">Blikveld vergroten en regressie stoppen</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('dyslexie')">
+      <div class="home-kaart-icon">🌈</div>
+      <div class="home-kaart-titel">Dyslexie Spel</div>
+      <div class="home-kaart-sub">Letter Jacht, Flits & Goed of Fout?</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('perifeer')">
+      <div class="home-kaart-icon">🔭</div>
+      <div class="home-kaart-titel">Perifeer Zien</div>
+      <div class="home-kaart-sub">Train je zijdelings blikveld</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('avontuur')">
+      <div class="home-kaart-icon">🗺️</div>
+      <div class="home-kaart-titel">Leesavontuur</div>
+      <div class="home-kaart-sub">Levels, badges en XP verdienen</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('begintest')">
+      <div class="home-kaart-icon">🎯</div>
+      <div class="home-kaart-titel">Begintest</div>
+      <div class="home-kaart-sub">Meet je startniveau en volg voortgang</div>
+    </button>
+  </div>
+
+  <!-- Waarom snellezen? -->
+  <h3 style="font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Waarom snellezen trainen?</h3>
+  <div class="tip-grid">
+    <div class="tip"><b>📈 2× sneller</b>De meeste mensen lezen 200–250 WPM. Met training haal je 400–500 WPM zónder begripsverlies.</div>
+    <div class="tip tip-cyan"><b>🧠 Minder subvocalisatie</b>Stil 'meelezen' in je hoofd vertraagt je. Oefening leert je hersenen woorden direct te verwerken.</div>
+    <div class="tip tip-green"><b>👁 Groter blikveld</b>Getrainde ogen vangen 5–7 woorden per fixatie, i.p.v. 1–2. Dat verdubbelt je tempo.</div>
+    <div class="tip tip-pink"><b>🔁 Geen regressie</b>Onbewust terugspringen kost 30% van je leestijd. Oogtraining sloopt deze gewoonte af.</div>
+  </div>
+
+  <div style="text-align:center;margin-top:24px">
+    <button class="btn btn-primary" onclick="sidebarNav('begintest')" style="padding:14px 32px;font-size:1rem">🎯 Start met de Begintest</button>
+    <div style="margin-top:8px;font-size:12px;color:var(--muted)">Of kies een oefening hierboven</div>
+  </div>
+</div>
+
 <!-- ── BEGINTEST ──────────────────────────────────────────── -->
 <div id="screen-begintest" class="screen">
   <div class="page-title">Begintest</div>
@@ -1463,7 +1545,7 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 </div>
 
 <!-- ── RSVP ─────────────────────────────────────────────── -->
-<div id="screen-rsvp" class="screen active">
+<div id="screen-rsvp" class="screen">
   <div class="page-title">RSVP — Woord voor Woord</div>
   <div class="page-sub">Elk woord verschijnt op hetzelfde punt. Geen oogbewegingen nodig — maximale leessnelheid.</div>
 
@@ -1587,8 +1669,16 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
       <div style="font-size:13px;color:var(--text)" id="oog-timer-lbl">Druk Start om te beginnen</div>
     </div>
     <div style="flex:1"></div>
-    <div class="oog-timer-num" id="oog-timer-num">—</div>
-    <div style="font-size:12px;color:var(--muted)">sec</div>
+    <!-- SVG circulaire countdown -->
+    <svg id="oog-ring-svg" width="72" height="72" viewBox="0 0 72 72" style="display:none;flex-shrink:0">
+      <circle cx="36" cy="36" r="30" fill="none" stroke="rgba(124,111,247,.15)" stroke-width="6"/>
+      <circle id="oog-ring-arc" cx="36" cy="36" r="30" fill="none" stroke="var(--accent)" stroke-width="6"
+        stroke-dasharray="188.5" stroke-dashoffset="0" stroke-linecap="round"
+        transform="rotate(-90 36 36)" style="transition:stroke-dashoffset 1s linear"/>
+      <text x="36" y="41" text-anchor="middle" font-size="16" font-weight="800" fill="var(--accent)" font-family="Inter,sans-serif" id="oog-ring-txt">—</text>
+    </svg>
+    <div class="oog-timer-num" id="oog-timer-num" style="display:block">—</div>
+    <div style="font-size:12px;color:var(--muted)" id="oog-sec-lbl">sec</div>
   </div>
 
   <canvas id="eye-canvas" height="220"></canvas>
@@ -1625,67 +1715,164 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 <!-- ── PERIFEER ───────────────────────────────────────────── -->
 <div id="screen-perifeer" class="screen">
   <div class="page-title">Perifeer Zien</div>
-  <div class="page-sub">Fixeer op het rode kruis. Probeer de woorden aan de zijkanten te lezen <em>zonder</em> uw ogen te bewegen.</div>
+  <div class="page-sub">Train je zijdelings blikveld — lees woorden zonder je ogen te bewegen. Dit is dé sleutel tot sneller lezen.</div>
 
-  <div id="peripheral-display">
-    <span id="center-fixation">+</span>
+  <!-- Waarom uitleg -->
+  <div class="card" style="margin-bottom:20px;border-left:3px solid var(--accent2)">
+    <div style="font-size:.8rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Waarom perifeer zien trainen?</div>
+    <div style="font-size:.85rem;color:var(--muted);line-height:1.6">
+      Getrainde lezers vangen <b style="color:var(--text)">5–7 woorden</b> per oogfixatie i.p.v. 1–2.
+      Door je blikveld te vergroten, maak je minder oogsprongen per regel — en lees je <b style="color:var(--text)">tot 3× sneller</b>.
+      Fixeer altijd op het kruisje en probeer de zijwoorden toch te lezen. Beweeg je ogen <em>niet</em>.
+    </div>
   </div>
 
-  <div class="controls-panel">
-    <div class="control-group">
-      <label>Breedte</label>
-      <div class="control-value"><span id="pw-val">60</span>%</div>
-      <input type="range" id="peri-width" min="20" max="95" value="60"
-        oninput="document.getElementById('pw-val').textContent=this.value">
+  <!-- Game modus tabs -->
+  <div style="display:flex;gap:8px;margin-bottom:16px">
+    <button id="peri-tab-vrij" class="btn btn-primary" style="font-size:.8rem" onclick="periSwitchTab('vrij')">🎮 Vrij oefenen</button>
+    <button id="peri-tab-spel" class="btn btn-ghost" style="font-size:.8rem" onclick="periSwitchTab('spel')">🏆 Spel met levels</button>
+  </div>
+
+  <!-- VRIJ OEFENEN -->
+  <div id="peri-view-vrij">
+    <div id="peripheral-display">
+      <span id="center-fixation">+</span>
     </div>
-    <div class="control-group">
-      <label>Interval</label>
-      <div class="control-value"><span id="pi-val">1.5</span>s</div>
-      <input type="range" id="peri-interval" min="5" max="30" value="15" step="1"
-        oninput="document.getElementById('pi-val').textContent=(this.value/10).toFixed(1)+'s'">
+    <div class="controls-panel">
+      <div class="control-group">
+        <label>Breedte</label>
+        <div class="control-value"><span id="pw-val">60</span>%</div>
+        <input type="range" id="peri-width" min="20" max="95" value="60"
+          oninput="document.getElementById('pw-val').textContent=this.value">
+      </div>
+      <div class="control-group">
+        <label>Interval</label>
+        <div class="control-value"><span id="pi-val">1.5</span>s</div>
+        <input type="range" id="peri-interval" min="5" max="30" value="15" step="1"
+          oninput="document.getElementById('pi-val').textContent=(this.value/10).toFixed(1)+'s'">
+      </div>
+      <div class="control-group" style="flex-direction:row;align-self:flex-end;flex:1;justify-content:flex-end">
+        <button class="btn btn-primary" onclick="periStart()">▶ Start</button>
+        <button class="btn btn-ghost" onclick="periStop()">⏹ Stop</button>
+      </div>
     </div>
-    <div class="control-group" style="flex-direction:row;align-self:flex-end;flex:1;justify-content:flex-end">
-      <button class="btn btn-primary" onclick="periStart()">▶ Start</button>
-      <button class="btn btn-ghost" onclick="periStop()">⏹ Stop</button>
+    <div id="peri-score" class="mt"></div>
+  </div>
+
+  <!-- SPEL MET LEVELS -->
+  <div id="peri-view-spel" style="display:none">
+    <!-- Level keuze -->
+    <div id="peri-level-keuze">
+      <h3 style="margin-bottom:12px">Kies een level</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:20px" id="peri-level-grid"></div>
+    </div>
+
+    <!-- Spel actief -->
+    <div id="peri-spel-actief" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div>
+          <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px" id="peri-spel-level-naam">Level 1</div>
+          <div style="font-size:1.1rem;font-weight:700" id="peri-spel-score-display">Score: 0 / 10</div>
+        </div>
+        <button class="btn btn-ghost" style="font-size:.8rem" onclick="periSpelStop()">✕ Stop</button>
+      </div>
+
+      <!-- Woord flash -->
+      <div id="peri-spel-display" style="background:var(--card);border:1px solid var(--border);border-radius:14px;min-height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;overflow:hidden">
+        <span id="peri-center-cross" style="font-size:2rem;font-weight:900;color:var(--accent);position:absolute;left:50%;transform:translateX(-50%)">+</span>
+        <span id="peri-links-woord" style="position:absolute;font-size:1.2rem;font-weight:700;color:var(--text);opacity:0;transition:opacity .15s"></span>
+        <span id="peri-rechts-woord" style="position:absolute;font-size:1.2rem;font-weight:700;color:var(--text);opacity:0;transition:opacity .15s"></span>
+      </div>
+
+      <!-- Vraag: welk woord zag je? -->
+      <div id="peri-vraag-wrap" style="display:none">
+        <div style="font-size:.85rem;color:var(--muted);margin-bottom:10px;text-align:center" id="peri-vraag-tekst"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="peri-antwoord-grid"></div>
+      </div>
+      <div id="peri-spel-feedback" style="text-align:center;font-size:1rem;font-weight:700;min-height:28px;margin-top:8px"></div>
+    </div>
+
+    <!-- Resultaat -->
+    <div id="peri-spel-resultaat" style="display:none;text-align:center;padding:20px">
+      <div style="font-size:3rem" id="peri-res-sterren"></div>
+      <div style="font-size:1.3rem;font-weight:700;margin:8px 0" id="peri-res-score"></div>
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:16px" id="peri-res-sub"></div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button class="btn btn-primary" onclick="periSpelHerstart()">🔄 Opnieuw</button>
+        <button class="btn btn-ghost" onclick="periSwitchTab('spel')">📋 Levels</button>
+      </div>
     </div>
   </div>
-  <div id="peri-score" class="mt"></div>
 </div>
 
 <!-- ── PAPIER ─────────────────────────────────────────────── -->
 <div id="screen-papier" class="screen">
   <div class="page-title">Papier Lees Training</div>
-  <div class="page-sub">Leer technieken voor fysieke tekst. De gidsaanwijzer-methode is bewezen effectief.</div>
+  <div class="page-sub">Kies een gidstechniek en oefen met de animatie hieronder. Elke techniek heeft een eigen beweging.</div>
+
+  <!-- Techniek keuze kaarten -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+    <button id="papier-tab-lijn" class="papier-tech-btn actief" onclick="papierKiesTech('lijn')"
+      style="padding:12px 8px;border-radius:10px;border:2px solid var(--accent);background:rgba(124,111,247,.1);color:var(--text);cursor:pointer;text-align:center">
+      <div style="font-size:1.4rem">🖊️</div>
+      <div style="font-size:.75rem;font-weight:700;margin-top:4px">Regelbegeleider</div>
+      <div style="font-size:.65rem;color:var(--muted);margin-top:2px">Pen onder elke regel</div>
+    </button>
+    <button id="papier-tab-s" class="papier-tech-btn" onclick="papierKiesTech('s')"
+      style="padding:12px 8px;border-radius:10px;border:2px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;text-align:center">
+      <div style="font-size:1.4rem">📏</div>
+      <div style="font-size:.75rem;font-weight:700;margin-top:4px">S-patroon</div>
+      <div style="font-size:.65rem;color:var(--muted);margin-top:2px">Diagonaal scannen</div>
+    </button>
+    <button id="papier-tab-diag" class="papier-tech-btn" onclick="papierKiesTech('diag')"
+      style="padding:12px 8px;border-radius:10px;border:2px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;text-align:center">
+      <div style="font-size:1.4rem">↕️</div>
+      <div style="font-size:.75rem;font-weight:700;margin-top:4px">Verticaal scannen</div>
+      <div style="font-size:.65rem;color:var(--muted);margin-top:2px">Recht omlaag door midden</div>
+    </button>
+  </div>
+
+  <!-- Uitleg per techniek -->
+  <div id="papier-uitleg-lijn" class="card" style="margin-bottom:12px;border-left:3px solid var(--accent)">
+    <b>🖊️ Regelbegeleider — hoe werkt het?</b><br>
+    <span style="font-size:.85rem;color:var(--muted)">Beweeg een pen of vinger ONDER de tekstregel. Je ogen volgen automatisch de punt. Verhoog geleidelijk de snelheid. Dit voorkomt regressie (terugspringen) en traint vloeiende oogbewegingen. Start traag, bouw in weken op.</span>
+  </div>
+  <div id="papier-uitleg-s" class="card" style="margin-bottom:12px;border-left:3px solid var(--accent2);display:none">
+    <b>📏 S-patroon — hoe werkt het?</b><br>
+    <span style="font-size:.85rem;color:var(--muted)">Scan de pagina diagonaal: begin links-boven, beweeg naar rechts-midden, dan naar links-onder (als een S). Ideaal voor previewing van een tekst — je vangt de hoofdideeën zonder elk woord te lezen. Goed voor nieuwsartikelen en studiemateriaal.</span>
+  </div>
+  <div id="papier-uitleg-diag" class="card" style="margin-bottom:12px;border-left:3px solid var(--green);display:none">
+    <b>↕️ Verticaal scannen — hoe werkt het?</b><br>
+    <span style="font-size:.85rem;color:var(--muted)">Beweeg je ogen recht omlaag door het midden van de kolom. Je perifere blikveld vangt de woorden aan de zijkanten. Werkt uitstekend in smalle kolommen (kranten, tijdschriften). Vereist goed perifeer zien — combineer met de Perifeer oefening.</span>
+  </div>
+
+  <!-- Eigen tekst laden voor papier -->
+  <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:.8rem;color:var(--muted)">Eigen tekst:</span>
+    <button class="btn btn-ghost" style="font-size:.8rem;padding:6px 12px" onclick="document.getElementById('papier-file').click()">📁 .txt laden</button>
+    <input type="file" id="papier-file" accept=".txt" style="display:none" onchange="papierLaadBestand(this)">
+    <input class="text-input" id="papier-url-input" placeholder="https://... artikel URL" style="flex:1;min-width:180px;margin-bottom:0;font-size:.8rem;padding:8px 12px">
+    <button class="btn btn-ghost" id="papier-url-btn" onclick="papierLaadUrl()" style="font-size:.8rem;padding:6px 12px">🌐 Ophalen</button>
+    <span id="papier-url-status" style="font-size:.75rem;color:var(--muted)"></span>
+  </div>
 
   <div class="controls-panel">
     <div class="control-group">
-      <label>Gidstechniek</label>
-      <select id="guide-mode">
-        <option value="lijn">Regelbegeleider</option>
-        <option value="s">S-patroon</option>
-        <option value="diag">Diagonaal scannen</option>
-      </select>
-    </div>
-    <div class="control-group">
-      <label>Snelheid (sec/regel)</label>
+      <label>Snelheid</label>
       <input type="range" id="guide-speed" min="3" max="30" value="12">
+      <span style="font-size:.75rem;color:var(--muted)" id="guide-speed-lbl">Normaal</span>
     </div>
     <div class="control-group" style="flex-direction:row;align-self:flex-end;flex:1;justify-content:flex-end">
-      <button class="btn btn-primary" onclick="papierStart()">▶ Animeer gids</button>
+      <button class="btn btn-primary" onclick="papierStart()">▶ Start gids</button>
       <button class="btn btn-ghost" onclick="papierStop()">⏹ Stop</button>
     </div>
   </div>
 
-  <div id="paper-text"><div id="paper-guide" style="top:0"></div></div>
+  <div id="paper-text"><div id="paper-guide" style="top:0"></div><div id="paper-guide-diag" style="display:none;position:absolute;top:0;left:50%;width:3px;height:20px;background:rgba(52,211,153,.7);border-radius:2px;transform:translateX(-50%);transition:top .3s linear"></div></div>
 
-  <h3>Technieken voor papier</h3>
-  <div class="tip-grid">
-    <div class="tip"><b>🖊️ Gidsmethode</b>Beweeg een pen ONDER de tekstregel. Verhoog geleidelijk de snelheid. Uw ogen volgen de punt.</div>
-    <div class="tip tip-cyan"><b>📏 S-patroon</b>Scan diagonaal: links-boven → rechts-midden → links-onder. Ideaal voor previewing.</div>
-    <div class="tip tip-green"><b>↕️ Vertikaal scannen</b>Beweeg ogen recht omlaag door het midden van de pagina. Werkt goed in smalle kolommen.</div>
-    <div class="tip tip-pink"><b>🃏 Dekkingskaart</b>Leg een kaart boven de gelezen regel. Voorkomt terugspringen — beweeg steeds sneller.</div>
-    <div class="tip"><b>👁️ Twee fixaties</b>Bij een normaal boek: fixeer op ¼ en ¾ van de regel. Nooit woord-voor-woord.</div>
-    <div class="tip tip-cyan"><b>🧠 Woordgroepen</b>Leer 3–5 woorden als één beeld te zien. Zinnen zijn clusters, geen losse eenheden.</div>
+  <!-- Snelheidslegenda -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+    <span style="font-size:.75rem;color:var(--muted)">Tip: begin traag (rechts) en verhoog geleidelijk</span>
   </div>
 </div>
 
@@ -1729,6 +1916,79 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
     <div class="input-row">
       <input class="text-input" type="text" id="w1a" placeholder="Fout antwoord 1" style="margin-bottom:0">
       <input class="text-input" type="text" id="w1b" placeholder="Fout antwoord 2" style="margin-bottom:0">
+    </div>
+  </div>
+</div>
+
+<!-- ── LEESTEST ───────────────────────────────────────────── -->
+<div id="screen-leestest" class="screen">
+  <div class="page-title">📏 Leestest</div>
+  <div class="page-sub">Lees een tekst op je eigen tempo. Daarna meet je WPM en test je begrip met 4 vragen.</div>
+
+  <!-- Intro -->
+  <div id="lt-view-intro">
+    <div class="card" style="margin-bottom:20px">
+      <div style="font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Geselecteerde tekst</div>
+      <div style="font-size:1rem;font-weight:700" id="lt-tekst-naam">—</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px" id="lt-tekst-wc">—</div>
+    </div>
+    <div class="tip-grid" style="margin-bottom:20px">
+      <div class="tip"><b>📖 Lees normaal</b>Lees de tekst op je gewone tempo. Je hoeft niet snel te lezen — meet je startsnelheid.</div>
+      <div class="tip tip-cyan"><b>⏱ Automatisch gemeten</b>Zodra je "Klaar" klikt stopt de timer. Je WPM wordt berekend en opgeslagen.</div>
+      <div class="tip tip-green"><b>❓ Begripstoets</b>Na het lezen krijg je 4 vragen. Check hoe goed je de tekst hebt begrepen.</div>
+      <div class="tip tip-pink"><b>📈 Voortgang bijhouden</b>Elke leestest wordt opgeslagen in je statistieken. Zie je verbetering!</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="leestestBegin()" style="padding:14px 28px;font-size:1rem">▶ Start lezen</button>
+      <button class="btn btn-ghost" onclick="leestestInit()" style="padding:14px 20px">🔀 Andere tekst</button>
+    </div>
+  </div>
+
+  <!-- Lezen -->
+  <div id="lt-view-lezen" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-size:.8rem;color:var(--muted)">⏱ Timer loopt — lees rustig door</div>
+      <button class="btn btn-primary" onclick="leestestKlaar()">✅ Klaar met lezen</button>
+    </div>
+    <div id="lt-tekst-inhoud" style="font-size:1rem;line-height:1.9;color:var(--text);background:var(--card);padding:24px;border-radius:14px;border:1px solid var(--border);white-space:pre-wrap"></div>
+    <div style="text-align:center;margin-top:16px">
+      <button class="btn btn-primary" onclick="leestestKlaar()" style="padding:14px 32px;font-size:1rem">✅ Klaar met lezen → naar vragen</button>
+    </div>
+  </div>
+
+  <!-- Vragen -->
+  <div id="lt-view-vragen" style="display:none">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:14px 16px;background:var(--card);border-radius:12px;border:1px solid var(--border)">
+      <div style="font-size:2rem">⚡</div>
+      <div>
+        <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Jouw leessnelheid</div>
+        <div style="font-size:1.8rem;font-weight:800;color:var(--accent)" id="lt-wpm-result">—</div>
+        <div style="font-size:.75rem;color:var(--muted)">woorden per minuut</div>
+      </div>
+    </div>
+    <div id="lt-vragen-wrap"></div>
+    <div style="text-align:center;margin-top:16px">
+      <button id="lt-submit-btn" class="btn btn-primary" onclick="leestestVerzend()" style="display:none;padding:14px 28px;font-size:1rem">📊 Bekijk resultaat</button>
+    </div>
+  </div>
+
+  <!-- Resultaat -->
+  <div id="lt-view-resultaat" style="display:none;text-align:center;padding:24px 0">
+    <div style="font-size:3rem;margin-bottom:12px">📊</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:340px;margin:0 auto 20px">
+      <div class="card" style="text-align:center">
+        <div style="font-size:2rem;font-weight:800;color:var(--accent)" id="lt-res-wpm">—</div>
+        <div style="font-size:.75rem;color:var(--muted)">WPM</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:1.3rem;font-weight:800;color:var(--green)" id="lt-res-score">—</div>
+        <div style="font-size:.75rem;color:var(--muted)">Begrip</div>
+      </div>
+    </div>
+    <div style="font-size:1rem;font-weight:600;margin-bottom:20px" id="lt-res-feedback"></div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="leestestInit()">🔄 Nieuwe leestest</button>
+      <button class="btn btn-ghost" onclick="sidebarNav('stats')">📊 Statistieken bekijken</button>
     </div>
   </div>
 </div>
@@ -2008,6 +2268,7 @@ function sidebarNav(id) {
   if (id === 'oog') setTimeout(resizeCanvas, 50);
   if (id === 'begintest') begintestInit();
   if (id === 'avontuur') avLaad();
+  if (id === 'leestest' && typeof leestestInit === 'function') leestestInit();
 
   sluitSidebar();
 }
@@ -2500,33 +2761,164 @@ function periStop() { clearTimeout(periTimer); periTimer = null; }
 
 // ─── PAPIER TRAINING ─────────────────────────────────────────────────────
 let papierTimer = null;
+let papierTechModus = 'lijn';
+let papierEigenTekst = null; // override van globale tekst
+
+function papierKiesTech(modus) {
+  papierTechModus = modus;
+  // Styling
+  document.querySelectorAll('.papier-tech-btn').forEach(b => {
+    b.style.borderColor = 'var(--border)';
+    b.style.background = 'var(--card)';
+  });
+  const actief = document.getElementById('papier-tab-' + modus);
+  if (actief) { actief.style.borderColor = 'var(--accent)'; actief.style.background = 'rgba(124,111,247,.1)'; }
+  // Uitleg
+  ['lijn','s','diag'].forEach(m => {
+    const el = document.getElementById('papier-uitleg-' + m);
+    if (el) el.style.display = m === modus ? '' : 'none';
+  });
+  papierStop();
+  bouwPapierTekst();
+}
+
+function papierLaadBestand(input) {
+  const f = input.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    papierEigenTekst = e.target.result;
+    bouwPapierTekst();
+    document.getElementById('papier-url-status').innerHTML = '<span style="color:var(--green)">✓ Bestand geladen</span>';
+  };
+  r.readAsText(f);
+}
+
+async function papierLaadUrl() {
+  const url = document.getElementById('papier-url-input').value.trim();
+  if (!url) return;
+  const status = document.getElementById('papier-url-status');
+  const btn = document.getElementById('papier-url-btn');
+  status.textContent = '⏳ Ophalen...'; btn.disabled = true;
+  const proxies = [
+    u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+    u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+  ];
+  let html = null;
+  for (const makeUrl of proxies) {
+    try { const r = await fetch(makeUrl(url), { signal: AbortSignal.timeout(8000) }); if (r.ok) { html = await r.text(); break; } } catch(e){}
+  }
+  if (!html) { status.innerHTML = '<span style="color:var(--pink)">❌ Ophalen mislukt. Kopieer de tekst handmatig.</span>'; btn.disabled = false; return; }
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  doc.querySelectorAll('script,style,nav,header,footer,aside,form,iframe,noscript').forEach(e => e.remove());
+  const container = doc.querySelector('article') || doc.querySelector('main') || doc.body;
+  let tekst = container.textContent.replace(/\s+/g,' ').trim();
+  if (tekst.length < 100) { status.innerHTML = '<span style="color:var(--pink)">❌ Te weinig tekst gevonden.</span>'; btn.disabled = false; return; }
+  papierEigenTekst = tekst;
+  bouwPapierTekst();
+  status.innerHTML = '<span style="color:var(--green)">✓ Tekst geladen!</span>';
+  btn.disabled = false;
+}
 
 function bouwPapierTekst() {
   const pt = document.getElementById('paper-text');
-  const zins = huidigeTekst().match(/[^.!?]+[.!?]*/g) || [];
-  let html = '<div id="paper-guide" style="top:0"></div>';
-  zins.forEach(z => {
-    const wds = woorden(z), chunks = [];
-    for (let i = 0; i < wds.length; i += 3) chunks.push(wds.slice(i,i+3).join(' '));
-    html += `<span class="line">${chunks.map(c => `<span class="chunk-marker">${c}</span>`).join(' ')}</span><br>`;
-  });
+  if (!pt) return;
+  const brontekst = papierEigenTekst || huidigeTekst();
+  const zins = brontekst.match(/[^.!?]+[.!?]*/g) || [];
+  let html = '<div id="paper-guide" style="top:0"></div><div id="paper-guide-diag" style="display:none;position:absolute;top:0;left:50%;width:3px;height:20px;background:rgba(52,211,153,.7);border-radius:2px;transform:translateX(-50%);transition:top .3s linear"></div>';
+
+  if (papierTechModus === 'diag') {
+    // Verticaal scannen: weergave als kolom, MiddenLijn gemarkeerd
+    html += '<div style="position:relative">';
+    zins.forEach(z => {
+      const wds = woorden(z);
+      html += `<p class="line" style="position:relative;margin:6px 0;line-height:1.8">${wds.join(' ')}</p>`;
+    });
+    html += '</div>';
+  } else if (papierTechModus === 's') {
+    // S-patroon: tekst in blokken van 3 regels
+    const regels = [];
+    zins.forEach(z => {
+      const wds = woorden(z), chunks = [];
+      for (let i = 0; i < wds.length; i += 5) chunks.push(wds.slice(i,i+5).join(' '));
+      chunks.forEach(c => regels.push(c));
+    });
+    regels.forEach((r, ri) => {
+      const links = ri % 2 === 0;
+      html += `<span class="line" style="display:block;text-align:${links ? 'left' : 'right'};padding:2px ${links ? '40%' : '0'} 2px ${links ? '0' : '40%'}">${r}</span>`;
+    });
+  } else {
+    // Regelbegeleider (standaard): chunks van 3 woorden
+    zins.forEach(z => {
+      const wds = woorden(z), chunks = [];
+      for (let i = 0; i < wds.length; i += 3) chunks.push(wds.slice(i,i+3).join(' '));
+      html += `<span class="line">${chunks.map(c => `<span class="chunk-marker">${c}</span>`).join(' ')}</span><br>`;
+    });
+  }
   pt.innerHTML = html;
 }
 
 function papierStart() {
   papierStop();
-  const regels = document.querySelectorAll('#paper-text .line');
-  if (!regels.length) return;
-  let i = 0; const ms = +document.getElementById('guide-speed').value * 100;
-  function stap() {
-    if (i >= regels.length) { papierStop(); return; }
-    const top = regels[i].offsetTop + regels[i].offsetHeight/2;
-    document.getElementById('paper-guide').style.top = top+'px';
-    i++; papierTimer = setTimeout(stap, ms);
+  const ms = +document.getElementById('guide-speed').value * 100;
+
+  if (papierTechModus === 'diag') {
+    // Verticale gids beweegt omlaag door midden
+    const regels = document.querySelectorAll('#paper-text .line');
+    if (!regels.length) return;
+    const diagGuide = document.getElementById('paper-guide-diag');
+    if (diagGuide) {
+      diagGuide.style.display = 'block';
+      let i = 0;
+      function stapDiag() {
+        if (i >= regels.length) { papierStop(); return; }
+        const top = regels[i].offsetTop + regels[i].offsetHeight / 2;
+        diagGuide.style.top = top + 'px';
+        i++;
+        papierTimer = setTimeout(stapDiag, ms);
+      }
+      stapDiag();
+    }
+  } else if (papierTechModus === 's') {
+    // S-patroon: gids zwaait heen en weer per regel
+    const regels = document.querySelectorAll('#paper-text .line');
+    if (!regels.length) return;
+    const guide = document.getElementById('paper-guide');
+    let i = 0;
+    function stapS() {
+      if (i >= regels.length) { papierStop(); return; }
+      const top = regels[i].offsetTop + regels[i].offsetHeight / 2;
+      guide.style.top = top + 'px';
+      // Wisselt richting visueel via breedte
+      guide.style.left = (i % 2 === 0) ? '0' : 'auto';
+      guide.style.right = (i % 2 === 0) ? 'auto' : '0';
+      i++;
+      papierTimer = setTimeout(stapS, ms * 1.4);
+    }
+    stapS();
+  } else {
+    // Regelbegeleider: horizontale lijn
+    const regels = document.querySelectorAll('#paper-text .line');
+    if (!regels.length) return;
+    const guide = document.getElementById('paper-guide');
+    guide.style.left = '0'; guide.style.right = 'auto';
+    let i = 0;
+    function stap() {
+      if (i >= regels.length) { papierStop(); return; }
+      const top = regels[i].offsetTop + regels[i].offsetHeight / 2;
+      guide.style.top = top + 'px';
+      i++;
+      papierTimer = setTimeout(stap, ms);
+    }
+    stap();
   }
-  stap();
 }
-function papierStop() { clearTimeout(papierTimer); papierTimer = null; }
+
+function papierStop() {
+  clearTimeout(papierTimer);
+  papierTimer = null;
+  const diagGuide = document.getElementById('paper-guide-diag');
+  if (diagGuide) diagGuide.style.display = 'none';
+}
 
 // ─── TEKST LADEN ─────────────────────────────────────────────────────────
 function laadBestand(input) {
@@ -2545,22 +2937,42 @@ async function laadVanUrl() {
   const btn = document.getElementById('url-ophalen-btn');
   status.textContent = '⏳ Bezig met ophalen...';
   btn.disabled = true;
+
+  // Meerdere CORS proxy fallbacks
+  const proxies = [
+    u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+    u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+  ];
+
+  let html = null, lastError = '';
+  for (const makeUrl of proxies) {
+    try {
+      const resp = await fetch(makeUrl(url), { signal: AbortSignal.timeout(8000) });
+      if (resp.ok) { html = await resp.text(); break; }
+    } catch(e) { lastError = e.message; }
+  }
+
+  if (!html) {
+    status.innerHTML = `<span style="color:var(--pink)">❌ Kon pagina niet ophalen. Probeer de tekst te kopiëren en hieronder te plakken.</span>`;
+    btn.disabled = false; return;
+  }
+
   try {
-    const resp = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(url));
-    if (!resp.ok) throw new Error('Kon pagina niet ophalen');
-    const html = await resp.text();
     const doc = new DOMParser().parseFromString(html, 'text/html');
-    doc.querySelectorAll('script,style,nav,header,footer,aside,form,iframe,noscript').forEach(e => e.remove());
-    const container = doc.querySelector('article') || doc.querySelector('main') || doc.body;
+    doc.querySelectorAll('script,style,nav,header,footer,aside,form,iframe,noscript,[role="banner"],[role="navigation"],[role="complementary"]').forEach(e => e.remove());
+    const container = doc.querySelector('article') || doc.querySelector('[class*="article"]') || doc.querySelector('[class*="content"]') || doc.querySelector('main') || doc.body;
     let tekst = container.textContent.replace(/\s+/g, ' ').trim();
-    if (tekst.length < 50) throw new Error('Te weinig tekst gevonden op deze pagina');
+    // Verwijder te korte regels (navigatie-resten, etc.)
+    tekst = tekst.split('\n').filter(r => r.trim().length > 20).join(' ').replace(/\s+/g,' ').trim();
+    if (tekst.length < 200) throw new Error('Te weinig bruikbare tekst gevonden. Kopieer de tekst en plak hem hieronder.');
     const titel = doc.querySelector('title')?.textContent?.trim() || new URL(url).hostname;
     document.getElementById('custom-text').value = tekst;
     document.getElementById('tekst-naam').value = titel;
     telWoorden();
-    status.innerHTML = '<span style="color:var(--green)">✓ Tekst opgehaald! Klik "Opslaan" om toe te voegen.</span>';
+    status.innerHTML = '<span style="color:var(--green)">✓ Tekst opgehaald! Controleer de tekst en klik "Opslaan".</span>';
   } catch(e) {
-    status.innerHTML = '<span style="color:var(--pink)">❌ ' + e.message + '</span>';
+    status.innerHTML = `<span style="color:var(--pink)">❌ ${e.message}</span>`;
   }
   btn.disabled = false;
 }
@@ -3540,19 +3952,47 @@ function oogKiesNiveau(n) {
   document.getElementById('oog-timer-num').textContent = '—';
 }
 
+function _oogUpdateRing(resterend, totaal) {
+  const ring = document.getElementById('oog-ring-svg');
+  const arc  = document.getElementById('oog-ring-arc');
+  const txt  = document.getElementById('oog-ring-txt');
+  const num  = document.getElementById('oog-timer-num');
+  const secLbl = document.getElementById('oog-sec-lbl');
+  const OMTREK = 188.5; // 2π × r(30)
+  if (!ring) return;
+  if (totaal > 0) {
+    ring.style.display = 'block';
+    num.style.display = 'none';
+    secLbl.style.display = 'none';
+    const fractie = Math.max(0, resterend / totaal);
+    arc.style.strokeDashoffset = OMTREK * (1 - fractie);
+    // Kleur: groen → geel → rood
+    arc.style.stroke = fractie > 0.5 ? 'var(--accent)' : fractie > 0.2 ? '#f59e0b' : '#ef4444';
+    const min = Math.floor(resterend / 60);
+    const sec = resterend % 60;
+    txt.textContent = min > 0 ? `${min}:${String(sec).padStart(2,'0')}` : String(resterend);
+  } else {
+    ring.style.display = 'none';
+    num.style.display = 'block';
+    secLbl.style.display = 'block';
+    num.textContent = '—';
+  }
+}
+
 function oogStartMetTimer() {
   clearInterval(oogTimerInterval);
   const niv = OOG_NIVEAUS[oogNiveauActief];
   oogTimerResterend = niv.duur;
   document.getElementById('oog-timer-lbl').textContent = `${niv.naam} · bezig…`;
+  _oogUpdateRing(oogTimerResterend, niv.duur);
 
   function tikTimer() {
-    document.getElementById('oog-timer-num').textContent = oogTimerResterend;
+    _oogUpdateRing(oogTimerResterend, niv.duur);
     if (oogTimerResterend <= 0) {
       clearInterval(oogTimerInterval);
       oogStop();
       document.getElementById('oog-timer-lbl').textContent = '✅ Sessie voltooid! Goed gedaan!';
-      document.getElementById('oog-timer-num').textContent = '0';
+      _oogUpdateRing(0, 0);
       if (kidsModus) showConfetti(50, 30);
       voltooiDaguitdaging('oog');
       return;
@@ -3569,7 +4009,7 @@ const _oogStopOrigineel = oogStop;
 oogStop = function() {
   clearInterval(oogTimerInterval);
   _oogStopOrigineel();
-  document.getElementById('oog-timer-num').textContent = '—';
+  _oogUpdateRing(0, 0);
   document.getElementById('oog-timer-lbl').textContent = 'Druk Start om te beginnen';
 };
 
@@ -3931,13 +4371,110 @@ const NIVEAUS = [
 const GOED_MSGS  = ['Super! 🌟','Top! 🎉','Geweldig! ⭐','Ja! 🏆','Knap! 🦁','Bravo! 🌈','Precies! 🎈','Fantastisch! 🎊','Uitstekend! 💫','Held! 🦸'];
 const FOUT_MSGS  = ['Bijna! Probeer nog eens 💪','Oeps! Kijk goed 👀','Niet erg, ga door! 🌻','Probeer het nog eens! 🔍','Volgende keer beter! 🍀'];
 
-// Letter-verwarring patronen voor Letter Jacht
+// Letter-verwarring patronen voor Letter Jacht (fallback voor WOORDENLIJST)
 const LETTER_VERWISSELING = [
   ['b','d'],['d','b'],['p','q'],['q','p'],['b','p'],['p','b'],['d','q'],['q','d'],
   ['m','n'],['n','m'],['u','v'],['v','u'],['ie','ei'],['ei','ie'],['au','ou'],['ou','au'],
   ['f','v'],['v','f'],['s','z'],['z','s'],['g','ch'],['ch','g'],['dt','d'],['d','dt'],
   ['oo','o'],['o','oo'],['ee','e'],['e','ee'],['aa','a'],['a','aa']
 ];
+
+// ── LETTERJACHT WOORDENLIJST ──────────────────────────────────────────────
+// Eenvoudige, kindvriendelijke woorden. fouteIdx = positie van de foute letter.
+// foutLen = lengte van de verwisseling (default 1). Niveau 0-3.
+const JACHT_WOORDEN = [
+  // ── Niveau 0: supersimpele 3-5 letter woorden ──
+  // b ↔ d (meest voorkomende dyslexie-verwarring)
+  {woord:'auto',  fout:'audo',  fouteIdx:2, foutLen:1, niveau:0}, // t→d (uw eigen voorbeeld!)
+  {woord:'boot',  fout:'doot',  fouteIdx:0, foutLen:1, niveau:0}, // b→d
+  {woord:'bal',   fout:'dal',   fouteIdx:0, foutLen:1, niveau:0}, // b→d
+  {woord:'bus',   fout:'dus',   fouteIdx:0, foutLen:1, niveau:0}, // b→d
+  {woord:'bol',   fout:'dol',   fouteIdx:0, foutLen:1, niveau:0}, // b→d
+  {woord:'beer',  fout:'deer',  fouteIdx:0, foutLen:1, niveau:0}, // b→d
+  {woord:'bed',   fout:'beb',   fouteIdx:2, foutLen:1, niveau:0}, // d→b (einde)
+  {woord:'bord',  fout:'dord',  fouteIdx:0, foutLen:1, niveau:0}, // b→d
+  {woord:'dag',   fout:'bag',   fouteIdx:0, foutLen:1, niveau:0}, // d→b
+  {woord:'dak',   fout:'bak',   fouteIdx:0, foutLen:1, niveau:0}, // d→b
+  {woord:'deur',  fout:'beur',  fouteIdx:0, foutLen:1, niveau:0}, // d→b
+  {woord:'dom',   fout:'bom',   fouteIdx:0, foutLen:1, niveau:0}, // d→b
+  // p ↔ b
+  {woord:'pen',   fout:'ben',   fouteIdx:0, foutLen:1, niveau:0}, // p→b
+  {woord:'pot',   fout:'bot',   fouteIdx:0, foutLen:1, niveau:0}, // p→b
+  {woord:'put',   fout:'but',   fouteIdx:0, foutLen:1, niveau:0}, // p→b
+  {woord:'pas',   fout:'bas',   fouteIdx:0, foutLen:1, niveau:0}, // p→b
+  // v ↔ f
+  {woord:'vis',   fout:'fis',   fouteIdx:0, foutLen:1, niveau:0}, // v→f
+  {woord:'vier',  fout:'fier',  fouteIdx:0, foutLen:1, niveau:0}, // v→f
+  // z ↔ s
+  {woord:'zon',   fout:'son',   fouteIdx:0, foutLen:1, niveau:0}, // z→s
+  {woord:'zee',   fout:'see',   fouteIdx:0, foutLen:1, niveau:0}, // z→s
+  {woord:'zes',   fout:'ses',   fouteIdx:0, foutLen:1, niveau:0}, // z→s
+  // t ↔ d
+  {woord:'kat',   fout:'kad',   fouteIdx:2, foutLen:1, niveau:0}, // t→d
+  {woord:'mat',   fout:'mad',   fouteIdx:2, foutLen:1, niveau:0}, // t→d
+  {woord:'net',   fout:'ned',   fouteIdx:2, foutLen:1, niveau:0}, // t→d
+
+  // ── Niveau 1: 4-6 letters, bekende woorden ──
+  // ie ↔ ei (beide tekens veranderen, fouteIdx=start van ie/ei)
+  {woord:'fiets', fout:'feits', fouteIdx:1, foutLen:2, niveau:1}, // ie→ei
+  {woord:'riem',  fout:'reim',  fouteIdx:1, foutLen:2, niveau:1}, // ie→ei
+  {woord:'dier',  fout:'deir',  fouteIdx:1, foutLen:2, niveau:1}, // ie→ei
+  {woord:'lied',  fout:'leid',  fouteIdx:1, foutLen:2, niveau:1}, // ie→ei
+  // b ↔ d
+  {woord:'brood', fout:'drood', fouteIdx:0, foutLen:1, niveau:1}, // b→d
+  {woord:'bloem', fout:'dloem', fouteIdx:0, foutLen:1, niveau:1}, // b→d
+  {woord:'blauw', fout:'dlauw', fouteIdx:0, foutLen:1, niveau:1}, // b→d
+  {woord:'brief', fout:'drief', fouteIdx:0, foutLen:1, niveau:1}, // b→d
+  {woord:'doos',  fout:'boos',  fouteIdx:0, foutLen:1, niveau:1}, // d→b
+  {woord:'donker',fout:'bonker',fouteIdx:0, foutLen:1, niveau:1}, // d→b
+  // p ↔ b
+  {woord:'appel', fout:'abbel', fouteIdx:1, foutLen:1, niveau:1}, // p→b
+  {woord:'paard', fout:'baard', fouteIdx:0, foutLen:1, niveau:1}, // p→b
+  // v ↔ f
+  {woord:'vogel', fout:'fogel', fouteIdx:0, foutLen:1, niveau:1}, // v→f
+  {woord:'vijf',  fout:'fijf',  fouteIdx:0, foutLen:1, niveau:1}, // v→f
+  {woord:'vlieg', fout:'flieg', fouteIdx:0, foutLen:1, niveau:1}, // v→f
+  // z ↔ s
+  {woord:'zeker', fout:'seker', fouteIdx:0, foutLen:1, niveau:1}, // z→s
+  {woord:'zwem',  fout:'swem',  fouteIdx:0, foutLen:1, niveau:1}, // z→s
+  // ou ↔ au
+  {woord:'goud',  fout:'gaud',  fouteIdx:1, foutLen:2, niveau:1}, // ou→au
+  {woord:'mouw',  fout:'mauw',  fouteIdx:1, foutLen:2, niveau:1}, // ou→au
+  // t ↔ d
+  {woord:'trein', fout:'drein', fouteIdx:0, foutLen:1, niveau:1}, // t→d
+  {woord:'tafel', fout:'dafel', fouteIdx:0, foutLen:1, niveau:1}, // t→d
+
+  // ── Niveau 2: 6-8 letters ──
+  {woord:'school',  fout:'scpool', fouteIdx:2, foutLen:1, niveau:2}, // h→p
+  {woord:'bloemen', fout:'dloemen',fouteIdx:0, foutLen:1, niveau:2}, // b→d
+  {woord:'brieven', fout:'drieven',fouteIdx:0, foutLen:1, niveau:2}, // b→d
+  {woord:'dolfijn', fout:'bolfijn',fouteIdx:0, foutLen:1, niveau:2}, // d→b
+  {woord:'vlinder', fout:'flinder',fouteIdx:0, foutLen:1, niveau:2}, // v→f
+  {woord:'vrienden',fout:'vrienden'.replace('v','f'), fouteIdx:0, foutLen:1, niveau:2}, // v→f
+  {woord:'station', fout:'sdation',fouteIdx:1, foutLen:1, niveau:2}, // t→d
+  {woord:'bezorger',fout:'dezorger',fouteIdx:0, foutLen:1, niveau:2}, // b→d
+  {woord:'bibliotheek',fout:'bimliotheek',fouteIdx:2,foutLen:1,niveau:2},// bl→ml... hmm
+  {woord:'stoeien', fout:'sdoeien', fouteIdx:1,foutLen:1, niveau:2},// t→d
+  {woord:'fietspad', fout:'feitspad',fouteIdx:1,foutLen:2, niveau:2},// ie→ei
+  {woord:'diepzee',  fout:'deiepzee',fouteIdx:1,foutLen:2, niveau:2},// ie→ei... complex
+
+  // ── Niveau 3: 8+ letters ──
+  {woord:'bibliotheek',fout:'bibliodeek',fouteIdx:6,foutLen:1,niveau:3},// t→d
+  {woord:'vliegtuig', fout:'fliegtuig', fouteIdx:0,foutLen:1,niveau:3},// v→f
+  {woord:'vriendschap',fout:'frienschap',fouteIdx:0,foutLen:1,niveau:3},// v→f... complex
+  {woord:'avontuur',  fout:'aventuur',  fouteIdx:2,foutLen:1,niveau:3},// o→e
+  {woord:'verjaardag',fout:'ferjaardag',fouteIdx:0,foutLen:1,niveau:3},// v→f
+  {woord:'dinosaurus',fout:'dinosouros',fouteIdx:5,foutLen:1,niveau:3},// a→o
+  {woord:'chocolade', fout:'chocolode', fouteIdx:6,foutLen:1,niveau:3},// a→o
+  {woord:'trampoline',fout:'drampoline',fouteIdx:0,foutLen:1,niveau:3},// t→d
+];
+
+// Haal jacht-pool op per niveau (gefilterd)
+function jachtPool(niv) {
+  return JACHT_WOORDEN.filter(w => w.niveau === niv);
+}
+
+let jachtFouteRange = [0, 0]; // [start, end] inclusief
 
 // ── GELUIDSSYSTEEM (Web Audio API) ──
 let _dyxAudioCtx = null;
@@ -4227,38 +4764,47 @@ function jachtVolgende() {
   const conf = NIVEAUS[niv];
   document.getElementById('game-niveau').textContent = '🔍 ' + conf.naam;
 
-  const poolIdxs = conf.pool;
-  const idx = poolIdxs[Math.floor(Math.random() * poolIdxs.length)];
-  huidigWoord = WOORDENLIJST[idx];
-  jachtOrigineel = huidigWoord.woord;
-
-  // Maak een versie met 1 foute letter
-  let woord = jachtOrigineel.split('');
-  // Probeer een bekende verwisseling toe te passen
-  let verwisseld = false;
-  const verwisselingen = dyxShuffle(LETTER_VERWISSELING);
-  for (const [van, naar] of verwisselingen) {
-    const pos = jachtOrigineel.indexOf(van);
-    if (pos >= 0 && van !== naar) {
-      woord = jachtOrigineel.split('');
-      // Vervang 'van' door 'naar' op positie pos
-      for (let i = 0; i < van.length; i++) woord[pos + i] = naar[i] || '';
-      if (naar.length > van.length) woord.splice(pos + van.length, 0, ...naar.slice(van.length).split(''));
-      if (naar.length < van.length) woord.splice(pos + naar.length, van.length - naar.length);
-      jachtFouteIdx = pos;
-      verwisseld = true;
-      break;
+  // Gebruik de kindvriendelijke JACHT_WOORDEN als er genoeg zijn voor dit niveau
+  const pool = jachtPool(niv);
+  let foutWoord, foutLen = 1;
+  if (pool.length > 0) {
+    const entry = pool[Math.floor(Math.random() * pool.length)];
+    jachtOrigineel = entry.woord;
+    foutWoord = entry.fout;
+    jachtFouteIdx = entry.fouteIdx;
+    foutLen = entry.foutLen || 1;
+  } else {
+    // Fallback: gebruik WOORDENLIJST + LETTER_VERWISSELING
+    const poolIdxs = conf.pool;
+    const idx = poolIdxs[Math.floor(Math.random() * poolIdxs.length)];
+    huidigWoord = WOORDENLIJST[idx];
+    jachtOrigineel = huidigWoord.woord;
+    let woord = jachtOrigineel.split('');
+    let verwisseld = false;
+    const verwisselingen = dyxShuffle(LETTER_VERWISSELING);
+    for (const [van, naar] of verwisselingen) {
+      const pos = jachtOrigineel.indexOf(van);
+      if (pos >= 0) {
+        woord = jachtOrigineel.split('');
+        for (let i = 0; i < van.length; i++) woord[pos + i] = naar[i] || '';
+        if (naar.length > van.length) woord.splice(pos + van.length, 0, ...naar.slice(van.length).split(''));
+        if (naar.length < van.length) woord.splice(pos + naar.length, van.length - naar.length);
+        jachtFouteIdx = pos;
+        foutLen = Math.max(van.length, naar.length);
+        verwisseld = true;
+        break;
+      }
     }
+    if (!verwisseld) {
+      jachtFouteIdx = Math.floor(Math.random() * woord.length);
+      const orig = woord[jachtFouteIdx];
+      const alt = 'abcdefghijklmnopqrstuvwxyz'.replace(orig, '');
+      woord[jachtFouteIdx] = alt[Math.floor(Math.random() * alt.length)];
+    }
+    foutWoord = woord.join('');
   }
-  if (!verwisseld) {
-    // Fallback: random letter veranderen
-    jachtFouteIdx = Math.floor(Math.random() * woord.length);
-    const orig = woord[jachtFouteIdx];
-    const alt = 'abcdefghijklmnopqrstuvwxyz'.replace(orig, '');
-    woord[jachtFouteIdx] = alt[Math.floor(Math.random() * alt.length)];
-  }
+  jachtFouteRange = [jachtFouteIdx, jachtFouteIdx + foutLen - 1];
 
-  const foutWoord = woord.join('');
   gameRonde++;
   updateGameUI();
 
@@ -4266,13 +4812,13 @@ function jachtVolgende() {
   document.getElementById('game-feedback').textContent = '';
   const display = document.getElementById('game-display');
   display.innerHTML = `
-    <div style="font-size:.9rem;color:#8b5e3c;font-family:'Comic Neue',cursive;font-weight:700;margin-bottom:8px">Welke letter klopt NIET? Klik erop! 🔍</div>
-    <div class="game-word" style="letter-spacing:.15em">${
+    <div style="font-size:.9rem;color:#8b5e3c;font-family:'Comic Neue',cursive;font-weight:700;margin-bottom:8px">Welke letter klopt NIET? Tik erop! 🔍</div>
+    <div class="game-word" style="letter-spacing:.18em">${
       foutWoord.split('').map((c, i) =>
         `<span class="dyx-letter-btn" onclick="jachtKies(${i})">${c}</span>`
       ).join('')
     }</div>
-    <div style="font-size:.8rem;color:#a07040;margin-top:8px;font-family:'Comic Neue',cursive">Het juiste woord is: <b style="filter:blur(4px);transition:filter .3s" id="jacht-hint">${jachtOrigineel}</b></div>
+    <div style="font-size:.8rem;color:#a07040;margin-top:10px;font-family:'Comic Neue',cursive">Het juiste woord is: <b style="filter:blur(4px);transition:filter .3s;cursor:pointer" id="jacht-hint" onclick="this.style.filter='none'">${jachtOrigineel}</b> <span style="opacity:.5;font-size:.7rem">(tik om te onthullen)</span></div>
   `;
 }
 
@@ -4280,10 +4826,10 @@ function jachtKies(idx) {
   if (gameWacht) return;
   gameWacht = true;
   const letters = document.querySelectorAll('.dyx-letter-btn');
-  // Check of de fout-index redelijk dicht bij de geklikte is (voor multi-char verwisselingen)
-  const goed = idx === jachtFouteIdx;
+  // Goed als de geklkte positie binnen het foute bereik valt
+  const goed = idx >= jachtFouteRange[0] && idx <= jachtFouteRange[1];
   letters.forEach((l, i) => {
-    if (i === jachtFouteIdx) l.classList.add('dyx-letter-goed');
+    if (i >= jachtFouteRange[0] && i <= jachtFouteRange[1]) l.classList.add('dyx-letter-goed');
     else if (i === idx && !goed) l.classList.add('dyx-letter-fout');
   });
   // Toon het juiste woord
@@ -4299,20 +4845,25 @@ function jachtKies(idx) {
   } else {
     dyxPlaySound('wrong');
     gameStreak = 0;
-    document.getElementById('game-feedback').textContent = FOUT_MSGS[Math.floor(Math.random()*FOUT_MSGS.length)] + ` (letter: ${jachtOrigineel[jachtFouteIdx]})`;
+    document.getElementById('game-feedback').textContent = FOUT_MSGS[Math.floor(Math.random()*FOUT_MSGS.length)] + ` (juist woord: ${jachtOrigineel})`;
   }
   updateGameUI();
   gameLoop = setTimeout(() => { gameWacht = false; jachtVolgende(); }, 1500);
 }
 
-// ═══ MODUS 3: SNELRONDE ═══
+// ═══ MODUS 3: SNELRONDE — "Goed of Fout?" spellingcheck ═══
+// Totaal anders dan Flits&Kies: een woord verschijnt, goed of fout gespeld.
+// Speler tikt snel GOED of FOUT. 60 seconden, zo veel mogelijk woorden.
+let snelrondeIsGoed = true; // is het getoonde woord correct gespeld?
+
 function snelrondeStart() {
-  const DUUR = 60; // seconden
+  const DUUR = 60;
   dyxTimerStart = Date.now();
   document.getElementById('dyx-timer-wrap').style.display = 'block';
   document.getElementById('dyx-timer-bar').style.width = '100%';
   document.getElementById('dyx-timer-text').textContent = DUUR + 's';
-  document.getElementById('game-niveau').textContent = '🏎️ Snelronde';
+  document.getElementById('game-niveau').textContent = '⚡ Goed of Fout?';
+  document.getElementById('antwoord-grid').innerHTML = '';
 
   dyxTimerInterval = setInterval(() => {
     const elapsed = (Date.now() - dyxTimerStart) / 1000;
@@ -4328,7 +4879,90 @@ function snelrondeStart() {
     }
   }, 100);
 
-  volgendeRonde(); // hergebruik flits-logica maar sneller
+  snelrondeVolgende();
+}
+
+function snelrondeVolgende() {
+  if (gameWacht) return;
+  const niv = +document.getElementById('game-niveau-select').value;
+  const conf = NIVEAUS[niv];
+
+  // 50% kans: goed gespeld of fout gespeld
+  snelrondeIsGoed = Math.random() > 0.45;
+  let toonWoord;
+
+  if (snelrondeIsGoed) {
+    // Toon correct woord (uit WOORDENLIJST of JACHT_WOORDEN)
+    const jPool = jachtPool(niv);
+    if (jPool.length > 0) {
+      const entry = jPool[Math.floor(Math.random() * jPool.length)];
+      huidigWoord = { woord: entry.woord };
+      toonWoord = entry.woord;
+    } else {
+      const poolIdxs = conf.pool;
+      const idx = poolIdxs[Math.floor(Math.random() * poolIdxs.length)];
+      huidigWoord = WOORDENLIJST[idx];
+      toonWoord = huidigWoord.woord;
+    }
+  } else {
+    // Toon fout gespeld woord
+    const jPool = jachtPool(niv);
+    if (jPool.length > 0) {
+      const entry = jPool[Math.floor(Math.random() * jPool.length)];
+      huidigWoord = { woord: entry.woord };
+      toonWoord = entry.fout;
+    } else {
+      const poolIdxs = conf.pool;
+      const idx = poolIdxs[Math.floor(Math.random() * poolIdxs.length)];
+      huidigWoord = WOORDENLIJST[idx];
+      const fouten = huidigWoord.fout;
+      toonWoord = fouten[Math.floor(Math.random() * fouten.length)];
+    }
+  }
+
+  gameRonde++;
+  updateGameUI();
+
+  document.getElementById('game-feedback').textContent = '';
+  document.getElementById('game-display').innerHTML = `
+    <div style="font-size:.85rem;color:#8b5e3c;font-family:'Comic Neue',cursive;font-weight:700;margin-bottom:8px">Is dit woord goed gespeld? ⚡</div>
+    <div class="game-word" style="font-size:2.4rem;margin:12px 0;letter-spacing:.05em">${toonWoord}</div>
+  `;
+  document.getElementById('antwoord-grid').innerHTML = `
+    <button onclick="snelrondeAntwoord(true)"
+      style="flex:1;padding:18px;font-size:1.3rem;font-weight:800;font-family:'Comic Neue',cursive;
+        background:rgba(52,211,153,.15);border:2px solid rgba(52,211,153,.5);color:#34d399;
+        border-radius:12px;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(52,211,153,.3)'" onmouseout="this.style.background='rgba(52,211,153,.15)'">
+      ✅ GOED
+    </button>
+    <button onclick="snelrondeAntwoord(false)"
+      style="flex:1;padding:18px;font-size:1.3rem;font-weight:800;font-family:'Comic Neue',cursive;
+        background:rgba(240,98,146,.15);border:2px solid rgba(240,98,146,.5);color:#f06292;
+        border-radius:12px;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(240,98,146,.3)'" onmouseout="this.style.background='rgba(240,98,146,.15)'">
+      ❌ FOUT
+    </button>
+  `;
+}
+
+function snelrondeAntwoord(antwoordIsGoed) {
+  if (gameWacht) return;
+  gameWacht = true;
+  document.querySelectorAll('#antwoord-grid button').forEach(b => b.disabled = true);
+  const goed = antwoordIsGoed === snelrondeIsGoed;
+  if (goed) {
+    dyxPlaySound('correct');
+    gameScore += 10 + gameStreak * 2;
+    gameStreak++;
+    if (gameStreak > dyxMaxStreak) dyxMaxStreak = gameStreak;
+    document.getElementById('game-feedback').textContent = GOED_MSGS[Math.floor(Math.random()*GOED_MSGS.length)];
+  } else {
+    dyxPlaySound('wrong');
+    gameStreak = 0;
+    const uitleg = snelrondeIsGoed ? `"${huidigWoord.woord}" is correct geschreven` : `het juiste woord is "${huidigWoord.woord}"`;
+    document.getElementById('game-feedback').textContent = FOUT_MSGS[Math.floor(Math.random()*FOUT_MSGS.length)] + ` (${uitleg})`;
+  }
+  updateGameUI();
+  gameLoop = setTimeout(() => { gameWacht = false; snelrondeVolgende(); }, 700);
 }
 
 function snelrondeEinde() {
@@ -4421,14 +5055,342 @@ setTimeout(() => { dyxToonBadges(); dyxToonHighscores(); }, 100);
 setTimeout(checkBegintestEersteKeer, 300);
 
 // ─── HERLAAD APP STATE NA CLOUD SYNC ──────────────────────
-// Wordt aangeroepen door supabase-sync.js na _laadVanCloud()
 function _herlaadAppState() {
   vulRsvpDropdown();
   laadRsvpTekst();
   avLaad();
-  kidsModus = localStorage.getItem('kids_modus') === '1'; // herlaad na cloud sync
+  kidsModus = localStorage.getItem('kids_modus') === '1';
   kidsToepassen();
   dyxLaad();
+}
+
+// ════════════════════════════════════════════════════════════
+//  🔭  PERIFEER SPEL MET LEVELS
+// ════════════════════════════════════════════════════════════
+
+const PERI_LEVELS = [
+  { naam:'Level 1', breedte:20, interval:2.5,  woorden:10, icon:'🌱', omschrijving:'Zeer dichtbij, trage flash' },
+  { naam:'Level 2', breedte:30, interval:2.0,  woorden:10, icon:'🌿', omschrijving:'Iets breder, 2 seconden' },
+  { naam:'Level 3', breedte:40, interval:1.8,  woorden:12, icon:'🌳', omschrijving:'40% breedte, sneller' },
+  { naam:'Level 4', breedte:50, interval:1.5,  woorden:12, icon:'⚡', omschrijving:'Halverwege de rand' },
+  { naam:'Level 5', breedte:60, interval:1.2,  woorden:15, icon:'🚀', omschrijving:'Ruim blikveld, 1.2s' },
+  { naam:'Level 6', breedte:70, interval:1.0,  woorden:15, icon:'🏆', omschrijving:'70% breedte, 1 seconde' },
+  { naam:'Level 7', breedte:80, interval:0.8,  woorden:15, icon:'💎', omschrijving:'Bijna aan de rand, snel' },
+  { naam:'Level 8', breedte:90, interval:0.6,  woorden:20, icon:'🌟', omschrijving:'Expert: volledige breedte' },
+];
+
+// Woordenlijst voor perifeer spel (makkelijk herkenbaar)
+const PERI_SPEL_WOORDEN = [
+  'kat','hond','bal','zon','boom','vis','maan','deur','raam','bed',
+  'bus','pen','boek','dag','nacht','weg','huis','dak','gras','meer',
+  'kip','aap','wolf','mus','eend','vos','beer','haas','muis','varken',
+  'rood','blauw','groen','geel','wit','zwart','groot','klein','lang','kort',
+  'snel','traag','warm','koud','hard','zacht','licht','donker','hoog','diep',
+  'auto','trein','fiets','boot','vlieg','loop','spring','ren','zwem','lees',
+  'appel','peer','brood','koek','melk','water','soep','rijst','kaas','worst',
+];
+
+let periSpelActief = false;
+let periSpelLevel = 0;
+let periSpelScore = 0;
+let periSpelTotaal = 10;
+let periSpelVraag = 0;
+let periSpelTimer = null;
+let periSpelLinks = '';
+let periSpelRechts = '';
+let periSpelVraagKant = 'links';
+let periSpelHoogsteLevel = parseInt(localStorage.getItem('peri_hoogste_level') || '0');
+
+function periSwitchTab(tab) {
+  document.getElementById('peri-tab-vrij').className = tab === 'vrij' ? 'btn btn-primary' : 'btn btn-ghost';
+  document.getElementById('peri-tab-spel').className = tab === 'spel' ? 'btn btn-primary' : 'btn btn-ghost';
+  document.getElementById('peri-view-vrij').style.display = tab === 'vrij' ? '' : 'none';
+  document.getElementById('peri-view-spel').style.display = tab === 'spel' ? '' : 'none';
+  if (tab === 'spel') periToonLevels();
+}
+
+function periSwitchTab(tab) {
+  document.getElementById('peri-tab-vrij').className = tab === 'vrij' ? 'btn btn-primary' : 'btn btn-ghost';
+  document.getElementById('peri-tab-spel').className = tab === 'spel' ? 'btn btn-primary' : 'btn btn-ghost';
+  document.getElementById('peri-view-vrij').style.display = tab === 'vrij' ? '' : 'none';
+  document.getElementById('peri-view-spel').style.display = tab === 'spel' ? '' : 'none';
+  if (tab === 'spel') { periToonLevels(); }
+}
+
+function periToonLevels() {
+  document.getElementById('peri-level-keuze').style.display = '';
+  document.getElementById('peri-spel-actief').style.display = 'none';
+  document.getElementById('peri-spel-resultaat').style.display = 'none';
+  const grid = document.getElementById('peri-level-grid');
+  grid.innerHTML = PERI_LEVELS.map((lv, i) => {
+    const unlocked = i <= periSpelHoogsteLevel + 1;
+    const voltooid = i < periSpelHoogsteLevel;
+    return `<button onclick="${unlocked ? `periSpelStart(${i})` : ''}"
+      style="padding:14px 10px;border-radius:12px;border:2px solid ${voltooid ? 'var(--green)' : unlocked ? 'var(--border2)' : 'var(--border)'};
+        background:${voltooid ? 'rgba(52,211,153,.1)' : unlocked ? 'var(--card)' : 'rgba(0,0,0,.2)'};
+        color:${unlocked ? 'var(--text)' : 'var(--muted)'};cursor:${unlocked ? 'pointer' : 'default'};
+        text-align:center;width:100%;transition:all .2s" ${unlocked ? `onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='${voltooid ? 'var(--green)' : 'var(--border2)'}'"` : ''}>
+      <div style="font-size:1.5rem">${lv.icon}${voltooid ? ' ✅' : !unlocked ? ' 🔒' : ''}</div>
+      <div style="font-weight:700;font-size:.8rem;margin-top:4px">${lv.naam}</div>
+      <div style="font-size:.7rem;color:var(--muted);margin-top:2px">${lv.omschrijving}</div>
+    </button>`;
+  }).join('');
+}
+
+function periSpelStart(levelIdx) {
+  periSpelLevel = levelIdx;
+  periSpelScore = 0;
+  periSpelVraag = 0;
+  periSpelTotaal = PERI_LEVELS[levelIdx].woorden;
+  periSpelActief = true;
+  document.getElementById('peri-level-keuze').style.display = 'none';
+  document.getElementById('peri-spel-actief').style.display = '';
+  document.getElementById('peri-spel-resultaat').style.display = 'none';
+  document.getElementById('peri-spel-level-naam').textContent = PERI_LEVELS[levelIdx].naam + ' · ' + PERI_LEVELS[levelIdx].omschrijving;
+  periSpelVolgende();
+}
+
+function periSpelVolgende() {
+  if (periSpelVraag >= periSpelTotaal) { periSpelEinde(); return; }
+  const lv = PERI_LEVELS[periSpelLevel];
+  const pos = (lv.breedte / 2);
+
+  // Kies 2 willekeurige woorden
+  const shuffle = [...PERI_SPEL_WOORDEN].sort(() => Math.random() - 0.5);
+  periSpelLinks = shuffle[0];
+  periSpelRechts = shuffle[1];
+  periSpelVraagKant = Math.random() > 0.5 ? 'links' : 'rechts';
+
+  // Toon vraag info
+  document.getElementById('peri-vraag-wrap').style.display = 'none';
+  document.getElementById('peri-antwoord-grid').innerHTML = '';
+  document.getElementById('peri-spel-feedback').textContent = '';
+  document.getElementById('peri-spel-score-display').textContent = `Score: ${periSpelScore} / ${periSpelTotaal}`;
+
+  // Positioneer woorden
+  const linksEl = document.getElementById('peri-links-woord');
+  const rechtsEl = document.getElementById('peri-rechts-woord');
+  linksEl.style.left = (50 - pos) + '%';
+  linksEl.style.transform = 'translateX(-50%)';
+  rechtsEl.style.left = (50 + pos) + '%';
+  rechtsEl.style.transform = 'translateX(-50%)';
+  linksEl.textContent = periSpelLinks;
+  rechtsEl.textContent = periSpelRechts;
+
+  // Flash!
+  linksEl.style.opacity = '1';
+  rechtsEl.style.opacity = '1';
+
+  periSpelTimer = setTimeout(() => {
+    linksEl.style.opacity = '0';
+    rechtsEl.style.opacity = '0';
+    // Stel vraag
+    setTimeout(() => periSpelStelVraag(), 200);
+  }, lv.interval * 1000);
+}
+
+function periSpelStelVraag() {
+  const gevraagd = periSpelVraagKant === 'links' ? periSpelLinks : periSpelRechts;
+  const fout1 = PERI_SPEL_WOORDEN.filter(w => w !== periSpelLinks && w !== periSpelRechts);
+  const fout2 = [...fout1].sort(() => Math.random() - 0.5).slice(0, 3);
+  const opties = dyxShuffle([gevraagd, ...fout2]);
+
+  document.getElementById('peri-vraag-tekst').textContent =
+    `Welk woord stond ${periSpelVraagKant === 'links' ? 'links' : 'rechts'} van het kruis?`;
+  document.getElementById('peri-antwoord-grid').innerHTML = opties.map(w =>
+    `<button onclick="periSpelAntwoord('${w}','${gevraagd}')"
+      style="padding:12px;border-radius:10px;border:1px solid var(--border2);background:var(--card);
+        color:var(--text);cursor:pointer;font-size:.9rem;font-weight:600;transition:all .15s"
+      onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)'">${w}</button>`
+  ).join('');
+  document.getElementById('peri-vraag-wrap').style.display = '';
+  periSpelVraag++;
+}
+
+function periSpelAntwoord(gekozen, juist) {
+  document.querySelectorAll('#peri-antwoord-grid button').forEach(b => b.disabled = true);
+  const goed = gekozen === juist;
+  if (goed) { periSpelScore++; document.getElementById('peri-spel-feedback').innerHTML = '<span style="color:var(--green)">✅ Goed!</span>'; }
+  else { document.getElementById('peri-spel-feedback').innerHTML = `<span style="color:var(--pink)">❌ Het was: <b>${juist}</b></span>`; }
+  document.getElementById('peri-spel-score-display').textContent = `Score: ${periSpelScore} / ${periSpelTotaal}`;
+  periSpelTimer = setTimeout(periSpelVolgende, 1000);
+}
+
+function periSpelEinde() {
+  periSpelActief = false;
+  clearTimeout(periSpelTimer);
+  const pct = periSpelScore / periSpelTotaal;
+  const sterren = pct >= 0.9 ? 5 : pct >= 0.7 ? 4 : pct >= 0.5 ? 3 : pct >= 0.3 ? 2 : 1;
+  const geslaagd = pct >= 0.7;
+  if (geslaagd && periSpelLevel >= periSpelHoogsteLevel) {
+    periSpelHoogsteLevel = Math.min(periSpelLevel + 1, PERI_LEVELS.length - 1);
+    localStorage.setItem('peri_hoogste_level', periSpelHoogsteLevel);
+  }
+  document.getElementById('peri-spel-actief').style.display = 'none';
+  document.getElementById('peri-spel-resultaat').style.display = '';
+  document.getElementById('peri-res-sterren').textContent = '⭐'.repeat(sterren) + '☆'.repeat(5 - sterren);
+  document.getElementById('peri-res-score').textContent = `${periSpelScore} van ${periSpelTotaal} goed`;
+  document.getElementById('peri-res-sub').textContent = geslaagd
+    ? (periSpelLevel < PERI_LEVELS.length - 1 ? `✅ Level voltooid! Level ${periSpelLevel + 2} ontgrendeld 🎉` : '🏆 Je hebt alle levels gehaald! Meesterlezer!')
+    : `Probeer opnieuw — je hebt ${Math.round(pct * 100)}% goed. (70% nodig om door te gaan)`;
+}
+
+function periSpelStop() {
+  clearTimeout(periSpelTimer);
+  periSpelActief = false;
+  periToonLevels();
+  document.getElementById('peri-level-keuze').style.display = '';
+  document.getElementById('peri-spel-actief').style.display = 'none';
+}
+
+function periSpelHerstart() {
+  periSpelStart(periSpelLevel);
+}
+
+// ════════════════════════════════════════════════════════════
+//  📏  LEESTEST MODULE
+// ════════════════════════════════════════════════════════════
+
+const LEESTEST_TEKSTEN = [
+  {
+    titel: 'De kracht van lezen',
+    tekst: `Lezen is een van de meest waardevolle vaardigheden die een mens kan beheersen. Het opent deuren naar kennis, fantasie en begrip van de wereld om ons heen. Toch lezen veel mensen langzamer dan nodig is, waardoor ze minder informatie in minder tijd verwerken. Met gerichte oefening kun je je leessnelheid significant verhogen zonder begripsverlies. De sleutel ligt in het herkennen van woordgroepen in plaats van losse woorden, het vermijden van stille meelezing en het trainen van je oogsprongen. Beginners lezen gemiddeld tweehonderd woorden per minuut. Getrainde lezers halen vier- tot vijfhonderd woorden per minuut. Toppers zoals presidenten en advocaten bereiken soms duizend woorden per minuut of meer. Het verschil zit niet in intelligentie, maar in techniek en oefening. Begin vandaag met dagelijkse leesoefeningen van tien minuten en je merkt al na twee weken verschil.`,
+    vragen: [
+      { v: 'Hoeveel woorden per minuut lezen beginners gemiddeld?', opties: ['100 WPM', '200 WPM', '400 WPM', '1000 WPM'], correct: 1 },
+      { v: 'Wat is de sleutel tot sneller lezen volgens de tekst?', opties: ['Harder je best doen', 'Woorden één voor één lezen', 'Woordgroepen herkennen en oogsprongen trainen', 'Harder praten'], correct: 2 },
+      { v: 'Hoeveel minuten oefening per dag noem de tekst als startpunt?', opties: ['5 minuten', '10 minuten', '30 minuten', '1 uur'], correct: 1 },
+      { v: 'Wat maakt het verschil tussen een langzame en snelle lezer?', opties: ['Intelligentie', 'Techniek en oefening', 'Leeftijd', 'Soort boek'], correct: 1 },
+    ]
+  },
+  {
+    titel: 'De wetenschap van slaap',
+    tekst: `Slaap is een van de meest onderschatte pijlers van onze gezondheid. Terwijl je slaapt, verwerkt je brein de ervaringen van de dag, consolideert het herinneringen en herstelt het lichaam op cellulair niveau. Een volwassene heeft gemiddeld zeven tot negen uur slaap per nacht nodig. Te weinig slaap verslechtert concentratie, geheugen en besluitvorming merkbaar. Chronisch slaaptekort verhoogt het risico op hart- en vaatziekten, diabetes en depressie. Toch slapen miljoenen mensen structureel te weinig vanwege werk, sociale verplichtingen of schermgebruik 's avonds. Het blauwe licht van smartphones en tablets onderdrukt de aanmaak van melatonine, het slaaphormoon. Experts adviseren schermen minstens een uur voor het slapengaan uit te zetten. Een vaste bedtijd, donkere slaapkamer en matige kamertemperatuur verbeteren de slaapkwaliteit aanzienlijk. Goede slaaphygiëne is geen luxe, maar een noodzaak voor optimale prestaties overdag.`,
+    vragen: [
+      { v: 'Hoeveel uur slaap heeft een volwassene gemiddeld nodig?', opties: ['5-6 uur', '7-9 uur', '9-11 uur', '4-5 uur'], correct: 1 },
+      { v: 'Wat doet blauw licht van schermen?', opties: ['Helpt je beter slapen', 'Onderdrukt melatonine aanmaak', 'Verhoogt je concentratie', 'Heeft geen effect'], correct: 1 },
+      { v: 'Hoe lang voor het slapengaan adviseren experts schermen uit te zetten?', opties: ['15 minuten', '30 minuten', '1 uur', '2 uur'], correct: 2 },
+      { v: 'Wat consolideer je brein tijdens slaap?', opties: ['Spieren', 'Herinneringen', 'Vitaminen', 'Energie'], correct: 1 },
+    ]
+  },
+  {
+    titel: 'Klimaatverandering in vogelvlucht',
+    tekst: `De aarde warmt op. Dat is geen mening maar een wetenschappelijk vastgesteld feit, onderschreven door meer dan negentig-zeven procent van klimaatwetenschappers wereldwijd. De gemiddelde temperatuur op aarde is de afgelopen honderd jaar met ongeveer één komma twee graden Celsius gestegen. De oorzaak is grotendeels de uitstoot van broeikasgassen door menselijke activiteiten: verbranding van fossiele brandstoffen, ontbossing en industriële processen. De gevolgen zijn zichtbaar en voelbaar. IJskappen smelten, zeespiegels stijgen, extreme weersomstandigheden worden vaker en heviger. Hittegolven, overstromingen, droogte en bosbranden nemen toe in frequentie en intensiteit. Om de opwarming te beperken tot anderhalve graad moeten de mondiale emissies voor het jaar tweeduizend dertig gehalveerd worden en voor tweeduizend vijftig netto nul bereiken. Dit vereist een ongekende transformatie van onze energiesystemen, mobiliteit, landbouw en consumptiepatronen.`,
+    vragen: [
+      { v: 'Met hoeveel graden is de aarde opgewarmd de afgelopen 100 jaar?', opties: ['0,5 graden', '1,2 graden', '2,0 graden', '3,5 graden'], correct: 1 },
+      { v: 'Welk percentage van klimaatwetenschappers onderschrijft klimaatverandering?', opties: ['60%', '75%', '97%', '100%'], correct: 2 },
+      { v: 'Wanneer moeten emissies netto nul zijn volgens de tekst?', opties: ['2030', '2040', '2050', '2100'], correct: 2 },
+      { v: 'Wat is de hoofdoorzaak van klimaatverandering?', opties: ['Vulkaanuitbarstingen', 'Menselijke broeikasgassen', 'Zonneactiviteit', 'Oceaanstromingen'], correct: 1 },
+    ]
+  },
+];
+
+let leestestActief = false;
+let leestestStart = 0;
+let leestestTekstIdx = 0;
+let leestestAntwoorden = [];
+let leestestScore = 0;
+
+function leestestInit() {
+  leestestActief = false;
+  leestestTekstIdx = Math.floor(Math.random() * LEESTEST_TEKSTEN.length);
+  const tekst = LEESTEST_TEKSTEN[leestestTekstIdx];
+  const wc = woorden(tekst.tekst).length;
+
+  document.getElementById('lt-tekst-naam').textContent = tekst.titel;
+  document.getElementById('lt-tekst-wc').textContent = `${wc} woorden`;
+  document.getElementById('lt-view-intro').style.display = '';
+  document.getElementById('lt-view-lezen').style.display = 'none';
+  document.getElementById('lt-view-vragen').style.display = 'none';
+  document.getElementById('lt-view-resultaat').style.display = 'none';
+}
+
+function leestestBegin() {
+  const tekst = LEESTEST_TEKSTEN[leestestTekstIdx];
+  document.getElementById('lt-tekst-inhoud').textContent = tekst.tekst;
+  document.getElementById('lt-view-intro').style.display = 'none';
+  document.getElementById('lt-view-lezen').style.display = '';
+  leestestStart = Date.now();
+  leestestActief = true;
+}
+
+function leestestKlaar() {
+  if (!leestestActief) return;
+  const elapsed = (Date.now() - leestestStart) / 1000 / 60; // minuten
+  const tekst = LEESTEST_TEKSTEN[leestestTekstIdx];
+  const wc = woorden(tekst.tekst).length;
+  const wpm = Math.round(wc / elapsed);
+
+  leestestActief = false;
+  leestestAntwoorden = [];
+
+  // Sla WPM op
+  slaaSessieOp(wpm, wc);
+
+  document.getElementById('lt-wpm-result').textContent = wpm;
+  document.getElementById('lt-view-lezen').style.display = 'none';
+
+  // Bouw vragen
+  const vragen = tekst.vragen;
+  let html = `<div style="font-size:.9rem;color:var(--muted);margin-bottom:16px">Beantwoord de vragen over de tekst die je net las:</div>`;
+  vragen.forEach((q, qi) => {
+    html += `<div style="margin-bottom:20px">
+      <div style="font-size:.9rem;font-weight:600;margin-bottom:8px">${qi + 1}. ${q.v}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        ${q.opties.map((opt, oi) =>
+          `<button onclick="leestestKiesAntwoord(${qi},${oi},this)"
+            data-idx="${qi}" data-opt="${oi}"
+            style="padding:10px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--card);
+              color:var(--text);cursor:pointer;font-size:.82rem;text-align:left;transition:all .15s"
+            onmouseover="this.style.borderColor='var(--accent)'" onmouseout="if(!this.classList.contains('gekozen'))this.style.borderColor='var(--border2)'">${opt}</button>`
+        ).join('')}
+      </div>
+    </div>`;
+  });
+  document.getElementById('lt-vragen-wrap').innerHTML = html;
+  document.getElementById('lt-view-vragen').style.display = '';
+}
+
+function leestestKiesAntwoord(vraagIdx, optieIdx, btn) {
+  // Deactiveer andere knoppen voor dezelfde vraag
+  document.querySelectorAll(`[data-idx="${vraagIdx}"]`).forEach(b => {
+    b.classList.remove('gekozen');
+    b.style.borderColor = 'var(--border2)';
+    b.style.background = 'var(--card)';
+  });
+  btn.classList.add('gekozen');
+  btn.style.borderColor = 'var(--accent)';
+  btn.style.background = 'rgba(124,111,247,.15)';
+  leestestAntwoorden[vraagIdx] = optieIdx;
+
+  // Check of alle vragen beantwoord zijn
+  const totaal = LEESTEST_TEKSTEN[leestestTekstIdx].vragen.length;
+  if (leestestAntwoorden.filter(a => a !== undefined).length === totaal) {
+    document.getElementById('lt-submit-btn').style.display = 'block';
+  }
+}
+
+function leestestVerzend() {
+  const tekst = LEESTEST_TEKSTEN[leestestTekstIdx];
+  const vragen = tekst.vragen;
+  let score = 0;
+  vragen.forEach((q, qi) => {
+    if (leestestAntwoorden[qi] === q.correct) score++;
+  });
+  leestestScore = score;
+
+  const wpm = parseInt(document.getElementById('lt-wpm-result').textContent) || 0;
+  const pct = Math.round((score / vragen.length) * 100);
+
+  document.getElementById('lt-res-wpm').textContent = wpm;
+  document.getElementById('lt-res-score').textContent = `${score} / ${vragen.length} (${pct}%)`;
+  const feedback = score === vragen.length ? '🏆 Perfect! Uitstekend begrip!' :
+    score >= vragen.length * 0.75 ? '✅ Goed begrip!' :
+    score >= vragen.length * 0.5 ? '📖 Redelijk begrip — oefen meer!' :
+    '💪 Nog wat moeilijk — lees de tekst nog eens rustig door.';
+  document.getElementById('lt-res-feedback').textContent = feedback;
+
+  document.getElementById('lt-view-vragen').style.display = 'none';
+  document.getElementById('lt-view-resultaat').style.display = '';
 }
 
 </script>
