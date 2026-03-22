@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "static-server",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3000", "/Users/sebastiaanvandermeer/Downloads/FLOW-READ-main-2"],
-      "port": 3000
+      "name": "snellees",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8899"],
+      "port": 8899
     }
   ]
 }
