@@ -1228,7 +1228,7 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 
   <div class="sidebar-section"><div class="sidebar-section-title">Training</div></div>
   <nav id="sidebar-nav-training">
-    <button class="active" onclick="sidebarNav('rsvp')" data-screen="rsvp"><span class="icon">⚡</span> RSVP</button>
+    <button onclick="sidebarNav('rsvp')" data-screen="rsvp"><span class="icon">⚡</span> RSVP</button>
     <button onclick="sidebarNav('chunk')" data-screen="chunk"><span class="icon">📖</span> Chunks</button>
     <button onclick="sidebarNav('oog')" data-screen="oog"><span class="icon">👁</span> Oogbeweging</button>
     <button onclick="sidebarNav('perifeer')" data-screen="perifeer"><span class="icon">🔭</span> Perifeer</button>
@@ -5107,14 +5107,6 @@ function periSwitchTab(tab) {
   document.getElementById('peri-view-vrij').style.display = tab === 'vrij' ? '' : 'none';
   document.getElementById('peri-view-spel').style.display = tab === 'spel' ? '' : 'none';
   if (tab === 'spel') periToonLevels();
-}
-
-function periSwitchTab(tab) {
-  document.getElementById('peri-tab-vrij').className = tab === 'vrij' ? 'btn btn-primary' : 'btn btn-ghost';
-  document.getElementById('peri-tab-spel').className = tab === 'spel' ? 'btn btn-primary' : 'btn btn-ghost';
-  document.getElementById('peri-view-vrij').style.display = tab === 'vrij' ? '' : 'none';
-  document.getElementById('peri-view-spel').style.display = tab === 'spel' ? '' : 'none';
-  if (tab === 'spel') { periToonLevels(); }
 }
 
 function periToonLevels() {
