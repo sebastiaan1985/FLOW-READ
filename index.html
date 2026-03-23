@@ -1377,6 +1377,109 @@ main { -webkit-overflow-scrolling: touch; }
 .doel-bar  { height:16px;border-radius:999px;background:var(--border2);overflow:hidden;margin:10px 0; }
 .doel-fill { height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#34d399);transition:width .6s ease; }
 .doel-input { padding:8px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--card2);color:var(--text);font-size:1rem;width:90px;text-align:center; }
+
+/* ── ONBOARDING WIZARD ─────────────────────────────────────── */
+#screen-onboarding {
+  position: fixed; inset: 0; z-index: 500;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.ob-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 28px;
+  max-width: 440px; width: 100%;
+  box-shadow: 0 8px 40px rgba(0,0,0,.4);
+}
+.ob-stap { display: none; }
+.ob-stap.actief { display: block; }
+.ob-stap-titel {
+  font-size: 1.5rem; font-weight: 800;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.ob-stap-sub { font-size: .9rem; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+.ob-naam-input {
+  width: 100%; padding: 12px 16px; border-radius: 10px;
+  border: 1.5px solid var(--border); background: var(--card2);
+  color: var(--text); font-size: 1.1rem; font-family: Inter, sans-serif;
+  margin-bottom: 20px; box-sizing: border-box;
+  transition: border-color .2s;
+}
+.ob-naam-input:focus { outline: none; border-color: var(--accent); }
+.ob-avatar-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 24px;
+}
+.ob-avatar {
+  font-size: 1.6rem; padding: 8px; border-radius: 10px;
+  border: 2px solid transparent; background: var(--card2);
+  cursor: pointer; transition: all .15s; text-align: center;
+}
+.ob-avatar:hover { background: var(--card); border-color: var(--border); }
+.ob-avatar.gekozen { border-color: var(--accent); background: rgba(124,111,247,.15); }
+.ob-doel-opties {
+  display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;
+}
+.ob-doel-optie {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+  border-radius: 12px; border: 1.5px solid var(--border);
+  background: var(--card2); cursor: pointer; transition: all .15s; text-align: left;
+}
+.ob-doel-optie:hover { border-color: var(--border2); background: var(--card); }
+.ob-doel-optie.gekozen { border-color: var(--accent); background: rgba(124,111,247,.12); }
+.ob-doel-icon { font-size: 1.6rem; flex-shrink: 0; }
+.ob-doel-tekst b { display: block; font-size: .95rem; color: var(--text); }
+.ob-doel-tekst span { font-size: .8rem; color: var(--muted); }
+.ob-voortgang {
+  display: flex; justify-content: center; gap: 6px; margin-bottom: 28px;
+}
+.ob-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border); transition: background .2s;
+}
+.ob-dot.actief { background: var(--accent); }
+.ob-btn-rij { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* ── VANDAAG PANEL (home scherm) ───────────────────────────── */
+.vandaag-panel {
+  background: linear-gradient(135deg, rgba(124,111,247,.12), rgba(76,201,240,.08));
+  border: 1px solid rgba(124,111,247,.25);
+  border-radius: 16px; padding: 20px 20px 16px;
+  margin-bottom: 20px;
+}
+.vandaag-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 14px;
+}
+.vandaag-begroeting {
+  font-size: 1.05rem; font-weight: 700; color: var(--text);
+}
+.vandaag-sub { font-size: .8rem; color: var(--muted); margin-top: 2px; }
+.streak-badge {
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(255,150,0,.15); border: 1px solid rgba(255,150,0,.3);
+  border-radius: 20px; padding: 5px 11px;
+  font-size: .85rem; font-weight: 700; color: #ffaa33;
+  flex-shrink: 0;
+}
+.streak-badge.nul { background: rgba(255,255,255,.05); border-color: var(--border); color: var(--muted); }
+.vandaag-uitdaging {
+  background: var(--card2); border-radius: 12px; padding: 14px;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer; border: 1px solid var(--border);
+  transition: border-color .2s;
+}
+.vandaag-uitdaging:hover { border-color: var(--accent); }
+.vandaag-uitdaging.klaar { opacity: .65; cursor: default; }
+.vandaag-uitd-icon { font-size: 1.6rem; flex-shrink: 0; }
+.vandaag-uitd-info { flex: 1; }
+.vandaag-uitd-label { font-size: .7rem; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: .5px; }
+.vandaag-uitd-naam { font-size: .92rem; font-weight: 600; color: var(--text); margin: 2px 0; }
+.vandaag-uitd-sub { font-size: .78rem; color: var(--muted); }
+.vandaag-uitd-status { font-size: 1.2rem; flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -1586,13 +1689,110 @@ main { -webkit-overflow-scrolling: touch; }
 </div>
 
 <!-- ── START / HOME ───────────────────────────────────────── -->
+<!-- ── ONBOARDING WIZARD ──────────────────────────────────── -->
+<div id="screen-onboarding" class="screen" style="display:none">
+  <div class="ob-card">
+    <!-- Voortgangsdots -->
+    <div class="ob-voortgang">
+      <div class="ob-dot actief" id="ob-dot-0"></div>
+      <div class="ob-dot" id="ob-dot-1"></div>
+      <div class="ob-dot" id="ob-dot-2"></div>
+    </div>
+
+    <!-- Stap 1: Naam + avatar -->
+    <div class="ob-stap actief" id="ob-stap-0">
+      <div style="font-size:2.5rem;margin-bottom:12px">👋</div>
+      <div class="ob-stap-titel">Welkom bij SnelLees!</div>
+      <div class="ob-stap-sub">Leer sneller lezen in 4 weken. Hoe mogen we je noemen?</div>
+      <input class="ob-naam-input" id="ob-naam" type="text" placeholder="Jouw naam…" maxlength="20" onkeydown="if(event.key==='Enter')obVolgende()">
+      <div class="ob-stap-sub" style="margin-bottom:10px">Kies een avatar:</div>
+      <div class="ob-avatar-grid" id="ob-avatar-grid">
+        <div class="ob-avatar gekozen" onclick="obKiesAvatar(this,'🦊')">🦊</div>
+        <div class="ob-avatar" onclick="obKiesAvatar(this,'🐺')">🐺</div>
+        <div class="ob-avatar" onclick="obKiesAvatar(this,'🦁')">🦁</div>
+        <div class="ob-avatar" onclick="obKiesAvatar(this,'🐉')">🐉</div>
+        <div class="ob-avatar" onclick="obKiesAvatar(this,'🦅')">🦅</div>
+        <div class="ob-avatar" onclick="obKiesAvatar(this,'🧙')">🧙</div>
+        <div class="ob-avatar" onclick="obKiesAvatar(this,'🚀')">🚀</div>
+        <div class="ob-avatar" onclick="obKiesAvatar(this,'⚡')">⚡</div>
+        <div class="ob-avatar" onclick="obKiesAvatar(this,'🌟')">🌟</div>
+        <div class="ob-avatar" onclick="obKiesAvatar(this,'🎯')">🎯</div>
+      </div>
+      <div class="ob-btn-rij">
+        <button class="btn btn-primary" onclick="obVolgende()" style="padding:10px 24px">Volgende →</button>
+      </div>
+    </div>
+
+    <!-- Stap 2: Leesdoel -->
+    <div class="ob-stap" id="ob-stap-1">
+      <div style="font-size:2.5rem;margin-bottom:12px">🎯</div>
+      <div class="ob-stap-titel">Waarom wil je sneller lezen?</div>
+      <div class="ob-stap-sub">We passen jouw oefeningen hierop aan.</div>
+      <div class="ob-doel-opties" id="ob-doel-grid">
+        <button class="ob-doel-optie gekozen" onclick="obKiesDoel(this,'studie')" id="ob-doel-studie">
+          <div class="ob-doel-icon">📚</div>
+          <div class="ob-doel-tekst"><b>Studie &amp; cursussen</b><span>Boeken, artikelen, samenvattingen</span></div>
+        </button>
+        <button class="ob-doel-optie" onclick="obKiesDoel(this,'werk')" id="ob-doel-werk">
+          <div class="ob-doel-icon">💼</div>
+          <div class="ob-doel-tekst"><b>Werk &amp; e-mail</b><span>Rapporten, documenten, nieuws</span></div>
+        </button>
+        <button class="ob-doel-optie" onclick="obKiesDoel(this,'plezier')" id="ob-doel-plezier">
+          <div class="ob-doel-icon">📖</div>
+          <div class="ob-doel-tekst"><b>Lezen voor plezier</b><span>Romans, blogs, tijdschriften</span></div>
+        </button>
+      </div>
+      <div class="ob-btn-rij">
+        <button class="btn" onclick="obVorige()" style="padding:10px 18px;background:var(--card2);border:1px solid var(--border);color:var(--text)">← Terug</button>
+        <button class="btn btn-primary" onclick="obVolgende()" style="padding:10px 24px">Volgende →</button>
+      </div>
+    </div>
+
+    <!-- Stap 3: Klaar + start -->
+    <div class="ob-stap" id="ob-stap-2">
+      <div style="font-size:2.5rem;margin-bottom:12px">🎉</div>
+      <div class="ob-stap-titel" id="ob-klaar-titel">Klaar, avonturier!</div>
+      <div class="ob-stap-sub">We meten eerst hoe snel je nu leest — dat duurt slechts 2 minuten. Daarna weet je je startpunt en kun je echt beginnen!</div>
+      <div style="background:var(--card2);border-radius:12px;padding:16px;margin-bottom:20px;display:flex;gap:12px;align-items:center">
+        <div style="font-size:1.8rem">⏱️</div>
+        <div>
+          <div style="font-weight:700;font-size:.95rem">Begintest — 2 minuten</div>
+          <div style="font-size:.8rem;color:var(--muted)">Lees een kort stukje tekst, beantwoord 3 vragen. Klaar!</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="obKlaar()" style="width:100%;padding:14px;font-size:1rem">🎯 Start de Begintest →</button>
+      <div style="text-align:center;margin-top:10px">
+        <button onclick="obSlaOver()" style="background:none;border:none;color:var(--muted);font-size:.8rem;cursor:pointer;text-decoration:underline">Sla over, ga direct naar de app</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="screen-home" class="screen active">
-  <div style="text-align:center;padding:32px 20px 20px">
-    <div style="font-size:3rem;margin-bottom:8px">📖⚡</div>
-    <h1 style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px">SnelLees Trainer</h1>
-    <p style="color:var(--muted);font-size:.95rem;max-width:420px;margin:0 auto 16px">Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.</p>
-    <!-- Leerweg CTA -->
-    <button onclick="sidebarNav('leerweg')" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#a78bfa);border:none;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,111,247,.4);margin-bottom:28px;font-family:Inter,sans-serif">
+  <!-- Vandaag Panel -->
+  <div class="vandaag-panel" id="vandaag-panel">
+    <div class="vandaag-header">
+      <div>
+        <div class="vandaag-begroeting" id="vandaag-begroeting">Goedendag! 👋</div>
+        <div class="vandaag-sub" id="vandaag-sub">Klaar voor je training?</div>
+      </div>
+      <div class="streak-badge nul" id="streak-badge">🔥 0</div>
+    </div>
+    <!-- Dagelijkse uitdaging -->
+    <div class="vandaag-uitdaging" id="vandaag-uitd-card" onclick="vandaagUitdagingOpen()">
+      <div class="vandaag-uitd-icon" id="vandaag-uitd-icon">⚡</div>
+      <div class="vandaag-uitd-info">
+        <div class="vandaag-uitd-label">Uitdaging van de dag</div>
+        <div class="vandaag-uitd-naam" id="vandaag-uitd-naam">Laden…</div>
+        <div class="vandaag-uitd-sub" id="vandaag-uitd-sub"></div>
+      </div>
+      <div class="vandaag-uitd-status" id="vandaag-uitd-status">→</div>
+    </div>
+  </div>
+
+  <!-- Compacte hero -->
+  <div style="text-align:center;padding:4px 0 18px">
+    <button onclick="sidebarNav('leerweg')" style="display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#a78bfa);border:none;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,111,247,.4);font-family:Inter,sans-serif">
       📚 Volg de 4-weken Leerweg →
     </button>
   </div>
@@ -2839,6 +3039,7 @@ function sidebarNav(id) {
   if (id === 'fixatie') fixInit();
   if (id === 'skim') skimInit();
   if (id === 'oogrust') orInit();
+  if (id === 'home') setTimeout(updateVandaagPanel, 50);
 
   sluitSidebar();
 }
@@ -3800,6 +4001,8 @@ function slaaSessieOp(wpm, n) {
   stats.totaalWoorden += n;
   if (wpm > stats.bestWpm) stats.bestWpm = wpm;
   localStorage.setItem('snellees_stats', JSON.stringify(stats));
+  // Bijwerken globale streak bij elke training
+  if (typeof updateGlobaalStreak === 'function') updateGlobaalStreak();
 }
 
 function toonStats() {
@@ -5815,8 +6018,9 @@ function updateGameUI() {
 // Init badges & highscores bij laden
 setTimeout(() => { dyxToonBadges(); dyxToonHighscores(); }, 100);
 
-// ─── AUTO BEGINTEST VOOR NIEUWE GEBRUIKERS ────────────────
-setTimeout(checkBegintestEersteKeer, 300);
+// ─── AUTO BEGINTEST VOOR NIEUWE GEBRUIKERS (vervangen door onboarding) ───
+// checkBegintestEersteKeer wordt niet meer direct aangeroepen —
+// checkOnboarding() (in Fase 1 blok hieronder) handelt dit af.
 
 // ─── HERLAAD APP STATE NA CLOUD SYNC ──────────────────────
 function _herlaadAppState() {
@@ -7043,6 +7247,215 @@ leerWegInit = function() {
   try { _origLeerWegInit(); }
   catch(e) { toonFout('Leerweg kon niet laden.', e); }
 };
+
+// ════════════════════════════════════════════════════════════
+//  🎓  FASE 1: ONBOARDING + STREAK + VANDAAG-PANEL
+// ════════════════════════════════════════════════════════════
+
+// ── ONBOARDING ────────────────────────────────────────────
+let _obStap = 0;
+let _obAvatar = '🦊';
+let _obDoel = 'studie';
+
+function checkOnboarding() {
+  // Toon onboarding als er geen gebruiker + geen sessies zijn
+  const heeftGebruiker = !!localStorage.getItem('snellees_gebruiker');
+  const heeftStats = !!localStorage.getItem('snellees_stats') || !!localStorage.getItem('begintest_baseline');
+  if (!heeftGebruiker && !heeftStats) {
+    const el = document.getElementById('screen-onboarding');
+    if (el) {
+      // Zet het scherm zichtbaar als overlay (boven alles)
+      el.style.display = 'flex';
+      // Verberg alle andere schermen
+      document.querySelectorAll('.screen').forEach(s => {
+        if (s.id !== 'screen-onboarding') s.classList.remove('active');
+      });
+    }
+  }
+}
+
+function obKiesAvatar(el, avatar) {
+  _obAvatar = avatar;
+  document.querySelectorAll('.ob-avatar').forEach(a => a.classList.remove('gekozen'));
+  el.classList.add('gekozen');
+}
+
+function obKiesDoel(el, doel) {
+  _obDoel = doel;
+  document.querySelectorAll('.ob-doel-optie').forEach(a => a.classList.remove('gekozen'));
+  el.classList.add('gekozen');
+}
+
+function obVolgende() {
+  if (_obStap === 0) {
+    const naam = document.getElementById('ob-naam').value.trim() || 'Avonturier';
+    document.getElementById('ob-klaar-titel').textContent = `Klaar, ${naam}! 🎉`;
+  }
+  _obStap = Math.min(_obStap + 1, 2);
+  _obToonStap(_obStap);
+}
+
+function obVorige() {
+  _obStap = Math.max(_obStap - 1, 0);
+  _obToonStap(_obStap);
+}
+
+function _obToonStap(n) {
+  document.querySelectorAll('.ob-stap').forEach((s, i) => {
+    s.classList.toggle('actief', i === n);
+  });
+  document.querySelectorAll('.ob-dot').forEach((d, i) => {
+    d.classList.toggle('actief', i === n);
+  });
+}
+
+function _obSlaOp() {
+  const naam = (document.getElementById('ob-naam').value.trim()) || 'Avonturier';
+  const gebruiker = { naam, avatar: _obAvatar, doel: _obDoel, aangemeld: new Date().toISOString() };
+  localStorage.setItem('snellees_gebruiker', JSON.stringify(gebruiker));
+  localStorage.setItem('snellees_onboarding_done', '1');
+  // Maak ook direct een aventuur-profiel aan als er nog geen is
+  const profielen = avGetProfielen();
+  if (profielen.length === 0) {
+    const nieuw = {
+      naam, leeftijd: null, avatar: _obAvatar, xp: 0, level: 1, streak: 0,
+      lastPlayed: null, voltooid: [], sterren: {}, totaleSterren: 0,
+      heeftPerfect: false, badges: [],
+    };
+    profielen.push(nieuw);
+    avSetProfielen(profielen);
+    avInloggen(0);
+  }
+  updateVandaagPanel();
+}
+
+function obKlaar() {
+  _obSlaOp();
+  document.getElementById('screen-onboarding').style.display = 'none';
+  toon('begintest', document.querySelector('.sidebar nav button[data-screen="begintest"]'));
+}
+
+function obSlaOver() {
+  _obSlaOp();
+  document.getElementById('screen-onboarding').style.display = 'none';
+  toon('home', document.querySelector('.sidebar nav button[data-screen="home"]'));
+}
+
+// ── GLOBALE STREAK ────────────────────────────────────────
+function getGlobaalStreak() {
+  try {
+    return JSON.parse(localStorage.getItem('snellees_streak') || '{"dagen":0,"laatste":null}');
+  } catch(e) { return { dagen: 0, laatste: null }; }
+}
+
+function updateGlobaalStreak() {
+  const streak = getGlobaalStreak();
+  const vandaag = new Date().toDateString();
+  const gisteren = new Date(Date.now() - 86400000).toDateString();
+
+  if (streak.laatste === vandaag) return; // Al getraind vandaag
+  streak.dagen = streak.laatste === gisteren ? (streak.dagen || 0) + 1 : 1;
+  streak.laatste = vandaag;
+  localStorage.setItem('snellees_streak', JSON.stringify(streak));
+  updateStreakBadge();
+}
+
+function updateStreakBadge() {
+  const badge = document.getElementById('streak-badge');
+  if (!badge) return;
+  const streak = getGlobaalStreak();
+  const dagen = streak.dagen || 0;
+  badge.textContent = `🔥 ${dagen}`;
+  if (dagen > 0) {
+    badge.classList.remove('nul');
+    badge.title = `${dagen} dag${dagen === 1 ? '' : 'en'} op rij getraind!`;
+  } else {
+    badge.classList.add('nul');
+    badge.title = 'Nog geen streak — train vandaag!';
+  }
+}
+
+// ── VANDAAG PANEL ─────────────────────────────────────────
+function updateVandaagPanel() {
+  // Begroeting op basis van tijd
+  const uur = new Date().getHours();
+  const gebruiker = (() => { try { return JSON.parse(localStorage.getItem('snellees_gebruiker') || '{}'); } catch(e) { return {}; } })();
+  const naam = gebruiker.naam || avProfiel?.naam || '';
+  const groet = uur < 12 ? 'Goedemorgen' : uur < 18 ? 'Goedemiddag' : 'Goedenavond';
+
+  const begroeting = document.getElementById('vandaag-begroeting');
+  const subEl = document.getElementById('vandaag-sub');
+  if (begroeting) begroeting.textContent = naam ? `${groet}, ${naam}! 👋` : `${groet}! 👋`;
+
+  // Subtext met streak motivatie
+  const streak = getGlobaalStreak();
+  if (subEl) {
+    if (streak.dagen >= 7) subEl.textContent = `🔥 ${streak.dagen} dagen op rij — je bent on fire!`;
+    else if (streak.dagen >= 3) subEl.textContent = `${streak.dagen} dagen op rij — goed bezig!`;
+    else if (streak.dagen >= 1) subEl.textContent = `Dag ${streak.dagen} — hou het vol!`;
+    else subEl.textContent = 'Klaar voor je training?';
+  }
+
+  // Streak badge updaten
+  updateStreakBadge();
+
+  // Dagelijkse uitdaging tonen
+  _updateVandaagUitdaging();
+}
+
+const _UITD_ICONEN = { rsvp:'⚡', chunk:'📖', oog:'👁', dyslexie:'🌈', papier:'📄', perifeer:'🔭', begintest:'🎯' };
+
+function _updateVandaagUitdaging() {
+  const kaart = document.getElementById('vandaag-uitd-card');
+  const iconEl = document.getElementById('vandaag-uitd-icon');
+  const naamEl = document.getElementById('vandaag-uitd-naam');
+  const subEl  = document.getElementById('vandaag-uitd-sub');
+  const statEl = document.getElementById('vandaag-uitd-status');
+  if (!kaart || typeof getDaguitdaging !== 'function') return;
+
+  const uitd = getDaguitdaging();
+  if (!uitd) return;
+
+  // Check if today's challenge is completed
+  let state = null;
+  try { state = JSON.parse(localStorage.getItem('daily_challenge') || 'null'); } catch(e) {}
+  const vandaag = new Date().toDateString();
+  const klaar = (state && state.datum === vandaag && state.voltooid) || uitd.voltooid;
+
+  iconEl.textContent = _UITD_ICONEN[uitd.type] || '⚡';
+  naamEl.textContent = uitd.beschrijving || 'Dagelijkse uitdaging';
+  subEl.textContent  = klaar ? '✅ Vandaag voltooid!' : 'Tik om te starten';
+  statEl.textContent = klaar ? '✅' : '→';
+
+  if (klaar) {
+    kaart.classList.add('klaar');
+    kaart.onclick = null;
+  } else {
+    kaart.classList.remove('klaar');
+    kaart.onclick = vandaagUitdagingOpen;
+  }
+}
+
+function vandaagUitdagingOpen() {
+  if (typeof getDaguitdaging !== 'function') return;
+  const uitd = getDaguitdaging();
+  if (uitd && uitd.type) sidebarNav(uitd.type);
+}
+
+// ── INITIALISATIE ─────────────────────────────────────────
+// Vervang de oude checkBegintestEersteKeer door checkOnboarding
+(function() {
+  // Wacht tot avLaad() uitgevoerd is
+  setTimeout(() => {
+    updateVandaagPanel();
+    checkOnboarding();
+  }, 400);
+})();
+
+// Update vandaag-panel telkens als naar home gegaan wordt
+const _origToonHome = window.toon;
+// Hook: update vandaag panel bij elke navigatie naar home
+document.addEventListener('snellees:home', updateVandaagPanel);
 
 </script>
 </body>
