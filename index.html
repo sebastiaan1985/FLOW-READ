@@ -431,15 +431,23 @@ textarea:focus { border-color: rgba(124,111,247,.5); }
 .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
 /* Tekst bibliotheek */
 .bibl-item {
-  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  flex-direction: column; align-items: stretch; padding: 14px 16px;
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); margin-bottom: 8px; transition: border-color .2s;
+  border-radius: var(--radius-sm); margin-bottom: 10px; transition: border-color .2s;
 }
 .bibl-item.actief { border-color: var(--accent); background: rgba(124,111,247,.07); }
+.bibl-item-header { display: flex; align-items: center; gap: 10px; }
 .bibl-item-info { flex: 1; min-width: 0; }
 .bibl-item-naam { font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .bibl-item-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.bibl-actief-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: rgba(124,111,247,.15); color: var(--accent); white-space: nowrap; }
+.bibl-actief-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: rgba(124,111,247,.15); color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+.bibl-acties { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.ba-btn { padding: 5px 11px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: .72rem; font-weight: 600; cursor: pointer; transition: border-color .15s, color .15s; white-space: nowrap; }
+.ba-btn:hover { border-color: var(--accent); color: var(--accent); }
+.ba-btn.lees { border-color: rgba(76,201,240,.35); color: #4cc9f0; }
+.ba-btn.lees:hover { border-color: #4cc9f0; background: rgba(76,201,240,.08); }
+.ba-btn.del { border-color: rgba(239,68,68,.3); color: #ef4444; }
+.ba-btn.del:hover { background: rgba(239,68,68,.08); }
 
 .wpm-badge {
   padding: 5px 14px; border-radius: 999px;
@@ -2442,13 +2450,33 @@ main { -webkit-overflow-scrolling: touch; }
 
   <div class="divider"></div>
   <h3>Begripstoets (optioneel)</h3>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Wordt na Chunks getoond.</p>
-  <div class="card">
-    <input class="text-input" type="text" id="v1" placeholder="Vraag">
-    <input class="text-input" type="text" id="a1" placeholder="Correct antwoord">
+  <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Sla maximaal 3 vragen op. Worden gebruikt bij de eigen leessessie en Chunks.</p>
+
+  <div class="card" style="margin-bottom:10px">
+    <div style="font-size:.7rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Vraag 1</div>
+    <input class="text-input" type="text" id="v1" placeholder="Vraagstelling">
+    <input class="text-input" type="text" id="a1" placeholder="✅ Correct antwoord">
     <div class="input-row">
-      <input class="text-input" type="text" id="w1a" placeholder="Fout antwoord 1" style="margin-bottom:0">
-      <input class="text-input" type="text" id="w1b" placeholder="Fout antwoord 2" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w1a" placeholder="❌ Fout antwoord 1" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w1b" placeholder="❌ Fout antwoord 2" style="margin-bottom:0">
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <div style="font-size:.7rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Vraag 2</div>
+    <input class="text-input" type="text" id="v2" placeholder="Vraagstelling">
+    <input class="text-input" type="text" id="a2" placeholder="✅ Correct antwoord">
+    <div class="input-row">
+      <input class="text-input" type="text" id="w2a" placeholder="❌ Fout antwoord 1" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w2b" placeholder="❌ Fout antwoord 2" style="margin-bottom:0">
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:.7rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Vraag 3</div>
+    <input class="text-input" type="text" id="v3" placeholder="Vraagstelling">
+    <input class="text-input" type="text" id="a3" placeholder="✅ Correct antwoord">
+    <div class="input-row">
+      <input class="text-input" type="text" id="w3a" placeholder="❌ Fout antwoord 1" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w3b" placeholder="❌ Fout antwoord 2" style="margin-bottom:0">
     </div>
   </div>
 </div>
@@ -2598,6 +2626,70 @@ main { -webkit-overflow-scrolling: touch; }
   </div>
 </div>
 
+<!-- ── EIGEN LEESSESSIE ───────────────────────────────────── -->
+<div id="screen-eigen-lees" class="screen">
+  <div class="page-title">📖 Eigen Leessessie</div>
+  <div class="page-sub" id="el-page-sub">Lees je eigen tekst op tempo en test je begrip.</div>
+
+  <!-- Intro -->
+  <div id="el-view-intro">
+    <div class="card" style="margin-bottom:20px">
+      <div style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Geselecteerde tekst</div>
+      <div style="font-size:1rem;font-weight:700" id="el-tekst-naam">—</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px" id="el-tekst-info">—</div>
+    </div>
+    <div class="tip-grid" style="margin-bottom:20px">
+      <div class="tip"><b>⏱ Timer</b>Start zodra je op "Lees" klikt. Stop zodra je klaar bent.</div>
+      <div class="tip tip-cyan"><b>🧠 Begrip</b>Beantwoord daarna de vragen die je hebt toegevoegd.</div>
+      <div class="tip tip-green"><b>⚡ Leesscore</b>WPM × begrip% = gecombineerde score.</div>
+      <div class="tip tip-pink"><b>📈 Opgeslagen</b>Resultaat telt mee in je statistieken en achievements.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="elBegin()" style="padding:14px 28px;font-size:1rem">▶ Start lezen</button>
+      <button class="btn btn-ghost" onclick="sidebarNav('tekst')" style="padding:14px 20px">📚 Terug naar bibliotheek</button>
+    </div>
+  </div>
+
+  <!-- Lezen -->
+  <div id="el-view-lezen" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-size:.8rem;color:var(--muted)">⏱ Timer loopt — lees rustig door</div>
+      <button class="btn btn-primary" onclick="elKlaar()">✅ Klaar met lezen</button>
+    </div>
+    <div id="el-tekst-inhoud" style="font-size:1rem;line-height:1.9;color:var(--text);background:var(--card);padding:24px;border-radius:14px;border:1px solid var(--border);white-space:pre-wrap"></div>
+    <div style="text-align:center;margin-top:16px">
+      <button class="btn btn-primary" onclick="elKlaar()" style="padding:14px 32px;font-size:1rem">✅ Klaar met lezen → verder</button>
+    </div>
+  </div>
+
+  <!-- Vragen -->
+  <div id="el-view-vragen" style="display:none">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:14px 16px;background:var(--card);border-radius:12px;border:1px solid var(--border)">
+      <div style="font-size:2rem">⚡</div>
+      <div>
+        <div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Leessnelheid</div>
+        <div style="font-size:1.8rem;font-weight:800;color:var(--accent)" id="el-wpm-result">—</div>
+        <div style="font-size:.72rem;color:var(--muted)">woorden per minuut</div>
+      </div>
+    </div>
+    <div style="font-size:.84rem;color:var(--muted);margin-bottom:16px">Beantwoord de vragen over de tekst:</div>
+    <div id="el-vragen-wrap"></div>
+    <div style="text-align:center;margin-top:16px">
+      <button id="el-submit-btn" class="btn btn-primary" onclick="elVerzend()" style="display:none;padding:14px 28px;font-size:1rem">📊 Bekijk resultaat</button>
+    </div>
+  </div>
+
+  <!-- Resultaat -->
+  <div id="el-view-resultaat" style="display:none;padding:4px 0">
+    <div class="ltt-score-kaart" id="el-score-kaart"></div>
+    <div id="el-feedback" style="font-size:.95rem;font-weight:600;margin:16px 0;text-align:center"></div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="sidebarNav('tekst')">📚 Bibliotheek</button>
+      <button class="btn btn-ghost" onclick="sidebarNav('voortgang')">📊 Voortgang</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── TRAINEN ────────────────────────────────────────────── -->
 <div id="screen-trainen" class="screen">
   <div class="page-title">⚡ Trainen</div>
@@ -2629,6 +2721,7 @@ main { -webkit-overflow-scrolling: touch; }
     <button class="tr-kaart" onclick="sidebarNav('dyslexie')"><div class="tr-icon">🌈</div><div class="tr-naam">Dyslexie Spel</div><div class="tr-sub">Letter-avontuur</div></button>
     <button class="tr-kaart" onclick="sidebarNav('avontuur')" style="border-color:rgba(224,112,0,.3)"><div class="tr-icon">🗺️</div><div class="tr-naam">Leesavontuur</div><div class="tr-sub">Gamified training</div></button>
     <button class="tr-kaart" onclick="sidebarNav('leerweg')" style="border-color:rgba(167,139,250,.35)"><div class="tr-icon">📅</div><div class="tr-naam">Leerweg</div><div class="tr-sub">4-weken programma</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('tekst')" style="border-color:rgba(76,201,240,.3)"><div class="tr-icon">📂</div><div class="tr-naam">Eigen Teksten</div><div class="tr-sub">Bibliotheek + leessessie</div></button>
   </div>
 </div>
 
@@ -3275,6 +3368,7 @@ function sidebarNav(id) {
   if (id === 'leestest' && typeof leestestInit === 'function') leestestInit();
   if (id === 'langetekst' && typeof lttInit === 'function') lttInit();
   if (id === 'voortgang' && typeof toonVoortgang === 'function') toonVoortgang();
+  if (id === 'tekst') toonBibliotheek();
   // Bottom nav active state synchroniseren
   _syncBottomNav(id);
   if (id === 'leerweg') leerWegInit();
@@ -5010,6 +5104,7 @@ const VOLW_LABELS = {
   langetekst:   { nav:'Lange Teksten',  titel:'📚 Lange Teksten',            sub:'Train leessnelheid én begrip met langere teksten op uw niveau. Het systeem past de moeilijkheidsgraad automatisch aan.' },
   trainen:      { nav:'Trainen',        titel:'⚡ Trainen',                   sub:'Kies een module en begin meteen.' },
   voortgang:    { nav:'Voortgang',      titel:'📊 Jouw Voortgang',           sub:'Statistieken, achievements en niveau.' },
+  'eigen-lees': { nav:'Eigen Leessessie', titel:'📖 Eigen Leessessie',       sub:'Lees je eigen tekst op tempo en test je begrip.' },
 };
 
 function kidsToepassen() {
@@ -8190,7 +8285,7 @@ const _BNAV_MAP = {
   papier:'trainen', subvocal:'trainen', regressie:'trainen', fixatie:'trainen',
   skim:'trainen', oogrust:'trainen', dyslexie:'trainen', avontuur:'trainen',
   leerweg:'trainen', leestest:'trainen', langetekst:'trainen',
-  begintest:'trainen', tekst:'trainen',
+  begintest:'trainen', tekst:'trainen', 'eigen-lees':'trainen',
 };
 
 function _syncBottomNav(screenId) {
@@ -8288,6 +8383,244 @@ function toonVoortgang() {
       </div>`;
     }).join('');
   }
+}
+
+// ════════════════════════════════════════════════════════════
+//  📂  FASE 4: EIGEN TEKSTEN + LEESSESSIE
+// ════════════════════════════════════════════════════════════
+
+// ── BIBLIOTHEEK UPGRADE ───────────────────────────────────
+// Overschrijft de bestaande toonBibliotheek met verbeterde versie
+function toonBibliotheek() {
+  const arr    = bibliLaad();
+  const actief = activeTekstIdx();
+  const cont   = document.getElementById('bibl-lijst');
+  if (!cont) return;
+
+  const alle = [{ naam: 'Demo tekst (ingebouwd)', tekst: DEMO_TEKST, vast: true }, ...arr];
+  cont.innerHTML = alle.map((t, i) => {
+    const wc      = woorden(t.tekst).length;
+    const minW    = Math.ceil(wc / 250);
+    const isAct   = i === actief;
+    const heeftV  = (t.vragen || []).filter(q => q?.v).length;
+    const isVast  = t.vast;
+
+    const actieBtns = `
+      <button class="ba-btn" onclick="eigenRsvp(${i})" title="RSVP">⚡ RSVP</button>
+      <button class="ba-btn" onclick="eigenChunk(${i})" title="Chunks">📖 Chunks</button>
+      <button class="ba-btn" onclick="eigenPapier(${i})" title="Papier">📄 Papier</button>
+      <button class="ba-btn lees" onclick="eigenLeesStart(${i})" title="Leessessie met timer">📚 Lees</button>
+      ${isAct ? '<span class="bibl-actief-badge">✓ Actief</span>' : ''}
+      ${!isVast ? `<button class="ba-btn del" onclick="verwijderTekst(${i})" title="Verwijderen">🗑</button>` : ''}`;
+
+    return `<div class="bibl-item${isAct ? ' actief' : ''}">
+      <div class="bibl-item-header">
+        <div class="bibl-item-info">
+          <div class="bibl-item-naam">${t.naam}</div>
+          <div class="bibl-item-meta">${wc} woorden · ca. ${minW} min${heeftV ? ` · ${heeftV} vra${heeftV===1?'ag':'gen'}` : ''}</div>
+        </div>
+      </div>
+      <div class="bibl-acties">${actieBtns}</div>
+    </div>`;
+  }).join('') || '<p style="color:var(--muted);font-size:13px">Nog geen eigen teksten opgeslagen.</p>';
+}
+
+// ── MULTI-MODE LAUNCHERS ──────────────────────────────────
+function eigenRsvp(idx) {
+  activeerTekst(idx);
+  sidebarNav('rsvp');
+}
+function eigenChunk(idx) {
+  activeerTekst(idx);
+  sidebarNav('chunk');
+}
+function eigenPapier(idx) {
+  activeerTekst(idx);
+  sidebarNav('papier');
+}
+
+// ── OPSLAAN MET 3 VRAGEN ─────────────────────────────────
+// Overschrijft de bestaande slaaTekstOp
+function slaaTekstOp() {
+  const tekst = document.getElementById('custom-text').value.trim();
+  if (!tekst) {
+    document.getElementById('tekst-info').innerHTML = '<span style="color:var(--pink)">Plak eerst een tekst.</span>';
+    return;
+  }
+  const naamEl = document.getElementById('tekst-naam');
+  const naam   = naamEl.value.trim() || ('Tekst ' + (bibliLaad().length + 1));
+
+  // Verzamel tot 3 vragen
+  const vragen = [];
+  [[1],[2],[3]].forEach(([n]) => {
+    const v  = (document.getElementById(`v${n}`)?.value || '').trim();
+    const a  = (document.getElementById(`a${n}`)?.value || '').trim();
+    const w1 = (document.getElementById(`w${n}a`)?.value || '').trim() || 'Onjuist';
+    const w2 = (document.getElementById(`w${n}b`)?.value || '').trim() || 'Onbekend';
+    if (v && a) vragen.push({ v, opties: [a, w1, w2], correct: 0 });
+  });
+
+  const arr = bibliLaad();
+  arr.push({ naam, tekst, vragen, toegevoegd: _vandaagISO ? _vandaagISO() : new Date().toISOString().split('T')[0] });
+  bibliSla(arr);
+  setActiveTekstIdx(arr.length); // 1-based
+
+  // Reset form
+  ['custom-text','tekst-naam','v1','a1','w1a','w1b','v2','a2','w2a','w2b','v3','a3','w3a','w3b']
+    .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('woord-tel').textContent = '';
+  document.getElementById('lees-tijden').innerHTML = '';
+  document.getElementById('tekst-info').innerHTML =
+    `<span class="success">✓ "${naam}" opgeslagen (${vragen.length} vra${vragen.length===1?'ag':'gen'})!</span>`;
+
+  laadRsvpTekst();
+  toonBibliotheek();
+}
+
+// ── EIGEN LEESSESSIE ──────────────────────────────────────
+let _elTekst      = null;
+let _elStart      = 0;
+let _elActief     = false;
+let _elAntwoorden = [];
+let _elWpm        = 0;
+let _elVragen     = []; // shuffled vragen for current sessie
+
+function eigenLeesStart(idx) {
+  const alle  = [{ naam: 'Demo tekst (ingebouwd)', tekst: DEMO_TEKST, vragen: [] }, ...bibliLaad()];
+  _elTekst    = alle[idx];
+  const wc    = woorden(_elTekst.tekst).length;
+  const v     = (_elTekst.vragen || []).filter(q => q?.v);
+
+  document.getElementById('el-tekst-naam').textContent = _elTekst.naam;
+  document.getElementById('el-tekst-info').textContent =
+    `${wc} woorden · ca. ${Math.ceil(wc/250)} min · ${v.length} vra${v.length===1?'ag':'gen'}`;
+
+  ['el-view-intro','el-view-lezen','el-view-vragen','el-view-resultaat'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = i === 0 ? '' : 'none';
+  });
+  _elActief = false;
+  _elAntwoorden = [];
+  _elVragen = v.map(q => _elShuffleVraag(q));
+
+  sidebarNav('eigen-lees');
+}
+
+function _elShuffleVraag(q) {
+  // q.opties[0] is correct, shuffle and remember new index
+  const shuffled = [...q.opties].sort(() => Math.random() - 0.5);
+  const correctTekst = q.opties[0]; // correct is always at index 0
+  return { v: q.v, opties: shuffled, correct: shuffled.indexOf(correctTekst) };
+}
+
+function elBegin() {
+  if (!_elTekst) return;
+  document.getElementById('el-tekst-inhoud').textContent = _elTekst.tekst;
+  document.getElementById('el-view-intro').style.display = 'none';
+  document.getElementById('el-view-lezen').style.display = '';
+  _elStart  = Date.now();
+  _elActief = true;
+}
+
+function elKlaar() {
+  if (!_elActief) return;
+  const elapsed = (Date.now() - _elStart) / 1000 / 60;
+  const wc = woorden(_elTekst.tekst).length;
+  _elWpm   = Math.round(wc / elapsed);
+  _elActief = false;
+  _elAntwoorden = [];
+
+  document.getElementById('el-wpm-result').textContent = _elWpm;
+  document.getElementById('el-view-lezen').style.display = 'none';
+
+  if (_elVragen.length === 0) {
+    // Geen vragen: direct resultaat tonen
+    _elToonResultaat(0, 0);
+    return;
+  }
+
+  // Bouw vragen HTML
+  let html = '';
+  _elVragen.forEach((q, qi) => {
+    html += `<div style="margin-bottom:20px">
+      <div style="font-size:.9rem;font-weight:600;margin-bottom:8px">${qi + 1}. ${q.v}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        ${q.opties.map((opt, oi) =>
+          `<button onclick="elKiesAntwoord(${qi},${oi},this)"
+            data-el-qi="${qi}" data-el-oi="${oi}"
+            style="padding:10px 12px;border-radius:8px;border:1px solid var(--border2);
+              background:var(--card);color:var(--text);cursor:pointer;font-size:.82rem;
+              text-align:left;transition:all .15s"
+            onmouseover="this.style.borderColor='var(--accent)'"
+            onmouseout="if(!this.classList.contains('el-g'))this.style.borderColor='var(--border2)'"
+          >${opt}</button>`
+        ).join('')}
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('el-vragen-wrap').innerHTML = html;
+  document.getElementById('el-submit-btn').style.display = 'none';
+  document.getElementById('el-view-vragen').style.display = '';
+}
+
+function elKiesAntwoord(qi, oi, btn) {
+  document.querySelectorAll(`[data-el-qi="${qi}"]`).forEach(b => {
+    b.classList.remove('el-g');
+    b.style.borderColor = 'var(--border2)';
+    b.style.background  = 'var(--card)';
+  });
+  btn.classList.add('el-g');
+  btn.style.borderColor = 'var(--accent)';
+  btn.style.background  = 'rgba(124,111,247,.15)';
+  _elAntwoorden[qi] = oi;
+
+  if (_elAntwoorden.filter(a => a !== undefined).length === _elVragen.length) {
+    document.getElementById('el-submit-btn').style.display = 'block';
+  }
+}
+
+function elVerzend() {
+  let score = 0;
+  _elVragen.forEach((q, qi) => { if (_elAntwoorden[qi] === q.correct) score++; });
+  const begrip_pct = _elVragen.length > 0 ? Math.round((score / _elVragen.length) * 100) : 100;
+  document.getElementById('el-view-vragen').style.display = 'none';
+  _elToonResultaat(score, begrip_pct);
+}
+
+function _elToonResultaat(score, begrip_pct) {
+  const wc = woorden(_elTekst.tekst).length;
+  slaaSessieOp(_elWpm, wc);
+
+  const leesscore  = Math.round(_elWpm * (begrip_pct / 100));
+  const heeftV     = _elVragen.length > 0;
+  const begripKlr  = begrip_pct >= 67 ? 'var(--green)' : begrip_pct >= 34 ? 'var(--accent)' : '#ef4444';
+
+  document.getElementById('el-score-kaart').innerHTML = `
+    <div>
+      <div class="ltt-score-num" style="color:var(--accent)">${_elWpm}</div>
+      <div class="ltt-score-lbl">WPM</div>
+    </div>
+    <div>
+      <div class="ltt-score-num" style="color:${begripKlr}">${heeftV ? `${score}/${_elVragen.length}` : '—'}</div>
+      <div class="ltt-score-lbl">Begrip</div>
+    </div>
+    <div>
+      <div class="ltt-score-num" style="color:var(--green)">${heeftV ? leesscore : _elWpm}</div>
+      <div class="ltt-score-lbl">Leesscore</div>
+    </div>`;
+
+  const feedback = !heeftV ? `⚡ ${_elWpm} WPM — voeg vragen toe voor een volledige leesscore!` :
+    score === _elVragen.length ? '🏆 Perfect begrip!' :
+    begrip_pct >= 67 ? '✅ Goed begrip!' :
+    begrip_pct >= 34 ? '📖 Matig begrip — lees wat langzamer.' :
+    '💪 Begrip laag — probeer het opnieuw.';
+  document.getElementById('el-feedback').textContent = feedback;
+  document.getElementById('el-view-resultaat').style.display = '';
+
+  if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('langetekst');
+  if (typeof updateVandaagPanel  === 'function') updateVandaagPanel();
+  setTimeout(checkAchievements, 80);
 }
 
 // ── HOOKS: slaaSessieOp wrappen ───────────────────────────
