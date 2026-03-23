@@ -183,6 +183,10 @@ function _toonGebruikerHeader() {
     gap: '5px',
   });
   header.appendChild(btn);
+
+  // Verberg "Maak profiel" knop wanneer ingelogd via Supabase
+  const noProfielBtn = document.getElementById('no-profiel-btn');
+  if (noProfielBtn) noProfielBtn.style.display = 'none';
 }
 
 // ── PATCH localStorage ───────────────────────────────────────────────────────

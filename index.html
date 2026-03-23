@@ -49,7 +49,7 @@
   --glow:     0 0 40px rgba(124,111,247,.25);
 }
 
-html { height: 100%; }
+html { height: 100%; overflow-x: hidden; }
 body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
@@ -57,6 +57,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* ── HEADER ───────────────────────────────────────────────── */
@@ -96,13 +97,14 @@ header {
 .sidebar-backdrop.open { display: block; opacity: 1; }
 
 .sidebar {
-  position: fixed; top: 0; left: -300px; width: 280px; height: 100vh;
+  position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
   background: var(--surface); border-right: 1px solid var(--border);
-  z-index: 250; transition: left .3s cubic-bezier(.4,0,.2,1);
-  display: flex; flex-direction: column; overflow-y: auto;
-  box-shadow: 8px 0 30px rgba(0,0,0,.3);
+  z-index: 250; transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+  display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden;
+  box-shadow: none;
+  transform: translateX(-100%);
 }
-.sidebar.open { left: 0; }
+.sidebar.open { transform: translateX(0); box-shadow: 8px 0 30px rgba(0,0,0,.3); }
 
 .sidebar-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -1286,9 +1288,16 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   .btn { padding: 11px 16px; font-size: .88rem; min-height: 44px; }
   .btn-primary { min-height: 44px; }
 
-  /* Header compacter */
-  header { padding: 0 12px; height: 52px; }
+  /* Header compacter + geen overflow */
+  header { padding: 0 10px; height: 52px; gap: 8px; overflow: hidden; }
   .logo  { font-size: 1rem; }
+  .header-spacer { min-width: 0; }
+  /* Gebruikersknop: alleen icoon op mobiel */
+  #sb-user-btn { font-size: 0 !important; padding: 6px 9px !important; min-width: 36px; justify-content: center; }
+  #sb-user-btn span { font-size: 15px !important; }
+  /* "Maak profiel" knop: alleen icoon */
+  #no-profiel-btn { font-size: 0 !important; padding: 6px 9px !important; }
+  #no-profiel-btn::before { content: '👤'; font-size: 15px; }
 
   /* Kaarten in home volledig breed op klein scherm */
   .home-kaart { padding: 14px 12px; }
@@ -1335,8 +1344,8 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   .or-cirkel { width: 100px; height: 100px; }
   .or-tel    { font-size: 2.2rem; }
 
-  /* Sidebar volledig breed op mobiel */
-  .sidebar { width: min(320px, 92vw); }
+  /* Sidebar breedte op mobiel — transform zorgt voor hide/show */
+  .sidebar { width: min(300px, 88vw); }
 
   /* Sessie items */
   .sessie-item { flex-direction: column; gap: 2px; font-size: .8rem; }
@@ -3987,7 +3996,8 @@ function updateSpelerIndicator() {
     el.style.display = 'none';
     document.getElementById('daguitdaging-banner').style.display = 'none';
     const noProfielBtn = document.getElementById('no-profiel-btn');
-    if (noProfielBtn) noProfielBtn.style.display = 'block';
+    // Alleen tonen als er geen Supabase-gebruiker ingelogd is
+    if (noProfielBtn && !document.getElementById('sb-user-btn')) noProfielBtn.style.display = 'block';
   }
 }
 

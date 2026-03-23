@@ -3,16 +3,15 @@
  * SnelLees Trainer — PWA offline support
  *
  * Strategie:
- * - App shell (HTML, CSS, JS) → Cache First
+ * - HTML-pagina's → Network First (altijd vers, cache als offline-fallback)
+ * - JS/CSS app shell → Cache First (snel laden)
  * - Externe CDN-scripts → Stale-While-Revalidate
- * - Supabase API-calls → Network First (gebruikersdata altijd vers)
+ * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM    = 'snellees-v1';
+const CACHE_NAAM    = 'snellees-v3';
 const CACHE_STATISCH = [
-  '/',
   '/index.html',
-  '/login.html',
   '/supabase-sync.js',
 ];
 
@@ -22,11 +21,13 @@ const CACHE_CDN = [
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Comic+Neue:wght@400;700&display=swap',
 ];
 
-// ── INSTALL: cache app shell ─────────────────────────────────
+// ── INSTALL: pre-cache app shell ─────────────────────────────
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAAM).then(cache => {
-      return cache.addAll(CACHE_STATISCH).catch(err => {
+      // cache:'reload' zorgt dat altijd de nieuwste versie van de server wordt opgehaald
+      const verzoeken = CACHE_STATISCH.map(url => new Request(url, { cache: 'reload' }));
+      return cache.addAll(verzoeken).catch(err => {
         console.warn('[SW] Niet alle bestanden gecached:', err);
       });
     })
@@ -76,22 +77,30 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // App shell: Cache First met netwerk-fallback
+  // HTML-pagina's: Network First → altijd vers, cache als offline-fallback
+  if (event.request.mode === 'navigate' ||
+      (url.pathname.endsWith('.html') || url.pathname === '/')) {
+    event.respondWith(
+      fetch(event.request).then(resp => {
+        if (resp.ok) {
+          caches.open(CACHE_NAAM).then(cache => cache.put(event.request, resp.clone()));
+        }
+        return resp;
+      }).catch(() => caches.match(event.request).then(cached => cached || caches.match('/index.html')))
+    );
+    return;
+  }
+
+  // Overige GET-bestanden (JS, CSS, fonts): Cache First met netwerk-fallback
   if (event.request.method === 'GET') {
     event.respondWith(
       caches.match(event.request).then(cached => {
         if (cached) return cached;
         return fetch(event.request).then(resp => {
-          // Cache HTML-pagina's
-          if (resp.ok && (url.pathname.endsWith('.html') || url.pathname === '/')) {
+          if (resp.ok) {
             caches.open(CACHE_NAAM).then(cache => cache.put(event.request, resp.clone()));
           }
           return resp;
-        }).catch(() => {
-          // Offline fallback: geef index.html terug voor navigatie
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html');
-          }
         });
       })
     );
