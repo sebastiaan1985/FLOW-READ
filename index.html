@@ -1190,6 +1190,69 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 }
 #game-progress-wrap { height: 10px; background: rgba(0,0,0,.08); border-radius: 999px; overflow: hidden; margin-bottom: 16px; }
 #game-progress-bar  { height: 100%; background: linear-gradient(90deg,#e07000,#f0c000); border-radius: 999px; width: 0%; transition: width .4s ease; }
+
+/* ── LEERWEG ─────────────────────────────────────────────── */
+.lw-week-card { background:var(--card);border:1px solid var(--border2);border-radius:14px;margin-bottom:12px;overflow:hidden; }
+.lw-week-header { display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;user-select:none; }
+.lw-week-icon { font-size:1.6rem;flex-shrink:0; }
+.lw-week-info { flex:1; }
+.lw-week-naam { font-size:1rem;font-weight:700;margin-bottom:2px; }
+.lw-week-sub  { font-size:.78rem;color:var(--muted); }
+.lw-week-badge { font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(124,111,247,.15);color:var(--accent); }
+.lw-week-badge.voltooid { background:rgba(52,211,153,.15);color:#34d399; }
+.lw-week-body { display:none;padding:0 18px 16px; }
+.lw-week-body.open { display:block; }
+.lw-dag-rij { display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border); }
+.lw-dag-rij:last-child { border-bottom:none; }
+.lw-dag-nr  { font-size:.75rem;color:var(--muted);min-width:42px; }
+.lw-dag-naam { flex:1;font-size:.88rem; }
+.lw-dag-duur { font-size:.75rem;color:var(--muted);margin-right:6px; }
+.lw-dag-btn { font-size:.75rem;padding:5px 11px;border-radius:7px;border:1px solid var(--border2);background:var(--card2);color:var(--text);cursor:pointer;white-space:nowrap; }
+.lw-dag-btn:hover { background:var(--accent);color:#fff;border-color:var(--accent); }
+.lw-dag-rij.gedaan .lw-dag-naam { color:var(--muted);text-decoration:line-through; }
+.lw-vandaag-box { background:linear-gradient(135deg,rgba(124,111,247,.15),rgba(124,111,247,.05));border:1px solid rgba(124,111,247,.3);border-radius:14px;padding:18px 20px;margin-bottom:20px; }
+.lw-doel-box { background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:12px;font-size:.85rem;color:var(--muted); }
+.lw-progress-rij { display:flex;gap:4px;margin-bottom:4px; }
+.lw-progress-dot { width:10px;height:10px;border-radius:50%;background:var(--border2);flex-shrink:0; }
+.lw-progress-dot.gedaan { background:#34d399; }
+.lw-progress-dot.vandaag { background:var(--accent); }
+
+/* ── SUBVOCAL ──────────────────────────────────────────────── */
+.sv-woord { font-size:3.2rem;font-weight:800;text-align:center;min-height:80px;display:flex;align-items:center;justify-content:center;letter-spacing:.04em; }
+.sv-metro-bar { height:10px;border-radius:999px;background:var(--border2);overflow:hidden;margin:14px 0; }
+.sv-metro-fill { height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#a78bfa);width:0%;transition:width .05s linear; }
+.sv-teller { font-size:2rem;font-weight:800;color:var(--accent);text-align:center;min-height:48px;display:flex;align-items:center;justify-content:center; }
+
+/* ── REGRESSIE ─────────────────────────────────────────────── */
+.reg-zin { font-size:1.15rem;line-height:1.9;padding:24px;text-align:center;min-height:120px;display:flex;align-items:center;justify-content:center;background:var(--card);border:1px solid var(--border2);border-radius:12px;transition:opacity .3s; }
+.reg-voortgang { height:8px;border-radius:999px;background:var(--border2);overflow:hidden;margin-bottom:16px; }
+.reg-voortgang-fill { height:100%;background:linear-gradient(90deg,#ef4444,#f59e0b);border-radius:999px;transition:width .3s ease; }
+
+/* ── FIXATIE ───────────────────────────────────────────────── */
+.fix-zin-wrap { position:relative;padding:20px;background:var(--card);border:1px solid var(--border2);border-radius:12px;font-size:1rem;line-height:2.4;text-align:center;min-height:80px; }
+.fix-woord { display:inline-block;padding:0 3px;transition:all .2s; }
+.fix-woord.actief { background:rgba(124,111,247,.25);border-radius:4px;color:var(--accent);font-weight:700;transform:scale(1.08); }
+.fix-woord.gelezen { color:var(--muted); }
+.fix-breedte-label { display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:8px; }
+
+/* ── SKIM ──────────────────────────────────────────────────── */
+.skim-tekst { font-size:.9rem;line-height:1.85;padding:18px;background:var(--card);border:1px solid var(--border2);border-radius:12px;max-height:380px;overflow-y:auto; }
+.skim-hl   { background:rgba(124,111,247,.22);border-radius:3px;padding:1px 2px; }
+.skim-titel{ font-weight:700;color:var(--accent);font-size:1rem; }
+.scan-input { width:100%;box-sizing:border-box;padding:12px 16px;border-radius:10px;border:1px solid var(--border2);background:var(--card2);color:var(--text);font-size:1rem; }
+.scan-hl    { background:rgba(245,158,11,.35);border-radius:3px;padding:1px 2px; }
+
+/* ── OOGRUST ───────────────────────────────────────────────── */
+.or-stap { text-align:center;padding:20px 12px; }
+.or-cirkel { width:130px;height:130px;border-radius:50%;border:6px solid var(--accent);margin:18px auto;display:flex;align-items:center;justify-content:center;font-size:3rem;transition:transform .5s; }
+.or-tel  { font-size:3rem;font-weight:800;color:var(--accent);margin:8px 0; }
+.or-uitleg { font-size:.9rem;color:var(--muted);margin-top:8px; }
+
+/* ── WPM-DOEL (stats) ──────────────────────────────────────── */
+.doel-wrap { background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:18px;margin-bottom:16px; }
+.doel-bar  { height:16px;border-radius:999px;background:var(--border2);overflow:hidden;margin:10px 0; }
+.doel-fill { height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#34d399);transition:width .6s ease; }
+.doel-input { padding:8px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--card2);color:var(--text);font-size:1rem;width:90px;text-align:center; }
 </style>
 </head>
 <body>
@@ -1221,6 +1284,7 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   <div class="sidebar-section"><div class="sidebar-section-title">Test & Start</div></div>
   <nav id="sidebar-nav-test">
     <button onclick="sidebarNav('home')" data-screen="home" class="active"><span class="icon">🏠</span> Home</button>
+    <button onclick="sidebarNav('leerweg')" data-screen="leerweg" style="color:#a78bfa"><span class="icon">📚</span> <b>Leerweg</b></button>
     <button onclick="sidebarNav('begintest')" data-screen="begintest"><span class="icon">🎯</span> Begintest</button>
     <button onclick="sidebarNav('leestest')" data-screen="leestest"><span class="icon">📏</span> Leestest</button>
     <button onclick="sidebarNav('stats')" data-screen="stats"><span class="icon">📊</span> Statistieken</button>
@@ -1233,6 +1297,11 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
     <button onclick="sidebarNav('oog')" data-screen="oog"><span class="icon">👁</span> Oogbeweging</button>
     <button onclick="sidebarNav('perifeer')" data-screen="perifeer"><span class="icon">🔭</span> Perifeer</button>
     <button onclick="sidebarNav('papier')" data-screen="papier"><span class="icon">📄</span> Papier</button>
+    <button onclick="sidebarNav('subvocal')" data-screen="subvocal"><span class="icon">🔕</span> Subvocalisatie</button>
+    <button onclick="sidebarNav('regressie')" data-screen="regressie"><span class="icon">⏩</span> Regressie</button>
+    <button onclick="sidebarNav('fixatie')" data-screen="fixatie"><span class="icon">🔲</span> Fixatie-training</button>
+    <button onclick="sidebarNav('skim')" data-screen="skim"><span class="icon">🔍</span> Skim &amp; Scan</button>
+    <button onclick="sidebarNav('oogrust')" data-screen="oogrust"><span class="icon">😌</span> Oogontspanning</button>
   </nav>
 
   <div class="sidebar-section"><div class="sidebar-section-title">Avontuur & Spellen</div></div>
@@ -1391,7 +1460,11 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   <div style="text-align:center;padding:32px 20px 20px">
     <div style="font-size:3rem;margin-bottom:8px">📖⚡</div>
     <h1 style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px">SnelLees Trainer</h1>
-    <p style="color:var(--muted);font-size:.95rem;max-width:420px;margin:0 auto 28px">Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.</p>
+    <p style="color:var(--muted);font-size:.95rem;max-width:420px;margin:0 auto 16px">Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.</p>
+    <!-- Leerweg CTA -->
+    <button onclick="sidebarNav('leerweg')" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#a78bfa);border:none;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,111,247,.4);margin-bottom:28px;font-family:Inter,sans-serif">
+      📚 Volg de 4-weken Leerweg →
+    </button>
   </div>
 
   <!-- Snelle toegang kaarten -->
@@ -1435,6 +1508,31 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
       <div class="home-kaart-icon">🎯</div>
       <div class="home-kaart-titel">Begintest</div>
       <div class="home-kaart-sub">Meet je startniveau en volg voortgang</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('subvocal')">
+      <div class="home-kaart-icon">🔕</div>
+      <div class="home-kaart-titel">Subvocalisatie</div>
+      <div class="home-kaart-sub">Schakel je innerlijke stem uit</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('regressie')">
+      <div class="home-kaart-icon">⏩</div>
+      <div class="home-kaart-titel">Regressie-stop</div>
+      <div class="home-kaart-sub">Leer nooit terug te kijken</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('fixatie')">
+      <div class="home-kaart-icon">🔲</div>
+      <div class="home-kaart-titel">Fixatie-training</div>
+      <div class="home-kaart-sub">Meer woorden per oogsprong</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('skim')">
+      <div class="home-kaart-icon">🔍</div>
+      <div class="home-kaart-titel">Skim &amp; Scan</div>
+      <div class="home-kaart-sub">Structuur en info razendsnel vinden</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('oogrust')">
+      <div class="home-kaart-icon">😌</div>
+      <div class="home-kaart-titel">Oogontspanning</div>
+      <div class="home-kaart-sub">Palming, focus & 20-20-20 regel</div>
     </button>
   </div>
 
@@ -2008,6 +2106,23 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   </div>
 
   <div class="divider"></div>
+  <h3>🎯 Jouw WPM-doel</h3>
+  <div class="doel-wrap" id="doel-wrap">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="font-size:.9rem">Doelsnelheid:</span>
+      <input type="number" id="doel-input" class="doel-input" min="100" max="2000" step="50" placeholder="bv. 400" onchange="slaDoelOp()"/>
+      <span style="font-size:.85rem;color:var(--muted)">WPM</span>
+      <button class="btn btn-primary" style="font-size:.8rem" onclick="slaDoelOp()">Opslaan</button>
+    </div>
+    <div class="doel-bar"><div class="doel-fill" id="doel-fill" style="width:0%"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:4px">
+      <span>Huidig gemiddelde: <b id="doel-huidig">—</b> WPM</span>
+      <span id="doel-pct">0%</span>
+    </div>
+    <div id="doel-motivatie" style="font-size:.85rem;margin-top:8px;color:var(--accent);font-weight:600"></div>
+  </div>
+
+  <div class="divider"></div>
   <h3>Snellees principes</h3>
   <div class="tip-grid">
     <div class="tip"><b>🎯 Gemiddelde lezer</b>200–250 WPM. Met training haalbaar: 400–600 WPM zonder begrips­verlies.</div>
@@ -2209,6 +2324,311 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 
 </div>
 
+<!-- ══════════════════════════════════════════════════════════
+     🗺️  LEERWEG — 4-weken curriculum
+══════════════════════════════════════════════════════════ -->
+<div id="screen-leerweg" class="screen">
+  <div class="page-title">📚 Jouw Leerweg</div>
+  <div class="page-sub">Een gestructureerd 4-weken programma om van gemiddelde lezer naar snelle lezer te gaan.</div>
+
+  <div class="lw-vandaag-box" id="lw-vandaag-box">
+    <div style="font-size:.8rem;color:var(--muted);margin-bottom:4px">VANDAAG OEFENEN</div>
+    <div id="lw-vandaag-tekst" style="font-size:1.05rem;font-weight:700;margin-bottom:10px">—</div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="lw-vandaag-btn" onclick="leerWegVandaagDoen()">▶ Starten</button>
+      <span id="lw-vandaag-duur" style="font-size:.8rem;color:var(--muted)"></span>
+      <button class="btn btn-ghost" style="font-size:.78rem" onclick="leerWegDagMarkeer()">✓ Al gedaan</button>
+    </div>
+    <div class="lw-doel-box" id="lw-wpm-doel-info"></div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <h3 style="margin:0">Programma overzicht</h3>
+    <button class="btn btn-ghost" style="font-size:.75rem" onclick="leerWegReset()">↺ Opnieuw starten</button>
+  </div>
+  <div id="lw-weken-container"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     🔕  SUBVOCALISATIE TRAINING
+══════════════════════════════════════════════════════════ -->
+<div id="screen-subvocal" class="screen">
+  <div class="page-title">🔕 Subvocalisatie-training</div>
+  <div class="page-sub">De innerlijke stem is de grootste rem op je leessnelheid. Leer hem uitschakelen.</div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3 style="margin:0 0 8px">Wat is subvocalisatie?</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin:0 0 8px">Bijna iedereen "spreekt" elk woord innerlijk uit tijdens het lezen. Dit beperkt je snelheid tot maximaal jouw spreektempo (~150–200 WPM). Door dit patroon te doorbreken kun je 2–3× sneller lezen zonder begripsverlies.</p>
+    <p style="font-size:.88rem;color:var(--muted);margin:0">De drie methodes hieronder trainen je brein om woorden direct te <em>herkennen</em> in plaats van ze te <em>uitspreken</em>.</p>
+  </div>
+
+  <!-- Modus tabs -->
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button id="sv-tab-metro" class="btn btn-primary" style="font-size:.82rem" onclick="svSwitchTab('metro')">🎵 Metronoom</button>
+    <button id="sv-tab-tel" class="btn btn-ghost" style="font-size:.82rem" onclick="svSwitchTab('tel')">🔢 Tel-methode</button>
+    <button id="sv-tab-hum" class="btn btn-ghost" style="font-size:.82rem" onclick="svSwitchTab('hum')">🎶 Humming</button>
+  </div>
+
+  <!-- METRONOOM -->
+  <div id="sv-view-metro">
+    <div class="card" style="margin-bottom:12px">
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Lees de tekst mee terwijl je het ritme volgt. De metronoom gaat sneller dan je spreektempo — je brein leert de woorden direct te herkennen.</div>
+      <div class="sv-woord" id="sv-metro-woord">—</div>
+      <div class="sv-metro-bar"><div class="sv-metro-fill" id="sv-metro-fill"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-bottom:12px">
+        <span>Tempo: <b id="sv-metro-bpm">280</b> WPM</span>
+        <span id="sv-metro-voortgang"></span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-primary" id="sv-metro-btn" onclick="svMetroToggle()">▶ Starten</button>
+        <button class="btn btn-ghost" onclick="svMetroBpm(-20)">− Langzamer</button>
+        <button class="btn btn-ghost" onclick="svMetroBpm(+20)">+ Sneller</button>
+      </div>
+    </div>
+    <div class="lw-doel-box">💡 <b>Tip:</b> Begin op een tempo dat net te snel voelt om alles na te zeggen. Na 3 dagen merk je al verschil.</div>
+  </div>
+
+  <!-- TEL-METHODE -->
+  <div id="sv-view-tel" style="display:none">
+    <div class="card" style="margin-bottom:12px">
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Lees de onderstaande tekst terwijl je hardop (of fluisterend) telt: 1-2-3-4-1-2-3-4. Je mond is bezig met tellen, dus kan de woorden niet meer uitspreken.</div>
+      <div id="sv-tel-tekst" style="font-size:1rem;line-height:1.9;padding:16px;background:var(--card2);border-radius:10px;min-height:120px"></div>
+      <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <div class="sv-teller" id="sv-tel-teller" style="font-size:1.5rem">—</div>
+        <button class="btn btn-primary" id="sv-tel-btn" onclick="svTelToggle()">▶ Start tellen</button>
+        <button class="btn btn-ghost" onclick="svTelNieuwe()">↺ Nieuwe tekst</button>
+      </div>
+    </div>
+    <div class="lw-doel-box">💡 <b>Tip:</b> Na 2 weken dagelijkse tel-oefening van 5 min zal je innerlijke stem vanzelf stiller worden.</div>
+  </div>
+
+  <!-- HUMMING -->
+  <div id="sv-view-hum" style="display:none">
+    <div class="card" style="margin-bottom:12px">
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Hum een toon (mmm…) terwijl je leest. Net als tellen bezet dit je stem zodat je de woorden niet meer kunt uitspreken. Lees de tekst zo snel mogelijk.</div>
+      <div id="sv-hum-tekst" style="font-size:1rem;line-height:1.9;padding:16px;background:var(--card2);border-radius:10px;min-height:120px"></div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button class="btn btn-primary" onclick="svHumNieuw()">↺ Nieuwe tekst</button>
+        <button class="btn btn-primary" id="sv-hum-timer-btn" onclick="svHumTimer()">⏱ 60s timer</button>
+      </div>
+      <div id="sv-hum-timer-display" style="font-size:1.8rem;font-weight:800;color:var(--accent);text-align:center;margin-top:10px;display:none"></div>
+    </div>
+    <div class="lw-doel-box">🎵 <b>Tip:</b> Zacht "mmm" of "lalalala" werkt het best. Doe dit 5 minuten per dag gedurende 2 weken.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ⏩  REGRESSIE-TRAINING
+══════════════════════════════════════════════════════════ -->
+<div id="screen-regressie" class="screen">
+  <div class="page-title">⏩ Regressie-training</div>
+  <div class="page-sub">Stop met terugkijken. Ogen die teruggaan kosten tot 30% van je leestijd.</div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3 style="margin:0 0 8px">Wat is regressie?</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin:0">Ogen springen onbewust terug naar woorden die je al gelezen hebt — gemiddeld 20–30% van alle oogbewegingen. In deze training verdwijnt tekst nadat je hem gepasseerd bent: terugkijken is onmogelijk. Je brein leert snel genoeg te verwerken om verder te gaan.</p>
+  </div>
+
+  <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+    <span style="font-size:.85rem">Tempo:</span>
+    <button class="btn btn-ghost" style="font-size:.8rem" onclick="regTempoPas(-20)">− Langzamer</button>
+    <span id="reg-wpm-label" style="font-weight:700;color:var(--accent);min-width:70px;text-align:center">220 WPM</span>
+    <button class="btn btn-ghost" style="font-size:.8rem" onclick="regTempoPas(+20)">+ Sneller</button>
+  </div>
+
+  <div class="reg-voortgang"><div class="reg-voortgang-fill" id="reg-prog-fill" style="width:0%"></div></div>
+  <div class="reg-zin" id="reg-zin-display">Klik op Start om te beginnen</div>
+
+  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+    <button class="btn btn-primary" id="reg-start-btn" onclick="regToggle()">▶ Starten</button>
+    <button class="btn btn-ghost" onclick="regNieuwe()">↺ Nieuwe tekst</button>
+  </div>
+  <div id="reg-einde-msg" style="display:none;margin-top:16px"></div>
+  <div class="lw-doel-box" style="margin-top:16px">💡 <b>Tip:</b> Begin op een tempo dat comfortabel aanvoelt, verhoog het elke dag met 10–20 WPM. Na 2 weken merk je dat je ogen niet meer terugspringen, ook bij normaal lezen.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     👁  FIXATIE-TRAINING
+══════════════════════════════════════════════════════════ -->
+<div id="screen-fixatie" class="screen">
+  <div class="page-title">👁 Fixatie-training</div>
+  <div class="page-sub">Leer meer woorden te zien per oogfixatie. Snelle lezers maken 3× minder oogsprongen per regel.</div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3 style="margin:0 0 6px">Hoe het werkt</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin:0">Per druk op [Spatie] of de knop verschijnt de volgende woordgroep. Probeer de hele groep in één oogfixatie te lezen, zonder je ogen te bewegen. De breedte neemt toe naarmate je verder komt.</p>
+  </div>
+
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+    <span style="font-size:.85rem">Woorden per fixatie:</span>
+    <button class="btn btn-ghost" style="font-size:.8rem" onclick="fixBreedtePas(-1)">−</button>
+    <span id="fix-breedte-val" style="font-weight:700;color:var(--accent);min-width:20px;text-align:center">3</span>
+    <button class="btn btn-ghost" style="font-size:.8rem" onclick="fixBreedtePas(+1)">+</button>
+    <span id="fix-auto-label" style="font-size:.75rem;color:var(--muted)">| Auto-modus:</span>
+    <button id="fix-auto-btn" class="btn btn-ghost" style="font-size:.75rem" onclick="fixAutoToggle()">UIT</button>
+  </div>
+
+  <div class="fix-zin-wrap" id="fix-display">Klik Start</div>
+  <div class="fix-breedte-label"><span id="fix-stats-l"></span><span id="fix-stats-r"></span></div>
+
+  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+    <button class="btn btn-primary" id="fix-start-btn" onclick="fixStart()">▶ Starten</button>
+    <button class="btn btn-ghost" onclick="fixVolgende()">→ Volgende groep</button>
+    <button class="btn btn-ghost" onclick="fixNieuwe()">↺ Nieuwe tekst</button>
+  </div>
+  <div id="fix-score-msg" style="display:none;margin-top:14px"></div>
+  <div class="lw-doel-box" style="margin-top:14px">💡 <b>Tip:</b> Begin met 2 woorden, bouw op naar 4–5. Oefen dagelijks 5–10 minuten. Combineer met de chunk-trainer voor extra effect.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     🔍  SKIMMEN & SCANNEN
+══════════════════════════════════════════════════════════ -->
+<div id="screen-skim" class="screen">
+  <div class="page-title">🔍 Skimmen &amp; Scannen</div>
+  <div class="page-sub">Leer teksten razendsnel doorkijken voor structuur (skim) of gerichte informatie (scan).</div>
+
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button id="skim-tab-uitleg" class="btn btn-ghost" style="font-size:.82rem" onclick="skimTab('uitleg')">📖 Uitleg</button>
+    <button id="skim-tab-skim" class="btn btn-primary" style="font-size:.82rem" onclick="skimTab('skim')">⚡ Skimmen</button>
+    <button id="skim-tab-scan" class="btn btn-ghost" style="font-size:.82rem" onclick="skimTab('scan')">🎯 Scannen</button>
+    <button id="skim-tab-preview" class="btn btn-ghost" style="font-size:.82rem" onclick="skimTab('preview')">👁 Previewing</button>
+  </div>
+
+  <!-- UITLEG -->
+  <div id="skim-view-uitleg" style="display:none">
+    <div class="card" style="margin-bottom:12px">
+      <h3 style="margin:0 0 8px">⚡ Skimmen</h3>
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Vliegensvlug de <b>structuur</b> van een tekst begrijpen. Je leest: titels, eerste en laatste zin van elke alinea, vetgedrukte woorden. Doel: 70% begrip in 20% van de normale leestijd. Gebruik voor: kranten, rapporten, e-mails.</p>
+    </div>
+    <div class="card" style="margin-bottom:12px">
+      <h3 style="margin:0 0 8px">🎯 Scannen</h3>
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Doelgericht zoeken naar <b>specifieke informatie</b>: een naam, datum, getal. Je leest niet alles, je laat je ogen als een radar over de tekst gaan. Gebruik voor: registers, FAQ's, datasheets.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 8px">👁 Previewing</h3>
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Vóór het lezen: scan 30–60 seconden de titels, afbeeldingen, eerste/laatste zinnen. Dit activeert je brein zodat het tijdens het lezen sneller herkent. Versnelt begrip met 20–40%.</p>
+    </div>
+  </div>
+
+  <!-- SKIMMEN OEFENING -->
+  <div id="skim-view-skim">
+    <div style="font-size:.85rem;color:var(--muted);margin-bottom:10px">De kernzinnen zijn gemarkeerd. Probeer in 30 seconden het hoofdidee te begrijpen zonder alles te lezen.</div>
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="skimNieuwe()">↺ Nieuwe tekst</button>
+      <button class="btn btn-ghost" id="skim-timer-btn" onclick="skimTimerStart()">⏱ 30s timer</button>
+      <span id="skim-timer-display" style="font-weight:700;color:var(--accent);font-size:1rem;display:none"></span>
+    </div>
+    <div class="skim-tekst" id="skim-tekst-box"></div>
+    <div id="skim-vraag-wrap" style="display:none;margin-top:14px"></div>
+  </div>
+
+  <!-- SCANNEN OEFENING -->
+  <div id="skim-view-scan" style="display:none">
+    <div style="font-size:.85rem;color:var(--muted);margin-bottom:10px">Zoek zo snel mogelijk naar het gevraagde woord of gegeven. Klik het woord aan als je het vindt.</div>
+    <div style="margin-bottom:10px">
+      <input id="scan-zoek-input" class="scan-input" placeholder="Voer een zoekwoord in..." oninput="scanZoek()" />
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="scanNieuwe()">↺ Nieuwe tekst</button>
+      <button class="btn btn-ghost" id="scan-auto-btn" onclick="scanAutoZoek()">🎯 Willekeurig zoekwoord</button>
+    </div>
+    <div id="scan-zoek-doel" style="font-size:.9rem;font-weight:700;color:var(--accent);margin-bottom:8px;min-height:24px"></div>
+    <div class="skim-tekst" id="scan-tekst-box"></div>
+    <div id="scan-resultaat" style="margin-top:10px;min-height:24px;font-size:.88rem"></div>
+  </div>
+
+  <!-- PREVIEWING OEFENING -->
+  <div id="skim-view-preview" style="display:none">
+    <div style="font-size:.85rem;color:var(--muted);margin-bottom:10px">Stap 1: Bekijk 30 seconden de structuur (titels + eerste zinnen). Stap 2: Lees de volledige tekst. Vergelijk hoe snel je begrijpt.</div>
+    <div id="preview-stap-1">
+      <div style="font-size:.9rem;font-weight:600;color:var(--accent);margin-bottom:8px">📋 Stap 1 — Structuur preview (30 sec)</div>
+      <div class="skim-tekst" id="preview-structuur-box"></div>
+      <button class="btn btn-primary" style="margin-top:12px" id="preview-verder-btn" onclick="previewNaarStap2()">→ Nu de volledige tekst lezen</button>
+    </div>
+    <div id="preview-stap-2" style="display:none">
+      <div style="font-size:.9rem;font-weight:600;color:var(--accent);margin-bottom:8px">📖 Stap 2 — Volledige tekst</div>
+      <div class="skim-tekst" id="preview-tekst-box"></div>
+      <button class="btn btn-primary" style="margin-top:12px" onclick="previewNieuwe()">↺ Volgende tekst</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     😌  OOGONTSPANNING
+══════════════════════════════════════════════════════════ -->
+<div id="screen-oogrust" class="screen">
+  <div class="page-title">😌 Oogontspanning</div>
+  <div class="page-sub">Ontspannen ogen lezen sneller en worden minder snel moe. Doe dit voor en na een leessessie.</div>
+
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button id="or-tab-palming" class="btn btn-primary" style="font-size:.82rem" onclick="orTab('palming')">🖐 Palming</button>
+    <button id="or-tab-focus" class="btn btn-ghost" style="font-size:.82rem" onclick="orTab('focus')">🔭 Ver-dichtbij</button>
+    <button id="or-tab-acht" class="btn btn-ghost" style="font-size:.82rem" onclick="orTab('acht')">8️⃣ Figuur-8</button>
+    <button id="or-tab-2020" class="btn btn-ghost" style="font-size:.82rem" onclick="orTab('2020')">👀 20-20-20</button>
+  </div>
+
+  <!-- PALMING -->
+  <div id="or-view-palming">
+    <div class="card" style="margin-bottom:12px">
+      <p style="font-size:.88rem;color:var(--muted);margin:0 0 8px">Wrijf je handen warm, sluit je ogen en bedek ze met je handpalmen (geen druk). Adem diep in en geniet van de duisternis. Dit ontspant oogspieren volledig.</p>
+    </div>
+    <div class="or-stap">
+      <div class="or-cirkel" id="or-palming-cirkel">🖐</div>
+      <div class="or-tel" id="or-palming-tel">30</div>
+      <div class="or-uitleg" id="or-palming-uitleg">Wrijf je handen warm en leg ze over je gesloten ogen</div>
+      <button class="btn btn-primary" style="margin-top:14px" id="or-palming-btn" onclick="orPalmingStart()">▶ Start (30 sec)</button>
+    </div>
+  </div>
+
+  <!-- VER-DICHTBIJ -->
+  <div id="or-view-focus" style="display:none">
+    <div class="card" style="margin-bottom:12px">
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Focus afwisselend op je vinger (dichtbij) en een punt zo ver mogelijk weg. Dit traint de aanpassingsspier van je lens en vermindert vermoeide ogen.</p>
+    </div>
+    <div class="or-stap">
+      <div class="or-cirkel" id="or-focus-cirkel" style="font-size:2rem">🔭</div>
+      <div class="or-tel" id="or-focus-tel">10</div>
+      <div class="or-uitleg" id="or-focus-uitleg">Hou je wijsvinger 25cm voor je neus</div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:14px">
+        <button class="btn btn-primary" id="or-focus-btn" onclick="orFocusStart()">▶ Starten</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIGUUR-8 -->
+  <div id="or-view-acht" style="display:none">
+    <div class="card" style="margin-bottom:12px">
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Teken een liggende 8 (∞) met je ogen op een denkbeeldig scherm voor je. Langzaam en vloeiend, 5× links en 5× rechts. Traint coördinatie van oogspieren.</p>
+    </div>
+    <div class="or-stap">
+      <svg width="200" height="100" style="margin:16px auto;display:block">
+        <path d="M100,50 C70,10 30,10 30,50 C30,90 70,90 100,50 C130,10 170,10 170,50 C170,90 130,90 100,50" fill="none" stroke="var(--accent)" stroke-width="3" opacity=".3"/>
+        <circle id="or-acht-dot" cx="100" cy="50" r="8" fill="var(--accent)"/>
+      </svg>
+      <div class="or-tel" id="or-acht-tel">10 ronden</div>
+      <div class="or-uitleg">Volg de ∞ met je ogen, beweeg alleen je ogen, niet je hoofd</div>
+      <button class="btn btn-primary" style="margin-top:14px" id="or-acht-btn" onclick="orAchtStart()">▶ Animatie starten</button>
+    </div>
+  </div>
+
+  <!-- 20-20-20 -->
+  <div id="or-view-2020" style="display:none">
+    <div class="card" style="margin-bottom:12px">
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Elke 20 minuten lezen: kijk 20 seconden naar iets dat minstens 6 meter weg is. Vermindert digitale vermoeide ogen drastisch. Stel dit in als herinnering!</p>
+    </div>
+    <div class="or-stap">
+      <div class="or-cirkel" id="or-2020-cirkel">👀</div>
+      <div class="or-tel" id="or-2020-tel">20</div>
+      <div class="or-uitleg" id="or-2020-uitleg">Kijk zo ver mogelijk weg van je scherm (≥6 meter)</div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="or-2020-btn" onclick="or2020Start()">▶ 20 seconden</button>
+        <button class="btn btn-ghost" onclick="or2020Herinnering()">⏰ Stel herinnering in</button>
+      </div>
+      <div id="or-2020-herin-msg" style="font-size:.8rem;color:var(--muted);margin-top:8px;text-align:center"></div>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <script>
@@ -2263,12 +2683,18 @@ function sidebarNav(id) {
 
   // Trigger screen-specific init
   if (id === 'papier') bouwPapierTekst();
-  if (id === 'stats') toonStats();
+  if (id === 'stats') { toonStats(); toonWpmDoel(); }
   if (id === 'tekst') toonBibliotheek();
   if (id === 'oog') setTimeout(resizeCanvas, 50);
   if (id === 'begintest') begintestInit();
   if (id === 'avontuur') avLaad();
   if (id === 'leestest' && typeof leestestInit === 'function') leestestInit();
+  if (id === 'leerweg') leerWegInit();
+  if (id === 'subvocal') svInit();
+  if (id === 'regressie') regInit();
+  if (id === 'fixatie') fixInit();
+  if (id === 'skim') skimInit();
+  if (id === 'oogrust') orInit();
 
   sluitSidebar();
 }
@@ -5245,6 +5671,66 @@ function periSpelHerstart() {
 
 const LEESTEST_TEKSTEN = [
   {
+    titel: 'De werking van het menselijk geheugen',
+    tekst: `Het menselijk geheugen is geen statische opslagplaats, maar een dynamisch systeem dat voortdurend verandert. Herinneringen worden niet opgeslagen als videobeelden, maar als netwerken van verbonden neuronen. Elke keer dat je een herinnering ophaalt, herschrijf je hem enigszins. Dit verklaart waarom getuigenverklaringen zo onbetrouwbaar kunnen zijn: mensen vullen onbewust gaten in met aannemelijke details. Er zijn drie soorten geheugen: het sensorisch geheugen registreert prikkels milliseconden lang, het werkgeheugen bewaart informatie tijdelijk voor verwerking en het langetermijngeheugen slaat kennis voor lange tijd op. De overgang van kort naar langetermijngeheugen heet consolidatie. Slaap speelt hierin een cruciale rol: tijdens de diepe slaapfase verbindt het brein nieuwe informatie met bestaande kennis. Herhaling, emotie en relevantie versterken herinneringen. Informatie die je meerdere keren tegenkomt in verschillende contexten, beklijft beter dan eenmalige blootstelling. Flashcard-methodes zoals het Leitner-systeem gebruiken dit principe van gespreide herhaling. Vergeten is overigens niet altijd slecht: het helpt ons onnodige details te filteren zodat we ons kunnen concentreren op het wezenlijke.`,
+    vragen: [
+      { v: 'Wat gebeurt er als je een herinnering ophaalt?', opties: ['Je speelt hem precies terug', 'Je herschrijft hem enigszins', 'Hij verdwijnt uit het werkgeheugen', 'Hij wordt sterker'], correct: 1 },
+      { v: 'Wat is consolidatie?', opties: ['Informatie vergeten', 'Overgang van kort naar langetermijngeheugen', 'Het sensorisch geheugen activeren', 'Slaap veroorzaken'], correct: 1 },
+      { v: 'Welke rol speelt slaap bij herinneringen?', opties: ['Geen rol', 'Wist herinneringen', 'Verbindt nieuwe info met bestaande kennis', 'Maakt werkgeheugen groter'], correct: 2 },
+      { v: 'Wat versterkt herinneringen het meest?', opties: ['Eenmalige blootstelling', 'Herhaling, emotie en relevantie', 'Weinig slaap', 'Sensorisch geheugen'], correct: 1 },
+    ]
+  },
+  {
+    titel: 'De opkomst van kunstmatige intelligentie',
+    tekst: `Kunstmatige intelligentie is niet langer sciencefiction maar een dagelijkse realiteit. Algoritmen selecteren welk nieuws je ziet, welke muziek je hoort en zelfs welke kandidaten een vacature worden uitgenodigd. De meest recente doorbraak is het grote taalmodel, een type AI dat menselijke tekst genereert op een manier die soms niet van echte tekst te onderscheiden is. Deze systemen zijn getraind op miljarden webpagina's, boeken en artikelen, waardoor ze brede kennis bezitten maar ook menselijke vooroordelen overnemen. De voordelen zijn enorm: AI kan medische scans nauwkeuriger beoordelen dan radiologen, wiskundige problemen oplossen die mensen eeuwen bezighielden en software schrijven op basis van beschrijvingen in gewone taal. De risico's zijn echter reëel. Deepfakes, automatische desinformatie en het verdwijnen van banen in de creatieve sector zijn al zichtbare gevolgen. Experts verschillen van mening over de tijdlijn van meer geavanceerde AI: sommigen voorspellen menselijk niveau binnen tien jaar, anderen denken dat fundamentele obstakels dit nog tientallen jaren vertragen. Wat zeker is, is dat de maatschappij nu al keuzes moet maken over regulering, transparantie en eerlijkheid.`,
+    vragen: [
+      { v: 'Wat is een groot taalmodel?', opties: ['Een soort robot', 'Een type AI dat tekst genereert', 'Een database van boeken', 'Een zoekmachine'], correct: 1 },
+      { v: 'Wat is een nadeel dat al zichtbaar is?', opties: ['AI is te traag', 'Te weinig data', 'Deepfakes en desinformatie', 'AI kan niet schrijven'], correct: 2 },
+      { v: 'Waarop zijn grote taalmodellen getraind?', opties: ['Alleen wetenschappelijke papers', 'Miljarden webpagina\'s, boeken en artikelen', 'Handmatig ingevoerde regels', 'Gesprekken met mensen'], correct: 1 },
+      { v: 'Welk voordeel noemt de tekst in de medische wereld?', opties: ['Goedkopere ziekenhuizen', 'Nauwkeurigere beoordeling van scans', 'Sneller opereren', 'Minder medicijnen nodig'], correct: 1 },
+    ]
+  },
+  {
+    titel: 'Hoe gewoonten ons leven sturen',
+    tekst: `Wetenschappers schatten dat tot vijfenveertig procent van ons dagelijkse gedrag bestaat uit gewoonten: automatische handelingen die we uitvoeren zonder bewuste sturing. Gewoonten worden gevormd door een driedelig proces dat neuropsychologen de gewoontelus noemen. Een prikkel activeert een routine, die wordt afgesloten met een beloning. Na verloop van tijd worden prikkel en beloning direct gekoppeld zonder dat het bewuste brein tussenkomt. Dit is efficiënt: het brein hoeft minder energie te besteden aan herhaalde taken. Maar het maakt gewoonten ook hardnekkig. Om een gewoonte te veranderen, is het niet effectief ze simpelweg weg te willen denken. Onderzoek van MIT en Harvard toont aan dat de meest succesvolle strategie substitutie is: vervang de routine terwijl je prikkel en beloning intact laat. Een roker die stress (prikkel) verwerkt door te roken (routine) voor ontspanning (beloning) heeft meer kans van slagen als hij de sigaret vervangt door een wandeling of ademhalingsoefening, dan als hij alleen willskracht inzet. Identiteitsgebaseerde gewoonten werken nog krachtiger. In plaats van 'ik probeer minder te eten' zeg je 'ik ben iemand die gezond leeft'. Dit verschuift gedrag van een doel naar een deel van je zelfbeeld, wat langduriger effect heeft.`,
+    vragen: [
+      { v: 'Welk percentage van ons gedrag bestaat uit gewoonten?', opties: ['10%', '25%', '45%', '80%'], correct: 2 },
+      { v: 'Wat zijn de drie onderdelen van de gewoontelus?', opties: ['Denken, doen, vergeten', 'Prikkel, routine, beloning', 'Wil, actie, resultaat', 'Brein, lichaam, omgeving'], correct: 1 },
+      { v: 'Wat is de meest effectieve strategie om een gewoonte te veranderen?', opties: ['Willskracht', 'Substitutie van de routine', 'De prikkel vermijden', 'De beloning weggooien'], correct: 1 },
+      { v: 'Wat is een identiteitsgebaseerde gewoonte?', opties: ['Een gewoonte die genetisch is', 'Gedrag koppelen aan wie je bent', 'Een gewoonte die al jaren bestaat', 'Imitatie van anderen'], correct: 1 },
+    ]
+  },
+  {
+    titel: 'De oceaan als klimaatregulator',
+    tekst: `De oceaan bedekt zeventig procent van het aardoppervlak en speelt een onmisbare rol in het klimaatsysteem. Ze absorbeert ruim negentig procent van de extra warmte die broeikasgassen vasthouden, en bijna een kwart van alle CO2 die mensen uitstoten. Zonder deze bufferfunctie zou de opwarming van de aarde aanzienlijk sneller verlopen. Maar de oceaan betaalt een prijs. De opname van CO2 veroorzaakt verzuring: het zeewaterwordt zuurder, wat koraalriffen oplost, schelpdieren zwakker maakt en de voedselketen verstoort. Tegelijkertijd leidt de warmteopname tot smeltende gletsjers en thermische uitzetting van water, waardoor de zeespiegel stijgt. Oceaanstromingen zoals de Golfstroom transporteren warmte van de evenaar naar de poolgebieden en houden Europa klimatologisch gematigd. Studies tonen aan dat deze stroom verzwakt door de instroom van zoet smeltwater, met mogelijk dramatische gevolgen voor het Europese klimaat: koudere winters, drogere zomers en extremere weersomstandigheden. Wetenschappers beschouwen de gezondheid van de oceaan als een van de belangrijkste indicatoren voor de stabiliteit van het hele aardsysteem.`,
+    vragen: [
+      { v: 'Welk percentage van extra warmte absorbeert de oceaan?', opties: ['50%', '70%', '90%', '99%'], correct: 2 },
+      { v: 'Wat veroorzaakt oceaanverzuring?', opties: ['Warmteopname', 'CO2-opname', 'Plastic vervuiling', 'Zoutgehalte'], correct: 1 },
+      { v: 'Wat is een gevolg van een verzwakkende Golfstroom voor Europa?', opties: ['Warmere zomers en zachtere winters', 'Koudere winters en drogere zomers', 'Hogere zeespiegel alleen', 'Meer regen in de winter'], correct: 1 },
+      { v: 'Waardoor verzwakt de Golfstroom?', opties: ['Meer CO2', 'Instroom van zoet smeltwater', 'Stijgende zeespiegel', 'Hogere temperaturen alleen'], correct: 1 },
+    ]
+  },
+  {
+    titel: 'De psychologie van besluitvorming',
+    tekst: `Mensen zijn geen rationele wezens die kosten en baten zorgvuldig afwegen. Tientallen jaren psychologisch onderzoek tonen aan dat onze beslissingen systematisch worden beïnvloed door cognitieve vertekeningen. Nobelprijswinnaar Daniel Kahneman beschrijft twee denksystemen: Systeem 1 is snel, automatisch en emotioneel. Systeem 2 is traag, bewust en analytisch. De meeste beslissingen worden genomen door Systeem 1, ook als de situatie eigenlijk om Systeem 2 vraagt. Een klassiek voorbeeld is de ankeringsvertekening: als je wordt gevraagd of de Eiffeltoren hoger of lager is dan twaalf meter, geef je daarna een lagere schatting van de hoogte dan wanneer de ankervraag vijfhonderd meter noemde. Ons brein hecht te veel gewicht aan het eerste getal. Verliesaversie is een andere krachtige kracht: een verlies van honderd euro voelt twee keer zo erg als een winst van honderd euro goed voelt. Dit verklaart waarom mensen risicovolle beleggingen vasthouden in de hoop verlies te voorkomen, ook als verkopen rationeler zou zijn. De status-quovoorkeur maakt dat we de huidige situatie prefereren boven verandering, zelfs als verandering objectief beter is. Bewustzijn van deze vertekeningen helpt betere beslissingen te nemen, maar elimineert ze niet volledig.`,
+    vragen: [
+      { v: 'Wat is Systeem 1 in Kahnemans model?', opties: ['Traag en analytisch', 'Snel, automatisch en emotioneel', 'Bewust en logisch', 'Alleen actief bij moeilijke keuzes'], correct: 1 },
+      { v: 'Wat is de ankeringsvertekening?', opties: ['Te veel twijfelen', 'Eerste informatie heeft te veel invloed op schattingen', 'Verlies groter voelen dan winst', 'De huidige situatie prefereren'], correct: 1 },
+      { v: 'Hoe voelt een verlies van €100 vergeleken met een winst van €100?', opties: ['Even erg / goed', 'Iets erger', 'Twee keer zo erg', 'Drie keer zo erg'], correct: 2 },
+      { v: 'Wat is de status-quovoorkeur?', opties: ['Voorkeur voor verandering', 'Huidige situatie prefereren boven verandering', 'Rationele keuzes maken', 'Risico\'s altijd vermijden'], correct: 1 },
+    ]
+  },
+  {
+    titel: 'Duurzame voeding en de planeet',
+    tekst: `De manier waarop we voedsel produceren is een van de grootste drijvers van klimaatverandering, biodiversiteitsverlies en waterschaarste. De veehouderij is verantwoordelijk voor ongeveer veertien komma vijf procent van alle wereldwijde broeikasgasemissies — meer dan de gehele transportsector. Runderen produceren methaangas, dat op korte termijn tachtig keer krachiger is als broeikasgas dan CO2. Naast uitstoot vereist vlees- en zuivelproductie enorme hoeveelheden land, water en voer. Om één kilo rundvlees te produceren zijn gemiddeld vijftien duizend liter water en zeven kilo graanvoer nodig. Plantaardige eiwitbronnen zoals peulvruchten, noten en tofu hebben een fractie van deze voetafdruk. Studies tonen aan dat overschakelen naar een overwegend plantaardig dieet de voedselgerelateerde uitstoot van een individu met tot zeventig procent kan verminderen. Dat hoeft geen alles-of-niets keuze te zijn: zelfs het vervangen van één vleesmaaltijd per dag door een plantaardig alternatief heeft een meetbaar effect. Voedselverspilling is een ander groot probleem: wereldwijd wordt een derde van al het geproduceerde voedsel weggegooid. Dit vertegenwoordigt niet alleen verspilling van voedsel, maar ook van alle water, energie en land die voor de productie zijn gebruikt.`,
+    vragen: [
+      { v: 'Welk percentage van broeikasgasemissies is afkomstig van de veehouderij?', opties: ['5%', '14,5%', '30%', '50%'], correct: 1 },
+      { v: 'Hoeveel liter water is nodig voor 1 kilo rundvlees?', opties: ['1.000 liter', '5.000 liter', '15.000 liter', '50.000 liter'], correct: 2 },
+      { v: 'Met hoeveel procent kan een plantaardig dieet de uitstoot verminderen?', opties: ['Tot 20%', 'Tot 40%', 'Tot 70%', 'Tot 100%'], correct: 2 },
+      { v: 'Welk deel van geproduceerd voedsel wordt verspild?', opties: ['Een tiende', 'Een kwart', 'Een derde', 'De helft'], correct: 2 },
+    ]
+  },
+  {
     titel: 'De kracht van lezen',
     tekst: `Lezen is een van de meest waardevolle vaardigheden die een mens kan beheersen. Het opent deuren naar kennis, fantasie en begrip van de wereld om ons heen. Toch lezen veel mensen langzamer dan nodig is, waardoor ze minder informatie in minder tijd verwerken. Met gerichte oefening kun je je leessnelheid significant verhogen zonder begripsverlies. De sleutel ligt in het herkennen van woordgroepen in plaats van losse woorden, het vermijden van stille meelezing en het trainen van je oogsprongen. Beginners lezen gemiddeld tweehonderd woorden per minuut. Getrainde lezers halen vier- tot vijfhonderd woorden per minuut. Toppers zoals presidenten en advocaten bereiken soms duizend woorden per minuut of meer. Het verschil zit niet in intelligentie, maar in techniek en oefening. Begin vandaag met dagelijkse leesoefeningen van tien minuten en je merkt al na twee weken verschil.`,
     vragen: [
@@ -5275,6 +5761,799 @@ const LEESTEST_TEKSTEN = [
     ]
   },
 ];
+
+// ═══════════════════════════════════════════════════════════
+// 📚  LEERWEG — 4-weken curriculum
+// ═══════════════════════════════════════════════════════════
+const LEERWEG_WEKEN = [
+  {
+    naam: 'Week 1: Fundament', icon: '🏗️', kleur: '#7c6ff7',
+    doel: 'Leer je beginsnelheid kennen en train je ogen op de juiste beweging',
+    uitleg: 'Ogen die correct bewegen zijn de basis van alles. Meten is weten: zonder beginmeting weet je niet hoeveel je verbetert.',
+    dagen: [
+      { naam: 'Begintest — meet je startsnelheid', duur: '10 min', screen: 'begintest' },
+      { naam: 'Oogbeweging basisoefening (5 min)', duur: '5 min', screen: 'oog' },
+      { naam: 'Perifeer zicht — Level 1 & 2', duur: '10 min', screen: 'perifeer' },
+      { naam: 'Leestest + 4 begripsvragen', duur: '15 min', screen: 'leestest' },
+      { naam: 'Oogontspanning: palming + ver-dichtbij', duur: '8 min', screen: 'oogrust' },
+      { naam: 'Vrije keuze — herhaal wat moeilijk was', duur: '10 min', screen: null },
+      { naam: 'Weektest: leessnelheid opnieuw meten', duur: '10 min', screen: 'leestest' },
+    ]
+  },
+  {
+    naam: 'Week 2: Snelheid', icon: '⚡', kleur: '#f59e0b',
+    doel: 'Verminder het aantal oogfixaties en elimineer regressie',
+    uitleg: 'De gemiddelde lezer kijkt 3–4× terug per regel. Dat kost 30% van je leestijd. Fixatie-training en regressie-training pakken dit direct aan.',
+    dagen: [
+      { naam: 'Fixatie-training (2 woorden per fixatie)', duur: '10 min', screen: 'fixatie' },
+      { naam: 'Regressie-training — lees zonder terug te kijken', duur: '10 min', screen: 'regressie' },
+      { naam: 'RSVP op jouw WPM + 50', duur: '10 min', screen: 'rsvp' },
+      { naam: 'Chunk lezen — groepen van 3 woorden', duur: '10 min', screen: 'chunk' },
+      { naam: 'Fixatie op 3 woorden + Regressie combo', duur: '15 min', screen: 'fixatie' },
+      { naam: 'Leestest: bewust geen oog terug', duur: '15 min', screen: 'leestest' },
+      { naam: 'Weektest: vergelijk met week 1', duur: '10 min', screen: 'leestest' },
+    ]
+  },
+  {
+    naam: 'Week 3: Techniek', icon: '🎯', kleur: '#10b981',
+    doel: 'Breek de innerlijke stem en lees met ritme en cadans',
+    uitleg: 'Subvocalisatie — de innerlijke stem — beperkt je tot jouw spreektempo (~150 WPM). Door dit patroon te doorbreken kun je verdubbelen zonder begripsverlies.',
+    dagen: [
+      { naam: 'Subvocalisatie uitleg + eerste tel-oefening', duur: '10 min', screen: 'subvocal' },
+      { naam: 'Metronoom lezen op 280 WPM', duur: '10 min', screen: 'subvocal' },
+      { naam: 'S-beweging papier lezen', duur: '10 min', screen: 'papier' },
+      { naam: 'RSVP fors boven jouw comfortzone', duur: '10 min', screen: 'rsvp' },
+      { naam: 'Perifeer niveau 4–6', duur: '10 min', screen: 'perifeer' },
+      { naam: 'Subvocal humming + regressie', duur: '15 min', screen: 'subvocal' },
+      { naam: 'Weektest', duur: '10 min', screen: 'leestest' },
+    ]
+  },
+  {
+    naam: 'Week 4: Begrip & Integratie', icon: '🧠', kleur: '#ef4444',
+    doel: 'Combineer snelheid met diep begrip via slimme leesstrategieën',
+    uitleg: 'Snelheid zonder begrip is waardeloos. Previewing, skimmen en scannen zijn technieken die je 70% begrip geven in 20% van de normale leestijd.',
+    dagen: [
+      { naam: 'Previewing-techniek — structuur eerst lezen', duur: '10 min', screen: 'skim' },
+      { naam: 'Skimmen — snel hoofdidee begrijpen', duur: '10 min', screen: 'skim' },
+      { naam: 'Scannen — doelgericht zoeken in tekst', duur: '10 min', screen: 'skim' },
+      { naam: 'Lange leestekst + alle begripsvragen', duur: '20 min', screen: 'leestest' },
+      { naam: 'Maak jouw persoonlijke top-3 technieken', duur: '15 min', screen: null },
+      { naam: 'Oogontspanning — volledig herstelroutine', duur: '10 min', screen: 'oogrust' },
+      { naam: '🏆 EINDTEST: vergelijk begin vs. nu!', duur: '15 min', screen: 'leestest' },
+    ]
+  }
+];
+
+const LW_KEY = 'leerweg_gedaan'; // ["w0d2","w1d0",...]
+function lwGedaan() { try { return JSON.parse(localStorage.getItem(LW_KEY) || '[]'); } catch(e) { return []; } }
+function lwKey(w,d) { return `w${w}d${d}`; }
+function lwIsDone(w,d) { return lwGedaan().includes(lwKey(w,d)); }
+
+function leerWegInit() {
+  const gedaan = lwGedaan();
+  // Zoek vandaag: eerste ongedane dag
+  let vandaagWeek = -1, vandaagDag = -1;
+  outer: for (let w = 0; w < LEERWEG_WEKEN.length; w++) {
+    for (let d = 0; d < LEERWEG_WEKEN[w].dagen.length; d++) {
+      if (!gedaan.includes(lwKey(w,d))) { vandaagWeek = w; vandaagDag = d; break outer; }
+    }
+  }
+
+  // Vandaag-box
+  if (vandaagWeek >= 0) {
+    const dag = LEERWEG_WEKEN[vandaagWeek].dagen[vandaagDag];
+    document.getElementById('lw-vandaag-tekst').textContent =
+      `${LEERWEG_WEKEN[vandaagWeek].icon} W${vandaagWeek+1} Dag ${vandaagDag+1}: ${dag.naam}`;
+    document.getElementById('lw-vandaag-duur').textContent = `⏱ ${dag.duur}`;
+    document.getElementById('lw-vandaag-btn').dataset.week = vandaagWeek;
+    document.getElementById('lw-vandaag-btn').dataset.dag = vandaagDag;
+  } else {
+    document.getElementById('lw-vandaag-tekst').textContent = '🏆 Programma voltooid! Start opnieuw voor nog meer verbetering.';
+    document.getElementById('lw-vandaag-duur').textContent = '';
+    document.getElementById('lw-vandaag-btn').style.display = 'none';
+  }
+
+  // WPM doel info
+  const doel = parseInt(localStorage.getItem('wpm_doel') || '0');
+  const stats = JSON.parse(localStorage.getItem('snellees_stats') || '{"sessies":[]}');
+  const sessies = stats.sessies || [];
+  const gem = sessies.length ? Math.round(sessies.slice(-5).reduce((a,s)=>a+s.wpm,0)/Math.min(5,sessies.length)) : 0;
+  const doelInfo = document.getElementById('lw-wpm-doel-info');
+  if (doel > 0 && gem > 0) {
+    const pct = Math.min(100, Math.round(gem/doel*100));
+    doelInfo.innerHTML = `🎯 WPM-doel: <b>${gem} / ${doel} WPM</b> — ${pct}% bereikt`;
+  } else if (doel > 0) {
+    doelInfo.innerHTML = `🎯 WPM-doel: <b>${doel} WPM</b> — doe de Begintest om je voortgang bij te houden`;
+  } else {
+    doelInfo.innerHTML = `💡 Stel een WPM-doel in via <a onclick="sidebarNav('stats')" href="#" style="color:var(--accent)">Statistieken</a> om je voortgang te volgen`;
+  }
+
+  // Weken bouwen
+  const cont = document.getElementById('lw-weken-container');
+  cont.innerHTML = LEERWEG_WEKEN.map((week, wi) => {
+    const weekGedaan = week.dagen.filter((_,di) => gedaan.includes(lwKey(wi,di))).length;
+    const totaal = week.dagen.length;
+    const isHuidig = wi === vandaagWeek;
+    const isVoltooid = weekGedaan === totaal;
+    const badgeTxt = isVoltooid ? '✅ Voltooid' : `${weekGedaan}/${totaal} gedaan`;
+
+    const dots = Array.from({length:totaal},(_,di) => {
+      const isDone = gedaan.includes(lwKey(wi,di));
+      const isVandaag = wi === vandaagWeek && di === vandaagDag;
+      return `<div class="lw-progress-dot ${isDone?'gedaan':isVandaag?'vandaag':''}"></div>`;
+    }).join('');
+
+    const dagenHtml = week.dagen.map((dag, di) => {
+      const done = gedaan.includes(lwKey(wi,di));
+      const isVandaagDag = wi === vandaagWeek && di === vandaagDag;
+      const btnTxt = done ? '✓' : isVandaagDag ? '▶ Nu' : 'Start';
+      return `<div class="lw-dag-rij ${done?'gedaan':''}">
+        <span class="lw-dag-nr">Dag ${di+1}</span>
+        <span class="lw-dag-naam">${dag.naam}</span>
+        <span class="lw-dag-duur">${dag.duur}</span>
+        ${done ? '<span class="lw-dag-vink">✅</span>' :
+          `<button class="lw-dag-btn" onclick="leerWegStartDag(${wi},${di})">${btnTxt}</button>`}
+      </div>`;
+    }).join('');
+
+    return `<div class="lw-week-card">
+      <div class="lw-week-header" onclick="lwToggleWeek(${wi})" style="${isHuidig?'border-left:3px solid var(--accent);':''}" >
+        <div class="lw-week-icon">${week.icon}</div>
+        <div class="lw-week-info">
+          <div class="lw-week-naam">${week.naam}</div>
+          <div class="lw-week-sub">${week.doel}</div>
+          <div class="lw-progress-rij" style="margin-top:6px">${dots}</div>
+        </div>
+        <span class="lw-week-badge ${isVoltooid?'voltooid':''}">${badgeTxt}</span>
+      </div>
+      <div class="lw-week-body ${isHuidig?'open':''}" id="lw-week-body-${wi}">
+        <div style="font-size:.82rem;color:var(--muted);margin-bottom:10px;padding:8px;background:var(--card2);border-radius:8px">💡 ${week.uitleg}</div>
+        ${dagenHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function lwToggleWeek(wi) {
+  const body = document.getElementById(`lw-week-body-${wi}`);
+  body.classList.toggle('open');
+}
+
+function leerWegVandaagDoen() {
+  const btn = document.getElementById('lw-vandaag-btn');
+  const w = parseInt(btn.dataset.week);
+  const d = parseInt(btn.dataset.dag);
+  leerWegStartDag(w, d);
+}
+
+function leerWegStartDag(w, d) {
+  const dag = LEERWEG_WEKEN[w].dagen[d];
+  if (dag.screen) {
+    sidebarNav(dag.screen);
+  } else {
+    alert('Vrij oefenen: kies zelf een module uit het menu!');
+  }
+  // Na navigatie markeren als gedaan
+  setTimeout(() => leerWegDagDoen(w, d), 300);
+}
+
+function leerWegDagMarkeer() {
+  const btn = document.getElementById('lw-vandaag-btn');
+  const w = parseInt(btn.dataset.week || '0');
+  const d = parseInt(btn.dataset.dag || '0');
+  leerWegDagDoen(w, d);
+}
+
+function leerWegDagDoen(w, d) {
+  const gedaan = lwGedaan();
+  const k = lwKey(w, d);
+  if (!gedaan.includes(k)) { gedaan.push(k); localStorage.setItem(LW_KEY, JSON.stringify(gedaan)); }
+  leerWegInit();
+}
+
+function leerWegReset() {
+  if (confirm('Weet je zeker dat je het programma opnieuw wilt starten? Alle voortgang wordt gewist.')) {
+    localStorage.removeItem(LW_KEY);
+    leerWegInit();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// 🔕  SUBVOCALISATIE-TRAINING
+// ═══════════════════════════════════════════════════════════
+const SV_TEKSTEN = [
+  'Het brein kan woorden herkennen zonder ze uit te spreken. Dit is een vaardigheid die met oefening te ontwikkelen is. Snelle lezers zien woorden als beelden, niet als klanken.',
+  'Elke dag lezen vergroot je woordenschat en verbetert je begrip. Consistentie is belangrijker dan intensiteit. Tien minuten per dag levert meer op dan één uur per week.',
+  'Concentratie is een spier die vermoeid raakt. Plan moeilijke leestaken in de ochtend wanneer je energie het hoogst is. Vermijd afleiding door je telefoon weg te leggen.',
+  'Informatie die je koppelt aan iets wat je al weet beklijft beter. Verbind nieuwe feiten met bestaande kennis. Zo bouw je een sterk kennisnetwerk in je brein.',
+  'Ogen bewegen in sprongen, niet vloeiend. Elke sprong heet een saccade. Snelle lezers maken minder maar grotere sprongen, waardoor ze meer woorden per fixatie zien.',
+  'Regelmatig pauzeren tijdens het lezen verhoogt de retentie. Elke twintig minuten even stoppen en nadenken over wat je las verankert informatie in je langetermijngeheugen.',
+];
+
+let svModus = 'metro';
+let svMetroActief = false;
+let svMetroTimer = null;
+let svMetroBpmVal = 280;
+let svMetroWoorden = [];
+let svMetroIdx = 0;
+let svTelActief = false;
+let svTelTimer = null;
+let svTelTeller = 1;
+let svHumTimerActief = false;
+let svHumCountdown = 0;
+let svHumTimerRef = null;
+
+function svInit() { svSwitchTab('metro'); svMetroLaadTekst(); svTelLaadTekst(); svHumLaadTekst(); }
+
+function svSwitchTab(t) {
+  svModus = t;
+  ['metro','tel','hum'].forEach(id => {
+    document.getElementById(`sv-tab-${id}`).className = t===id ? 'btn btn-primary' : 'btn btn-ghost';
+    document.getElementById(`sv-view-${id}`).style.display = t===id ? '' : 'none';
+  });
+}
+
+function svMetroLaadTekst() {
+  svMetroWoorden = SV_TEKSTEN[Math.floor(Math.random()*SV_TEKSTEN.length)].split(/\s+/);
+  svMetroIdx = 0;
+  document.getElementById('sv-metro-voortgang').textContent = '';
+  document.getElementById('sv-metro-woord').textContent = '—';
+}
+
+function svMetroToggle() {
+  if (svMetroActief) { svMetroStop(); return; }
+  svMetroActief = true;
+  document.getElementById('sv-metro-btn').textContent = '⏹ Stop';
+  svMetroTick();
+}
+
+function svMetroTick() {
+  if (!svMetroActief) return;
+  if (svMetroIdx >= svMetroWoorden.length) { svMetroStop(); svMetroLaadTekst(); return; }
+  document.getElementById('sv-metro-woord').textContent = svMetroWoorden[svMetroIdx];
+  document.getElementById('sv-metro-voortgang').textContent = `${svMetroIdx+1} / ${svMetroWoorden.length}`;
+  // Animate bar
+  const fill = document.getElementById('sv-metro-fill');
+  fill.style.width = '0%';
+  requestAnimationFrame(()=> requestAnimationFrame(()=> fill.style.width = '100%'));
+  svMetroIdx++;
+  const ms = Math.round(60000 / svMetroBpmVal);
+  svMetroTimer = setTimeout(svMetroTick, ms);
+}
+
+function svMetroStop() {
+  svMetroActief = false;
+  clearTimeout(svMetroTimer);
+  document.getElementById('sv-metro-btn').textContent = '▶ Starten';
+  document.getElementById('sv-metro-fill').style.width = '0%';
+}
+
+function svMetroBpm(delta) {
+  svMetroBpmVal = Math.max(100, Math.min(600, svMetroBpmVal + delta));
+  document.getElementById('sv-metro-bpm').textContent = svMetroBpmVal;
+  if (svMetroActief) { clearTimeout(svMetroTimer); svMetroTick(); }
+}
+
+function svTelLaadTekst() {
+  document.getElementById('sv-tel-tekst').textContent = SV_TEKSTEN[Math.floor(Math.random()*SV_TEKSTEN.length)];
+}
+
+function svTelToggle() {
+  if (svTelActief) {
+    svTelActief = false; clearInterval(svTelTimer);
+    document.getElementById('sv-tel-btn').textContent = '▶ Start tellen';
+    document.getElementById('sv-tel-teller').textContent = '—';
+    return;
+  }
+  svTelActief = true; svTelTeller = 1;
+  document.getElementById('sv-tel-btn').textContent = '⏹ Stop tellen';
+  svTelTimer = setInterval(() => {
+    document.getElementById('sv-tel-teller').textContent = svTelTeller;
+    svTelTeller = svTelTeller >= 4 ? 1 : svTelTeller + 1;
+  }, 350);
+}
+
+function svTelNieuwe() { svTelLaadTekst(); }
+
+function svHumLaadTekst() {
+  document.getElementById('sv-hum-tekst').textContent = SV_TEKSTEN[Math.floor(Math.random()*SV_TEKSTEN.length)];
+  document.getElementById('sv-hum-timer-display').style.display = 'none';
+}
+
+function svHumNieuw() { svHumLaadTekst(); }
+
+function svHumTimer() {
+  if (svHumTimerActief) return;
+  svHumTimerActief = true; svHumCountdown = 60;
+  document.getElementById('sv-hum-timer-display').style.display = '';
+  document.getElementById('sv-hum-timer-btn').disabled = true;
+  svHumTimerRef = setInterval(() => {
+    svHumCountdown--;
+    const m = Math.floor(svHumCountdown/60), s = svHumCountdown%60;
+    document.getElementById('sv-hum-timer-display').textContent = `${m}:${String(s).padStart(2,'0')}`;
+    if (svHumCountdown <= 0) {
+      clearInterval(svHumTimerRef); svHumTimerActief = false;
+      document.getElementById('sv-hum-timer-display').textContent = '✅ Klaar!';
+      document.getElementById('sv-hum-timer-btn').disabled = false;
+    }
+  }, 1000);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ⏩  REGRESSIE-TRAINING
+// ═══════════════════════════════════════════════════════════
+const REG_TEKSTEN = [
+  'Regressie kost lezers gemiddeld dertig procent van hun leestijd. Ogen keren terug uit gewoonte, niet uit noodzaak. Door bewust vooruit te lezen train je dit patroon weg. Het brein past zich snel aan als terugkijken simpelweg niet meer mogelijk is.',
+  'Elke dag een kleine verbetering maakt na een jaar een enorm verschil. Consistente oefening van tien minuten per dag is effectiever dan sporadische sessies van een uur. Bouw ritme op en houd dat vast.',
+  'Begrip volgt snelheid, niet andersom. Als je sneller leest, dwingt je brein zich om efficiënter te verwerken. Langzamer lezen geeft het brein de kans te dwalen. Sneller lezen houdt de aandacht scherp.',
+  'Woorden zijn niet gelijk: functiewoorden zoals de en het verwerkt je brein razendsnel. Inhoudswoorden zoals resultaten en experimenten vereisen meer aandacht. Oefen om functiewoorden over te slaan zonder ze te missen.',
+  'Focus is een beperkte hulpbron. De hersenen kunnen slechts vier tot zeven elementen tegelijk in het werkgeheugen houden. Goede lezers groeperen informatie automatisch, waardoor ze meer inhoud per fixatie opslaan.',
+  'Snelheid en begrip zijn geen tegenpolen. Onderzoek toont aan dat mensen die sneller lezen vaak beter begrip hebben, omdat hun aandacht scherpter is en hun geest minder afdwaalt.',
+];
+
+let regWpm = 220;
+let regActief = false;
+let regZinnen = [];
+let regIdx = 0;
+let regTimer = null;
+let regTekst = '';
+
+function regInit() {
+  document.getElementById('reg-wpm-label').textContent = `${regWpm} WPM`;
+  regNieuwe();
+}
+
+function regNieuwe() {
+  regStop();
+  regTekst = REG_TEKSTEN[Math.floor(Math.random()*REG_TEKSTEN.length)];
+  regZinnen = regTekst.match(/[^.!?]+[.!?]?/g).filter(z=>z.trim().length>5).map(z=>z.trim());
+  regIdx = 0;
+  document.getElementById('reg-zin-display').textContent = 'Klik op Start om te beginnen';
+  document.getElementById('reg-prog-fill').style.width = '0%';
+  document.getElementById('reg-einde-msg').style.display = 'none';
+  document.getElementById('reg-start-btn').textContent = '▶ Starten';
+}
+
+function regToggle() {
+  if (regActief) { regStop(); return; }
+  regActief = true;
+  document.getElementById('reg-start-btn').textContent = '⏹ Stop';
+  document.getElementById('reg-einde-msg').style.display = 'none';
+  regVolgende();
+}
+
+function regVolgende() {
+  if (!regActief) return;
+  if (regIdx >= regZinnen.length) { regStop(); regEinde(); return; }
+  const zin = regZinnen[regIdx];
+  document.getElementById('reg-zin-display').textContent = zin;
+  document.getElementById('reg-prog-fill').style.width = `${Math.round((regIdx+1)/regZinnen.length*100)}%`;
+  const wc = zin.split(/\s+/).length;
+  const ms = Math.round(wc / regWpm * 60 * 1000);
+  regIdx++;
+  regTimer = setTimeout(regVolgende, ms);
+}
+
+function regStop() {
+  regActief = false;
+  clearTimeout(regTimer);
+  document.getElementById('reg-start-btn').textContent = '▶ Starten';
+}
+
+function regEinde() {
+  document.getElementById('reg-zin-display').textContent = '✅ Tekst voltooid!';
+  document.getElementById('reg-einde-msg').innerHTML =
+    `<div class="card"><b>Goed gedaan!</b> Je hebt de hele tekst gelezen zonder terug te kijken. Verhoog het tempo met 10–20 WPM en probeer opnieuw.</div>`;
+  document.getElementById('reg-einde-msg').style.display = '';
+}
+
+function regTempoPas(delta) {
+  regWpm = Math.max(80, Math.min(600, regWpm + delta));
+  document.getElementById('reg-wpm-label').textContent = `${regWpm} WPM`;
+  if (regActief) { clearTimeout(regTimer); regVolgende(); }
+}
+
+// ═══════════════════════════════════════════════════════════
+// 👁  FIXATIE-TRAINING
+// ═══════════════════════════════════════════════════════════
+const FIX_TEKSTEN = [
+  'Het menselijk oog kan vijf woorden tegelijk herkennen als ze gecentreerd zijn op het fixatiepunt. De kunst is om dat blikveld bewust te benutten bij het lezen van gewone tekst.',
+  'Iedere lezer begint met één woord per fixatie. Met training groeit dat naar twee dan drie dan vier woorden. Dit klinkt simpel maar vereist weken van dagelijkse oefening.',
+  'Periferisch zien is niet alleen voor snellezen handig. Sportcoaches trainen het bij voetballers en basketbalspelers zodat ze het veld overzien zonder hun hoofd te draaien.',
+  'Lezen met brede fixaties kost aanvankelijk meer concentratie. Dat is normaal. Het brein moet een nieuw patroon opbouwen. Na twee weken voelt het vanzelf en gemakkelijk.',
+  'Een fixatie duurt gemiddeld tweehonderd tot driehonderd milliseconden. Bij drie woorden per fixatie en tweehonderd fixaties per minuut lees je zeshonderd woorden per minuut.',
+];
+
+let fixBreedte = 3;
+let fixActief = false;
+let fixAuto = false;
+let fixWoorden = [];
+let fixGroepen = [];
+let fixGrpIdx = 0;
+let fixAutoTimer = null;
+const FIX_AUTO_MS = 700;
+
+function fixInit() {
+  document.getElementById('fix-breedte-val').textContent = fixBreedte;
+  fixNieuwe();
+}
+
+function fixNieuwe() {
+  fixStop();
+  const tekst = FIX_TEKSTEN[Math.floor(Math.random()*FIX_TEKSTEN.length)];
+  fixWoorden = tekst.split(/\s+/);
+  fixGroepen = [];
+  for (let i=0; i<fixWoorden.length; i+=fixBreedte) fixGroepen.push(fixWoorden.slice(i,i+fixBreedte));
+  fixGrpIdx = 0;
+  fixRender(-1);
+  document.getElementById('fix-score-msg').style.display='none';
+  document.getElementById('fix-start-btn').textContent='▶ Starten';
+}
+
+function fixRender(actief) {
+  const html = fixGroepen.map((grp,i) =>
+    `<span class="fix-woord ${i<actief?'gelezen':i===actief?'actief':''}">${grp.join(' ')}</span> `
+  ).join('');
+  document.getElementById('fix-display').innerHTML = html;
+  document.getElementById('fix-stats-l').textContent = `Groep ${Math.max(1,actief+1)} / ${fixGroepen.length}`;
+  document.getElementById('fix-stats-r').textContent = `${fixBreedte} woorden per fixatie`;
+}
+
+function fixStart() {
+  if (fixActief && !fixAuto) { fixStop(); return; }
+  fixActief = true;
+  document.getElementById('fix-start-btn').textContent = '⏹ Stop';
+  fixGrpIdx = 0;
+  fixRender(fixGrpIdx);
+}
+
+function fixVolgende() {
+  if (!fixActief) { fixStart(); return; }
+  if (fixGrpIdx >= fixGroepen.length - 1) { fixEinde(); return; }
+  fixGrpIdx++;
+  fixRender(fixGrpIdx);
+}
+
+function fixStop() {
+  fixActief = false;
+  clearInterval(fixAutoTimer);
+  document.getElementById('fix-start-btn').textContent='▶ Starten';
+  if (fixAuto) { fixAuto = false; document.getElementById('fix-auto-btn').textContent='UIT'; }
+}
+
+function fixAutoToggle() {
+  fixAuto = !fixAuto;
+  document.getElementById('fix-auto-btn').textContent = fixAuto ? 'AAN' : 'UIT';
+  if (fixAuto) {
+    if (!fixActief) { fixActief = true; document.getElementById('fix-start-btn').textContent='⏹ Stop'; }
+    fixAutoTimer = setInterval(() => { if (fixGrpIdx>=fixGroepen.length-1){fixStop();fixEinde();} else { fixGrpIdx++;fixRender(fixGrpIdx); } }, FIX_AUTO_MS);
+  } else {
+    clearInterval(fixAutoTimer);
+  }
+}
+
+function fixBreedtePas(delta) {
+  fixBreedte = Math.max(1, Math.min(7, fixBreedte + delta));
+  document.getElementById('fix-breedte-val').textContent = fixBreedte;
+  fixNieuwe();
+}
+
+function fixEinde() {
+  fixStop();
+  document.getElementById('fix-score-msg').innerHTML =
+    `<div class="card">✅ <b>Goed gedaan!</b> Je hebt alle ${fixGroepen.length} groepen van ${fixBreedte} woorden gelezen. Probeer nu ${fixBreedte+1} woorden per fixatie!</div>`;
+  document.getElementById('fix-score-msg').style.display='';
+}
+
+// ═══════════════════════════════════════════════════════════
+// 🔍  SKIMMEN & SCANNEN
+// ═══════════════════════════════════════════════════════════
+const SKIM_TEKSTEN_DATA = [
+  {
+    titel: 'Voordelen van dagelijkse beweging',
+    alineas: [
+      'Regelmatige lichaamsbeweging heeft bewezen voordelen voor zowel lichaam als geest. Studies tonen aan dat dertig minuten matige beweging per dag de kans op hart- en vaatziekten met dertig procent verlaagt.',
+      'Het brein profiteert minstens zo veel van beweging als het lichaam. Aerobe activiteit stimuleert de aanmaak van BDNF, een eiwit dat nieuwe neuronverbindingen bevordert en het geheugen verbetert.',
+      'Beweging vermindert stresshormonen zoals cortisol en verhoogt endorfine. Dit verklaart het zogenoemde runners high en het gevoel van welzijn na het sporten.',
+      'Zelfs korte wandelingen van tien minuten hebben meetbaar effect. Wie niet van intensief sporten houdt kan beginnen met dagelijkse wandelingen en dit geleidelijk opbouwen.',
+    ]
+  },
+  {
+    titel: 'De geschiedenis van het internet',
+    alineas: [
+      'Het internet begon als ARPANET, een militair communicatienetwerk van de Amerikaanse overheid uit de jaren zestig. Het doel was een netwerk dat bestand was tegen nucleaire aanvallen.',
+      'In de jaren tachtig groeide het netwerk naar universiteiten en onderzoeksinstituten. Tim Berners-Lee introduceerde in negentien negentig het World Wide Web, waarmee informatie voor iedereen toegankelijk werd.',
+      'De opkomst van browsers zoals Netscape in de jaren negentig maakte het internet toegankelijk voor gewone gebruikers. E-commerce, zoekmachines en sociale media volgden snel daarna.',
+      'Vandaag zijn vijf miljard mensen verbonden met het internet. Het heeft communicatie, handel, onderwijs en entertainment fundamenteel veranderd en is de ruggengraat van de moderne economie.',
+    ]
+  },
+  {
+    titel: 'Waarom muziek ons raakt',
+    alineas: [
+      'Muziek activeert meer hersengebieden tegelijk dan bijna elke andere activiteit. Emotie, geheugen, beweging en beloning worden allemaal aangesproken bij het luisteren naar of maken van muziek.',
+      'Het dopaminesysteem reageert op muziek op dezelfde manier als op eten of sociale verbinding. Kippenvel bij een emotioneel hoogtepunt in een lied is een teken van dopaminevrijlating.',
+      'Muziek uit de adolescentie heeft een bijzonder sterke emotionele lading door de heightened brain plasticity in die periode. Nummers uit je tienerjaren roepen levendigere herinneringen op dan latere muziek.',
+      'Muziektherapie wordt ingezet bij revalidatie na beroertes, bij dementiepatiënten en bij PTSS. Ritme en melodie activeren neurale circuits die bij verbale therapie moeilijker te bereiken zijn.',
+    ]
+  },
+];
+
+const SCAN_WOORDEN = ['dertig','BDNF','ARPANET','Netscape','dopamine','cortisol','browsers','Tim Berners-Lee','adolescentie','cortisol'];
+
+let skimHuidigeTab = 'skim';
+let skimTekstIdx = 0;
+let skimTimerRef = null;
+let skimTimerActief = false;
+let skimTimerSec = 30;
+let scanAutoZoekWrd = '';
+
+function skimInit() { skimTab('skim'); skimNieuwe(); scanNieuwe(); previewNieuwe(); }
+
+function skimTab(t) {
+  skimHuidigeTab = t;
+  ['uitleg','skim','scan','preview'].forEach(id => {
+    document.getElementById(`skim-tab-${id}`).className = t===id?'btn btn-primary':'btn btn-ghost';
+    document.getElementById(`skim-view-${id}`).style.display = t===id?'':'none';
+  });
+}
+
+function skimNieuwe() {
+  skimTekstIdx = Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length);
+  const d = SKIM_TEKSTEN_DATA[skimTekstIdx];
+  // Highlight eerste + laatste zin van elke alinea
+  const html = `<div class="skim-titel">${d.titel}</div>` +
+    d.alineas.map(al => {
+      const zinnen = al.match(/[^.!?]+[.!?]?/g)||[al];
+      return zinnen.map((z,i)=> (i===0||i===zinnen.length-1)
+        ? `<span class="skim-hl">${z}</span>`
+        : `<span>${z}</span>`
+      ).join('');
+    }).map(a=>`<p>${a}</p>`).join('');
+  document.getElementById('skim-tekst-box').innerHTML = html;
+  document.getElementById('skim-vraag-wrap').style.display='none';
+  clearInterval(skimTimerRef); skimTimerActief=false;
+  document.getElementById('skim-timer-btn').textContent='⏱ 30s timer';
+  document.getElementById('skim-timer-display').style.display='none';
+}
+
+function skimTimerStart() {
+  if (skimTimerActief) return;
+  skimTimerActief=true; skimTimerSec=30;
+  document.getElementById('skim-timer-btn').textContent='⏱ Bezig...';
+  document.getElementById('skim-timer-display').style.display='';
+  skimTimerRef = setInterval(()=>{
+    skimTimerSec--;
+    document.getElementById('skim-timer-display').textContent=`${skimTimerSec}s`;
+    if(skimTimerSec<=0){
+      clearInterval(skimTimerRef); skimTimerActief=false;
+      document.getElementById('skim-timer-display').textContent='⏱ Tijd!';
+      // Toon begripsvraag
+      const d=SKIM_TEKSTEN_DATA[skimTekstIdx];
+      const wrap=document.getElementById('skim-vraag-wrap');
+      wrap.style.display='';
+      wrap.innerHTML=`<div class="card"><b>Begripscheck:</b> Wat is het hoofdonderwerp van "${d.titel}"?
+        <div style="margin-top:8px;font-size:.88rem;color:var(--muted)">Bekijk je antwoord door de tekst nog eens te lezen. Kon je het hoofdidee vaststellen?</div>
+        <button class="btn btn-primary" style="margin-top:8px;font-size:.82rem" onclick="skimNieuwe()">↺ Volgende tekst</button>
+      </div>`;
+    }
+  },1000);
+}
+
+function scanNieuwe() {
+  const d = SKIM_TEKSTEN_DATA[Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length)];
+  const html = `<div class="skim-titel">${d.titel}</div>` +
+    d.alineas.map(a=>`<p>${a}</p>`).join('');
+  document.getElementById('scan-tekst-box').innerHTML = html;
+  document.getElementById('scan-zoek-input').value='';
+  document.getElementById('scan-zoek-doel').textContent='';
+  document.getElementById('scan-resultaat').textContent='';
+  scanAutoZoekWrd='';
+}
+
+function scanZoek() {
+  const zoek = document.getElementById('scan-zoek-input').value.trim().toLowerCase();
+  const box = document.getElementById('scan-tekst-box');
+  // Reset highlights
+  const d = SKIM_TEKSTEN_DATA[Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length)];
+  // Re-render with highlights
+  let html = box.innerHTML.replace(/<mark[^>]*>(.*?)<\/mark>/gi,'$1'); // strip old marks
+  if (zoek.length>1) {
+    const re = new RegExp(`(${zoek.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+    box.innerHTML = box.innerHTML.replace(/<mark[^>]*>(.*?)<\/mark>/gi,'$1').replace(re,'<mark class="scan-hl">$1</mark>');
+    const ct = (box.innerHTML.match(/<mark/gi)||[]).length;
+    document.getElementById('scan-resultaat').textContent = ct>0?`✅ ${ct} keer gevonden.`:'❌ Niet gevonden in deze tekst.';
+  }
+}
+
+function scanAutoZoek() {
+  const wrd = SCAN_WOORDEN[Math.floor(Math.random()*SCAN_WOORDEN.length)];
+  document.getElementById('scan-zoek-doel').textContent = `🎯 Zoek: "${wrd}"`;
+  document.getElementById('scan-zoek-input').value = wrd;
+  scanZoek();
+}
+
+function previewNieuwe() {
+  const d = SKIM_TEKSTEN_DATA[Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length)];
+  // Stap 1: structuur (titels + eerste zinnen)
+  const strHtml = `<div class="skim-titel">${d.titel}</div>` +
+    d.alineas.map(a=>{
+      const eer = (a.match(/[^.!?]+[.!?]?/)||[a])[0];
+      return `<p><span class="skim-hl">${eer}</span></p>`;
+    }).join('');
+  document.getElementById('preview-structuur-box').innerHTML = strHtml;
+  // Stap 2: volledige tekst
+  document.getElementById('preview-tekst-box').innerHTML = `<div class="skim-titel">${d.titel}</div>` +
+    d.alineas.map(a=>`<p>${a}</p>`).join('');
+  document.getElementById('preview-stap-1').style.display='';
+  document.getElementById('preview-stap-2').style.display='none';
+}
+
+function previewNaarStap2() {
+  document.getElementById('preview-stap-1').style.display='none';
+  document.getElementById('preview-stap-2').style.display='';
+}
+
+// ═══════════════════════════════════════════════════════════
+// 😌  OOGONTSPANNING
+// ═══════════════════════════════════════════════════════════
+let orActieveTab = 'palming';
+let orTimerRef = null;
+
+function orInit() { orTab('palming'); }
+
+function orTab(t) {
+  orActieveTab = t;
+  ['palming','focus','acht','2020'].forEach(id=>{
+    document.getElementById(`or-tab-${id}`).className = t===id?'btn btn-primary':'btn btn-ghost';
+    document.getElementById(`or-view-${id}`).style.display = t===id?'':'none';
+  });
+  clearInterval(orTimerRef);
+}
+
+let orPalmingSec = 0;
+function orPalmingStart() {
+  orPalmingSec = 30;
+  document.getElementById('or-palming-btn').disabled=true;
+  document.getElementById('or-palming-uitleg').textContent='Sluit je ogen en leg je warme handpalmen erover...';
+  clearInterval(orTimerRef);
+  orTimerRef = setInterval(()=>{
+    orPalmingSec--;
+    document.getElementById('or-palming-tel').textContent=orPalmingSec;
+    if(orPalmingSec<=0){
+      clearInterval(orTimerRef);
+      document.getElementById('or-palming-tel').textContent='😌';
+      document.getElementById('or-palming-uitleg').textContent='Uitstekend! Ogen geopend, neem even de tijd.';
+      document.getElementById('or-palming-btn').disabled=false;
+      document.getElementById('or-palming-btn').textContent='↺ Opnieuw';
+    }
+  },1000);
+}
+
+let orFocusFase = 'dicht';
+let orFocusSec = 0;
+function orFocusStart() {
+  const stappen = [
+    {fase:'dicht', sec:5, icoon:'👆', tekst:'Focus op je vinger dichtbij (25 cm)'},
+    {fase:'ver',   sec:5, icoon:'🔭', tekst:'Focus op een punt zo ver mogelijk weg'},
+    {fase:'dicht', sec:5, icoon:'👆', tekst:'Terug naar je vinger...'},
+    {fase:'ver',   sec:5, icoon:'🔭', tekst:'En ver weg...'},
+    {fase:'dicht', sec:5, icoon:'👆', tekst:'Nog een keer dichtbij...'},
+    {fase:'ver',   sec:5, icoon:'🔭', tekst:'En ver weg — bijna klaar!'},
+  ];
+  let stapIdx=0;
+  document.getElementById('or-focus-btn').disabled=true;
+  clearInterval(orTimerRef);
+  function doStap(){
+    if(stapIdx>=stappen.length){
+      document.getElementById('or-focus-tel').textContent='😌';
+      document.getElementById('or-focus-uitleg').textContent='Klaar! Herhaal dit elke 20 minuten.';
+      document.getElementById('or-focus-btn').disabled=false;
+      document.getElementById('or-focus-btn').textContent='↺ Opnieuw';
+      return;
+    }
+    const stap=stappen[stapIdx];
+    orFocusSec=stap.sec;
+    document.getElementById('or-focus-cirkel').textContent=stap.icoon;
+    document.getElementById('or-focus-uitleg').textContent=stap.tekst;
+    clearInterval(orTimerRef);
+    orTimerRef=setInterval(()=>{
+      orFocusSec--;
+      document.getElementById('or-focus-tel').textContent=orFocusSec;
+      if(orFocusSec<=0){clearInterval(orTimerRef);stapIdx++;doStap();}
+    },1000);
+  }
+  doStap();
+}
+
+let orAchtRonde=0;
+let orAchtAngle=0;
+let orAchtTimer=null;
+function orAchtStart(){
+  orAchtRonde=10;
+  orAchtAngle=0;
+  document.getElementById('or-acht-btn').disabled=true;
+  document.getElementById('or-acht-tel').textContent='10 ronden';
+  clearInterval(orTimerRef);
+  // Animate dot along figure-8 path
+  orTimerRef=setInterval(()=>{
+    orAchtAngle+=0.05;
+    const t=orAchtAngle;
+    // Parametric figure-8: x=100+70*sin(t), y=50+25*sin(2t)
+    const x=100+70*Math.sin(t);
+    const y=50+25*Math.sin(2*t);
+    document.getElementById('or-acht-dot').setAttribute('cx',x.toFixed(1));
+    document.getElementById('or-acht-dot').setAttribute('cy',y.toFixed(1));
+    const ronden=10-Math.floor(orAchtAngle/(2*Math.PI));
+    document.getElementById('or-acht-tel').textContent=`${Math.max(0,ronden)} ronden`;
+    if(orAchtAngle>=20*Math.PI){
+      clearInterval(orTimerRef);
+      document.getElementById('or-acht-tel').textContent='😌 Klaar!';
+      document.getElementById('or-acht-btn').disabled=false;
+      document.getElementById('or-acht-btn').textContent='↺ Opnieuw';
+    }
+  },40);
+}
+
+let or2020Sec=0;
+function or2020Start(){
+  or2020Sec=20;
+  document.getElementById('or-2020-btn').disabled=true;
+  document.getElementById('or-2020-uitleg').textContent='Kijk naar een punt zo ver mogelijk weg...';
+  clearInterval(orTimerRef);
+  orTimerRef=setInterval(()=>{
+    or2020Sec--;
+    document.getElementById('or-2020-tel').textContent=or2020Sec;
+    if(or2020Sec<=0){
+      clearInterval(orTimerRef);
+      document.getElementById('or-2020-tel').textContent='✅';
+      document.getElementById('or-2020-uitleg').textContent='Uitstekend! Doe dit elke 20 minuten.';
+      document.getElementById('or-2020-btn').disabled=false;
+      document.getElementById('or-2020-btn').textContent='↺ Opnieuw';
+    }
+  },1000);
+}
+
+function or2020Herinnering(){
+  document.getElementById('or-2020-herin-msg').textContent=
+    '📱 Stel een timer in op 20 minuten op je telefoon. Of gebruik een browser-extensie zoals "Eye Care" voor automatische herinneringen.';
+}
+
+// ═══════════════════════════════════════════════════════════
+// 🎯  WPM DOEL (statistieken)
+// ═══════════════════════════════════════════════════════════
+function toonWpmDoel() {
+  const doel = parseInt(localStorage.getItem('wpm_doel')||'0');
+  const stats = JSON.parse(localStorage.getItem('snellees_stats')||'{"sessies":[]}');
+  const sessies = (stats.sessies||[]).filter(s=>s.wpm>0);
+  const gem = sessies.length
+    ? Math.round(sessies.slice(-10).reduce((a,s)=>a+s.wpm,0)/Math.min(10,sessies.length))
+    : 0;
+
+  document.getElementById('doel-input').value = doel||'';
+  document.getElementById('doel-huidig').textContent = gem>0?`${gem}`:'—';
+
+  if (doel>0 && gem>0) {
+    const pct=Math.min(100,Math.round(gem/doel*100));
+    document.getElementById('doel-fill').style.width=`${pct}%`;
+    document.getElementById('doel-pct').textContent=`${pct}% van doel`;
+    const over=doel-gem;
+    document.getElementById('doel-motivatie').textContent = over<=0
+      ? '🏆 Doel bereikt! Stel een nieuw, hoger doel in!'
+      : `💪 Nog ${over} WPM te gaan — blijf oefenen!`;
+  } else {
+    document.getElementById('doel-fill').style.width='0%';
+    document.getElementById('doel-pct').textContent='—';
+    document.getElementById('doel-motivatie').textContent = doel>0
+      ? '📏 Doe de Begintest om je huidige snelheid te meten'
+      : '👆 Stel hierboven je WPM-doel in';
+  }
+}
+
+function slaDoelOp() {
+  const val = parseInt(document.getElementById('doel-input').value)||0;
+  if(val>0) localStorage.setItem('wpm_doel', val);
+  toonWpmDoel();
+}
 
 let leestestActief = false;
 let leestestStart = 0;
