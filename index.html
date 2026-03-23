@@ -1480,6 +1480,21 @@ main { -webkit-overflow-scrolling: touch; }
 .vandaag-uitd-naam { font-size: .92rem; font-weight: 600; color: var(--text); margin: 2px 0; }
 .vandaag-uitd-sub { font-size: .78rem; color: var(--muted); }
 .vandaag-uitd-status { font-size: 1.2rem; flex-shrink: 0; }
+
+/* ── FASE 2: LANGE TEKSTEN + ADAPTIEF NIVEAU ─────────────── */
+.ltt-niveau-strip { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:20px; padding:12px 16px; background:var(--card); border-radius:12px; border:1px solid var(--border); }
+.ltt-niveau-badge { font-size:.88rem; font-weight:700; letter-spacing:.3px; }
+.ltt-niveau-hint { font-size:.73rem; color:var(--muted); }
+.ltt-score-kaart { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:16px; }
+.ltt-score-kaart > div { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 12px; text-align:center; }
+.ltt-score-num { font-size:1.9rem; font-weight:800; }
+.ltt-score-lbl { font-size:.72rem; color:var(--muted); margin-top:4px; }
+.adaptief-melding { background:linear-gradient(135deg,rgba(124,111,247,.18),rgba(76,201,240,.1)); border:1.5px solid rgba(124,111,247,.38); border-radius:14px; padding:20px; text-align:center; margin-bottom:16px; }
+.adaptief-melding .am-icon { font-size:2.4rem; margin-bottom:8px; }
+.adaptief-melding .am-titel { font-size:1.05rem; font-weight:700; margin-bottom:4px; }
+.adaptief-melding .am-sub { font-size:.82rem; color:var(--muted); }
+.ltt-voortgang-bar { height:6px; background:var(--border); border-radius:3px; overflow:hidden; margin-top:10px; }
+.ltt-voortgang-fill { height:100%; border-radius:3px; transition:width .6s ease; }
 </style>
 </head>
 <body>
@@ -1520,6 +1535,7 @@ main { -webkit-overflow-scrolling: touch; }
     <button onclick="sidebarNav('leerweg')" data-screen="leerweg" style="color:#a78bfa"><span class="icon">📚</span> <b>Leerweg</b></button>
     <button onclick="sidebarNav('begintest')" data-screen="begintest"><span class="icon">🎯</span> Begintest</button>
     <button onclick="sidebarNav('leestest')" data-screen="leestest"><span class="icon">📏</span> Leestest</button>
+    <button onclick="sidebarNav('langetekst')" data-screen="langetekst"><span class="icon">📚</span> Lange Teksten</button>
     <button onclick="sidebarNav('stats')" data-screen="stats"><span class="icon">📊</span> Statistieken</button>
   </nav>
 
@@ -1808,6 +1824,11 @@ main { -webkit-overflow-scrolling: touch; }
       <div class="home-kaart-icon">📏</div>
       <div class="home-kaart-titel">Leestest</div>
       <div class="home-kaart-sub">Lees een tekst, meet je WPM + begrip</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('langetekst')" style="border-color:rgba(76,201,240,.3)">
+      <div class="home-kaart-icon">📚</div>
+      <div class="home-kaart-titel">Lange Teksten</div>
+      <div class="home-kaart-sub">Adaptief niveau · WPM × begrip score</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('chunk')">
       <div class="home-kaart-icon">📖</div>
@@ -2417,6 +2438,78 @@ main { -webkit-overflow-scrolling: touch; }
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="leestestInit()">🔄 Nieuwe leestest</button>
       <button class="btn btn-ghost" onclick="sidebarNav('stats')">📊 Statistieken bekijken</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── LANGE TEKSTEN ──────────────────────────────────────── -->
+<div id="screen-langetekst" class="screen">
+  <div class="page-title">📚 Lange Teksten</div>
+  <div class="page-sub">Train leessnelheid én begrip tegelijk. Het systeem past het niveau automatisch aan.</div>
+
+  <!-- Niveau strip -->
+  <div class="ltt-niveau-strip">
+    <div class="ltt-niveau-badge" id="ltt-niveau-badge">🟢 Niveau 1 · Starter</div>
+    <div class="ltt-niveau-hint" id="ltt-niveau-hint">280+ WPM + goed begrip → Gevorderd</div>
+  </div>
+
+  <!-- Intro -->
+  <div id="ltt-view-intro">
+    <div class="card" style="margin-bottom:20px">
+      <div style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Geselecteerde tekst</div>
+      <div style="font-size:1rem;font-weight:700" id="ltt-tekst-naam">—</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px" id="ltt-tekst-info">—</div>
+      <div class="ltt-voortgang-bar" style="margin-top:10px"><div class="ltt-voortgang-fill" id="ltt-niveau-bar" style="width:0%;background:var(--accent)"></div></div>
+    </div>
+    <div class="tip-grid" style="margin-bottom:20px">
+      <div class="tip"><b>📖 Lees op tempo</b>Timer start zodra je klikt. Lees op je normale leestempo.</div>
+      <div class="tip tip-cyan"><b>🧠 Begripstoets</b>Na het lezen: 3 vragen. Begrip telt mee in je eindscore.</div>
+      <div class="tip tip-green"><b>⚡ Leesscore</b>WPM × begrip% = gecombineerde leesscore. Hoog begrip geeft bonus!</div>
+      <div class="tip tip-pink"><b>📈 Adaptief</b>Goed scoren? Volgende keer een moeilijkere tekst. Automatisch.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="lttBegin()" style="padding:14px 28px;font-size:1rem">▶ Start lezen</button>
+      <button class="btn btn-ghost" onclick="lttInit()" style="padding:14px 20px">🔀 Andere tekst</button>
+    </div>
+  </div>
+
+  <!-- Lezen -->
+  <div id="ltt-view-lezen" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-size:.8rem;color:var(--muted)">⏱ Timer loopt — lees rustig door</div>
+      <button class="btn btn-primary" onclick="lttKlaar()">✅ Klaar met lezen</button>
+    </div>
+    <div id="ltt-tekst-inhoud" style="font-size:1rem;line-height:1.9;color:var(--text);background:var(--card);padding:24px;border-radius:14px;border:1px solid var(--border);white-space:pre-wrap"></div>
+    <div style="text-align:center;margin-top:16px">
+      <button class="btn btn-primary" onclick="lttKlaar()" style="padding:14px 32px;font-size:1rem">✅ Klaar met lezen → naar vragen</button>
+    </div>
+  </div>
+
+  <!-- Vragen -->
+  <div id="ltt-view-vragen" style="display:none">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:14px 16px;background:var(--card);border-radius:12px;border:1px solid var(--border)">
+      <div style="font-size:2rem">⚡</div>
+      <div>
+        <div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Leessnelheid</div>
+        <div style="font-size:1.8rem;font-weight:800;color:var(--accent)" id="ltt-wpm-result">—</div>
+        <div style="font-size:.72rem;color:var(--muted)">woorden per minuut</div>
+      </div>
+    </div>
+    <div style="font-size:.84rem;color:var(--muted);margin-bottom:16px">Beantwoord de 3 vragen over de tekst die je net las:</div>
+    <div id="ltt-vragen-wrap"></div>
+    <div style="text-align:center;margin-top:16px">
+      <button id="ltt-submit-btn" class="btn btn-primary" onclick="lttVerzend()" style="display:none;padding:14px 28px;font-size:1rem">📊 Bekijk resultaat</button>
+    </div>
+  </div>
+
+  <!-- Resultaat -->
+  <div id="ltt-view-resultaat" style="display:none;padding:4px 0">
+    <div class="ltt-score-kaart" id="ltt-score-kaart"></div>
+    <div id="ltt-niveau-melding" style="display:none" class="adaptief-melding"></div>
+    <div id="ltt-feedback" style="font-size:.95rem;font-weight:600;margin:16px 0;text-align:center"></div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="lttInit()">🔄 Nieuwe tekst</button>
+      <button class="btn btn-ghost" onclick="sidebarNav('stats')">📊 Statistieken</button>
     </div>
   </div>
 </div>
@@ -3033,6 +3126,7 @@ function sidebarNav(id) {
   if (id === 'begintest') begintestInit();
   if (id === 'avontuur') avLaad();
   if (id === 'leestest' && typeof leestestInit === 'function') leestestInit();
+  if (id === 'langetekst' && typeof lttInit === 'function') lttInit();
   if (id === 'leerweg') leerWegInit();
   if (id === 'subvocal') svInit();
   if (id === 'regressie') regInit();
@@ -4728,6 +4822,8 @@ const DAGELIJKSE_UITDAGINGEN = [
   { beschrijving: 'Lees een tekst op Papier modus', type: 'papier' },
   { beschrijving: 'Oefen 2 minuten Breed Kijken', type: 'perifeer' },
   { beschrijving: 'Doe de Begintest (opnieuw)', type: 'begintest' },
+  { beschrijving: 'Lees 1 lange tekst op jouw niveau', type: 'langetekst' },
+  { beschrijving: 'Lees een lange tekst en beantwoord de vragen', type: 'langetekst' },
 ];
 
 // ─── INIT ─────────────────────────────────────────────────
@@ -4748,18 +4844,20 @@ const KIDS_LABELS = {
   tekst:     { nav:'Verhalen',       titel:'Mijn Verhalen',           sub:'Kies een verhaal of voeg je eigen tekst toe!' },
   stats:     { nav:'Mijn Score',     titel:'Mijn Score',              sub:'Bekijk hoe goed je het doet!' },
   dyslexie:  { nav:'Woordspel',      titel:'Woordspel',               sub:'Lees het woord en kies het juiste antwoord. Hoe meer sterren, hoe beter!' },
-  begintest: { nav:'Hoe snel lees jij?', titel:'Hoe Snel Lees Jij?',  sub:'Lees een stukje tekst en ontdek hoe snel jij al leest!' },
+  begintest:    { nav:'Hoe snel lees jij?', titel:'Hoe Snel Lees Jij?',  sub:'Lees een stukje tekst en ontdek hoe snel jij al leest!' },
+  langetekst:   { nav:'Lange Teksten',      titel:'📚 Lange Teksten',       sub:'Train je leessnelheid én begrip met langere teksten. Leuk om te doen!' },
 };
 const VOLW_LABELS = {
-  rsvp:      { nav:'RSVP',           titel:'RSVP — Woord voor Woord',     sub:'Elk woord verschijnt op hetzelfde punt. Geen oogbewegingen nodig — maximale leessnelheid.' },
-  chunk:     { nav:'Chunks',         titel:'Chunk Lezen',                  sub:'Lees woordgroepen in één oogopslag. Vergroot uw blikveld stap voor stap.' },
-  oog:       { nav:'Oogbeweging',    titel:'Oogbewegingstraining',         sub:'Volg de bal met uw ogen. Vergroot uw blikveld en verminder onbewust terugspringen (regressie).' },
-  perifeer:  { nav:'Perifeer',       titel:'Perifeer Zien',               sub:'Fixeer op het rode kruis. Probeer de woorden aan de zijkanten te lezen zonder uw ogen te bewegen.' },
-  papier:    { nav:'Papier',         titel:'Papier Lees Training',        sub:'Leer technieken voor fysieke tekst. De gidsaanwijzer-methode is bewezen effectief.' },
-  tekst:     { nav:'Tekst laden',    titel:'Tekst Bibliotheek',           sub:'Sla teksten op en gebruik ze direct in RSVP, Chunks en Papier. De actieve tekst wordt overal gebruikt.' },
-  stats:     { nav:'Statistieken',   titel:'Uw Voortgang',                sub:'Alle sessies worden lokaal opgeslagen in uw browser.' },
-  dyslexie:  { nav:'Dyslexie Spel',  titel:'🌈 Dyslexie Leesavontuur',   sub:'Lees het woord goed en kies het juiste antwoord. Hoe meer sterren, hoe beter! Speciaal lettertype helpt letters uit elkaar houden.' },
-  begintest: { nav:'Begintest',      titel:'Begintest',                    sub:'Meet uw leessnelheid en begripsniveau als startpunt voor uw training.' },
+  rsvp:         { nav:'RSVP',           titel:'RSVP — Woord voor Woord',     sub:'Elk woord verschijnt op hetzelfde punt. Geen oogbewegingen nodig — maximale leessnelheid.' },
+  chunk:        { nav:'Chunks',         titel:'Chunk Lezen',                  sub:'Lees woordgroepen in één oogopslag. Vergroot uw blikveld stap voor stap.' },
+  oog:          { nav:'Oogbeweging',    titel:'Oogbewegingstraining',         sub:'Volg de bal met uw ogen. Vergroot uw blikveld en verminder onbewust terugspringen (regressie).' },
+  perifeer:     { nav:'Perifeer',       titel:'Perifeer Zien',               sub:'Fixeer op het rode kruis. Probeer de woorden aan de zijkanten te lezen zonder uw ogen te bewegen.' },
+  papier:       { nav:'Papier',         titel:'Papier Lees Training',        sub:'Leer technieken voor fysieke tekst. De gidsaanwijzer-methode is bewezen effectief.' },
+  tekst:        { nav:'Tekst laden',    titel:'Tekst Bibliotheek',           sub:'Sla teksten op en gebruik ze direct in RSVP, Chunks en Papier. De actieve tekst wordt overal gebruikt.' },
+  stats:        { nav:'Statistieken',   titel:'Uw Voortgang',                sub:'Alle sessies worden lokaal opgeslagen in uw browser.' },
+  dyslexie:     { nav:'Dyslexie Spel',  titel:'🌈 Dyslexie Leesavontuur',   sub:'Lees het woord goed en kies het juiste antwoord. Hoe meer sterren, hoe beter! Speciaal lettertype helpt letters uit elkaar houden.' },
+  begintest:    { nav:'Begintest',      titel:'Begintest',                    sub:'Meet uw leessnelheid en begripsniveau als startpunt voor uw training.' },
+  langetekst:   { nav:'Lange Teksten',  titel:'📚 Lange Teksten',            sub:'Train leessnelheid én begrip met langere teksten op uw niveau. Het systeem past de moeilijkheidsgraad automatisch aan.' },
 };
 
 function kidsToepassen() {
@@ -7403,7 +7501,7 @@ function updateVandaagPanel() {
   _updateVandaagUitdaging();
 }
 
-const _UITD_ICONEN = { rsvp:'⚡', chunk:'📖', oog:'👁', dyslexie:'🌈', papier:'📄', perifeer:'🔭', begintest:'🎯' };
+const _UITD_ICONEN = { rsvp:'⚡', chunk:'📖', oog:'👁', dyslexie:'🌈', papier:'📄', perifeer:'🔭', begintest:'🎯', langetekst:'📚' };
 
 function _updateVandaagUitdaging() {
   const kaart = document.getElementById('vandaag-uitd-card');
@@ -7456,6 +7554,365 @@ function vandaagUitdagingOpen() {
 const _origToonHome = window.toon;
 // Hook: update vandaag panel bij elke navigatie naar home
 document.addEventListener('snellees:home', updateVandaagPanel);
+
+// ════════════════════════════════════════════════════════════
+//  📚  FASE 2: LANGE TEKSTEN + ADAPTIEVE MOEILIJKHEID
+// ════════════════════════════════════════════════════════════
+
+// ── TEKSTBIBLIOTHEEK (6 teksten, 2 per niveau) ────────────
+const LANGE_TEKSTEN = [
+
+// ── NIVEAU 1: STARTER (~480 woorden) ──────────────────────
+{
+  id: 'n1a', niveau: 1,
+  titel: 'Waarom bewegen je gezond houdt',
+  tekst: `Bewegen is een van de eenvoudigste en krachtigste dingen die je kunt doen voor je gezondheid. Toch zit de gemiddelde Nederlander meer dan negen uur per dag. Dat is meer dan hij slaapt. En het heeft duidelijke gevolgen.
+
+Wanneer je beweegt, pompt je hart sneller. Meer bloed stroomt naar je spieren en organen. Je longen werken harder om zuurstof te leveren. Na verloop van tijd worden hart en longen sterker. Dit verlaagt je rusthartslag en vermindert het risico op hart- en vaatziekten.
+
+Bewegen heeft ook een sterk effect op je hersenen. Tijdens lichaamsbeweging maakt je lichaam endorfines aan, stofjes die je een goed gevoel geven. Mensen die regelmatig sporten, rapporteren minder stress, betere slaap en meer energie overdag. Depressie en angststoornissen nemen af bij mensen die drie tot vijf keer per week matig intensief bewegen.
+
+Je hoeft geen topsporter te zijn. Dertig minuten stevig wandelen per dag is al genoeg om de meeste gezondheidsvoordelen te krijgen. Fietsen naar je werk, de trap nemen in plaats van de lift, even stretchen tijdens je pauze: kleine keuzes tellen op.
+
+Kinderen en jongeren hebben meer beweging nodig: minstens een uur per dag. Voor ouderen is bewegen bijzonder belangrijk, omdat het vallen voorkomt door spierversterking en balansverbetering. Krachttraining twee keer per week houdt botten sterk en de stofwisseling actief.
+
+Er zijn ook langetermijnvoordelen. Mensen die actief blijven, leven gemiddeld vijf tot tien jaar langer. Ze hebben minder kans op diabetes type 2, kanker en dementie. Zelfs hersenfunctie blijft beter behouden bij regelmatige beweging.
+
+Het goede nieuws: je kunt op elk moment beginnen. Studies tonen aan dat mensen die pas op hun zestigste starten met regelmatig bewegen alsnog enorme gezondheidswinst boeken.
+
+Begin klein. Kies iets wat je leuk vindt. Maak het een gewoonte door het aan een vast moment te koppelen. Leg je sportschoenen klaar bij de deur. Plan een wandeling in je agenda. Beweeg samen met een vriend, want sociale steun vergroot de kans dat je doorgaat.
+
+Je lichaam en je geest zullen je dankbaar zijn.`,
+  vragen: [
+    { v: 'Hoeveel uur per dag zit de gemiddelde Nederlander?', opties: ['Vijf uur', 'Zeven uur', 'Negen uur', 'Twaalf uur'], correct: 2 },
+    { v: 'Welke stofjes maakt je lichaam aan tijdens het bewegen, waardoor je je beter voelt?', opties: ['Insuline', 'Endorfines', 'Adrenaline', 'Melatonine'], correct: 1 },
+    { v: 'Hoeveel minuten wandelen per dag volstaat al voor de meeste gezondheidsvoordelen?', opties: ['Tien minuten', 'Twintig minuten', 'Dertig minuten', 'Zestig minuten'], correct: 2 },
+  ]
+},
+
+{
+  id: 'n1b', niveau: 1,
+  titel: 'Hoe je beter kunt slapen',
+  tekst: `Slaap is de basis van alles. Als je slecht slaapt, word je prikkelbaar, vergeet je meer en presteer je minder goed op school of werk. Toch kampt een groot deel van de bevolking met slaapproblemen. De meeste mensen weten niet dat veel van die problemen oplosbaar zijn met eenvoudige gewoonten.
+
+Je lichaam heeft een interne klok, het circadiaans ritme. Die klok wordt gestuurd door licht. In de ochtend zorgt daglicht ervoor dat je wakker en alert wordt. In de avond, als het donker wordt, maakt je brein melatonine aan: het slaaphormoon. Maar kunstlicht — en zeker het blauwe licht van telefoons en laptops — verstoort dit proces. Je brein denkt dat het nog dag is en maakt minder melatonine aan.
+
+De oplossing is eenvoudig: zet je schermen een uur voor het slapengaan uit. Of gebruik een blauwlichtfilter op je apparaten. Dim het licht in je huis 's avonds. Deze kleine aanpassing kan al een groot verschil maken.
+
+Temperatuur speelt ook een rol. Je lichaam moet afkoelen om goed in slaap te vallen. Een slaapkamer van rond de achttien graden Celsius is voor de meeste mensen ideaal. Een warme douche of bad vlak voor het slapengaan helpt paradoxaal genoeg: het warme water trekt het bloed naar de huid, waarna je lichaamskern snel afkoelt.
+
+Een vaste bedtijd is minstens zo belangrijk als hoeveel uren je slaapt. In het weekend uitslapen klinkt heerlijk, maar het verschuift je interne klok. Maandag voel je je dan versuft, alsof je door een tijdzone gereisd bent. Probeer elke dag op dezelfde tijd op te staan, ook in het weekend.
+
+Cafeïne blijft zes tot acht uur in je bloed. Een kop koffie om drie uur 's middags kan er voor zorgen dat je om elf uur 's avonds nog klaarwakker bent. Beperk cafeïne na het middaguur.
+
+Goed slapen is geen luxe. Het is de fundering waarop concentratie, geheugen en stemming rusten.`,
+  vragen: [
+    { v: 'Wat is het circadiaans ritme?', opties: ['Een slaapstoornis', 'De interne klok van je lichaam', 'Een soort melatonine', 'Een oefening om beter te slapen'], correct: 1 },
+    { v: 'Waarom is een warme douche voor het slapengaan juist goed?', opties: ['Het maakt je moe door inspanning', 'Warmte verhoogt melatonine', 'Je lichaamskern koelt daarna snel af', 'Het blauwe licht valt weg'], correct: 2 },
+    { v: 'Hoelang blijft cafeïne actief in je bloed?', opties: ['Twee uur', 'Vier uur', 'Zes tot acht uur', 'Twaalf uur'], correct: 2 },
+  ]
+},
+
+// ── NIVEAU 2: GEVORDERD (~750 woorden) ────────────────────
+{
+  id: 'n2a', niveau: 2,
+  titel: 'Sociale media en het tienerbrein',
+  tekst: `Tieners brengen gemiddeld meer dan zes uur per dag door op sociale media. Dat is meer tijd dan ze op school zitten. En terwijl deze platforms ontworpen zijn om zo verslavend mogelijk te zijn, is het tienerbrein bijzonder kwetsbaar voor precies de mechanismen die ze gebruiken.
+
+Het tienerbrein is nog volop in ontwikkeling. De prefrontale cortex — het deel dat verantwoordelijk is voor impulscontrole, planning en het afwegen van risico's — is pas volledig ontwikkeld rond het vijfentwintigste levensjaar. Tieners zijn biologisch gezien gevoeliger voor sociale beloning en afwijzing. Een like op Instagram geeft een dopaminepiek die vergelijkbaar is met het eten van suiker of het winnen van een spelletje. Een ontbrekende reactie of een negatief commentaar voelt disproportioneel pijnlijk.
+
+Platforms als Instagram, TikTok en Snapchat maken hier bewust gebruik van. Variabele beloningen — soms veel likes, soms weinig, nooit voorspelbaar — zijn de meest verslavende vorm van beloning die er bestaat. Het is hetzelfde principe als een gokautomaat. Je weet nooit wanneer de beloning komt, dus je blijft kijken.
+
+Onderzoek van de Universiteit van Pennsylvania toonde aan dat het beperken van sociale mediagebruik tot dertig minuten per dag significante vermindering gaf van angst, depressie en eenzaamheid bij jongeren. Een studie van Jean Twenge laat zien dat de mentale gezondheid van tieners in de westerse wereld sterk is verslechterd vanaf 2012 — precies het jaar dat smartphones massaal gemeengoed werden.
+
+Maar de relatie is niet simpel. Passief gebruik — scrollen, kijken, vergelijken — is schadelijker dan actief gebruik, zoals berichten sturen, reageren en creëren. Tieners die sociale media gebruiken om contact te onderhouden met vrienden die ze ook in het echte leven zien, lijken minder negatieve effecten te ervaren dan tieners die voornamelijk onbekenden volgen of zichzelf vergelijken met influencers.
+
+Er is ook een genderverschil. Meisjes lijken gemiddeld meer schade te ondervinden van sociale media dan jongens. Dit wordt deels verklaard door het type gebruik: meisjes vergelijken zichzelf vaker op uiterlijk via foto's en video's, terwijl jongens meer gamen en competitief interacteren. Beide vormen hebben risico's, maar lichaamsbeeldproblemen bij meisjes zijn beter gedocumenteerd.
+
+Wat kunnen ouders en scholen doen? Verbieden werkt zelden goed — het verhoogt de aantrekkingskracht en verplaatst het gebruik naar het geheim. Betere strategieën zijn: mediageletterdheid onderwijzen, zodat tieners begrijpen hoe platforms werken en hen manipuleren; samen afspraken maken over schermvrije momenten en plekken; alternatieve activiteiten faciliteren die dezelfde behoeften bevredigen — sociale verbinding, erkenning, stimulatie.
+
+De kern van het probleem is niet de technologie zelf, maar het gebrek aan bewustzijn en controle. Een tiener die begrijpt waarom hij of zij het gevoel heeft te moeten scrollen, is beter in staat die drang te weerstaan. Digitale zelfkennis is de vaardigheid van de eenentwintigste eeuw.`,
+  vragen: [
+    { v: 'Wanneer is de prefrontale cortex volledig ontwikkeld?', opties: ['Rond het achttiende jaar', 'Rond het twintigste jaar', 'Rond het vijfentwintigste jaar', 'Rond het dertigste jaar'], correct: 2 },
+    { v: 'Welk type sociale mediagebruik is schadelijker?', opties: ['Berichten sturen naar vrienden', 'Passief scrollen en vergelijken', 'Creëren van eigen inhoud', 'Reageren op posts van bekenden'], correct: 1 },
+    { v: 'Welke aanpak werkt het best voor ouders en scholen?', opties: ['Volledig verbieden', 'Negeren en afwachten', 'Mediageletterdheid en gezamenlijke afspraken', 'Alleen schermtijd meten'], correct: 2 },
+  ]
+},
+
+{
+  id: 'n2b', niveau: 2,
+  titel: 'De stille revolutie van duurzame energie',
+  tekst: `In 2010 kostte een kilowattuur zonne-energie meer dan driehonderd dollar om te produceren. In 2024 is die prijs gedaald naar minder dan twee dollar. Dat is een daling van meer dan negentig-acht procent in veertien jaar. Geen enkele technologie in de geschiedenis van de mensheid heeft zo'n snelle prijsdaling meegemaakt. En toch begint de wereld maar langzaam te begrijpen wat dit betekent.
+
+Zonne- en windenergie zijn inmiddels de goedkoopste vormen van nieuwe elektriciteitsopwekking in bijna elk land ter wereld. Nieuwe kolencentrales kunnen niet meer concurreren. Nieuwe kerncentrales evenmin, zonder enorme subsidies. De energietransitie is niet meer een kwestie van idealisme, maar van economische logica.
+
+De uitdaging is niet langer productie, maar opslag en netwerk. De zon schijnt niet altijd, de wind waait niet altijd. Oplossingen zijn in volle ontwikkeling: lithiumbatterijen schalen snel op, waterstof wordt gezien als oplossing voor seizoensopslag, en vraagsturing — waarbij machines hun stroomverbruik aanpassen aan het aanbod — wint terrein.
+
+Het elektriciteitsnet zelf moet worden heruitgevonden. Het huidige net is ontworpen voor gecentraliseerde opwekking: grote centrales sturen stroom naar consumenten. Duurzame energie is gedecentraliseerd: miljoenen zonnepanelen op daken, windparken op zee, batterijen in huishoudens. Dit vraagt om een intelligent, tweerichtingsnet dat vraag en aanbod dynamisch in balans houdt.
+
+In China werden in 2023 meer elektrische auto's verkocht dan auto's met verbrandingsmotor. In Europa rijdt al een op de vijf nieuwe auto's elektrisch. De transportsector, verantwoordelijk voor ongeveer twintig procent van de wereldwijde CO2-uitstoot, is in transitie. Vliegtuigen en schepen volgen trager, maar ook daar worden waterstof en batterijen ingezet.
+
+De landbouw, de industrie en de verwarming van gebouwen zijn nog grotere uitdagingen. Staal en cement produceren vereist enorme hoeveelheden energie en heeft nog geen goedkope groene alternatieven op schaal. Hier liggen de hardste noten om te kraken.
+
+Toch is de richting duidelijk. De vraag is niet meer of de energietransitie plaatsvindt, maar hoe snel. En die snelheid bepaalt hoeveel klimaatschade we nog oplopen onderweg.`,
+  vragen: [
+    { v: 'Hoeveel kostte zonne-energie per kilowattuur in 2010?', opties: ['Tien dollar', 'Vijftig dollar', 'Honderd dollar', 'Meer dan driehonderd dollar'], correct: 3 },
+    { v: 'Wat is de huidige grootste uitdaging voor duurzame energie?', opties: ['Productie is te duur', 'Opslag en netwerk', 'Te weinig zonlicht in Europa', 'Politieke weerstand'], correct: 1 },
+    { v: 'Welke sectoren zijn nog het moeilijkst te verduurzamen?', opties: ['Transport en landbouw', 'Zonne-energie en wind', 'Staal, cement en industrie', 'Elektrische auto\'s'], correct: 2 },
+  ]
+},
+
+// ── NIVEAU 3: EXPERT (~1100 woorden) ──────────────────────
+{
+  id: 'n3a', niveau: 3,
+  titel: 'De psychologie van intrinsieke motivatie',
+  tekst: `Waarom doen mensen sommige dingen met plezier en andere met tegenzin, zelfs als de beloning gelijk is? Het antwoord ligt in een van de meest besproken theorieën uit de psychologie: de zelfdeterminatietheorie van Deci en Ryan. Deze theorie onderscheidt intrinsieke motivatie — dingen doen omdat ze op zichzelf bevredigend zijn — van extrinsieke motivatie, waarbij het gedrag wordt aangedreven door externe beloningen of straffen.
+
+Decennia van onderzoek laten zien dat mensen floreren wanneer aan drie basisbehoeften wordt voldaan: autonomie, competentie en verbondenheid. Autonomie betekent dat je het gevoel hebt zelf richting te geven aan je gedrag, dat je keuzes maakt die overeenkomen met je waarden en interesses. Competentie verwijst naar de behoefte om je bekwaam te voelen, uitdagingen te kunnen overwinnen en te groeien. Verbondenheid, ten slotte, is de behoefte aan betekenisvolle relaties met anderen.
+
+De paradox van beloning is een van de meest intrigerende bevindingen in dit veld. In een klassiek experiment van Lepper en collega's uit 1973 kregen kinderen die al graag tekenden een beloning aangeboden voor hun tekeningen. Later, toen de beloning wegviel, tekenden ze minder dan kinderen die nooit een beloning hadden ontvangen. De externe beloning had de intrinsieke motivatie ondermijnd. Dit fenomeen staat bekend als het overjustificatie-effect: als je iemand betaalt voor iets wat hij of zij leuk vindt, kan de persoon gaan geloven dat hij het alleen voor het geld deed.
+
+Dit heeft verreikende implicaties voor opvoeding, onderwijs en management. Een leraar die kinderen puur beloont met stickers en punten, loopt het risico hun nieuwsgierigheid te doden. Een manager die medewerkers alleen extrinsiek motiveert met bonussen, creëert werknemers die precies doen wat nodig is voor de bonus — en niets meer. Autonomie en eigenaarschap zijn machtiger drijfveren dan geld.
+
+Toch is de werkelijkheid genuanceerder. Extrinsieke motivatie is niet per definitie slecht. Deci en Ryan onderscheiden verschillende vormen van extrinsieke regulatie op een continuüm van extern naar intern. Aan het externe eind staat puur gedrag uit angst voor straf. Meer intern is geïntrojecteerde regulatie: dingen doen om schuldgevoelens te vermijden of trots te voelen. Nog verder op het continuüm staat geïdentificeerde regulatie: gedrag dat niet inherent leuk is, maar dat je doet omdat je de waarde ervan inziet. En het meest geïnternaliseerde type is geïntegreerde regulatie: gedrag dat volledig in lijn is met je persoonlijke waarden en identiteit.
+
+In de praktijk is veel van ons gedrag een mix. Een wetenschapper kan zijn onderzoek intrinsiek motiverend vinden maar extrinsiek gedreven zijn door publicatiedruk. Een atleet kan van zijn sport houden maar ook gemotiveerd worden door de verwachtingen van zijn coach. De vraag is niet of iemand intrinsiek of extrinsiek gemotiveerd is, maar waar op het continuüm zijn regulatie ligt en hoe omgevingsfactoren dat beïnvloeden.
+
+Scholen en werkgevers die intrinsieke motivatie willen ondersteunen, doen er goed aan drie dingen te doen: autonomie te geven door mensen inspraak te geven in hoe ze een taak aanpakken; structuur te bieden die competentiegroei ondersteunt zonder te controleren; en een sfeer van verbondenheid te creëren waarin mensen zich gezien en gewaardeerd voelen.
+
+Digitale platforms hebben deze psychologische mechanismen op ongekende schaal toegepast. Sociale media bieden variabele beloningen in de vorm van likes en reacties, spelen in op de behoefte aan verbondenheid, en geven een gevoel van autonomie door gebruikers te laten kiezen wat ze delen. Maar tegelijkertijd ondermijnen ze autonomie door algoritmen die het gedrag sturen en vergelijking die competentiebeleving beschadigt.
+
+Inzicht in de zelfdeterminatietheorie helpt niet alleen om gedrag van anderen te begrijpen, maar ook om jezelf beter te kennen. Welke activiteiten geven je energie, en welke zuigen die weg? Wanneer voel je je competent en autonoom, en wanneer voelt werk als een opgelegde verplichting? Door deze vragen eerlijk te beantwoorden, kun je bewuster kiezen hoe je je tijd en energie inzet. Motivatie is niet iets wat je hebt of niet hebt — het is iets wat je kunt cultiveren.`,
+  vragen: [
+    { v: 'Wat zijn de drie basisbehoeften in de zelfdeterminatietheorie?', opties: ['Veiligheid, beloning en erkenning', 'Autonomie, competentie en verbondenheid', 'Vrijheid, geld en status', 'Intrinsiek, extrinsiek en gemengd'], correct: 1 },
+    { v: 'Wat toont het overjustificatie-effect aan?', opties: ['Beloningen verhogen altijd de motivatie', 'Externe beloningen kunnen intrinsieke motivatie ondermijnen', 'Kinderen tekenen beter als ze betaald worden', 'Straf werkt beter dan beloning'], correct: 1 },
+    { v: 'Welke regulatievorm staat het dichtst bij intrinsieke motivatie?', opties: ['Externe regulatie', 'Geïntrojecteerde regulatie', 'Geïdentificeerde regulatie', 'Geïntegreerde regulatie'], correct: 3 },
+  ]
+},
+
+{
+  id: 'n3b', niveau: 3,
+  titel: 'Globalisering en de paradox van welvaart',
+  tekst: `Globalisering heeft de afgelopen vijftig jaar de meest spectaculaire armoedevermindering in de menselijke geschiedenis teweeggebracht. Tussen 1990 en 2015 daalde het aantal mensen dat in extreme armoede leeft van bijna twee miljard naar minder dan zevenhonderd miljoen. China alleen al haalde meer dan zevenhonderd miljoen mensen uit de armoede. Dit is een prestatie zonder weerga, mogelijk gemaakt door internationale handel, technologieoverdracht en buitenlandse investeringen.
+
+En toch voelt globalisering in de rijkste landen van de wereld als een bedreiging. Industrie verdwijnt naar lageloonlanden. Banen zijn verdwenen. Gemeenschappen die decennialang bloeiden dankzij de staalindustrie of textiel zijn verpauperd. De politieke reactie is populisme, protectionisme en nostalgie naar een verleden dat niet terugkomt.
+
+Dit is de paradox van globalisering: het heeft de wereld als geheel rijker gemaakt, maar de baten zijn ongelijk verdeeld. Economen als Dani Rodrik wijzen op het trilemma van globalisering: je kunt niet tegelijkertijd maximale economische integratie, nationale soevereiniteit en democratie hebben. Iets moet wijken. In de afgelopen decennia was dat veelal de nationale soevereiniteit — staten verloren de greep op belastingbeleid, arbeidsstandaarden en industriepolitiek.
+
+De financiële crisis van 2008 legde kwetsbaarheden bloot die eerder waren verhuld door schijnbare welvaart. Gecomplexe internationale financiële ketens zorgden ervoor dat een hypothekencrisis in de Amerikaanse markt binnen weken mondiale banken neersloeg. Globale integratie betekent dat schokken snel en breed worden doorgegeven. Geen land is meer een eiland.
+
+De COVID-19-pandemie toonde een andere kant van de kwetsbaarheid: de afhankelijkheid van mondiale toeleveringsketens voor essentiële goederen. Mondmaskers, medicijnen en chips waren plotseling schaars, niet omdat ze niet bestonden, maar omdat de productie was gecentraliseerd in een handvol landen. Landen herontdekten het concept van strategische autonomie.
+
+Tegelijkertijd is er geen realistisch alternatief voor globalisering. Deglobalisering — het terugdraaien van internationale handelsbanden — zou de kosten van goederen dramatisch verhogen, innovatie afremmen en miljoenen mensen in opkomende economieën terugwerpen in armoede. Het is gemakkelijker te roepen dat we de klok terugdraaien dan om te onderzoeken wat de prijs daarvan is.
+
+De productievere vraag is: hoe maken we globalisering inclusiever en weerbaarder? Economen wijzen op de noodzaak van beter herverdelingsbeleid — niet als liefdadigheid, maar als economische logica: mensen die verliezen door handelsliberalisering moeten worden gecompenseerd en omgeschoold. Landen moeten kritieke sectoren strategisch beschermen zonder in protectionisme te vervallen. En internationale instituties moeten worden hervormd zodat ze de stemmen van ontwikkelingslanden beter vertegenwoordigen.
+
+De wereld is onherroepelijk verweven. Klimaatverandering, pandemieën, kunstmatige intelligentie en kernwapens zijn problemen die geen enkel land alleen kan oplossen. Globalisering is niet slechts een economisch fenomeen — het is de conditie van de hedendaagse beschaving. De keuze is niet of we samenwerken, maar hoe we dat doen op een manier die rechtvaardig, democratisch en veerkrachtig is.`,
+  vragen: [
+    { v: 'Hoeveel mensen daalde de extreme armoede tussen 1990 en 2015?', opties: ['Van 500 miljoen naar 100 miljoen', 'Van 1 miljard naar 300 miljoen', 'Van bijna 2 miljard naar minder dan 700 miljoen', 'Van 3 miljard naar 1 miljard'], correct: 2 },
+    { v: 'Wat is het trilemma van globalisering volgens Rodrik?', opties: ['Handel, inflatie en werkgelegenheid', 'Economische integratie, soevereiniteit en democratie', 'Vrijhandel, protectionisme en subsidies', 'Armoede, welvaart en ongelijkheid'], correct: 1 },
+    { v: 'Wat toonde de COVID-19-pandemie over globalisering?', opties: ['Dat globalisering armoede reduceert', 'Dat internationale handel niet werkt', 'Kwetsbaarheid door afhankelijkheid van mondiale toeleveringsketens', 'Dat klimaatverandering erger is dan pandemieën'], correct: 2 },
+  ]
+},
+
+]; // einde LANGE_TEKSTEN
+
+// ── NIVEAU CONFIGURATIE ───────────────────────────────────
+const _LTT_NIVEAUS = {
+  1: { naam: 'Starter',   emoji: '🟢', kleur: '#4cc9f0', drempelWpm: 0,   drempelOmhoog: 280, barPct: 20 },
+  2: { naam: 'Gevorderd', emoji: '🟡', kleur: '#f59e0b', drempelWpm: 280, drempelOmhoog: 420, barPct: 60 },
+  3: { naam: 'Expert',    emoji: '🔴', kleur: '#ef4444', drempelWpm: 420, drempelOmhoog: 9999, barPct: 100 },
+};
+
+// ── NIVEAU OPSLAG ─────────────────────────────────────────
+function lttGetNiveau() {
+  try { return JSON.parse(localStorage.getItem('snellees_niveau') || '{"niveau":1}').niveau; }
+  catch(e) { return 1; }
+}
+
+function lttSlaOp(wpm, begrip_pct) {
+  let d;
+  try { d = JSON.parse(localStorage.getItem('snellees_niveau') || '{"niveau":1,"sessies":[]}'); }
+  catch(e) { d = { niveau: 1, sessies: [] }; }
+  d.sessies = d.sessies || [];
+  d.sessies.push({ wpm, begrip: begrip_pct, datum: new Date().toISOString().split('T')[0] });
+
+  const oud = d.niveau;
+  // Niveau omhoog: wpm én begrip hoog genoeg
+  const omhoogWpm = d.niveau === 1 ? 280 : 420;
+  if (d.niveau < 3 && wpm >= omhoogWpm && begrip_pct >= 67) d.niveau++;
+  // Niveau omlaag: begrip < 34% (slechts begrip)
+  else if (d.niveau > 1 && begrip_pct < 34) d.niveau--;
+
+  localStorage.setItem('snellees_niveau', JSON.stringify(d));
+  return { oud, nieuw: d.niveau };
+}
+
+// ── STATE ─────────────────────────────────────────────────
+let _lttTekst    = null;
+let _lttStart    = 0;
+let _lttActief   = false;
+let _lttAntwoorden = [];
+let _lttWpm      = 0;
+
+// ── INITIALISATIE ─────────────────────────────────────────
+function lttInit() {
+  const niveau = lttGetNiveau();
+  const cfg    = _LTT_NIVEAUS[niveau];
+  const opties = LANGE_TEKSTEN.filter(t => t.niveau === niveau);
+  _lttTekst    = opties[Math.floor(Math.random() * opties.length)];
+  const wc     = woorden(_lttTekst.tekst).length;
+
+  // Niveau strip
+  document.getElementById('ltt-niveau-badge').textContent =
+    `${cfg.emoji} Niveau ${niveau} · ${cfg.naam}`;
+  document.getElementById('ltt-niveau-hint').textContent =
+    niveau < 3
+      ? `${cfg.drempelOmhoog}+ WPM + goed begrip (≥2/3) → ${_LTT_NIVEAUS[niveau + 1].naam}`
+      : '🏆 Je zit op het hoogste niveau!';
+
+  // Voortgangsbalk
+  const bar = document.getElementById('ltt-niveau-bar');
+  if (bar) { bar.style.width = cfg.barPct + '%'; bar.style.background = cfg.kleur; }
+
+  // Intro kaart
+  document.getElementById('ltt-tekst-naam').textContent = _lttTekst.titel;
+  document.getElementById('ltt-tekst-info').textContent =
+    `${wc} woorden · ${cfg.emoji} ${cfg.naam}`;
+
+  // Views
+  document.getElementById('ltt-view-intro').style.display = '';
+  document.getElementById('ltt-view-lezen').style.display = 'none';
+  document.getElementById('ltt-view-vragen').style.display = 'none';
+  document.getElementById('ltt-view-resultaat').style.display = 'none';
+  _lttActief = false;
+  _lttAntwoorden = [];
+}
+
+// ── STARTEN ───────────────────────────────────────────────
+function lttBegin() {
+  if (!_lttTekst) return;
+  document.getElementById('ltt-tekst-inhoud').textContent = _lttTekst.tekst;
+  document.getElementById('ltt-view-intro').style.display = 'none';
+  document.getElementById('ltt-view-lezen').style.display = '';
+  _lttStart  = Date.now();
+  _lttActief = true;
+}
+
+// ── KLAAR MET LEZEN ───────────────────────────────────────
+function lttKlaar() {
+  if (!_lttActief) return;
+  const elapsed = (Date.now() - _lttStart) / 1000 / 60;
+  const wc = woorden(_lttTekst.tekst).length;
+  _lttWpm   = Math.round(wc / elapsed);
+  _lttActief = false;
+  _lttAntwoorden = [];
+
+  document.getElementById('ltt-wpm-result').textContent = _lttWpm;
+  document.getElementById('ltt-view-lezen').style.display = 'none';
+
+  // Bouw vragen
+  const vragen = _lttTekst.vragen;
+  let html = '';
+  vragen.forEach((q, qi) => {
+    html += `<div style="margin-bottom:20px">
+      <div style="font-size:.9rem;font-weight:600;margin-bottom:8px">${qi + 1}. ${q.v}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        ${q.opties.map((opt, oi) =>
+          `<button onclick="lttKiesAntwoord(${qi},${oi},this)"
+            data-ltt-qi="${qi}" data-ltt-oi="${oi}"
+            style="padding:10px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--card);
+              color:var(--text);cursor:pointer;font-size:.82rem;text-align:left;transition:all .15s"
+            onmouseover="this.style.borderColor='var(--accent)'"
+            onmouseout="if(!this.classList.contains('ltt-g'))this.style.borderColor='var(--border2)'"
+          >${opt}</button>`
+        ).join('')}
+      </div>
+    </div>`;
+  });
+  document.getElementById('ltt-vragen-wrap').innerHTML = html;
+  document.getElementById('ltt-submit-btn').style.display = 'none';
+  document.getElementById('ltt-view-vragen').style.display = '';
+}
+
+// ── ANTWOORD KIEZEN ───────────────────────────────────────
+function lttKiesAntwoord(qi, oi, btn) {
+  document.querySelectorAll(`[data-ltt-qi="${qi}"]`).forEach(b => {
+    b.classList.remove('ltt-g');
+    b.style.borderColor = 'var(--border2)';
+    b.style.background  = 'var(--card)';
+  });
+  btn.classList.add('ltt-g');
+  btn.style.borderColor = 'var(--accent)';
+  btn.style.background  = 'rgba(124,111,247,.15)';
+  _lttAntwoorden[qi] = oi;
+
+  const totaal = _lttTekst.vragen.length;
+  if (_lttAntwoorden.filter(a => a !== undefined).length === totaal) {
+    document.getElementById('ltt-submit-btn').style.display = 'block';
+  }
+}
+
+// ── RESULTAAT VERWERKEN ───────────────────────────────────
+function lttVerzend() {
+  const vragen = _lttTekst.vragen;
+  let score = 0;
+  vragen.forEach((q, qi) => { if (_lttAntwoorden[qi] === q.correct) score++; });
+  const begrip_pct = Math.round((score / vragen.length) * 100);
+  const leesscore  = Math.round(_lttWpm * (begrip_pct / 100));
+
+  // Sla op in gewone stats + niveau systeem
+  slaaSessieOp(_lttWpm, woorden(_lttTekst.tekst).length);
+  const niveauResult = lttSlaOp(_lttWpm, begrip_pct);
+
+  // Score kaart
+  const begripKleur = begrip_pct >= 67 ? 'var(--green)' : begrip_pct >= 34 ? 'var(--accent)' : '#ef4444';
+  document.getElementById('ltt-score-kaart').innerHTML = `
+    <div>
+      <div class="ltt-score-num" style="color:var(--accent)">${_lttWpm}</div>
+      <div class="ltt-score-lbl">WPM</div>
+    </div>
+    <div>
+      <div class="ltt-score-num" style="color:${begripKleur}">${score}/${vragen.length}</div>
+      <div class="ltt-score-lbl">Begrip</div>
+    </div>
+    <div>
+      <div class="ltt-score-num" style="color:var(--green)">${leesscore}</div>
+      <div class="ltt-score-lbl">Leesscore</div>
+    </div>`;
+
+  // Niveau melding
+  const niveauEl = document.getElementById('ltt-niveau-melding');
+  if (niveauResult.nieuw !== niveauResult.oud) {
+    const cfg    = _LTT_NIVEAUS[niveauResult.nieuw];
+    const omhoog = niveauResult.nieuw > niveauResult.oud;
+    niveauEl.style.display = '';
+    niveauEl.innerHTML = `
+      <div class="am-icon">${omhoog ? '🎉' : '📉'}</div>
+      <div class="am-titel">${omhoog ? 'Niveau omhoog!' : 'Niveau omlaag'} → ${cfg.emoji} ${cfg.naam}</div>
+      <div class="am-sub">${omhoog
+        ? 'Indrukwekkend! Je leesscore was hoog genoeg voor het volgende niveau.'
+        : 'Geen zorgen — oefen meer voor beter begrip en probeer het opnieuw.'}</div>`;
+  } else {
+    niveauEl.style.display = 'none';
+  }
+
+  // Feedback tekst
+  const feedback =
+    score === vragen.length ? '🏆 Perfect begrip! Uitstekend!' :
+    score >= 2              ? '✅ Goed begrip!' :
+    score === 1             ? '📖 Matig begrip — lees wat rustiger.' :
+                              '💪 Begrip nog laag — probeer de tekst bewuster te lezen.';
+  document.getElementById('ltt-feedback').textContent = feedback;
+
+  document.getElementById('ltt-view-vragen').style.display = 'none';
+  document.getElementById('ltt-view-resultaat').style.display = '';
+
+  // Daguitdaging voltooien
+  if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('langetekst');
+  // Vandaag panel bijwerken
+  if (typeof updateVandaagPanel === 'function') updateVandaagPanel();
+}
 
 </script>
 </body>
