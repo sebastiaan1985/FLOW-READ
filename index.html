@@ -898,6 +898,19 @@ body.kids .oog-niveau-kaart.actief { border-color:#ff6b6b; background:rgba(255,1
 .oog-timer-wrap { display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--surface); border:1px solid var(--border); border-radius:10px; margin-bottom:16px; }
 .oog-timer-num { font-size:1.8rem; font-weight:800; color:var(--accent); font-variant-numeric:tabular-nums; min-width:3ch; text-align:center; }
 body.kids .oog-timer-num { color:#ff6b6b; }
+/* ── PERIFEER TIMER ──────────────────────────────────────── */
+.peri-timer-wrap { display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:12px; }
+.peri-timer-num  { font-size:1.6rem;font-weight:800;color:var(--accent2);font-variant-numeric:tabular-nums;min-width:3.5ch;text-align:center; }
+/* ── LEVEL-UP OVERLAY ────────────────────────────────────── */
+.lu-overlay { position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9998;display:flex;align-items:center;justify-content:center;animation:luFI .2s ease;cursor:pointer; }
+.lu-card    { background:var(--card);border:2px solid var(--accent);border-radius:24px;padding:40px 28px;text-align:center;max-width:300px;width:90%;animation:luPop .45s cubic-bezier(.34,1.56,.64,1);cursor:default; }
+.lu-badge   { font-size:3.5rem;margin-bottom:8px; }
+.lu-suptitel{ font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:6px; }
+.lu-titel   { font-size:1.6rem;font-weight:900;margin-bottom:6px; }
+.lu-niveau  { font-size:1.1rem;font-weight:700;margin-bottom:14px;padding:8px 16px;border-radius:30px;display:inline-block; }
+.lu-sub     { font-size:.85rem;color:var(--muted);line-height:1.55;margin-bottom:20px; }
+@keyframes luFI  { from{opacity:0} to{opacity:1} }
+@keyframes luPop { from{transform:scale(.6);opacity:0} to{transform:scale(1);opacity:1} }
 
 /* Kids modus toggle knop */
 .kids-toggle-btn {
@@ -2285,6 +2298,33 @@ main { -webkit-overflow-scrolling: touch; }
 
   <!-- VRIJ OEFENEN -->
   <div id="peri-view-vrij">
+
+    <!-- Timer balk -->
+    <div class="peri-timer-wrap" id="peri-timer-wrap">
+      <div style="flex:1">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Oefentimer</div>
+        <div style="font-size:13px;color:var(--text)" id="peri-timer-lbl">Druk Start om te beginnen (2 min)</div>
+      </div>
+      <!-- Circulaire ring (zelfde opbouw als oog) -->
+      <svg id="peri-ring-svg" width="64" height="64" viewBox="0 0 72 72" style="display:none;flex-shrink:0">
+        <circle cx="36" cy="36" r="30" fill="none" stroke="rgba(124,111,247,.15)" stroke-width="6"/>
+        <circle id="peri-ring-arc" cx="36" cy="36" r="30" fill="none" stroke="var(--accent2)" stroke-width="6"
+          stroke-dasharray="188.5" stroke-dashoffset="0" stroke-linecap="round"
+          transform="rotate(-90 36 36)" style="transition:stroke-dashoffset 1s linear"/>
+        <text x="36" y="41" text-anchor="middle" font-size="14" font-weight="800" fill="var(--accent2)" font-family="Inter,sans-serif" id="peri-ring-txt">—</text>
+      </svg>
+      <div class="peri-timer-num" id="peri-timer-num" style="display:block">—</div>
+    </div>
+
+    <!-- Voltooiingskaart -->
+    <div id="peri-resultaat" style="display:none;padding:24px 20px;background:rgba(52,211,153,.07);border:2px solid var(--green);border-radius:16px;text-align:center;margin-bottom:12px">
+      <div style="font-size:2.5rem;margin-bottom:8px">🎉</div>
+      <div style="font-size:1.15rem;font-weight:800;margin-bottom:6px">2 minuten voltooid!</div>
+      <div id="peri-res-sub" style="font-size:.88rem;color:var(--muted);margin-bottom:14px">Goed gedaan — je blikveld is getraind!</div>
+      <div id="peri-res-uitd" style="display:none;background:rgba(250,204,21,.12);border:1px solid #f59e0b;border-radius:8px;padding:9px 14px;margin-bottom:14px;font-size:.88rem;font-weight:700;color:#f59e0b">⭐ Daguitdaging voltooid! +15 XP</div>
+      <button class="btn btn-primary" onclick="periNieuweSessie()">▶ Opnieuw starten</button>
+    </div>
+
     <div id="peripheral-display">
       <span id="center-fixation">+</span>
     </div>
@@ -2302,7 +2342,7 @@ main { -webkit-overflow-scrolling: touch; }
           oninput="document.getElementById('pi-val').textContent=(this.value/10).toFixed(1)+'s'">
       </div>
       <div class="control-group" style="flex-direction:row;align-self:flex-end;flex:1;justify-content:flex-end">
-        <button class="btn btn-primary" onclick="periStart()">▶ Start</button>
+        <button class="btn btn-primary" onclick="periStartMetTimer()">▶ Start</button>
         <button class="btn btn-ghost" onclick="periStop()">⏹ Stop</button>
       </div>
     </div>
@@ -3875,7 +3915,90 @@ function periStart() {
   }
   toon();
 }
-function periStop() { clearTimeout(periTimer); periTimer = null; }
+function periStop() {
+  clearTimeout(periTimer); periTimer = null;
+  clearInterval(_periInterval); _periInterval = null;
+  _periUpdateRing(0, 0);
+  document.getElementById('peri-timer-lbl').textContent = 'Druk Start om te beginnen (2 min)';
+  const res = document.getElementById('peri-resultaat');
+  if (res) res.style.display = 'none';
+}
+
+// ─── PERIFEER TIMER ──────────────────────────────────────────────────────
+let _periInterval = null;
+let _periResterend = 0;
+const _PERI_DUUR = 120; // 2 minuten
+
+function _periUpdateRing(resterend, totaal) {
+  const ring   = document.getElementById('peri-ring-svg');
+  const arc    = document.getElementById('peri-ring-arc');
+  const txt    = document.getElementById('peri-ring-txt');
+  const num    = document.getElementById('peri-timer-num');
+  const OMTREK = 188.5;
+  if (!ring) return;
+  if (totaal > 0) {
+    ring.style.display = 'block';
+    num.style.display  = 'block';
+    const fractie = Math.max(0, resterend / totaal);
+    arc.style.strokeDashoffset = OMTREK * (1 - fractie);
+    const kleur = fractie > 0.5 ? 'var(--accent2)' : fractie > 0.2 ? '#f59e0b' : '#ef4444';
+    arc.style.stroke = kleur;
+    num.style.color  = kleur;
+    const min = Math.floor(resterend / 60);
+    const sec = resterend % 60;
+    const ts  = min > 0 ? `${min}:${String(sec).padStart(2,'0')}` : String(resterend);
+    txt.textContent = ts;
+    num.textContent = ts;
+  } else {
+    ring.style.display = 'none';
+    num.style.display  = 'block';
+    num.textContent    = '—';
+    num.style.color    = 'var(--accent2)';
+  }
+}
+
+function periStartMetTimer() {
+  clearInterval(_periInterval);
+  const res = document.getElementById('peri-resultaat');
+  if (res) res.style.display = 'none';
+  _periResterend = _PERI_DUUR;
+  document.getElementById('peri-timer-lbl').textContent = 'Bezig… kijk naar het kruis';
+  _periUpdateRing(_periResterend, _PERI_DUUR);
+  periStart(); // start de visuele animatie
+  function tik() {
+    _periUpdateRing(_periResterend, _PERI_DUUR);
+    if (_periResterend <= 0) {
+      clearInterval(_periInterval); _periInterval = null;
+      periStop();
+      document.getElementById('peri-timer-lbl').textContent = '✅ Sessie afgerond';
+      _periUpdateRing(0, 0);
+      _periToonResultaat();
+      if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('perifeer');
+      if (typeof kidsModus !== 'undefined' && kidsModus && typeof showConfetti === 'function') showConfetti(40, 30);
+      return;
+    }
+    _periResterend--;
+  }
+  tik();
+  _periInterval = setInterval(tik, 1000);
+}
+
+function _periToonResultaat() {
+  const res = document.getElementById('peri-resultaat');
+  if (!res) return;
+  const dagU = (typeof getDaguitdaging === 'function') ? getDaguitdaging() : null;
+  const uitdEl = document.getElementById('peri-res-uitd');
+  if (uitdEl) uitdEl.style.display = (dagU && dagU.type === 'perifeer') ? 'block' : 'none';
+  res.style.display = 'block';
+  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function periNieuweSessie() {
+  const res = document.getElementById('peri-resultaat');
+  if (res) res.style.display = 'none';
+  document.getElementById('peri-timer-lbl').textContent = 'Druk Start om te beginnen (2 min)';
+  _periUpdateRing(0, 0);
+}
 
 // ─── PAPIER TRAINING ─────────────────────────────────────────────────────
 let papierTimer = null;
@@ -8180,6 +8303,8 @@ function lttVerzend() {
       <div class="am-sub">${omhoog
         ? 'Indrukwekkend! Je leesscore was hoog genoeg voor het volgende niveau.'
         : 'Geen zorgen — oefen meer voor beter begrip en probeer het opnieuw.'}</div>`;
+    // Level-up: grote overlay animatie
+    if (omhoog) setTimeout(() => _toonLevelUp(niveauResult.nieuw), 600);
   } else {
     niveauEl.style.display = 'none';
   }
@@ -8201,6 +8326,33 @@ function lttVerzend() {
   if (typeof updateVandaagPanel === 'function') updateVandaagPanel();
   // Achievements checken (na localStorage-update)
   setTimeout(checkAchievements, 50);
+}
+
+// ── LEVEL-UP OVERLAY ──────────────────────────────────────
+function _toonLevelUp(nieuwNiveau) {
+  const cfg = _LTT_NIVEAUS[nieuwNiveau];
+  if (!cfg) return;
+  // Confetti
+  if (typeof showConfetti === 'function') showConfetti(120, 40);
+  // Overlay
+  const ov = document.createElement('div');
+  ov.className = 'lu-overlay';
+  ov.innerHTML = `
+    <div class="lu-card" onclick="event.stopPropagation()">
+      <div class="lu-badge">${cfg.emoji}</div>
+      <div class="lu-suptitel">🎉 Niveau omhoog!</div>
+      <div class="lu-titel">Je bent nu ${cfg.naam}</div>
+      <div class="lu-niveau" style="background:${cfg.kleur}22;color:${cfg.kleur}">${cfg.emoji} Niveau ${nieuwNiveau} — ${cfg.naam}</div>
+      <div class="lu-sub">${nieuwNiveau === 2
+        ? 'Je leest nu sneller dan het gemiddelde. Langere en complexere teksten staan voor je klaar!'
+        : 'Indrukwekkend — je behoort nu tot de snelste lezers. Alleen de uitdagendste teksten kunnen je nog stoppen.'
+      }</div>
+      <button class="btn btn-primary" onclick="this.closest('.lu-overlay').remove()">Doorgaan →</button>
+    </div>`;
+  ov.addEventListener('click', () => ov.remove());
+  document.body.appendChild(ov);
+  // Auto-dismiss na 6 seconden
+  setTimeout(() => { if (ov.parentNode) ov.remove(); }, 6000);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -8667,6 +8819,11 @@ function _elToonResultaat(score, begrip_pct) {
 (function() {
   const _orig = slaaSessieOp;
   slaaSessieOp = function(wpm, n) {
+    // Sanity check: sla onrealistische scores niet op
+    if (typeof wpm !== 'number' || wpm < 30 || wpm > 1200) {
+      console.warn('[FlowRead] WPM buiten bereik, sessie niet opgeslagen:', wpm);
+      return;
+    }
     _orig(wpm, n);
     _registreerTraindag();
     setTimeout(checkAchievements, 80);
