@@ -168,7 +168,7 @@ header {
 header > nav { display: none; }
 
 /* ── LAYOUT ───────────────────────────────────────────────── */
-main { flex: 1; padding: 28px 28px 88px; max-width: 920px; width: 100%; margin: 0 auto; }
+main { flex: 1; padding: 28px 28px calc(88px + env(safe-area-inset-bottom, 0px)); max-width: 920px; width: 100%; margin: 0 auto; }
 .screen { display: none; animation: fadeIn .25s ease; }
 .screen.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -1301,7 +1301,7 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 /* ── MOBIELE UX ──────────────────────────────────────────────── */
 @media (max-width: 640px) {
   /* Basis layout */
-  main { padding: 12px; }
+  main { padding: 12px 12px 88px; }
   .page-title { font-size: 1.3rem; }
   .page-sub   { font-size: .82rem; }
 
@@ -1506,7 +1506,8 @@ main { -webkit-overflow-scrolling: touch; }
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
   background: var(--surface); border-top: 1px solid var(--border);
-  display: flex; height: 62px;
+  display: flex; height: calc(62px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
 .bn-btn {
