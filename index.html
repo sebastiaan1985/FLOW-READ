@@ -2224,6 +2224,15 @@ main { -webkit-overflow-scrolling: touch; }
 
   <canvas id="eye-canvas" height="220"></canvas>
 
+  <!-- ── OOG RESULTAAT KAART ──────────────────────────────── -->
+  <div id="oog-resultaat" style="display:none;padding:28px 20px;background:rgba(124,111,247,.08);border:2px solid var(--accent);border-radius:16px;text-align:center;margin-bottom:16px">
+    <div style="font-size:2.8rem;margin-bottom:10px">🎉</div>
+    <div style="font-size:1.25rem;font-weight:800;margin-bottom:6px">Sessie voltooid!</div>
+    <div id="oog-res-sub" style="font-size:.9rem;color:var(--muted);margin-bottom:14px"></div>
+    <div id="oog-res-uitd" style="display:none;background:rgba(250,204,21,.12);border:1px solid #f59e0b;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:.9rem;font-weight:700;color:#f59e0b">⭐ Daguitdaging voltooid! +15 XP</div>
+    <button class="btn btn-primary" onclick="oogNieuweSessie()">▶ Nieuwe sessie starten</button>
+  </div>
+
   <div class="controls-panel">
     <div class="control-group">
       <label>Patroon</label>
@@ -5274,20 +5283,25 @@ function _oogUpdateRing(resterend, totaal) {
   if (!ring) return;
   if (totaal > 0) {
     ring.style.display = 'block';
-    num.style.display = 'none';
+    num.style.display = 'block'; // groot getal ook zichtbaar tijdens sessie
     secLbl.style.display = 'none';
     const fractie = Math.max(0, resterend / totaal);
     arc.style.strokeDashoffset = OMTREK * (1 - fractie);
-    // Kleur: groen → geel → rood
-    arc.style.stroke = fractie > 0.5 ? 'var(--accent)' : fractie > 0.2 ? '#f59e0b' : '#ef4444';
+    // Kleur: paars → geel → rood
+    const kleur = fractie > 0.5 ? 'var(--accent)' : fractie > 0.2 ? '#f59e0b' : '#ef4444';
+    arc.style.stroke = kleur;
+    num.style.color  = kleur;
     const min = Math.floor(resterend / 60);
     const sec = resterend % 60;
-    txt.textContent = min > 0 ? `${min}:${String(sec).padStart(2,'0')}` : String(resterend);
+    const timeStr = min > 0 ? `${min}:${String(sec).padStart(2,'0')}` : String(resterend);
+    txt.textContent = timeStr;
+    num.textContent = timeStr; // groot afteltimer synchroniseren
   } else {
     ring.style.display = 'none';
     num.style.display = 'block';
     secLbl.style.display = 'block';
     num.textContent = '—';
+    num.style.color = 'var(--accent)';
   }
 }
 
@@ -5303,9 +5317,10 @@ function oogStartMetTimer() {
     if (oogTimerResterend <= 0) {
       clearInterval(oogTimerInterval);
       oogStop();
-      document.getElementById('oog-timer-lbl').textContent = '✅ Sessie voltooid! Goed gedaan!';
+      document.getElementById('oog-timer-lbl').textContent = '✅ Sessie afgerond';
       _oogUpdateRing(0, 0);
       if (kidsModus) showConfetti(50, 30);
+      _oogToonResultaat(niv);
       voltooiDaguitdaging('oog');
       return;
     }
@@ -5323,7 +5338,32 @@ oogStop = function() {
   _oogStopOrigineel();
   _oogUpdateRing(0, 0);
   document.getElementById('oog-timer-lbl').textContent = 'Druk Start om te beginnen';
+  // Verberg resultaatkaart bij handmatig stoppen
+  const res = document.getElementById('oog-resultaat');
+  if (res) res.style.display = 'none';
 };
+
+function _oogToonResultaat(niv) {
+  const res = document.getElementById('oog-resultaat');
+  if (!res) return;
+  const sub = document.getElementById('oog-res-sub');
+  const uitdEl = document.getElementById('oog-res-uitd');
+  if (sub) sub.textContent = `${niv.naam} · ${niv.label} voltooid 💪`;
+  // Toon daguitdaging-badge alleen als vandaag oog-uitdaging is
+  if (uitdEl) {
+    const dagU = (typeof getDaguitdaging === 'function') ? getDaguitdaging() : null;
+    uitdEl.style.display = (dagU && dagU.type === 'oog') ? 'block' : 'none';
+  }
+  res.style.display = 'block';
+  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function oogNieuweSessie() {
+  const res = document.getElementById('oog-resultaat');
+  if (res) res.style.display = 'none';
+  document.getElementById('oog-timer-lbl').textContent = 'Druk Start om te beginnen';
+  _oogUpdateRing(0, 0);
+}
 
 // ════════════════════════════════════════════════════════════
 //  🔤  DYSLEXIE SYSTEEM
