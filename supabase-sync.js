@@ -28,6 +28,11 @@ const SYNC_KEYS = [
   'dyx_settings',
   'kids_modus',
   'daily_challenge',
+  // ── Fase 1–4 toevoegingen ──
+  'snellees_gebruiker',     // Onboarding: naam, avatar, leesdoel
+  'snellees_niveau',        // Adaptief leesniveau (Starter/Gevorderd/Expert)
+  'snellees_achievements',  // Behaalde achievements (array van IDs)
+  'snellees_traindagen',    // Streakdatums (array van ISO-datumstrings)
 ];
 
 let _huidigeGebruiker = null;
@@ -104,6 +109,13 @@ async function _laadVanCloud() {
   } else if (localStorage.getItem('av_actief') === null && data.av_profielen) {
     localStorage.setItem('av_actief', '-1');
   }
+
+  // ── Fase 1–4 velden ────────────────────────────────────────
+  if (data.snellees_gebruiker)    localStorage.setItem('snellees_gebruiker',    JSON.stringify(data.snellees_gebruiker));
+  if (data.snellees_niveau)       localStorage.setItem('snellees_niveau',       JSON.stringify(data.snellees_niveau));
+  if (data.snellees_achievements) localStorage.setItem('snellees_achievements', JSON.stringify(data.snellees_achievements));
+  if (data.snellees_traindagen)   localStorage.setItem('snellees_traindagen',   JSON.stringify(data.snellees_traindagen));
+  if (data.daily_challenge)       localStorage.setItem('daily_challenge',       JSON.stringify(data.daily_challenge));
 }
 
 // ── DATA OPSLAAN NAAR SUPABASE ────────────────────────────────────────────────
@@ -123,6 +135,7 @@ async function _syncNuNaarCloud() {
 
   const payload = {
     id:                   _huidigeGebruiker.id,
+    // ── Bestaande velden ──────────────────────────────────────
     stats:                lsJson('snellees_stats',      { sessies: [], totaalWoorden: 0, bestWpm: 0 }),
     bibliotheek:          lsJson('tekst_bibliotheek',   []),
     begintest_baseline:   lsJson('begintest_baseline',  null),
@@ -132,6 +145,12 @@ async function _syncNuNaarCloud() {
     bt_laatste_passage:   parseInt(localStorage.getItem('bt_laatste_passage') ?? '-1'),
     tekst_actief:         parseInt(localStorage.getItem('tekst_actief') ?? '0'),
     av_actief:            parseInt(localStorage.getItem('av_actief') ?? '-1'),
+    // ── Fase 1–4 velden ──────────────────────────────────────
+    snellees_gebruiker:   lsJson('snellees_gebruiker',    null),
+    snellees_niveau:      lsJson('snellees_niveau',       { niveau: 1, sessies: [] }),
+    snellees_achievements:lsJson('snellees_achievements', []),
+    snellees_traindagen:  lsJson('snellees_traindagen',   []),
+    daily_challenge:      lsJson('daily_challenge',       null),
     updated_at:           new Date().toISOString(),
   };
 
