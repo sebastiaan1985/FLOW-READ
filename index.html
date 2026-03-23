@@ -168,7 +168,7 @@ header {
 header > nav { display: none; }
 
 /* ── LAYOUT ───────────────────────────────────────────────── */
-main { flex: 1; padding: 28px; max-width: 920px; width: 100%; margin: 0 auto; }
+main { flex: 1; padding: 28px 28px 88px; max-width: 920px; width: 100%; margin: 0 auto; }
 .screen { display: none; animation: fadeIn .25s ease; }
 .screen.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -1481,6 +1481,90 @@ main { -webkit-overflow-scrolling: touch; }
 .vandaag-uitd-sub { font-size: .78rem; color: var(--muted); }
 .vandaag-uitd-status { font-size: 1.2rem; flex-shrink: 0; }
 
+/* ── FASE 3: BOTTOM NAV ──────────────────────────────────── */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+  background: var(--surface); border-top: 1px solid var(--border);
+  display: flex; height: 62px;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+.bn-btn {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; border: none; background: none; cursor: pointer;
+  color: var(--muted); font-size: .68rem; font-weight: 600; letter-spacing: .3px;
+  transition: color .2s, transform .15s; padding: 0; -webkit-tap-highlight-color: transparent;
+}
+.bn-btn .bn-icon { font-size: 1.4rem; line-height: 1; }
+.bn-btn.actief { color: var(--accent); }
+.bn-btn.actief .bn-icon { transform: translateY(-2px); }
+.bn-btn:active { transform: scale(.92); }
+.bn-badge {
+  position: absolute; top: 8px; right: calc(50% - 20px);
+  background: #ef4444; color: #fff; font-size: .6rem; font-weight: 700;
+  border-radius: 999px; padding: 1px 5px; min-width: 16px; text-align: center;
+}
+
+/* ── FASE 3: TRAINEN SCREEN ───────────────────────────────── */
+.tr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 4px; }
+.tr-kaart {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  cursor: pointer; text-align: left; transition: border-color .2s, transform .15s, box-shadow .2s;
+  color: var(--text); -webkit-tap-highlight-color: transparent;
+}
+.tr-kaart:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(124,111,247,.18); }
+.tr-kaart:active { transform: scale(.97); }
+.tr-icon { font-size: 1.6rem; }
+.tr-naam { font-size: .88rem; font-weight: 700; }
+.tr-sub  { font-size: .72rem; color: var(--muted); }
+
+/* ── FASE 3: VOORTGANG + ACHIEVEMENTS ────────────────────── */
+.vg-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
+@media (min-width: 480px) { .vg-stats-grid { grid-template-columns: repeat(4, 1fr); } }
+.vg-stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 12px; text-align: center; }
+.vg-stat-num { font-size: 1.7rem; font-weight: 800; }
+.vg-stat-lbl { font-size: .7rem; color: var(--muted); margin-top: 2px; }
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+.ach-badge {
+  background: var(--card); border: 1.5px solid var(--border); border-radius: 14px;
+  padding: 14px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  text-align: center; transition: border-color .2s, transform .15s;
+}
+.ach-badge.verdiend { border-color: rgba(124,111,247,.45); background: rgba(124,111,247,.07); }
+.ach-badge.verdiend:hover { transform: translateY(-2px); border-color: var(--accent); }
+.ach-badge-icon { font-size: 1.8rem; }
+.ach-badge-naam { font-size: .72rem; font-weight: 700; color: var(--text); }
+.ach-badge-sub  { font-size: .65rem; color: var(--muted); line-height: 1.3; }
+.ach-badge.vergrendeld .ach-badge-icon { filter: grayscale(1); opacity: .35; }
+.ach-badge.vergrendeld .ach-badge-naam { color: var(--muted); }
+.vg-niveau-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 24px; }
+.vg-niveau-dot { font-size: 2rem; flex-shrink: 0; }
+.vg-niveau-info { flex: 1; }
+.vg-niveau-naam { font-size: 1rem; font-weight: 700; }
+.vg-niveau-sub  { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+.vg-niveau-bar  { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+.vg-niveau-fill { height: 100%; border-radius: 3px; transition: width .6s ease; }
+.streak-cal { display: flex; gap: 5px; flex-wrap: wrap; padding: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 24px; }
+.streak-dot { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .65rem; color: var(--muted); background: var(--border); font-weight: 600; }
+.streak-dot.actief { background: rgba(255,150,0,.25); color: #ffaa33; }
+.streak-dot.vandaag { border: 2px solid #ffaa33; }
+
+/* ── FASE 3: ACHIEVEMENT TOAST (styled variant) ───────────── */
+.ach-toast {
+  position: fixed; bottom: 74px; left: 50%; transform: translateX(-50%) translateY(0);
+  z-index: 9998; background: linear-gradient(135deg, #1a1a3e, #2a2060);
+  border: 1.5px solid rgba(124,111,247,.55); border-radius: 16px;
+  padding: 12px 20px; display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 8px 32px rgba(124,111,247,.35); max-width: 320px; width: calc(100% - 40px);
+  animation: achToastIn .4s ease, achToastOut .4s ease 3.2s forwards;
+}
+.ach-toast .at-icon { font-size: 1.8rem; flex-shrink: 0; }
+.ach-toast .at-lbl  { font-size: .7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.ach-toast .at-naam { font-size: .92rem; font-weight: 700; color: #fff; }
+.ach-toast .at-sub  { font-size: .75rem; color: var(--muted); }
+@keyframes achToastIn  { from { transform: translateX(-50%) translateY(20px); opacity:0; } to { transform: translateX(-50%) translateY(0); opacity:1; } }
+@keyframes achToastOut { from { transform: translateX(-50%) translateY(0); opacity:1; } to { transform: translateX(-50%) translateY(20px); opacity:0; } }
+
 /* ── FASE 2: LANGE TEKSTEN + ADAPTIEF NIVEAU ─────────────── */
 .ltt-niveau-strip { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:20px; padding:12px 16px; background:var(--card); border-radius:12px; border:1px solid var(--border); }
 .ltt-niveau-badge { font-size:.88rem; font-weight:700; letter-spacing:.3px; }
@@ -2514,6 +2598,69 @@ main { -webkit-overflow-scrolling: touch; }
   </div>
 </div>
 
+<!-- ── TRAINEN ────────────────────────────────────────────── -->
+<div id="screen-trainen" class="screen">
+  <div class="page-title">⚡ Trainen</div>
+  <div class="page-sub">Kies een module en begin meteen.</div>
+
+  <h3>Snelheid &amp; Begrip</h3>
+  <div class="tr-grid">
+    <button class="tr-kaart" onclick="sidebarNav('rsvp')"><div class="tr-icon">⚡</div><div class="tr-naam">RSVP</div><div class="tr-sub">Woord voor woord flitsen</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('chunk')"><div class="tr-icon">📖</div><div class="tr-naam">Chunks</div><div class="tr-sub">Woordgroepen lezen</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('leestest')"><div class="tr-icon">📏</div><div class="tr-naam">Leestest</div><div class="tr-sub">WPM + begrip meten</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('langetekst')" style="border-color:rgba(76,201,240,.3)"><div class="tr-icon">📚</div><div class="tr-naam">Lange Teksten</div><div class="tr-sub">Adaptief niveau</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('begintest')"><div class="tr-icon">🎯</div><div class="tr-naam">Begintest</div><div class="tr-sub">Snelheid basismeting</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('papier')"><div class="tr-icon">📄</div><div class="tr-naam">Papier</div><div class="tr-sub">Gids-aanwijzer methode</div></button>
+  </div>
+
+  <h3>Oogtraining</h3>
+  <div class="tr-grid">
+    <button class="tr-kaart" onclick="sidebarNav('oog')"><div class="tr-icon">👁</div><div class="tr-naam">Oogbeweging</div><div class="tr-sub">Blikveld vergroten</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('perifeer')"><div class="tr-icon">🔭</div><div class="tr-naam">Perifeer</div><div class="tr-sub">Breed zien oefenen</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('fixatie')"><div class="tr-icon">🔲</div><div class="tr-naam">Fixatie</div><div class="tr-sub">Minder oogstops</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('regressie')"><div class="tr-icon">⏩</div><div class="tr-naam">Regressie</div><div class="tr-sub">Niet terug kijken</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('skim')"><div class="tr-icon">🔍</div><div class="tr-naam">Skim &amp; Scan</div><div class="tr-sub">Snel doorzoeken</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('oogrust')"><div class="tr-icon">😌</div><div class="tr-naam">Oogontspanning</div><div class="tr-sub">Palming + oefeningen</div></button>
+  </div>
+
+  <h3>Extra</h3>
+  <div class="tr-grid">
+    <button class="tr-kaart" onclick="sidebarNav('subvocal')"><div class="tr-icon">🔕</div><div class="tr-naam">Subvocalisatie</div><div class="tr-sub">Meelezen stoppen</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('dyslexie')"><div class="tr-icon">🌈</div><div class="tr-naam">Dyslexie Spel</div><div class="tr-sub">Letter-avontuur</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('avontuur')" style="border-color:rgba(224,112,0,.3)"><div class="tr-icon">🗺️</div><div class="tr-naam">Leesavontuur</div><div class="tr-sub">Gamified training</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('leerweg')" style="border-color:rgba(167,139,250,.35)"><div class="tr-icon">📅</div><div class="tr-naam">Leerweg</div><div class="tr-sub">4-weken programma</div></button>
+  </div>
+</div>
+
+<!-- ── VOORTGANG ───────────────────────────────────────────── -->
+<div id="screen-voortgang" class="screen">
+  <div class="page-title">📊 Jouw Voortgang</div>
+  <div class="page-sub">Statistieken, achievements en niveau.</div>
+
+  <!-- Stats -->
+  <div class="vg-stats-grid" id="vg-stats-grid"></div>
+
+  <!-- Niveau Lange Teksten -->
+  <h3>📚 Niveau Lange Teksten</h3>
+  <div id="vg-niveau-card" class="vg-niveau-card">
+    <div class="vg-niveau-dot" id="vg-niveau-emoji">🟢</div>
+    <div class="vg-niveau-info">
+      <div class="vg-niveau-naam" id="vg-niveau-naam">Starter</div>
+      <div class="vg-niveau-sub" id="vg-niveau-sub">Eerste niveau</div>
+      <div class="vg-niveau-bar"><div class="vg-niveau-fill" id="vg-niveau-fill" style="width:20%;background:#4cc9f0"></div></div>
+    </div>
+  </div>
+
+  <!-- Streak kalender -->
+  <h3>🔥 Laatste 14 dagen</h3>
+  <div class="streak-cal" id="vg-streak-cal"></div>
+
+  <!-- Achievements -->
+  <h3>🏆 Achievements <span id="vg-ach-count" style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-size:.8rem"></span></h3>
+  <div class="ach-grid" id="vg-ach-grid"></div>
+  <div style="height:12px"></div>
+</div>
+
 <!-- ── STATISTIEKEN ───────────────────────────────────────── -->
 <div id="screen-stats" class="screen">
   <div class="page-title">Uw Voortgang</div>
@@ -3127,6 +3274,9 @@ function sidebarNav(id) {
   if (id === 'avontuur') avLaad();
   if (id === 'leestest' && typeof leestestInit === 'function') leestestInit();
   if (id === 'langetekst' && typeof lttInit === 'function') lttInit();
+  if (id === 'voortgang' && typeof toonVoortgang === 'function') toonVoortgang();
+  // Bottom nav active state synchroniseren
+  _syncBottomNav(id);
   if (id === 'leerweg') leerWegInit();
   if (id === 'subvocal') svInit();
   if (id === 'regressie') regInit();
@@ -4858,6 +5008,8 @@ const VOLW_LABELS = {
   dyslexie:     { nav:'Dyslexie Spel',  titel:'🌈 Dyslexie Leesavontuur',   sub:'Lees het woord goed en kies het juiste antwoord. Hoe meer sterren, hoe beter! Speciaal lettertype helpt letters uit elkaar houden.' },
   begintest:    { nav:'Begintest',      titel:'Begintest',                    sub:'Meet uw leessnelheid en begripsniveau als startpunt voor uw training.' },
   langetekst:   { nav:'Lange Teksten',  titel:'📚 Lange Teksten',            sub:'Train leessnelheid én begrip met langere teksten op uw niveau. Het systeem past de moeilijkheidsgraad automatisch aan.' },
+  trainen:      { nav:'Trainen',        titel:'⚡ Trainen',                   sub:'Kies een module en begin meteen.' },
+  voortgang:    { nav:'Voortgang',      titel:'📊 Jouw Voortgang',           sub:'Statistieken, achievements en niveau.' },
 };
 
 function kidsToepassen() {
@@ -7912,8 +8064,258 @@ function lttVerzend() {
   if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('langetekst');
   // Vandaag panel bijwerken
   if (typeof updateVandaagPanel === 'function') updateVandaagPanel();
+  // Achievements checken (na localStorage-update)
+  setTimeout(checkAchievements, 50);
 }
 
+// ════════════════════════════════════════════════════════════
+//  🏆  FASE 3: ACHIEVEMENTS + VOORTGANG + BOTTOM NAV
+// ════════════════════════════════════════════════════════════
+
+// ── ACHIEVEMENTS DATA ─────────────────────────────────────
+const ACHIEVEMENTS = [
+  // Sessies
+  { id:'eerste-sessie',  icon:'🎯', naam:'Eerste Stap',      beschrijving:'Je eerste trainingssessie voltooid',          cat:'sessies'  },
+  { id:'sessies-10',     icon:'💪', naam:'Doorzetter',        beschrijving:'10 sessies voltooid',                         cat:'sessies'  },
+  { id:'sessies-50',     icon:'🏆', naam:'Veteraan',          beschrijving:'50 sessies voltooid',                         cat:'sessies'  },
+  { id:'sessies-100',    icon:'👑', naam:'Legende',           beschrijving:'100 sessies voltooid',                        cat:'sessies'  },
+  // WPM
+  { id:'wpm-200',        icon:'📖', naam:'Vlotte Lezer',      beschrijving:'200 WPM bereikt',                             cat:'snelheid' },
+  { id:'wpm-300',        icon:'⚡', naam:'Snelle Lezer',      beschrijving:'300 WPM bereikt',                             cat:'snelheid' },
+  { id:'wpm-400',        icon:'🚀', naam:'Razendsnel',        beschrijving:'400 WPM bereikt',                             cat:'snelheid' },
+  { id:'wpm-500',        icon:'💫', naam:'Superlezer',        beschrijving:'500 WPM bereikt',                             cat:'snelheid' },
+  // Streak
+  { id:'streak-3',       icon:'🔥', naam:'Op Dreef',          beschrijving:'3 dagen op rij geoefend',                     cat:'streak'   },
+  { id:'streak-7',       icon:'🌟', naam:'Weekkampioen',      beschrijving:'7 dagen op rij geoefend',                     cat:'streak'   },
+  { id:'streak-30',      icon:'🌙', naam:'Maandmeester',      beschrijving:'30 dagen op rij geoefend',                    cat:'streak'   },
+  // Lange teksten
+  { id:'eerste-lt',      icon:'📚', naam:'Lezer',             beschrijving:'Eerste lange tekst voltooid',                 cat:'begrip'   },
+  { id:'perfect-begrip', icon:'🧠', naam:'Alleslezer',        beschrijving:'3/3 begripsvragen correct',                   cat:'begrip'   },
+  { id:'lt-niveau-2',    icon:'🟡', naam:'Gevorderd Lezer',   beschrijving:'Niveau Gevorderd bereikt in Lange Teksten',   cat:'begrip'   },
+  { id:'lt-niveau-3',    icon:'🔴', naam:'Expert Lezer',      beschrijving:'Niveau Expert bereikt in Lange Teksten',      cat:'begrip'   },
+];
+
+// ── OPSLAG ────────────────────────────────────────────────
+function getVerdiendAchievements() {
+  try { return JSON.parse(localStorage.getItem('snellees_achievements') || '[]'); }
+  catch(e) { return []; }
+}
+function slaAchievementsOp(ids) {
+  localStorage.setItem('snellees_achievements', JSON.stringify([...new Set(ids)]));
+}
+
+// ── TRAINDAGEN BIJHOUDEN ─────────────────────────────────
+function _vandaagISO() {
+  return new Date().toISOString().split('T')[0];
+}
+function _registreerTraindag() {
+  const d = _vandaagISO();
+  let dagen;
+  try { dagen = JSON.parse(localStorage.getItem('snellees_traindagen') || '[]'); }
+  catch(e) { dagen = []; }
+  if (!dagen.includes(d)) {
+    dagen.push(d);
+    if (dagen.length > 60) dagen = dagen.slice(-60);
+    localStorage.setItem('snellees_traindagen', JSON.stringify(dagen));
+  }
+}
+
+// ── ACHIEVEMENT CHECK ─────────────────────────────────────
+function checkAchievements() {
+  try {
+    const verdiend = getVerdiendAchievements();
+    const nieuw    = [];
+    const check    = (id, cond) => { if (cond && !verdiend.includes(id)) nieuw.push(id); };
+
+    // Sessies
+    const totaal  = (stats.sessies || []).length;
+    const bestWpm = stats.bestWpm || 0;
+    check('eerste-sessie', totaal >= 1);
+    check('sessies-10',    totaal >= 10);
+    check('sessies-50',    totaal >= 50);
+    check('sessies-100',   totaal >= 100);
+
+    // WPM
+    check('wpm-200', bestWpm >= 200);
+    check('wpm-300', bestWpm >= 300);
+    check('wpm-400', bestWpm >= 400);
+    check('wpm-500', bestWpm >= 500);
+
+    // Streak
+    const streakDagen = (typeof getGlobaalStreak === 'function') ? getGlobaalStreak().dagen : 0;
+    check('streak-3',  streakDagen >= 3);
+    check('streak-7',  streakDagen >= 7);
+    check('streak-30', streakDagen >= 30);
+
+    // Lange teksten
+    let ltData;
+    try { ltData = JSON.parse(localStorage.getItem('snellees_niveau') || '{}'); }
+    catch(e) { ltData = {}; }
+    const ltSessies = ltData.sessies || [];
+    const ltNiveau  = ltData.niveau  || 1;
+    check('eerste-lt',      ltSessies.length >= 1);
+    check('perfect-begrip', ltSessies.some(s => s.begrip >= 100));
+    check('lt-niveau-2',    ltNiveau >= 2);
+    check('lt-niveau-3',    ltNiveau >= 3);
+
+    if (nieuw.length > 0) {
+      slaAchievementsOp([...verdiend, ...nieuw]);
+      nieuw.forEach((id, i) => setTimeout(() => _toonAchievementToast(id), i * 1400));
+    }
+  } catch(e) { /* stille failure */ }
+}
+
+// ── ACHIEVEMENT TOAST ─────────────────────────────────────
+function _toonAchievementToast(id) {
+  const ach = ACHIEVEMENTS.find(a => a.id === id);
+  if (!ach) return;
+  const el = document.createElement('div');
+  el.className = 'ach-toast';
+  el.innerHTML = `
+    <div class="at-icon">${ach.icon}</div>
+    <div>
+      <div class="at-lbl">🏆 Achievement ontgrendeld!</div>
+      <div class="at-naam">${ach.naam}</div>
+      <div class="at-sub">${ach.beschrijving}</div>
+    </div>`;
+  document.body.appendChild(el);
+  if (typeof showConfetti === 'function') showConfetti(30, 5);
+  setTimeout(() => el.remove(), 3700);
+}
+
+// ── BOTTOM NAV ────────────────────────────────────────────
+const _BNAV_MAP = {
+  home:'home', trainen:'trainen', voortgang:'voortgang', stats:'voortgang',
+  rsvp:'trainen', chunk:'trainen', oog:'trainen', perifeer:'trainen',
+  papier:'trainen', subvocal:'trainen', regressie:'trainen', fixatie:'trainen',
+  skim:'trainen', oogrust:'trainen', dyslexie:'trainen', avontuur:'trainen',
+  leerweg:'trainen', leestest:'trainen', langetekst:'trainen',
+  begintest:'trainen', tekst:'trainen',
+};
+
+function _syncBottomNav(screenId) {
+  const tab = _BNAV_MAP[screenId] || null;
+  document.querySelectorAll('.bn-btn').forEach(b => b.classList.remove('actief'));
+  if (tab) {
+    const btn = document.querySelector(`.bn-btn[data-tab="${tab}"]`);
+    if (btn) btn.classList.add('actief');
+  }
+}
+
+function bottomNavNaar(tab) {
+  if (tab === 'home')      sidebarNav('home');
+  else if (tab === 'trainen')   sidebarNav('trainen');
+  else if (tab === 'voortgang') sidebarNav('voortgang');
+}
+
+// ── VOORTGANG SCHERM RENDEREN ─────────────────────────────
+function toonVoortgang() {
+  // Stats summary
+  const s   = stats.sessies || [];
+  const gem = s.length ? Math.round(s.reduce((a,x) => a + x.wpm, 0) / s.length) : 0;
+  const streakDagen = (typeof getGlobaalStreak === 'function') ? getGlobaalStreak().dagen : 0;
+
+  const statsEl = document.getElementById('vg-stats-grid');
+  if (statsEl) statsEl.innerHTML = `
+    <div class="vg-stat">
+      <div class="vg-stat-num" style="color:var(--accent)">${s.length}</div>
+      <div class="vg-stat-lbl">Sessies</div>
+    </div>
+    <div class="vg-stat">
+      <div class="vg-stat-num" style="color:var(--green)">${stats.bestWpm || 0}</div>
+      <div class="vg-stat-lbl">Best WPM</div>
+    </div>
+    <div class="vg-stat">
+      <div class="vg-stat-num">${gem}</div>
+      <div class="vg-stat-lbl">Gem. WPM</div>
+    </div>
+    <div class="vg-stat">
+      <div class="vg-stat-num" style="color:#ffaa33">${streakDagen}</div>
+      <div class="vg-stat-lbl">Streak 🔥</div>
+    </div>`;
+
+  // Niveau Lange Teksten
+  let ltData;
+  try { ltData = JSON.parse(localStorage.getItem('snellees_niveau') || '{}'); }
+  catch(e) { ltData = {}; }
+  const niveau = ltData.niveau || 1;
+  if (typeof _LTT_NIVEAUS !== 'undefined') {
+    const cfg  = _LTT_NIVEAUS[niveau];
+    const ltSn = (ltData.sessies || []).length;
+    const emEl = document.getElementById('vg-niveau-emoji');
+    const nmEl = document.getElementById('vg-niveau-naam');
+    const sbEl = document.getElementById('vg-niveau-sub');
+    const fEl  = document.getElementById('vg-niveau-fill');
+    if (emEl) emEl.textContent = cfg.emoji;
+    if (nmEl) nmEl.textContent = `${cfg.naam} (Niveau ${niveau})`;
+    if (sbEl) sbEl.textContent = niveau < 3
+      ? `${ltSn} lange tekst(en) gelezen · ${_LTT_NIVEAUS[niveau + 1].naam} bij ${cfg.drempelOmhoog}+ WPM + goed begrip`
+      : `${ltSn} lange tekst(en) gelezen · 🏆 Hoogste niveau bereikt!`;
+    if (fEl) { fEl.style.width = cfg.barPct + '%'; fEl.style.background = cfg.kleur; }
+  }
+
+  // Streak kalender (14 dagen)
+  const calEl = document.getElementById('vg-streak-cal');
+  if (calEl) {
+    let traindagen;
+    try { traindagen = JSON.parse(localStorage.getItem('snellees_traindagen') || '[]'); }
+    catch(e) { traindagen = []; }
+    const nu = new Date();
+    let html = '';
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(nu); d.setDate(d.getDate() - i);
+      const iso = d.toISOString().split('T')[0];
+      const dag = d.getDate();
+      const actief  = traindagen.includes(iso);
+      const isToday = i === 0;
+      html += `<div class="streak-dot${actief?' actief':''}${isToday?' vandaag':''}" title="${iso}">${dag}</div>`;
+    }
+    calEl.innerHTML = html;
+  }
+
+  // Achievement grid
+  const achEl    = document.getElementById('vg-ach-grid');
+  const cntEl    = document.getElementById('vg-ach-count');
+  const verdiend = getVerdiendAchievements();
+  if (cntEl) cntEl.textContent = `${verdiend.length} / ${ACHIEVEMENTS.length}`;
+  if (achEl) {
+    achEl.innerHTML = ACHIEVEMENTS.map(ach => {
+      const ok = verdiend.includes(ach.id);
+      return `<div class="ach-badge ${ok ? 'verdiend' : 'vergrendeld'}" title="${ach.beschrijving}">
+        <div class="ach-badge-icon">${ach.icon}</div>
+        <div class="ach-badge-naam">${ach.naam}</div>
+        <div class="ach-badge-sub">${ach.beschrijving}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+// ── HOOKS: slaaSessieOp wrappen ───────────────────────────
+(function() {
+  const _orig = slaaSessieOp;
+  slaaSessieOp = function(wpm, n) {
+    _orig(wpm, n);
+    _registreerTraindag();
+    setTimeout(checkAchievements, 80);
+  };
+})();
+
 </script>
+
+<!-- ── BOTTOM NAVIGATIE ──────────────────────────────────── -->
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="bn-btn actief" data-tab="home" onclick="bottomNavNaar('home')">
+    <span class="bn-icon">🏠</span>
+    <span>Home</span>
+  </button>
+  <button class="bn-btn" data-tab="trainen" onclick="bottomNavNaar('trainen')">
+    <span class="bn-icon">⚡</span>
+    <span>Trainen</span>
+  </button>
+  <button class="bn-btn" data-tab="voortgang" onclick="bottomNavNaar('voortgang')">
+    <span class="bn-icon">📊</span>
+    <span>Voortgang</span>
+  </button>
+</nav>
 </body>
 </html>
