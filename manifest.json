@@ -1,0 +1,27 @@
+{
+  "name": "SnelLees Trainer",
+  "short_name": "SnelLees",
+  "description": "Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#7c6ff7",
+  "orientation": "portrait-primary",
+  "lang": "nl",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='32' fill='%237c6ff7'/%3E%3Ctext y='130' x='96' text-anchor='middle' font-size='110' font-family='Arial'>📖%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%237c6ff7'/%3E%3Ctext y='360' x='256' text-anchor='middle' font-size='300' font-family='Arial'>📖%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "screenshots": []
+}

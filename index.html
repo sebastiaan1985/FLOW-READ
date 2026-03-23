@@ -2,9 +2,18 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>SnelLees Trainer</title>
+<meta name="description" content="Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.">
+<meta name="theme-color" content="#7c6ff7">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SnelLees">
+<link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+<!-- Chart.js voor statistieken grafieken -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <!-- Supabase auth + sync (laadt vóór eigen scripts) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-sync.js"></script>
@@ -1248,6 +1257,112 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 .or-tel  { font-size:3rem;font-weight:800;color:var(--accent);margin:8px 0; }
 .or-uitleg { font-size:.9rem;color:var(--muted);margin-top:8px; }
 
+/* ── GRAFIEKEN ──────────────────────────────────────────────── */
+.chart-wrap { position:relative;height:200px;margin:16px 0;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:16px; }
+.chart-tabs { display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap; }
+.chart-tab  { font-size:.75rem;padding:5px 12px;border-radius:7px;border:1px solid var(--border2);background:var(--card2);color:var(--muted);cursor:pointer; }
+.chart-tab.actief { background:var(--accent);color:#fff;border-color:var(--accent); }
+.chart-leeg { display:flex;align-items:center;justify-content:center;height:140px;color:var(--muted);font-size:.85rem;font-style:italic; }
+
+/* ── FOUT TOAST ──────────────────────────────────────────────── */
+#fout-toast {
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:#1a1a2e;border:1px solid #ef4444;color:#fca5a5;
+  padding:12px 20px;border-radius:12px;font-size:.88rem;font-weight:600;
+  z-index:9999;max-width:calc(100vw - 32px);box-shadow:0 8px 24px rgba(0,0,0,.4);
+  transition:transform .3s ease;display:flex;align-items:center;gap:10px;
+}
+#fout-toast.zichtbaar { transform:translateX(-50%) translateY(0); }
+#fout-toast .fout-sluit { cursor:pointer;opacity:.7;font-size:1rem;flex-shrink:0; }
+
+/* ── MOBIELE UX ──────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Basis layout */
+  main { padding: 12px; }
+  .page-title { font-size: 1.3rem; }
+  .page-sub   { font-size: .82rem; }
+
+  /* Buttons groter voor touch */
+  .btn { padding: 11px 16px; font-size: .88rem; min-height: 44px; }
+  .btn-primary { min-height: 44px; }
+
+  /* Header compacter */
+  header { padding: 0 12px; height: 52px; }
+  .logo  { font-size: 1rem; }
+
+  /* Kaarten in home volledig breed op klein scherm */
+  .home-kaart { padding: 14px 12px; }
+  .home-kaart-icon { font-size: 1.6rem; }
+  .home-kaart-titel { font-size: .9rem; }
+
+  /* Stat cards */
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .stat-card { padding: 12px 10px; }
+  .stat-num  { font-size: 1.6rem; }
+
+  /* Tips grid één kolom */
+  .tip-grid { grid-template-columns: 1fr; }
+
+  /* RSVP woord kleiner op mobiel */
+  #rsvp-woord { font-size: 2rem; }
+
+  /* Chunk display aanpassen */
+  #chunk-display { font-size: 1.2rem; }
+
+  /* Perifeer game woorden */
+  #peri-links, #peri-rechts { font-size: .75rem; }
+
+  /* Leerweg week-header compacter */
+  .lw-week-naam { font-size: .9rem; }
+  .lw-dag-rij   { flex-wrap: wrap; }
+
+  /* Formulieren breed */
+  .scan-input, .doel-input { font-size: 16px; } /* 16px voorkomt auto-zoom iOS */
+
+  /* Chart compacter */
+  .chart-wrap { height: 170px; padding: 10px; }
+
+  /* Subvocal woord */
+  .sv-woord { font-size: 2.2rem; }
+
+  /* Regressie zin */
+  .reg-zin { font-size: 1rem; padding: 16px; }
+
+  /* Fixatie */
+  .fix-zin-wrap { font-size: .9rem; }
+
+  /* Oog rust cirkel */
+  .or-cirkel { width: 100px; height: 100px; }
+  .or-tel    { font-size: 2.2rem; }
+
+  /* Sidebar volledig breed op mobiel */
+  .sidebar { width: min(320px, 92vw); }
+
+  /* Sessie items */
+  .sessie-item { flex-direction: column; gap: 2px; font-size: .8rem; }
+
+  /* Avontuur knoppen groter */
+  .av-antwoord-btn { min-height: 48px; font-size: 1rem; }
+}
+
+@media (max-width: 380px) {
+  .stat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .page-title { font-size: 1.15rem; }
+  .btn { padding: 10px 12px; font-size: .82rem; }
+}
+
+/* Touch-targets algemeen — minimaal 44×44px */
+button, input[type="button"], input[type="submit"],
+a[role="button"] { touch-action: manipulation; }
+
+/* Smooth scrolling voor mobiel */
+main { -webkit-overflow-scrolling: touch; }
+
+/* Voorkom tekst selectie op game-knoppen */
+.vanger-bubble, .dyx-letter-btn, .antwoord-btn, .av-antwoord-btn {
+  -webkit-user-select: none; user-select: none;
+}
+
 /* ── WPM-DOEL (stats) ──────────────────────────────────────── */
 .doel-wrap { background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:18px;margin-bottom:16px; }
 .doel-bar  { height:16px;border-radius:999px;background:var(--border2);overflow:hidden;margin:10px 0; }
@@ -1272,6 +1387,12 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   </div>
   <button id="no-profiel-btn" onclick="sidebarNav('avontuur')" style="display:none;padding:7px 14px;border:1px solid rgba(224,112,0,.4);border-radius:8px;background:transparent;color:#e07000;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">👤 Maak profiel</button>
 </header>
+
+<!-- Fout toast (error boundary UI) -->
+<div id="fout-toast">
+  <span id="fout-toast-msg">Er is iets misgegaan.</span>
+  <span class="fout-sluit" onclick="sluitFoutToast()">✕</span>
+</div>
 
 <!-- Sidebar Navigation -->
 <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="sluitSidebar()"></div>
@@ -2097,6 +2218,20 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   <div class="page-sub">Alle sessies worden lokaal opgeslagen in uw browser.</div>
 
   <div class="stat-grid" id="stat-cards"></div>
+
+  <!-- Grafieken -->
+  <div class="chart-tabs">
+    <button class="chart-tab actief" onclick="chartTab('wpm')">📈 WPM over tijd</button>
+    <button class="chart-tab" onclick="chartTab('verdeling')">📊 Snelheidsverdeling</button>
+  </div>
+  <div class="chart-wrap" id="chart-wrap-wpm">
+    <div class="chart-leeg" id="chart-leeg-wpm">Nog geen sessies — begin met trainen!</div>
+    <canvas id="chart-wpm" style="display:none"></canvas>
+  </div>
+  <div class="chart-wrap" id="chart-wrap-verdeling" style="display:none">
+    <div class="chart-leeg" id="chart-leeg-verdeling">Nog geen sessies — begin met trainen!</div>
+    <canvas id="chart-verdeling" style="display:none"></canvas>
+  </div>
 
   <h3>Recente sessies</h3>
   <div class="card" id="sessie-lijst"></div>
@@ -3476,6 +3611,181 @@ function toonBibliotheek() {
 }
 
 // ─── STATISTIEKEN ─────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// 🚨  ERROR BOUNDARIES
+// ═══════════════════════════════════════════════════════════
+let _foutToastTimer = null;
+
+function toonFout(bericht, details) {
+  const el = document.getElementById('fout-toast');
+  const msg = document.getElementById('fout-toast-msg');
+  if (!el || !msg) return;
+  msg.textContent = bericht || 'Er is iets misgegaan. Probeer het opnieuw.';
+  el.classList.add('zichtbaar');
+  clearTimeout(_foutToastTimer);
+  _foutToastTimer = setTimeout(sluitFoutToast, 5000);
+  if (details) console.error('[SnelLees fout]', bericht, details);
+}
+
+function sluitFoutToast() {
+  const el = document.getElementById('fout-toast');
+  if (el) el.classList.remove('zichtbaar');
+}
+
+// Globale vangnet: onverwachte JS-fouten tonen als toast
+window.onerror = function(msg, src, line, col, err) {
+  // Alleen tonen voor onze eigen code, niet externe scripts
+  if (src && (src.includes('supabase') || src.includes('cdn.jsdelivr') || src.includes('chart.js'))) return false;
+  toonFout('Er is een onverwachte fout opgetreden. De pagina werkt mogelijk niet correct.');
+  return false;
+};
+
+window.addEventListener('unhandledrejection', function(e) {
+  if (e.reason && String(e.reason).includes('NetworkError')) {
+    toonFout('Geen internetverbinding. Sommige functies werken mogelijk niet.');
+  } else if (e.reason && String(e.reason).includes('supabase')) {
+    // Supabase fouten stil afhandelen — app werkt ook offline
+  } else {
+    toonFout('Er is een onverwachte fout opgetreden.');
+  }
+});
+
+// Helper: veilig een functie uitvoeren met foutafhandeling
+function veilig(fn, label) {
+  try { return fn(); }
+  catch(e) { toonFout(`Fout in ${label||'module'}: ${e.message}`); console.error(e); }
+}
+
+// ═══════════════════════════════════════════════════════════
+// 📊  GRAFIEKEN (Chart.js)
+// ═══════════════════════════════════════════════════════════
+let _chartWpm = null;
+let _chartVerd = null;
+let _actieveChartTab = 'wpm';
+
+const CHART_KLEUREN = {
+  lijn:   'rgba(124,111,247,1)',
+  vulling:'rgba(124,111,247,0.15)',
+  groen:  'rgba(52,211,153,0.8)',
+  oranje: 'rgba(245,158,11,0.8)',
+  rood:   'rgba(239,68,68,0.8)',
+  grid:   'rgba(255,255,255,0.06)',
+  tekst:  'rgba(180,180,200,0.8)',
+};
+
+function chartTab(t) {
+  _actieveChartTab = t;
+  document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('actief'));
+  document.querySelector(`.chart-tab[onclick*="${t}"]`).classList.add('actief');
+  document.getElementById('chart-wrap-wpm').style.display     = t==='wpm'?'':'none';
+  document.getElementById('chart-wrap-verdeling').style.display = t==='verdeling'?'':'none';
+}
+
+function tekenGrafieken() {
+  if (typeof Chart === 'undefined') return; // CDN nog niet geladen
+  const sessies = (stats.sessies || []).filter(s => s.wpm > 0);
+
+  // ── WPM over tijd ──────────────────────────────────────
+  const wpmCanvas  = document.getElementById('chart-wpm');
+  const wpmLeeg    = document.getElementById('chart-leeg-wpm');
+
+  if (sessies.length < 2) {
+    wpmCanvas.style.display = 'none';
+    wpmLeeg.style.display   = '';
+  } else {
+    wpmCanvas.style.display = '';
+    wpmLeeg.style.display   = 'none';
+
+    const labels = sessies.slice(-20).map((s,i) => `#${sessies.length - Math.min(20,sessies.length) + i + 1}`);
+    const data   = sessies.slice(-20).map(s => s.wpm);
+    const gem    = Math.round(data.reduce((a,v)=>a+v,0)/data.length);
+
+    if (_chartWpm) _chartWpm.destroy();
+    _chartWpm = new Chart(wpmCanvas, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: 'WPM',
+          data,
+          borderColor: CHART_KLEUREN.lijn,
+          backgroundColor: CHART_KLEUREN.vulling,
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: CHART_KLEUREN.lijn,
+          fill: true,
+          tension: 0.35,
+        }, {
+          label: `Gemiddelde (${gem})`,
+          data: Array(data.length).fill(gem),
+          borderColor: 'rgba(52,211,153,0.5)',
+          borderWidth: 1.5,
+          borderDash: [6,3],
+          pointRadius: 0,
+          fill: false,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { color: CHART_KLEUREN.tekst, font: { size: 11 } } },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y} WPM` } }
+        },
+        scales: {
+          x: { ticks: { color: CHART_KLEUREN.tekst, font:{size:10} }, grid: { color: CHART_KLEUREN.grid } },
+          y: { ticks: { color: CHART_KLEUREN.tekst, font:{size:10}, callback: v=>`${v}` },
+               grid: { color: CHART_KLEUREN.grid }, beginAtZero: false }
+        }
+      }
+    });
+  }
+
+  // ── Snelheidsverdeling ────────────────────────────────
+  const verdCanvas = document.getElementById('chart-verdeling');
+  const verdLeeg   = document.getElementById('chart-leeg-verdeling');
+
+  if (sessies.length < 3) {
+    verdCanvas.style.display = 'none';
+    verdLeeg.style.display   = '';
+  } else {
+    verdCanvas.style.display = '';
+    verdLeeg.style.display   = 'none';
+
+    const bakken = [
+      { label: '<150', min:0,   max:149 },
+      { label: '150–249', min:150, max:249 },
+      { label: '250–349', min:250, max:349 },
+      { label: '350–449', min:350, max:449 },
+      { label: '450–599', min:450, max:599 },
+      { label: '600+',  min:600, max:9999 },
+    ];
+    const counts = bakken.map(b => sessies.filter(s => s.wpm>=b.min && s.wpm<=b.max).length);
+    const kleuren = [CHART_KLEUREN.rood, CHART_KLEUREN.oranje, 'rgba(250,204,21,0.8)',
+                     CHART_KLEUREN.groen, 'rgba(34,211,238,0.8)', 'rgba(167,139,250,0.8)'];
+
+    if (_chartVerd) _chartVerd.destroy();
+    _chartVerd = new Chart(verdCanvas, {
+      type: 'bar',
+      data: {
+        labels: bakken.map(b=>b.label),
+        datasets: [{ label: 'Sessies', data: counts, backgroundColor: kleuren, borderRadius: 6, borderWidth: 0 }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color: CHART_KLEUREN.tekst, font:{size:10} }, grid: { color: CHART_KLEUREN.grid } },
+          y: { ticks: { color: CHART_KLEUREN.tekst, font:{size:10}, stepSize:1 },
+               grid: { color: CHART_KLEUREN.grid }, beginAtZero: true }
+        }
+      }
+    });
+  }
+}
+
 function slaaSessieOp(wpm, n) {
   stats.sessies.push({ datum: new Date().toLocaleString('nl-NL'), wpm, woorden: n });
   stats.totaalWoorden += n;
@@ -3486,15 +3796,33 @@ function slaaSessieOp(wpm, n) {
 function toonStats() {
   const gem = stats.sessies.length
     ? Math.round(stats.sessies.reduce((s,x)=>s+x.wpm,0)/stats.sessies.length) : 0;
+
+  // Trend: vergelijk laatste 5 met de 5 daarvoor
+  let trendHtml = '';
+  if (stats.sessies.length >= 6) {
+    const recent = stats.sessies.slice(-5).reduce((a,s)=>a+s.wpm,0)/5;
+    const eerder = stats.sessies.slice(-10,-5).reduce((a,s)=>a+s.wpm,0)/Math.min(5,stats.sessies.length-5);
+    const diff = Math.round(recent - eerder);
+    trendHtml = diff > 0
+      ? `<span style="font-size:.7rem;color:#34d399">▲ +${diff} vs vorige 5</span>`
+      : diff < 0
+        ? `<span style="font-size:.7rem;color:#ef4444">▼ ${diff} vs vorige 5</span>`
+        : `<span style="font-size:.7rem;color:var(--muted)">= stabiel</span>`;
+  }
+
   document.getElementById('stat-cards').innerHTML = `
     <div class="stat-card"><div class="stat-num">${stats.sessies.length}</div><div class="stat-lbl">Sessies</div></div>
-    <div class="stat-card"><div class="stat-num">${gem}</div><div class="stat-lbl">Gem. WPM</div></div>
+    <div class="stat-card"><div class="stat-num">${gem}</div><div class="stat-lbl">Gem. WPM${trendHtml?`<br>${trendHtml}`:''}</div></div>
     <div class="stat-card"><div class="stat-num">${stats.bestWpm}</div><div class="stat-lbl">Best WPM</div></div>
     <div class="stat-card"><div class="stat-num">${stats.totaalWoorden.toLocaleString()}</div><div class="stat-lbl">Woorden totaal</div></div>`;
+
   const lijst = [...stats.sessies].reverse().slice(0,10);
   document.getElementById('sessie-lijst').innerHTML = lijst.length
     ? lijst.map(s => `<div class="sessie-item"><span>${s.datum}</span><span><b class="sessie-wpm">${s.wpm} WPM</b> · ${s.woorden} woorden</span></div>`).join('')
     : '<span style="color:var(--muted);font-size:13px">Nog geen sessies — begin met trainen!</span>';
+
+  // Render grafieken (klein delay zodat canvas zichtbaar is)
+  setTimeout(tekenGrafieken, 50);
 }
 
 function resetStats() {
@@ -6663,6 +6991,48 @@ function leestestVerzend() {
   document.getElementById('lt-view-vragen').style.display = 'none';
   document.getElementById('lt-view-resultaat').style.display = '';
 }
+
+// ═══════════════════════════════════════════════════════════
+// 📱  PWA — Service Worker registratie
+// ═══════════════════════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('[PWA] Service worker geregistreerd:', reg.scope))
+      .catch(err => console.warn('[PWA] Service worker registratie mislukt:', err));
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// 🛡️  ERROR BOUNDARIES — kritieke functies wrappen
+// ═══════════════════════════════════════════════════════════
+// Originele leestestBegin bewaken
+const _origLeestestBegin = leestestBegin;
+leestestBegin = function() {
+  try { _origLeestestBegin(); }
+  catch(e) { toonFout('Leestest kon niet starten. Probeer opnieuw.', e); }
+};
+
+// Originele slaaSessieOp bewaken
+const _origSlaaSessieOp = slaaSessieOp;
+slaaSessieOp = function(wpm, n) {
+  try { _origSlaaSessieOp(wpm, n); }
+  catch(e) { toonFout('Sessie kon niet worden opgeslagen.', e); }
+};
+
+// Originele begintestInit bewaken
+const _origBegintestInit = begintestInit;
+begintestInit = function() {
+  try { _origBegintestInit(); }
+  catch(e) { toonFout('Begintest kon niet laden.', e); }
+};
+
+// Originele leerWegInit bewaken
+const _origLeerWegInit = leerWegInit;
+leerWegInit = function() {
+  try { _origLeerWegInit(); }
+  catch(e) { toonFout('Leerweg kon niet laden.', e); }
+};
 
 </script>
 </body>
