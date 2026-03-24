@@ -1609,6 +1609,7 @@ main { -webkit-overflow-scrolling: touch; }
   <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
   <div class="logo">Snel<span>Lees</span> Trainer</div>
   <div class="header-spacer"></div>
+  <button class="dyx-btn" id="header-dyx-btn" onclick="dyxOpenPanel()" title="Dyslexie instellingen">🔤 Dyslexie</button>
   <div class="speler-indicator" id="speler-indicator" onclick="toonAvontuurDirect()" title="Klik om je scores te bekijken" style="display:none">
     <span class="speler-avatar" id="speler-avatar"></span>
     <span class="speler-naam" id="speler-naam"></span>
@@ -5598,7 +5599,8 @@ function dyxToepassen() {
   const root = document.documentElement.style;
 
   // Aan/uit knop stijl
-  document.getElementById('dyx-open-btn')?.classList.toggle('actief', dyx.aan);
+  document.getElementById('sidebar-dyx-btn')?.classList.toggle('actief', dyx.aan);
+  document.getElementById('header-dyx-btn')?.classList.toggle('actief', dyx.aan);
 
   // Body class
   body.classList.toggle('dyx-aan', dyx.aan);
