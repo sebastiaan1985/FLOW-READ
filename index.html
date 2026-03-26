@@ -2828,6 +2828,7 @@ main { -webkit-overflow-scrolling: touch; }
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="lttBegin()" style="padding:14px 28px;font-size:1rem">▶ Start lezen</button>
       <button class="btn btn-ghost" onclick="lttInit()" style="padding:14px 20px">🔀 Andere tekst</button>
+      <button id="ai-langetekst-btn" class="btn btn-ghost" onclick="aiLangeTekstNieuwe()" style="padding:14px 20px;border-color:var(--accent);color:var(--accent)">🤖 AI Tekst (~1000 woorden)</button>
     </div>
   </div>
 
@@ -9806,6 +9807,10 @@ const _aiTekstGen = {
 {"titel":"korte titel","alineas":["alinea 1 (40-50 woorden)","alinea 2 (40-50 woorden)","alinea 3 (40-50 woorden)","alinea 4 (40-50 woorden)"],"sleutelwoorden":["woord1","woord2","woord3"]}
 Kies een willekeurig onderwerp. Alleen JSON, geen andere tekst.`,
 
+      langetekst: `Schrijf een boeiende en meeslepende Nederlandse tekst van ongeveer 1000 woorden over een interessant willekeurig onderwerp (bijv. historie, wetenschap, of natuur). Gebruik alinea's gescheiden door witregels. Bedenk een titel. Bedenk vervolgens precies 3 meerkeuzevragen over de tekst (met 3 opties, 1 correct). Geef alles in dit exacte JSON formaat: 
+{"titel": "Titel", "tekst": "Lange tekst hier...\n\nVolgende alinea...", "vragen": [{"v": "Vraag 1", "opties": ["Fout", "Vraag 1 Correct", "Fout 2"], "c": 1}]}
+De property "c" geeft de index van het juiste antwoord (0, 1 of 2). Alleen JSON, geen Markdown blocks.`,
+
       woordparen: `Genereer 15 Nederlandse woorden met voor elk woord 4 visueel gelijkende fout-gespelde varianten. Wissel in moeilijkheid (3-8 letters). Geef het resultaat als JSON array:
 [{"woord":"correct","fout":["fout1","fout2","fout3","fout4"]}]
 Alleen JSON, geen andere tekst.`,
@@ -9815,20 +9820,20 @@ Alleen JSON, geen andere tekst.`,
 
     if (!prompts[type]) return null;
 
-    const maxTokens = type === 'skim' || type === 'woordparen' ? 600 : 300;
+    const maxTokens = type === 'skim' || type === 'woordparen' ? 600 : (type === 'langetekst' ? 2500 : 300);
     const result = await _aiGemini.send(prompts[type], maxTokens);
     if (!result.ok) return null;
 
     // Parse response afhankelijk van type
     try {
-      if (type === 'skim' || type === 'woordparen' || type === 'periwoorden') {
+      if (type === 'skim' || type === 'woordparen' || type === 'periwoorden' || type === 'langetekst') {
         let json = result.text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
         return JSON.parse(json);
       }
       return result.text.trim();
     } catch(e) {
       console.warn('[AI TekstGen] Parse error voor', type, e);
-      return type === 'skim' || type === 'woordparen' || type === 'periwoorden' ? null : result.text.trim();
+      return type === 'skim' || type === 'woordparen' || type === 'periwoorden' || type === 'langetekst' ? null : result.text.trim();
     }
   }
 };
@@ -9952,6 +9957,52 @@ async function aiSkimNieuwe() {
   if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
 }
 
+// Lange Teksten: AI tekst gegenereerd uit langetekst JSON
+async function aiLangeTekstNieuwe() {
+  const btn = event?.target || document.getElementById('ai-langetekst-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren… (even geduld)'; }
+  
+  const data = await _aiTekstGen.get('langetekst');
+  
+  if (data && data.titel && data.tekst && data.vragen) {
+    const gemapteVragen = data.vragen.map(q => ({
+      v: q.v,
+      opties: q.opties,
+      correct: typeof q.c !== 'undefined' ? q.c : 0
+    }));
+
+    _lttTekst = {
+      niveau: lttGetNiveau(),
+      titel: "🤖 " + data.titel,
+      tekst: data.tekst,
+      vragen: gemapteVragen
+    };
+
+    document.getElementById('ltt-niveau-badge').textContent = '🤖 AI · Lange Tekst';
+    document.getElementById('ltt-niveau-hint').textContent = '1000+ woorden met dynamische vragen';
+    
+    const bar = document.getElementById('ltt-niveau-bar');
+    if (bar) { bar.style.width = '100%'; bar.style.background = 'var(--accent)'; }
+    
+    const wc = woorden(_lttTekst.tekst).length;
+    document.getElementById('ltt-tekst-naam').textContent = _lttTekst.titel;
+    document.getElementById('ltt-tekst-info').textContent = `${wc} woorden · AI Gegenereerd`;
+    
+    document.getElementById('ltt-view-intro').style.display = '';
+    document.getElementById('ltt-view-lezen').style.display = 'none';
+    document.getElementById('ltt-view-vragen').style.display = 'none';
+    document.getElementById('ltt-view-resultaat').style.display = 'none';
+    
+    _lttActief = false;
+    _lttAntwoorden = [];
+    
+    _aiTts.spreek('Ik heb een nieuwe tekst voor je gegenereerd. Klik op start zodra je klaar bent.');
+  } else {
+    alert('Fout bij het genereren van de AI tekst. Controleer je instellingen.');
+  }
+  
+  if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Tekst (~1000 woorden)'; }
+}
 
 // ── AI HOOKS FASE 2+3 ───────────────────────────────────────
 (function() {
