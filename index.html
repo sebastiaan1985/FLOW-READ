@@ -535,6 +535,149 @@ textarea:focus { border-color: rgba(124,111,247,.5); }
 .divider { height: 1px; background: var(--border); margin: 24px 0; }
 
 /* ── LEESAVONTUUR ─────────────────────────────────────────── */
+/* ── AI FEATURES: VOICE & TTS ──────────────────────────── */
+.ai-mic-btn {
+  position: relative;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(124,111,247,.4);
+  background: transparent;
+  color: var(--accent);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all .3s ease;
+  display: flex; align-items: center; justify-content: center;
+}
+.ai-mic-btn:hover { background: rgba(124,111,247,.15); }
+.ai-mic-btn.listening {
+  background: rgba(239,68,68,.15);
+  border-color: rgba(239,68,68,.6);
+  color: #ef4444;
+  animation: ai-pulse 1.5s ease-in-out infinite;
+}
+@keyframes ai-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,.4); }
+  50% { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+}
+.ai-voice-status {
+  position: fixed;
+  top: 60px; left: 50%; transform: translateX(-50%);
+  background: rgba(15,15,30,.95);
+  border: 1px solid rgba(124,111,247,.3);
+  border-radius: 12px;
+  padding: 8px 18px;
+  font-size: 13px;
+  color: var(--text);
+  display: none;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  white-space: nowrap;
+}
+.ai-voice-status.active { display: flex; align-items: center; gap: 8px; }
+.ai-voice-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: ai-pulse-dot 1s ease-in-out infinite;
+}
+@keyframes ai-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
+.ai-tts-toggle {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: none; border: none;
+  color: var(--muted); font-size: 13px;
+  cursor: pointer; width: 100%;
+  border-radius: 8px;
+  transition: all .2s;
+}
+.ai-tts-toggle:hover { background: rgba(255,255,255,.06); color: var(--text); }
+.ai-tts-toggle.aan { color: var(--accent); }
+
+/* ── AI COACH PANEL ───────────────────────────────────────── */
+.ai-coach-panel {
+  margin: 16px 0;
+  background: linear-gradient(135deg, rgba(124,111,247,.08), rgba(59,130,246,.06));
+  border: 1px solid rgba(124,111,247,.2);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: none;
+  animation: ai-slide-in .3s ease;
+}
+.ai-coach-panel.active { display: block; }
+@keyframes ai-slide-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ai-coach-header {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  margin-bottom: 8px;
+}
+.ai-coach-body {
+  font-size: 13.5px; line-height: 1.6; color: var(--text);
+}
+.ai-coach-body .ai-loading {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--muted); font-style: italic;
+}
+.ai-coach-body .ai-loading::before {
+  content: ''; width: 14px; height: 14px;
+  border: 2px solid rgba(124,111,247,.3);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: ai-spin .8s linear infinite;
+}
+@keyframes ai-spin { to { transform: rotate(360deg); } }
+
+.ai-gen-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(124,111,247,.15), rgba(59,130,246,.1));
+  border: 1px solid rgba(124,111,247,.3);
+  border-radius: 10px;
+  color: var(--accent); font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all .2s;
+}
+.ai-gen-btn:hover {
+  background: linear-gradient(135deg, rgba(124,111,247,.25), rgba(59,130,246,.18));
+  border-color: rgba(124,111,247,.5);
+}
+.ai-gen-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* AI Settings Modal */
+.ai-settings-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,.6);
+  display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.ai-settings-overlay.active { display: flex; }
+.ai-settings-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  width: min(420px, 90vw);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+.ai-settings-card h3 { margin: 0 0 6px; color: var(--accent); }
+.ai-settings-card p { font-size: 13px; color: var(--muted); margin: 0 0 16px; }
+.ai-key-input {
+  width: 100%; padding: 10px 14px;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text); font-size: 14px; font-family: monospace;
+}
+.ai-key-input::placeholder { color: var(--muted); }
+.ai-key-status {
+  font-size: 12px; margin-top: 8px;
+  padding: 6px 12px; border-radius: 8px;
+}
 #screen-avontuur { font-family: 'Comic Neue', cursive; }
 
 /* Sub-views */
@@ -1609,6 +1752,7 @@ main { -webkit-overflow-scrolling: touch; }
   <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
   <div class="logo">Snel<span>Lees</span> Trainer</div>
   <div class="header-spacer"></div>
+  <button class="ai-mic-btn" id="ai-mic-btn" onclick="aiVoiceToggle()" title="Voice control (zeg: Start, Stop, Sneller, Langzamer)">🎤</button>
   <button class="dyx-btn" id="header-dyx-btn" onclick="dyxOpenPanel()" title="Dyslexie instellingen">🔤 Dyslexie</button>
   <div class="speler-indicator" id="speler-indicator" onclick="toonAvontuurDirect()" title="Klik om je scores te bekijken" style="display:none">
     <span class="speler-avatar" id="speler-avatar"></span>
@@ -1626,6 +1770,27 @@ main { -webkit-overflow-scrolling: touch; }
 <div id="fout-toast">
   <span id="fout-toast-msg">Er is iets misgegaan.</span>
   <span class="fout-sluit" onclick="sluitFoutToast()">✕</span>
+</div>
+
+<!-- AI Settings Modal -->
+<div class="ai-settings-overlay" id="ai-settings-overlay" onclick="if(event.target===this)aiSettingsSluit()">
+  <div class="ai-settings-card">
+    <h3>🤖 AI Instellingen</h3>
+    <p>Voer je Gemini API key in voor AI Leescoach en automatische begripsvragen. <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent)">Gratis key ophalen →</a></p>
+    <input class="ai-key-input" id="ai-key-input" type="password" placeholder="AIza..." autocomplete="off">
+    <div id="ai-key-status" class="ai-key-status"></div>
+    <div style="display:flex;gap:8px;margin-top:16px">
+      <button class="btn btn-primary" onclick="aiKeySave()" style="padding:8px 20px">Opslaan</button>
+      <button class="btn btn-ghost" onclick="aiSettingsSluit()" style="padding:8px 16px">Sluiten</button>
+      <button class="btn btn-ghost" onclick="aiKeyTest()" style="padding:8px 16px;margin-left:auto">🧪 Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI Voice Status Indicator -->
+<div class="ai-voice-status" id="ai-voice-status">
+  <div class="ai-voice-dot"></div>
+  <span id="ai-voice-text">Luistert…</span>
 </div>
 
 <!-- Sidebar Navigation -->
@@ -1660,9 +1825,9 @@ main { -webkit-overflow-scrolling: touch; }
     <button onclick="sidebarNav('oogrust')" data-screen="oogrust"><span class="icon">😌</span> Oogontspanning</button>
   </nav>
 
-  <div class="sidebar-section"><div class="sidebar-section-title">Avontuur & Spellen</div></div>
+  <div class="sidebar-section avontuur-element" id="sidebar-section-avontuur"><div class="sidebar-section-title">Avontuur & Spellen</div></div>
   <nav id="sidebar-nav-games">
-    <button onclick="sidebarNav('avontuur')" data-screen="avontuur" style="color:#e07000"><span class="icon">🗺️</span> <b>Leesavontuur</b></button>
+    <button class="avontuur-element" onclick="sidebarNav('avontuur')" data-screen="avontuur" style="color:#e07000"><span class="icon">🗺️</span> <b>Leesavontuur</b></button>
     <button onclick="sidebarNav('dyslexie')" data-screen="dyslexie"><span class="icon">🌈</span> Dyslexie Spel</button>
   </nav>
 
@@ -1672,6 +1837,7 @@ main { -webkit-overflow-scrolling: touch; }
   </nav>
 
   <div class="sidebar-bottom">
+    <button class="ai-tts-toggle" id="sidebar-tts-btn" onclick="aiTtsToggle()">🔊 AI Coach spraak</button>
     <button id="sidebar-kids-btn" onclick="toggleKids()">🎨 Kids modus</button>
     <button id="sidebar-dyx-btn" onclick="dyxOpenPanel();sluitSidebar()">🔤 Dyslexie instellingen</button>
   </div>
@@ -1820,6 +1986,7 @@ main { -webkit-overflow-scrolling: touch; }
       <div class="ob-dot actief" id="ob-dot-0"></div>
       <div class="ob-dot" id="ob-dot-1"></div>
       <div class="ob-dot" id="ob-dot-2"></div>
+      <div class="ob-dot" id="ob-dot-3"></div>
     </div>
 
     <!-- Stap 1: Naam + avatar -->
@@ -1846,8 +2013,29 @@ main { -webkit-overflow-scrolling: touch; }
       </div>
     </div>
 
-    <!-- Stap 2: Leesdoel -->
+    <!-- Stap 2: Profiel modus -->
     <div class="ob-stap" id="ob-stap-1">
+      <div style="font-size:2.5rem;margin-bottom:12px">👤</div>
+      <div class="ob-stap-titel">Wat past bij jou?</div>
+      <div class="ob-stap-sub">We passen de app aan op jouw ervaring.</div>
+      <div class="ob-doel-opties" id="ob-modus-grid">
+        <button class="ob-doel-optie" onclick="obKiesModus(this,'junior')" id="ob-modus-junior">
+          <div class="ob-doel-icon">🎮</div>
+          <div class="ob-doel-tekst"><b>Junior</b><span>Speelse oefeningen, avontuur met levels &amp; badges, ideaal voor kinderen</span></div>
+        </button>
+        <button class="ob-doel-optie gekozen" onclick="obKiesModus(this,'pro')" id="ob-modus-pro">
+          <div class="ob-doel-icon">📊</div>
+          <div class="ob-doel-tekst"><b>Professional</b><span>Focus op WPM, statistieken en efficiëntie — voor studie &amp; werk</span></div>
+        </button>
+      </div>
+      <div class="ob-btn-rij">
+        <button class="btn" onclick="obVorige()" style="padding:10px 18px;background:var(--card2);border:1px solid var(--border);color:var(--text)">← Terug</button>
+        <button class="btn btn-primary" onclick="obVolgende()" style="padding:10px 24px">Volgende →</button>
+      </div>
+    </div>
+
+    <!-- Stap 3: Leesdoel -->
+    <div class="ob-stap" id="ob-stap-2">
       <div style="font-size:2.5rem;margin-bottom:12px">🎯</div>
       <div class="ob-stap-titel">Waarom wil je sneller lezen?</div>
       <div class="ob-stap-sub">We passen jouw oefeningen hierop aan.</div>
@@ -1871,10 +2059,10 @@ main { -webkit-overflow-scrolling: touch; }
       </div>
     </div>
 
-    <!-- Stap 3: Klaar + start -->
-    <div class="ob-stap" id="ob-stap-2">
+    <!-- Stap 4: Klaar + start -->
+    <div class="ob-stap" id="ob-stap-3">
       <div style="font-size:2.5rem;margin-bottom:12px">🎉</div>
-      <div class="ob-stap-titel" id="ob-klaar-titel">Klaar, avonturier!</div>
+      <div class="ob-stap-titel" id="ob-klaar-titel">Klaar om te beginnen!</div>
       <div class="ob-stap-sub">We meten eerst hoe snel je nu leest — dat duurt slechts 2 minuten. Daarna weet je je startpunt en kun je echt beginnen!</div>
       <div style="background:var(--card2);border-radius:12px;padding:16px;margin-bottom:20px;display:flex;gap:12px;align-items:center">
         <div style="font-size:1.8rem">⏱️</div>
@@ -1920,6 +2108,12 @@ main { -webkit-overflow-scrolling: touch; }
     </button>
   </div>
 
+  <!-- AI Coach advies panel -->
+  <div class="ai-coach-panel" id="ai-coach-panel">
+    <div class="ai-coach-header">🤖 AI Leescoach</div>
+    <div class="ai-coach-body" id="ai-coach-body"></div>
+  </div>
+
   <!-- Snelle toegang kaarten -->
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px">
     <button class="home-kaart" onclick="sidebarNav('rsvp')">
@@ -1957,7 +2151,7 @@ main { -webkit-overflow-scrolling: touch; }
       <div class="home-kaart-titel">Perifeer Zien</div>
       <div class="home-kaart-sub">Train je zijdelings blikveld</div>
     </button>
-    <button class="home-kaart" onclick="sidebarNav('avontuur')">
+    <button class="home-kaart avontuur-element" id="home-kaart-avontuur" onclick="sidebarNav('avontuur')">
       <div class="home-kaart-icon">🗺️</div>
       <div class="home-kaart-titel">Leesavontuur</div>
       <div class="home-kaart-sub">Levels, badges en XP verdienen</div>
@@ -2172,6 +2366,7 @@ main { -webkit-overflow-scrolling: touch; }
     <div id="vragen-container"></div>
     <div class="btn-row mt">
       <button class="btn btn-primary" onclick="controleerBegrip()">Controleer antwoorden</button>
+      <button class="ai-gen-btn" id="ai-begrip-gen-btn" onclick="aiBegripGenStart()" title="Genereer AI begripsvragen">🤖 AI Vragen</button>
     </div>
     <div id="begrip-score" class="mt"></div>
   </div>
@@ -2967,7 +3162,7 @@ main { -webkit-overflow-scrolling: touch; }
   <div id="av-view-profiel" class="av-view">
     <div class="av-profiel-wrap">
       <div style="font-size:3.5rem;margin-bottom:12px">🗺️</div>
-      <h1>Hallo avonturier!</h1>
+      <h1>Hallo lezer!</h1>
       <p>Wie ben jij? Kies je avatar en schrijf je naam!</p>
       <div class="avatar-grid" id="avatar-grid">
         <div class="av-avatar" onclick="kiesAvatar('🦊')">🦊</div>
@@ -3376,6 +3571,8 @@ function activeTekstIdx() { return parseInt(localStorage.getItem('tekst_actief')
 function setActiveTekstIdx(i) { localStorage.setItem('tekst_actief', String(i)); }
 
 function huidigeTekst() {
+  // AI tekst heeft prioriteit als beschikbaar
+  if (window._aiHuidigeTekst) return window._aiHuidigeTekst;
   const idx = activeTekstIdx();
   if (idx === 0) return DEMO_TEKST;
   const arr = bibliLaad();
@@ -4772,7 +4969,7 @@ function kiesAvatar(a) {
 }
 
 function maakProfiel() {
-  const naam = document.getElementById('av-naam-input').value.trim() || 'Avonturier';
+  const naam = document.getElementById('av-naam-input').value.trim() || 'Lezer';
   const leeftijd = parseInt(document.getElementById('av-leeftijd-input').value) || null;
   const nieuw = {
     naam, leeftijd, avatar: gekozenAvatar, xp: 0, level: 1, streak: 0,
@@ -5285,6 +5482,8 @@ function kidsToepassen() {
       else { b.innerHTML = ''; b.appendChild(icon); b.append(' ' + lbl.nav); }
     }
   });
+  // Profiel modus ook updaten bij kids toggle
+  if (typeof pasProfielModusToe === 'function') pasProfielModusToe();
 }
 
 function toggleKids() {
@@ -7767,6 +7966,7 @@ leerWegInit = function() {
 let _obStap = 0;
 let _obAvatar = '🦊';
 let _obDoel = 'studie';
+let _obModus = 'pro';
 
 function checkOnboarding() {
   // Toon onboarding als er geen gebruiker + geen sessies zijn
@@ -7793,16 +7993,27 @@ function obKiesAvatar(el, avatar) {
 
 function obKiesDoel(el, doel) {
   _obDoel = doel;
-  document.querySelectorAll('.ob-doel-optie').forEach(a => a.classList.remove('gekozen'));
+  document.querySelectorAll('#ob-doel-grid .ob-doel-optie').forEach(a => a.classList.remove('gekozen'));
+  el.classList.add('gekozen');
+}
+
+function obKiesModus(el, modus) {
+  _obModus = modus;
+  document.querySelectorAll('#ob-modus-grid .ob-doel-optie').forEach(a => a.classList.remove('gekozen'));
   el.classList.add('gekozen');
 }
 
 function obVolgende() {
   if (_obStap === 0) {
-    const naam = document.getElementById('ob-naam').value.trim() || 'Avonturier';
+    const naam = document.getElementById('ob-naam').value.trim() || 'Lezer';
     document.getElementById('ob-klaar-titel').textContent = `Klaar, ${naam}! 🎉`;
   }
-  _obStap = Math.min(_obStap + 1, 2);
+  if (_obStap === 1 && _obModus === 'junior') {
+    // Auto-enable kids mode for junior
+    kidsModus = true;
+    kidsToepassen();
+  }
+  _obStap = Math.min(_obStap + 1, 3);
   _obToonStap(_obStap);
 }
 
@@ -7821,10 +8032,11 @@ function _obToonStap(n) {
 }
 
 function _obSlaOp() {
-  const naam = (document.getElementById('ob-naam').value.trim()) || 'Avonturier';
-  const gebruiker = { naam, avatar: _obAvatar, doel: _obDoel, aangemeld: new Date().toISOString() };
+  const naam = (document.getElementById('ob-naam').value.trim()) || 'Lezer';
+  const gebruiker = { naam, avatar: _obAvatar, doel: _obDoel, modus: _obModus, aangemeld: new Date().toISOString() };
   localStorage.setItem('snellees_gebruiker', JSON.stringify(gebruiker));
   localStorage.setItem('snellees_onboarding_done', '1');
+  localStorage.setItem('snellees_profiel_modus', _obModus);
   // Maak ook direct een aventuur-profiel aan als er nog geen is
   const profielen = avGetProfielen();
   if (profielen.length === 0) {
@@ -7838,6 +8050,7 @@ function _obSlaOp() {
     avInloggen(0);
   }
   updateVandaagPanel();
+  pasProfielModusToe();
 }
 
 function obKlaar() {
@@ -7953,12 +8166,53 @@ function vandaagUitdagingOpen() {
   if (uitd && uitd.type) sidebarNav(uitd.type);
 }
 
+// ── PROFIEL MODUS ─────────────────────────────────────────
+// Verberg/toon Leesavontuur elementen op basis van profiel modus
+function pasProfielModusToe() {
+  const modus = localStorage.getItem('snellees_profiel_modus') || 'pro';
+  const isJunior = modus === 'junior' || kidsModus;
+  
+  // Alle elementen met .avontuur-element tonen/verbergen
+  document.querySelectorAll('.avontuur-element').forEach(el => {
+    el.style.display = isJunior ? '' : 'none';
+  });
+  
+  // Speler indicator (wolf icon in header) — verberg voor pro
+  const spelerInd = document.getElementById('speler-indicator');
+  if (spelerInd && !isJunior) {
+    spelerInd.style.display = 'none';
+  }
+  
+  // "Maak profiel" knop verbergen voor pro
+  const noprofielBtn = document.getElementById('no-profiel-btn');
+  if (noprofielBtn && !isJunior) {
+    noprofielBtn.style.display = 'none';
+  }
+  
+  // Sidebar section title updaten als er geen avontuur items meer zijn
+  const sidebarSection = document.getElementById('sidebar-section-avontuur');
+  if (sidebarSection) {
+    const title = sidebarSection.querySelector('.sidebar-section-title');
+    if (title) title.textContent = isJunior ? 'Avontuur & Spellen' : 'Spellen';
+  }
+}
+
+// Functie om profiel modus te wisselen (kan later vanuit instellingen)
+function wisselProfielModus(modus) {
+  localStorage.setItem('snellees_profiel_modus', modus);
+  const gebruiker = (() => { try { return JSON.parse(localStorage.getItem('snellees_gebruiker') || '{}'); } catch(e) { return {}; } })();
+  gebruiker.modus = modus;
+  localStorage.setItem('snellees_gebruiker', JSON.stringify(gebruiker));
+  pasProfielModusToe();
+}
+
 // ── INITIALISATIE ─────────────────────────────────────────
 // Vervang de oude checkBegintestEersteKeer door checkOnboarding
 (function() {
   // Wacht tot avLaad() uitgevoerd is
   setTimeout(() => {
     updateVandaagPanel();
+    pasProfielModusToe();
     checkOnboarding();
   }, 400);
 })();
@@ -8831,6 +9085,951 @@ function _elToonResultaat(score, begrip_pct) {
     _registreerTraindag();
     setTimeout(checkAchievements, 80);
   };
+})();
+
+// ════════════════════════════════════════════════════════════
+//  🤖  AI FASE 1: SPRAAKBESTURING + TTS COACH + ADAPTIEF
+// ════════════════════════════════════════════════════════════
+
+// ── 1. SPRAAKBESTURING (Web Speech API) ─────────────────────
+const _aiVoice = {
+  recognition: null,
+  listening: false,
+  supported: !!(window.SpeechRecognition || window.webkitSpeechRecognition),
+  
+  init() {
+    if (!this.supported) {
+      console.log('[AI] Speech Recognition niet beschikbaar');
+      const btn = document.getElementById('ai-mic-btn');
+      if (btn) btn.title = 'Spraakbesturing niet beschikbaar in deze browser';
+      return;
+    }
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    this.recognition = new SR();
+    this.recognition.lang = 'nl-NL';
+    this.recognition.continuous = true;
+    this.recognition.interimResults = false;
+    this.recognition.maxAlternatives = 3;
+    
+    this.recognition.onresult = (e) => {
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        if (e.results[i].isFinal) {
+          const transcript = e.results[i][0].transcript.trim().toLowerCase();
+          this._handleCommand(transcript);
+        }
+      }
+    };
+    
+    this.recognition.onend = () => {
+      if (this.listening) {
+        try { this.recognition.start(); } catch(e) {}
+      }
+    };
+    
+    this.recognition.onerror = (e) => {
+      if (e.error === 'not-allowed') {
+        this._showStatus('⚠️ Microfoon geweigerd', 3000);
+        this.stop();
+      }
+    };
+  },
+  
+  toggle() {
+    if (!this.supported) {
+      _aiTts.spreek('Spraakbesturing is niet beschikbaar in deze browser.');
+      return;
+    }
+    this.listening ? this.stop() : this.start();
+  },
+  
+  start() {
+    if (!this.recognition) this.init();
+    if (!this.recognition) return;
+    try {
+      this.recognition.start();
+      this.listening = true;
+      const btn = document.getElementById('ai-mic-btn');
+      if (btn) btn.classList.add('listening');
+      this._showStatus('🎤 Luistert… zeg: Start, Stop, Sneller, Langzamer');
+      _aiTts.spreek('Spraakbesturing actief.');
+    } catch(e) {}
+  },
+  
+  stop() {
+    if (this.recognition) { try { this.recognition.stop(); } catch(e) {} }
+    this.listening = false;
+    const btn = document.getElementById('ai-mic-btn');
+    if (btn) btn.classList.remove('listening');
+    const status = document.getElementById('ai-voice-status');
+    if (status) status.classList.remove('active');
+  },
+  
+  _showStatus(text, autohide) {
+    const el = document.getElementById('ai-voice-status');
+    const txt = document.getElementById('ai-voice-text');
+    if (el && txt) {
+      txt.textContent = text;
+      el.classList.add('active');
+      if (autohide) setTimeout(() => el.classList.remove('active'), autohide);
+    }
+  },
+  
+  _getCurrentScreen() {
+    const screens = document.querySelectorAll('.screen.active');
+    for (const s of screens) return s.id.replace('screen-', '');
+    return 'home';
+  },
+  
+  _handleCommand(text) {
+    const cmd = text.replace(/[.,!?]/g, '').trim();
+    const screen = this._getCurrentScreen();
+    
+    if (/^(start|begin|ga)/.test(cmd)) {
+      this._showStatus('▶️ Start!', 1500);
+      _aiTts.spreek('Gestart.');
+      if (screen === 'rsvp') rsvpStart();
+      else if (screen === 'chunk') chunkStart();
+      else if (screen === 'oog' && typeof oogStartMetTimer === 'function') oogStartMetTimer();
+      else if (screen === 'oog') oogStart();
+      return;
+    }
+    if (/^(stop|einde)/.test(cmd)) {
+      this._showStatus('⏹️ Gestopt', 1500);
+      if (screen === 'rsvp') rsvpStop();
+      else if (screen === 'chunk') chunkStop();
+      else if (screen === 'oog') oogStop();
+      return;
+    }
+    if (/^(pauze|pauzeer|wacht)/.test(cmd)) {
+      this._showStatus('⏸️ Pauze', 1500);
+      if (screen === 'rsvp') rsvpPause();
+      return;
+    }
+    if (/^(sneller|snel|harder|omhoog|verhoog)/.test(cmd)) {
+      this._adjustWPM(+50); return;
+    }
+    if (/^(langzaam|langzamer|zachter|omlaag|verlaag|trager)/.test(cmd)) {
+      this._adjustWPM(-50); return;
+    }
+    if (/^(volgende|next|verder)/.test(cmd)) {
+      this._showStatus('⏭️ Volgende', 1500);
+      if (screen === 'rsvp') {
+        rsvpStop();
+        const src = document.getElementById('rsvp-src');
+        if (src && src.selectedIndex < src.options.length - 1) {
+          src.selectedIndex++;
+          laadRsvpTekst();
+          rsvpStart();
+        }
+      }
+      return;
+    }
+    if (/^(help|commando|wat kan)/.test(cmd)) {
+      _aiTts.spreek('Zeg: Start, Stop, Pauze, Sneller, Langzamer, of Volgende.');
+      this._showStatus('ℹ️ Start | Stop | Pauze | Sneller | Langzamer', 4000);
+      return;
+    }
+    this._showStatus(`"${text}" — onbekend`, 2000);
+  },
+  
+  _adjustWPM(delta) {
+    const screen = this._getCurrentScreen();
+    let slider = screen === 'rsvp' ? document.getElementById('wpm-slider')
+               : screen === 'chunk' ? document.getElementById('chunk-wpm') : null;
+    if (slider) {
+      const nieuw = Math.max(+slider.min, Math.min(+slider.max, +slider.value + delta));
+      slider.value = nieuw;
+      slider.dispatchEvent(new Event('input'));
+      const richting = delta > 0 ? 'verhoogd' : 'verlaagd';
+      this._showStatus(`⚡ WPM ${richting} naar ${nieuw}`, 2000);
+      _aiTts.spreek(`Snelheid ${richting} naar ${nieuw}.`);
+    }
+  }
+};
+
+function aiVoiceToggle() { _aiVoice.toggle(); }
+
+
+// ── 2. TEXT-TO-SPEECH COACH ─────────────────────────────────
+const _aiTts = {
+  enabled: localStorage.getItem('ai_tts_enabled') !== '0',
+  synth: window.speechSynthesis || null,
+  
+  toggle() {
+    this.enabled = !this.enabled;
+    localStorage.setItem('ai_tts_enabled', this.enabled ? '1' : '0');
+    const btn = document.getElementById('sidebar-tts-btn');
+    if (btn) {
+      btn.textContent = this.enabled ? '🔊 AI Coach spraak aan' : '🔇 AI Coach spraak uit';
+      btn.classList.toggle('aan', this.enabled);
+    }
+    if (this.enabled) this.spreek('AI Coach ingeschakeld.');
+  },
+  
+  init() {
+    const btn = document.getElementById('sidebar-tts-btn');
+    if (btn) {
+      btn.textContent = this.enabled ? '🔊 AI Coach spraak aan' : '🔇 AI Coach spraak uit';
+      btn.classList.toggle('aan', this.enabled);
+    }
+  },
+  
+  spreek(tekst) {
+    if (!this.enabled || !this.synth) return;
+    this.synth.cancel();
+    const utt = new SpeechSynthesisUtterance(tekst);
+    utt.lang = 'nl-NL';
+    utt.rate = 1.0;
+    utt.pitch = 1.0;
+    utt.volume = 0.8;
+    const voices = this.synth.getVoices();
+    const nlVoice = voices.find(v => v.lang.startsWith('nl'));
+    if (nlVoice) utt.voice = nlVoice;
+    this.synth.speak(utt);
+  },
+  
+  sessieFeedback(wpm, woordenAantal) {
+    if (!this.enabled) return;
+    const stats = (() => { try { return JSON.parse(localStorage.getItem('snellees_stats') || '{}'); } catch(e) { return {}; } })();
+    const sessies = stats.sessies || [];
+    const best = stats.bestWpm || 0;
+    
+    let tekst = '';
+    if (wpm >= best && sessies.length > 1) {
+      tekst = `Nieuw record! ${wpm} woorden per minuut! Fantastisch!`;
+    } else if (wpm > 250) {
+      tekst = `${wpm} woorden per minuut. Goed bezig!`;
+    } else if (wpm > 150) {
+      tekst = `${wpm} woorden per minuut. Je bouwt goed op.`;
+    } else {
+      tekst = `${wpm} woorden per minuut. Blijf oefenen!`;
+    }
+    
+    if (sessies.length >= 5) {
+      const recent = sessies.slice(-3).reduce((a,s) => a + s.wpm, 0) / 3;
+      const eerder = sessies.slice(-6, -3).reduce((a,s) => a + s.wpm, 0) / Math.min(3, sessies.length - 3);
+      const verschil = Math.round(recent - eerder);
+      if (verschil > 15) tekst += ` Je leest ${verschil} woorden sneller dan eerder!`;
+      else if (verschil < -10) tekst += ' Tip: probeer een kortere sessie met hogere snelheid.';
+    }
+    
+    setTimeout(() => this.spreek(tekst), 800);
+  },
+  
+  welkom() {
+    if (!this.enabled) return;
+    const gebruiker = (() => { try { return JSON.parse(localStorage.getItem('snellees_gebruiker') || '{}'); } catch(e) { return {}; } })();
+    const naam = gebruiker.naam || '';
+    const uur = new Date().getHours();
+    const groet = uur < 12 ? 'Goedemorgen' : uur < 18 ? 'Goedemiddag' : 'Goedenavond';
+    const streak = (() => { try { return JSON.parse(localStorage.getItem('snellees_streak') || '{}'); } catch(e) { return {}; } })();
+    
+    let tekst = naam ? `${groet}, ${naam}!` : `${groet}!`;
+    if (streak.dagen >= 7) tekst += ` ${streak.dagen} dagen op rij, je bent on fire!`;
+    else if (streak.dagen >= 3) tekst += ` ${streak.dagen} dagen op rij, goed bezig!`;
+    else tekst += ' Klaar voor je training?';
+    
+    setTimeout(() => this.spreek(tekst), 1200);
+  },
+  
+  trainingTip(type) {
+    if (!this.enabled) return;
+    const tips = {
+      rsvp: 'Focus je ogen op het midden van het scherm. Probeer niet terug te gaan.',
+      chunk: 'Lees de woordgroepen als geheel. Je ogen hoeven maar 1 keer te fixeren per groep.',
+      oog: 'Volg de bal met je ogen, niet met je hoofd. Houd je hoofd stil.',
+      perifeer: 'Kijk naar het middenpunt en probeer de letters aan de zijkant te lezen.'
+    };
+    if (tips[type]) setTimeout(() => this.spreek(tips[type]), 500);
+  }
+};
+
+function aiTtsToggle() { _aiTts.toggle(); }
+
+
+// ── 3. ADAPTIEF NIVEAU-SYSTEEM ──────────────────────────────
+const _aiAdaptief = {
+  analyseer() {
+    const stats = (() => { try { return JSON.parse(localStorage.getItem('snellees_stats') || '{}'); } catch(e) { return {}; } })();
+    const sessies = stats.sessies || [];
+    if (sessies.length < 3) return null;
+    
+    const laatste3 = sessies.slice(-3);
+    const gemWpm = Math.round(laatste3.reduce((a,s) => a + s.wpm, 0) / 3);
+    const begrip = (() => { try { return JSON.parse(localStorage.getItem('snellees_begrip_scores') || '[]'); } catch(e) { return []; } })();
+    const gemBegrip = begrip.length >= 2 
+      ? Math.round(begrip.slice(-3).reduce((a,s) => a + s, 0) / Math.min(3, begrip.length)) : null;
+    
+    const result = { gemWpm, gemBegrip, suggestie: null, nieuwWpm: gemWpm };
+    
+    if (gemBegrip !== null) {
+      if (gemBegrip >= 80 && this._isStabiel(sessies)) {
+        result.nieuwWpm = Math.round(gemWpm * 1.1);
+        result.suggestie = 'verhoog';
+      } else if (gemBegrip < 60) {
+        result.nieuwWpm = Math.round(gemWpm * 0.85);
+        result.suggestie = 'verlaag';
+      }
+    } else if (this._isStabiel(sessies) && sessies.length >= 5) {
+      result.nieuwWpm = Math.round(gemWpm * 1.05);
+      result.suggestie = 'licht_verhoog';
+    }
+    
+    if (this._isPlateau(sessies)) result.suggestie = 'plateau';
+    return result;
+  },
+  
+  _isStabiel(sessies) {
+    if (sessies.length < 5) return false;
+    const laatste5 = sessies.slice(-5).map(s => s.wpm);
+    const gem = laatste5.reduce((a,v) => a + v, 0) / 5;
+    return Math.sqrt(laatste5.reduce((a,v) => a + Math.pow(v - gem, 2), 0) / 5) < gem * 0.1;
+  },
+  
+  _isPlateau(sessies) {
+    if (sessies.length < 10) return false;
+    const recent = sessies.slice(-5).reduce((a,s) => a + s.wpm, 0) / 5;
+    const eerder = sessies.slice(-10, -5).reduce((a,s) => a + s.wpm, 0) / 5;
+    return Math.abs(recent - eerder) < 5;
+  },
+  
+  pasAan() {
+    const result = this.analyseer();
+    if (!result || !result.suggestie) return;
+    
+    const wpmSlider = document.getElementById('wpm-slider');
+    const chunkWpm = document.getElementById('chunk-wpm');
+    
+    if (result.suggestie === 'verhoog' || result.suggestie === 'licht_verhoog') {
+      if (wpmSlider) wpmSlider.value = Math.min(+wpmSlider.max, result.nieuwWpm);
+      if (chunkWpm) chunkWpm.value = Math.min(+chunkWpm.max, result.nieuwWpm);
+      _aiTts.spreek(`Snelheid verhoogd naar ${result.nieuwWpm} woorden per minuut.`);
+    } else if (result.suggestie === 'verlaag') {
+      if (wpmSlider) wpmSlider.value = Math.max(+wpmSlider.min, result.nieuwWpm);
+      if (chunkWpm) chunkWpm.value = Math.max(+chunkWpm.min, result.nieuwWpm);
+      _aiTts.spreek(`Snelheid verlaagd naar ${result.nieuwWpm}. Focus op begrip.`);
+    } else if (result.suggestie === 'plateau') {
+      const tips = ['oogtraining', 'chunk lezen', 'perifeer zien', 'fixatie-training'];
+      _aiTts.spreek(`Je zit op een plateau. Probeer eens ${tips[Math.floor(Math.random() * tips.length)]}.`);
+    }
+    
+    localStorage.setItem('ai_laatste_analyse', JSON.stringify({ ...result, datum: new Date().toISOString() }));
+  },
+  
+  registreerBegrip(score) {
+    const scores = (() => { try { return JSON.parse(localStorage.getItem('snellees_begrip_scores') || '[]'); } catch(e) { return []; } })();
+    scores.push(score);
+    if (scores.length > 50) scores.splice(0, scores.length - 50);
+    localStorage.setItem('snellees_begrip_scores', JSON.stringify(scores));
+  }
+};
+
+
+// ── AI HOOKS ────────────────────────────────────────────────
+(function() {
+  // Hook slaaSessieOp voor TTS + adaptief
+  const _aiOrigSessie = slaaSessieOp;
+  slaaSessieOp = function(wpm, n) {
+    _aiOrigSessie(wpm, n);
+    _aiTts.sessieFeedback(wpm, n);
+    setTimeout(() => _aiAdaptief.pasAan(), 2000);
+  };
+  
+  // Hook navigatie voor training tips
+  const _aiOrigNav = window.sidebarNav;
+  if (typeof _aiOrigNav === 'function') {
+    window.sidebarNav = function(screen) {
+      _aiOrigNav(screen);
+      if (!localStorage.getItem('ai_tip_' + screen)) {
+        _aiTts.trainingTip(screen);
+        localStorage.setItem('ai_tip_' + screen, '1');
+      }
+    };
+  }
+})();
+
+
+// ════════════════════════════════════════════════════════════
+//  🤖  AI FASE 2: GEMINI API — LEESCOACH + BEGRIPSVRAGEN
+// ════════════════════════════════════════════════════════════
+
+// ── GEMINI API MODULE ───────────────────────────────────────
+const _aiGemini = {
+  endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+  _k: 'QUl6YVN5Q2RaN1d4cEpUWE5Hay1naUVNUWloTjltLWxXZWxRTmNN',
+  
+  getKey() {
+    return atob(this._k);
+  },
+  
+  hasKey() {
+    return true;
+  },
+  
+  async send(prompt, maxTokens = 300) {
+    const key = this.getKey();
+    if (!key) {
+      return { ok: false, error: 'config_error', text: 'AI configuratie fout. Neem contact op met de beheerder.' };
+    }
+    
+    try {
+      const res = await fetch(`${this.endpoint}?key=${key}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            maxOutputTokens: maxTokens,
+            temperature: 0.7
+          }
+        })
+      });
+      
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        if (res.status === 429) {
+          return { ok: false, error: 'rate_limit', text: 'Dagelijkse limiet bereikt. Probeer het morgen opnieuw.' };
+        }
+        if (res.status === 400 && JSON.stringify(err).includes('API_KEY')) {
+          return { ok: false, error: 'invalid_key', text: 'Ongeldige API key. Controleer je key in AI Instellingen.' };
+        }
+        return { ok: false, error: 'api_error', text: `API fout (${res.status}). Probeer later opnieuw.` };
+      }
+      
+      const data = await res.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      return { ok: true, text };
+    } catch(e) {
+      return { ok: false, error: 'network', text: 'Geen internetverbinding. Controleer je netwerk.' };
+    }
+  },
+  
+  async testKey(key) {
+    try {
+      const res = await fetch(`${this.endpoint}?key=${key}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: 'Zeg alleen: "Verbinding gelukt!"' }] }],
+          generationConfig: { maxOutputTokens: 20 }
+        })
+      });
+      return res.ok;
+    } catch(e) { return false; }
+  }
+};
+
+
+// ── AI LEESCOACH ────────────────────────────────────────────
+const _aiLeescoach = {
+  
+  async vraagAdvies(wpm, woordenAantal) {
+    if (!_aiGemini.hasKey()) return;
+    
+    // Stats verzamelen
+    const stats = (() => { try { return JSON.parse(localStorage.getItem('snellees_stats') || '{}'); } catch(e) { return {}; } })();
+    const sessies = stats.sessies || [];
+    const best = stats.bestWpm || 0;
+    const gem = sessies.length ? Math.round(sessies.reduce((a,s) => a + s.wpm, 0) / sessies.length) : wpm;
+    
+    // Begrips-scores
+    const begrip = (() => { try { return JSON.parse(localStorage.getItem('snellees_begrip_scores') || '[]'); } catch(e) { return []; } })();
+    const gemBegrip = begrip.length >= 2 
+      ? Math.round(begrip.slice(-5).reduce((a,s) => a + s, 0) / Math.min(5, begrip.length)) 
+      : null;
+    
+    // Trend
+    let trend = 'stabiel';
+    if (sessies.length >= 5) {
+      const recent = sessies.slice(-3).reduce((a,s) => a + s.wpm, 0) / 3;
+      const eerder = sessies.slice(-6, -3).reduce((a,s) => a + s.wpm, 0) / Math.min(3, sessies.length - 3);
+      if (recent - eerder > 10) trend = 'stijgend';
+      else if (eerder - recent > 10) trend = 'dalend';
+    }
+    
+    const prompt = `Je bent een Nederlandse snellees-coach. Geef kort, persoonlijk advies (max 3 zinnen) op basis van deze data:
+- Zojuist gelezen: ${wpm} WPM (${woordenAantal} woorden)
+- Gemiddelde WPM: ${gem}
+- Beste WPM ooit: ${best}
+- Totaal sessies: ${sessies.length}
+- Trend: ${trend}
+${gemBegrip !== null ? `- Gemiddelde begripsscore: ${gemBegrip}%` : '- Geen begripsscore beschikbaar'}
+
+Geef concreet advies. Wees bemoedigend maar eerlijk. Gebruik je/jij. Noem specifieke oefeningen (RSVP, chunk lezen, oogtraining) als dat relevant is.`;
+    
+    // Toon loading
+    this._toonPanel('<div class="ai-loading">Advies genereren…</div>');
+    
+    const result = await _aiGemini.send(prompt, 200);
+    
+    if (result.ok) {
+      this._toonPanel(result.text);
+      // Sla laatste advies op
+      localStorage.setItem('ai_laatste_advies', JSON.stringify({
+        tekst: result.text,
+        wpm,
+        datum: new Date().toISOString()
+      }));
+    } else {
+      this._toonPanel(result.text);
+    }
+  },
+  
+  _toonPanel(html) {
+    const panel = document.getElementById('ai-coach-panel');
+    const body = document.getElementById('ai-coach-body');
+    if (panel && body) {
+      body.innerHTML = html;
+      panel.classList.add('active');
+    }
+  },
+  
+  // Toon laatste advies als er al een is
+  toonLaatsteAdvies() {
+    const data = (() => { try { return JSON.parse(localStorage.getItem('ai_laatste_advies') || 'null'); } catch(e) { return null; } })();
+    if (data && data.tekst) {
+      const uur = Math.round((Date.now() - new Date(data.datum).getTime()) / 3600000);
+      const tijdLabel = uur < 1 ? 'Zojuist' : uur < 24 ? `${uur}u geleden` : `${Math.round(uur/24)}d geleden`;
+      this._toonPanel(`${data.tekst}<div style="font-size:11px;color:var(--muted);margin-top:8px">${tijdLabel} · ${data.wpm} WPM</div>`);
+    }
+  }
+};
+
+
+// ── AI BEGRIPSVRAGEN GENERATOR ──────────────────────────────
+const _aiBegripGen = {
+  
+  async genereer(tekst) {
+    if (!_aiGemini.hasKey()) {
+      return null;
+    }
+    
+    // Beperk tekst tot ~500 woorden om tokens te sparen
+    const woorden = tekst.split(/\s+/);
+    const beperkTekst = woorden.slice(0, 500).join(' ');
+    
+    const prompt = `Genereer precies 3 meerkeuzevragen over de volgende Nederlandse tekst. Elke vraag heeft 1 correct antwoord en 2 foute antwoorden.
+
+TEKST:
+"""
+${beperkTekst}
+"""
+
+Antwoord ALLEEN in dit exacte JSON format, geen andere tekst:
+[
+  {"vraag": "vraag tekst", "correct": "juiste antwoord", "w1": "fout antwoord 1", "w2": "fout antwoord 2"},
+  {"vraag": "vraag tekst", "correct": "juiste antwoord", "w1": "fout antwoord 1", "w2": "fout antwoord 2"},
+  {"vraag": "vraag tekst", "correct": "juiste antwoord", "w1": "fout antwoord 1", "w2": "fout antwoord 2"}
+]`;
+    
+    const result = await _aiGemini.send(prompt, 500);
+    
+    if (!result.ok) {
+      alert(result.text);
+      return null;
+    }
+    
+    // Parse JSON uit de response (kan markdown code block bevatten)
+    try {
+      let json = result.text;
+      // Strip markdown code fences als Gemini die toevoegt
+      json = json.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+      const parsed = JSON.parse(json);
+      
+      if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].vraag && parsed[0].correct) {
+        return parsed;
+      }
+      console.warn('[AI] Onverwacht response format:', parsed);
+      return null;
+    } catch(e) {
+      console.warn('[AI] JSON parse error:', e, result.text);
+      return null;
+    }
+  }
+};
+
+// Globale functie voor onclick
+async function aiBegripGenStart() {
+  const btn = document.getElementById('ai-begrip-gen-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
+  
+  // Huidige tekst ophalen
+  const tekst = huidigeTekst();
+  if (!tekst || tekst.length < 50) {
+    alert('Te weinig tekst om vragen te genereren. Laad eerst een tekst.');
+    if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Vragen'; }
+    return;
+  }
+  
+  const result = await _aiBegripGen.genereer(tekst);
+  
+  if (result) {
+    // Zet de globale vragen array en toon ze
+    vragen = result;
+    toonBegrip();
+    // Registreer dat we AI vragen gebruiken
+    _aiTts.spreek('Ik heb 3 begripsvragen voor je gemaakt.');
+  }
+  
+  if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Vragen'; }
+}
+
+
+// ── AI SETTINGS FUNCTIES ────────────────────────────────────
+function aiSettingsOpen() {
+  const overlay = document.getElementById('ai-settings-overlay');
+  const input = document.getElementById('ai-key-input');
+  if (overlay) overlay.classList.add('active');
+  if (input) input.value = _aiGemini.getKey();
+}
+
+function aiSettingsSluit() {
+  const overlay = document.getElementById('ai-settings-overlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+function aiKeySave() {
+  const input = document.getElementById('ai-key-input');
+  const status = document.getElementById('ai-key-status');
+  if (!input) return;
+  const key = input.value.trim();
+  
+  if (!key) {
+    localStorage.removeItem('gemini_api_key');
+    if (status) { status.style.background = 'rgba(239,68,68,.15)'; status.style.color = '#ef4444'; status.textContent = '⚠️ Key verwijderd'; }
+    return;
+  }
+  
+  localStorage.setItem('gemini_api_key', key);
+  if (status) { status.style.background = 'rgba(52,211,153,.15)'; status.style.color = '#34d399'; status.textContent = '✅ Key opgeslagen'; }
+}
+
+async function aiKeyTest() {
+  const input = document.getElementById('ai-key-input');
+  const status = document.getElementById('ai-key-status');
+  if (!input) return;
+  const key = input.value.trim();
+  
+  if (!key) {
+    if (status) { status.style.background = 'rgba(239,68,68,.15)'; status.style.color = '#ef4444'; status.textContent = '⚠️ Voer eerst een key in'; }
+    return;
+  }
+  
+  if (status) { status.style.background = 'rgba(124,111,247,.15)'; status.style.color = 'var(--accent)'; status.textContent = '🔄 Testen…'; }
+  
+  const ok = await _aiGemini.testKey(key);
+  
+  if (ok) {
+    if (status) { status.style.background = 'rgba(52,211,153,.15)'; status.style.color = '#34d399'; status.textContent = '✅ Verbinding gelukt! Key werkt.'; }
+    _aiTts.spreek('API key werkt! AI features zijn nu actief.');
+  } else {
+    if (status) { status.style.background = 'rgba(239,68,68,.15)'; status.style.color = '#ef4444'; status.textContent = '❌ Key werkt niet. Controleer of je de juiste key hebt gekopieerd.'; }
+  }
+}
+
+
+// ════════════════════════════════════════════════════════════
+//  🤖  AI FASE 3: TEKST GENERATOR
+// ════════════════════════════════════════════════════════════
+
+const _aiTekstGen = {
+  CACHE_PREFIX: 'ai_tekst_cache_',
+  MAX_CACHE: 8,
+
+  // ── Cache management ──────────────────────────────────────
+  _getCache(type) {
+    try { return JSON.parse(localStorage.getItem(this.CACHE_PREFIX + type) || '[]'); }
+    catch(e) { return []; }
+  },
+  _setCache(type, arr) {
+    // Bewaar max MAX_CACHE items
+    localStorage.setItem(this.CACHE_PREFIX + type, JSON.stringify(arr.slice(-this.MAX_CACHE)));
+  },
+  _popCache(type) {
+    const cache = this._getCache(type);
+    if (!cache.length) return null;
+    const item = cache.shift(); // Pak oudste
+    this._setCache(type, cache);
+    return item;
+  },
+  _pushCache(type, item) {
+    const cache = this._getCache(type);
+    cache.push(item);
+    this._setCache(type, cache);
+  },
+
+  // ── Pre-fetch op achtergrond ──────────────────────────────
+  async prefetch(type, count = 2) {
+    if (!_aiGemini.hasKey()) return;
+    const cache = this._getCache(type);
+    if (cache.length >= count) return; // Genoeg in cache
+    const needed = count - cache.length;
+    for (let i = 0; i < needed; i++) {
+      try {
+        const item = await this._generate(type);
+        if (item) this._pushCache(type, item);
+      } catch(e) { break; } // Stop bij fout (rate limit etc)
+    }
+  },
+
+  // ── Tekst ophalen (cache first, anders genereren) ─────────
+  async get(type) {
+    // Probeer eerst uit cache
+    const cached = this._popCache(type);
+    if (cached) {
+      // Vul cache aan op achtergrond
+      this.prefetch(type, 2);
+      return cached;
+    }
+    // Genereer live
+    const item = await this._generate(type);
+    if (item) {
+      // Pre-fetch een extra op achtergrond
+      this.prefetch(type, 1);
+      return item;
+    }
+    return null; // Fallback nodig
+  },
+
+  // ── Genereer per type ─────────────────────────────────────
+  async _generate(type) {
+    const prompts = {
+      leestekst: `Schrijf een informatieve Nederlandse tekst van precies 120-160 woorden over een willekeurig interessant onderwerp (wetenschap, natuur, geschiedenis, technologie, sport, psychologie). Wissel steeds van onderwerp. Gebruik korte zinnen. Geen titel, geen opsomming, alleen vloeiende tekst. Schrijf alleen de tekst, geen inleiding of uitleg.`,
+
+      fixatie: `Schrijf een korte Nederlandse oefentekst van 40-60 woorden over een willekeurig onderwerp. Gebruik duidelijke, goed leesbare zinnen. Geen titel. Alleen de tekst.`,
+
+      subvocalisatie: `Schrijf een Nederlandse tekst van 50-70 woorden over een willekeurig kennisfeit. Gebruik korte, feitelijke zinnen. Varieer in onderwerp (natuur, wetenschap, geschiedenis, sport). Geen titel, alleen tekst.`,
+
+      regressie: `Schrijf een vloeiende Nederlandse tekst van 60-80 woorden over een willekeurig onderwerp. Gebruik zinnen die logisch op elkaar volgen zodat de lezer niet hoeft terug te lezen. Geen titel, alleen tekst.`,
+
+      skim: `Genereer een Nederlandse informatieve tekst voor een skim-lees oefening. Geef het resultaat als JSON:
+{"titel":"korte titel","alineas":["alinea 1 (40-50 woorden)","alinea 2 (40-50 woorden)","alinea 3 (40-50 woorden)","alinea 4 (40-50 woorden)"],"sleutelwoorden":["woord1","woord2","woord3"]}
+Kies een willekeurig onderwerp. Alleen JSON, geen andere tekst.`,
+
+      woordparen: `Genereer 15 Nederlandse woorden met voor elk woord 4 visueel gelijkende fout-gespelde varianten. Wissel in moeilijkheid (3-8 letters). Geef het resultaat als JSON array:
+[{"woord":"correct","fout":["fout1","fout2","fout3","fout4"]}]
+Alleen JSON, geen andere tekst.`,
+
+      periwoorden: `Genereer een lijst van 30 korte, goed herkenbare Nederlandse woorden (2-5 letters). Mix van dieren, kleuren, objecten, acties. Geef als JSON array: ["woord1","woord2","woord3",...]. Alleen JSON.`
+    };
+
+    if (!prompts[type]) return null;
+
+    const maxTokens = type === 'skim' || type === 'woordparen' ? 600 : 300;
+    const result = await _aiGemini.send(prompts[type], maxTokens);
+    if (!result.ok) return null;
+
+    // Parse response afhankelijk van type
+    try {
+      if (type === 'skim' || type === 'woordparen' || type === 'periwoorden') {
+        let json = result.text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+        return JSON.parse(json);
+      }
+      return result.text.trim();
+    } catch(e) {
+      console.warn('[AI TekstGen] Parse error voor', type, e);
+      return type === 'skim' || type === 'woordparen' || type === 'periwoorden' ? null : result.text.trim();
+    }
+  }
+};
+
+
+// ── AI TEKST KNOPPEN + HOOKS ────────────────────────────────
+
+// Helper: voeg "🤖 AI tekst" knop toe aan een element
+function _aiAddRefreshBtn(containerId, onclick) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  // Check of er al een AI knop is
+  if (container.querySelector('.ai-gen-btn')) return;
+  const btn = document.createElement('button');
+  btn.className = 'ai-gen-btn';
+  btn.innerHTML = '🤖 Nieuwe AI tekst';
+  btn.onclick = onclick;
+  btn.style.marginTop = '8px';
+  container.appendChild(btn);
+}
+
+// RSVP/Chunk: voeg "AI Tekst" toe als tekstbron optie
+function aiLaadTekstBronOpties() {
+  const sel = document.getElementById('rsvp-src');
+  if (!sel) return;
+  // Check of AI optie al bestaat
+  if ([...sel.options].some(o => o.value === 'ai')) return;
+  const opt = document.createElement('option');
+  opt.value = 'ai';
+  opt.textContent = '🤖 AI Tekst (uniek)';
+  sel.appendChild(opt);
+}
+
+// Genereer AI tekst voor RSVP/Chunk
+async function aiLaadLeestekst() {
+  const display = document.getElementById('rsvp-woord') || document.getElementById('chunk-display');
+  if (display) display.textContent = '🤖 Tekst genereren…';
+
+  const tekst = await _aiTekstGen.get('leestekst');
+  if (tekst) {
+    // Sla op als tijdelijke tekst
+    window._aiHuidigeTekst = tekst;
+    if (display) display.textContent = 'AI tekst geladen! Klik Start.';
+    return tekst;
+  } else {
+    if (display) display.textContent = 'AI niet beschikbaar, demo tekst geladen.';
+    return null;
+  }
+}
+
+// Fixatie: AI tekst laden
+async function aiFixNieuwe() {
+  const btn = event?.target;
+  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
+  const tekst = await _aiTekstGen.get('fixatie');
+  if (tekst) {
+    fixStop();
+    fixWoorden = tekst.split(/\s+/);
+    fixGroepen = [];
+    for (let i=0; i<fixWoorden.length; i+=fixBreedte) fixGroepen.push(fixWoorden.slice(i,i+fixBreedte));
+    fixGrpIdx = 0;
+    fixRender(-1);
+    document.getElementById('fix-score-msg').style.display='none';
+    document.getElementById('fix-start-btn').textContent='▶ Starten';
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
+}
+
+// Subvocalisatie: AI tekst laden
+async function aiSvNieuwe() {
+  const btn = event?.target;
+  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
+  const tekst = await _aiTekstGen.get('subvocalisatie');
+  if (tekst) {
+    svMetroWoorden = tekst.split(/\s+/);
+    svMetroIdx = 0;
+    document.getElementById('sv-metro-voortgang').textContent = '';
+    document.getElementById('sv-metro-woord').textContent = '—';
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
+}
+
+// Regressie: AI tekst laden
+async function aiRegNieuwe() {
+  const btn = event?.target;
+  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
+  const tekst = await _aiTekstGen.get('regressie');
+  if (tekst) {
+    regStop();
+    regTekst = tekst;
+    regZinnen = regTekst.match(/[^.!?]+[.!?]?/g).filter(z=>z.trim().length>5).map(z=>z.trim());
+    regIdx = 0;
+    document.getElementById('reg-zin-display').textContent = 'AI tekst geladen! Klik op Start.';
+    document.getElementById('reg-prog-fill').style.width = '0%';
+    document.getElementById('reg-einde-msg').style.display = 'none';
+    document.getElementById('reg-start-btn').textContent = '▶ Starten';
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
+}
+
+// Skim & Scan: AI tekst
+async function aiSkimNieuwe() {
+  const btn = event?.target;
+  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
+  const data = await _aiTekstGen.get('skim');
+  if (data && data.titel && data.alineas) {
+    // Voeg toe aan SKIM_TEKSTEN_DATA tijdelijk
+    SKIM_TEKSTEN_DATA.push(data);
+    skimTekstIdx = SKIM_TEKSTEN_DATA.length - 1;
+    const container = document.getElementById('skim-tekst-area');
+    if (container) {
+      let html = `<h4>${data.titel}</h4>`;
+      data.alineas.forEach(a => html += `<p>${a}</p>`);
+      container.innerHTML = html;
+    }
+    // Stel scan woorden in als die er zijn
+    if (data.sleutelwoorden && data.sleutelwoorden.length) {
+      scanAutoZoekWrd = data.sleutelwoorden[0];
+    }
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
+}
+
+
+// ── AI HOOKS FASE 2+3 ───────────────────────────────────────
+(function() {
+  // Hook slaaSessieOp voor AI Leescoach advies
+  const _aiF2OrigSessie = slaaSessieOp;
+  slaaSessieOp = function(wpm, n) {
+    _aiF2OrigSessie(wpm, n);
+    if (_aiGemini.hasKey()) {
+      _aiLeescoach.vraagAdvies(wpm, n);
+    }
+  };
+
+  // Hook vulRsvpDropdown om AI optie toe te voegen na elke rebuild
+  const _origVulRsvpDropdown = vulRsvpDropdown;
+  vulRsvpDropdown = function() {
+    _origVulRsvpDropdown();
+    aiLaadTekstBronOpties();
+  };
+
+  // Hook laadRsvpTekst voor AI tekstbron selectie
+  const _origLaadRsvpTekst = laadRsvpTekst;
+  laadRsvpTekst = function() {
+    const sel = document.getElementById('rsvp-src');
+    if (sel && sel.value === 'ai') {
+      aiLaadLeestekst().then(tekst => {
+        if (tekst) {
+          rsvpWoorden = woorden(tekst);
+          document.getElementById('rsvp-total').textContent = rsvpWoorden.length;
+          document.getElementById('rsvp-pos').textContent = 0;
+        }
+      });
+      return;
+    }
+    window._aiHuidigeTekst = null;
+    _origLaadRsvpTekst();
+  };
+
+  // Hook sidebarNav om AI knoppen te injecteren
+  const _origSidebarNav = sidebarNav;
+  sidebarNav = function(id) {
+    _origSidebarNav(id);
+    // Voeg AI knoppen toe per module (met kleine delay voor DOM)
+    setTimeout(() => {
+      if (id === 'rsvp') aiLaadTekstBronOpties();
+      if (id === 'fixatie') _aiAddRefreshBtn('screen-fixatie', aiFixNieuwe);
+      if (id === 'subvocal') _aiAddRefreshBtn('screen-subvocal', aiSvNieuwe);
+      if (id === 'regressie') _aiAddRefreshBtn('screen-regressie', aiRegNieuwe);
+      if (id === 'skim') _aiAddRefreshBtn('screen-skim', aiSkimNieuwe);
+      if (id === 'chunk') _aiAddRefreshBtn('screen-chunk', async function() {
+        const btn = event?.target;
+        if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
+        const tekst = await aiLaadLeestekst();
+        if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
+      });
+    }, 100);
+  };
+})();
+
+
+// ── AI INIT ─────────────────────────────────────────────────
+(function() {
+  _aiVoice.init();
+  _aiTts.init();
+  if (localStorage.getItem('snellees_onboarding_done')) _aiTts.welkom();
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+  }
+  // Toon laatste AI advies op home
+  _aiLeescoach.toonLaatsteAdvies();
+
+  // Fase 3: Pre-fetch teksten op achtergrond (staggered om rate limits te vermijden)
+  if (_aiGemini.hasKey()) {
+    setTimeout(() => _aiTekstGen.prefetch('leestekst', 2), 3000);
+    setTimeout(() => _aiTekstGen.prefetch('fixatie', 2), 8000);
+    setTimeout(() => _aiTekstGen.prefetch('subvocalisatie', 2), 13000);
+    setTimeout(() => _aiTekstGen.prefetch('regressie', 2), 18000);
+  }
 })();
 
 </script>
