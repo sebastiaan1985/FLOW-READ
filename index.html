@@ -9520,8 +9520,12 @@ const _aiGemini = {
           generationConfig: { maxOutputTokens: 20 }
         })
       });
-      return res.ok;
-    } catch(e) { return false; }
+      if (res.ok) return { ok: true };
+      const err = await res.json().catch(() => ({}));
+      const msg = err?.error?.message || `Status ${res.status}`;
+      console.warn('[AI] testKey fout:', res.status, msg);
+      return { ok: false, msg };
+    } catch(e) { return { ok: false, msg: 'Geen internetverbinding: ' + e.message }; }
   }
 };
 
@@ -9725,13 +9729,13 @@ async function aiKeyTest() {
   
   if (status) { status.style.background = 'rgba(124,111,247,.15)'; status.style.color = 'var(--accent)'; status.textContent = '🔄 Testen…'; }
   
-  const ok = await _aiGemini.testKey(key);
-  
-  if (ok) {
+  const result = await _aiGemini.testKey(key);
+
+  if (result.ok) {
     if (status) { status.style.background = 'rgba(52,211,153,.15)'; status.style.color = '#34d399'; status.textContent = '✅ Verbinding gelukt! Key werkt.'; }
     _aiTts.spreek('API key werkt! AI features zijn nu actief.');
   } else {
-    if (status) { status.style.background = 'rgba(239,68,68,.15)'; status.style.color = '#ef4444'; status.textContent = '❌ Key werkt niet. Controleer of je de juiste key hebt gekopieerd.'; }
+    if (status) { status.style.background = 'rgba(239,68,68,.15)'; status.style.color = '#ef4444'; status.textContent = '❌ ' + (result.msg || 'Key werkt niet.'); }
   }
 }
 
