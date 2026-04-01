@@ -9488,13 +9488,15 @@ const _aiGemini = {
       
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
+        console.warn('[AI Gemini] API error:', res.status, JSON.stringify(err));
         if (res.status === 429) {
           return { ok: false, error: 'rate_limit', text: 'Dagelijkse limiet bereikt. Probeer het morgen opnieuw.' };
         }
         if (res.status === 400 && JSON.stringify(err).includes('API_KEY')) {
           return { ok: false, error: 'invalid_key', text: 'Ongeldige API key. Controleer je key in AI Instellingen.' };
         }
-        return { ok: false, error: 'api_error', text: `API fout (${res.status}). Probeer later opnieuw.` };
+        const errMsg = err?.error?.message || `Status ${res.status}`;
+        return { ok: false, error: 'api_error', text: `API fout: ${errMsg}` };
       }
       
       const data = await res.json();
@@ -9822,7 +9824,10 @@ Alleen JSON, geen andere tekst.`,
 
     const maxTokens = type === 'skim' || type === 'woordparen' ? 600 : (type === 'langetekst' ? 8000 : 300);
     const result = await _aiGemini.send(prompts[type], maxTokens);
-    if (!result.ok) return null;
+    if (!result.ok) {
+      console.warn('[AI TekstGen] API fout voor', type, ':', result.text);
+      return { _error: result.text };
+    }
 
     // Parse response afhankelijk van type
     try {
@@ -9974,6 +9979,7 @@ async function aiLangeTekstNieuwe() {
     data = await _aiTekstGen.get('langetekst');
   } catch(e) {
     console.warn('[AI LangeTekst] Generatie mislukt:', e);
+    data = { _error: 'Onverwachte fout: ' + e.message };
   }
 
   if (data && data.titel && data.tekst && data.vragen) {
@@ -10010,7 +10016,8 @@ async function aiLangeTekstNieuwe() {
     
     _aiTts.spreek('Ik heb een nieuwe tekst voor je gegenereerd. Klik op start zodra je klaar bent.');
   } else {
-    alert('Fout bij het genereren van de AI tekst. Controleer je instellingen.');
+    const errMsg = data?._error || 'Onbekende fout';
+    alert('AI tekst generatie mislukt:\n' + errMsg);
   }
   
   if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Tekst (~1000 woorden)'; }
