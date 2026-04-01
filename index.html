@@ -9820,7 +9820,7 @@ Alleen JSON, geen andere tekst.`,
 
     if (!prompts[type]) return null;
 
-    const maxTokens = type === 'skim' || type === 'woordparen' ? 600 : (type === 'langetekst' ? 2500 : 300);
+    const maxTokens = type === 'skim' || type === 'woordparen' ? 600 : (type === 'langetekst' ? 8000 : 300);
     const result = await _aiGemini.send(prompts[type], maxTokens);
     if (!result.ok) return null;
 
@@ -9828,6 +9828,13 @@ Alleen JSON, geen andere tekst.`,
     try {
       if (type === 'skim' || type === 'woordparen' || type === 'periwoorden' || type === 'langetekst') {
         let json = result.text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+        // Fix truncated JSON: sluit ontbrekende haakjes
+        const openBraces = (json.match(/\{/g) || []).length;
+        const closeBraces = (json.match(/\}/g) || []).length;
+        const openBrackets = (json.match(/\[/g) || []).length;
+        const closeBrackets = (json.match(/\]/g) || []).length;
+        for (let i = 0; i < openBrackets - closeBrackets; i++) json += ']';
+        for (let i = 0; i < openBraces - closeBraces; i++) json += '}';
         return JSON.parse(json);
       }
       return result.text.trim();
@@ -9961,9 +9968,14 @@ async function aiSkimNieuwe() {
 async function aiLangeTekstNieuwe() {
   const btn = event?.target || document.getElementById('ai-langetekst-btn');
   if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren… (even geduld)'; }
-  
-  const data = await _aiTekstGen.get('langetekst');
-  
+
+  let data = null;
+  try {
+    data = await _aiTekstGen.get('langetekst');
+  } catch(e) {
+    console.warn('[AI LangeTekst] Generatie mislukt:', e);
+  }
+
   if (data && data.titel && data.tekst && data.vragen) {
     const gemapteVragen = data.vragen.map(q => ({
       v: q.v,
