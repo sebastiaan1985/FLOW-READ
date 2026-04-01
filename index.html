@@ -9707,7 +9707,9 @@ function aiKeySave() {
   }
   
   localStorage.setItem('gemini_api_key', key);
-  if (status) { status.style.background = 'rgba(52,211,153,.15)'; status.style.color = '#34d399'; status.textContent = '✅ Key opgeslagen'; }
+  // Leeg AI cache zodat oude (mogelijk foute) items niet hergebruikt worden
+  Object.keys(localStorage).filter(k => k.startsWith('ai_tekst_cache_')).forEach(k => localStorage.removeItem(k));
+  if (status) { status.style.background = 'rgba(52,211,153,.15)'; status.style.color = '#34d399'; status.textContent = '✅ Key opgeslagen (cache geleegd)'; }
 }
 
 async function aiKeyTest() {
@@ -9829,7 +9831,7 @@ Alleen JSON, geen andere tekst.`,
     const result = await _aiGemini.send(prompts[type], maxTokens);
     if (!result.ok) {
       console.warn('[AI TekstGen] API fout voor', type, ':', result.text);
-      return { _error: result.text };
+      return null;
     }
 
     // Parse response afhankelijk van type
@@ -10019,8 +10021,7 @@ async function aiLangeTekstNieuwe() {
     
     _aiTts.spreek('Ik heb een nieuwe tekst voor je gegenereerd. Klik op start zodra je klaar bent.');
   } else {
-    const errMsg = data?._error || 'Onbekende fout';
-    alert('AI tekst generatie mislukt:\n' + errMsg);
+    alert('AI tekst generatie mislukt. Klik op ⚙️ AI Key om je Gemini API key in te stellen of te vernieuwen.');
   }
   
   if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Tekst (~1000 woorden)'; }
