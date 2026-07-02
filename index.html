@@ -10573,22 +10573,21 @@ const _aiAdaptief = {
 // ── GEMINI API MODULE ───────────────────────────────────────
 const _aiGemini = {
   endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent',
-  _k: 'QUl6YVN5Q2RaN1d4cEpUWE5Hay1naUVNUWloTjltLWxXZWxRTmNN',
-  
+
   getKey() {
     const userKey = localStorage.getItem('gemini_api_key');
     if (userKey && userKey.trim()) return userKey.trim();
-    return atob(this._k);
+    return null;
   },
 
   hasKey() {
-    return true;
+    return !!this.getKey();
   },
   
   async send(prompt, maxTokens = 300) {
     const key = this.getKey();
     if (!key) {
-      return { ok: false, error: 'config_error', text: 'AI configuratie fout. Neem contact op met de beheerder.' };
+      return { ok: false, error: 'no_key', text: 'Geen AI-sleutel ingesteld. Voeg je gratis Gemini-sleutel toe via ⚙️ AI Instellingen.' };
     }
     
     try {
@@ -10787,13 +10786,15 @@ async function aiBegripGenStart() {
   }
   
   const result = await _aiBegripGen.genereer(tekst);
-  
+
   if (result) {
     // Zet de globale vragen array en toon ze
     vragen = result;
     toonBegrip();
     // Registreer dat we AI vragen gebruiken
     _aiTts.spreek('Ik heb 3 begripsvragen voor je gemaakt.');
+  } else if (!_aiGemini.hasKey()) {
+    alert('Voor AI-vragen heb je een gratis Gemini-sleutel nodig. Stel deze in via ⚙️ AI Instellingen.');
   }
   
   if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Vragen'; }
@@ -10805,7 +10806,7 @@ function aiSettingsOpen() {
   const overlay = document.getElementById('ai-settings-overlay');
   const input = document.getElementById('ai-key-input');
   if (overlay) overlay.classList.add('active');
-  if (input) input.value = _aiGemini.getKey();
+  if (input) input.value = _aiGemini.getKey() || '';
 }
 
 function aiSettingsSluit() {
