@@ -8,7 +8,7 @@
  * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM = 'snellees-v4';
+const CACHE_NAAM = 'snellees-v5';
 
 const CACHE_STATISCH = [
   '/',
@@ -16,6 +16,7 @@ const CACHE_STATISCH = [
   '/login.html',
   '/reset-wachtwoord.html',
   '/supabase-sync.js',
+  '/teksten.js',
   '/manifest.json',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
