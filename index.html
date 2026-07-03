@@ -1681,6 +1681,61 @@ main { -webkit-overflow-scrolling: touch; }
   border-radius: 999px; padding: 1px 5px; min-width: 16px; text-align: center;
 }
 
+/* ── GAMIFICATION 2.0 ────────────────────────────────────── */
+.leestotaal { font-size: .74rem; color: var(--muted); margin-top: 6px; }
+.leestotaal b { color: var(--text); }
+
+.levelup-overlay {
+  position: fixed; inset: 0; z-index: 600;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(8,8,26,.7); backdrop-filter: blur(3px);
+  animation: fadeIn .25s ease;
+}
+.levelup-kaart {
+  position: relative; text-align: center; padding: 44px 60px;
+  background: var(--surface); border: 1px solid rgba(124,111,247,.5);
+  border-radius: 24px; overflow: hidden;
+  animation: levelupPop .45s cubic-bezier(.2,1.6,.4,1);
+}
+.levelup-glow {
+  position: absolute; inset: -40%;
+  background: radial-gradient(circle, rgba(124,111,247,.35), transparent 60%);
+  animation: levelupDraai 3s linear infinite;
+}
+.levelup-lbl { position: relative; font-size: .8rem; font-weight: 800; letter-spacing: 4px; color: var(--accent); }
+.levelup-nr { position: relative; font-size: 4.5rem; font-weight: 900; line-height: 1.1;
+  background: linear-gradient(135deg, var(--accent), #4cc9f0);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.levelup-sub { position: relative; color: var(--muted); font-size: .9rem; }
+@keyframes levelupPop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes levelupDraai { to { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .levelup-kaart, .levelup-overlay { animation: none; }
+  .levelup-glow { display: none; }
+}
+
+.recap-overlay {
+  position: fixed; inset: 0; z-index: 550;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  background: rgba(8,8,26,.7); backdrop-filter: blur(3px); animation: fadeIn .25s ease;
+}
+.recap-kaart {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 26px 24px; max-width: 420px; width: 100%;
+}
+.recap-kaart h3 { margin: 0 0 16px; }
+.recap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.recap-grid > div { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; text-align: center; }
+.recap-num { font-size: 1.4rem; font-weight: 800; }
+.recap-lbl { font-size: .7rem; color: var(--muted); margin-top: 2px; }
+.recap-coach { font-size: .85rem; color: var(--muted); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 18px; }
+.recap-sluit {
+  width: 100%; padding: 13px; border: none; border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #a78bfa); color: #fff;
+  font-weight: 700; font-size: .92rem; cursor: pointer; font-family: inherit;
+}
+
 /* ── PWA INSTALLATIE ─────────────────────────────────────── */
 .installeer-banner {
   display: flex; align-items: center; gap: 12px;
@@ -1896,6 +1951,7 @@ main { -webkit-overflow-scrolling: touch; }
 
   <div class="sidebar-bottom">
     <button id="sidebar-installeer-btn" onclick="_installatie.start()" style="display:none;color:var(--accent)">📲 Installeer de app</button>
+    <button id="sidebar-geluid-btn" onclick="_geluid.toggle()">🔔 Geluid aan</button>
     <button class="ai-tts-toggle" id="sidebar-tts-btn" onclick="aiTtsToggle()">🔊 AI Coach spraak</button>
     <button id="sidebar-kids-btn" onclick="toggleKids()">🎨 Kids modus</button>
     <button id="sidebar-dyx-btn" onclick="dyxOpenPanel();sluitSidebar()">🔤 Dyslexie instellingen</button>
@@ -2157,8 +2213,12 @@ main { -webkit-overflow-scrolling: touch; }
       <div>
         <div class="vandaag-begroeting" id="vandaag-begroeting">Goedendag! 👋</div>
         <div class="vandaag-sub" id="vandaag-sub">Klaar voor je training?</div>
+        <div class="leestotaal" id="leestotaal"></div>
       </div>
-      <div class="streak-badge nul" id="streak-badge">🔥 0</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div id="dagdoel-ring" title="Jouw dagdoel"></div>
+        <div class="streak-badge nul" id="streak-badge">🔥 0</div>
+      </div>
     </div>
     <!-- Dagelijkse uitdaging -->
     <div class="vandaag-uitdaging" id="vandaag-uitd-card" onclick="vandaagUitdagingOpen()">
@@ -5510,6 +5570,12 @@ const DAGELIJKSE_UITDAGINGEN = [
   { beschrijving: 'Doe de Begintest (opnieuw)', type: 'begintest' },
   { beschrijving: 'Lees 1 lange tekst op jouw niveau', type: 'langetekst' },
   { beschrijving: 'Lees een lange tekst en beantwoord de vragen', type: 'langetekst' },
+  { beschrijving: 'Doe een Leestest met begripsvragen', type: 'leestest' },
+  { beschrijving: 'Train 2 minuten met de subvocalisatie-metronoom', type: 'subvocal' },
+  { beschrijving: 'Lees een tekst zonder terug te springen (Regressie)', type: 'regressie' },
+  { beschrijving: 'Voltooi een fixatie-training', type: 'fixatie' },
+  { beschrijving: 'Zoek de sleutelwoorden met Skim & Scan', type: 'skim' },
+  { beschrijving: 'Gun je ogen 30 seconden rust (Palming)', type: 'oogrust' },
 ];
 
 // ─── INIT ─────────────────────────────────────────────────
@@ -5612,8 +5678,9 @@ kidsToepassen();
 // ─── CONFETTI ─────────────────────────────────────────────
 const CONFETTI_KLEUREN = ['#ff6b6b','#ffd93d','#6bcb77','#4cc9f0','#c77dff','#ff9f43','#ff6348'];
 
-function showConfetti(x, y) {
-  if (!kidsModus) return;
+function showConfetti(x, y, force) {
+  if (!kidsModus && !force) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const n = 40;
   for (let i = 0; i < n; i++) {
     const el = document.createElement('div');
@@ -5646,9 +5713,20 @@ function getDaguitdaging() {
   const nu = new Date().toDateString();
   let data = JSON.parse(localStorage.getItem('daily_challenge') || '{}');
   if (data.datum !== nu) {
-    const idx = new Date().getDate() % DAGELIJKSE_UITDAGINGEN.length;
+    // Zwakte-gewogen keuze via de Coach-planner (2 van de 3 dagen),
+    // anders dag-geseede rotatie voor variatie.
+    let idx = null;
+    const seed = Math.abs(nu.split('').reduce((a, c) => a * 31 + c.charCodeAt(0) | 0, 7));
+    if (typeof Coach !== 'undefined' && seed % 3 !== 0) {
+      const aanb = Coach.planner.aanbeveling();
+      const kandidaten = DAGELIJKSE_UITDAGINGEN
+        .map((u, i) => ({ u, i })).filter(x => x.u.type === aanb?.type);
+      if (kandidaten.length) idx = kandidaten[seed % kandidaten.length].i;
+    }
+    if (idx === null) idx = seed % DAGELIJKSE_UITDAGINGEN.length;
     data = { datum: nu, idx, voltooid: false };
     localStorage.setItem('daily_challenge', JSON.stringify(data));
+    if (typeof updateAppBadge === 'function') updateAppBadge();
   }
   return { ...DAGELIJKSE_UITDAGINGEN[data.idx], voltooid: data.voltooid };
 }
@@ -5660,13 +5738,22 @@ function voltooiDaguitdaging(type) {
     data.voltooid = true;
     localStorage.setItem('daily_challenge', JSON.stringify(data));
     updateDaguitdaging();
-    toonAchievement('🎯', 'Daguitdaging voltooid!');
-    // Bonus XP
+    // Variabele beloning (dag-geseed): 60% +0, 30% +10, 10% +25 bonus
+    const seed = Math.abs(data.datum.split('').reduce((a, c) => a * 33 + c.charCodeAt(0) | 0, 3));
+    const bonus = seed % 10 < 6 ? 0 : seed % 10 < 9 ? 10 : 25;
+    const totaal = 15 + bonus;
+    toonAchievement('🎯', bonus > 0 ? `Daguitdaging voltooid! +${totaal} XP 🎁 (bonus!)` : `Daguitdaging voltooid! +${totaal} XP`);
+    _geluid.streak();
+    tril([40, 30, 60]);
+    // Teller voor de uitdagings-badge
+    const g = _gamZet('uitdagingenVoltooid', (_gamLaad().uitdagingenVoltooid || 0) + 1);
     if (avProfiel) {
-      avProfiel.xp = (avProfiel.xp || 0) + 15;
+      avProfiel.xp = (avProfiel.xp || 0) + totaal;
       avSla();
       updateSpelerIndicator();
     }
+    if (typeof updateAppBadge === 'function') updateAppBadge();
+    if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 400);
   }
 }
 
@@ -5684,6 +5771,223 @@ function updateDaguitdaging() {
   } else {
     status.textContent = 'Open';
     status.style.background = '';
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+//  🎮  GAMIFICATION 2.0 — geluid, haptics, vieringen, dagdoel
+// ════════════════════════════════════════════════════════════
+
+// ── Gamificatie-state (gesynct via extra-kolom) ─────────────
+function _gamLaad() {
+  try { return JSON.parse(localStorage.getItem('gamificatie') || '{}'); }
+  catch(e) { return {}; }
+}
+function _gamSla(g) { localStorage.setItem('gamificatie', JSON.stringify(g)); }
+function _gamZet(key, waarde) { const g = _gamLaad(); g[key] = waarde; _gamSla(g); return g; }
+
+// ── Geluid: kleine Web Audio-synth, geen bestanden nodig ───
+const _geluid = {
+  _ctx: null,
+
+  aan() {
+    const g = _gamLaad();
+    return g.geluidAan !== false; // default: aan
+  },
+
+  toggle() {
+    const nieuw = !this.aan();
+    _gamZet('geluidAan', nieuw);
+    const btn = document.getElementById('sidebar-geluid-btn');
+    if (btn) btn.textContent = nieuw ? '🔔 Geluid aan' : '🔕 Geluid uit';
+    if (nieuw) this.klik();
+    return nieuw;
+  },
+
+  _init() {
+    // AudioContext mag pas na een user-gesture starten (iOS-eis)
+    if (!this._ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) this._ctx = new AC();
+    }
+    if (this._ctx && this._ctx.state === 'suspended') this._ctx.resume();
+    return this._ctx;
+  },
+
+  _toon(freq, start, duur, type = 'sine', volume = 0.12) {
+    const ctx = this._init();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, ctx.currentTime + start);
+    gain.gain.linearRampToValueAtTime(volume, ctx.currentTime + start + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + start + duur);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(ctx.currentTime + start);
+    osc.stop(ctx.currentTime + start + duur + 0.05);
+  },
+
+  klik()   { if (this.aan()) this._toon(660, 0, 0.06, 'sine', 0.06); },
+  goed()   { if (this.aan()) { this._toon(523, 0, 0.1); this._toon(784, 0.09, 0.14); } },
+  fout()   { if (this.aan()) this._toon(196, 0, 0.2, 'triangle', 0.08); },
+  streak() { if (this.aan()) { this._toon(587, 0, 0.09); this._toon(740, 0.08, 0.09); this._toon(880, 0.16, 0.16); } },
+  fanfare() {
+    if (!this.aan()) return;
+    // Majeur-arpeggio + hoge shimmer
+    [[523, 0], [659, 0.11], [784, 0.22], [1047, 0.33]].forEach(([f, t]) => this._toon(f, t, 0.22, 'triangle', 0.11));
+    this._toon(2093, 0.4, 0.35, 'sine', 0.04);
+  },
+};
+
+// ── Haptics (Android trilt; iOS negeert dit stilletjes) ────
+function tril(patroon) {
+  try { if (navigator.vibrate) navigator.vibrate(patroon); } catch(e) { /* niet ondersteund */ }
+}
+
+// ── Level-up viering ────────────────────────────────────────
+function vierLevelUp(level) {
+  _geluid.fanfare();
+  tril([80, 40, 120]);
+  showConfetti(50, 15, true);
+  const overlay = document.createElement('div');
+  overlay.className = 'levelup-overlay';
+  overlay.innerHTML = `
+    <div class="levelup-kaart">
+      <div class="levelup-glow"></div>
+      <div class="levelup-lbl">LEVEL UP!</div>
+      <div class="levelup-nr">${level}</div>
+      <div class="levelup-sub">${kidsModus ? 'Jij bent een superlezer! 🚀' : 'Sterk werk — je leest je steeds sterker.'}</div>
+    </div>`;
+  overlay.addEventListener('click', () => overlay.remove());
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.remove(), 3200);
+}
+
+// ── Dagdoel-ring + leestotalen op home ──────────────────────
+function dagdoelMinuten() {
+  const g = _gamLaad();
+  if (g.dagDoelMin) return g.dagDoelMin;
+  return (typeof Coach !== 'undefined' && Coach.isKids()) ? 5 : 10;
+}
+
+function trainMinutenVandaag() {
+  const sessies = (stats.sessies || []);
+  const vandaag = new Date(); vandaag.setHours(0, 0, 0, 0);
+  let minuten = 0;
+  for (const s of sessies) {
+    if (!s.ts || s.ts < vandaag.getTime()) continue;
+    // Duur ≈ woorden / wpm (minuten)
+    if (s.wpm > 0 && s.woorden > 0) minuten += s.woorden / s.wpm;
+  }
+  return minuten;
+}
+
+function updateDagdoelRing() {
+  const el = document.getElementById('dagdoel-ring');
+  if (!el) return;
+  const doel = dagdoelMinuten();
+  const gedaan = trainMinutenVandaag();
+  const pct = Math.min(100, (gedaan / doel) * 100);
+  const R = 26, OMTREK = 2 * Math.PI * R;
+  const vol = pct >= 100;
+  el.innerHTML = `
+    <svg width="64" height="64" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="${R}" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="6"/>
+      <circle cx="32" cy="32" r="${R}" fill="none" stroke="${vol ? 'var(--green)' : 'var(--accent)'}" stroke-width="6"
+        stroke-linecap="round" stroke-dasharray="${OMTREK}" stroke-dashoffset="${OMTREK * (1 - pct / 100)}"
+        transform="rotate(-90 32 32)" style="transition:stroke-dashoffset .6s ease"/>
+      <text x="32" y="30" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text)">${vol ? '✓' : Math.floor(gedaan)}</text>
+      <text x="32" y="43" text-anchor="middle" font-size="8" fill="var(--muted)">${vol ? 'klaar!' : 'van ' + doel + ' min'}</text>
+    </svg>`;
+  // Eén keer per dag vieren als het doel gehaald is
+  const g = _gamLaad();
+  const vandaagStr = new Date().toDateString();
+  if (vol && g.dagdoelGevierd !== vandaagStr) {
+    _gamZet('dagdoelGevierd', vandaagStr);
+    _geluid.streak();
+    tril(60);
+    toonAchievement('🎯', `Dagdoel gehaald: ${doel} minuten gelezen!`);
+  }
+  // Leestotalen
+  const totEl = document.getElementById('leestotaal');
+  if (totEl) {
+    const woorden = stats.totaalWoorden || 0;
+    const boeken = woorden / 60000;
+    totEl.innerHTML = woorden > 0
+      ? `Je hebt al <b>${woorden.toLocaleString('nl-NL')}</b> woorden gelezen — dat is 📚 <b>${boeken < 1 ? boeken.toFixed(2) : boeken.toFixed(1)}</b> ${boeken >= 1.05 ? 'boeken' : 'boek'}!`
+      : '';
+  }
+}
+
+// ── Weekoverzicht "Jouw leesweek" ───────────────────────────
+function _weekId(d = new Date()) {
+  // Maandag als weekstart
+  const dt = new Date(d); dt.setHours(0, 0, 0, 0);
+  dt.setDate(dt.getDate() - ((dt.getDay() + 6) % 7));
+  return dt.toISOString().slice(0, 10);
+}
+
+function toonWeekRecap() {
+  const dezeWeek = _weekId();
+  const vorigeWeekStart = new Date(dezeWeek); vorigeWeekStart.setDate(vorigeWeekStart.getDate() - 7);
+  const sessies = (stats.sessies || []).filter(s => s.ts);
+  const inWeek = (s, start) => { const t = new Date(start).getTime(); return s.ts >= t && s.ts < t + 7 * 86400000; };
+  const vorige = sessies.filter(s => inWeek(s, vorigeWeekStart));
+  if (!vorige.length) return false;
+
+  const eerder = sessies.filter(s => { const t = new Date(vorigeWeekStart).getTime(); return s.ts >= t - 7 * 86400000 && s.ts < t; });
+  const woorden = vorige.reduce((a, s) => a + (s.woorden || 0), 0);
+  const best = Math.max(...vorige.map(s => s.wpm));
+  const gem = Math.round(vorige.reduce((a, s) => a + s.wpm, 0) / vorige.length);
+  const gemEerder = eerder.length ? Math.round(eerder.reduce((a, s) => a + s.wpm, 0) / eerder.length) : null;
+  const delta = gemEerder ? Math.round(((gem - gemEerder) / gemEerder) * 100) : null;
+  const coachZin = (typeof Coach !== 'undefined') ? Coach.feedback.genereer().tekst : '';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'recap-overlay';
+  overlay.innerHTML = `
+    <div class="recap-kaart" role="dialog" aria-modal="true" aria-label="Jouw leesweek">
+      <h3>📖 Jouw leesweek</h3>
+      <div class="recap-grid">
+        <div><div class="recap-num">${vorige.length}</div><div class="recap-lbl">sessies</div></div>
+        <div><div class="recap-num">${woorden.toLocaleString('nl-NL')}</div><div class="recap-lbl">woorden</div></div>
+        <div><div class="recap-num">${best}</div><div class="recap-lbl">beste WPM</div></div>
+        <div><div class="recap-num" style="color:${delta > 0 ? 'var(--green)' : 'var(--muted)'}">${delta === null ? '—' : (delta > 0 ? '+' : '') + delta + '%'}</div><div class="recap-lbl">vs week ervoor</div></div>
+      </div>
+      <div class="recap-coach">${coachZin}</div>
+      <button class="recap-sluit" onclick="this.closest('.recap-overlay').remove()">Op naar deze week! 🚀</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  _geluid.goed();
+  return true;
+}
+
+function checkWeekRecap() {
+  const g = _gamLaad();
+  const dezeWeek = _weekId();
+  if (g.laatsteRecap === dezeWeek) return;
+  if (toonWeekRecap()) _gamZet('laatsteRecap', dezeWeek);
+  else _gamZet('laatsteRecap', dezeWeek); // geen data: stil overslaan tot volgende week
+}
+
+// ── App-badge + streak-nudge ────────────────────────────────
+function updateAppBadge() {
+  try {
+    if (!('setAppBadge' in navigator)) return;
+    const uitdaging = getDaguitdaging();
+    if (uitdaging.voltooid) navigator.clearAppBadge();
+    else navigator.setAppBadge(1);
+  } catch(e) { /* geen badging-support */ }
+}
+
+function checkStreakGevaar() {
+  const streak = (typeof getGlobaalStreak === 'function') ? getGlobaalStreak() : {};
+  const dagen = streak.dagen || 0;
+  const gisteren = new Date(Date.now() - 86400000).toDateString();
+  if (dagen >= 3 && streak.laatste === gisteren && new Date().getHours() >= 17) {
+    toonAchievement('🔥', `Je streak van ${dagen} dagen loopt vandaag gevaar — train nog even!`);
   }
 }
 
@@ -7305,7 +7609,7 @@ function svMetroToggle() {
 
 function svMetroTick() {
   if (!svMetroActief) return;
-  if (svMetroIdx >= svMetroWoorden.length) { svMetroStop(); svMetroLaadTekst(); return; }
+  if (svMetroIdx >= svMetroWoorden.length) { svMetroStop(); svMetroLaadTekst(); voltooiDaguitdaging('subvocal'); _geluid.goed(); return; }
   document.getElementById('sv-metro-woord').textContent = svMetroWoorden[svMetroIdx];
   document.getElementById('sv-metro-voortgang').textContent = `${svMetroIdx+1} / ${svMetroWoorden.length}`;
   // Animate bar
@@ -7461,6 +7765,8 @@ function regStop() {
 }
 
 function regEinde() {
+  voltooiDaguitdaging('regressie');
+  _geluid.goed();
   document.getElementById('reg-zin-display').textContent = '✅ Tekst voltooid!';
   document.getElementById('reg-einde-msg').innerHTML =
     `<div class="card"><b>Goed gedaan!</b> Je hebt de hele tekst gelezen zonder terug te kijken. Verhoog het tempo met 10–20 WPM en probeer opnieuw.</div>`;
@@ -7585,6 +7891,8 @@ function fixBreedtePas(delta) {
 
 function fixEinde() {
   fixStop();
+  voltooiDaguitdaging('fixatie');
+  _geluid.goed();
   document.getElementById('fix-score-msg').innerHTML =
     `<div class="card">✅ <b>Goed gedaan!</b> Je hebt alle ${fixGroepen.length} groepen van ${fixBreedte} woorden gelezen. Probeer nu ${fixBreedte+1} woorden per fixatie!</div>`;
   document.getElementById('fix-score-msg').style.display='';
@@ -7950,6 +8258,7 @@ function scanZoek() {
     box.innerHTML = box.innerHTML.replace(/<mark[^>]*>(.*?)<\/mark>/gi,'$1').replace(re,'<mark class="scan-hl">$1</mark>');
     const ct = (box.innerHTML.match(/<mark/gi)||[]).length;
     document.getElementById('scan-resultaat').textContent = ct>0?`✅ ${ct} keer gevonden.`:'❌ Niet gevonden in deze tekst.';
+    if (ct > 0) { voltooiDaguitdaging('skim'); _geluid.goed(); }
   }
 }
 
@@ -8009,6 +8318,7 @@ function orPalmingStart() {
     document.getElementById('or-palming-tel').textContent=orPalmingSec;
     if(orPalmingSec<=0){
       clearInterval(orTimerRef);
+      voltooiDaguitdaging('oogrust');
       document.getElementById('or-palming-tel').textContent='😌';
       document.getElementById('or-palming-uitleg').textContent='Uitstekend! Ogen geopend, neem even de tijd.';
       document.getElementById('or-palming-btn').disabled=false;
@@ -8293,6 +8603,8 @@ const _installatie = {
       this._prompt = null;
       this.verbergKnoppen();
       localStorage.removeItem('installatie_hint');
+      if (typeof _gamZet === 'function') _gamZet('geinstalleerd', true);
+      if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 800);
     });
 
     // iOS heeft geen beforeinstallprompt — toon daar altijd de knoppen
@@ -8505,11 +8817,32 @@ function updateGlobaalStreak() {
   const streak = getGlobaalStreak();
   const vandaag = new Date().toDateString();
   const gisteren = new Date(Date.now() - 86400000).toDateString();
+  const eergisteren = new Date(Date.now() - 2 * 86400000).toDateString();
 
   if (streak.laatste === vandaag) return; // Al getraind vandaag
-  streak.dagen = streak.laatste === gisteren ? (streak.dagen || 0) + 1 : 1;
+
+  if (streak.laatste === gisteren) {
+    streak.dagen = (streak.dagen || 0) + 1;
+  } else if (streak.laatste === eergisteren && (_gamLaad().streakBevriezingen || 0) > 0) {
+    // Eén dag gemist maar een streak-bevriezing beschikbaar → verbruiken
+    const g = _gamLaad();
+    _gamZet('streakBevriezingen', g.streakBevriezingen - 1);
+    streak.dagen = (streak.dagen || 0) + 1;
+    toonAchievement('🧊', `Streak-bevriezing gebruikt — je streak van ${streak.dagen} dagen leeft nog!`);
+  } else {
+    streak.dagen = 1;
+  }
   streak.laatste = vandaag;
   localStorage.setItem('snellees_streak', JSON.stringify(streak));
+
+  // Elke 7 dagen streak: +1 bevriezing verdienen (max 2)
+  if (streak.dagen > 0 && streak.dagen % 7 === 0) {
+    const g = _gamLaad();
+    if ((g.streakBevriezingen || 0) < 2) {
+      _gamZet('streakBevriezingen', (g.streakBevriezingen || 0) + 1);
+      toonAchievement('🧊', 'Streak-bevriezing verdiend! (beschermt je streak bij 1 gemiste dag)');
+    }
+  }
   updateStreakBadge();
 }
 
@@ -8912,6 +9245,21 @@ const ACHIEVEMENTS = [
   { id:'perfect-begrip', icon:'🧠', naam:'Alleslezer',        beschrijving:'3/3 begripsvragen correct',                   cat:'begrip'   },
   { id:'lt-niveau-2',    icon:'🟡', naam:'Gevorderd Lezer',   beschrijving:'Niveau Gevorderd bereikt in Lange Teksten',   cat:'begrip'   },
   { id:'lt-niveau-3',    icon:'🔴', naam:'Expert Lezer',      beschrijving:'Niveau Expert bereikt in Lange Teksten',      cat:'begrip'   },
+  // Woorden gelezen
+  { id:'woorden-10k',    icon:'📄', naam:'Woordenverzamelaar', beschrijving:'10.000 woorden gelezen',                     cat:'woorden'  },
+  { id:'woorden-25k',    icon:'📃', naam:'Bladzijdenvreter',   beschrijving:'25.000 woorden gelezen',                     cat:'woorden'  },
+  { id:'woorden-60k',    icon:'📕', naam:'Je eerste boek!',    beschrijving:'60.000 woorden gelezen — een heel boek!',    cat:'woorden'  },
+  { id:'woorden-250k',   icon:'📚', naam:'Boekenkast',         beschrijving:'250.000 woorden gelezen',                    cat:'woorden'  },
+  { id:'woorden-600k',   icon:'🏛️', naam:'Bibliotheek',       beschrijving:'600.000 woorden — 10 boeken gelezen!',       cat:'woorden'  },
+  // Streak-extra's
+  { id:'streak-14',      icon:'🔥', naam:'Tweewekentopper',    beschrijving:'14 dagen op rij geoefend',                   cat:'streak'   },
+  { id:'streak-100',     icon:'🌋', naam:'Onstuitbaar',        beschrijving:'100 dagen op rij geoefend',                  cat:'streak'   },
+  // Gedrag
+  { id:'vroege-vogel',   icon:'🐦', naam:'Vroege Vogel',       beschrijving:'Getraind vóór 8 uur ’s ochtends',       cat:'gedrag'   },
+  { id:'nachtuil',       icon:'🦉', naam:'Nachtuil',           beschrijving:'Getraind na 9 uur ’s avonds',           cat:'gedrag'   },
+  { id:'weekendlezer',   icon:'🛋️', naam:'Weekendlezer',      beschrijving:'In één weekend op zaterdag én zondag getraind', cat:'gedrag' },
+  { id:'uitdaging-7',    icon:'🎯', naam:'Uitdagingsjager',    beschrijving:'7 daguitdagingen voltooid',                  cat:'gedrag'   },
+  { id:'app-install',    icon:'📲', naam:'Altijd bij de hand', beschrijving:'De app op je beginscherm gezet',             cat:'gedrag'   },
 ];
 
 // ── OPSLAG ────────────────────────────────────────────────
@@ -8965,6 +9313,39 @@ function checkAchievements() {
     check('streak-3',  streakDagen >= 3);
     check('streak-7',  streakDagen >= 7);
     check('streak-30', streakDagen >= 30);
+    check('streak-14', streakDagen >= 14);
+    check('streak-100', streakDagen >= 100);
+
+    // Woorden gelezen
+    const totWoorden = stats.totaalWoorden || 0;
+    check('woorden-10k',  totWoorden >= 10000);
+    check('woorden-25k',  totWoorden >= 25000);
+    check('woorden-60k',  totWoorden >= 60000);
+    check('woorden-250k', totWoorden >= 250000);
+    check('woorden-600k', totWoorden >= 600000);
+
+    // Gedrag
+    const uur = new Date().getHours();
+    const laatsteSessieVandaag = (stats.sessies || []).some(s => s.ts && new Date(s.ts).toDateString() === new Date().toDateString());
+    if (laatsteSessieVandaag) {
+      check('vroege-vogel', uur < 8);
+      check('nachtuil', uur >= 21);
+    }
+    const traindagen = (() => { try { return JSON.parse(localStorage.getItem('snellees_traindagen') || '[]'); } catch(e) { return []; } })();
+    const perWeekend = {};
+    traindagen.forEach(d => {
+      const dt = new Date(d + 'T12:00');
+      const dag = dt.getDay();
+      if (dag === 0 || dag === 6) {
+        const wk = (typeof _weekId === 'function') ? _weekId(dt) : d;
+        perWeekend[wk] = (perWeekend[wk] || 0) | (dag === 6 ? 1 : 2);
+      }
+    });
+    check('weekendlezer', Object.values(perWeekend).some(v => v === 3));
+    const gam = (typeof _gamLaad === 'function') ? _gamLaad() : {};
+    check('uitdaging-7', (gam.uitdagingenVoltooid || 0) >= 7);
+    check('app-install', !!gam.geinstalleerd ||
+      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches));
 
     // Lange teksten
     let ltData;
@@ -9711,6 +10092,10 @@ const _aiAdaptief = {
     _aiTts.sessieFeedback(wpm, n);
     const scherm = (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'rsvp';
     Coach.naSessie(scherm, wpm, n);
+    // Gamification: daguitdaging generiek afvangen + badges + dagdoel
+    if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging(scherm);
+    if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 600);
+    if (typeof updateDagdoelRing === 'function') updateDagdoelRing();
     // Analyse blijven vastleggen voor het coach-panel (zonder sliders aan te passen)
     setTimeout(() => {
       const r = _aiAdaptief.analyseer();
@@ -10437,6 +10822,47 @@ async function aiLangeTekstNieuwe() {
   // Init: coach-panelen op home direct vullen
   Coach.feedback.toonHome();
   Coach.planner.toonHome();
+})();
+
+// ── GAMIFICATION 2.0 HOOKS ──────────────────────────────────
+(function() {
+  // Level-up detecteren: updateSpelerIndicator draait na elke XP-wijziging
+  const _gamOrigIndicator = updateSpelerIndicator;
+  updateSpelerIndicator = function() {
+    _gamOrigIndicator();
+    if (!avProfiel) return;
+    const level = Math.floor((avProfiel.xp || 0) / 100) + 1;
+    const g = _gamLaad();
+    if (g.laatsteLevel === undefined) { _gamZet('laatsteLevel', level); return; }
+    if (level > g.laatsteLevel) {
+      _gamZet('laatsteLevel', level);
+      vierLevelUp(level);
+    } else if (level !== g.laatsteLevel) {
+      _gamZet('laatsteLevel', level); // profielwissel omlaag: stil bijwerken
+    }
+  };
+
+  // Home-panelen ook bij navigatie verversen
+  const _gamOrigNav = window.sidebarNav;
+  window.sidebarNav = function(screen) {
+    _gamOrigNav(screen);
+    if (screen === 'home') updateDagdoelRing();
+  };
+
+  // Eerste user-gesture: AudioContext alvast opwarmen (iOS)
+  document.addEventListener('pointerdown', function eenmalig() {
+    _geluid._init();
+    document.removeEventListener('pointerdown', eenmalig);
+  }, { once: true });
+
+  // Init
+  const g = _gamLaad();
+  const geluidBtn = document.getElementById('sidebar-geluid-btn');
+  if (geluidBtn) geluidBtn.textContent = _geluid.aan() ? '🔔 Geluid aan' : '🔕 Geluid uit';
+  updateDagdoelRing();
+  updateAppBadge();
+  setTimeout(checkStreakGevaar, 2500);
+  setTimeout(checkWeekRecap, 4000);
 })();
 
 </script>

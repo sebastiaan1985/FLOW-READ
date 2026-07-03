@@ -37,10 +37,11 @@ const SYNC_KEYS = [
   // (eenmalig in Supabase: alter table user_data add column if not exists extra jsonb;)
   'coach_state',            // Slimme Coach: doel-WPM per oefening, feedback-state
   'snellees_begrip_scores', // Begripscores (array, laatste 50)
+  'gamificatie',            // Streak-bevriezingen, dagdoel, recap, geluid
 ];
 
 // Keys die in payload.extra terechtkomen (nooit meer losse kolommen nodig)
-const EXTRA_KEYS = ['coach_state', 'snellees_begrip_scores'];
+const EXTRA_KEYS = ['coach_state', 'snellees_begrip_scores', 'gamificatie'];
 
 let _huidigeGebruiker = null;
 let _syncTimer = null;
