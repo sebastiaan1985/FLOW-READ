@@ -1,24 +1,47 @@
 /**
  * service-worker.js
- * SnelLees Trainer — PWA offline support
+ * SnelLees Trainer — PWA offline support (v4)
  *
- * Strategie:
+ * Alle assets zijn nu lokaal gehost (geen CDN meer):
  * - HTML-pagina's → Network First (altijd vers, cache als offline-fallback)
- * - JS/CSS app shell → Cache First (snel laden)
- * - Externe CDN-scripts → Stale-While-Revalidate
+ * - JS/CSS/fonts/iconen app shell → Cache First (snel laden, volledig offline)
  * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM    = 'snellees-v3';
-const CACHE_STATISCH = [
-  '/index.html',
-  '/supabase-sync.js',
-];
+const CACHE_NAAM = 'snellees-v4';
 
-const CACHE_CDN = [
-  'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
-  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Comic+Neue:wght@400;700&display=swap',
+const CACHE_STATISCH = [
+  '/',
+  '/index.html',
+  '/login.html',
+  '/reset-wachtwoord.html',
+  '/supabase-sync.js',
+  '/manifest.json',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
+  '/icons/icon-maskable-512.png',
+  '/icons/apple-touch-icon.png',
+  '/icons/favicon-32.png',
+  '/vendor/chart.umd.min.js',
+  '/vendor/supabase.min.js',
+  '/vendor/fonts.css',
+  '/vendor/fonts/4UaErEJDsxBrF37olUeD_xHM8pxULilENlY.woff2',
+  '/vendor/fonts/4UaHrEJDsxBrF37olUeD96rp57F2IwM.woff2',
+  '/vendor/fonts/OpenDyslexic-Bold.otf',
+  '/vendor/fonts/OpenDyslexic-Regular.otf',
+  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2',
+  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2',
+  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2',
+  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2',
+  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2',
+  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2',
+  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2',
+  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx3cwgknk-6nFg.woff2',
+  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwgknk-6nFg.woff2',
+  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwgknk-4.woff2',
+  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxPcwgknk-6nFg.woff2',
+  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxTcwgknk-6nFg.woff2',
+  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx_cwgknk-6nFg.woff2',
 ];
 
 // ── INSTALL: pre-cache app shell ─────────────────────────────
@@ -61,22 +84,6 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // CDN-scripts: Stale-While-Revalidate
-  if (CACHE_CDN.some(u => event.request.url.startsWith(u.split('/dist')[0]))) {
-    event.respondWith(
-      caches.open(CACHE_NAAM).then(cache =>
-        cache.match(event.request).then(cached => {
-          const netwerk = fetch(event.request).then(resp => {
-            cache.put(event.request, resp.clone());
-            return resp;
-          }).catch(() => cached);
-          return cached || netwerk;
-        })
-      )
-    );
-    return;
-  }
-
   // HTML-pagina's: Network First → altijd vers, cache als offline-fallback
   if (event.request.mode === 'navigate' ||
       (url.pathname.endsWith('.html') || url.pathname === '/')) {
@@ -91,7 +98,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Overige GET-bestanden (JS, CSS, fonts): Cache First met netwerk-fallback
+  // Overige GET-bestanden (JS, CSS, fonts, iconen): Cache First met netwerk-fallback
   if (event.request.method === 'GET') {
     event.respondWith(
       caches.match(event.request).then(cached => {

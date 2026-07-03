@@ -11,22 +11,25 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SnelLees">
 <link rel="manifest" href="manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<!-- Fonts lokaal gehost (geen CDN nodig, werkt offline) -->
+<link href="vendor/fonts.css" rel="stylesheet">
 <!-- Chart.js voor statistieken grafieken -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="vendor/chart.umd.min.js"></script>
 <!-- Supabase auth + sync (laadt vóór eigen scripts) -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="vendor/supabase.min.js"></script>
 <script src="supabase-sync.js"></script>
 <style>
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.otf') format('opentype');
-  font-weight: normal; font-style: normal;
+  src: url('vendor/fonts/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: normal; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Bold.otf') format('opentype');
-  font-weight: bold; font-style: normal;
+  src: url('vendor/fonts/OpenDyslexic-Bold.otf') format('opentype');
+  font-weight: bold; font-style: normal; font-display: swap;
 }
 /* ── RESET & BASE ─────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -66,6 +69,9 @@ header {
   align-items: center;
   gap: 14px;
   padding: 12px 20px;
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  padding-left: calc(20px + env(safe-area-inset-left, 0px));
+  padding-right: calc(20px + env(safe-area-inset-right, 0px));
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   position: sticky; top: 0; z-index: 100;
@@ -103,6 +109,8 @@ header {
   display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden;
   box-shadow: none;
   transform: translateX(-100%);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
 }
 .sidebar.open { transform: translateX(0); box-shadow: 8px 0 30px rgba(0,0,0,.3); }
 
@@ -1669,6 +1677,52 @@ main { -webkit-overflow-scrolling: touch; }
   border-radius: 999px; padding: 1px 5px; min-width: 16px; text-align: center;
 }
 
+/* ── PWA INSTALLATIE ─────────────────────────────────────── */
+.installeer-banner {
+  display: flex; align-items: center; gap: 12px;
+  background: linear-gradient(135deg, rgba(124,111,247,.14), rgba(76,201,240,.10));
+  border: 1px solid rgba(124,111,247,.35); border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 20px; position: relative;
+}
+.installeer-banner-icon { font-size: 1.9rem; flex-shrink: 0; }
+.installeer-banner-tekst { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.installeer-banner-tekst b { font-size: .92rem; }
+.installeer-banner-tekst span { font-size: .78rem; color: var(--muted); }
+.installeer-banner-knop {
+  flex-shrink: 0; padding: 9px 18px; border: none; border-radius: 10px;
+  background: var(--accent); color: #fff; font-weight: 700; font-size: .85rem;
+  cursor: pointer; font-family: inherit;
+}
+.installeer-banner-sluit {
+  position: absolute; top: 6px; right: 8px; border: none; background: none;
+  color: var(--muted); cursor: pointer; font-size: 13px; padding: 4px;
+}
+.ios-installeer-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(8,8,26,.75); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  align-items: flex-end; justify-content: center;
+}
+.ios-installeer-overlay.open { display: flex; }
+.ios-installeer-kaart {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px 20px 0 0; padding: 26px 22px calc(26px + env(safe-area-inset-bottom, 0px));
+  width: 100%; max-width: 480px; animation: slideUp .3s ease;
+}
+.ios-installeer-kaart h3 { margin: 0 0 6px; font-size: 1.1rem; }
+.ios-installeer-kaart p { margin: 0 0 16px; color: var(--muted); font-size: .88rem; }
+.ios-stap { display: flex; align-items: center; gap: 12px; padding: 10px 0; font-size: .92rem; }
+.ios-stap .nr {
+  width: 26px; height: 26px; border-radius: 50%; background: rgba(124,111,247,.2);
+  color: var(--accent); font-weight: 700; font-size: .8rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ios-stap .sym { font-size: 1.2rem; }
+.ios-installeer-sluit {
+  width: 100%; margin-top: 16px; padding: 12px; border: 1px solid var(--border2);
+  border-radius: 12px; background: transparent; color: var(--text);
+  font-weight: 600; cursor: pointer; font-family: inherit; font-size: .9rem;
+}
+
 /* ── FASE 3: TRAINEN SCREEN ───────────────────────────────── */
 .tr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 4px; }
 .tr-kaart {
@@ -1837,6 +1891,7 @@ main { -webkit-overflow-scrolling: touch; }
   </nav>
 
   <div class="sidebar-bottom">
+    <button id="sidebar-installeer-btn" onclick="_installatie.start()" style="display:none;color:var(--accent)">📲 Installeer de app</button>
     <button class="ai-tts-toggle" id="sidebar-tts-btn" onclick="aiTtsToggle()">🔊 AI Coach spraak</button>
     <button id="sidebar-kids-btn" onclick="toggleKids()">🎨 Kids modus</button>
     <button id="sidebar-dyx-btn" onclick="dyxOpenPanel();sluitSidebar()">🔤 Dyslexie instellingen</button>
@@ -1856,6 +1911,18 @@ main { -webkit-overflow-scrolling: touch; }
     <button onclick="toon('dyslexie', this)"><span class="icon">🌈</span> Dyslexie Spel</button>
     <button onclick="toon('avontuur', this)"><span class="icon">🗺️</span> <b>Leesavontuur</b></button>
 </nav>
+
+<!-- iOS installatie-instructies -->
+<div class="ios-installeer-overlay" id="ios-installeer-overlay" onclick="if(event.target===this)_installatie.sluitIos()">
+  <div class="ios-installeer-kaart">
+    <h3>📲 Zet SnelLees op je beginscherm</h3>
+    <p>Zo gebruik je SnelLees als echte app — fullscreen en offline:</p>
+    <div class="ios-stap"><span class="nr">1</span> Tik onderin Safari op <span class="sym">⎋</span> <b>Deel</b></div>
+    <div class="ios-stap"><span class="nr">2</span> Kies <span class="sym">➕</span> <b>Zet op beginscherm</b></div>
+    <div class="ios-stap"><span class="nr">3</span> Tik rechtsboven op <b>Voeg toe</b></div>
+    <button class="ios-installeer-sluit" onclick="_installatie.sluitIos()">Begrepen!</button>
+  </div>
+</div>
 
 <!-- Kleur-overlay -->
 <div id="dyx-overlay"></div>
@@ -2106,6 +2173,17 @@ main { -webkit-overflow-scrolling: touch; }
     <button onclick="sidebarNav('leerweg')" style="display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#a78bfa);border:none;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,111,247,.4);font-family:Inter,sans-serif">
       📚 Volg de 4-weken Leerweg →
     </button>
+  </div>
+
+  <!-- Installatie-banner (alleen zichtbaar in browser, niet in geïnstalleerde app) -->
+  <div class="installeer-banner" id="installeer-banner" style="display:none">
+    <div class="installeer-banner-icon">📲</div>
+    <div class="installeer-banner-tekst">
+      <b>Zet SnelLees op je beginscherm</b>
+      <span>Als echte app — snel, fullscreen en offline te gebruiken.</span>
+    </div>
+    <button class="installeer-banner-knop" onclick="_installatie.start()">Installeer</button>
+    <button class="installeer-banner-sluit" onclick="_installatie.verbergBanner()" aria-label="Sluiten">✕</button>
   </div>
 
   <!-- AI Coach advies panel -->
@@ -8454,6 +8532,98 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.warn('[PWA] Service worker registratie mislukt:', err));
   });
 }
+
+// ═══════════════════════════════════════════════════════════
+// 📲  PWA — Installatie-flow (Android prompt + iOS instructies)
+// ═══════════════════════════════════════════════════════════
+const _installatie = {
+  _prompt: null,
+
+  isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;
+  },
+
+  isIos() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent)
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  },
+
+  init() {
+    if (this.isStandalone()) return; // al geïnstalleerd — niets tonen
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      this._prompt = e;
+      this.toonKnoppen();
+    });
+
+    window.addEventListener('appinstalled', () => {
+      this._prompt = null;
+      this.verbergKnoppen();
+      localStorage.removeItem('installatie_hint');
+    });
+
+    // iOS heeft geen beforeinstallprompt — toon daar altijd de knoppen
+    if (this.isIos()) this.toonKnoppen();
+  },
+
+  toonKnoppen() {
+    const sbBtn = document.getElementById('sidebar-installeer-btn');
+    if (sbBtn) sbBtn.style.display = '';
+    // Banner max. 3× weggeklikt tonen (device-lokaal, niet syncen)
+    const afgewezen = parseInt(localStorage.getItem('installatie_hint') || '0', 10);
+    const banner = document.getElementById('installeer-banner');
+    if (banner && afgewezen < 3) banner.style.display = '';
+  },
+
+  verbergKnoppen() {
+    const sbBtn = document.getElementById('sidebar-installeer-btn');
+    const banner = document.getElementById('installeer-banner');
+    if (sbBtn) sbBtn.style.display = 'none';
+    if (banner) banner.style.display = 'none';
+  },
+
+  verbergBanner() {
+    const banner = document.getElementById('installeer-banner');
+    if (banner) banner.style.display = 'none';
+    const n = parseInt(localStorage.getItem('installatie_hint') || '0', 10);
+    localStorage.setItem('installatie_hint', String(n + 1));
+  },
+
+  async start() {
+    sluitSidebar();
+    if (this._prompt) {
+      this._prompt.prompt();
+      const keuze = await this._prompt.userChoice;
+      if (keuze.outcome === 'accepted') this.verbergKnoppen();
+      this._prompt = null;
+      return;
+    }
+    if (this.isIos()) {
+      document.getElementById('ios-installeer-overlay')?.classList.add('open');
+      return;
+    }
+    alert('Open het browsermenu (⋮) en kies "App installeren" of "Toevoegen aan startscherm".');
+  },
+
+  sluitIos() {
+    document.getElementById('ios-installeer-overlay')?.classList.remove('open');
+  }
+};
+_installatie.init();
+
+// ── App-shortcuts uit manifest.json (/?actie=...) ───────────
+(function() {
+  const actie = new URLSearchParams(location.search).get('actie');
+  if (!actie) return;
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (actie === 'uitdaging' && typeof vandaagUitdagingOpen === 'function') vandaagUitdagingOpen();
+      else if (actie === 'trainen') sidebarNav('trainen');
+    }, 300);
+  });
+})();
 
 // ═══════════════════════════════════════════════════════════
 // 🛡️  ERROR BOUNDARIES — kritieke functies wrappen
