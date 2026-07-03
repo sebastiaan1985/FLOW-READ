@@ -22,6 +22,8 @@
 <script src="supabase-sync.js"></script>
 <!-- Tekstbibliotheek (gegenereerd door scripts/bouw-teksten.mjs) -->
 <script src="teksten.js"></script>
+<!-- Slimme Leescoach (offline, geen API-key nodig) -->
+<script src="coach.js"></script>
 <style>
 @font-face {
   font-family: 'OpenDyslexic';
@@ -2188,11 +2190,14 @@ main { -webkit-overflow-scrolling: touch; }
     <button class="installeer-banner-sluit" onclick="_installatie.verbergBanner()" aria-label="Sluiten">✕</button>
   </div>
 
-  <!-- AI Coach advies panel -->
+  <!-- Leescoach panel (werkt offline; met AI-key komt er AI-advies bij) -->
   <div class="ai-coach-panel" id="ai-coach-panel">
-    <div class="ai-coach-header">🤖 AI Leescoach</div>
+    <div class="ai-coach-header">🧠 Leescoach</div>
     <div class="ai-coach-body" id="ai-coach-body"></div>
   </div>
+
+  <!-- Aanbevolen oefening (Coach.planner) -->
+  <div id="coach-aanbeveling" style="margin-bottom:14px"></div>
 
   <!-- Snelle toegang kaarten -->
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px">
@@ -4121,8 +4126,11 @@ function controleerBegrip() {
     });
     if (gekozen && gekozen.value === v.correct) goed++;
   });
+  const begripPct = Math.round(goed / vragen.length * 100);
   document.getElementById('begrip-score').innerHTML =
-    `<span class="score-badge">${goed}/${vragen.length} correct — ${Math.round(goed/vragen.length*100)}%</span>`;
+    `<span class="score-badge">${goed}/${vragen.length} correct — ${begripPct}%</span>`;
+  const actiefScherm = (document.querySelector('.screen.active')?.id || '').replace('screen-', '');
+  Coach.registreerBegrip(begripPct, actiefScherm || 'rsvp');
 }
 function shuffle(a) { return [...a].sort(() => Math.random() - .5); }
 
@@ -4769,7 +4777,7 @@ function tekenGrafieken() {
 }
 
 function slaaSessieOp(wpm, n) {
-  stats.sessies.push({ datum: new Date().toLocaleString('nl-NL'), wpm, woorden: n });
+  stats.sessies.push({ datum: new Date().toLocaleString('nl-NL'), ts: Date.now(), wpm, woorden: n });
   stats.totaalWoorden += n;
   if (wpm > stats.bestWpm) stats.bestWpm = wpm;
   localStorage.setItem('snellees_stats', JSON.stringify(stats));
@@ -8234,6 +8242,7 @@ function leestestVerzend() {
 
   document.getElementById('lt-res-wpm').textContent = wpm;
   document.getElementById('lt-res-score').textContent = `${score} / ${vragen.length} (${pct}%)`;
+  Coach.registreerBegrip(pct, 'leestest');
   const feedback = score === vragen.length ? '🏆 Perfect! Uitstekend begrip!' :
     score >= vragen.length * 0.75 ? '✅ Goed begrip!' :
     score >= vragen.length * 0.5 ? '📖 Redelijk begrip — oefen meer!' :
@@ -8795,6 +8804,7 @@ function lttVerzend() {
 
   // Sla op in gewone stats + niveau systeem
   slaaSessieOp(_lttWpm, woorden(_lttTekst.tekst).length);
+  Coach.registreerBegrip(begrip_pct, 'langetekst');
   const niveauResult = lttSlaOp(_lttWpm, begrip_pct);
 
   // Score kaart
@@ -9692,12 +9702,20 @@ const _aiAdaptief = {
 
 // ── AI HOOKS ────────────────────────────────────────────────
 (function() {
-  // Hook slaaSessieOp voor TTS + adaptief
+  // Hook slaaSessieOp voor TTS + Coach (adaptieve moeilijkheid)
+  // Let op: sliders worden door Coach.adaptief gezet bij het openen van een
+  // scherm — _aiAdaptief.pasAan() muteert ze niet meer (dubbel systeem).
   const _aiOrigSessie = slaaSessieOp;
   slaaSessieOp = function(wpm, n) {
     _aiOrigSessie(wpm, n);
     _aiTts.sessieFeedback(wpm, n);
-    setTimeout(() => _aiAdaptief.pasAan(), 2000);
+    const scherm = (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'rsvp';
+    Coach.naSessie(scherm, wpm, n);
+    // Analyse blijven vastleggen voor het coach-panel (zonder sliders aan te passen)
+    setTimeout(() => {
+      const r = _aiAdaptief.analyseer();
+      if (r) localStorage.setItem('ai_laatste_analyse', JSON.stringify({ ...r, datum: new Date().toISOString() }));
+    }, 1500);
   };
   
   // Hook navigatie voor training tips
@@ -9923,8 +9941,18 @@ Antwoord ALLEEN in dit exacte JSON format, geen andere tekst:
 // Globale functie voor onclick
 async function aiBegripGenStart() {
   const btn = document.getElementById('ai-begrip-gen-btn');
+
+  // Bibliotheektekst? Dan hebben we de vragen al — geen AI-key nodig.
+  const bibVragen = Coach.vragen.voorHuidigeTekst();
+  if (bibVragen) {
+    vragen = bibVragen;
+    toonBegrip();
+    _aiTts.spreek('Hier zijn drie vragen over de tekst.');
+    return;
+  }
+
   if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
-  
+
   // Huidige tekst ophalen
   const tekst = huidigeTekst();
   if (!tekst || tekst.length < 50) {
@@ -9932,7 +9960,7 @@ async function aiBegripGenStart() {
     if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Vragen'; }
     return;
   }
-  
+
   const result = await _aiBegripGen.genereer(tekst);
 
   if (result) {
@@ -10372,6 +10400,43 @@ async function aiLangeTekstNieuwe() {
     setTimeout(() => _aiTekstGen.prefetch('subvocalisatie', 2), 13000);
     setTimeout(() => _aiTekstGen.prefetch('regressie', 2), 18000);
   }
+})();
+
+// ── SLIMME COACH HOOKS (offline, geen key nodig) ────────────
+(function() {
+  // Bij scherm-wissel: sliders op adaptief doeltempo + home-panelen verversen
+  const _coachOrigNav = window.sidebarNav;
+  window.sidebarNav = function(screen) {
+    _coachOrigNav(screen);
+    if (screen === 'home') {
+      Coach.feedback.toonHome();
+      Coach.planner.toonHome();
+    }
+    if (screen === 'rsvp') {
+      const slider = document.getElementById('wpm-slider');
+      if (slider && !slider.dataset.handmatig) {
+        slider.value = Math.min(+slider.max, Math.max(+slider.min, Coach.adaptief.doelWpm('rsvp')));
+        slider.dispatchEvent(new Event('input'));
+      }
+    }
+    if (screen === 'chunk') {
+      const slider = document.getElementById('chunk-wpm');
+      if (slider && !slider.dataset.handmatig) {
+        slider.value = Math.min(+slider.max, Math.max(+slider.min, Coach.adaptief.doelWpm('chunk')));
+        slider.dispatchEvent(new Event('input'));
+      }
+    }
+  };
+
+  // Handmatige slider-aanpassing respecteren voor de rest van de sessie
+  ['wpm-slider', 'chunk-wpm'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('pointerdown', () => { el.dataset.handmatig = '1'; });
+  });
+
+  // Init: coach-panelen op home direct vullen
+  Coach.feedback.toonHome();
+  Coach.planner.toonHome();
 })();
 
 </script>

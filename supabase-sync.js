@@ -33,7 +33,14 @@ const SYNC_KEYS = [
   'snellees_niveau',        // Adaptief leesniveau (Starter/Gevorderd/Expert)
   'snellees_achievements',  // Behaalde achievements (array van IDs)
   'snellees_traindagen',    // Streakdatums (array van ISO-datumstrings)
+  // ── Nieuwe keys: gaan als sub-velden in de jsonb-kolom `extra` ──
+  // (eenmalig in Supabase: alter table user_data add column if not exists extra jsonb;)
+  'coach_state',            // Slimme Coach: doel-WPM per oefening, feedback-state
+  'snellees_begrip_scores', // Begripscores (array, laatste 50)
 ];
+
+// Keys die in payload.extra terechtkomen (nooit meer losse kolommen nodig)
+const EXTRA_KEYS = ['coach_state', 'snellees_begrip_scores'];
 
 let _huidigeGebruiker = null;
 let _syncTimer = null;
@@ -116,6 +123,19 @@ async function _laadVanCloud() {
   if (data.snellees_achievements) localStorage.setItem('snellees_achievements', JSON.stringify(data.snellees_achievements));
   if (data.snellees_traindagen)   localStorage.setItem('snellees_traindagen',   JSON.stringify(data.snellees_traindagen));
   if (data.daily_challenge)       localStorage.setItem('daily_challenge',       JSON.stringify(data.daily_challenge));
+
+  // ── Extra (jsonb): nieuwe keys zonder schema-wijzigingen ──
+  if (data.extra && typeof data.extra === 'object') {
+    for (const key of EXTRA_KEYS) {
+      if (data.extra[key] !== undefined && data.extra[key] !== null) {
+        localStorage.setItem(key, JSON.stringify(data.extra[key]));
+      }
+    }
+    // tekst_actief als string (kan 'b:<id>' zijn — de int-kolom kan dat niet aan)
+    if (typeof data.extra.tekst_actief_raw === 'string') {
+      localStorage.setItem('tekst_actief', data.extra.tekst_actief_raw);
+    }
+  }
 }
 
 // ── DATA OPSLAAN NAAR SUPABASE ────────────────────────────────────────────────
@@ -143,7 +163,7 @@ async function _syncNuNaarCloud() {
     dyx_settings:         lsJson('dyx_settings',        {}),
     kids_modus:           localStorage.getItem('kids_modus') === '1',
     bt_laatste_passage:   parseInt(localStorage.getItem('bt_laatste_passage') ?? '-1'),
-    tekst_actief:         parseInt(localStorage.getItem('tekst_actief') ?? '0'),
+    tekst_actief:         parseInt(localStorage.getItem('tekst_actief') ?? '0') || 0, // 'b:<id>' → 0; echte waarde zit in extra.tekst_actief_raw
     av_actief:            parseInt(localStorage.getItem('av_actief') ?? '-1'),
     // ── Fase 1–4 velden ──────────────────────────────────────
     snellees_gebruiker:   lsJson('snellees_gebruiker',    null),
@@ -154,8 +174,24 @@ async function _syncNuNaarCloud() {
     updated_at:           new Date().toISOString(),
   };
 
-  await _sb.from('user_data').upsert(payload, { onConflict: 'id' });
+  // ── Extra (jsonb): alle nieuwe keys in één kolom ──
+  const extra = { tekst_actief_raw: localStorage.getItem('tekst_actief') || '0' };
+  for (const key of EXTRA_KEYS) extra[key] = lsJson(key, null);
+  payload.extra = extra;
+
+  const { error } = await _sb.from('user_data').upsert(payload, { onConflict: 'id' });
+  if (error && /extra/.test(error.message || '')) {
+    // Kolom `extra` bestaat nog niet — sync de rest zodat er niets verloren gaat.
+    if (!_extraKolomWaarschuwing) {
+      console.warn('[Sync] Kolom `extra` ontbreekt in Supabase. Voer eenmalig uit in de SQL editor:\n' +
+        '  alter table user_data add column if not exists extra jsonb;');
+      _extraKolomWaarschuwing = true;
+    }
+    delete payload.extra;
+    await _sb.from('user_data').upsert(payload, { onConflict: 'id' });
+  }
 }
+let _extraKolomWaarschuwing = false;
 
 // ── UITLOGGEN ────────────────────────────────────────────────────────────────
 async function uitloggen() {
