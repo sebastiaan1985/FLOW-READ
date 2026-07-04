@@ -1690,25 +1690,49 @@ main { -webkit-overflow-scrolling: touch; }
   border-radius: 999px; padding: 1px 5px; min-width: 16px; text-align: center;
 }
 
-/* ── FOCUS-MODUS: alles weg behalve de oefening ──────────── */
+/* ── FOCUS-MODUS: fullscreen leesscherm (design variant B) ── */
+body.focus-modus { background: #0f0f1a; }
 body.focus-modus header,
 body.focus-modus .bottom-nav,
 body.focus-modus #daguitdaging-banner,
 body.focus-modus .page-title,
-body.focus-modus .page-sub { display: none !important; }
-body.focus-modus main { padding-top: calc(16px + env(safe-area-inset-top, 0px)); }
+body.focus-modus .page-sub,
+body.focus-modus .controls-panel,
+body.focus-modus .btn-row,
+body.focus-modus #begrip-section { display: none !important; }
+/* main vult het hele scherm en centreert het woord */
+body.focus-modus main {
+  position: fixed; inset: 0; z-index: 350; margin: 0;
+  display: flex; flex-direction: column;
+  padding: calc(64px + env(safe-area-inset-top,0px)) 24px calc(44px + env(safe-area-inset-bottom,0px));
+  background: #0f0f1a;
+}
+body.focus-modus .screen.active { flex: 1; display: flex; flex-direction: column; }
+/* leesvlak: neemt alle ruimte, woord gigantisch gecentreerd */
 body.focus-modus #rsvp-display,
-body.focus-modus #chunk-display { min-height: 55vh; }
-body.focus-modus #rsvp-word { font-size: 2em; }
-body.focus-modus #chunk-tekst { font-size: 1.5em; }
+body.focus-modus #chunk-display {
+  flex: 1; min-height: 0; border: none; background: none; margin: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+body.focus-modus #rsvp-word { font-size: clamp(38px, 13vw, 52px); font-weight: 800; letter-spacing: -1.5px; }
+body.focus-modus #chunk-tekst { font-size: clamp(26px, 8vw, 38px); font-weight: 800; letter-spacing: -.5px; }
+body.focus-modus #rsvp-orp { display: none; }
+/* live WPM (cyaan) boven een dunne gradient-voortgangsbalk */
+body.focus-modus .progress-labels { justify-content: flex-end; margin: 0 0 12px; }
+body.focus-modus .progress-labels span:first-child { display: none; }
+body.focus-modus .progress-labels span:last-child { color: transparent; font-size: 0; }
+body.focus-modus .progress-labels #rsvp-wpm-live { color: #4cc9f0; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+body.focus-modus .progress-wrap { height: 3px; background: rgba(255,255,255,.09); }
+body.focus-modus .progress-fill { background: linear-gradient(90deg,#7c6ff7,#a78bfa) !important; }
 .focus-exit {
   display: none; position: fixed; z-index: 400;
-  top: calc(14px + env(safe-area-inset-top, 0px)); right: 14px;
-  width: 40px; height: 40px; border-radius: 50%;
-  border: 1px solid var(--border2); background: rgba(20,20,40,.8);
-  color: var(--muted); font-size: 16px; cursor: pointer;
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  top: calc(58px + env(safe-area-inset-top, 0px)); right: 18px;
+  width: 36px; height: 36px; border-radius: 999px;
+  border: none; background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.7); font-size: 15px; cursor: pointer;
+  transition: background .2s;
 }
+.focus-exit:hover { background: rgba(255,255,255,.12); }
 body.focus-modus .focus-exit { display: flex; align-items: center; justify-content: center; }
 #rsvp-display, #chunk-display { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 
@@ -2051,6 +2075,93 @@ button:active { transform: scale(.96); }
 #screen-home .home-kaart-titel { font-size: 13.5px; font-weight: 600; }
 #screen-home .home-kaart-sub { font-size: 11.5px; margin-top: 3px; }
 #screen-home .home-sectiekop { margin: 4px 2px 10px; }
+
+/* ══════════════════════════════════════════════════════════
+   🦊  KIDS-VARIANT (design variant C) — vos, ballon, XP, cyaan
+   ══════════════════════════════════════════════════════════ */
+.kids-hero { display: none; position: relative; padding: 8px 2px 2px; margin-bottom: 14px; }
+body.kids .kids-hero { display: block; }
+.kids-hero-glow {
+  position: absolute; top: -36px; left: -24px; width: 290px; height: 200px;
+  background: radial-gradient(closest-side, rgba(76,201,240,.22), transparent 70%); pointer-events: none;
+}
+.kids-hero-top { position: relative; display: flex; align-items: center; gap: 14px; }
+.kids-vos { width: 88px; height: 88px; flex: none; filter: drop-shadow(0 6px 16px rgba(255,122,107,.25)); }
+.kids-vos-hup { animation: vosHup 1.6s ease-in-out 2; }
+@keyframes vosHup { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(-3deg); } }
+.kids-vos:active { transform: scale(.92); transition: transform .1s; }
+.kids-bubble {
+  background: #16162a; border: 1px solid rgba(255,255,255,.09);
+  border-radius: 18px 18px 18px 4px; padding: 11px 15px;
+  font-size: 16px; font-weight: 800; letter-spacing: -.3px; line-height: 1.3;
+}
+.kids-xp {
+  position: relative; margin-top: 14px; background: #16162a;
+  border: 1px solid rgba(255,255,255,.07); border-radius: 20px; padding: 16px;
+}
+.kids-xp-kop { display: flex; align-items: baseline; justify-content: space-between; }
+.kids-xp-level { font-size: 12px; font-weight: 800; letter-spacing: .4px; color: #ff8f5e; }
+.kids-xp-getal { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.6); }
+.kids-xp-getal b { color: #fff; font-weight: 800; }
+.kids-xp-track { margin-top: 9px; height: 10px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+.kids-xp-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg,#ff8f5e,#4cc9f0); transition: width .6s ease; width: 0; }
+
+/* In kids-modus: verberg de volwassen-hero-tekst, toon de vos-hero i.p.v. */
+body.kids #screen-home .vandaag-panel { background: none; border: none; padding: 0; margin-bottom: 14px; }
+body.kids #screen-home .vandaag-panel::before { display: none; }
+body.kids #screen-home .vandaag-header { display: none; }
+/* Uitdaging → speelse cyaan "MISSIE" met rondere hoeken */
+body.kids #screen-home .vandaag-uitdaging {
+  background: linear-gradient(135deg,#132c3a,#16162a 65%);
+  border: 1px solid rgba(76,201,240,.4); border-radius: 22px; padding: 18px 16px;
+  box-shadow: 0 0 26px rgba(76,201,240,.12);
+}
+body.kids #screen-home .vandaag-uitd-label { color: #4cc9f0; }
+body.kids #screen-home .vandaag-uitd-naam { font-size: 15.5px; font-weight: 800; }
+body.kids #screen-home .vandaag-uitd-icon { background: linear-gradient(135deg,#4cc9f0,#7c6ff7); }
+/* Rondere kaarten in kids-modus */
+body.kids #screen-home .lw-kaart,
+body.kids #screen-home .ai-coach-panel,
+body.kids #screen-home .aanbevolen-kaart,
+body.kids #screen-home .eerste-stappen { border-radius: 22px; }
+body.kids #screen-home .home-kaart { border-radius: 20px; }
+body.kids .lw-cta { background: linear-gradient(135deg,#4cc9f0,#7c6ff7); }
+
+/* Kids-thema is LICHT (wit + regenboog) — maak de home-kaarten licht en
+   leesbaar, met behoud van de speelse vos/cyaan/koraal-accenten */
+body.kids .kids-hero-glow { background: radial-gradient(closest-side, rgba(76,201,240,.28), transparent 70%); }
+body.kids .kids-bubble { background: #fff; border-color: rgba(0,0,0,.08); color: #1a1a3a; }
+body.kids .kids-xp { background: #fff; border-color: rgba(0,0,0,.07); }
+body.kids .kids-xp-track { background: rgba(0,0,0,.08); }
+body.kids .kids-xp-getal { color: #7a7a9a; }
+body.kids .kids-xp-getal b { color: #1a1a3a; }
+body.kids #screen-home .vandaag-uitdaging {
+  background: linear-gradient(135deg,#e8f8ff,#ffffff 70%);
+  border-color: rgba(76,201,240,.5); box-shadow: 0 4px 16px rgba(76,201,240,.15);
+}
+body.kids #screen-home .vandaag-uitd-naam { color: #1a1a3a; }
+body.kids #screen-home .vandaag-uitd-status { color: #4cc9f0; }
+body.kids #screen-home .lw-kaart,
+body.kids #screen-home .ai-coach-panel,
+body.kids #screen-home .aanbevolen-kaart,
+body.kids #screen-home .home-kaart {
+  background: #fff; border-color: rgba(0,0,0,.07);
+}
+body.kids #screen-home .sectie-label { color: #9a7ac0; }
+body.kids #screen-home .lw-kop-rechts,
+body.kids #screen-home .lw-kop-rechts b,
+body.kids #screen-home .ai-coach-body,
+body.kids #screen-home .home-kaart-titel,
+body.kids #screen-home .ab-titel { color: #1a1a3a; }
+body.kids #screen-home .home-kaart-sub,
+body.kids #screen-home .ab-sub { color: #7a7a9a; }
+body.kids #screen-home .home-kaart-icon svg { stroke: #6a5a9a; }
+body.kids #screen-home .lw-node { background: #fff; border-color: rgba(0,0,0,.15); }
+body.kids #screen-home .lw-node.gedaan { background: #4cc9f0; border-color: #4cc9f0; }
+body.kids #screen-home .lw-node.nu { background: #fff; border-color: #7c6ff7; }
+body.kids #screen-home .lw-verbinding { background: rgba(0,0,0,.1); }
+body.kids #screen-home .lw-verbinding.gedaan { background: #4cc9f0; }
+body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 </style>
 </head>
 <body>
@@ -2416,6 +2527,34 @@ button:active { transform: scale(.96); }
 </div>
 
 <div id="screen-home" class="screen active">
+  <!-- Kids-hero: vos-mascotte + tekstballon + XP-balk (alleen in kids-modus) -->
+  <div class="kids-hero" id="kids-hero">
+    <div class="kids-hero-glow"></div>
+    <div class="kids-hero-top">
+      <svg class="kids-vos" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M11 5 L26 18 L8 26 Z" fill="#ff8f5e"/>
+        <path d="M53 5 L38 18 L56 26 Z" fill="#ff8f5e"/>
+        <path d="M14 8 L24 17 L12 22 Z" fill="#c2542f"/>
+        <path d="M50 8 L40 17 L52 22 Z" fill="#c2542f"/>
+        <path d="M8 24 Q8 46 32 58 Q56 46 56 24 Q44 15 32 17 Q20 15 8 24 Z" fill="#ff8f5e"/>
+        <path d="M20 42 Q32 40 44 42 Q40 54 32 58 Q24 54 20 42 Z" fill="#ffe9dc"/>
+        <circle cx="23.5" cy="32" r="3.2" fill="#1b1b2e"/>
+        <circle cx="40.5" cy="32" r="3.2" fill="#1b1b2e"/>
+        <circle cx="24.7" cy="30.8" r="1" fill="#fff"/>
+        <circle cx="41.7" cy="30.8" r="1" fill="#fff"/>
+        <path d="M28.5 45.5 Q32 48.5 35.5 45.5 L32 42.5 Z" fill="#1b1b2e"/>
+      </svg>
+      <div class="kids-bubble" id="kids-bubble">Hoi! Klaar om te lezen? 🚀</div>
+    </div>
+    <div class="kids-xp">
+      <div class="kids-xp-kop">
+        <span class="kids-xp-level" id="kids-xp-level">LEVEL 1 · WOORDVOS</span>
+        <span class="kids-xp-getal"><b id="kids-xp-nu">0</b><span id="kids-xp-max">/100 XP</span></span>
+      </div>
+      <div class="kids-xp-track"><div class="kids-xp-fill" id="kids-xp-fill"></div></div>
+    </div>
+  </div>
+
   <!-- Vandaag Panel -->
   <div class="vandaag-panel" id="vandaag-panel">
     <div class="vandaag-header">
@@ -5926,6 +6065,14 @@ function kidsToepassen() {
       else { b.innerHTML = ''; b.appendChild(icon); b.append(' ' + lbl.nav); }
     }
   });
+  // "Uitdaging" heet "Missie" voor kinderen
+  const uitdLabel = document.querySelector('#screen-home .vandaag-uitd-label');
+  if (uitdLabel) uitdLabel.textContent = kidsModus ? 'Missie van de dag' : 'Uitdaging van de dag';
+
+  // Kids-hero (vos + XP) meteen vullen (try: kan tijdens vroege init draaien
+  // vóór late const-initialisatie — dan pakt de reguliere init het later op)
+  try { updateVandaagPanel(); } catch (e) { /* vroege init */ }
+
   // Profiel modus ook updaten bij kids toggle
   if (typeof pasProfielModusToe === 'function') pasProfielModusToe();
 }
@@ -9286,8 +9433,42 @@ function updateVandaagPanel() {
   // Streak badge updaten
   updateStreakBadge();
 
+  // Kids-hero (vos-mascotte + XP-balk) bijwerken
+  _updateKidsHero(naam, streak);
+
   // Dagelijkse uitdaging tonen
   _updateVandaagUitdaging();
+}
+
+const _WOORDVOS_TITELS = ['Woordvos', 'Snelsnuffel', 'Leesheld', 'Bladzijdebaas', 'Turbolezer', 'Leesraket'];
+
+function _updateKidsHero(naam, streak) {
+  if (!document.body.classList.contains('kids')) return;
+  const bubbel = document.getElementById('kids-bubble');
+  const vos = document.querySelector('.kids-vos');
+  if (vos) vos.classList.add('kids-vos-hup');
+  // Speelse begroeting via de vos
+  if (bubbel) {
+    const nm = naam || 'kanjer';
+    const d = streak.dagen || 0;
+    let zin;
+    if (d >= 7) zin = `Hoi ${nm}! ${d} dagen op rij — je bent niet te stoppen! 🔥`;
+    else if (d >= 3) zin = `Hoi ${nm}! Dag ${d} al — je vliegt door de woorden! 🚀`;
+    else if (d >= 1) zin = `Hoi ${nm}! Klaar voor dag ${d}? Kom op! ⚡`;
+    else zin = `Hoi ${nm}! Zullen we samen lezen? 🦊`;
+    bubbel.textContent = zin;
+  }
+  // XP-balk uit avontuurprofiel
+  const xp = (typeof avProfiel !== 'undefined' && avProfiel) ? (avProfiel.xp || 0) : 0;
+  const level = Math.floor(xp / 100) + 1;
+  const inLevel = xp % 100;
+  const titel = _WOORDVOS_TITELS[(level - 1) % _WOORDVOS_TITELS.length];
+  const zet = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  zet('kids-xp-level', `LEVEL ${level} · ${titel.toUpperCase()}`);
+  zet('kids-xp-nu', inLevel);
+  zet('kids-xp-max', '/100 XP');
+  const fill = document.getElementById('kids-xp-fill');
+  if (fill) fill.style.width = inLevel + '%';
 }
 
 const _UITD_ICONEN = { rsvp:'⚡', chunk:'📖', oog:'👁', dyslexie:'🌈', papier:'📄', perifeer:'🔭', begintest:'🎯', langetekst:'📚' };
