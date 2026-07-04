@@ -1121,6 +1121,11 @@ body.kids .oog-timer-num { color:#ff6b6b; }
   .speler-xp-mini { display: none !important; }
   .speler-indicator { padding: 5px 8px 5px 6px; }
 }
+/* Extra smal (≤360px, o.a. iPhone SE): streak staat al in de header-chip —
+   verberg de dubbele badge in de hero zodat ring + badge niet knellen */
+@media (max-width: 360px) {
+  #screen-home .streak-badge { display: none; }
+}
 .speler-avatar { font-size: 1.2rem; line-height: 1; }
 .speler-naam { font-size: 12px; font-weight: 600; color: #e07000; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
 .speler-streak { font-size: 11px; font-weight: 700; color: #e07000; white-space: nowrap; }
@@ -1688,6 +1693,15 @@ main { -webkit-overflow-scrolling: touch; }
   position: absolute; top: 8px; right: calc(50% - 20px);
   background: #ef4444; color: #fff; font-size: .6rem; font-weight: 700;
   border-radius: 999px; padding: 1px 5px; min-width: 16px; text-align: center;
+}
+/* Desktop/tablet: bottom-nav als zwevende gecentreerde pill i.p.v. volle balk */
+@media (min-width: 768px) {
+  .bottom-nav {
+    left: 50%; right: auto; transform: translateX(-50%);
+    width: 420px; bottom: 14px; border-radius: 999px;
+    border: 1px solid var(--border); height: 62px; padding-bottom: 0;
+    box-shadow: 0 10px 34px rgba(0,0,0,.45);
+  }
 }
 
 /* ── FOCUS-MODUS: fullscreen leesscherm (design variant B) ── */
