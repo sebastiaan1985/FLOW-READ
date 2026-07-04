@@ -295,6 +295,19 @@ const Coach = {
 
     /** {type, naam, icon, reden} — of null zolang er geen begintest is. */
     aanbeveling() {
+      // Leerweg-dag van vandaag heeft altijd topprioriteit
+      if (typeof leerWegVolgendeDag === 'function') {
+        const lw = leerWegVolgendeDag();
+        if (lw && lw.dag.screen && this.OEFENINGEN[lw.dag.screen] && (typeof lwGedaan === 'function' && lwGedaan().length > 0)) {
+          return {
+            type: lw.dag.screen,
+            ...this.OEFENINGEN[lw.dag.screen],
+            reden: Coach.isKids()
+              ? `Jouw leerweg-missie van vandaag: ${lw.dag.naam}!`
+              : `Leerweg week ${lw.w + 1}, dag ${lw.d + 1}: ${lw.dag.naam}`,
+          };
+        }
+      }
       const st = Coach.laad();
       const begrip = Coach.begripScores();
       const gemBegrip = begrip.length >= 3

@@ -38,10 +38,11 @@ const SYNC_KEYS = [
   'coach_state',            // Slimme Coach: doel-WPM per oefening, feedback-state
   'snellees_begrip_scores', // Begripscores (array, laatste 50)
   'gamificatie',            // Streak-bevriezingen, dagdoel, recap, geluid
+  'leerweg_gedaan',         // Afgevinkte leerweg-dagen
 ];
 
 // Keys die in payload.extra terechtkomen (nooit meer losse kolommen nodig)
-const EXTRA_KEYS = ['coach_state', 'snellees_begrip_scores', 'gamificatie'];
+const EXTRA_KEYS = ['coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan'];
 
 let _huidigeGebruiker = null;
 let _syncTimer = null;

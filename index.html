@@ -1681,6 +1681,22 @@ main { -webkit-overflow-scrolling: touch; }
   border-radius: 999px; padding: 1px 5px; min-width: 16px; text-align: center;
 }
 
+/* ── EERSTE STAPPEN CHECKLIST ────────────────────────────── */
+.eerste-stappen {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 20px;
+}
+.es-kop { font-weight: 700; font-size: .9rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.es-sluit { border: none; background: none; color: var(--muted); cursor: pointer; font-size: 12px; padding: 4px; }
+.es-item {
+  display: flex; align-items: center; gap: 10px; padding: 8px 6px;
+  font-size: .86rem; border-radius: 8px; cursor: pointer; transition: background .15s;
+}
+.es-item:hover { background: rgba(255,255,255,.04); }
+.es-item.klaar { color: var(--muted); text-decoration: line-through; cursor: default; }
+.es-check { font-size: 1rem; color: var(--muted); }
+.es-item.klaar .es-check { color: var(--green); }
+
 /* ── GAMIFICATION 2.0 ────────────────────────────────────── */
 .leestotaal { font-size: .74rem; color: var(--muted); margin-top: 6px; }
 .leestotaal b { color: var(--text); }
@@ -2140,19 +2156,27 @@ main { -webkit-overflow-scrolling: touch; }
       </div>
     </div>
 
-    <!-- Stap 2: Profiel modus -->
+    <!-- Stap 2: Leeftijdsgroep (bepaalt teksten, coach-toon en modus) -->
     <div class="ob-stap" id="ob-stap-1">
       <div style="font-size:2.5rem;margin-bottom:12px">👤</div>
-      <div class="ob-stap-titel">Wat past bij jou?</div>
-      <div class="ob-stap-sub">We passen de app aan op jouw ervaring.</div>
+      <div class="ob-stap-titel">Voor wie is deze app?</div>
+      <div class="ob-stap-sub">We kiezen passende verhalen, oefeningen en een coach die bij je past.</div>
       <div class="ob-doel-opties" id="ob-modus-grid">
-        <button class="ob-doel-optie" onclick="obKiesModus(this,'junior')" id="ob-modus-junior">
-          <div class="ob-doel-icon">🎮</div>
-          <div class="ob-doel-tekst"><b>Junior</b><span>Speelse oefeningen, avontuur met levels &amp; badges, ideaal voor kinderen</span></div>
+        <button class="ob-doel-optie" onclick="obKiesGroep(this,'kids6-9')" id="ob-groep-kids1">
+          <div class="ob-doel-icon">🧒</div>
+          <div class="ob-doel-tekst"><b>6 – 9 jaar</b><span>Korte verhaaltjes, spelletjes en veel confetti</span></div>
         </button>
-        <button class="ob-doel-optie gekozen" onclick="obKiesModus(this,'pro')" id="ob-modus-pro">
-          <div class="ob-doel-icon">📊</div>
-          <div class="ob-doel-tekst"><b>Professional</b><span>Focus op WPM, statistieken en efficiëntie — voor studie &amp; werk</span></div>
+        <button class="ob-doel-optie" onclick="obKiesGroep(this,'kids9-12')" id="ob-groep-kids2">
+          <div class="ob-doel-icon">👦</div>
+          <div class="ob-doel-tekst"><b>9 – 12 jaar</b><span>Coole weetjes, avontuur met levels &amp; badges</span></div>
+        </button>
+        <button class="ob-doel-optie" onclick="obKiesGroep(this,'teens')" id="ob-groep-teens">
+          <div class="ob-doel-icon">🧑</div>
+          <div class="ob-doel-tekst"><b>13 – 17 jaar</b><span>Sneller leren lezen voor school én voor jezelf</span></div>
+        </button>
+        <button class="ob-doel-optie gekozen" onclick="obKiesGroep(this,'volwassen')" id="ob-groep-volw">
+          <div class="ob-doel-icon">🧑‍💼</div>
+          <div class="ob-doel-tekst"><b>Volwassene</b><span>Focus op WPM, statistieken en efficiëntie</span></div>
         </button>
       </div>
       <div class="ob-btn-rij">
@@ -2234,9 +2258,17 @@ main { -webkit-overflow-scrolling: touch; }
 
   <!-- Compacte hero -->
   <div style="text-align:center;padding:4px 0 18px">
-    <button onclick="sidebarNav('leerweg')" style="display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#a78bfa);border:none;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,111,247,.4);font-family:Inter,sans-serif">
+    <button id="leerweg-hero-btn" onclick="sidebarNav('leerweg')" style="display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#a78bfa);border:none;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,111,247,.4);font-family:Inter,sans-serif">
       📚 Volg de 4-weken Leerweg →
     </button>
+  </div>
+
+  <!-- Eerste stappen checklist (verdwijnt zodra alles klaar is) -->
+  <div class="eerste-stappen" id="eerste-stappen" style="display:none">
+    <div class="es-kop">🚀 Eerste stappen <button class="es-sluit" onclick="eersteStappenVerberg()" aria-label="Verbergen">✕</button></div>
+    <div class="es-item" id="es-begintest" onclick="sidebarNav('begintest')"><span class="es-check">○</span> Doe de begintest (2 min)</div>
+    <div class="es-item" id="es-oefening" onclick="sidebarNav('rsvp')"><span class="es-check">○</span> Voltooi je eerste oefening</div>
+    <div class="es-item" id="es-installeer" onclick="_installatie.start()"><span class="es-check">○</span> Zet de app op je beginscherm</div>
   </div>
 
   <!-- Installatie-banner (alleen zichtbaar in browser, niet in geïnstalleerde app) -->
@@ -4041,7 +4073,12 @@ function begintestControleer() {
       <li>Doe elke dag <b>${wpm < 200 ? '10' : '15'}</b> minuten oefenen</li>
       ${begrip < 60 ? '<li>Focus eerst op het <b>Chunks</b> scherm voor beter begrip</li>' : ''}
       ${wpm < 200 ? '<li>Probeer de <b>Oogtraining</b> om je ogen sneller te maken</li>' : ''}
-    </ul>`;
+    </ul>
+    <div style="margin-top:10px;padding:10px 12px;background:rgba(124,111,247,.1);border-left:3px solid var(--accent);border-radius:8px;font-size:.85rem">
+      🧠 <b>Coach:</b> ${Coach.isKids()
+        ? 'Dit is jouw startpunt — vanaf nu word je elke dag een beetje sneller! 🚀'
+        : `Geoefende lezers halen vaak het dubbele van hun startniveau. Met 10 minuten per dag zit jij daar over enkele weken ook.`}
+    </div>`;
 
     btToonStap('resultaat');
   }, 600);
@@ -5970,6 +6007,89 @@ function checkWeekRecap() {
   if (g.laatsteRecap === dezeWeek) return;
   if (toonWeekRecap()) _gamZet('laatsteRecap', dezeWeek);
   else _gamZet('laatsteRecap', dezeWeek); // geen data: stil overslaan tot volgende week
+}
+
+// ── Eerste stappen checklist ────────────────────────────────
+function eersteStappenUpdate() {
+  const el = document.getElementById('eerste-stappen');
+  if (!el) return;
+  const g = _gamLaad();
+  if (g.eersteStappenVerborgen) { el.style.display = 'none'; return; }
+
+  const begintestKlaar = !!localStorage.getItem('begintest_baseline');
+  const oefeningKlaar = (stats.sessies || []).length > 0;
+  const installKlaar = !!g.geinstalleerd ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+
+  const zet = (id, klaar) => {
+    const item = document.getElementById(id);
+    if (!item) return;
+    item.classList.toggle('klaar', klaar);
+    item.querySelector('.es-check').textContent = klaar ? '✓' : '○';
+  };
+  zet('es-begintest', begintestKlaar);
+  zet('es-oefening', oefeningKlaar);
+  zet('es-installeer', installKlaar);
+
+  if (begintestKlaar && oefeningKlaar && installKlaar) {
+    if (!g.eersteStappenGevierd) {
+      _gamZet('eersteStappenGevierd', true);
+      toonAchievement('🚀', 'Alle eerste stappen voltooid — je bent op weg!');
+      _geluid.goed();
+    }
+    el.style.display = 'none';
+  } else {
+    el.style.display = '';
+  }
+}
+function eersteStappenVerberg() {
+  _gamZet('eersteStappenVerborgen', true);
+  const el = document.getElementById('eerste-stappen');
+  if (el) el.style.display = 'none';
+}
+
+// ── Leerweg: automatisch afvinken + voortgang op home ──────
+function leerWegVolgendeDag() {
+  if (typeof LEERWEG_WEKEN === 'undefined') return null;
+  const gedaan = lwGedaan();
+  for (let w = 0; w < LEERWEG_WEKEN.length; w++) {
+    for (let d = 0; d < LEERWEG_WEKEN[w].dagen.length; d++) {
+      if (!gedaan.includes(lwKey(w, d))) return { w, d, dag: LEERWEG_WEKEN[w].dagen[d] };
+    }
+  }
+  return null; // hele leerweg voltooid
+}
+
+function leerWegAutoVoltooi(scherm) {
+  const volgende = leerWegVolgendeDag();
+  if (!volgende || volgende.dag.screen !== scherm) return;
+  // Vandaag-dag automatisch afvinken zodra de bijbehorende oefening is gedaan
+  const gedaan = lwGedaan();
+  gedaan.push(lwKey(volgende.w, volgende.d));
+  localStorage.setItem(LW_KEY, JSON.stringify(gedaan));
+  const week = LEERWEG_WEKEN[volgende.w];
+  const weekKlaar = week.dagen.every((_, d) => gedaan.includes(lwKey(volgende.w, d)));
+  if (weekKlaar) {
+    toonAchievement(week.icon, `${week.naam} voltooid! 🎉`);
+    showConfetti(50, 15, true);
+    _geluid.fanfare();
+    tril([80, 40, 120]);
+  } else {
+    toonAchievement('📚', `Leerweg-dag afgevinkt: ${volgende.dag.naam}`);
+    _geluid.goed();
+  }
+  leerWegHeroUpdate();
+  if (document.getElementById('screen-leerweg')?.classList.contains('active')) leerWegInit();
+}
+
+function leerWegHeroUpdate() {
+  const btn = document.getElementById('leerweg-hero-btn');
+  if (!btn) return;
+  const volgende = leerWegVolgendeDag();
+  if (!volgende) { btn.innerHTML = '🏆 Leerweg voltooid — bekijk je resultaat →'; return; }
+  const gedaan = lwGedaan().length;
+  if (gedaan === 0) { btn.innerHTML = '📚 Volg de 4-weken Leerweg →'; return; }
+  btn.innerHTML = `📚 Leerweg: week ${volgende.w + 1} · dag ${volgende.d + 1} van ${LEERWEG_WEKEN[volgende.w].dagen.length} →`;
 }
 
 // ── App-badge + streak-nudge ────────────────────────────────
@@ -8708,6 +8828,7 @@ let _obStap = 0;
 let _obAvatar = '🦊';
 let _obDoel = 'studie';
 let _obModus = 'pro';
+let _obGroep = 'volwassen';
 
 function checkOnboarding() {
   // Toon onboarding als er geen gebruiker + geen sessies zijn
@@ -8738,8 +8859,10 @@ function obKiesDoel(el, doel) {
   el.classList.add('gekozen');
 }
 
-function obKiesModus(el, modus) {
-  _obModus = modus;
+function obKiesGroep(el, groep) {
+  _obGroep = groep;
+  // Modus volgt uit de leeftijdsgroep: kinderen → junior (kids-modus), rest → pro
+  _obModus = groep.startsWith('kids') ? 'junior' : 'pro';
   document.querySelectorAll('#ob-modus-grid .ob-doel-optie').forEach(a => a.classList.remove('gekozen'));
   el.classList.add('gekozen');
 }
@@ -8774,7 +8897,7 @@ function _obToonStap(n) {
 
 function _obSlaOp() {
   const naam = (document.getElementById('ob-naam').value.trim()) || 'Lezer';
-  const gebruiker = { naam, avatar: _obAvatar, doel: _obDoel, modus: _obModus, aangemeld: new Date().toISOString() };
+  const gebruiker = { naam, avatar: _obAvatar, doel: _obDoel, modus: _obModus, doelgroep: _obGroep, aangemeld: new Date().toISOString() };
   localStorage.setItem('snellees_gebruiker', JSON.stringify(gebruiker));
   localStorage.setItem('snellees_onboarding_done', '1');
   localStorage.setItem('snellees_profiel_modus', _obModus);
@@ -10092,10 +10215,12 @@ const _aiAdaptief = {
     _aiTts.sessieFeedback(wpm, n);
     const scherm = (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'rsvp';
     Coach.naSessie(scherm, wpm, n);
-    // Gamification: daguitdaging generiek afvangen + badges + dagdoel
+    // Gamification: daguitdaging generiek afvangen + badges + dagdoel + leerweg
     if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging(scherm);
     if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 600);
     if (typeof updateDagdoelRing === 'function') updateDagdoelRing();
+    if (typeof leerWegAutoVoltooi === 'function') leerWegAutoVoltooi(scherm);
+    if (typeof eersteStappenUpdate === 'function') eersteStappenUpdate();
     // Analyse blijven vastleggen voor het coach-panel (zonder sliders aan te passen)
     setTimeout(() => {
       const r = _aiAdaptief.analyseer();
@@ -10846,7 +10971,7 @@ async function aiLangeTekstNieuwe() {
   const _gamOrigNav = window.sidebarNav;
   window.sidebarNav = function(screen) {
     _gamOrigNav(screen);
-    if (screen === 'home') updateDagdoelRing();
+    if (screen === 'home') { updateDagdoelRing(); eersteStappenUpdate(); leerWegHeroUpdate(); }
   };
 
   // Eerste user-gesture: AudioContext alvast opwarmen (iOS)
@@ -10860,6 +10985,8 @@ async function aiLangeTekstNieuwe() {
   const geluidBtn = document.getElementById('sidebar-geluid-btn');
   if (geluidBtn) geluidBtn.textContent = _geluid.aan() ? '🔔 Geluid aan' : '🔕 Geluid uit';
   updateDagdoelRing();
+  eersteStappenUpdate();
+  leerWegHeroUpdate();
   updateAppBadge();
   setTimeout(checkStreakGevaar, 2500);
   setTimeout(checkWeekRecap, 4000);
