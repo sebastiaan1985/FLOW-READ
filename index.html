@@ -23,6 +23,8 @@
 <script src="teksten.js"></script>
 <!-- Slimme Leescoach (offline, geen API-key nodig) -->
 <script src="coach.js"></script>
+<!-- Leesronde-motor: checkpoints, combo's, sterren en XP -->
+<script src="ronde.js"></script>
 <style>
 @font-face {
   font-family: 'OpenDyslexic';
@@ -1703,6 +1705,83 @@ main { -webkit-overflow-scrolling: touch; }
     box-shadow: 0 10px 34px rgba(0,0,0,.45);
   }
 }
+
+/* ── LEESRONDE: checkpoints + resultaat ──────────────────── */
+.ronde-cp {
+  position: fixed; inset: 0; z-index: 460;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  background: rgba(8,8,26,.72); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  animation: fadeIn .15s ease;
+}
+.ronde-cp-kaart {
+  position: relative; width: 100%; max-width: 400px; text-align: center;
+  background: #16162a; border: 1px solid rgba(124,111,247,.4);
+  border-radius: 20px; padding: 22px 20px 16px;
+  box-shadow: 0 0 34px rgba(124,111,247,.18);
+  animation: levelupPop .25s cubic-bezier(.2,1.4,.4,1);
+}
+.ronde-cp-vraag { font-size: 14px; font-weight: 700; color: rgba(255,255,255,.75); margin-bottom: 14px; }
+.ronde-cp-opties { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ronde-cp-optie {
+  padding: 16px 10px; border-radius: 14px; cursor: pointer;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  color: var(--text); font-size: 17px; font-weight: 800; letter-spacing: -.2px; font-family: inherit;
+}
+.ronde-cp-optie:hover { border-color: rgba(124,111,247,.6); }
+.ronde-cp-optie.goed { background: rgba(52,211,153,.18); border-color: var(--green); color: var(--green); }
+.ronde-cp-optie.fout { background: rgba(239,68,68,.15); border-color: #ef4444; color: #ef4444; }
+.ronde-cp-timer { height: 3px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; margin-top: 16px; }
+.ronde-cp-timer-fill { width: 100%; height: 100%; border-radius: 999px; background: linear-gradient(90deg,#7c6ff7,#4cc9f0); }
+.ronde-cp-combo {
+  position: absolute; top: -14px; right: 14px;
+  background: linear-gradient(135deg,#e07000,#f0c000); color: #fff;
+  font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px;
+  animation: levelupPop .3s cubic-bezier(.2,1.6,.4,1);
+}
+.ronde-res {
+  position: fixed; inset: 0; z-index: 455;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  background: rgba(8,8,26,.78); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  animation: fadeIn .2s ease;
+}
+.ronde-res-kaart {
+  width: 100%; max-width: 420px; text-align: center;
+  background: #16162a; border: 1px solid var(--dm-rand, rgba(255,255,255,.07));
+  border-radius: 22px; padding: 26px 22px 22px;
+  animation: levelupPop .35s cubic-bezier(.2,1.5,.4,1);
+}
+.ronde-sterren { font-size: 44px; letter-spacing: 8px; line-height: 1; margin-bottom: 10px; }
+.ronde-ster { color: rgba(255,255,255,.14); display: inline-block; }
+.ronde-ster.aan { color: #f0c000; animation: sterPop .45s cubic-bezier(.2,1.8,.4,1) both; text-shadow: 0 0 22px rgba(240,192,0,.45); }
+@keyframes sterPop { from { transform: scale(0) rotate(-30deg); } to { transform: scale(1) rotate(0); } }
+.ronde-res-uitleg { font-size: 14px; color: var(--muted); margin-bottom: 18px; line-height: 1.5; }
+.ronde-res-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.ronde-res-grid > div { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 12px 6px; }
+.ronde-res-num { font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.ronde-res-lbl { font-size: .68rem; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; }
+.ronde-res-xp {
+  display: inline-block; margin-bottom: 18px;
+  background: linear-gradient(135deg, rgba(124,111,247,.25), rgba(76,201,240,.18));
+  border: 1px solid rgba(124,111,247,.45); color: #cfc7ff;
+  font-size: 15px; font-weight: 800; padding: 8px 20px; border-radius: 999px;
+}
+.ronde-res-knoppen { display: flex; flex-direction: column; gap: 10px; }
+.ronde-res-opnieuw {
+  height: 48px; border: none; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(135deg,#7c6ff7,#a78bfa); color: #fff;
+  font-size: 15px; font-weight: 700; font-family: inherit;
+}
+.ronde-res-klaar {
+  height: 44px; border-radius: 999px; cursor: pointer;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+  color: var(--muted); font-size: 14px; font-weight: 600; font-family: inherit;
+}
+/* Kids: lichte kaarten, zelfde motor */
+body.kids .ronde-cp-kaart, body.kids .ronde-res-kaart { background: #fff; border-color: rgba(76,201,240,.5); }
+body.kids .ronde-cp-vraag, body.kids .ronde-res-uitleg { color: #5a5a7a; }
+body.kids .ronde-cp-optie { background: #f4f8ff; border-color: rgba(0,0,0,.1); color: #1a1a3a; }
+body.kids .ronde-res-num { color: #1a1a3a; }
+body.kids .ronde-res-grid > div { background: #f6f4ff; border-color: rgba(0,0,0,.06); }
 
 /* ── FOCUS-MODUS: fullscreen leesscherm (design variant B) ── */
 body.focus-modus { background: #0f0f1a; }
@@ -4500,6 +4579,8 @@ function laadRsvpTekst() {
 function rsvpStart() {
   if (!rsvpWoorden.length) laadRsvpTekst();
   if (rsvpIdx >= rsvpWoorden.length) rsvpIdx = 0;
+  // Verse ronde (niet hervatten na pauze): Leesronde-motor aanzetten
+  if (rsvpIdx === 0) Ronde.start('rsvp', rsvpWoorden);
   if (!rsvpStart_t) rsvpStart_t = Date.now() - (rsvpElapsed || 0);
   focusModusAan();
   rsvpTick();
@@ -4509,7 +4590,14 @@ function rsvpTick() {
   const wpm = +document.getElementById('wpm-slider').value;
   const chunk = +document.getElementById('rsvp-chunk').value;
   const delay = (60000 / wpm) * chunk;
-  if (rsvpIdx >= rsvpWoorden.length) { rsvpStop(); slaaSessieOp(wpm, rsvpWoorden.length); voltooiDaguitdaging('rsvp'); return; }
+  if (rsvpIdx >= rsvpWoorden.length) {
+    const liveWpm = rsvpStart_t ? Math.round(rsvpWoorden.length / ((Date.now() - rsvpStart_t) / 60000)) : wpm;
+    rsvpStop(); slaaSessieOp(wpm, rsvpWoorden.length); voltooiDaguitdaging('rsvp');
+    Ronde.einde(liveWpm || wpm, rsvpWoorden.length);
+    return;
+  }
+  // Checkpoint? Dan pauzeert de Leesronde-motor tot de speler antwoordt
+  if (Ronde.bijIndex(rsvpIdx, (pauzeMs) => { if (rsvpStart_t) rsvpStart_t += pauzeMs; rsvpTick(); })) return;
   const slice = rsvpWoorden.slice(rsvpIdx, rsvpIdx + chunk).join(' ');
   const el = document.getElementById('rsvp-word');
   el.style.opacity = 0;
@@ -4536,6 +4624,7 @@ function rsvpStop() {
 
 // Tik op het leesvlak = starten of pauzeren (grote knop op mobiel)
 document.getElementById('rsvp-display')?.addEventListener('click', () => {
+  if (Ronde.wachtOpAntwoord) return; // checkpoint open: alleen de knoppen tellen
   if (rsvpTimer) { rsvpPause(); } else { rsvpStart(); }
 });
 document.getElementById('chunk-display')?.addEventListener('click', () => {
