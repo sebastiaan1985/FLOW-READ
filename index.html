@@ -1926,6 +1926,131 @@ button:active { transform: scale(.96); }
 .adaptief-melding .am-sub { font-size:.82rem; color:var(--muted); }
 .ltt-voortgang-bar { height:6px; background:var(--border); border-radius:3px; overflow:hidden; margin-top:10px; }
 .ltt-voortgang-fill { height:100%; border-radius:3px; transition:width .6s ease; }
+
+/* ══════════════════════════════════════════════════════════
+   🎨  DESIGN-MATCH — home-screen naar Claude Design mockup
+   Tokens: kaart #16162a · radius 18px · label 10px/1.4px ·
+   hero 25px/800 · accent #7c6ff7/#a78bfa · cyaan #4cc9f0
+   ══════════════════════════════════════════════════════════ */
+#screen-home { --dm-kaart:#16162a; --dm-rand:rgba(255,255,255,.07); }
+#screen-home.screen { padding-bottom: 8px; }
+
+/* Herbruikbaar sectielabel (10px, 1.4px spatiëring) */
+.sectie-label { font-size:10px; font-weight:700; letter-spacing:1.4px; color:rgba(255,255,255,.45); text-transform:uppercase; }
+
+/* HERO / vandaag-panel */
+#screen-home .vandaag-panel {
+  position: relative; overflow: hidden;
+  background: linear-gradient(160deg,#1a1738,#12122400 70%), var(--dm-kaart);
+  border: 1px solid var(--dm-rand);
+  border-radius: 20px; padding: 22px 20px 18px; margin-bottom: 14px;
+}
+#screen-home .vandaag-panel::before {
+  content: ''; position: absolute; top: -60px; left: -20px; width: 240px; height: 200px;
+  background: radial-gradient(closest-side, rgba(124,111,247,.28), transparent);
+  pointer-events: none;
+}
+#screen-home .vandaag-header { position: relative; margin-bottom: 16px; align-items: flex-start; }
+#screen-home .vandaag-begroeting { font-size: 1.6rem; font-weight: 800; letter-spacing: -.5px; line-height: 1.12; }
+#screen-home .vandaag-sub { font-size: .85rem; margin-top: 6px; }
+#screen-home .leestotaal { margin-top: 8px; }
+
+/* Streak-badge: warme oranje-goud look */
+#screen-home .streak-badge {
+  background: linear-gradient(135deg, rgba(224,112,0,.22), rgba(240,192,0,.16));
+  border: 1px solid rgba(240,160,0,.35); color: #f0b000; padding: 6px 12px; font-size: .82rem;
+}
+
+/* Uitdaging-kaart binnen de hero: gradient + paarse rand + zachte glow */
+#screen-home .vandaag-uitdaging {
+  position: relative;
+  background: linear-gradient(135deg,#1a1738,#16162a 60%);
+  border: 1px solid rgba(124,111,247,.4); border-radius: 18px; padding: 15px 16px; gap: 14px;
+  box-shadow: 0 0 26px rgba(124,111,247,.14);
+}
+#screen-home .vandaag-uitd-label { font-size: 10px; letter-spacing: 1.4px; color: #a78bfa; }
+#screen-home .vandaag-uitd-naam { font-size: 15px; font-weight: 700; letter-spacing: -.2px; margin: 4px 0 3px; }
+#screen-home .vandaag-uitd-sub { font-size: 12px; font-weight: 700; color: var(--green); }
+#screen-home .vandaag-uitd-icon {
+  width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  background: rgba(124,111,247,.15); font-size: 1.3rem; flex-shrink: 0;
+}
+#screen-home .vandaag-uitd-status { color: rgba(255,255,255,.5); font-size: 1.4rem; }
+
+/* LEERWEG-kaart met knooppuntenpad */
+.lw-kaart {
+  background: var(--dm-kaart); border: 1px solid var(--dm-rand);
+  border-radius: 18px; padding: 16px; margin-bottom: 14px;
+}
+.lw-kop { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+.lw-kop-rechts { font-size: 12px; color: rgba(255,255,255,.7); font-weight: 600; }
+.lw-kop-rechts b { color: #fff; }
+.lw-pad { display: flex; align-items: center; gap: 6px; margin: 4px 4px 18px; }
+.lw-node {
+  width: 15px; height: 15px; border-radius: 999px; flex-shrink: 0;
+  background: #0f0f1a; border: 2px solid rgba(255,255,255,.16); transition: all .3s;
+}
+.lw-node.gedaan { background: #7c6ff7; border-color: #7c6ff7; }
+.lw-node.nu {
+  width: 22px; height: 22px; background: #16162a; border: 2px solid #a78bfa;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 5px rgba(124,111,247,.18), 0 0 16px rgba(124,111,247,.4);
+}
+.lw-node.nu::after { content: ''; width: 8px; height: 8px; border-radius: 999px; background: #a78bfa; }
+.lw-verbinding { flex: 1; height: 2px; background: rgba(255,255,255,.12); border-radius: 2px; }
+.lw-verbinding.gedaan { background: #7c6ff7; }
+.lw-cta {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+  height: 46px; border: none; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(135deg,#7c6ff7,#a78bfa); color: #fff;
+  font-size: 14px; font-weight: 700; font-family: inherit;
+}
+.lw-cta svg { width: 16px; height: 16px; }
+
+/* LEESCOACH-kaart: cyaan icoon-vierkant + label + tekst */
+#screen-home .ai-coach-panel {
+  display: flex; align-items: flex-start; gap: 14px; margin: 0 0 14px;
+  background: var(--dm-kaart); border: 1px solid var(--dm-rand);
+  border-radius: 18px; padding: 15px 16px;
+}
+#screen-home .ai-coach-panel.active { display: flex; }
+#screen-home .ai-coach-icoon {
+  width: 34px; height: 34px; border-radius: 11px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(76,201,240,.12);
+}
+#screen-home .ai-coach-icoon svg { width: 18px; height: 18px; stroke: #4cc9f0; }
+#screen-home .ai-coach-header { font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: rgba(255,255,255,.45); text-transform: uppercase; margin-bottom: 4px; }
+#screen-home .ai-coach-body { font-size: 13.5px; line-height: 1.5; color: var(--text); }
+#screen-home .ai-coach-body b { color: #4cc9f0; }
+
+/* AANBEVOLEN-kaart */
+.aanbevolen-kaart {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--dm-kaart); border: 1px solid var(--dm-rand);
+  border-radius: 18px; padding: 14px 16px; width: 100%; cursor: pointer; text-align: left;
+  color: var(--text); font-family: inherit;
+}
+.aanbevolen-kaart .ab-titel { font-size: 15px; font-weight: 700; letter-spacing: -.2px; margin-top: 4px; }
+.aanbevolen-kaart .ab-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.aanbevolen-kaart .ab-play {
+  width: 42px; height: 42px; border-radius: 999px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg,#7c6ff7,#a78bfa);
+}
+.aanbevolen-kaart .ab-play svg { width: 18px; height: 18px; stroke: #fff; fill: #fff; }
+
+/* OEFENKAARTEN: line-icons i.p.v. emoji, radius 16px */
+#screen-home .home-kaart {
+  background: var(--dm-kaart); border: 1px solid var(--dm-rand); border-radius: 16px;
+  padding: 15px 14px; gap: 0;
+}
+#screen-home .home-kaart:hover { border-color: rgba(124,111,247,.5); background: var(--dm-kaart); }
+#screen-home .home-kaart-icon { width: 26px; height: 26px; margin-bottom: 12px; font-size: 1.5rem; display: flex; align-items: center; }
+#screen-home .home-kaart-icon svg { width: 22px; height: 22px; stroke: rgba(255,255,255,.85); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+#screen-home .home-kaart-titel { font-size: 13.5px; font-weight: 600; }
+#screen-home .home-kaart-sub { font-size: 11.5px; margin-top: 3px; }
+#screen-home .home-sectiekop { margin: 4px 2px 10px; }
 </style>
 </head>
 <body>
@@ -2316,10 +2441,16 @@ button:active { transform: scale(.96); }
     </div>
   </div>
 
-  <!-- Compacte hero -->
-  <div style="text-align:center;padding:4px 0 18px">
-    <button id="leerweg-hero-btn" onclick="sidebarNav('leerweg')" style="display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#a78bfa);border:none;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,111,247,.4);font-family:Inter,sans-serif">
-      📚 Volg de 4-weken Leerweg →
+  <!-- Leerweg-kaart met knooppuntenpad -->
+  <div class="lw-kaart" id="leerweg-kaart">
+    <div class="lw-kop">
+      <span class="sectie-label">4-weken leerweg</span>
+      <span class="lw-kop-rechts" id="lw-kop-rechts"></span>
+    </div>
+    <div class="lw-pad" id="lw-pad"></div>
+    <button class="lw-cta" id="leerweg-hero-btn" onclick="sidebarNav('leerweg')">
+      <span id="lw-cta-tekst">Volg de 4-weken Leerweg</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
     </button>
   </div>
 
@@ -2344,8 +2475,13 @@ button:active { transform: scale(.96); }
 
   <!-- Leescoach panel (werkt offline; met AI-key komt er AI-advies bij) -->
   <div class="ai-coach-panel" id="ai-coach-panel">
-    <div class="ai-coach-header">🧠 Leescoach</div>
-    <div class="ai-coach-body" id="ai-coach-body"></div>
+    <div class="ai-coach-icoon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/><path d="M9 20h6"/><path d="M10 23h4"/></svg>
+    </div>
+    <div style="min-width:0;flex:1">
+      <div class="ai-coach-header">Leescoach</div>
+      <div class="ai-coach-body" id="ai-coach-body"></div>
+    </div>
   </div>
 
   <!-- Aanbevolen oefening (Coach.planner) -->
@@ -2354,72 +2490,72 @@ button:active { transform: scale(.96); }
   <!-- Snelle toegang kaarten -->
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px">
     <button class="home-kaart" onclick="sidebarNav('rsvp')">
-      <div class="home-kaart-icon">⚡</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
       <div class="home-kaart-titel">RSVP Lezen</div>
       <div class="home-kaart-sub">Woord voor woord — verhoog je snelheid</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('leestest')">
-      <div class="home-kaart-icon">📏</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15v5"/><path d="M7.5 8.5 12 4l4.5 4.5"/><path d="M4 20a8 8 0 0 1 16 0"/></svg></div>
       <div class="home-kaart-titel">Leestest</div>
       <div class="home-kaart-sub">Lees een tekst, meet je WPM + begrip</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('langetekst')" style="border-color:rgba(76,201,240,.3)">
-      <div class="home-kaart-icon">📚</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
       <div class="home-kaart-titel">Lange Teksten</div>
       <div class="home-kaart-sub">Adaptief niveau · WPM × begrip score</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('chunk')">
-      <div class="home-kaart-icon">📖</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg></div>
       <div class="home-kaart-titel">Chunk Lezen</div>
       <div class="home-kaart-sub">Woordgroepen in één oogopslag</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('oog')">
-      <div class="home-kaart-icon">👁</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
       <div class="home-kaart-titel">Oogtraining</div>
       <div class="home-kaart-sub">Blikveld vergroten en regressie stoppen</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('dyslexie')">
-      <div class="home-kaart-icon">🌈</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v12"/><path d="M12 3a6 6 0 0 1 6 6v12"/><path d="M12 7a2 2 0 0 0-2 2v12"/><path d="M12 7a2 2 0 0 1 2 2v12"/></svg></div>
       <div class="home-kaart-titel">Dyslexie Spel</div>
       <div class="home-kaart-sub">Letter Jacht, Flits & Goed of Fout?</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('perifeer')">
-      <div class="home-kaart-icon">🔭</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.065 12.493 6.5 21"/><path d="m13.56 11.747 4.332-.924"/><path d="m16 21-3.105-6.21"/><path d="M3.485 12.746a.5.5 0 0 1-.417-.612l.7-3.386a2 2 0 0 1 2.312-1.566l14.331 2.516a2 2 0 0 1 1.617 2.31l-.7 3.386a.5.5 0 0 1-.617.396z"/><path d="M6 9 5 3"/></svg></div>
       <div class="home-kaart-titel">Perifeer Zien</div>
       <div class="home-kaart-sub">Train je zijdelings blikveld</div>
     </button>
     <button class="home-kaart avontuur-element" id="home-kaart-avontuur" onclick="sidebarNav('avontuur')">
-      <div class="home-kaart-icon">🗺️</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v14"/><path d="M9 3.236v15"/></svg></div>
       <div class="home-kaart-titel">Leesavontuur</div>
       <div class="home-kaart-sub">Levels, badges en XP verdienen</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('begintest')">
-      <div class="home-kaart-icon">🎯</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
       <div class="home-kaart-titel">Begintest</div>
       <div class="home-kaart-sub">Meet je startniveau en volg voortgang</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('subvocal')">
-      <div class="home-kaart-icon">🔕</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 2 20 20"/><path d="M8.7 3A6 6 0 0 1 18 8c0 2.4.5 4 1.2 5"/><path d="M6 8a6 6 0 0 0-.6 2.6c0 3.5-1.4 5.4-1.4 5.4h13"/><path d="M9 17v1a3 3 0 0 0 5.2 2"/></svg></div>
       <div class="home-kaart-titel">Subvocalisatie</div>
       <div class="home-kaart-sub">Schakel je innerlijke stem uit</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('regressie')">
-      <div class="home-kaart-icon">⏩</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg></div>
       <div class="home-kaart-titel">Regressie-stop</div>
       <div class="home-kaart-sub">Leer nooit terug te kijken</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('fixatie')">
-      <div class="home-kaart-icon">🔲</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg></div>
       <div class="home-kaart-titel">Fixatie-training</div>
       <div class="home-kaart-sub">Meer woorden per oogsprong</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('skim')">
-      <div class="home-kaart-icon">🔍</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
       <div class="home-kaart-titel">Skim &amp; Scan</div>
       <div class="home-kaart-sub">Structuur en info razendsnel vinden</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('oogrust')">
-      <div class="home-kaart-icon">😌</div>
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/></svg></div>
       <div class="home-kaart-titel">Oogontspanning</div>
       <div class="home-kaart-sub">Palming, focus & 20-20-20 regel</div>
     </button>
@@ -5706,7 +5842,11 @@ const DAGELIJKSE_UITDAGINGEN = [
 ];
 
 // ─── INIT ─────────────────────────────────────────────────
-avLaad();
+// In een try omdat avLaad → avToonDash badges kan tonen, en toonAchievement
+// leunt op state (kidsModus e.d.) die verderop in het script pas wordt
+// geïnitialiseerd. avProfiel is dan al gezet; een fout in de dash-render mag
+// de rest van de opstart niet blokkeren.
+try { avLaad(); } catch (e) { console.warn('[init] avLaad uitgesteld:', e.message); }
 
 // ════════════════════════════════════════════════════════════
 //  🎨  KIDS MODUS
@@ -5844,12 +5984,17 @@ function getDaguitdaging() {
     // anders dag-geseede rotatie voor variatie.
     let idx = null;
     const seed = Math.abs(nu.split('').reduce((a, c) => a * 31 + c.charCodeAt(0) | 0, 7));
-    if (typeof Coach !== 'undefined' && seed % 3 !== 0) {
-      const aanb = Coach.planner.aanbeveling();
-      const kandidaten = DAGELIJKSE_UITDAGINGEN
-        .map((u, i) => ({ u, i })).filter(x => x.u.type === aanb?.type);
-      if (kandidaten.length) idx = kandidaten[seed % kandidaten.length].i;
-    }
+    // Zwakte-gewogen keuze; in een try omdat de planner de leerweg-data
+    // (LEERWEG_WEKEN) raadpleegt die pas later in het script wordt geïnitialiseerd.
+    // Bij vroege aanroep tijdens laden valt hij netjes terug op rotatie.
+    try {
+      if (typeof Coach !== 'undefined' && seed % 3 !== 0) {
+        const aanb = Coach.planner.aanbeveling();
+        const kandidaten = DAGELIJKSE_UITDAGINGEN
+          .map((u, i) => ({ u, i })).filter(x => x.u.type === aanb?.type);
+        if (kandidaten.length) idx = kandidaten[seed % kandidaten.length].i;
+      }
+    } catch (e) { /* planner nog niet klaar tijdens vroege init → rotatie */ }
     if (idx === null) idx = seed % DAGELIJKSE_UITDAGINGEN.length;
     data = { datum: nu, idx, voltooid: false };
     localStorage.setItem('daily_challenge', JSON.stringify(data));
@@ -6191,13 +6336,38 @@ function leerWegAutoVoltooi(scherm) {
 }
 
 function leerWegHeroUpdate() {
-  const btn = document.getElementById('leerweg-hero-btn');
-  if (!btn) return;
+  const tekstEl = document.getElementById('lw-cta-tekst');
+  const kopEl = document.getElementById('lw-kop-rechts');
+  const padEl = document.getElementById('lw-pad');
+  if (!tekstEl || !padEl) return;
+
   const volgende = leerWegVolgendeDag();
-  if (!volgende) { btn.innerHTML = '🏆 Leerweg voltooid — bekijk je resultaat →'; return; }
-  const gedaan = lwGedaan().length;
-  if (gedaan === 0) { btn.innerHTML = '📚 Volg de 4-weken Leerweg →'; return; }
-  btn.innerHTML = `📚 Leerweg: week ${volgende.w + 1} · dag ${volgende.d + 1} van ${LEERWEG_WEKEN[volgende.w].dagen.length} →`;
+  const gedaanArr = (typeof lwGedaan === 'function') ? lwGedaan() : [];
+
+  // CTA-tekst + kop
+  if (!volgende) {
+    tekstEl.textContent = 'Leerweg voltooid — bekijk resultaat';
+    if (kopEl) kopEl.innerHTML = '🏆 Klaar!';
+  } else if (gedaanArr.length === 0) {
+    tekstEl.textContent = 'Start de 4-weken Leerweg';
+    if (kopEl) kopEl.innerHTML = `Week 1 · dag <b>1</b> van ${LEERWEG_WEKEN[0].dagen.length}`;
+  } else {
+    tekstEl.textContent = `Ga verder met dag ${volgende.d + 1}`;
+    if (kopEl) kopEl.innerHTML = `Week ${volgende.w + 1} · dag <b>${volgende.d + 1}</b> van ${LEERWEG_WEKEN[volgende.w].dagen.length}`;
+  }
+
+  // Knooppuntenpad van de huidige week (7 dagen)
+  const week = LEERWEG_WEKEN[volgende ? volgende.w : LEERWEG_WEKEN.length - 1];
+  const nuDag = volgende ? volgende.d : week.dagen.length;
+  let html = '';
+  for (let d = 0; d < week.dagen.length; d++) {
+    const wIdx = volgende ? volgende.w : LEERWEG_WEKEN.length - 1;
+    const isGedaan = gedaanArr.includes(lwKey(wIdx, d));
+    const isNu = d === nuDag && !!volgende;
+    if (d > 0) html += `<div class="lw-verbinding ${d <= nuDag ? 'gedaan' : ''}"></div>`;
+    html += `<div class="lw-node ${isGedaan ? 'gedaan' : ''} ${isNu ? 'nu' : ''}"></div>`;
+  }
+  padEl.innerHTML = html;
 }
 
 // ── App-badge + streak-nudge ────────────────────────────────

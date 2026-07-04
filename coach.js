@@ -362,11 +362,15 @@ const Coach = {
       const a = this.aanbeveling();
       if (!a) { el.innerHTML = ''; return; }
       el.innerHTML = `
-        <button class="home-kaart" style="width:100%;border-color:rgba(124,111,247,.45);background:linear-gradient(135deg,rgba(124,111,247,.10),rgba(76,201,240,.06))" onclick="sidebarNav('${a.type}')">
-          <div style="font-size:.68rem;font-weight:700;letter-spacing:1px;color:var(--accent);text-transform:uppercase">⭐ Aanbevolen voor jou</div>
-          <div class="home-kaart-icon">${a.icon}</div>
-          <div class="home-kaart-titel">${a.naam}</div>
-          <div class="home-kaart-sub">${a.reden}</div>
+        <button class="aanbevolen-kaart" onclick="sidebarNav('${a.type}')">
+          <div style="flex:1;min-width:0">
+            <div class="sectie-label">Aanbevolen voor jou</div>
+            <div class="ab-titel">${a.naam}</div>
+            <div class="ab-sub">${a.reden}</div>
+          </div>
+          <div class="ab-play">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+          </div>
         </button>`;
     },
   },
