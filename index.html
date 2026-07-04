@@ -1111,6 +1111,16 @@ body.kids .oog-timer-num { color:#ff6b6b; }
   transition: all .2s; white-space: nowrap; flex-shrink: 0;
 }
 .speler-indicator:hover { background: linear-gradient(135deg, rgba(224,112,0,.25), rgba(240,192,0,.2)); border-color: rgba(224,112,0,.5); }
+
+/* Compacte header op smalle schermen: geen overloop meer */
+@media (max-width: 600px) {
+  header { gap: 8px; padding-left: calc(12px + env(safe-area-inset-left, 0px)); padding-right: calc(12px + env(safe-area-inset-right, 0px)); }
+  .logo { font-size: .95rem; }
+  .dyx-lbl { display: none; }
+  .speler-naam { display: none !important; }
+  .speler-xp-mini { display: none !important; }
+  .speler-indicator { padding: 5px 8px 5px 6px; }
+}
 .speler-avatar { font-size: 1.2rem; line-height: 1; }
 .speler-naam { font-size: 12px; font-weight: 600; color: #e07000; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
 .speler-streak { font-size: 11px; font-weight: 700; color: #e07000; white-space: nowrap; }
@@ -1670,7 +1680,7 @@ main { -webkit-overflow-scrolling: touch; }
   color: var(--muted); font-size: .68rem; font-weight: 600; letter-spacing: .3px;
   transition: color .2s, transform .15s; padding: 0; -webkit-tap-highlight-color: transparent;
 }
-.bn-btn .bn-icon { font-size: 1.4rem; line-height: 1; }
+.bn-btn .bn-icon { width: 22px; height: 22px; }
 .bn-btn.actief { color: var(--accent); }
 .bn-btn.actief .bn-icon { transform: translateY(-2px); }
 .bn-btn:active { transform: scale(.92); }
@@ -1678,6 +1688,43 @@ main { -webkit-overflow-scrolling: touch; }
   position: absolute; top: 8px; right: calc(50% - 20px);
   background: #ef4444; color: #fff; font-size: .6rem; font-weight: 700;
   border-radius: 999px; padding: 1px 5px; min-width: 16px; text-align: center;
+}
+
+/* ── FOCUS-MODUS: alles weg behalve de oefening ──────────── */
+body.focus-modus header,
+body.focus-modus .bottom-nav,
+body.focus-modus #daguitdaging-banner,
+body.focus-modus .page-title,
+body.focus-modus .page-sub { display: none !important; }
+body.focus-modus main { padding-top: calc(16px + env(safe-area-inset-top, 0px)); }
+body.focus-modus #rsvp-display,
+body.focus-modus #chunk-display { min-height: 55vh; }
+body.focus-modus #rsvp-word { font-size: 2em; }
+body.focus-modus #chunk-tekst { font-size: 1.5em; }
+.focus-exit {
+  display: none; position: fixed; z-index: 400;
+  top: calc(14px + env(safe-area-inset-top, 0px)); right: 14px;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--border2); background: rgba(20,20,40,.8);
+  color: var(--muted); font-size: 16px; cursor: pointer;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+body.focus-modus .focus-exit { display: flex; align-items: center; justify-content: center; }
+#rsvp-display, #chunk-display { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+/* Selects met lange tekstnamen mogen nooit uit hun paneel steken */
+.control-group select { width: 100%; max-width: 100%; text-overflow: ellipsis; }
+
+/* ── MICRO-INTERACTIES ───────────────────────────────────── */
+button { transition: transform .12s ease; }
+button:active { transform: scale(.96); }
+.home-kaart { transition: transform .15s ease, border-color .2s, box-shadow .2s; }
+.home-kaart:hover { transform: translateY(-2px); border-color: rgba(124,111,247,.45); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+.screen.active { animation: schermIn .22s ease; }
+@keyframes schermIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .screen.active { animation: none; }
+  button, .home-kaart { transition: none; }
 }
 
 /* ── TOEGANKELIJKHEID ────────────────────────────────────── */
@@ -1887,8 +1934,12 @@ main { -webkit-overflow-scrolling: touch; }
   <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()" title="Menu" aria-label="Menu openen" aria-controls="sidebar">☰</button>
   <div class="logo">Snel<span>Lees</span> Trainer</div>
   <div class="header-spacer"></div>
-  <button class="ai-mic-btn" id="ai-mic-btn" onclick="aiVoiceToggle()" title="Voice control (zeg: Start, Stop, Sneller, Langzamer)">🎤</button>
-  <button class="dyx-btn" id="header-dyx-btn" onclick="dyxOpenPanel()" title="Dyslexie instellingen" aria-label="Dyslexie instellingen">🔤 Dyslexie</button>
+  <button class="ai-mic-btn" id="ai-mic-btn" onclick="aiVoiceToggle()" title="Voice control (zeg: Start, Stop, Sneller, Langzamer)" aria-label="Spraakbesturing">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+  </button>
+  <button class="dyx-btn" id="header-dyx-btn" onclick="dyxOpenPanel()" title="Dyslexie instellingen" aria-label="Dyslexie instellingen">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>
+    <span class="dyx-lbl">Dyslexie</span></button>
   <div class="speler-indicator" id="speler-indicator" onclick="toonAvontuurDirect()" title="Klik om je scores te bekijken" style="display:none">
     <span class="speler-avatar" id="speler-avatar"></span>
     <span class="speler-naam" id="speler-naam"></span>
@@ -1900,6 +1951,9 @@ main { -webkit-overflow-scrolling: touch; }
   </div>
   <button id="no-profiel-btn" onclick="sidebarNav('avontuur')" style="display:none;padding:7px 14px;border:1px solid rgba(224,112,0,.4);border-radius:8px;background:transparent;color:#e07000;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">👤 Maak profiel</button>
 </header>
+
+<!-- Focus-modus verlaten -->
+<button class="focus-exit" onclick="focusModusUit(true)" aria-label="Focus-modus verlaten" title="Terug">✕</button>
 
 <!-- Fout toast (error boundary UI) -->
 <div id="fout-toast">
@@ -4140,6 +4194,7 @@ function rsvpStart() {
   if (!rsvpWoorden.length) laadRsvpTekst();
   if (rsvpIdx >= rsvpWoorden.length) rsvpIdx = 0;
   if (!rsvpStart_t) rsvpStart_t = Date.now() - (rsvpElapsed || 0);
+  focusModusAan();
   rsvpTick();
 }
 
@@ -4169,7 +4224,16 @@ function rsvpStop() {
   document.getElementById('rsvp-word').textContent = 'Gestopt';
   document.getElementById('rsvp-bar').style.width = '0%';
   document.getElementById('rsvp-pos').textContent = 0;
+  focusModusUit();
 }
+
+// Tik op het leesvlak = starten of pauzeren (grote knop op mobiel)
+document.getElementById('rsvp-display')?.addEventListener('click', () => {
+  if (rsvpTimer) { rsvpPause(); } else { rsvpStart(); }
+});
+document.getElementById('chunk-display')?.addEventListener('click', () => {
+  if (chunkTimer) { chunkStop(); } else { chunkStart(); }
+});
 vulRsvpDropdown();
 laadRsvpTekst();
 
@@ -4180,6 +4244,7 @@ function chunkStart() {
   chunkWds = woorden(huidigeTekst());
   chunkIdx = 0; chunkStart_t = Date.now();
   document.getElementById('begrip-section').style.display = 'none';
+  focusModusAan();
   chunkTick();
 }
 
@@ -4201,7 +4266,7 @@ function chunkTick() {
   chunkTimer = setTimeout(chunkTick, delay);
 }
 
-function chunkStop() { clearTimeout(chunkTimer); chunkTimer = null; document.getElementById('chunk-tekst').textContent = 'Gestopt'; }
+function chunkStop() { clearTimeout(chunkTimer); chunkTimer = null; document.getElementById('chunk-tekst').textContent = 'Gestopt'; focusModusUit(); }
 
 // ─── BEGRIP ───────────────────────────────────────────────────────────────
 function toonBegrip() {
@@ -5824,6 +5889,10 @@ function updateDaguitdaging() {
   if (!banner) return;
   if (!avProfiel) { banner.style.display = 'none'; return; }
   const uitdaging = getDaguitdaging();
+  // Op home staat de uitdaging al in het vandaag-panel (geen dubbele banner);
+  // na voltooiing is de banner alleen nog ruis → weg.
+  const opHome = document.getElementById('screen-home')?.classList.contains('active');
+  if (opHome || uitdaging.voltooid) { banner.style.display = 'none'; return; }
   banner.style.display = 'block';
   document.getElementById('daguitdaging-tekst').textContent = uitdaging.beschrijving;
   const status = document.getElementById('daguitdaging-status');
@@ -6032,6 +6101,20 @@ function checkWeekRecap() {
   if (g.laatsteRecap === dezeWeek) return;
   if (toonWeekRecap()) _gamZet('laatsteRecap', dezeWeek);
   else _gamZet('laatsteRecap', dezeWeek); // geen data: stil overslaan tot volgende week
+}
+
+// ── Focus-modus: fullscreen oefenen zonder afleiding ───────
+function focusModusAan() {
+  document.body.classList.add('focus-modus');
+}
+function focusModusUit(stopOefening) {
+  if (!document.body.classList.contains('focus-modus')) return;
+  document.body.classList.remove('focus-modus');
+  if (stopOefening) {
+    // Via de ✕-knop: lopende oefening netjes stoppen
+    try { if (typeof rsvpPause === 'function') rsvpPause(); } catch(e) {}
+    try { if (typeof chunkStop === 'function' && document.getElementById('screen-chunk')?.classList.contains('active')) chunkStop(); } catch(e) {}
+  }
 }
 
 // ── Eerste stappen checklist ────────────────────────────────
@@ -9537,7 +9620,7 @@ const _BNAV_MAP = {
   rsvp:'trainen', chunk:'trainen', oog:'trainen', perifeer:'trainen',
   papier:'trainen', subvocal:'trainen', regressie:'trainen', fixatie:'trainen',
   skim:'trainen', oogrust:'trainen', dyslexie:'trainen', avontuur:'trainen',
-  leerweg:'trainen', leestest:'trainen', langetekst:'trainen',
+  leerweg:'leerweg', leestest:'trainen', langetekst:'trainen',
   begintest:'trainen', tekst:'trainen', 'eigen-lees':'trainen',
 };
 
@@ -9551,7 +9634,8 @@ function _syncBottomNav(screenId) {
 }
 
 function bottomNavNaar(tab) {
-  if (tab === 'home')      sidebarNav('home');
+  if (tab === 'home')           sidebarNav('home');
+  else if (tab === 'leerweg')   sidebarNav('leerweg');
   else if (tab === 'trainen')   sidebarNav('trainen');
   else if (tab === 'voortgang') sidebarNav('voortgang');
 }
@@ -10997,6 +11081,8 @@ async function aiLangeTekstNieuwe() {
   window.sidebarNav = function(screen) {
     _gamOrigNav(screen);
     if (screen === 'home') { updateDagdoelRing(); eersteStappenUpdate(); leerWegHeroUpdate(); }
+    updateDaguitdaging(); // banner alleen buiten home en zolang de uitdaging open staat
+    focusModusUit();      // navigeren = altijd terug naar normale weergave
   };
 
   // Eerste user-gesture: AudioContext alvast opwarmen (iOS)
@@ -11020,17 +11106,21 @@ async function aiLangeTekstNieuwe() {
 </script>
 
 <!-- ── BOTTOM NAVIGATIE ──────────────────────────────────── -->
-<nav class="bottom-nav" id="bottom-nav">
+<nav class="bottom-nav" id="bottom-nav" aria-label="Hoofdnavigatie">
   <button class="bn-btn actief" data-tab="home" onclick="bottomNavNaar('home')">
-    <span class="bn-icon">🏠</span>
+    <svg class="bn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     <span>Home</span>
   </button>
+  <button class="bn-btn" data-tab="leerweg" onclick="bottomNavNaar('leerweg')">
+    <svg class="bn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+    <span>Leerweg</span>
+  </button>
   <button class="bn-btn" data-tab="trainen" onclick="bottomNavNaar('trainen')">
-    <span class="bn-icon">⚡</span>
+    <svg class="bn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
     <span>Trainen</span>
   </button>
   <button class="bn-btn" data-tab="voortgang" onclick="bottomNavNaar('voortgang')">
-    <span class="bn-icon">📊</span>
+    <svg class="bn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
     <span>Voortgang</span>
   </button>
 </nav>
