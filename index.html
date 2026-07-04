@@ -1952,6 +1952,24 @@ button:active { transform: scale(.96); }
 .ltt-voortgang-fill { height:100%; border-radius:3px; transition:width .6s ease; }
 
 /* ══════════════════════════════════════════════════════════
+   🎨  OEFENSCHERMEN — zelfde design-tokens als home
+   kaart #16162a · rand rgba(255,255,255,.07) · radius 18px
+   ══════════════════════════════════════════════════════════ */
+body:not(.kids) .card,
+body:not(.kids) .controls-panel {
+  background: #16162a; border: 1px solid rgba(255,255,255,.07); border-radius: 18px;
+}
+body:not(.kids) #rsvp-display,
+body:not(.kids) #chunk-display {
+  background: #16162a; border: 1px solid rgba(255,255,255,.07); border-radius: 18px;
+}
+body:not(.kids) .page-title { font-size: 1.4rem; letter-spacing: -.5px; }
+body:not(.kids) .control-group label { font-size: 10px; letter-spacing: 1.4px; color: rgba(255,255,255,.45); }
+/* Segment-tabs / secundaire knoppen iets ronder, consistent */
+body:not(.kids) .btn { border-radius: 12px; }
+body:not(.kids) .btn-ghost { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.09); }
+
+/* ══════════════════════════════════════════════════════════
    🎨  DESIGN-MATCH — home-screen naar Claude Design mockup
    Tokens: kaart #16162a · radius 18px · label 10px/1.4px ·
    hero 25px/800 · accent #7c6ff7/#a78bfa · cyaan #4cc9f0
