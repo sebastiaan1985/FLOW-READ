@@ -4628,6 +4628,7 @@ document.getElementById('rsvp-display')?.addEventListener('click', () => {
   if (rsvpTimer) { rsvpPause(); } else { rsvpStart(); }
 });
 document.getElementById('chunk-display')?.addEventListener('click', () => {
+  if (Ronde.wachtOpAntwoord) return; // checkpoint open: alleen de knoppen tellen
   if (chunkTimer) { chunkStop(); } else { chunkStart(); }
 });
 vulRsvpDropdown();
@@ -4639,6 +4640,7 @@ let chunkTimer = null, chunkIdx = 0, chunkWds = [], chunkStart_t = null;
 function chunkStart() {
   chunkWds = woorden(huidigeTekst());
   chunkIdx = 0; chunkStart_t = Date.now();
+  Ronde.start('chunk', chunkWds);
   document.getElementById('begrip-section').style.display = 'none';
   focusModusAan();
   chunkTick();
@@ -4651,9 +4653,14 @@ function chunkTick() {
   if (chunkIdx >= chunkWds.length) {
     chunkStop();
     const elapsed = (Date.now() - chunkStart_t) / 60000;
-    slaaSessieOp(Math.round(chunkWds.length / elapsed), chunkWds.length);
-    voltooiDaguitdaging('chunk'); toonBegrip(); return;
+    const liveWpm = Math.round(chunkWds.length / elapsed);
+    slaaSessieOp(liveWpm, chunkWds.length);
+    voltooiDaguitdaging('chunk'); toonBegrip();
+    Ronde.einde(liveWpm, chunkWds.length);
+    return;
   }
+  // Checkpoint? Dan pauzeert de Leesronde-motor tot de speler antwoordt
+  if (Ronde.bijIndex(chunkIdx, (pauzeMs) => { if (chunkStart_t) chunkStart_t += pauzeMs; chunkTick(); })) return;
   const slice = chunkWds.slice(chunkIdx, chunkIdx + cs);
   const midden = Math.floor(slice.length / 2);
   document.getElementById('chunk-tekst').innerHTML = slice.map((w,i) =>
@@ -9219,6 +9226,8 @@ function leestestVerzend() {
   document.getElementById('lt-res-wpm').textContent = wpm;
   document.getElementById('lt-res-score').textContent = `${score} / ${vragen.length} (${pct}%)`;
   Coach.registreerBegrip(pct, 'leestest');
+  // Sterren + XP via de Leesronde-motor (eigen vragen = directe ronde)
+  Ronde.direct('leestest', wpm, woorden(tekst.tekst).length, pct);
   const feedback = score === vragen.length ? '🏆 Perfect! Uitstekend begrip!' :
     score >= vragen.length * 0.75 ? '✅ Goed begrip!' :
     score >= vragen.length * 0.5 ? '📖 Redelijk begrip — oefen meer!' :

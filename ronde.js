@@ -175,11 +175,23 @@ const Ronde = {
     return n ? Math.round((this._goed / n) * 100) : null;
   },
 
-  einde(wpm, aantalWoorden) {
+  /**
+   * Directe ronde zonder checkpoints — voor oefeningen die hun eigen
+   * begripsmeting hebben (leestest, langetekst): zelfde sterren, XP en
+   * resultaat-overlay, begrip komt van buiten.
+   */
+  direct(type, wpm, aantalWoorden, begripPct) {
+    this.type = type;
+    this.actief = true;
+    this._goed = 0; this._fout = 0; this._combo = 0; this._maxCombo = 0;
+    return this.einde(wpm, aantalWoorden, begripPct);
+  },
+
+  einde(wpm, aantalWoorden, begripOverride) {
     if (!this.actief) return null;
     this.actief = false;
 
-    const begrip = this.begripPct();
+    const begrip = (begripOverride !== undefined) ? begripOverride : this.begripPct();
     const doelWpm = (typeof Coach !== 'undefined') ? Coach.adaptief.doelWpm(this.type) : 250;
 
     let sterren = 1;
@@ -200,8 +212,9 @@ const Ronde = {
       }
     } catch (e) { /* geen profiel: XP telt stil niet mee */ }
 
-    // Begrip voedt de adaptieve coach
-    try { if (begrip !== null) Coach.registreerBegrip(begrip, this.type); } catch (e) {}
+    // Begrip voedt de adaptieve coach (bij direct-modus registreert de
+    // oefening het zelf al — niet dubbel tellen)
+    try { if (begrip !== null && begripOverride === undefined) Coach.registreerBegrip(begrip, this.type); } catch (e) {}
 
     // Beste sterren per oefening bewaren
     try {
@@ -244,7 +257,9 @@ const Ronde = {
         </div>
         <div class="ronde-res-xp">+${r.xp} XP</div>
         <div class="ronde-res-knoppen">
-          <button class="ronde-res-opnieuw" onclick="Ronde.opnieuw()">🚀 Nog een keer <span style="opacity:.8">(+10%)</span></button>
+          ${(r.type === 'rsvp' || r.type === 'chunk')
+            ? `<button class="ronde-res-opnieuw" onclick="Ronde.opnieuw()">🚀 Nog een keer <span style="opacity:.8">(+10%)</span></button>`
+            : ''}
           <button class="ronde-res-klaar" onclick="Ronde.sluit()">Klaar</button>
         </div>
       </div>`;
@@ -268,6 +283,13 @@ const Ronde = {
         slider.dispatchEvent(new Event('input'));
       }
       if (typeof rsvpStart === 'function') { rsvpIdx = 0; rsvpElapsed = 0; rsvpStart_t = null; rsvpStart(); }
+    } else if (this.type === 'chunk') {
+      const slider = document.getElementById('chunk-wpm');
+      if (slider) {
+        slider.value = Math.min(+slider.max, Math.round((+slider.value * 1.1) / 5) * 5);
+        slider.dispatchEvent(new Event('input'));
+      }
+      if (typeof chunkStart === 'function') chunkStart();
     }
   },
 };
