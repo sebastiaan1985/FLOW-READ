@@ -1706,6 +1706,22 @@ main { -webkit-overflow-scrolling: touch; }
   }
 }
 
+/* ── EIGEN TEKST: direct-lezen-knoppen ───────────────────── */
+.eigen-launch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.eigen-mode {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  padding: 14px; border-radius: 16px; cursor: pointer; text-align: left;
+  background: #16162a; border: 1px solid rgba(124,111,247,.3); color: var(--text);
+  font-family: inherit; transition: border-color .2s, transform .12s;
+}
+.eigen-mode:hover { border-color: rgba(124,111,247,.6); }
+.eigen-mode:active { transform: scale(.97); }
+.eigen-mode-ico { font-size: 1.5rem; margin-bottom: 6px; }
+.eigen-mode span { font-size: 14px; font-weight: 700; }
+.eigen-mode small { font-size: 11px; color: var(--muted); }
+body.kids .eigen-mode { background: #fff; border-color: rgba(76,201,240,.4); color: #1a1a3a; }
+body.kids .eigen-mode small { color: #7a7a9a; }
+
 /* ── LEESRONDE: checkpoints + resultaat ──────────────────── */
 .ronde-cp {
   position: fixed; inset: 0; z-index: 460;
@@ -2369,7 +2385,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <div class="sidebar-section"><div class="sidebar-section-title">Beheer</div></div>
   <nav id="sidebar-nav-manage">
-    <button onclick="sidebarNav('tekst')" data-screen="tekst"><span class="icon">📂</span> Tekst laden</button>
+    <button onclick="sidebarNav('tekst')" data-screen="tekst"><span class="icon">✍️</span> Eigen tekst</button>
   </nav>
 
   <div class="sidebar-bottom">
@@ -2389,7 +2405,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button onclick="toon('oog', this)"><span class="icon">👁</span> Oogbeweging</button>
     <button onclick="toon('perifeer', this)"><span class="icon">🔭</span> Perifeer</button>
     <button onclick="toon('papier', this)"><span class="icon">📄</span> Papier</button>
-    <button onclick="toon('tekst', this)"><span class="icon">📂</span> Tekst laden</button>
+    <button onclick="toon('tekst', this)"><span class="icon">✍️</span> Eigen tekst</button>
     <button onclick="toon('stats', this)"><span class="icon">📊</span> Statistieken</button>
     <button onclick="toon('dyslexie', this)"><span class="icon">🌈</span> Dyslexie Spel</button>
     <button onclick="toon('avontuur', this)"><span class="icon">🗺️</span> <b>Leesavontuur</b></button>
@@ -2808,6 +2824,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/></svg></div>
       <div class="home-kaart-titel">Oogontspanning</div>
       <div class="home-kaart-sub">Palming, focus & 20-20-20 regel</div>
+    </button>
+    <button class="home-kaart" onclick="sidebarNav('tekst')" style="border-color:rgba(76,201,240,.3)">
+      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+      <div class="home-kaart-titel">Eigen tekst</div>
+      <div class="home-kaart-sub">Plak je eigen tekst en lees 'm op elke manier</div>
     </button>
   </div>
 
@@ -3288,34 +3309,52 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
 <!-- ── TEKST LADEN ─────────────────────────────────────────── -->
 <div id="screen-tekst" class="screen">
-  <div class="page-title">Tekst Bibliotheek</div>
-  <div class="page-sub">Sla teksten op en gebruik ze direct in RSVP, Chunks en Papier. De actieve tekst wordt overal gebruikt.</div>
+  <div class="page-title">✍️ Eigen tekst</div>
+  <div class="page-sub">Plak of upload je eigen tekst — een hoofdstuk, artikel of samenvatting — en train er direct mee op elke manier. Je hoeft niets op te slaan om te beginnen.</div>
 
-  <!-- Opgeslagen teksten -->
-  <h3>Opgeslagen teksten</h3>
-  <div id="bibl-lijst"></div>
-
-  <div class="divider"></div>
-
-  <!-- Nieuwe tekst toevoegen -->
-  <h3>Nieuwe tekst toevoegen</h3>
+  <!-- Plak/laad tekst -->
   <div class="flex" style="margin-bottom:10px;gap:10px">
-    <input class="text-input" id="tekst-naam" placeholder="Naam (bijv. Hoofdstuk 1)" style="flex:1;margin-bottom:0">
-    <button class="btn btn-ghost" onclick="document.getElementById('file-input').click()">📁 .txt bestand</button>
+    <input class="text-input" id="tekst-naam" placeholder="Naam (optioneel)" style="flex:1;margin-bottom:0">
+    <button class="btn btn-ghost" onclick="document.getElementById('file-input').click()">📁 .txt</button>
     <input type="file" id="file-input" accept=".txt" style="display:none" onchange="laadBestand(this)">
   </div>
   <div class="flex" style="margin-bottom:10px;gap:10px">
-    <input class="text-input" id="url-input" placeholder="https://... (plak een link naar een artikel)" style="flex:1;margin-bottom:0">
+    <input class="text-input" id="url-input" placeholder="https://... (link naar een artikel)" style="flex:1;margin-bottom:0">
     <button class="btn btn-ghost" id="url-ophalen-btn" onclick="laadVanUrl()">🌐 Ophalen</button>
   </div>
   <div id="url-status" style="font-size:13px;color:var(--muted);margin-bottom:10px"></div>
   <textarea id="custom-text" placeholder="Plak hier je tekst…"></textarea>
   <div class="flex mt" style="justify-content:space-between;align-items:center">
     <span id="woord-tel" style="font-size:13px;color:var(--muted)"></span>
-    <button class="btn btn-primary" onclick="slaaTekstOp()">💾 Opslaan in bibliotheek</button>
+    <button class="btn btn-ghost" style="font-size:12px;padding:8px 14px" onclick="slaaTekstOp()">💾 Bewaren</button>
+  </div>
+
+  <!-- Direct lezen (verschijnt zodra er tekst staat) -->
+  <div id="eigen-launch" style="display:none;margin-top:14px">
+    <div class="sectie-label" style="margin-bottom:10px">▶ Nu lezen als</div>
+    <div class="eigen-launch-grid">
+      <button class="eigen-mode" onclick="eigenSnelStart('rsvp')">
+        <span class="eigen-mode-ico">⚡</span><span>RSVP</span><small>Woord voor woord</small>
+      </button>
+      <button class="eigen-mode" onclick="eigenSnelStart('chunk')">
+        <span class="eigen-mode-ico">📖</span><span>Chunks</span><small>Woordgroepen</small>
+      </button>
+      <button class="eigen-mode" onclick="eigenSnelStart('lees')">
+        <span class="eigen-mode-ico">📏</span><span>Leestest</span><small>Meet WPM + begrip</small>
+      </button>
+      <button class="eigen-mode" onclick="eigenSnelStart('papier')">
+        <span class="eigen-mode-ico">📄</span><span>Papier</span><small>Gidsaanwijzer</small>
+      </button>
+    </div>
   </div>
   <div id="tekst-info" class="mt"></div>
   <div id="lees-tijden" class="badge-row mt"></div>
+
+  <div class="divider"></div>
+
+  <!-- Opgeslagen teksten -->
+  <h3>Mijn opgeslagen teksten</h3>
+  <div id="bibl-lijst"></div>
 
   <div class="divider"></div>
   <h3>Begripstoets (optioneel)</h3>
@@ -5105,6 +5144,54 @@ function telWoorden() {
   document.getElementById('woord-tel').textContent = n + ' woorden';
   document.getElementById('lees-tijden').innerHTML = [100,200,300,400,600].map(wpm =>
     `<span class="wpm-badge">${wpm} WPM → ${Math.ceil(n/wpm)} min</span>`).join('');
+  // Direct-lezen-knoppen tonen zodra er genoeg tekst staat
+  const launch = document.getElementById('eigen-launch');
+  if (launch) launch.style.display = n >= 20 ? 'block' : 'none';
+}
+
+// ── DIRECT LEZEN: bewaar-en-start zonder het formulier in te vullen ──
+function _tekstNaamUitInhoud(tekst) {
+  const eerste = tekst.trim().split(/\s+/).slice(0, 5).join(' ');
+  return (eerste.length > 40 ? eerste.slice(0, 40) + '…' : eerste) || 'Mijn tekst';
+}
+
+function eigenSnelStart(mode) {
+  const tekst = (document.getElementById('custom-text').value || '').trim();
+  if (woorden(tekst).length < 20) {
+    document.getElementById('tekst-info').innerHTML = '<span style="color:var(--pink)">Plak eerst wat meer tekst (minstens 20 woorden).</span>';
+    return;
+  }
+  const naam = (document.getElementById('tekst-naam').value || '').trim() || _tekstNaamUitInhoud(tekst);
+
+  // Eventuele begripsvragen meenemen (zelfde formaat als slaaTekstOp)
+  const vragen = [];
+  [1, 2, 3].forEach(n => {
+    const v  = (document.getElementById(`v${n}`)?.value || '').trim();
+    const a  = (document.getElementById(`a${n}`)?.value || '').trim();
+    const w1 = (document.getElementById(`w${n}a`)?.value || '').trim() || 'Onjuist';
+    const w2 = (document.getElementById(`w${n}b`)?.value || '').trim() || 'Onbekend';
+    if (v && a) vragen.push({ v, opties: [a, w1, w2], correct: 0 });
+  });
+
+  // Bewaren in de bibliotheek + actief maken (zo werkt hij overal + blijft bewaard)
+  const arr = bibliLaad();
+  arr.push({ naam, tekst, vragen, toegevoegd: (typeof _vandaagISO === 'function' ? _vandaagISO() : new Date().toISOString().split('T')[0]) });
+  bibliSla(arr);
+  const idx = arr.length; // 1-based (0 = demo)
+  setActiveTekstIdx(idx);
+
+  // Formulier opschonen
+  ['custom-text','tekst-naam','v1','a1','w1a','w1b','v2','a2','w2a','w2b','v3','a3','w3a','w3b']
+    .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('woord-tel').textContent = '';
+  document.getElementById('lees-tijden').innerHTML = '';
+  document.getElementById('eigen-launch').style.display = 'none';
+
+  // Direct in de gekozen modus starten. 'lees' = eigen-leessessie met timer
+  // (werkt mét én zonder eigen begripsvragen). De launcher (eigenRsvp etc.)
+  // activeert de tekst en zet de woorden zelf.
+  const start = { rsvp: eigenRsvp, chunk: eigenChunk, papier: eigenPapier, lees: eigenLeesStart };
+  (start[mode] || eigenRsvp)(idx);
 }
 document.getElementById('custom-text').addEventListener('input', telWoorden);
 
@@ -5137,7 +5224,15 @@ function slaaTekstOp() {
 
 function activeerTekst(idx) {
   setActiveTekstIdx(idx);
-  laadRsvpTekst();
+  // Direct de dropdown herbouwen met deze tekst geselecteerd en de RSVP-woorden
+  // zetten. (Niet via laadRsvpTekst — die leest de nog-verouderde select-waarde
+  // en zou de zojuist gekozen tekst overschrijven.)
+  if (typeof vulRsvpDropdown === 'function') vulRsvpDropdown();
+  rsvpWoorden = woorden(huidigeTekst());
+  const totEl = document.getElementById('rsvp-total');
+  if (totEl) totEl.textContent = rsvpWoorden.length;
+  const posEl = document.getElementById('rsvp-pos');
+  if (posEl) posEl.textContent = 0;
   toonBibliotheek();
 }
 
@@ -6127,7 +6222,7 @@ const KIDS_LABELS = {
   oog:       { nav:'Oogtraining',    titel:'Oogtraining',             sub:'Volg de bal met je ogen. Goed voor sneller lezen!' },
   perifeer:  { nav:'Breed Kijken',   titel:'Breed Kijken',            sub:'Kijk naar het midden en probeer de woorden aan de zijkant te lezen!' },
   papier:    { nav:'Samen Lezen',    titel:'Samen Lezen',             sub:'Leer hoe je sneller kunt lezen op papier!' },
-  tekst:     { nav:'Verhalen',       titel:'Mijn Verhalen',           sub:'Kies een verhaal of voeg je eigen tekst toe!' },
+  tekst:     { nav:'Mijn tekst',     titel:'✍️ Mijn tekst',           sub:'Plak je eigen verhaal en lees het op elke manier!' },
   stats:     { nav:'Mijn Score',     titel:'Mijn Score',              sub:'Bekijk hoe goed je het doet!' },
   dyslexie:  { nav:'Woordspel',      titel:'Woordspel',               sub:'Lees het woord en kies het juiste antwoord. Hoe meer sterren, hoe beter!' },
   begintest:    { nav:'Hoe snel lees jij?', titel:'Hoe Snel Lees Jij?',  sub:'Lees een stukje tekst en ontdek hoe snel jij al leest!' },
@@ -6139,7 +6234,7 @@ const VOLW_LABELS = {
   oog:          { nav:'Oogbeweging',    titel:'Oogbewegingstraining',         sub:'Volg de bal met uw ogen. Vergroot uw blikveld en verminder onbewust terugspringen (regressie).' },
   perifeer:     { nav:'Perifeer',       titel:'Perifeer Zien',               sub:'Fixeer op het rode kruis. Probeer de woorden aan de zijkanten te lezen zonder uw ogen te bewegen.' },
   papier:       { nav:'Papier',         titel:'Papier Lees Training',        sub:'Leer technieken voor fysieke tekst. De gidsaanwijzer-methode is bewezen effectief.' },
-  tekst:        { nav:'Tekst laden',    titel:'Tekst Bibliotheek',           sub:'Sla teksten op en gebruik ze direct in RSVP, Chunks en Papier. De actieve tekst wordt overal gebruikt.' },
+  tekst:        { nav:'Eigen tekst',    titel:'✍️ Eigen tekst',              sub:'Plak of upload je eigen tekst en train er direct mee op elke manier. Opslaan is optioneel.' },
   stats:        { nav:'Statistieken',   titel:'Uw Voortgang',                sub:'Alle sessies worden lokaal opgeslagen in uw browser.' },
   dyslexie:     { nav:'Dyslexie Spel',  titel:'🌈 Dyslexie Leesavontuur',   sub:'Lees het woord goed en kies het juiste antwoord. Hoe meer sterren, hoe beter! Speciaal lettertype helpt letters uit elkaar houden.' },
   begintest:    { nav:'Begintest',      titel:'Begintest',                    sub:'Meet uw leessnelheid en begripsniveau als startpunt voor uw training.' },
