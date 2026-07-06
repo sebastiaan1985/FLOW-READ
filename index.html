@@ -1928,6 +1928,23 @@ body.kids .eigen-mode small { color: #7a7a9a; }
   background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
   color: var(--muted); font-size: 14px; font-weight: 600; font-family: inherit;
 }
+.ronde-res-volgende {
+  height: 46px; border-radius: 999px; cursor: pointer;
+  background: rgba(76,201,240,.1); border: 1px solid rgba(76,201,240,.4);
+  color: #4cc9f0; font-size: 14px; font-weight: 700; font-family: inherit;
+}
+/* Sterren-badge op oefenkaarten */
+.kaart-sterren {
+  position: absolute; top: 10px; right: 12px;
+  font-size: 12px; letter-spacing: 1px; color: #f0c000;
+  text-shadow: 0 0 8px rgba(240,192,0,.4);
+}
+/* Oogspanne-mini-test */
+.ogsp-flits {
+  min-height: 90px; display: flex; align-items: center; justify-content: center;
+  font-size: 19px; font-weight: 800; letter-spacing: -.2px; text-align: center;
+  background: #0f0f1a; border-radius: 14px; padding: 14px; margin: 14px 0;
+}
 /* Kids: lichte kaarten, zelfde motor */
 body.kids .ronde-cp-kaart, body.kids .ronde-res-kaart { background: #fff; border-color: rgba(76,201,240,.5); }
 body.kids .ronde-cp-vraag, body.kids .ronde-res-uitleg { color: #5a5a7a; }
@@ -4666,7 +4683,10 @@ function begintestControleer() {
       🧠 <b>Coach:</b> ${Coach.isKids()
         ? 'Dit is jouw startpunt — vanaf nu word je elke dag een beetje sneller! 🚀'
         : `Geoefende lezers halen vaak het dubbele van hun startniveau. Met 10 minuten per dag zit jij daar over enkele weken ook.`}
-    </div>`;
+    </div>
+    <button class="btn btn-ghost" style="width:100%;margin-top:10px;justify-content:center" onclick="_oogspanne.start()">
+      👁 Bonus: meet je oogspanne (30 sec) — bepaalt je ideale chunk-grootte
+    </button>`;
 
     btToonStap('resultaat');
   }, 600);
@@ -6226,6 +6246,145 @@ function tril(patroon) {
   try { if (navigator.vibrate) navigator.vibrate(patroon); } catch(e) { /* niet ondersteund */ }
 }
 
+// ── Count-up: getallen tellen op naar hun eindwaarde ───────
+function telOp(el, naar, duurMs = 700) {
+  if (!el) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = naar; return;
+  }
+  const start = performance.now();
+  const tick = (t) => {
+    const p = Math.min(1, (t - start) / duurMs);
+    el.textContent = Math.round(naar * (1 - Math.pow(1 - p, 3))); // ease-out
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+// ── Sterren-badges op de oefenkaarten (home + trainen) ─────
+function updateOefeningSterren() {
+  let rondes = {};
+  try { rondes = (_gamLaad().rondes) || {}; } catch(e) { return; }
+  Object.keys(rondes).forEach(type => {
+    const beste = rondes[type].beste || 0;
+    if (!beste) return;
+    document.querySelectorAll(`.home-kaart[onclick*="'${type}'"], .tr-kaart[onclick*="'${type}'"]`).forEach(kaart => {
+      let badge = kaart.querySelector('.kaart-sterren');
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'kaart-sterren';
+        kaart.style.position = 'relative';
+        kaart.appendChild(badge);
+      }
+      badge.textContent = '★'.repeat(beste);
+    });
+  });
+}
+
+// ── Oogspanne-mini-test: hoeveel woorden vang jij in één blik? ──
+// Flitst woordgroepen van oplopende lengte (~300ms). Twee goede = niveau
+// omhoog; twee fouten = klaar. Resultaat bepaalt de ideale chunk-grootte.
+const _oogspanne = {
+  _n: 2, _fouten: 0, _goedOpN: 0, _bezig: false,
+
+  woorden() {
+    // Inhoudswoorden uit de bibliotheek als bron
+    try {
+      const t = tekstenKies({ collectie: 'kort' })[0];
+      return t.tekst.split(/\s+/).map(w => w.replace(/[^a-zA-Zà-ü]/g, '')).filter(w => w.length >= 3 && w.length <= 9);
+    } catch (e) {
+      return ['huis','boom','water','licht','stoel','brood','veld','wolk','pad','markt','glas','touw'];
+    }
+  },
+
+  start() {
+    this._n = 2; this._fouten = 0; this._goedOpN = 0; this._bezig = true;
+    this._pool = this.woorden();
+    const overlay = document.createElement('div');
+    overlay.className = 'ronde-cp';
+    overlay.id = 'ogsp-overlay';
+    overlay.innerHTML = `
+      <div class="ronde-cp-kaart">
+        <div class="ronde-cp-vraag" id="ogsp-vraag">👁 Oogspanne-test — lees de flits in één blik</div>
+        <div class="ogsp-flits" id="ogsp-flits">Klaar…?</div>
+        <div class="ronde-cp-opties" id="ogsp-opties" style="visibility:hidden">
+          <button class="ronde-cp-optie" id="ogsp-opt-0"></button>
+          <button class="ronde-cp-optie" id="ogsp-opt-1"></button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    setTimeout(() => this.ronde(), 900);
+  },
+
+  _pak(n) {
+    const uit = [];
+    while (uit.length < n && this._pool.length) {
+      uit.push(this._pool.splice(Math.floor(Math.random() * this._pool.length), 1)[0]);
+    }
+    return uit;
+  },
+
+  ronde() {
+    if (!this._bezig) return;
+    const groep = this._pak(this._n);
+    if (groep.length < this._n) { this.klaar(); return; }
+    const juist = groep.join(' ');
+    // Afleider: één woord vervangen
+    const anders = [...groep];
+    const vervang = this._pak(1)[0] || 'anders';
+    anders[Math.floor(Math.random() * anders.length)] = vervang;
+
+    const flits = document.getElementById('ogsp-flits');
+    const opties = document.getElementById('ogsp-opties');
+    flits.textContent = juist;
+    opties.style.visibility = 'hidden';
+
+    setTimeout(() => {
+      flits.textContent = '· · ·';
+      const volgorde = Math.random() < 0.5 ? [juist, anders.join(' ')] : [anders.join(' '), juist];
+      [0, 1].forEach(i => {
+        const b = document.getElementById('ogsp-opt-' + i);
+        b.textContent = volgorde[i];
+        b.className = 'ronde-cp-optie';
+        b.disabled = false;
+        b.style.fontSize = '13px';
+        b.onclick = () => this.antwoord(volgorde[i] === juist, b);
+      });
+      opties.style.visibility = 'visible';
+    }, 280 + this._n * 40); // iets langer bij grotere groepen
+  },
+
+  antwoord(goed, btn) {
+    document.querySelectorAll('#ogsp-opties .ronde-cp-optie').forEach(b => b.disabled = true);
+    btn.classList.add(goed ? 'goed' : 'fout');
+    if (typeof _geluid !== 'undefined') (goed ? _geluid.goed() : _geluid.fout());
+    if (goed) {
+      this._goedOpN++;
+      if (this._goedOpN >= 2) { this._n++; this._goedOpN = 0; }
+      if (this._n > 6) { setTimeout(() => this.klaar(), 500); return; }
+    } else {
+      this._fouten++;
+      if (this._fouten >= 2) { setTimeout(() => this.klaar(), 500); return; }
+    }
+    setTimeout(() => this.ronde(), 650);
+  },
+
+  klaar() {
+    this._bezig = false;
+    const spanne = Math.max(2, Math.min(6, this._n - (this._goedOpN === 0 && this._fouten >= 2 ? 1 : 0)));
+    _gamZet('oogspanne', spanne);
+    const kaart = document.querySelector('#ogsp-overlay .ronde-cp-kaart');
+    if (kaart) {
+      kaart.innerHTML = `
+        <div class="ronde-cp-vraag">👁 Jouw oogspanne</div>
+        <div class="ogsp-flits" style="font-size:2.2rem">${spanne} woorden</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Je vangt ${spanne} woorden in één blik — je chunk-grootte staat nu automatisch op ${Math.min(spanne, 5)}.</p>
+        <button class="ronde-res-opnieuw" style="width:100%" onclick="document.getElementById('ogsp-overlay').remove()">Top!</button>`;
+    }
+    if (typeof _geluid !== 'undefined') _geluid.fanfare();
+  },
+};
+
 // ── Level-up viering ────────────────────────────────────────
 function vierLevelUp(level) {
   _geluid.fanfare();
@@ -6426,6 +6585,7 @@ function leerWegAutoVoltooi(scherm) {
   const nu = Date.now();
   if (nu - _lwAutoLaatst < 3000) return;
   _lwAutoLaatst = nu;
+  window._lwLaatstAfgevinkt = nu; // ronde-resultaat toont dan "Naar de kaart"
   // Vandaag-dag automatisch afvinken zodra de bijbehorende oefening is gedaan
   const gedaan = lwGedaan();
   gedaan.push(lwKey(volgende.w, volgende.d));
@@ -11347,11 +11507,20 @@ async function aiLangeTekstNieuwe() {
         slider.value = Math.min(+slider.max, Math.max(+slider.min, Coach.adaptief.doelWpm('chunk')));
         slider.dispatchEvent(new Event('input'));
       }
+      // Chunk-grootte uit de oogspanne-meting (tenzij handmatig aangepast)
+      const cs = document.getElementById('chunk-size');
+      try {
+        const spanne = _gamLaad().oogspanne;
+        if (cs && spanne && !cs.dataset.handmatig) {
+          cs.value = Math.min(+cs.max, Math.max(+cs.min, Math.min(spanne, 5)));
+          cs.dispatchEvent(new Event('input'));
+        }
+      } catch (e) {}
     }
   };
 
   // Handmatige slider-aanpassing respecteren voor de rest van de sessie
-  ['wpm-slider', 'chunk-wpm'].forEach(id => {
+  ['wpm-slider', 'chunk-wpm', 'chunk-size'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('pointerdown', () => { el.dataset.handmatig = '1'; });
   });
@@ -11384,6 +11553,7 @@ async function aiLangeTekstNieuwe() {
   window.sidebarNav = function(screen) {
     _gamOrigNav(screen);
     if (screen === 'home') { updateDagdoelRing(); eersteStappenUpdate(); leerWegHeroUpdate(); }
+    if (screen === 'home' || screen === 'trainen') updateOefeningSterren();
     updateDaguitdaging(); // banner alleen buiten home en zolang de uitdaging open staat
     focusModusUit();      // navigeren = altijd terug naar normale weergave
   };
@@ -11401,6 +11571,7 @@ async function aiLangeTekstNieuwe() {
   updateDagdoelRing();
   eersteStappenUpdate();
   leerWegHeroUpdate();
+  updateOefeningSterren();
   updateAppBadge();
   setTimeout(checkStreakGevaar, 2500);
   setTimeout(checkWeekRecap, 4000);

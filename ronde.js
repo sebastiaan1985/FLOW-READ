@@ -50,6 +50,10 @@ const Ronde = {
     this._volgendeCp = 0;
     this.wachtOpAntwoord = false;
 
+    // Herhaald-lezen-modus (vloeiendheid): gezet door herlees()
+    this._fluency = this._pendingFluency || null;
+    this._pendingFluency = null;
+
     if (this._woorden.length < 40) { this.actief = false; return; }
     this.actief = true;
 
@@ -201,7 +205,14 @@ const Ronde = {
     // XP: woorden × begrip-multiplier + combo-bonus (5..80)
     const basis = Math.round(aantalWoorden / 12);
     const mult = 0.4 + 0.6 * ((begrip ?? 50) / 100);
-    const xp = Math.max(5, Math.min(80, Math.round(basis * mult) + this._maxCombo * 2));
+    let xp = Math.max(5, Math.min(80, Math.round(basis * mult) + this._maxCombo * 2));
+
+    // Vloeiendheid-bonus (herhaald lezen): tweede keer beter begrip = +10 XP
+    let fluencyBonus = false;
+    if (this._fluency && begrip !== null && begrip > this._fluency.begrip) {
+      xp += 10;
+      fluencyBonus = { van: this._fluency.begrip, naar: begrip };
+    }
 
     // Eén economie: XP naar het avontuurprofiel (level-balk in de header)
     try {
@@ -225,7 +236,8 @@ const Ronde = {
       _gamSla(g);
     } catch (e) {}
 
-    const res = { sterren, wpm, begrip, xp, maxCombo: this._maxCombo, doelWpm, type: this.type };
+    const res = { sterren, wpm, begrip, xp, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus };
+    this._fluency = null;
     this._toonResultaat(res);
     return res;
   },
@@ -235,13 +247,42 @@ const Ronde = {
     const sterHtml = [1, 2, 3].map(i =>
       `<span class="ronde-ster ${i <= r.sterren ? 'aan' : ''}" style="animation-delay:${i * .18}s">★</span>`).join('');
 
-    const uitleg = r.sterren === 3
+    let uitleg = r.sterren === 3
       ? (kids ? 'WAUW! Alle sterren — jij bent een supervos! 🦊' : 'Perfect: snel én alles begrepen.')
       : r.sterren === 2
         ? (kids ? 'Goed gelezen! Haal je ook het doeltempo? 🚀' : `Sterk begrip. Derde ster bij ${r.doelWpm} WPM.`)
         : (r.begrip !== null && r.begrip < 70
-            ? (kids ? 'Net gemist! Lees iets rustiger, dan vang je alle woorden. 🎯' : 'Tempo iets terug — begrip ≥70% geeft de tweede ster.')
+            ? (kids ? 'Net gemist! Lees ’m nog een keer — dan vang je alle woorden. 🎯' : 'Begrip onder de 70% — herhaald lezen van dezelfde tekst is dé bewezen manier om dat te fixen.')
             : (kids ? 'Goed gedaan! Nog een keertje?' : 'Uitgelezen! Checkpoints goed beantwoorden geeft meer sterren.'));
+
+    // Vloeiendheid-bonus (herhaald lezen met beter begrip)
+    if (r.fluencyBonus) {
+      uitleg = kids
+        ? `📈 Van ${r.fluencyBonus.van}% naar ${r.fluencyBonus.naar}% begrip — herlezen werkt! +10 bonus-XP`
+        : `📈 Vloeiendheid-bonus: begrip steeg van ${r.fluencyBonus.van}% naar ${r.fluencyBonus.naar}%. +10 XP extra.`;
+    }
+
+    // Knoppen: herlezen (slecht begrip) óf +10% (goed) · ketting · kaart/klaar
+    const paced = r.type === 'rsvp' || r.type === 'chunk';
+    const herleesbaar = paced && r.begrip !== null && r.begrip < 70;
+    let knoppen = '';
+    if (herleesbaar) {
+      knoppen += `<button class="ronde-res-opnieuw" onclick="Ronde.herlees(${r.begrip})">📖 Lees nog eens <span style="opacity:.8">(zelfde tempo)</span></button>`;
+    } else if (paced) {
+      knoppen += `<button class="ronde-res-opnieuw" onclick="Ronde.opnieuw()">🚀 Nog een keer <span style="opacity:.8">(+10%)</span></button>`;
+    }
+    // Ketting: houd de speler in de loop met de coach-aanbeveling
+    try {
+      const aanb = Coach.planner.aanbeveling();
+      if (aanb && aanb.type !== r.type) {
+        knoppen += `<button class="ronde-res-volgende" onclick="Ronde.volgende('${aanb.type}')">Volgende: ${aanb.icon} ${aanb.naam} →</button>`;
+      }
+    } catch (e) { /* planner niet beschikbaar */ }
+    // Net een leerweg-dag afgevinkt? Dan is de kaart hét beloningsmoment
+    const lwNet = (Date.now() - (window._lwLaatstAfgevinkt || 0)) < 90000;
+    knoppen += lwNet
+      ? `<button class="ronde-res-klaar" onclick="Ronde.sluit();sidebarNav('leerweg')">🗺️ Naar de kaart</button>`
+      : `<button class="ronde-res-klaar" onclick="Ronde.sluit()">Klaar</button>`;
 
     const overlay = document.createElement('div');
     overlay.className = 'ronde-res';
@@ -251,19 +292,18 @@ const Ronde = {
         <div class="ronde-sterren">${sterHtml}</div>
         <div class="ronde-res-uitleg">${uitleg}</div>
         <div class="ronde-res-grid">
-          <div><div class="ronde-res-num">${r.wpm}</div><div class="ronde-res-lbl">WPM</div></div>
+          <div><div class="ronde-res-num" id="ronde-res-wpm">0</div><div class="ronde-res-lbl">WPM</div></div>
           <div><div class="ronde-res-num" style="color:${r.begrip === null ? 'var(--muted)' : r.begrip >= 70 ? 'var(--green)' : '#f59e0b'}">${r.begrip === null ? '—' : r.begrip + '%'}</div><div class="ronde-res-lbl">begrip</div></div>
           <div><div class="ronde-res-num" style="color:#f0b000">${r.maxCombo > 1 ? '×' + r.maxCombo : '—'}</div><div class="ronde-res-lbl">combo</div></div>
         </div>
         <div class="ronde-res-xp">+${r.xp} XP</div>
-        <div class="ronde-res-knoppen">
-          ${(r.type === 'rsvp' || r.type === 'chunk')
-            ? `<button class="ronde-res-opnieuw" onclick="Ronde.opnieuw()">🚀 Nog een keer <span style="opacity:.8">(+10%)</span></button>`
-            : ''}
-          <button class="ronde-res-klaar" onclick="Ronde.sluit()">Klaar</button>
-        </div>
+        <div class="ronde-res-knoppen">${knoppen}</div>
       </div>`;
     document.body.appendChild(overlay);
+
+    // WPM telt op naar de eindwaarde (oog-snoep)
+    if (typeof telOp === 'function') telOp(document.getElementById('ronde-res-wpm'), r.wpm);
+    else document.getElementById('ronde-res-wpm').textContent = r.wpm;
 
     if (r.sterren >= 3 && typeof showConfetti === 'function') showConfetti(50, 20, true);
     if (typeof _geluid !== 'undefined') (r.sterren >= 2 ? _geluid.fanfare() : _geluid.goed());
@@ -271,6 +311,23 @@ const Ronde = {
 
   sluit() {
     document.getElementById('ronde-res')?.remove();
+  },
+
+  /** Herhaald lezen: zelfde tekst, zelfde tempo — met vloeiendheid-bonus. */
+  herlees(vorigBegrip) {
+    this.sluit();
+    this._pendingFluency = { begrip: vorigBegrip ?? 0 };
+    if (this.type === 'rsvp' && typeof rsvpStart === 'function') {
+      rsvpIdx = 0; rsvpElapsed = 0; rsvpStart_t = null; rsvpStart();
+    } else if (this.type === 'chunk' && typeof chunkStart === 'function') {
+      chunkStart();
+    }
+  },
+
+  /** Ketting: door naar de volgende aanbevolen oefening. */
+  volgende(type) {
+    this.sluit();
+    if (typeof sidebarNav === 'function') sidebarNav(type);
   },
 
   /** Pacing-ramp: zelfde tekst, 10% sneller. */
