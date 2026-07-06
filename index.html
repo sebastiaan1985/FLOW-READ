@@ -69,6 +69,8 @@ body {
 }
 
 /* ── HEADER ───────────────────────────────────────────────── */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
 header {
   display: flex;
   align-items: center;
@@ -1128,6 +1130,12 @@ body.kids .oog-timer-num { color:#ff6b6b; }
 @media (max-width: 360px) {
   #screen-home .streak-badge { display: none; }
 }
+/* Geïnstalleerd op het beginscherm (standalone): de pagina loopt onder de
+   iPhone-statusbalk door (black-translucent) — extra ademruimte bovenin
+   zodat de menuknop nooit onder de klok/batterij valt */
+@media (display-mode: standalone) {
+  header { padding-top: calc(16px + env(safe-area-inset-top, 0px)); }
+}
 .speler-avatar { font-size: 1.2rem; line-height: 1; }
 .speler-naam { font-size: 12px; font-weight: 600; color: #e07000; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
 .speler-streak { font-size: 11px; font-weight: 700; color: #e07000; white-space: nowrap; }
@@ -1705,6 +1713,61 @@ main { -webkit-overflow-scrolling: touch; }
     box-shadow: 0 10px 34px rgba(0,0,0,.45);
   }
 }
+
+/* ── LEERWEG GAME-KAART: kronkelpad met nodes ────────────── */
+.lwp-wereld { margin-bottom: 30px; }
+.lwp-banner {
+  display: flex; align-items: center; gap: 12px;
+  border: 1px solid; border-radius: 18px; padding: 14px 16px; margin-bottom: 22px;
+}
+.lwp-banner-icon { font-size: 1.7rem; flex-shrink: 0; }
+.lwp-banner-info { flex: 1; min-width: 0; }
+.lwp-banner-naam { font-size: .95rem; font-weight: 800; letter-spacing: -.2px; }
+.lwp-banner-doel { font-size: .74rem; color: var(--muted); margin-top: 2px; }
+.lwp-banner-badge { font-size: .85rem; font-weight: 800; flex-shrink: 0; }
+.lwp-pad { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 4px 0 8px; }
+.lwp-rij { display: flex; flex-direction: column; align-items: center; }
+.lwp-node {
+  width: 58px; height: 58px; border-radius: 999px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; font-weight: 800; font-family: inherit;
+  background: #1b1b33; border: 2px solid rgba(255,255,255,.12); color: rgba(255,255,255,.4);
+  box-shadow: 0 5px 0 rgba(0,0,0,.4);                /* 3D-drukknop */
+  transition: transform .1s, box-shadow .1s;
+}
+.lwp-node:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,.4); }
+.lwp-node.done { background: var(--wk); border-color: var(--wk); color: #fff; box-shadow: 0 5px 0 rgba(0,0,0,.35); }
+.lwp-node.nu {
+  width: 68px; height: 68px; font-size: 26px; position: relative;
+  background: var(--wk); border-color: #fff3; color: #fff;
+  box-shadow: 0 6px 0 rgba(0,0,0,.35);
+}
+.lwp-node.nu::after {
+  content: ''; position: absolute; inset: -11px; border-radius: 999px;
+  border: 3px solid var(--wk); animation: lwpPuls 1.8s ease-out infinite;
+}
+@keyframes lwpPuls { from { transform: scale(.82); opacity: .8; } to { transform: scale(1.18); opacity: 0; } }
+.lwp-node.shake { animation: lwpShake .4s ease; }
+@keyframes lwpShake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-7px); } 75% { transform: translateX(7px); } }
+.lwp-label {
+  margin-top: 10px; max-width: 150px; text-align: center;
+  font-size: 11.5px; font-weight: 700; line-height: 1.35; color: var(--text);
+  background: #16162a; border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px; padding: 6px 10px;
+}
+.lwp-finish {
+  text-align: center; padding: 10px 0 26px; color: var(--muted);
+  font-size: .8rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+}
+.lwp-finish-cup { display: block; font-size: 3rem; margin-bottom: 6px; filter: grayscale(.9) opacity(.5); }
+.lwp-finish.behaald .lwp-finish-cup { filter: none; animation: levelupPop .5s cubic-bezier(.2,1.6,.4,1); }
+.lwp-finish.behaald { color: #f0c000; }
+@media (prefers-reduced-motion: reduce) { .lwp-node.nu::after { animation: none; opacity: .35; } }
+/* Kids (licht thema): witte nodes, zachtere schaduwen */
+body.kids .lwp-node { background: #fff; border-color: rgba(0,0,0,.14); color: #9a9ab8; box-shadow: 0 5px 0 rgba(0,0,0,.12); }
+body.kids .lwp-node.done, body.kids .lwp-node.nu { background: var(--wk); border-color: var(--wk); color: #fff; }
+body.kids .lwp-banner { background: #fff !important; }
+body.kids .lwp-label { background: #fff; border-color: rgba(0,0,0,.1); color: #1a1a3a; }
 
 /* ── EIGEN TEKST: direct-lezen-knoppen ───────────────────── */
 .eigen-launch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -6374,6 +6437,11 @@ function getDaguitdaging() {
 }
 
 function voltooiDaguitdaging(type) {
+  // Elke afgeronde oefening telt ook mee voor de leerweg-dag van vandaag
+  // (dekt oefeningen zónder sessie-opslag zoals oogrust/fixatie/regressie;
+  // leerWegAutoVoltooi heeft een debounce tegen dubbel afvinken)
+  if (typeof leerWegAutoVoltooi === 'function') leerWegAutoVoltooi(type);
+
   const data = JSON.parse(localStorage.getItem('daily_challenge') || '{}');
   const uitdaging = DAGELIJKSE_UITDAGINGEN[data.idx];
   if (uitdaging && uitdaging.type === type && !data.voltooid) {
@@ -6683,9 +6751,15 @@ function leerWegVolgendeDag() {
   return null; // hele leerweg voltooid
 }
 
+let _lwAutoLaatst = 0;
 function leerWegAutoVoltooi(scherm) {
   const volgende = leerWegVolgendeDag();
   if (!volgende || volgende.dag.screen !== scherm) return;
+  // Debounce: één voltooiing = één afgevinkte dag, ook als meerdere
+  // hooks (sessie-opslag + daguitdaging) vlak na elkaar vuren
+  const nu = Date.now();
+  if (nu - _lwAutoLaatst < 3000) return;
+  _lwAutoLaatst = nu;
   // Vandaag-dag automatisch afvinken zodra de bijbehorende oefening is gedaan
   const gedaan = lwGedaan();
   gedaan.push(lwKey(volgende.w, volgende.d));
@@ -8212,50 +8286,58 @@ function leerWegInit() {
     doelInfo.innerHTML = `💡 Stel een WPM-doel in via <a onclick="sidebarNav('stats')" href="#" style="color:var(--accent)">Statistieken</a> om je voortgang te volgen`;
   }
 
-  // Weken bouwen
+  // ── GAME-KAART: kronkelend pad van nodes per wereld (week) ──
   const cont = document.getElementById('lw-weken-container');
+  const kids = document.body.classList.contains('kids');
+  let globaal = 0;
+  const allesKlaar = vandaagWeek === -1;
+
   cont.innerHTML = LEERWEG_WEKEN.map((week, wi) => {
-    const weekGedaan = week.dagen.filter((_,di) => gedaan.includes(lwKey(wi,di))).length;
-    const totaal = week.dagen.length;
-    const isHuidig = wi === vandaagWeek;
-    const isVoltooid = weekGedaan === totaal;
-    const badgeTxt = isVoltooid ? '✅ Voltooid' : `${weekGedaan}/${totaal} gedaan`;
+    const weekGedaan = week.dagen.filter((_, di) => gedaan.includes(lwKey(wi, di))).length;
+    const isVoltooid = weekGedaan === week.dagen.length;
 
-    const dots = Array.from({length:totaal},(_,di) => {
-      const isDone = gedaan.includes(lwKey(wi,di));
-      const isVandaag = wi === vandaagWeek && di === vandaagDag;
-      return `<div class="lw-progress-dot ${isDone?'gedaan':isVandaag?'vandaag':''}"></div>`;
-    }).join('');
-
-    const dagenHtml = week.dagen.map((dag, di) => {
-      const done = gedaan.includes(lwKey(wi,di));
-      const isVandaagDag = wi === vandaagWeek && di === vandaagDag;
-      const btnTxt = done ? '✓' : isVandaagDag ? '▶ Nu' : 'Start';
-      return `<div class="lw-dag-rij ${done?'gedaan':''}">
-        <span class="lw-dag-nr">Dag ${di+1}</span>
-        <span class="lw-dag-naam">${dag.naam}</span>
-        <span class="lw-dag-duur">${dag.duur}</span>
-        ${done ? '<span class="lw-dag-vink">✅</span>' :
-          `<button class="lw-dag-btn" onclick="leerWegStartDag(${wi},${di})">${btnTxt}</button>`}
+    const nodesHtml = week.dagen.map((dag, di) => {
+      const done = gedaan.includes(lwKey(wi, di));
+      const isNu = wi === vandaagWeek && di === vandaagDag;
+      const locked = !done && !isNu;
+      // Kronkelend pad: sinusvormige horizontale offset
+      const offset = Math.round(Math.sin(globaal * 1.05) * 72);
+      globaal++;
+      const inhoud = done ? '✓' : isNu ? (kids ? '🦊' : '▶') : (di + 1);
+      const klik = locked ? 'lwLockedTik(this)' : `leerWegStartDag(${wi},${di})`;
+      return `<div class="lwp-rij" style="transform:translateX(${offset}px)">
+        <button class="lwp-node ${done ? 'done' : ''} ${isNu ? 'nu' : ''} ${locked ? 'locked' : ''}"
+          style="--wk:${week.kleur}" onclick="${klik}"
+          title="Dag ${di + 1}: ${dag.naam} (${dag.duur})"
+          aria-label="Week ${wi + 1} dag ${di + 1}: ${dag.naam}">${inhoud}</button>
+        ${isNu ? `<div class="lwp-label">${dag.naam}</div>` : ''}
       </div>`;
     }).join('');
 
-    return `<div class="lw-week-card">
-      <div class="lw-week-header" onclick="lwToggleWeek(${wi})" style="${isHuidig?'border-left:3px solid var(--accent);':''}" >
-        <div class="lw-week-icon">${week.icon}</div>
-        <div class="lw-week-info">
-          <div class="lw-week-naam">${week.naam}</div>
-          <div class="lw-week-sub">${week.doel}</div>
-          <div class="lw-progress-rij" style="margin-top:6px">${dots}</div>
+    return `<div class="lwp-wereld">
+      <div class="lwp-banner" style="background:linear-gradient(135deg,${week.kleur}26,#16162a 70%);border-color:${week.kleur}55">
+        <span class="lwp-banner-icon">${week.icon}</span>
+        <div class="lwp-banner-info">
+          <div class="lwp-banner-naam">${week.naam}</div>
+          <div class="lwp-banner-doel">${week.doel}</div>
         </div>
-        <span class="lw-week-badge ${isVoltooid?'voltooid':''}">${badgeTxt}</span>
+        <span class="lwp-banner-badge" style="color:${week.kleur}">${isVoltooid ? '✅' : weekGedaan + '/' + week.dagen.length}</span>
       </div>
-      <div class="lw-week-body ${isHuidig?'open':''}" id="lw-week-body-${wi}">
-        <div style="font-size:.82rem;color:var(--muted);margin-bottom:10px;padding:8px;background:var(--card2);border-radius:8px">💡 ${week.uitleg}</div>
-        ${dagenHtml}
-      </div>
+      <div class="lwp-pad">${nodesHtml}</div>
     </div>`;
-  }).join('');
+  }).join('') + `
+    <div class="lwp-finish ${allesKlaar ? 'behaald' : ''}">
+      <span class="lwp-finish-cup">🏆</span>
+      <div>${allesKlaar ? (kids ? 'JIJ BENT EEN ECHTE SNELLEZER!' : 'Programma voltooid — jij bent een snellezer!') : 'Snellezer'}</div>
+    </div>`;
+}
+
+// Vergrendelde dag aangetikt: schud + korte uitleg
+function lwLockedTik(el) {
+  el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+  if (typeof _geluid !== 'undefined') _geluid.fout();
+  if (typeof tril === 'function') tril(40);
+  toonFout('🔒 Rond eerst de vorige dag af — stap voor stap word je sneller!');
 }
 
 function lwToggleWeek(wi) {
@@ -8273,12 +8355,15 @@ function leerWegVandaagDoen() {
 function leerWegStartDag(w, d) {
   const dag = LEERWEG_WEKEN[w].dagen[d];
   if (dag.screen) {
+    // Game-integriteit: de dag wordt pas afgevinkt zodra de oefening écht
+    // is afgerond (leerWegAutoVoltooi) — niet bij het openen van het scherm.
     sidebarNav(dag.screen);
   } else {
+    // Vrije-keuze-dag: geen specifiek scherm, dus meteen afvinken mag
     alert('Vrij oefenen: kies zelf een module uit het menu!');
+    leerWegDagDoen(w, d);
+    sidebarNav('trainen');
   }
-  // Na navigatie markeren als gedaan
-  setTimeout(() => leerWegDagDoen(w, d), 300);
 }
 
 function leerWegDagMarkeer() {
