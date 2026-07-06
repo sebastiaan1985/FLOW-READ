@@ -1714,6 +1714,79 @@ main { -webkit-overflow-scrolling: touch; }
   }
 }
 
+/* ── PROFIEL (sanering avontuur → strak) ─────────────────── */
+#screen-avontuur { font-family: inherit; }
+.prof-acties { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.prof-mini-btn { font-size: 12px; padding: 7px 13px; }
+.prof-kop {
+  display: flex; align-items: center; gap: 16px;
+  background: linear-gradient(160deg,#1a1738,#16162a 70%);
+  border: 1px solid rgba(124,111,247,.3); border-radius: 20px;
+  padding: 18px 18px; margin-bottom: 14px; position: relative; overflow: hidden;
+}
+.prof-kop::before {
+  content: ''; position: absolute; top: -50px; left: -30px; width: 220px; height: 180px;
+  background: radial-gradient(closest-side, rgba(124,111,247,.25), transparent); pointer-events: none;
+}
+.prof-avatar {
+  width: 64px; height: 64px; border-radius: 999px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 2rem;
+  background: rgba(124,111,247,.15); border: 1px solid rgba(124,111,247,.4); position: relative;
+}
+.prof-naam { font-size: 1.25rem; font-weight: 800; letter-spacing: -.3px; }
+.prof-level { font-size: .8rem; color: var(--accent2); font-weight: 700; margin-top: 2px; }
+.prof-xp-rij { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin: 10px 0 5px; font-variant-numeric: tabular-nums; }
+.prof-xp-track { height: 8px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+.prof-xp-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg,var(--accent),#a78bfa); transition: width .5s ease; }
+.prof-streak {
+  flex-shrink: 0; align-self: flex-start; font-size: .85rem; font-weight: 800; color: #f0b000;
+  background: linear-gradient(135deg, rgba(224,112,0,.2), rgba(240,192,0,.14));
+  border: 1px solid rgba(240,160,0,.35); border-radius: 999px; padding: 6px 12px; position: relative;
+}
+.prof-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.prof-stats > div { background: #16162a; border: 1px solid rgba(255,255,255,.07); border-radius: 16px; padding: 14px 8px; text-align: center; }
+.prof-stat-num { font-size: 1.3rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.prof-stat-lbl { font-size: .66rem; color: var(--muted); margin-top: 3px; text-transform: uppercase; letter-spacing: .8px; }
+.prof-oefeningen { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.prof-oef {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  background: #16162a; border: 1px solid rgba(255,255,255,.07); border-radius: 14px;
+  padding: 11px 13px; cursor: pointer; color: var(--text); font-family: inherit; font-size: 12.5px; font-weight: 600;
+}
+.prof-oef:hover { border-color: rgba(124,111,247,.45); }
+.prof-oef-naam { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.prof-oef-sterren { flex-shrink: 0; font-size: 13px; letter-spacing: 1px; }
+.ster-aan { color: #f0c000; } .ster-uit { color: rgba(255,255,255,.15); }
+.prof-badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.prof-badge {
+  background: #16162a; border: 1px solid rgba(255,255,255,.07); border-radius: 14px;
+  padding: 12px 6px; text-align: center;
+}
+.prof-badge.dicht { opacity: .38; filter: grayscale(1); }
+.prof-badge-icon { display: block; font-size: 1.5rem; margin-bottom: 5px; }
+.prof-badge-naam { font-size: 10px; color: var(--muted); line-height: 1.3; display: block; }
+.prof-onder { display: flex; justify-content: space-between; margin-top: 22px; }
+/* profiel-kiezen + aanmaken: strak i.p.v. cream */
+.av-profiel-kaart, .av-nieuw-kaart {
+  background: #16162a !important; border: 1px solid rgba(255,255,255,.09) !important;
+  border-radius: 18px !important; box-shadow: none !important;
+}
+.av-profiel-kaart:hover, .av-nieuw-kaart:hover { border-color: rgba(124,111,247,.5) !important; }
+.av-profiel-kaart-naam { color: var(--text) !important; font-family: inherit !important; }
+.av-profiel-kaart-info, .av-nieuw-naam { color: var(--muted) !important; }
+.av-naam-input {
+  background: rgba(255,255,255,.06) !important; border: 1px solid var(--border2) !important;
+  color: var(--text) !important; border-radius: 12px !important; font-family: inherit !important;
+}
+.av-avatar { background: #16162a !important; border: 2px solid rgba(255,255,255,.1) !important; }
+.av-avatar.gekozen, .av-avatar:hover { border-color: var(--accent) !important; }
+/* kids: licht thema */
+body.kids .prof-kop, body.kids .prof-stats > div, body.kids .prof-oef,
+body.kids .prof-badge, body.kids .av-profiel-kaart, body.kids .av-nieuw-kaart { background: #fff !important; border-color: rgba(0,0,0,.08) !important; }
+body.kids .prof-naam, body.kids .prof-stat-num, body.kids .prof-oef, body.kids .av-profiel-kaart-naam { color: #1a1a3a !important; }
+body.kids .ster-uit { color: rgba(0,0,0,.12); }
+body.kids .prof-kop::before { background: radial-gradient(closest-side, rgba(76,201,240,.22), transparent); }
+
 /* ── LEERWEG GAME-KAART: kronkelpad met nodes ────────────── */
 .lwp-wereld { margin-bottom: 30px; }
 .lwp-banner {
@@ -2440,9 +2513,9 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button onclick="sidebarNav('oogrust')" data-screen="oogrust"><span class="icon">😌</span> Oogontspanning</button>
   </nav>
 
-  <div class="sidebar-section avontuur-element" id="sidebar-section-avontuur"><div class="sidebar-section-title">Avontuur & Spellen</div></div>
+  <div class="sidebar-section" id="sidebar-section-avontuur"><div class="sidebar-section-title">Spelen</div></div>
   <nav id="sidebar-nav-games">
-    <button class="avontuur-element" onclick="sidebarNav('avontuur')" data-screen="avontuur" style="color:#e07000"><span class="icon">🗺️</span> <b>Leesavontuur</b></button>
+    <button onclick="sidebarNav('avontuur')" data-screen="avontuur"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Profiel</button>
     <button onclick="sidebarNav('dyslexie')" data-screen="dyslexie"><span class="icon">🌈</span> Dyslexie Spel</button>
   </nav>
 
@@ -2471,7 +2544,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button onclick="toon('tekst', this)"><span class="icon">✍️</span> Eigen tekst</button>
     <button onclick="toon('stats', this)"><span class="icon">📊</span> Statistieken</button>
     <button onclick="toon('dyslexie', this)"><span class="icon">🌈</span> Dyslexie Spel</button>
-    <button onclick="toon('avontuur', this)"><span class="icon">🗺️</span> <b>Leesavontuur</b></button>
+    <button onclick="toon('avontuur', this)"><span class="icon">👤</span> Profiel</button>
 </nav>
 
 <!-- iOS installatie-instructies -->
@@ -2852,11 +2925,6 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.065 12.493 6.5 21"/><path d="m13.56 11.747 4.332-.924"/><path d="m16 21-3.105-6.21"/><path d="M3.485 12.746a.5.5 0 0 1-.417-.612l.7-3.386a2 2 0 0 1 2.312-1.566l14.331 2.516a2 2 0 0 1 1.617 2.31l-.7 3.386a.5.5 0 0 1-.617.396z"/><path d="M6 9 5 3"/></svg></div>
       <div class="home-kaart-titel">Perifeer Zien</div>
       <div class="home-kaart-sub">Train je zijdelings blikveld</div>
-    </button>
-    <button class="home-kaart avontuur-element" id="home-kaart-avontuur" onclick="sidebarNav('avontuur')">
-      <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v14"/><path d="M9 3.236v15"/></svg></div>
-      <div class="home-kaart-titel">Leesavontuur</div>
-      <div class="home-kaart-sub">Levels, badges en XP verdienen</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('begintest')">
       <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
@@ -3875,101 +3943,73 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 ══════════════════════════════════════════════════════════ -->
 <div id="screen-avontuur" class="screen">
 
-  <!-- PROFIEL KIEZEN (startscherm) -->
+  <!-- PROFIEL KIEZEN -->
   <div id="av-view-kies" class="av-view av-active">
-    <div class="av-kies-wrap">
-      <div style="font-size:3rem;margin-bottom:8px">🗺️</div>
-      <h1>Wie gaat er lezen?</h1>
-      <p>Kies jouw profiel of maak een nieuw avontuur aan!</p>
-      <div class="av-profiel-grid" id="av-kies-grid"></div>
-    </div>
+    <div class="page-title">Wie gaat er lezen?</div>
+    <div class="page-sub">Kies je profiel — iedereen houdt z'n eigen voortgang, streak en badges bij.</div>
+    <div class="av-profiel-grid" id="av-kies-grid"></div>
   </div>
 
   <!-- PROFIEL AANMAKEN -->
   <div id="av-view-profiel" class="av-view">
-    <div class="av-profiel-wrap">
-      <div style="font-size:3.5rem;margin-bottom:12px">🗺️</div>
-      <h1>Hallo lezer!</h1>
-      <p>Wie ben jij? Kies je avatar en schrijf je naam!</p>
-      <div class="avatar-grid" id="avatar-grid">
-        <div class="av-avatar" onclick="kiesAvatar('🦊')">🦊</div>
-        <div class="av-avatar" onclick="kiesAvatar('🐉')">🐉</div>
-        <div class="av-avatar" onclick="kiesAvatar('🦋')">🦋</div>
-        <div class="av-avatar" onclick="kiesAvatar('🐬')">🐬</div>
-        <div class="av-avatar" onclick="kiesAvatar('🦁')">🦁</div>
-        <div class="av-avatar" onclick="kiesAvatar('🌟')">🌟</div>
-        <div class="av-avatar" onclick="kiesAvatar('🐸')">🐸</div>
-        <div class="av-avatar" onclick="kiesAvatar('🦄')">🦄</div>
-      </div>
-      <input class="av-naam-input" id="av-naam-input" type="text" placeholder="Jouw naam…" value="" maxlength="20">
-      <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center">
-        <label style="font-size:.9rem;color:#8b5e3c;white-space:nowrap">Hoe oud ben jij?</label>
-        <input class="av-naam-input" id="av-leeftijd-input" type="number" min="4" max="99" placeholder="leeftijd" style="margin-bottom:0;width:90px;text-align:center">
-        <span style="font-size:.85rem;color:#a07050">jaar</span>
-      </div>
-      <p style="font-size:.75rem;color:#b08060;margin-bottom:16px">👶 Onder 12? Kids modus gaat automatisch aan!</p>
-      <button class="av-btn av-btn-oranje" style="width:100%;justify-content:center;font-size:1.1rem" onclick="maakProfiel()">🚀 Start mijn avontuur!</button>
+    <div class="page-title">Nieuw profiel</div>
+    <div class="page-sub">Kies een avatar en vul je naam in.</div>
+    <div class="avatar-grid" id="avatar-grid">
+      <div class="av-avatar" onclick="kiesAvatar('🦊')">🦊</div>
+      <div class="av-avatar" onclick="kiesAvatar('🐉')">🐉</div>
+      <div class="av-avatar" onclick="kiesAvatar('🦋')">🦋</div>
+      <div class="av-avatar" onclick="kiesAvatar('🐬')">🐬</div>
+      <div class="av-avatar" onclick="kiesAvatar('🦁')">🦁</div>
+      <div class="av-avatar" onclick="kiesAvatar('🌟')">🌟</div>
+      <div class="av-avatar" onclick="kiesAvatar('🐸')">🐸</div>
+      <div class="av-avatar" onclick="kiesAvatar('🦄')">🦄</div>
     </div>
+    <input class="av-naam-input" id="av-naam-input" type="text" placeholder="Jouw naam…" value="" maxlength="20">
+    <div style="display:flex;gap:10px;margin:12px 0 8px;align-items:center">
+      <label style="font-size:.85rem;color:var(--muted);white-space:nowrap">Leeftijd</label>
+      <input class="av-naam-input" id="av-leeftijd-input" type="number" min="4" max="99" placeholder="—" style="margin:0;width:90px;text-align:center">
+      <span style="font-size:.8rem;color:var(--muted)">jaar · onder de 12 gaat kids-modus automatisch aan</span>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:1rem;margin-top:10px" onclick="maakProfiel()">Start →</button>
   </div>
 
-  <!-- DASHBOARD -->
+  <!-- PROFIEL -->
   <div id="av-view-dash" class="av-view">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#b08060">Jouw profiel</div>
+    <div class="prof-acties">
+      <span class="sectie-label">Jouw profiel</span>
       <div style="display:flex;gap:8px">
-        <button class="av-btn av-btn-wit" style="font-size:.8rem;padding:6px 14px" onclick="avNieuwProfielDirect()">➕ Nieuw profiel</button>
-        <button class="av-btn av-btn-wit" style="font-size:.8rem;padding:6px 14px" onclick="avUitloggen()">🔄 Wissel</button>
+        <button class="btn btn-ghost prof-mini-btn" onclick="avNieuwProfielDirect()">＋ Nieuw</button>
+        <button class="btn btn-ghost prof-mini-btn" onclick="avUitloggen()">⇄ Wissel</button>
       </div>
     </div>
-    <div class="av-dash-header">
-      <div class="av-avatar-big" id="av-dash-avatar">🦊</div>
-      <div style="flex:1">
-        <div class="av-dash-name" id="av-dash-naam">Lizz</div>
-        <div class="av-dash-sub" id="av-dash-level">Level 1 · Begin lezer</div>
-        <div class="av-xp-bar-wrap" style="margin-top:8px">
-          <div class="av-xp-label"><span>XP</span><span id="av-xp-label">0 / 100</span></div>
-          <div class="av-xp-track"><div class="av-xp-fill" id="av-xp-fill" style="width:0%"></div></div>
-        </div>
+
+    <div class="prof-kop">
+      <div class="prof-avatar" id="av-dash-avatar">🦊</div>
+      <div style="flex:1;min-width:0">
+        <div class="prof-naam" id="av-dash-naam">—</div>
+        <div class="prof-level" id="av-dash-level">Level 1 · Begin lezer</div>
+        <div class="prof-xp-rij"><span>XP</span><span id="av-xp-label">0 / 100</span></div>
+        <div class="prof-xp-track"><div class="prof-xp-fill" id="av-xp-fill" style="width:0%"></div></div>
       </div>
-      <div class="av-streak"><span id="av-streak-num">0</span>🔥 dagen</div>
+      <div class="prof-streak" title="Dagen op rij getraind">🔥 <span id="av-streak-num">0</span></div>
     </div>
 
-    <div class="av-stats-row">
-      <div class="av-stat"><div class="num" id="av-stat-niveaus">0</div><div class="lbl">Levels voltooid</div></div>
-      <div class="av-stat"><div class="num" id="av-stat-sterren">0</div><div class="lbl">Sterren totaal</div></div>
-      <div class="av-stat"><div class="num" id="av-stat-badges">0</div><div class="lbl">Badges</div></div>
+    <div class="prof-stats">
+      <div><div class="prof-stat-num" id="prof-stat-woorden">0</div><div class="prof-stat-lbl">woorden</div></div>
+      <div><div class="prof-stat-num" id="prof-stat-wpm">0</div><div class="prof-stat-lbl">beste WPM</div></div>
+      <div><div class="prof-stat-num" id="prof-stat-sessies">0</div><div class="prof-stat-lbl">sessies</div></div>
     </div>
 
-    <h3 style="color:#8b5e3c;font-size:.75rem">Jouw werelden</h3>
-    <div class="av-worlds" id="av-worlds-grid"></div>
+    <div class="sectie-label" style="margin:20px 2px 10px;display:block">Sterren per oefening</div>
+    <div class="prof-oefeningen" id="prof-oefeningen"></div>
 
-    <h3 style="color:#8b5e3c;font-size:.75rem;margin-top:24px">Verdiende badges</h3>
-    <div class="badges-grid" id="av-badges-grid"></div>
+    <div class="sectie-label" style="margin:20px 2px 10px;display:block">Badges</div>
+    <div class="prof-badges" id="av-badges-grid"></div>
 
-    <div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-      <button class="av-btn av-btn-wit" style="font-size:.9rem;padding:10px 18px" onclick="avUitloggen()">🔄 Wissel profiel</button>
-      <button class="av-btn av-btn-wit" style="font-size:.85rem;padding:8px 14px;opacity:.6" onclick="verwijderHuidigProfiel()">🗑 Verwijder profiel</button>
+    <div class="prof-onder">
+      <button class="btn btn-ghost prof-mini-btn" onclick="avUitloggen()">⇄ Wissel profiel</button>
+      <button class="btn btn-ghost prof-mini-btn" style="opacity:.55" onclick="verwijderHuidigProfiel()">Verwijderen</button>
     </div>
-  </div>
-
-  <!-- WERELD / LEVEL KIEZEN -->
-  <div id="av-view-wereld" class="av-view">
-    <div class="av-levels-header">
-      <button class="av-back-btn" id="av-back-wereld" onclick="avToonDash()" style="color:#8b3000;border-color:#e07000">← Terug</button>
-      <div class="av-levels-title" id="av-wereld-titel"></div>
-    </div>
-    <div class="av-level-grid" id="av-level-grid"></div>
-  </div>
-
-  <!-- GAME SPEELVELD -->
-  <div id="av-view-spel" class="av-view">
-    <div class="av-game-header">
-      <button class="av-back-btn" style="color:#8b3000;border-color:#e07000" onclick="avToonDash()">← Stop</button>
-      <div class="av-game-prog-wrap"><div class="av-game-prog-bar" id="av-prog-bar"></div></div>
-      <div class="av-game-titel" id="av-spel-titel">Level 1</div>
-    </div>
-    <div class="av-feedback" id="av-feedback"></div>
-    <div id="av-spel-inhoud"></div>
   </div>
 
 </div>
@@ -5576,117 +5616,34 @@ function resetStats() {
 // ════════════════════════════════════════════════════════════
 
 // ─── CONTENT DATABASE ─────────────────────────────────────
-const AV_WOORDEN = {
-  k1: ['kat','bus','vis','zon','bal','arm','tak','pop','rij','tas','mes','vos','dam','bij','net'],
-  k2: ['hond','boom','roos','gras','beer','wolf','eend','neus','deur','geel','rood','bloem','fiets','brood','tafel'],
-  k3: ['appel','water','stoel','paard','zebra','wolken','regen','vliegt','school','klasse','banaan','oranje','lezen','rijden','spelen'],
-  k4: ['vliegtuig','bibliotheek','avontuur','vriendelijk','schildpad','schrijven','woordenboek','herfstblad','vliegveld','sprookje'],
-};
-
-const AV_VANGER_SETS = [
-  { doel:'kat',   pool:['kan','nat','rat','mat','bat','tan'] },
-  { doel:'hond',  pool:['bond','fond','mond','pond','wond','rond'] },
-  { doel:'boom',  pool:['room','toom','zoom','loom','doom','moom'] },
-  { doel:'fiets', pool:['diets','giets','niets','biets','riets','miets'] },
-  { doel:'appel', pool:['eppel','oppel','appol','appil','uppal','ippel'] },
-  { doel:'water', pool:['bater','gater','later','mater','nater','fater'] },
-  { doel:'school',pool:['scpool','scqool','scjool','sckool','sbool','sdool'] },
-  { doel:'lezen', pool:['lezon','lezun','lezin','lizen','luzen','lozin'] },
-];
-
-const AV_VERHALEN = [
-  {
-    tekst:'Mia heeft een kat. De kat heet Poes. Poes is oranje. Mia speelt elke dag met Poes. Ze zijn beste vrienden.',
-    wpm:100,
-    vragen:[
-      { v:'Wat is de naam van de kat?', goed:'Poes', fout:['Mia','Fleur','Miep'] },
-      { v:'Welke kleur heeft Poes?',    goed:'oranje', fout:['geel','wit','zwart'] },
-    ],
-  },
-  {
-    tekst:'Sem gaat naar de winkel. Hij koopt een appel en een banaan. Thuis eet hij eerst de appel op. Die is lekker en zoet!',
-    wpm:130,
-    vragen:[
-      { v:'Waar gaat Sem naartoe?',    goed:'de winkel', fout:['school','het park','de bibliotheek'] },
-      { v:'Wat eet Sem als eerste op?',goed:'de appel',  fout:['de banaan','een koek','een brood'] },
-    ],
-  },
-  {
-    tekst:'Het regent buiten. Lisa pakt haar gele paraplu. Ze loopt naar school. Haar laarzen plonzen door de plassen. Dat vindt ze eigenlijk wel leuk!',
-    wpm:160,
-    vragen:[
-      { v:'Wat is het weer?',        goed:'Het regent',   fout:['Het is zonnig','Het sneeuwt','Het stormt'] },
-      { v:'Welke kleur heeft de paraplu?', goed:'geel',  fout:['rood','blauw','groen'] },
-      { v:'Waar gaat Lisa naartoe?', goed:'school',       fout:['de winkel','huis','het park'] },
-    ],
-  },
-  {
-    tekst:'Tom vindt een boek in de bibliotheek over draken en ridders. Hij leest het in één dag uit. Zijn moeder zegt dat hij een echte boekenslinder is. Tom lacht trots.',
-    wpm:200,
-    vragen:[
-      { v:'Waar vindt Tom het boek?',      goed:'de bibliotheek', fout:['de winkel','thuis','school'] },
-      { v:'Waar gaat het boek over?',      goed:'draken en ridders', fout:['vissen en boten','katten en honden','auto\'s en treinen'] },
-      { v:'Hoe lang doet Tom over het boek?', goed:'één dag', fout:['een week','twee uur','een maand'] },
-    ],
-  },
-];
-
-// ─── LEVEL CONFIGURATIE ───────────────────────────────────
-// type: 'flits' | 'vanger' | 'sprint'
-const WERELDEN = [
-  {
-    naam:'Het Letterpad', emoji:'🌿', kleur:'w1', achtergrond:'#1a4a28',
-    sub:'Korte woordjes leren', unlockXP:0,
-    levels:[
-      { naam:'Eerste stapjes',   type:'flits',  flitsMs:2200, woordenSet:'k1', aantal:7,  xp:10 },
-      { naam:'Korte woorden',    type:'flits',  flitsMs:1800, woordenSet:'k1', aantal:9,  xp:12 },
-      { naam:'Iets sneller!',    type:'flits',  flitsMs:1400, woordenSet:'k2', aantal:10, xp:15 },
-      { naam:'Woordenracer',     type:'vanger', setIdx:0,     duur:35,         xp:18 },
-    ],
-  },
-  {
-    naam:'De Woordenzee', emoji:'🌊', kleur:'w2', achtergrond:'#0a2a4a',
-    sub:'Langere woorden vangen', unlockXP:55,
-    levels:[
-      { naam:'Bubbels!',         type:'vanger', setIdx:1,     duur:35,         xp:18 },
-      { naam:'Woordenregen',     type:'vanger', setIdx:2,     duur:30,         xp:20 },
-      { naam:'Snelle vanger',    type:'flits',  flitsMs:1100, woordenSet:'k2', aantal:12, xp:22 },
-      { naam:'Zee-sprint',       type:'vanger', setIdx:3,     duur:28,         xp:25 },
-    ],
-  },
-  {
-    naam:'De Zinsberg', emoji:'⛰️', kleur:'w3', achtergrond:'#4a1a0a',
-    sub:'Zinnen lezen en begrijpen', unlockXP:140,
-    levels:[
-      { naam:'Eerste verhaal',   type:'sprint', verhaalIdx:0, xp:25 },
-      { naam:'Op avontuur',      type:'sprint', verhaalIdx:1, xp:28 },
-      { naam:'Vliegen door woorden', type:'flits', flitsMs:800, woordenSet:'k3', aantal:14, xp:30 },
-      { naam:'Berg-sprint',      type:'sprint', verhaalIdx:2, xp:35 },
-    ],
-  },
-  {
-    naam:'De Snelheidsstad', emoji:'🚀', kleur:'w4', achtergrond:'#2a0a4a',
-    sub:'Echte snellezer worden!', unlockXP:280,
-    levels:[
-      { naam:'Turbo woorden',    type:'vanger', setIdx:4,     duur:25,         xp:35 },
-      { naam:'Flits kampioen',   type:'flits',  flitsMs:600,  woordenSet:'k3', aantal:15, xp:38 },
-      { naam:'Lange woorden',    type:'vanger', setIdx:5,     duur:25,         xp:40 },
-      { naam:'Snellezer finale', type:'sprint', verhaalIdx:3, xp:50 },
-    ],
-  },
-];
+// ─── BADGES (hermapte checks: leerweg-weken + Leesronde-sterren) ───
+// Helpers zijn runtime-safe: LEERWEG_WEKEN/_gamLaad staan later in het
+// script; try/catch vangt vroege aanroepen tijdens het laden op.
+function _lwWeekKlaar(i) {
+  try { return LEERWEG_WEKEN[i].dagen.every((_, d) => lwGedaan().includes(lwKey(i, d))); }
+  catch (e) { return false; }
+}
+function _rondeSterrenTotaal() {
+  try { return Object.values((_gamLaad().rondes) || {}).reduce((a, r) => a + (r.beste || 0), 0); }
+  catch (e) { return 0; }
+}
+function _heeftPerfecteRonde() {
+  try { return Object.values((_gamLaad().rondes) || {}).some(r => (r.beste || 0) >= 3); }
+  catch (e) { return false; }
+}
 
 const ALLE_BADGES = [
-  { id:'eerste',   icon:'🌱', naam:'Eerste stap',    check:p => p.xp >= 10 },
-  { id:'w1',       icon:'🌿', naam:'Bosverkenner',   check:p => p.voltooid.some(v => v.w===0) },
-  { id:'w2',       icon:'🌊', naam:'Zeekapitein',    check:p => p.voltooid.some(v => v.w===1) },
-  { id:'w3',       icon:'⛰️', naam:'Bergbeklimmer',  check:p => p.voltooid.some(v => v.w===2) },
-  { id:'w4',       icon:'🚀', naam:'Snellezer',      check:p => p.voltooid.some(v => v.w===3) },
-  { id:'streak3',  icon:'🔥', naam:'3 dagen op rij', check:p => p.streak >= 3 },
-  { id:'ster15',   icon:'⭐', naam:'15 sterren',     check:p => p.totaleSterren >= 15 },
-  { id:'100xp',    icon:'💎', naam:'100 XP!',        check:p => p.xp >= 100 },
-  { id:'perfect',  icon:'👑', naam:'Perfecte ronde', check:p => p.heeftPerfect },
+  { id:'eerste',  icon:'🌱', naam:'Eerste stap',        check:p => (p.xp || 0) >= 10 },
+  { id:'w1',      icon:'🏗️', naam:'Week 1: Fundament',  check:p => _lwWeekKlaar(0) },
+  { id:'w2',      icon:'⚡', naam:'Week 2: Snelheid',    check:p => _lwWeekKlaar(1) },
+  { id:'w3',      icon:'🎯', naam:'Week 3: Techniek',    check:p => _lwWeekKlaar(2) },
+  { id:'w4',      icon:'🧠', naam:'Week 4: Begrip',      check:p => _lwWeekKlaar(3) },
+  { id:'streak3', icon:'🔥', naam:'3 dagen op rij',      check:p => ((typeof getGlobaalStreak === 'function' ? getGlobaalStreak().dagen : p.streak) || 0) >= 3 },
+  { id:'ster15',  icon:'⭐', naam:'15 sterren',          check:p => _rondeSterrenTotaal() >= 15 },
+  { id:'100xp',   icon:'💎', naam:'100 XP',              check:p => (p.xp || 0) >= 100 },
+  { id:'perfect', icon:'👑', naam:'Perfecte ronde',      check:p => _heeftPerfecteRonde() || p.heeftPerfect },
 ];
+
 
 // ─── PROFIEL ──────────────────────────────────────────────
 let avProfiel = null;
@@ -5871,381 +5828,90 @@ function avToonView(id) {
 }
 
 function avToonDash() {
-  clearInterval(vangerTimer); clearTimeout(vangerBubbleTimer); clearTimeout(sprintTimer);
   if (!avProfiel) { avToonView('profiel'); return; }
   avUpdateDash(); avToonView('dash');
 }
 
+// ─── PROFIEL-DASHBOARD (strak, geen werelden meer) ───
 function avUpdateDash() {
   const p = avProfiel;
-  document.getElementById('av-dash-avatar').textContent = p.avatar;
-  document.getElementById('av-dash-naam').textContent = p.naam;
+  if (!p) return;
 
-  const niveauNamen = ['Begin lezer','Woord vanger','Zin lezer','Snellezer','Kampioen!'];
-  document.getElementById('av-dash-level').textContent = `Level ${p.level} · ${niveauNamen[Math.min(p.level-1,4)]}`;
-  document.getElementById('av-streak-num').textContent = p.streak;
+  // Kop: avatar, naam, level + titel, XP-balk, streak
+  const niveauNamen = ['Begin lezer', 'Woordvanger', 'Zinlezer', 'Snellezer', 'Kampioen'];
+  const level = Math.floor((p.xp || 0) / 100) + 1;
+  const inLevel = (p.xp || 0) % 100;
+  const zet = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  zet('av-dash-avatar', p.avatar || '🦊');
+  zet('av-dash-naam', p.naam || 'Lezer');
+  zet('av-dash-level', `Level ${level} · ${niveauNamen[Math.min(level - 1, niveauNamen.length - 1)]}`);
+  zet('av-xp-label', `${inLevel} / 100`);
+  const fill = document.getElementById('av-xp-fill');
+  if (fill) fill.style.width = inLevel + '%';
+  const streak = (typeof getGlobaalStreak === 'function') ? (getGlobaalStreak().dagen || 0) : (p.streak || 0);
+  zet('av-streak-num', streak);
 
-  const xpPerLevel = 100;
-  const xpInLevel = p.xp % xpPerLevel;
-  document.getElementById('av-xp-label').textContent = `${xpInLevel} / ${xpPerLevel}`;
-  document.getElementById('av-xp-fill').style.width = (xpInLevel/xpPerLevel*100)+'%';
+  // Stats uit de leeshistorie
+  let st = {};
+  try { st = JSON.parse(localStorage.getItem('snellees_stats') || '{}'); } catch (e) {}
+  zet('prof-stat-woorden', (st.totaalWoorden || 0).toLocaleString('nl-NL'));
+  zet('prof-stat-wpm', st.bestWpm || 0);
+  zet('prof-stat-sessies', (st.sessies || []).length);
 
-  const totaalVoltooid = p.voltooid.length;
-  document.getElementById('av-stat-niveaus').textContent = totaalVoltooid;
-  document.getElementById('av-stat-sterren').textContent = p.totaleSterren;
-
-  // Badges controleren
-  const oudeBadges = [...(p.badges || [])];
-  p.badges = ALLE_BADGES.filter(b => b.check(p)).map(b => b.id);
-  const nieuweBadges = p.badges.filter(id => !oudeBadges.includes(id));
-  nieuweBadges.forEach(id => {
-    const b = ALLE_BADGES.find(x => x.id === id);
-    if (b) toonAchievement(b.icon, b.naam);
-  });
-  document.getElementById('av-stat-badges').textContent = p.badges.length;
-
-  // Wereld-kaarten
-  const grid = document.getElementById('av-worlds-grid');
-  grid.innerHTML = WERELDEN.map((w,wi) => {
-    const vergrendeld = p.xp < w.unlockXP;
-    const voltooide = p.voltooid.filter(v => v.w===wi);
-    const maxSterren = w.levels.length * 3;
-    const verdiend = voltooide.reduce((s,v)=>s+(v.sterren||0),0);
-    const pct = Math.round(voltooide.length/w.levels.length*100);
-    return `<div class="av-world-card ${w.kleur} ${vergrendeld?'vergrendeld':''}" onclick="${vergrendeld?'':` avToonWereld(${wi})`}">
-      <div class="av-world-emoji">${w.emoji}</div>
-      <div class="av-world-name">${w.naam}</div>
-      <div class="av-world-sub">${w.sub}</div>
-      <div class="av-world-stars">${avSterrenStr(verdiend)} <small style="opacity:.6;font-size:.7rem">${verdiend}/${maxSterren}</small></div>
-      <div class="av-world-prog">${vergrendeld ? '🔒 Verdien '+w.unlockXP+' XP om te openen' : voltooide.length+'/'+w.levels.length+' levels ('+pct+'%)'}</div>
-    </div>`;
-  }).join('');
-
-  // Badges display
-  const badgesGrid = document.getElementById('av-badges-grid');
-  badgesGrid.innerHTML = ALLE_BADGES.map(b => {
-    const heeft = p.badges.includes(b.id);
-    return `<div class="badge ${heeft?'':'gelock'}" title="${heeft?b.naam:'???'}">
-      <span class="badge-icon">${heeft?b.icon:'❓'}</span>
-      <div class="badge-naam">${heeft?b.naam:'???'}</div>
-    </div>`;
-  }).join('');
-}
-
-function avSterrenStr(n) {
-  const vol = '⭐', leeg = '☆';
-  return Array(Math.min(n,3)).fill(vol).join('')+Array(Math.max(0,3-n)).fill(leeg).join('');
-}
-
-function avToonWereld(wi) {
-  const w = WERELDEN[wi];
-  document.getElementById('av-wereld-titel').textContent = w.emoji+' '+w.naam;
-  document.getElementById('av-back-wereld').onclick = avToonDash;
-
-  const grid = document.getElementById('av-level-grid');
-  grid.innerHTML = w.levels.map((lv,li) => {
-    const key = `${wi}-${li}`;
-    const vData = avProfiel.voltooid.find(v=>v.w===wi&&v.l===li);
-    const sterren = vData ? vData.sterren : 0;
-    // Level vrijgeven als li===0 of vorig level voltooid
-    const vrijgegeven = li===0 || avProfiel.voltooid.some(v=>v.w===wi&&v.l===li-1);
-    return `<div class="av-level-node ${w.kleur} ${vrijgegeven?'':'vergr'} ${vData?'voltooid':''}"
-        onclick="${vrijgegeven?`avSpeelLevel(${wi},${li})`:''}" style="padding:12px 8px">
-      <div class="lv-num">${li+1}</div>
-      <div style="font-size:.78rem;font-weight:700;color:currentColor;opacity:.85">${lv.naam}</div>
-      <div class="lv-stars">${vrijgegeven?(sterren?avSterrenStr(sterren):'☆☆☆'):'🔒'}</div>
-    </div>`;
-  }).join('');
-  avToonView('wereld');
-}
-
-// ─── GAME ENGINE ──────────────────────────────────────────
-let avState = {};
-
-function avSpeelLevel(wi, li) {
-  const lv = WERELDEN[wi].levels[li];
-  const w  = WERELDEN[wi];
-  avState = { wi, li, lv, w, score:0, maxScore:0, fouten:0, start:Date.now() };
-  document.getElementById('av-spel-titel').textContent = `${w.emoji} Level ${li+1}: ${lv.naam}`;
-  document.getElementById('av-prog-bar').style.width = '0%';
-  document.getElementById('av-feedback').textContent = '';
-  document.getElementById('av-spel-inhoud').innerHTML = '';
-  avToonView('spel');
-
-  if (lv.type === 'flits')  avStartFlits();
-  if (lv.type === 'vanger') avStartVanger();
-  if (lv.type === 'sprint') avStartSprint();
-}
-
-// ── FLITS GAME ────────────────────────────────────────────
-function avStartFlits() {
-  const lv  = avState.lv;
-  const pool = shuffle([...AV_WOORDEN[lv.woordenSet]]);
-  const woorden = pool.slice(0, lv.aantal);
-  avState.flitsWoorden = woorden;
-  avState.flitsIdx = 0;
-  avState.maxScore = woorden.length;
-  avFlitsVolgende();
-}
-
-function avFlitsVolgende() {
-  const { flitsWoorden, flitsIdx, lv } = avState;
-  if (flitsIdx >= flitsWoorden.length) { avEinde(); return; }
-
-  const doelWoord = flitsWoorden[flitsIdx];
-  avState.flitsIdx++;
-  const pct = (avState.flitsIdx / flitsWoorden.length) * 100;
-  document.getElementById('av-prog-bar').style.width = pct+'%';
-  document.getElementById('av-feedback').textContent = '';
-
-  // bionic
-  const half = Math.ceil(doelWoord.length/2);
-  const bio = `<b class="flits-bio-b">${doelWoord.slice(0,half)}</b>${doelWoord.slice(half)}`;
-
-  const div = document.getElementById('av-spel-inhoud');
-  div.innerHTML = `<div class="flits-box"><div class="flits-woord" id="flits-toon">${bio}</div>
-    <div style="font-size:.9rem;color:#8b5e3c">Onthoud dit woord!</div></div>
-    <div class="flits-kies-grid" id="flits-grid" style="pointer-events:none;opacity:.4"></div>`;
-
-  // antwoorden voorbereiden
-  const fouten = shuffle(AV_WOORDEN[lv.woordenSet].filter(w=>w!==doelWoord)).slice(0,3);
-  const opties = shuffle([doelWoord, ...fouten]);
-
-  // na flitstime: verberg woord, toon opties
-  setTimeout(() => {
-    document.getElementById('flits-toon').style.opacity = 0;
-    const grid = document.getElementById('flits-grid');
-    grid.style.opacity = 1; grid.style.pointerEvents = 'auto';
-    grid.innerHTML = opties.map(o =>
-      `<button class="flits-kies-btn" onclick="avFlitsKies(this,'${o}','${doelWoord}')">${o}</button>`
-    ).join('');
-  }, lv.flitsMs);
-}
-
-function avFlitsKies(btn, keuze, doel) {
-  const goed = keuze === doel;
-  document.querySelectorAll('.flits-kies-btn').forEach(b => {
-    b.disabled = true;
-    if (b.textContent === doel) b.classList.add('goed');
-    else if (b === btn) b.classList.add('fout');
-  });
-  if (goed) { avState.score++; setFeedback(true); } else { avState.fouten++; setFeedback(false, doel); }
-  setTimeout(avFlitsVolgende, 1200);
-}
-
-// ── VANGER GAME ───────────────────────────────────────────
-let vangerTimer = null, vangerBubbleTimer = null, vangerTick = null;
-
-function avStartVanger() {
-  clearInterval(vangerTimer); clearTimeout(vangerBubbleTimer);
-  const lv  = avState.lv;
-  const set = AV_VANGER_SETS[lv.setIdx];
-  avState.doel = set.doel;
-  avState.pool = [...set.pool];
-  avState.vangerDuur = lv.duur;
-  avState.vangerResterend = lv.duur;
-  avState.maxScore = 8;
-
-  const div = document.getElementById('av-spel-inhoud');
-  div.innerHTML = `
-    <div class="vanger-timer">
-      <span>⏱ <b id="v-tijd">${lv.duur}</b>s</span>
-      <div class="vanger-timer-bar-wrap"><div class="vanger-timer-bar" id="v-tbar" style="width:100%"></div></div>
-      <span>🎯 <b id="v-score">0</b></span>
-    </div>
-    <div class="vanger-arena" id="v-arena">
-      <div class="vanger-doel">
-        <div class="vanger-doel-lbl">Vang dit woord!</div>
-        <div class="vanger-doel-woord">${set.doel}</div>
-      </div>
-    </div>`;
-
-  vangerTimer = setInterval(() => {
-    avState.vangerResterend--;
-    const el = document.getElementById('v-tijd');
-    const bar = document.getElementById('v-tbar');
-    if (el) el.textContent = avState.vangerResterend;
-    if (bar) bar.style.width = (avState.vangerResterend/lv.duur*100)+'%';
-    if (avState.vangerResterend <= 0) { clearInterval(vangerTimer); clearTimeout(vangerBubbleTimer); avEinde(); }
-  }, 1000);
-
-  function lanceerdBubble() {
-    const arena = document.getElementById('v-arena');
-    if (!arena) return;
-    const isTarget = Math.random() < 0.45;
-    const tekst = isTarget ? avState.doel : avState.pool[Math.floor(Math.random()*avState.pool.length)];
-    const kleuren = ['#ffd6e0','#d0f0ff','#d4f5d0','#fff0cc','#e8d0ff'];
-    const kleur = kleuren[Math.floor(Math.random()*kleuren.length)];
-    const duur = 4 + Math.random()*3;
-    const links = 5+Math.random()*70;
-    const el = document.createElement('div');
-    el.className = 'vanger-bubble';
-    el.textContent = tekst;
-    el.style.cssText = `left:${links}%;animation-duration:${duur}s;background:${kleur};border-color:${kleur}`;
-    el.onclick = () => {
-      if (tekst === avState.doel) {
-        avState.score++; el.classList.add('raak'); setFeedback(true);
-        document.getElementById('v-score').textContent = avState.score;
-        setTimeout(()=>el.remove(),300);
-      } else {
-        el.classList.add('mis'); avState.fouten++; setFeedback(false,avState.doel);
-        setTimeout(()=>el.remove(),300);
-      }
-    };
-    arena.appendChild(el);
-    el.addEventListener('animationend',()=>el.remove());
-    const interval = 900+Math.random()*600;
-    vangerBubbleTimer = setTimeout(lanceerdBubble, interval);
+  // Sterren per oefening (beste Leesronde-score)
+  const oefEl = document.getElementById('prof-oefeningen');
+  if (oefEl) {
+    let rondes = {};
+    try { rondes = (_gamLaad().rondes) || {}; } catch (e) {}
+    const cat = (typeof Coach !== 'undefined') ? Coach.planner.OEFENINGEN : {};
+    const rijen = Object.keys(cat).map(type => {
+      const beste = (rondes[type] || {}).beste || 0;
+      const sterren = [1, 2, 3].map(i => `<span class="${i <= beste ? 'ster-aan' : 'ster-uit'}">★</span>`).join('');
+      return `<button class="prof-oef" onclick="sidebarNav('${type}')">
+        <span class="prof-oef-naam">${cat[type].icon} ${cat[type].naam}</span>
+        <span class="prof-oef-sterren">${sterren}</span>
+      </button>`;
+    });
+    oefEl.innerHTML = rijen.join('') || '<p style="color:var(--muted);font-size:13px">Speel een Leesronde om sterren te verdienen!</p>';
   }
-  lanceerdBubble();
-}
 
-// ── SPRINT GAME ───────────────────────────────────────────
-let sprintTimer = null, sprintWds = [], sprintIdx = 0;
+  // Nieuwe profiel-badges toekennen + vieren
+  const badgesNu = ALLE_BADGES.filter(b => { try { return b.check(p); } catch (e) { return false; } }).map(b => b.id);
+  const nieuw = badgesNu.filter(id => !(p.badges || []).includes(id));
+  if (nieuw.length) {
+    p.badges = badgesNu;
+    avSla();
+    nieuw.forEach((id, i) => {
+      const b = ALLE_BADGES.find(x => x.id === id);
+      if (b) setTimeout(() => toonAchievement(b.icon, b.naam), i * 1400);
+    });
+  }
 
-function avStartSprint() {
-  const verhaal = AV_VERHALEN[avState.lv.verhaalIdx];
-  avState.verhaal = verhaal;
-  avState.maxScore = verhaal.vragen.length;
-  sprintWds = woorden(verhaal.tekst); sprintIdx = 0;
-
-  const div = document.getElementById('av-spel-inhoud');
-  div.innerHTML = `<div class="flits-box"><div class="flits-woord" id="sprint-woord" style="font-size:2.8rem">Klaar?</div>
-    <div style="font-size:.9rem;color:#8b5e3c">Lees de woorden en onthoud het verhaal!</div></div>`;
-
-  setTimeout(() => {
-    document.getElementById('sprint-woord').textContent = '3'; setTimeout(()=>{
-      document.getElementById('sprint-woord').textContent = '2'; setTimeout(()=>{
-        document.getElementById('sprint-woord').textContent = '1'; setTimeout(()=>{ avSprintTick(); },700);
-      },700);
-    },700);
-  },600);
-}
-
-function avSprintTick() {
-  if (sprintIdx >= sprintWds.length) { avSprintVragen(); return; }
-  const wpm = avState.lv.verhaalIdx >= 2 ? (150+avState.lv.verhaalIdx*20) : 110;
-  const delay = 60000/wpm;
-  const pct = (sprintIdx/sprintWds.length)*100;
-  document.getElementById('av-prog-bar').style.width = pct+'%';
-  const el = document.getElementById('sprint-woord');
-  if (el) { el.style.opacity=0; setTimeout(()=>{ if(el)el.textContent=sprintWds[sprintIdx]; el.style.opacity=1; },40); }
-  sprintIdx++;
-  sprintTimer = setTimeout(avSprintTick, delay);
-}
-
-function avSprintVragen() {
-  clearTimeout(sprintTimer);
-  document.getElementById('av-prog-bar').style.width = '80%';
-  document.getElementById('av-feedback').textContent = '🧠 Beantwoord de vragen!';
-  const verhaal = avState.verhaal;
-  avState.sprintAntwoorden = 0;
-  avState.sprintIdx = 0;
-
-  function toonVraag(i) {
-    if (i >= verhaal.vragen.length) { avEinde(); return; }
-    const vr = verhaal.vragen[i];
-    const opties = shuffle([vr.goed, ...vr.fout.slice(0,2)]);
-    document.getElementById('av-spel-inhoud').innerHTML = `
-      <div class="sprint-vraag">
-        <p>Vraag ${i+1} van ${verhaal.vragen.length}:</p>
-        <p>${vr.v}</p>
-        ${opties.map(o=>`<button class="sprint-opt" onclick="avSprintKies(this,'${o}','${vr.goed}',${i})">${o}</button>`).join('')}
+  // Badge-muur: profiel-badges + algemene achievements in één grid
+  const wall = document.getElementById('av-badges-grid');
+  if (wall) {
+    const profielHtml = ALLE_BADGES.map(b => {
+      const heeft = badgesNu.includes(b.id);
+      return `<div class="prof-badge ${heeft ? '' : 'dicht'}" title="${b.naam}">
+        <span class="prof-badge-icon">${heeft ? b.icon : '？'}</span>
+        <span class="prof-badge-naam">${b.naam}</span>
       </div>`;
+    }).join('');
+    let achHtml = '';
+    try {
+      const verdiend = getVerdiendAchievements();
+      achHtml = ACHIEVEMENTS.map(a => {
+        const heeft = verdiend.includes(a.id);
+        return `<div class="prof-badge ${heeft ? '' : 'dicht'}" title="${a.beschrijving}">
+          <span class="prof-badge-icon">${heeft ? a.icon : '？'}</span>
+          <span class="prof-badge-naam">${a.naam}</span>
+        </div>`;
+      }).join('');
+    } catch (e) { /* ACHIEVEMENTS nog niet geladen tijdens vroege init */ }
+    wall.innerHTML = profielHtml + achHtml;
   }
-
-  avState.toonSprintVraag = toonVraag;
-  toonVraag(0);
 }
-
-function avSprintKies(btn, keuze, goed, idx) {
-  const correct = keuze === goed;
-  document.querySelectorAll('.sprint-opt').forEach(b => {
-    b.disabled = true;
-    if (b.textContent === goed) b.classList.add('goed');
-    else if (b === btn) b.classList.add('fout');
-  });
-  if (correct) { avState.score++; setFeedback(true); } else { setFeedback(false, goed); }
-  setTimeout(()=>avState.toonSprintVraag(idx+1), 1200);
-}
-
-// ─── EINDE & RESULTATEN ───────────────────────────────────
-function avEinde() {
-  clearInterval(vangerTimer); clearTimeout(vangerBubbleTimer); clearTimeout(sprintTimer);
-  const p   = avProfiel;
-  const lv  = avState.lv;
-  const pct = avState.maxScore > 0 ? avState.score/avState.maxScore : avState.score/8;
-  const sterren = pct >= .9 ? 3 : pct >= .65 ? 2 : 1;
-
-  if (pct === 1) p.heeftPerfect = true;
-
-  // XP & voortgang opslaan
-  const xpGewonnen = Math.round(lv.xp * (sterren/3));
-  const bestaand = p.voltooid.find(v=>v.w===avState.wi&&v.l===avState.li);
-  const oudeStars = bestaand ? bestaand.sterren : 0;
-  if (sterren > oudeStars) {
-    p.totaleSterren += (sterren - oudeStars);
-  }
-  const oudeXp = bestaand ? (bestaand.xp || 0) : 0;
-  if (xpGewonnen > oudeXp) {
-    p.xp += (xpGewonnen - oudeXp);
-  }
-  p.level = Math.floor(p.xp/100)+1;
-
-  if (bestaand) { if(sterren>bestaand.sterren) bestaand.sterren=sterren; bestaand.xp=Math.max(oudeXp,xpGewonnen); }
-  else p.voltooid.push({w:avState.wi,l:avState.li,sterren,xp:xpGewonnen});
-
-  controleerStreak();
-  const oudeBadges2 = [...(p.badges || [])];
-  p.badges = ALLE_BADGES.filter(b=>b.check(p)).map(b=>b.id);
-  p.badges.filter(id => !oudeBadges2.includes(id)).forEach(id => {
-    const b = ALLE_BADGES.find(x => x.id === id);
-    if (b) toonAchievement(b.icon, b.naam);
-  });
-  avSla();
-  updateSpelerIndicator();
-
-  const sterStr = avSterrenStr(sterren);
-  const berichten = [
-    ['Oeps! Bijna!','Probeer het nog een keer 💪','😅'],
-    ['Goed gedaan!','Je leest steeds beter! 📖','😊'],
-    ['Super! Geweldig!','Wat een snellezer! 🌟','🏆'],
-  ];
-  const [titel,sub,emoji] = berichten[sterren-1];
-
-  const volgendLi = avState.li+1;
-  const heeftVolgende = volgendLi < WERELDEN[avState.wi].levels.length;
-
-  document.getElementById('av-prog-bar').style.width = '100%';
-  document.getElementById('av-spel-inhoud').innerHTML = `
-    <div class="av-resultaat">
-      <div class="groot">${emoji}</div>
-      <div class="av-resultaat-sterren">${sterStr}</div>
-      <h2>${titel}</h2>
-      <p>${sub}<br><small>+${xpGewonnen} XP verdiend!</small></p>
-      <div>
-        <button class="av-btn av-btn-oranje" onclick="avSpeelLevel(${avState.wi},${avState.li})">🔄 Nog een keer</button>
-        ${heeftVolgende?`<button class="av-btn av-btn-oranje" onclick="avSpeelLevel(${avState.wi},${volgendLi})">➡️ Volgende level</button>`:''}
-        <button class="av-btn av-btn-wit" onclick="avToonDash()">🏠 Terug naar home</button>
-      </div>
-    </div>`;
-  document.getElementById('av-feedback').textContent = '';
-}
-
-// ─── FEEDBACK ─────────────────────────────────────────────
-const GOED_FB = ['Geweldig! 🌟','Super! 🎉','Top! 🏆','Ja! ⭐','Knap! 🦁','Bravo! 🌈','Perfect! 👑','Yes! 🚀'];
-const FOUT_FB = ['Bijna! 💪','Oeps! Probeer door! 👀','Niet erg! 🌻'];
-function setFeedback(goed, antwoord='') {
-  const el = document.getElementById('av-feedback');
-  if (!el) return;
-  el.textContent = goed ? GOED_FB[Math.floor(Math.random()*GOED_FB.length)]
-    : FOUT_FB[Math.floor(Math.random()*FOUT_FB.length)]+(antwoord?' ('+antwoord+')':'');
-  // Animatie + confetti bij goed antwoord in kids modus
-  el.classList.remove('kids-goed-anim', 'kids-fout-anim');
-  void el.offsetWidth; // reflow
-  el.classList.add(goed ? 'kids-goed-anim' : 'kids-fout-anim');
-  if (goed && kidsModus) showConfetti(50, 40);
-}
+// ─── EINDE PROFIEL-DASHBOARD ───
 
 // ─── DAGELIJKSE UITDAGING DATA (moet voor avLaad staan) ───
 const DAGELIJKSE_UITDAGINGEN = [
@@ -9823,32 +9489,8 @@ function vandaagUitdagingOpen() {
 // ── PROFIEL MODUS ─────────────────────────────────────────
 // Verberg/toon Leesavontuur elementen op basis van profiel modus
 function pasProfielModusToe() {
-  const modus = localStorage.getItem('snellees_profiel_modus') || 'pro';
-  const isJunior = modus === 'junior' || kidsModus;
-  
-  // Alle elementen met .avontuur-element tonen/verbergen
-  document.querySelectorAll('.avontuur-element').forEach(el => {
-    el.style.display = isJunior ? '' : 'none';
-  });
-  
-  // Speler indicator (wolf icon in header) — verberg voor pro
-  const spelerInd = document.getElementById('speler-indicator');
-  if (spelerInd && !isJunior) {
-    spelerInd.style.display = 'none';
-  }
-  
-  // "Maak profiel" knop verbergen voor pro
-  const noprofielBtn = document.getElementById('no-profiel-btn');
-  if (noprofielBtn && !isJunior) {
-    noprofielBtn.style.display = 'none';
-  }
-  
-  // Sidebar section title updaten als er geen avontuur items meer zijn
-  const sidebarSection = document.getElementById('sidebar-section-avontuur');
-  if (sidebarSection) {
-    const title = sidebarSection.querySelector('.sidebar-section-title');
-    if (title) title.textContent = isJunior ? 'Avontuur & Spellen' : 'Spellen';
-  }
+  // Sinds de sanering (avontuur → Profiel) is het profiel voor iedereen
+  // zichtbaar; junior/pro stuurt alleen nog toon en teksten (kids-modus).
 }
 
 // Functie om profiel modus te wisselen (kan later vanuit instellingen)
@@ -10280,8 +9922,8 @@ const _BNAV_MAP = {
   home:'home', trainen:'trainen', voortgang:'voortgang', stats:'voortgang',
   rsvp:'trainen', chunk:'trainen', oog:'trainen', perifeer:'trainen',
   papier:'trainen', subvocal:'trainen', regressie:'trainen', fixatie:'trainen',
-  skim:'trainen', oogrust:'trainen', dyslexie:'trainen', avontuur:'trainen',
-  leerweg:'leerweg', leestest:'trainen', langetekst:'trainen',
+  skim:'trainen', oogrust:'trainen', dyslexie:'trainen', avontuur:'voortgang',
+  leerweg:'leerweg', leestest:'trainen', langetekst:'trainen', 
   begintest:'trainen', tekst:'trainen', 'eigen-lees':'trainen',
 };
 
