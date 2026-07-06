@@ -3486,6 +3486,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- Plak/laad tekst -->
   <div class="flex" style="margin-bottom:10px;gap:10px">
     <input class="text-input" id="tekst-naam" placeholder="Naam (optioneel)" style="flex:1;margin-bottom:0">
+    <button class="btn btn-ghost" onclick="plakVanKlembord()">📋 Plak</button>
     <button class="btn btn-ghost" onclick="document.getElementById('file-input').click()">📁 .txt</button>
     <input type="file" id="file-input" accept=".txt" style="display:none" onchange="laadBestand(this)">
   </div>
@@ -9571,6 +9572,59 @@ _installatie.init();
     }, 300);
   });
 })();
+
+// ── Deel-naar-de-app (manifest share_target, /?share-...) ───
+// Android/Chrome: artikel of tekst delen vanuit een andere app opent
+// SnelLees met de inhoud klaar om te snellezen.
+(function() {
+  const q = new URLSearchParams(location.search);
+  const gedeeldTekst = q.get('share-text');
+  const gedeeldUrl = q.get('share-url');
+  const gedeeldTitel = q.get('share-title');
+  if (!gedeeldTekst && !gedeeldUrl) return;
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      sidebarNav('tekst');
+      // Sommige apps stoppen de url in het text-veld — detecteer dat
+      const isUrl = (s) => /^https?:\/\/\S+$/.test((s || '').trim());
+      const url = gedeeldUrl || (isUrl(gedeeldTekst) ? gedeeldTekst.trim() : null);
+      if (url) {
+        const urlInput = document.getElementById('url-input');
+        if (urlInput) { urlInput.value = url; laadVanUrl(); }
+      } else {
+        const ta = document.getElementById('custom-text');
+        if (ta) { ta.value = gedeeldTekst; telWoorden(); }
+        const naam = document.getElementById('tekst-naam');
+        if (naam && gedeeldTitel) naam.value = gedeeldTitel.slice(0, 60);
+        toonAchievement('📥', 'Tekst ontvangen — kies hoe je wilt lezen!');
+      }
+      // Query opschonen zodat een refresh niet opnieuw importeert
+      history.replaceState(null, '', location.pathname);
+    }, 350);
+  });
+})();
+
+// ── Klembord: plak-knop op het Eigen-tekst-scherm ───────────
+async function plakVanKlembord() {
+  const ta = document.getElementById('custom-text');
+  if (!ta) return;
+  try {
+    const tekst = await navigator.clipboard.readText();
+    if (!tekst || tekst.trim().length < 5) {
+      toonFout('Je klembord is leeg. Kopieer eerst een stuk tekst.');
+      return;
+    }
+    ta.value = tekst;
+    telWoorden();
+    _geluid.klik();
+    ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch (e) {
+    // iOS/permissie geweigerd: nette uitleg i.p.v. stille mislukking
+    toonFout('Plakken lukt niet automatisch — houd het tekstvak ingedrukt en kies "Plak".');
+    ta.focus();
+  }
+}
 
 // ═══════════════════════════════════════════════════════════
 // 🛡️  ERROR BOUNDARIES — kritieke functies wrappen
