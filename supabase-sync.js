@@ -39,10 +39,11 @@ const SYNC_KEYS = [
   'snellees_begrip_scores', // Begripscores (array, laatste 50)
   'gamificatie',            // Streak-bevriezingen, dagdoel, recap, geluid
   'leerweg_gedaan',         // Afgevinkte leerweg-dagen
+  'teksten_gelezen',        // Gelezen-collectie: per tekst keren/beste prestatie
 ];
 
 // Keys die in payload.extra terechtkomen (nooit meer losse kolommen nodig)
-const EXTRA_KEYS = ['coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan'];
+const EXTRA_KEYS = ['coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan', 'teksten_gelezen'];
 
 let _huidigeGebruiker = null;
 let _syncTimer = null;

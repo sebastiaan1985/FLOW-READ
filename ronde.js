@@ -184,14 +184,14 @@ const Ronde = {
    * begripsmeting hebben (leestest, langetekst): zelfde sterren, XP en
    * resultaat-overlay, begrip komt van buiten.
    */
-  direct(type, wpm, aantalWoorden, begripPct) {
+  direct(type, wpm, aantalWoorden, begripPct, tekstId) {
     this.type = type;
     this.actief = true;
     this._goed = 0; this._fout = 0; this._combo = 0; this._maxCombo = 0;
-    return this.einde(wpm, aantalWoorden, begripPct);
+    return this.einde(wpm, aantalWoorden, begripPct, tekstId);
   },
 
-  einde(wpm, aantalWoorden, begripOverride) {
+  einde(wpm, aantalWoorden, begripOverride, tekstId) {
     if (!this.actief) return null;
     this.actief = false;
 
@@ -238,6 +238,13 @@ const Ronde = {
 
     const res = { sterren, wpm, begrip, xp, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus };
     this._fluency = null;
+
+    // Gelezen-collectie: vink de tekst af met de beste prestatie
+    try {
+      const tid = (tekstId !== undefined) ? tekstId
+        : (typeof actieveTekstId === 'function' ? actieveTekstId() : null);
+      if (tid && typeof markeerGelezen === 'function') markeerGelezen(tid, { wpm, sterren });
+    } catch (e) { /* geen collectie beschikbaar */ }
     this._toonResultaat(res);
     return res;
   },

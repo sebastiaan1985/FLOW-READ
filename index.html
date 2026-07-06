@@ -1766,6 +1766,14 @@ main { -webkit-overflow-scrolling: touch; }
 .prof-badge-icon { display: block; font-size: 1.5rem; margin-bottom: 5px; }
 .prof-badge-naam { font-size: 10px; color: var(--muted); line-height: 1.3; display: block; }
 .prof-onder { display: flex; justify-content: space-between; margin-top: 22px; }
+.prof-collectie {
+  margin-top: 10px; background: #16162a; border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px; padding: 13px 15px; font-size: 12.5px; color: var(--muted);
+}
+.prof-collectie b { color: var(--text); }
+.prof-coll-track { margin-top: 8px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+.prof-coll-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg,#4cc9f0,var(--accent)); transition: width .5s ease; }
+body.kids .prof-collectie { background: #fff !important; border-color: rgba(0,0,0,.08) !important; }
 /* profiel-kiezen + aanmaken: strak i.p.v. cream */
 .av-profiel-kaart, .av-nieuw-kaart {
   background: #16162a !important; border: 1px solid rgba(255,255,255,.09) !important;
@@ -4016,6 +4024,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div><div class="prof-stat-num" id="prof-stat-wpm">0</div><div class="prof-stat-lbl">beste WPM</div></div>
       <div><div class="prof-stat-num" id="prof-stat-sessies">0</div><div class="prof-stat-lbl">sessies</div></div>
     </div>
+    <div class="prof-collectie" id="prof-collectie"></div>
 
     <div class="sectie-label" style="margin:20px 2px 10px;display:block">Sterren per oefening</div>
     <div class="prof-oefeningen" id="prof-oefeningen"></div>
@@ -4348,11 +4357,60 @@ let stats = JSON.parse(localStorage.getItem('snellees_stats') || '{"sessies":[],
 let vragen = [];
 
 function bibliLaad() {
-  try { return JSON.parse(localStorage.getItem('tekst_bibliotheek') || '[]'); } catch(e) { return []; }
+  try {
+    const arr = JSON.parse(localStorage.getItem('tekst_bibliotheek') || '[]');
+    // Migratie: geef teksten zonder stabiel id een uid (indexen verschuiven
+    // bij verwijderen; de gelezen-status heeft een vast anker nodig)
+    let gemigreerd = false;
+    arr.forEach((t, i) => {
+      if (!t.uid) { t.uid = Date.now().toString(36) + i.toString(36); gemigreerd = true; }
+    });
+    if (gemigreerd) bibliSla(arr);
+    return arr;
+  } catch(e) { return []; }
 }
 function bibliSla(arr) { localStorage.setItem('tekst_bibliotheek', JSON.stringify(arr)); }
 function activeTekstIdx() { return parseInt(localStorage.getItem('tekst_actief') ?? '0'); }
 function setActiveTekstIdx(i) { localStorage.setItem('tekst_actief', String(i)); }
+
+// ── GELEZEN-COLLECTIE ────────────────────────────────────────
+// tekstId-conventie: 'b:<id>' bibliotheek · 'e:<uid>' eigen tekst ·
+// 'lang-<id>' lange teksten · 'lt-<n>' leestest-teksten
+
+/** Stabiel id van de actieve tekst in de RSVP/Chunk-kiezer (of null). */
+function actieveTekstId() {
+  const raw = localStorage.getItem('tekst_actief') || '0';
+  if (raw.startsWith('b:')) return raw;
+  const idx = parseInt(raw);
+  if (!idx || isNaN(idx)) return null; // demo-tekst telt niet mee
+  const t = bibliLaad()[idx - 1];
+  return t ? 'e:' + t.uid : null;
+}
+
+function gelezenLaad() {
+  try { return JSON.parse(localStorage.getItem('teksten_gelezen') || '{}'); } catch(e) { return {}; }
+}
+
+/** Vink een tekst af als gelezen en bewaar de beste prestatie. */
+function markeerGelezen(tekstId, res = {}) {
+  if (!tekstId) return;
+  const g = gelezenLaad();
+  const oud = g[tekstId] || { keren: 0, besteWpm: 0, besteSterren: 0 };
+  g[tekstId] = {
+    keren: (oud.keren || 0) + 1,
+    laatsteTs: Date.now(),
+    besteWpm: Math.max(oud.besteWpm || 0, res.wpm || 0),
+    besteSterren: Math.max(oud.besteSterren || 0, res.sterren || 0),
+  };
+  localStorage.setItem('teksten_gelezen', JSON.stringify(g));
+}
+
+/** Korte weergave-badge voor een gelezen tekst ('✓ ★★' of ''). */
+function gelezenBadge(tekstId) {
+  const info = gelezenLaad()[tekstId];
+  if (!info) return '';
+  return '✓' + (info.besteSterren ? ' ' + '★'.repeat(info.besteSterren) : '');
+}
 
 function huidigeTekst() {
   // AI tekst heeft prioriteit als beschikbaar
@@ -4716,14 +4774,18 @@ function vulRsvpDropdown() {
   const sel = document.getElementById('rsvp-src');
   const arr = bibliLaad();
   const actiefRaw = localStorage.getItem('tekst_actief') || '0';
+  const gelezen = gelezenLaad();
+  // Ongelezen eerst (verzameldrang), daarna op niveau en titel
   const bieb = tekstenKies({ doelgroep: tekstDoelgroepen(), collectie: 'kort' })
-    .sort((a, b) => a.niveau - b.niveau || a.titel.localeCompare(b.titel));
+    .sort((a, b) => (gelezen['b:'+a.id] ? 1 : 0) - (gelezen['b:'+b.id] ? 1 : 0)
+      || a.niveau - b.niveau || a.titel.localeCompare(b.titel));
+  const badge = (id) => { const b = gelezenBadge(id); return b ? b + ' ' : ''; };
   sel.innerHTML = `<option value="0" ${actiefRaw==='0'?'selected':''}>Demo tekst (ingebouwd)</option>`
     + (bieb.length ? `<optgroup label="📚 Bibliotheek">`
-        + bieb.map(t => `<option value="b:${t.id}" ${actiefRaw==='b:'+t.id?'selected':''}>${t.titel} (niv. ${t.niveau}, ${t.woorden} w.)</option>`).join('')
+        + bieb.map(t => `<option value="b:${t.id}" ${actiefRaw==='b:'+t.id?'selected':''}>${badge('b:'+t.id)}${t.titel} (niv. ${t.niveau}, ${t.woorden} w.)</option>`).join('')
         + `</optgroup>` : '')
     + (arr.length ? `<optgroup label="✏️ Eigen teksten">`
-        + arr.map((t,i) => `<option value="${i+1}" ${actiefRaw===String(i+1)?'selected':''}>${t.naam}</option>`).join('')
+        + arr.map((t,i) => `<option value="${i+1}" ${actiefRaw===String(i+1)?'selected':''}>${badge('e:'+t.uid)}${t.naam}</option>`).join('')
         + `</optgroup>` : '');
 }
 
@@ -5877,6 +5939,19 @@ function avUpdateDash() {
   zet('prof-stat-woorden', (st.totaalWoorden || 0).toLocaleString('nl-NL'));
   zet('prof-stat-wpm', st.bestWpm || 0);
   zet('prof-stat-sessies', (st.sessies || []).length);
+
+  // Collectie-teller: hoeveel bibliotheekteksten zijn gelezen?
+  const collEl = document.getElementById('prof-collectie');
+  if (collEl) {
+    try {
+      const totaal = TEKST_BIB.length;
+      const gelezenIds = Object.keys(gelezenLaad());
+      const inBib = gelezenIds.filter(id => id.startsWith('b:') || id.startsWith('lang-') || id.startsWith('lt-')).length;
+      const pct = totaal ? Math.round((inBib / totaal) * 100) : 0;
+      collEl.innerHTML = `📚 Collectie: <b>${inBib}</b> van ${totaal} teksten gelezen
+        <div class="prof-coll-track"><div class="prof-coll-fill" style="width:${pct}%"></div></div>`;
+    } catch (e) { collEl.innerHTML = ''; }
+  }
 
   // Sterren per oefening (beste Leesronde-score)
   const oefEl = document.getElementById('prof-oefeningen');
@@ -9233,7 +9308,7 @@ function leestestVerzend() {
   document.getElementById('lt-res-score').textContent = `${score} / ${vragen.length} (${pct}%)`;
   Coach.registreerBegrip(pct, 'leestest');
   // Sterren + XP via de Leesronde-motor (eigen vragen = directe ronde)
-  Ronde.direct('leestest', wpm, woorden(tekst.tekst).length, pct);
+  Ronde.direct('leestest', wpm, woorden(tekst.tekst).length, pct, 'lt-' + (leestestTekstIdx + 1));
   const feedback = score === vragen.length ? '🏆 Perfect! Uitstekend begrip!' :
     score >= vragen.length * 0.75 ? '✅ Goed begrip!' :
     score >= vragen.length * 0.5 ? '📖 Redelijk begrip — oefen meer!' :
@@ -9743,10 +9818,12 @@ function lttInit() {
   const bar = document.getElementById('ltt-niveau-bar');
   if (bar) { bar.style.width = cfg.barPct + '%'; bar.style.background = cfg.kleur; }
 
-  // Intro kaart
+  // Intro kaart (+ gelezen-status uit de collectie)
   document.getElementById('ltt-tekst-naam').textContent = _lttTekst.titel;
+  const lttG = gelezenLaad()['lang-' + _lttTekst.id];
   document.getElementById('ltt-tekst-info').textContent =
-    `${wc} woorden · ${cfg.emoji} ${cfg.naam}`;
+    `${wc} woorden · ${cfg.emoji} ${cfg.naam}` +
+    (lttG ? ` · ✓ eerder gelezen${lttG.besteWpm ? ' (beste ' + lttG.besteWpm + ' WPM)' : ''}` : '');
 
   // Views
   document.getElementById('ltt-view-intro').style.display = '';
@@ -9832,6 +9909,8 @@ function lttVerzend() {
   // Sla op in gewone stats + niveau systeem
   slaaSessieOp(_lttWpm, woorden(_lttTekst.tekst).length);
   Coach.registreerBegrip(begrip_pct, 'langetekst');
+  // Sterren + XP + gelezen-vinkje via de Leesronde-motor (eigen vragen)
+  Ronde.direct('langetekst', _lttWpm, woorden(_lttTekst.tekst).length, begrip_pct, 'lang-' + _lttTekst.id);
   const niveauResult = lttSlaOp(_lttWpm, begrip_pct);
 
   // Score kaart
@@ -10204,6 +10283,8 @@ function toonBibliotheek() {
     const isAct   = i === actief;
     const heeftV  = (t.vragen || []).filter(q => q?.v).length;
     const isVast  = t.vast;
+    const gInfo   = t.uid ? gelezenLaad()['e:' + t.uid] : null;
+    const gBadge  = gInfo ? ` · <span style="color:var(--green)">✓ ${gInfo.keren}× gelezen${gInfo.besteWpm ? ' · beste ' + gInfo.besteWpm + ' WPM' : ''}</span>` : '';
 
     const actieBtns = `
       <button class="ba-btn" onclick="eigenRsvp(${i})" title="RSVP">⚡ RSVP</button>
@@ -10217,7 +10298,7 @@ function toonBibliotheek() {
       <div class="bibl-item-header">
         <div class="bibl-item-info">
           <div class="bibl-item-naam">${t.naam}</div>
-          <div class="bibl-item-meta">${wc} woorden · ca. ${minW} min${heeftV ? ` · ${heeftV} vra${heeftV===1?'ag':'gen'}` : ''}</div>
+          <div class="bibl-item-meta">${wc} woorden · ca. ${minW} min${heeftV ? ` · ${heeftV} vra${heeftV===1?'ag':'gen'}` : ''}${gBadge}</div>
         </div>
       </div>
       <div class="bibl-acties">${actieBtns}</div>
@@ -10391,6 +10472,8 @@ function elVerzend() {
 function _elToonResultaat(score, begrip_pct) {
   const wc = woorden(_elTekst.tekst).length;
   slaaSessieOp(_elWpm, wc);
+  // Gelezen-vinkje voor de eigen tekst (demo-tekst heeft geen uid)
+  if (_elTekst.uid) markeerGelezen('e:' + _elTekst.uid, { wpm: _elWpm });
 
   const leesscore  = Math.round(_elWpm * (begrip_pct / 100));
   const heeftV     = _elVragen.length > 0;
