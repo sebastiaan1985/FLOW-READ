@@ -184,14 +184,14 @@ const Ronde = {
    * begripsmeting hebben (leestest, langetekst): zelfde sterren, XP en
    * resultaat-overlay, begrip komt van buiten.
    */
-  direct(type, wpm, aantalWoorden, begripPct, tekstId) {
+  direct(type, wpm, aantalWoorden, begripPct, tekstId, opts) {
     this.type = type;
     this.actief = true;
     this._goed = 0; this._fout = 0; this._combo = 0; this._maxCombo = 0;
-    return this.einde(wpm, aantalWoorden, begripPct, tekstId);
+    return this.einde(wpm, aantalWoorden, begripPct, tekstId, opts);
   },
 
-  einde(wpm, aantalWoorden, begripOverride, tekstId) {
+  einde(wpm, aantalWoorden, begripOverride, tekstId, opts) {
     if (!this.actief) return null;
     this.actief = false;
 
@@ -201,11 +201,14 @@ const Ronde = {
     let sterren = 1;
     if (begrip !== null && begrip >= 70) sterren = 2;
     if (begrip !== null && begrip >= 70 && wpm >= doelWpm) sterren = 3;
+    // Score-rondes (bijv. oog-vanggame): derde ster op topscore i.p.v. tempo
+    if (opts && opts.topBij && begrip !== null && begrip >= opts.topBij) sterren = 3;
 
     // XP: woorden × begrip-multiplier + combo-bonus (5..80)
     const basis = Math.round(aantalWoorden / 12);
     const mult = 0.4 + 0.6 * ((begrip ?? 50) / 100);
     let xp = Math.max(5, Math.min(80, Math.round(basis * mult) + this._maxCombo * 2));
+    if (opts && opts.xpVast) xp = Math.max(5, Math.min(80, opts.xpVast));
 
     // Vloeiendheid-bonus (herhaald lezen): tweede keer beter begrip = +10 XP
     let fluencyBonus = false;
@@ -236,7 +239,7 @@ const Ronde = {
       _gamSla(g);
     } catch (e) {}
 
-    const res = { sterren, wpm, begrip, xp, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus };
+    const res = { sterren, wpm, begrip, xp, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus, opts: opts || null };
     this._fluency = null;
 
     // Gelezen-collectie: vink de tekst af met de beste prestatie
@@ -254,13 +257,23 @@ const Ronde = {
     const sterHtml = [1, 2, 3].map(i =>
       `<span class="ronde-ster ${i <= r.sterren ? 'aan' : ''}" style="animation-delay:${i * .18}s">★</span>`).join('');
 
-    let uitleg = r.sterren === 3
-      ? (kids ? 'WAUW! Alle sterren — jij bent een supervos! 🦊' : 'Perfect: snel én alles begrepen.')
-      : r.sterren === 2
-        ? (kids ? 'Goed gelezen! Haal je ook het doeltempo? 🚀' : `Sterk begrip. Derde ster bij ${r.doelWpm} WPM.`)
-        : (r.begrip !== null && r.begrip < 70
-            ? (kids ? 'Net gemist! Lees ’m nog een keer — dan vang je alle woorden. 🎯' : 'Begrip onder de 70% — herhaald lezen van dezelfde tekst is dé bewezen manier om dat te fixen.')
-            : (kids ? 'Goed gedaan! Nog een keertje?' : 'Uitgelezen! Checkpoints goed beantwoorden geeft meer sterren.'));
+    let uitleg;
+    if (r.opts && r.opts.label) {
+      // Score-ronde (vanggame)
+      uitleg = r.sterren === 3
+        ? (kids ? 'WAUW, wat een scherpe ogen! Alles gevangen! 🦊' : 'Scherpe ogen — topscore!')
+        : r.sterren === 2
+          ? (kids ? 'Goed gevangen! Lukt het je om ze állemaal te vangen? 👀' : 'Sterk! Vang 90% voor drie sterren.')
+          : (kids ? 'Blijf de bal goed volgen — dan vang je er steeds meer! 🎯' : 'Blijf de bal volgen met je ogen — elke vangst telt.');
+    } else {
+      uitleg = r.sterren === 3
+        ? (kids ? 'WAUW! Alle sterren — jij bent een supervos! 🦊' : 'Perfect: snel én alles begrepen.')
+        : r.sterren === 2
+          ? (kids ? 'Goed gelezen! Haal je ook het doeltempo? 🚀' : `Sterk begrip. Derde ster bij ${r.doelWpm} WPM.`)
+          : (r.begrip !== null && r.begrip < 70
+              ? (kids ? 'Net gemist! Lees ’m nog een keer — dan vang je alle woorden. 🎯' : 'Begrip onder de 70% — herhaald lezen van dezelfde tekst is dé bewezen manier om dat te fixen.')
+              : (kids ? 'Goed gedaan! Nog een keertje?' : 'Uitgelezen! Checkpoints goed beantwoorden geeft meer sterren.'));
+    }
 
     // Vloeiendheid-bonus (herhaald lezen met beter begrip)
     if (r.fluencyBonus) {
@@ -299,8 +312,8 @@ const Ronde = {
         <div class="ronde-sterren">${sterHtml}</div>
         <div class="ronde-res-uitleg">${uitleg}</div>
         <div class="ronde-res-grid">
-          <div><div class="ronde-res-num" id="ronde-res-wpm">0</div><div class="ronde-res-lbl">WPM</div></div>
-          <div><div class="ronde-res-num" style="color:${r.begrip === null ? 'var(--muted)' : r.begrip >= 70 ? 'var(--green)' : '#f59e0b'}">${r.begrip === null ? '—' : r.begrip + '%'}</div><div class="ronde-res-lbl">begrip</div></div>
+          <div><div class="ronde-res-num" id="ronde-res-wpm">${r.opts && r.opts.waarde ? r.opts.waarde : '0'}</div><div class="ronde-res-lbl">${r.opts && r.opts.label ? r.opts.label : 'WPM'}</div></div>
+          <div><div class="ronde-res-num" style="color:${r.begrip === null ? 'var(--muted)' : r.begrip >= 70 ? 'var(--green)' : '#f59e0b'}">${r.begrip === null ? '—' : r.begrip + '%'}</div><div class="ronde-res-lbl">${r.opts && r.opts.label ? 'raak' : 'begrip'}</div></div>
           <div><div class="ronde-res-num" style="color:#f0b000">${r.maxCombo > 1 ? '×' + r.maxCombo : '—'}</div><div class="ronde-res-lbl">combo</div></div>
         </div>
         <div class="ronde-res-xp">+${r.xp} XP</div>
@@ -308,9 +321,11 @@ const Ronde = {
       </div>`;
     document.body.appendChild(overlay);
 
-    // WPM telt op naar de eindwaarde (oog-snoep)
-    if (typeof telOp === 'function') telOp(document.getElementById('ronde-res-wpm'), r.wpm);
-    else document.getElementById('ronde-res-wpm').textContent = r.wpm;
+    // WPM telt op naar de eindwaarde (oog-snoep); score-rondes tonen X/Y vast
+    if (!(r.opts && r.opts.waarde)) {
+      if (typeof telOp === 'function') telOp(document.getElementById('ronde-res-wpm'), r.wpm);
+      else document.getElementById('ronde-res-wpm').textContent = r.wpm;
+    }
 
     if (r.sterren >= 3 && typeof showConfetti === 'function') showConfetti(50, 20, true);
     if (typeof _geluid !== 'undefined') (r.sterren >= 2 ? _geluid.fanfare() : _geluid.goed());

@@ -1947,6 +1947,12 @@ body.kids .eigen-mode small { color: #7a7a9a; }
   font-size: 12px; letter-spacing: 1px; color: #f0c000;
   text-shadow: 0 0 8px rgba(240,192,0,.4);
 }
+/* Volg & Vang (oogtraining) */
+.oog-vang-kop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.oog-vang-score { font-size: 13px; font-weight: 700; color: #f0b000; font-variant-numeric: tabular-nums; }
+.oog-vang-score b { color: var(--text); }
+#oog-vang-knoppen .ronde-cp-optie { padding: 13px 8px; font-size: 15px; }
+
 /* Oogspanne-mini-test */
 .ogsp-flits {
   min-height: 90px; display: flex; align-items: center; justify-content: center;
@@ -3233,6 +3239,15 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   </div>
 
   <canvas id="eye-canvas" height="220"></canvas>
+
+  <!-- Volg & Vang: vangvragen onder het canvas (bal loopt door) -->
+  <div id="oog-vang-ui" style="display:none;margin-bottom:14px">
+    <div class="oog-vang-kop">
+      <span class="sectie-label">🎯 Vang het woord van de bal</span>
+      <span id="oog-vang-score" class="oog-vang-score"></span>
+    </div>
+    <div class="ronde-cp-opties" id="oog-vang-knoppen" style="min-height:54px"></div>
+  </div>
 
   <!-- ── OOG RESULTAAT KAART ──────────────────────────────── -->
   <div id="oog-resultaat" style="display:none;padding:28px 20px;background:rgba(124,111,247,.08);border:2px solid var(--accent);border-radius:16px;text-align:center;margin-bottom:16px">
@@ -4961,10 +4976,18 @@ function oogTeken(x, y) {
   glow.addColorStop(0, 'rgba(124,111,247,.35)');
   glow.addColorStop(1, 'rgba(124,111,247,0)');
   ctx.beginPath(); ctx.arc(x, y, 40, 0, Math.PI*2); ctx.fillStyle = glow; ctx.fill();
-  // bal
-  const g = ctx.createRadialGradient(x, y, 2, x, y, 14);
-  g.addColorStop(0, '#fff'); g.addColorStop(.5, '#a78bfa'); g.addColorStop(1, 'rgba(124,111,247,0)');
-  ctx.beginPath(); ctx.arc(x, y, 14, 0, Math.PI*2); ctx.fillStyle = g; ctx.fill();
+  // bal (kids volgen de vos)
+  if (typeof kidsModus !== 'undefined' && kidsModus) {
+    ctx.font = '24px serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🦊', x, y + 9);
+  } else {
+    const g = ctx.createRadialGradient(x, y, 2, x, y, 14);
+    g.addColorStop(0, '#fff'); g.addColorStop(.5, '#a78bfa'); g.addColorStop(1, 'rgba(124,111,247,0)');
+    ctx.beginPath(); ctx.arc(x, y, 14, 0, Math.PI*2); ctx.fillStyle = g; ctx.fill();
+  }
+  // vang-woord op de bal (Volg & Vang)
+  if (typeof _oogVang !== 'undefined') _oogVang.teken(x, y);
 }
 
 function oogStart() {
@@ -4987,12 +5010,129 @@ function oogStart() {
     } else {
       x = pad + (W-2*pad)*(.5+.5*Math.sin(oogT*2)); y = H/2 + 20*Math.sin(oogT*.7);
     }
+    if (typeof _oogVang !== 'undefined') _oogVang.tik(performance.now());
     oogTeken(x, y);
     oogAnim = requestAnimationFrame(frame);
   }
   oogAnim = requestAnimationFrame(frame);
 }
 function oogStop() { if (oogAnim) cancelAnimationFrame(oogAnim); ctx.clearRect(0,0,canvas.width,canvas.height); }
+
+// ─── VOLG & VANG: game-laag over de oogtraining ─────────────
+// Tijdens de niveau-sessies verschijnt er af en toe een kort woord óp de
+// bewegende bal (~850ms). Daarna kies je in één tik welk woord je zag —
+// terwijl de bal gewoon doorloopt. Zo wordt saccade-training een vanggame.
+const _oogVang = {
+  actief: false, wachtOpAntwoord: false,
+  woord: null, toonTot: 0, volgende: 0,
+  score: 0, totaal: 0, combo: 0, maxCombo: 0, _timeout: null,
+
+  start() {
+    this.actief = true; this.wachtOpAntwoord = false; this.woord = null;
+    this.score = 0; this.totaal = 0; this.combo = 0; this.maxCombo = 0;
+    this.volgende = performance.now() + 2500;
+    this._ui(true);
+  },
+
+  stop() {
+    this.actief = false; this.woord = null; this.wachtOpAntwoord = false;
+    clearTimeout(this._timeout);
+    this._ui(false);
+  },
+
+  /** Elke animatieframe: woorden plannen en laten verlopen. */
+  tik(nu) {
+    if (!this.actief) return;
+    if (!this.woord && !this.wachtOpAntwoord && nu >= this.volgende) {
+      const pool = (typeof Ronde !== 'undefined') ? Ronde._AFLEIDERS : ['water','huis','vogel'];
+      this.woord = pool[Math.floor(Math.random() * pool.length)];
+      this.toonTot = nu + 850;
+    }
+    if (this.woord && nu > this.toonTot) {
+      const doel = this.woord;
+      this.woord = null; // van de bal af — nu de vangvraag
+      this._vraag(doel);
+    }
+  },
+
+  /** Woord op de bal tekenen (aangeroepen vanuit oogTeken). */
+  teken(x, y) {
+    if (!this.woord) return;
+    ctx.font = '700 17px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = 'rgba(124,111,247,.8)'; ctx.shadowBlur = 10;
+    ctx.fillText(this.woord, x, y - 26);
+    ctx.shadowBlur = 0;
+  },
+
+  _vraag(doel) {
+    this.wachtOpAntwoord = true;
+    this.totaal++;
+    const bron = (typeof Ronde !== 'undefined') ? Ronde._AFLEIDERS : [];
+    const pool = bron.filter(w => w !== doel && Math.abs(w.length - doel.length) <= 2);
+    const afleider = pool.length ? pool[Math.floor(Math.random() * pool.length)] : 'anders';
+    const opties = Math.random() < .5 ? [doel, afleider] : [afleider, doel];
+    const wrap = document.getElementById('oog-vang-knoppen');
+    if (!wrap) { this.wachtOpAntwoord = false; return; }
+    wrap.innerHTML = opties.map(o => `<button class="ronde-cp-optie" data-w="${o}">${o}</button>`).join('');
+    wrap.querySelectorAll('button').forEach(b => {
+      b.onclick = () => this._antwoord(b.dataset.w === doel, b, doel);
+    });
+    // 4 seconden bedenktijd — de bal loopt gewoon door
+    this._timeout = setTimeout(() => this._antwoord(false, null, doel), 4000);
+  },
+
+  _antwoord(goed, btn, doel) {
+    clearTimeout(this._timeout);
+    if (!this.wachtOpAntwoord) return;
+    this.wachtOpAntwoord = false;
+    const wrap = document.getElementById('oog-vang-knoppen');
+    if (wrap) wrap.querySelectorAll('button').forEach(b => {
+      b.disabled = true;
+      if (b.dataset.w === doel) b.classList.add('goed');
+      else if (b === btn) b.classList.add('fout');
+    });
+    if (goed) {
+      this.score++; this.combo++;
+      this.maxCombo = Math.max(this.maxCombo, this.combo);
+      if (typeof _geluid !== 'undefined') _geluid.goed();
+      if (typeof tril === 'function') tril(20);
+    } else {
+      this.combo = 0;
+      if (typeof _geluid !== 'undefined') _geluid.fout();
+    }
+    this._chip();
+    setTimeout(() => { if (wrap) wrap.innerHTML = ''; }, goed ? 450 : 800);
+    this.volgende = performance.now() + 2400 + Math.random() * 1800;
+  },
+
+  _chip() {
+    const el = document.getElementById('oog-vang-score');
+    if (el) el.innerHTML = `🎯 <b>${this.score}</b>/${this.totaal}${this.combo >= 2 ? ` · 🔥×${this.combo}` : ''}`;
+  },
+
+  _ui(aan) {
+    const ui = document.getElementById('oog-vang-ui');
+    if (ui) ui.style.display = aan ? '' : 'none';
+    if (aan) {
+      const w = document.getElementById('oog-vang-knoppen');
+      if (w) w.innerHTML = '';
+      this._chip();
+    }
+  },
+
+  /** Sessie-einde: sterren + XP via de Leesronde-motor (score-modus). */
+  einde() {
+    if (!this.actief) return;
+    const { score, totaal, maxCombo } = this;
+    this.stop();
+    if (!totaal) return;
+    const pct = Math.round((score / totaal) * 100);
+    Ronde.direct('oog', score, totaal, pct, null,
+      { label: 'gevangen', waarde: `${score}/${totaal}`, xpVast: 8 + score * 2 + maxCombo, topBij: 90 });
+  },
+};
 
 // ─── PERIFEER ZIEN ───────────────────────────────────────────────────────
 let periTimer = null;
@@ -6790,6 +6930,13 @@ function _oogUpdateRing(resterend, totaal) {
 function oogStartMetTimer() {
   clearInterval(oogTimerInterval);
   const niv = OOG_NIVEAUS[oogNiveauActief];
+
+  // EERST de animatie starten: oogStart() roept intern oogStop() aan, en de
+  // override daarvan wist timer + label. Daarna pas timer/label/vang zetten
+  // (dit was een sluimerende bug: de sessie-timer stierf direct na start).
+  oogStart();
+  _oogVang.start();
+
   oogTimerResterend = niv.duur;
   document.getElementById('oog-timer-lbl').textContent = `${niv.naam} · bezig…`;
   _oogUpdateRing(oogTimerResterend, niv.duur);
@@ -6798,6 +6945,7 @@ function oogStartMetTimer() {
     _oogUpdateRing(oogTimerResterend, niv.duur);
     if (oogTimerResterend <= 0) {
       clearInterval(oogTimerInterval);
+      _oogVang.einde(); // eerst afrekenen (sterren/XP), dan alles stoppen
       oogStop();
       document.getElementById('oog-timer-lbl').textContent = '✅ Sessie afgerond';
       _oogUpdateRing(0, 0);
@@ -6810,13 +6958,13 @@ function oogStartMetTimer() {
   }
   tikTimer();
   oogTimerInterval = setInterval(tikTimer, 1000);
-  oogStart();
 }
 
-// Override oogStop om ook timer te stoppen
+// Override oogStop om ook timer + vanggame te stoppen
 const _oogStopOrigineel = oogStop;
 oogStop = function() {
   clearInterval(oogTimerInterval);
+  if (typeof _oogVang !== 'undefined') _oogVang.stop();
   _oogStopOrigineel();
   _oogUpdateRing(0, 0);
   document.getElementById('oog-timer-lbl').textContent = 'Druk Start om te beginnen';
