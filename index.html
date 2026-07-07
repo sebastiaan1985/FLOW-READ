@@ -1426,6 +1426,16 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 .lw-testbar { display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border); }
 .lw-testbar .btn { font-size:.76rem; }
 .lw-testbar .actief { border-color:rgba(52,211,153,.45);background:rgba(52,211,153,.12);color:#34d399; }
+.tekstbron-panel {
+  display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;margin:0 0 16px;
+}
+.tekstbron-panel .tekstbron-main { flex:1;min-width:220px; }
+.tekstbron-panel label { display:block;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:7px; }
+.tekstbron-panel select { width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-family:'Inter',sans-serif;font-size:13px; }
+.tekstbron-panel .tekstbron-actions { display:flex;gap:8px;flex-wrap:wrap; }
+.tekstbron-panel .tekstbron-meta { flex-basis:100%;font-size:12px;color:var(--muted); }
 .lw-progress-rij { display:flex;gap:4px;margin-bottom:4px; }
 .lw-progress-dot { width:10px;height:10px;border-radius:50%;background:var(--border2);flex-shrink:0; }
 .lw-progress-dot.gedaan { background:#34d399; }
@@ -3133,6 +3143,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <div class="control-group">
       <label>Tekstbron</label>
       <select id="rsvp-src" onchange="laadRsvpTekst()"></select>
+      <button class="btn btn-ghost" style="font-size:.76rem;margin-top:8px;padding:7px 10px" onclick="tekstBronUploadKlik('rsvp')">📁 Upload tekst</button>
     </div>
   </div>
 
@@ -3147,6 +3158,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-chunk" class="screen">
   <div class="page-title">Chunk Lezen</div>
   <div class="page-sub">Lees woordgroepen in één oogopslag. Vergroot uw blikveld stap voor stap.</div>
+  <div class="tekstbron-panel" data-tekstbron="chunk"></div>
 
   <div id="chunk-display"><span id="chunk-tekst">Druk Start</span></div>
 
@@ -3185,6 +3197,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-oog" class="screen">
   <div class="page-title">Oogbewegingstraining</div>
   <div class="page-sub">Volg de bal met uw ogen. Vergroot uw blikveld en verminder onbewust terugspringen (regressie).</div>
+  <div class="tekstbron-panel" data-tekstbron="oog"></div>
 
   <h3>Kies jouw niveau</h3>
   <div class="oog-niveau-grid">
@@ -3294,6 +3307,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-perifeer" class="screen">
   <div class="page-title">Perifeer Zien</div>
   <div class="page-sub">Train je zijdelings blikveld — lees woorden zonder je ogen te bewegen. Dit is dé sleutel tot sneller lezen.</div>
+  <div class="tekstbron-panel" data-tekstbron="perifeer"></div>
 
   <!-- Waarom uitleg -->
   <div class="card" style="margin-bottom:20px;border-left:3px solid var(--accent2)">
@@ -3414,6 +3428,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-papier" class="screen">
   <div class="page-title">Papier Lees Training</div>
   <div class="page-sub">Kies een gidstechniek en oefen met de animatie hieronder. Elke techniek heeft een eigen beweging.</div>
+  <div class="tekstbron-panel" data-tekstbron="papier"></div>
 
   <!-- Techniek keuze kaarten -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
@@ -4095,6 +4110,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-subvocal" class="screen">
   <div class="page-title">🔕 Subvocalisatie-training</div>
   <div class="page-sub">De innerlijke stem is de grootste rem op je leessnelheid. Leer hem uitschakelen.</div>
+  <div class="tekstbron-panel" data-tekstbron="subvocal"></div>
 
   <div class="card" style="margin-bottom:16px">
     <h3 style="margin:0 0 8px">Wat is subvocalisatie?</h3>
@@ -4163,6 +4179,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-regressie" class="screen">
   <div class="page-title">⏩ Regressie-training</div>
   <div class="page-sub">Stop met terugkijken. Ogen die teruggaan kosten tot 30% van je leestijd.</div>
+  <div class="tekstbron-panel" data-tekstbron="regressie"></div>
 
   <div class="card" style="margin-bottom:16px">
     <h3 style="margin:0 0 8px">Wat is regressie?</h3>
@@ -4193,6 +4210,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-fixatie" class="screen">
   <div class="page-title">👁 Fixatie-training</div>
   <div class="page-sub">Leer meer woorden te zien per oogfixatie. Snelle lezers maken 3× minder oogsprongen per regel.</div>
+  <div class="tekstbron-panel" data-tekstbron="fixatie"></div>
 
   <div class="card" style="margin-bottom:16px">
     <h3 style="margin:0 0 6px">Hoe het werkt</h3>
@@ -4226,6 +4244,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-skim" class="screen">
   <div class="page-title">🔍 Skimmen &amp; Scannen</div>
   <div class="page-sub">Leer teksten razendsnel doorkijken voor structuur (skim) of gerichte informatie (scan).</div>
+  <div class="tekstbron-panel" data-tekstbron="skim"></div>
 
   <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
     <button id="skim-tab-uitleg" class="btn btn-ghost" style="font-size:.82rem" onclick="skimTab('uitleg')">📖 Uitleg</button>
@@ -4370,6 +4389,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 </div>
 
 </main>
+<input type="file" id="training-tekst-file" accept=".txt,text/plain" style="display:none" onchange="tekstBronUploadBestand(this)">
 
 <script>
 // ─── DATA ────────────────────────────────────────────────────────────────
@@ -4459,6 +4479,119 @@ function huidigeBibTekst() {
 
 function woorden(t) { return t.trim().split(/\s+/).filter(w => w.length > 0); }
 
+function tekstBronWoordenPool(min = 3, max = 14) {
+  const pool = [...new Set(
+    woorden(huidigeTekst())
+      .map(w => w.replace(/[^a-zA-ZÀ-ÖØ-öø-ÿ-]/g, '').replace(/^-+|-+$/g, ''))
+      .filter(w => w.length >= min && w.length <= max)
+  )];
+  return pool.length >= 6 ? pool : null;
+}
+
+function htmlEsc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function tekstBronOptiesHtml() {
+  const arr = bibliLaad();
+  const actiefRaw = localStorage.getItem('tekst_actief') || '0';
+  const gelezen = gelezenLaad();
+  const bieb = tekstenKies({ doelgroep: tekstDoelgroepen(), collectie: 'kort' })
+    .sort((a, b) => (gelezen['b:'+a.id] ? 1 : 0) - (gelezen['b:'+b.id] ? 1 : 0)
+      || a.niveau - b.niveau || a.titel.localeCompare(b.titel));
+  const badge = (id) => { const b = gelezenBadge(id); return b ? b + ' ' : ''; };
+  return `<option value="0" ${actiefRaw==='0'?'selected':''}>Demo tekst (ingebouwd)</option>`
+    + (bieb.length ? `<optgroup label="📚 Bibliotheek">`
+        + bieb.map(t => `<option value="b:${htmlEsc(t.id)}" ${actiefRaw==='b:'+t.id?'selected':''}>${htmlEsc(badge('b:'+t.id) + t.titel)} (niv. ${t.niveau}, ${t.woorden} w.)</option>`).join('')
+        + `</optgroup>` : '')
+    + (arr.length ? `<optgroup label="✏️ Eigen teksten">`
+        + arr.map((t,i) => `<option value="${i+1}" ${actiefRaw===String(i+1)?'selected':''}>${htmlEsc(badge('e:'+t.uid) + (t.naam || 'Mijn tekst'))}</option>`).join('')
+        + `</optgroup>` : '');
+}
+
+function tekstBronNaam() {
+  const raw = localStorage.getItem('tekst_actief') || '0';
+  if (raw === '0') return 'Demo tekst';
+  if (raw.startsWith('b:')) return tekstBijId(raw.slice(2))?.titel || 'Bibliotheektekst';
+  const idx = parseInt(raw, 10);
+  return bibliLaad()[idx - 1]?.naam || 'Eigen tekst';
+}
+
+function tekstBronMeta() {
+  const wc = woorden(huidigeTekst()).length;
+  return `${tekstBronNaam()} · ${wc} woorden`;
+}
+
+function renderTekstBronPanelen() {
+  const html = (scope) => `
+    <div class="tekstbron-main">
+      <label>Tekstbron</label>
+      <select onchange="tekstBronKies(this.value, '${scope}')">${tekstBronOptiesHtml()}</select>
+    </div>
+    <div class="tekstbron-actions">
+      <button class="btn btn-ghost" style="font-size:.76rem;padding:8px 11px" onclick="tekstBronUploadKlik('${scope}')">📁 Upload .txt</button>
+      <button class="btn btn-ghost" style="font-size:.76rem;padding:8px 11px" onclick="sidebarNav('tekst')">✍️ Beheer</button>
+    </div>
+    <div class="tekstbron-meta">${htmlEsc(tekstBronMeta())}</div>`;
+  document.querySelectorAll('.tekstbron-panel[data-tekstbron]').forEach(el => {
+    el.innerHTML = html(el.dataset.tekstbron || 'training');
+  });
+}
+
+function tekstBronKies(value, scope = '') {
+  localStorage.setItem('tekst_actief', value || '0');
+  window._aiHuidigeTekst = null;
+  papierEigenTekst = '';
+  if (typeof rsvpStop === 'function') rsvpStop();
+  if (typeof chunkStop === 'function') chunkStop();
+  if (typeof vulRsvpDropdown === 'function') vulRsvpDropdown();
+  if (typeof laadRsvpTekst === 'function') laadRsvpTekst();
+  renderTekstBronPanelen();
+  tekstBronRefreshTraining(scope);
+}
+
+let _tekstBronUploadScope = 'training';
+function tekstBronUploadKlik(scope = 'training') {
+  _tekstBronUploadScope = scope;
+  const input = document.getElementById('training-tekst-file');
+  if (input) { input.value = ''; input.click(); }
+}
+
+function tekstBronUploadBestand(input) {
+  const f = input.files && input.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    const tekst = String(e.target.result || '').trim();
+    if (woorden(tekst).length < 20) { toonFout('Tekst is te kort om goed mee te trainen.'); return; }
+    const arr = bibliLaad();
+    const naam = (f.name || 'Mijn tekst').replace(/\.txt$/i, '').slice(0, 60);
+    arr.push({ naam, tekst, vragen: [], uid: Date.now().toString(36) });
+    bibliSla(arr);
+    localStorage.setItem('tekst_actief', String(arr.length));
+    window._aiHuidigeTekst = null;
+    papierEigenTekst = '';
+    if (typeof toonBibliotheek === 'function') toonBibliotheek();
+    if (typeof vulRsvpDropdown === 'function') vulRsvpDropdown();
+    if (typeof laadRsvpTekst === 'function') laadRsvpTekst();
+    renderTekstBronPanelen();
+    tekstBronRefreshTraining(_tekstBronUploadScope);
+    toonFout(`📁 Tekst geladen: ${naam}`);
+  };
+  r.readAsText(f);
+}
+
+function tekstBronRefreshTraining(scope = '') {
+  if (scope === 'papier' && typeof bouwPapierTekst === 'function') bouwPapierTekst();
+  if (scope === 'subvocal' && typeof svInit === 'function') svInit();
+  if (scope === 'regressie' && typeof regNieuwe === 'function') regNieuwe();
+  if (scope === 'fixatie' && typeof fixNieuwe === 'function') fixNieuwe();
+  if (scope === 'skim' && typeof skimInit === 'function') skimInit();
+  if (scope === 'chunk') document.getElementById('chunk-tekst').textContent = 'Druk Start';
+  if (scope === 'perifeer' && typeof periStop === 'function') periStop();
+  if (scope === 'oog' && typeof oogStop === 'function') oogStop();
+}
+
 // ─── SIDEBAR ─────────────────────────────────────────────────────────────
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
@@ -4483,6 +4616,7 @@ function sidebarNav(id) {
   // Show the correct screen
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
+  if (typeof renderTekstBronPanelen === 'function') renderTekstBronPanelen();
 
   // Trigger screen-specific init
   if (id === 'papier') bouwPapierTekst();
@@ -4796,21 +4930,7 @@ let rsvpTimer = null, rsvpIdx = 0, rsvpWoorden = [], rsvpStart_t = null, rsvpEla
 
 function vulRsvpDropdown() {
   const sel = document.getElementById('rsvp-src');
-  const arr = bibliLaad();
-  const actiefRaw = localStorage.getItem('tekst_actief') || '0';
-  const gelezen = gelezenLaad();
-  // Ongelezen eerst (verzameldrang), daarna op niveau en titel
-  const bieb = tekstenKies({ doelgroep: tekstDoelgroepen(), collectie: 'kort' })
-    .sort((a, b) => (gelezen['b:'+a.id] ? 1 : 0) - (gelezen['b:'+b.id] ? 1 : 0)
-      || a.niveau - b.niveau || a.titel.localeCompare(b.titel));
-  const badge = (id) => { const b = gelezenBadge(id); return b ? b + ' ' : ''; };
-  sel.innerHTML = `<option value="0" ${actiefRaw==='0'?'selected':''}>Demo tekst (ingebouwd)</option>`
-    + (bieb.length ? `<optgroup label="📚 Bibliotheek">`
-        + bieb.map(t => `<option value="b:${t.id}" ${actiefRaw==='b:'+t.id?'selected':''}>${badge('b:'+t.id)}${t.titel} (niv. ${t.niveau}, ${t.woorden} w.)</option>`).join('')
-        + `</optgroup>` : '')
-    + (arr.length ? `<optgroup label="✏️ Eigen teksten">`
-        + arr.map((t,i) => `<option value="${i+1}" ${actiefRaw===String(i+1)?'selected':''}>${badge('e:'+t.uid)}${t.naam}</option>`).join('')
-        + `</optgroup>` : '');
+  if (sel) sel.innerHTML = tekstBronOptiesHtml();
 }
 
 function laadRsvpTekst() {
@@ -4822,6 +4942,7 @@ function laadRsvpTekst() {
   rsvpWoorden = woorden(huidigeTekst());
   document.getElementById('rsvp-total').textContent = rsvpWoorden.length;
   document.getElementById('rsvp-pos').textContent = 0;
+  if (typeof renderTekstBronPanelen === 'function') renderTekstBronPanelen();
 }
 
 function rsvpStart() {
@@ -5053,7 +5174,9 @@ const _oogVang = {
   tik(nu) {
     if (!this.actief) return;
     if (!this.woord && !this.wachtOpAntwoord && nu >= this.volgende) {
-      const pool = (typeof Ronde !== 'undefined') ? Ronde._AFLEIDERS : ['water','huis','vogel'];
+      const pool = tekstBronWoordenPool(4, 12)
+        || ((typeof Ronde !== 'undefined') ? Ronde._AFLEIDERS : null)
+        || ['water','huis','vogel'];
       this.woord = pool[Math.floor(Math.random() * pool.length)];
       this.toonTot = nu + 850;
     }
@@ -5078,7 +5201,8 @@ const _oogVang = {
   _vraag(doel) {
     this.wachtOpAntwoord = true;
     this.totaal++;
-    const bron = (typeof Ronde !== 'undefined') ? Ronde._AFLEIDERS : [];
+    const bron = tekstBronWoordenPool(4, 12)
+      || ((typeof Ronde !== 'undefined') ? Ronde._AFLEIDERS : []);
     const pool = bron.filter(w => w !== doel && Math.abs(w.length - doel.length) <= 2);
     const afleider = pool.length ? pool[Math.floor(Math.random() * pool.length)] : 'anders';
     const opties = Math.random() < .5 ? [doel, afleider] : [afleider, doel];
@@ -5147,6 +5271,9 @@ const _oogVang = {
 let periTimer = null;
 const periWoorden = ['vlug','hemel','boom','rivier','stad','licht','boek','regen',
   'zon','maan','wind','zee','berg','blad','hand','oog','deur','pad','ster','golf'];
+function periWoordenPool() {
+  return tekstBronWoordenPool(4, 10) || periWoorden;
+}
 
 function periStart() {
   periStop();
@@ -5158,8 +5285,9 @@ function periStart() {
       e.style.opacity = 0; setTimeout(() => e.remove(), 200);
     });
     const kant = breedte / 2;
-    [[-kant, periWoorden[Math.floor(Math.random()*periWoorden.length)]],
-     [kant,  periWoorden[Math.floor(Math.random()*periWoorden.length)]]].forEach(([pct, woord]) => {
+    const pool = periWoordenPool();
+    [[-kant, pool[Math.floor(Math.random()*pool.length)]],
+     [kant,  pool[Math.floor(Math.random()*pool.length)]]].forEach(([pct, woord]) => {
       const el = document.createElement('span');
       el.className = 'peripheral-word'; el.textContent = woord;
       el.style.left = (50+pct)+'%'; el.style.top = (30+Math.random()*40)+'%';
@@ -6525,6 +6653,8 @@ const _oogspanne = {
   _n: 2, _fouten: 0, _goedOpN: 0, _bezig: false,
 
   woorden() {
+    const actief = tekstBronWoordenPool(3, 9);
+    if (actief) return actief;
     // Inhoudswoorden uit de bibliotheek als bron
     try {
       const t = tekstenKies({ collectie: 'kort' })[0];
@@ -8154,7 +8284,8 @@ function periSpelVolgende() {
   const pos = (lv.breedte / 2);
 
   // Kies 2 willekeurige woorden
-  const shuffle = [...PERI_SPEL_WOORDEN].sort(() => Math.random() - 0.5);
+  const pool = tekstBronWoordenPool(4, 12) || PERI_SPEL_WOORDEN;
+  const shuffle = [...pool].sort(() => Math.random() - 0.5);
   periSpelLinks = shuffle[0];
   periSpelRechts = shuffle[1];
   periSpelVraagKant = Math.random() > 0.5 ? 'links' : 'rechts';
@@ -8189,7 +8320,8 @@ function periSpelVolgende() {
 
 function periSpelStelVraag() {
   const gevraagd = periSpelVraagKant === 'links' ? periSpelLinks : periSpelRechts;
-  const fout1 = PERI_SPEL_WOORDEN.filter(w => w !== periSpelLinks && w !== periSpelRechts);
+  const pool = tekstBronWoordenPool(4, 12) || PERI_SPEL_WOORDEN;
+  const fout1 = pool.filter(w => w !== periSpelLinks && w !== periSpelRechts);
   const fout2 = [...fout1].sort(() => Math.random() - 0.5).slice(0, 3);
   const opties = dyxShuffle([gevraagd, ...fout2]);
 
@@ -8569,7 +8701,7 @@ function svSwitchTab(t) {
 }
 
 function svMetroLaadTekst() {
-  svMetroWoorden = SV_TEKSTEN[Math.floor(Math.random()*SV_TEKSTEN.length)].split(/\s+/);
+  svMetroWoorden = woorden(huidigeTekst());
   svMetroIdx = 0;
   document.getElementById('sv-metro-voortgang').textContent = '';
   document.getElementById('sv-metro-woord').textContent = '—';
@@ -8610,7 +8742,7 @@ function svMetroBpm(delta) {
 }
 
 function svTelLaadTekst() {
-  document.getElementById('sv-tel-tekst').textContent = SV_TEKSTEN[Math.floor(Math.random()*SV_TEKSTEN.length)];
+  document.getElementById('sv-tel-tekst').textContent = huidigeTekst();
 }
 
 function svTelToggle() {
@@ -8631,7 +8763,7 @@ function svTelToggle() {
 function svTelNieuwe() { svTelLaadTekst(); }
 
 function svHumLaadTekst() {
-  document.getElementById('sv-hum-tekst').textContent = SV_TEKSTEN[Math.floor(Math.random()*SV_TEKSTEN.length)];
+  document.getElementById('sv-hum-tekst').textContent = huidigeTekst();
   document.getElementById('sv-hum-timer-display').style.display = 'none';
 }
 
@@ -8704,7 +8836,7 @@ function regInit() {
 
 function regNieuwe() {
   regStop();
-  regTekst = REG_TEKSTEN[Math.floor(Math.random()*REG_TEKSTEN.length)];
+  regTekst = huidigeTekst() || REG_TEKSTEN[Math.floor(Math.random()*REG_TEKSTEN.length)];
   regZinnen = regTekst.match(/[^.!?]+[.!?]?/g).filter(z=>z.trim().length>5).map(z=>z.trim());
   regIdx = 0;
   document.getElementById('reg-zin-display').textContent = 'Klik op Start om te beginnen';
@@ -8806,7 +8938,7 @@ function fixInit() {
 
 function fixNieuwe() {
   fixStop();
-  const tekst = FIX_TEKSTEN[Math.floor(Math.random()*FIX_TEKSTEN.length)];
+  const tekst = huidigeTekst() || FIX_TEKSTEN[Math.floor(Math.random()*FIX_TEKSTEN.length)];
   fixWoorden = tekst.split(/\s+/);
   fixGroepen = [];
   for (let i=0; i<fixWoorden.length; i+=fixBreedte) fixGroepen.push(fixWoorden.slice(i,i+fixBreedte));
@@ -9158,6 +9290,20 @@ let skimTimerActief = false;
 let skimTimerSec = 30;
 let scanAutoZoekWrd = '';
 
+function skimDataActief() {
+  const tekst = huidigeTekst();
+  let alineas = tekst.split(/\n{2,}/).map(a => a.trim()).filter(a => woorden(a).length > 3);
+  if (alineas.length < 2) {
+    const zinnen = tekst.match(/[^.!?]+[.!?]?/g) || [tekst];
+    alineas = [];
+    for (let i = 0; i < zinnen.length; i += 4) {
+      const al = zinnen.slice(i, i + 4).join(' ').trim();
+      if (al) alineas.push(al);
+    }
+  }
+  return { titel: tekstBronNaam(), alineas: alineas.length ? alineas : [tekst] };
+}
+
 function skimInit() { skimTab('skim'); skimNieuwe(); scanNieuwe(); previewNieuwe(); }
 
 function skimTab(t) {
@@ -9169,15 +9315,15 @@ function skimTab(t) {
 }
 
 function skimNieuwe() {
-  skimTekstIdx = Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length);
-  const d = SKIM_TEKSTEN_DATA[skimTekstIdx];
+  const d = skimDataActief();
+  skimTekstIdx = 0;
   // Highlight eerste + laatste zin van elke alinea
-  const html = `<div class="skim-titel">${d.titel}</div>` +
+  const html = `<div class="skim-titel">${htmlEsc(d.titel)}</div>` +
     d.alineas.map(al => {
       const zinnen = al.match(/[^.!?]+[.!?]?/g)||[al];
       return zinnen.map((z,i)=> (i===0||i===zinnen.length-1)
-        ? `<span class="skim-hl">${z}</span>`
-        : `<span>${z}</span>`
+        ? `<span class="skim-hl">${htmlEsc(z)}</span>`
+        : `<span>${htmlEsc(z)}</span>`
       ).join('');
     }).map(a=>`<p>${a}</p>`).join('');
   document.getElementById('skim-tekst-box').innerHTML = html;
@@ -9199,10 +9345,10 @@ function skimTimerStart() {
       clearInterval(skimTimerRef); skimTimerActief=false;
       document.getElementById('skim-timer-display').textContent='⏱ Tijd!';
       // Toon begripsvraag
-      const d=SKIM_TEKSTEN_DATA[skimTekstIdx];
+      const d=skimDataActief();
       const wrap=document.getElementById('skim-vraag-wrap');
       wrap.style.display='';
-      wrap.innerHTML=`<div class="card"><b>Begripscheck:</b> Wat is het hoofdonderwerp van "${d.titel}"?
+      wrap.innerHTML=`<div class="card"><b>Begripscheck:</b> Wat is het hoofdonderwerp van "${htmlEsc(d.titel)}"?
         <div style="margin-top:8px;font-size:.88rem;color:var(--muted)">Bekijk je antwoord door de tekst nog eens te lezen. Kon je het hoofdidee vaststellen?</div>
         <button class="btn btn-primary" style="margin-top:8px;font-size:.82rem" onclick="skimNieuwe()">↺ Volgende tekst</button>
       </div>`;
@@ -9211,9 +9357,9 @@ function skimTimerStart() {
 }
 
 function scanNieuwe() {
-  const d = SKIM_TEKSTEN_DATA[Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length)];
-  const html = `<div class="skim-titel">${d.titel}</div>` +
-    d.alineas.map(a=>`<p>${a}</p>`).join('');
+  const d = skimDataActief();
+  const html = `<div class="skim-titel">${htmlEsc(d.titel)}</div>` +
+    d.alineas.map(a=>`<p>${htmlEsc(a)}</p>`).join('');
   document.getElementById('scan-tekst-box').innerHTML = html;
   document.getElementById('scan-zoek-input').value='';
   document.getElementById('scan-zoek-doel').textContent='';
@@ -9238,24 +9384,25 @@ function scanZoek() {
 }
 
 function scanAutoZoek() {
-  const wrd = SCAN_WOORDEN[Math.floor(Math.random()*SCAN_WOORDEN.length)];
+  const pool = [...new Set(woorden(huidigeTekst()).map(w => w.replace(/[^a-zA-Zà-üÀ-Ü]/g, '')).filter(w => w.length >= 5 && w.length <= 16))];
+  const wrd = (pool.length ? pool : SCAN_WOORDEN)[Math.floor(Math.random() * (pool.length ? pool.length : SCAN_WOORDEN.length))];
   document.getElementById('scan-zoek-doel').textContent = `🎯 Zoek: "${wrd}"`;
   document.getElementById('scan-zoek-input').value = wrd;
   scanZoek();
 }
 
 function previewNieuwe() {
-  const d = SKIM_TEKSTEN_DATA[Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length)];
+  const d = skimDataActief();
   // Stap 1: structuur (titels + eerste zinnen)
-  const strHtml = `<div class="skim-titel">${d.titel}</div>` +
+  const strHtml = `<div class="skim-titel">${htmlEsc(d.titel)}</div>` +
     d.alineas.map(a=>{
       const eer = (a.match(/[^.!?]+[.!?]?/)||[a])[0];
-      return `<p><span class="skim-hl">${eer}</span></p>`;
+      return `<p><span class="skim-hl">${htmlEsc(eer)}</span></p>`;
     }).join('');
   document.getElementById('preview-structuur-box').innerHTML = strHtml;
   // Stap 2: volledige tekst
-  document.getElementById('preview-tekst-box').innerHTML = `<div class="skim-titel">${d.titel}</div>` +
-    d.alineas.map(a=>`<p>${a}</p>`).join('');
+  document.getElementById('preview-tekst-box').innerHTML = `<div class="skim-titel">${htmlEsc(d.titel)}</div>` +
+    d.alineas.map(a=>`<p>${htmlEsc(a)}</p>`).join('');
   document.getElementById('preview-stap-1').style.display='';
   document.getElementById('preview-stap-2').style.display='none';
 }
@@ -10707,8 +10854,10 @@ function slaaTekstOp() {
   document.getElementById('tekst-info').innerHTML =
     `<span class="success">✓ "${naam}" opgeslagen (${vragen.length} vra${vragen.length===1?'ag':'gen'})!</span>`;
 
+  vulRsvpDropdown();
   laadRsvpTekst();
   toonBibliotheek();
+  renderTekstBronPanelen();
 }
 
 // ── EIGEN LEESSESSIE ──────────────────────────────────────
