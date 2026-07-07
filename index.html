@@ -3815,8 +3815,8 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- Stats -->
   <div class="vg-stats-grid" id="vg-stats-grid"></div>
 
-  <!-- Niveau Lange Teksten -->
-  <h3>📚 Niveau Lange Teksten</h3>
+  <!-- Adaptief leesniveau -->
+  <h3>📚 Adaptief Leesniveau</h3>
   <div id="vg-niveau-card" class="vg-niveau-card">
     <div class="vg-niveau-dot" id="vg-niveau-emoji">🟢</div>
     <div class="vg-niveau-info">
@@ -5787,8 +5787,21 @@ function tekenGrafieken() {
   }
 }
 
-function slaaSessieOp(wpm, n) {
-  stats.sessies.push({ datum: new Date().toLocaleString('nl-NL'), ts: Date.now(), wpm, woorden: n });
+function slaaSessieOp(wpm, n, meta = {}) {
+  const begrip = (typeof meta.begrip === 'number') ? Math.max(0, Math.min(100, Math.round(meta.begrip))) : null;
+  const leesscore = begrip !== null ? Math.round(wpm * (begrip / 100)) : null;
+  const scherm = meta.type || (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'onbekend';
+  stats.sessies.push({
+    datum: new Date().toLocaleString('nl-NL'),
+    ts: Date.now(),
+    type: scherm,
+    wpm,
+    woorden: n,
+    begrip,
+    leesscore,
+    tekstId: meta.tekstId || null,
+    tekstNiveau: meta.tekstNiveau || null,
+  });
   stats.totaalWoorden += n;
   if (wpm > stats.bestWpm) stats.bestWpm = wpm;
   localStorage.setItem('snellees_stats', JSON.stringify(stats));
@@ -5821,7 +5834,7 @@ function toonStats() {
 
   const lijst = [...stats.sessies].reverse().slice(0,10);
   document.getElementById('sessie-lijst').innerHTML = lijst.length
-    ? lijst.map(s => `<div class="sessie-item"><span>${s.datum}</span><span><b class="sessie-wpm">${s.wpm} WPM</b> · ${s.woorden} woorden</span></div>`).join('')
+    ? lijst.map(s => `<div class="sessie-item"><span>${s.datum}</span><span><b class="sessie-wpm">${s.wpm} WPM</b>${s.begrip != null ? ` · ${s.begrip}% begrip` : ''}${s.leesscore != null ? ` · score ${s.leesscore}` : ''} · ${s.woorden} woorden</span></div>`).join('')
     : '<span style="color:var(--muted);font-size:13px">Nog geen sessies — begin met trainen!</span>';
 
   // Render grafieken (klein delay zodat canvas zichtbaar is)
@@ -9963,34 +9976,100 @@ document.addEventListener('snellees:home', updateVandaagPanel);
 // LANGE_TEKSTEN is verhuisd naar teksten.js (collectie: lang) // einde LANGE_TEKSTEN
 
 // ── NIVEAU CONFIGURATIE ───────────────────────────────────
+// Een niveau is pas sterk wanneer snelheid en begrip samen stijgen.
+// Leesscore = WPM x begrip%, dus 400 WPM met 50% begrip telt als 200.
 const _LTT_NIVEAUS = {
-  1: { naam: 'Starter',   emoji: '🟢', kleur: '#4cc9f0', drempelWpm: 0,   drempelOmhoog: 280, barPct: 20 },
-  2: { naam: 'Gevorderd', emoji: '🟡', kleur: '#f59e0b', drempelWpm: 280, drempelOmhoog: 420, barPct: 60 },
-  3: { naam: 'Expert',    emoji: '🔴', kleur: '#ef4444', drempelWpm: 420, drempelOmhoog: 9999, barPct: 100 },
+  1: { naam: 'Starter',             emoji: '🟢', kleur: '#4cc9f0', minWpm: 0,   minBegrip: 0,  minScore: 0,   barPct: 18 },
+  2: { naam: 'Vlotte Lezer',        emoji: '🟡', kleur: '#f59e0b', minWpm: 240, minBegrip: 70, minScore: 180, barPct: 38 },
+  3: { naam: 'Snelle Lezer',        emoji: '🟠', kleur: '#f97316', minWpm: 320, minBegrip: 75, minScore: 240, barPct: 58 },
+  4: { naam: 'Strategische Lezer',  emoji: '🔵', kleur: '#38c8f0', minWpm: 420, minBegrip: 80, minScore: 336, barPct: 78 },
+  5: { naam: 'Expert',              emoji: '🔴', kleur: '#ef4444', minWpm: 550, minBegrip: 82, minScore: 451, barPct: 100 },
 };
+
+function _leesNiveauDefault() {
+  return { niveau: 1, besteNiveau: 1, sessies: [] };
+}
+
+function _leesNiveauLaad() {
+  try {
+    const d = JSON.parse(localStorage.getItem('snellees_niveau') || 'null') || _leesNiveauDefault();
+    d.niveau = Math.min(5, Math.max(1, parseInt(d.niveau || 1, 10)));
+    d.besteNiveau = Math.min(5, Math.max(d.niveau, parseInt(d.besteNiveau || d.niveau, 10)));
+    d.sessies = Array.isArray(d.sessies) ? d.sessies : [];
+    return d;
+  } catch(e) {
+    return _leesNiveauDefault();
+  }
+}
+
+function _leesScore(wpm, begripPct) {
+  return Math.round((wpm || 0) * ((begripPct || 0) / 100));
+}
+
+function _leesNiveauVoorGemiddelde(gemWpm, gemBegrip, gemScore) {
+  let niveau = 1;
+  for (let i = 2; i <= 5; i++) {
+    const cfg = _LTT_NIVEAUS[i];
+    if (gemWpm >= cfg.minWpm && gemBegrip >= cfg.minBegrip && gemScore >= cfg.minScore) niveau = i;
+  }
+  return niveau;
+}
+
+function _leesNiveauVolgendeHint(niveau) {
+  const next = _LTT_NIVEAUS[Math.min(5, niveau + 1)];
+  if (!next || niveau >= 5) return 'Hoogste niveau bereikt';
+  return `${next.minWpm}+ WPM · ${next.minBegrip}% begrip · score ${next.minScore}`;
+}
+
+function registreerLeesPrestatie(type, wpm, begripPct, opts = {}) {
+  if (typeof begripPct !== 'number') return { oud: lttGetNiveau(), nieuw: lttGetNiveau(), gewijzigd: false };
+  const d = _leesNiveauLaad();
+  const begrip = Math.max(0, Math.min(100, Math.round(begripPct)));
+  const leesscore = _leesScore(wpm, begrip);
+  const sessie = {
+    type,
+    wpm,
+    begrip,
+    leesscore,
+    woorden: opts.woorden || null,
+    tekstId: opts.tekstId || null,
+    tekstNiveau: opts.tekstNiveau || null,
+    datum: new Date().toISOString().split('T')[0],
+    ts: Date.now(),
+  };
+  d.sessies.push(sessie);
+  if (d.sessies.length > 120) d.sessies.splice(0, d.sessies.length - 120);
+
+  const oud = d.niveau;
+  const meetbaar = d.sessies.filter(s => typeof s.begrip === 'number' && typeof s.wpm === 'number');
+  const laatste3 = meetbaar.slice(-3);
+  if (laatste3.length >= 3) {
+    const gemWpm = Math.round(laatste3.reduce((a, s) => a + s.wpm, 0) / laatste3.length);
+    const gemBegrip = Math.round(laatste3.reduce((a, s) => a + s.begrip, 0) / laatste3.length);
+    const gemScore = Math.round(laatste3.reduce((a, s) => a + (s.leesscore || _leesScore(s.wpm, s.begrip)), 0) / laatste3.length);
+    const stabielNiveau = _leesNiveauVoorGemiddelde(gemWpm, gemBegrip, gemScore);
+    if (stabielNiveau > d.niveau) d.niveau = Math.min(d.niveau + 1, stabielNiveau);
+    else if (d.niveau > 1 && gemBegrip < Math.max(45, _LTT_NIVEAUS[d.niveau].minBegrip - 18)) d.niveau--;
+    d.laatsteGemiddelde = { wpm: gemWpm, begrip: gemBegrip, leesscore: gemScore };
+  }
+
+  d.besteNiveau = Math.max(d.besteNiveau || 1, d.niveau);
+  d.laatste = sessie;
+  localStorage.setItem('snellees_niveau', JSON.stringify(d));
+  return { oud, nieuw: d.niveau, gewijzigd: oud !== d.niveau, sessie };
+}
 
 // ── NIVEAU OPSLAG ─────────────────────────────────────────
 function lttGetNiveau() {
-  try { return JSON.parse(localStorage.getItem('snellees_niveau') || '{"niveau":1}').niveau; }
-  catch(e) { return 1; }
+  return _leesNiveauLaad().niveau;
 }
 
 function lttSlaOp(wpm, begrip_pct) {
-  let d;
-  try { d = JSON.parse(localStorage.getItem('snellees_niveau') || '{"niveau":1,"sessies":[]}'); }
-  catch(e) { d = { niveau: 1, sessies: [] }; }
-  d.sessies = d.sessies || [];
-  d.sessies.push({ wpm, begrip: begrip_pct, datum: new Date().toISOString().split('T')[0] });
-
-  const oud = d.niveau;
-  // Niveau omhoog: wpm én begrip hoog genoeg
-  const omhoogWpm = d.niveau === 1 ? 280 : 420;
-  if (d.niveau < 3 && wpm >= omhoogWpm && begrip_pct >= 67) d.niveau++;
-  // Niveau omlaag: begrip < 34% (slechts begrip)
-  else if (d.niveau > 1 && begrip_pct < 34) d.niveau--;
-
-  localStorage.setItem('snellees_niveau', JSON.stringify(d));
-  return { oud, nieuw: d.niveau };
+  return registreerLeesPrestatie('langetekst', wpm, begrip_pct, {
+    woorden: _lttTekst ? woorden(_lttTekst.tekst).length : null,
+    tekstId: _lttTekst ? 'lang-' + _lttTekst.id : null,
+    tekstNiveau: _lttTekst ? _lttTekst.niveau : null,
+  });
 }
 
 // ── STATE ─────────────────────────────────────────────────
@@ -10004,7 +10083,8 @@ let _lttWpm      = 0;
 function lttInit() {
   const niveau = lttGetNiveau();
   const cfg    = _LTT_NIVEAUS[niveau];
-  const opties = LANGE_TEKSTEN.filter(t => t.niveau === niveau);
+  const tekstNiveau = Math.min(niveau, 3);
+  const opties = LANGE_TEKSTEN.filter(t => t.niveau === tekstNiveau);
   _lttTekst    = opties[Math.floor(Math.random() * opties.length)];
   const wc     = woorden(_lttTekst.tekst).length;
 
@@ -10012,8 +10092,8 @@ function lttInit() {
   document.getElementById('ltt-niveau-badge').textContent =
     `${cfg.emoji} Niveau ${niveau} · ${cfg.naam}`;
   document.getElementById('ltt-niveau-hint').textContent =
-    niveau < 3
-      ? `${cfg.drempelOmhoog}+ WPM + goed begrip (≥2/3) → ${_LTT_NIVEAUS[niveau + 1].naam}`
+    niveau < 5
+      ? `Volgende: ${_leesNiveauVolgendeHint(niveau)} → ${_LTT_NIVEAUS[niveau + 1].naam}`
       : '🏆 Je zit op het hoogste niveau!';
 
   // Voortgangsbalk
@@ -10024,7 +10104,7 @@ function lttInit() {
   document.getElementById('ltt-tekst-naam').textContent = _lttTekst.titel;
   const lttG = gelezenLaad()['lang-' + _lttTekst.id];
   document.getElementById('ltt-tekst-info').textContent =
-    `${wc} woorden · ${cfg.emoji} ${cfg.naam}` +
+    `${wc} woorden · tekstniveau ${tekstNiveau} · ${cfg.emoji} ${cfg.naam}` +
     (lttG ? ` · ✓ eerder gelezen${lttG.besteWpm ? ' (beste ' + lttG.besteWpm + ' WPM)' : ''}` : '');
 
   // Views
@@ -10109,7 +10189,12 @@ function lttVerzend() {
   const leesscore  = Math.round(_lttWpm * (begrip_pct / 100));
 
   // Sla op in gewone stats + niveau systeem
-  slaaSessieOp(_lttWpm, woorden(_lttTekst.tekst).length);
+  slaaSessieOp(_lttWpm, woorden(_lttTekst.tekst).length, {
+    type: 'langetekst',
+    begrip: begrip_pct,
+    tekstId: 'lang-' + _lttTekst.id,
+    tekstNiveau: _lttTekst.niveau,
+  });
   Coach.registreerBegrip(begrip_pct, 'langetekst');
   // Sterren + XP + gelezen-vinkje via de Leesronde-motor (eigen vragen)
   Ronde.direct('langetekst', _lttWpm, woorden(_lttTekst.tekst).length, begrip_pct, 'lang-' + _lttTekst.id);
@@ -10184,8 +10269,10 @@ function _toonLevelUp(nieuwNiveau) {
       <div class="lu-titel">Je bent nu ${cfg.naam}</div>
       <div class="lu-niveau" style="background:${cfg.kleur}22;color:${cfg.kleur}">${cfg.emoji} Niveau ${nieuwNiveau} — ${cfg.naam}</div>
       <div class="lu-sub">${nieuwNiveau === 2
-        ? 'Je leest nu sneller dan het gemiddelde. Langere en complexere teksten staan voor je klaar!'
-        : 'Indrukwekkend — je behoort nu tot de snelste lezers. Alleen de uitdagendste teksten kunnen je nog stoppen.'
+        ? 'Je leest nu stabiel sneller met voldoende begrip. Langere teksten staan voor je klaar!'
+        : nieuwNiveau >= 5
+          ? 'Indrukwekkend — je combineert hoge snelheid met sterk begrip. Alleen de uitdagendste teksten kunnen je nog stoppen.'
+          : 'Mooi: je snelheid en begrip groeien samen. De volgende stap vraagt vooral om stabiel blijven onder hogere druk.'
       }</div>
       <button class="btn btn-primary" onclick="this.closest('.lu-overlay').remove()">Doorgaan →</button>
     </div>`;
@@ -10215,11 +10302,13 @@ const ACHIEVEMENTS = [
   { id:'streak-3',       icon:'🔥', naam:'Op Dreef',          beschrijving:'3 dagen op rij geoefend',                     cat:'streak'   },
   { id:'streak-7',       icon:'🌟', naam:'Weekkampioen',      beschrijving:'7 dagen op rij geoefend',                     cat:'streak'   },
   { id:'streak-30',      icon:'🌙', naam:'Maandmeester',      beschrijving:'30 dagen op rij geoefend',                    cat:'streak'   },
-  // Lange teksten
+  // Begrip en adaptief niveau
   { id:'eerste-lt',      icon:'📚', naam:'Lezer',             beschrijving:'Eerste lange tekst voltooid',                 cat:'begrip'   },
   { id:'perfect-begrip', icon:'🧠', naam:'Alleslezer',        beschrijving:'3/3 begripsvragen correct',                   cat:'begrip'   },
-  { id:'lt-niveau-2',    icon:'🟡', naam:'Gevorderd Lezer',   beschrijving:'Niveau Gevorderd bereikt in Lange Teksten',   cat:'begrip'   },
-  { id:'lt-niveau-3',    icon:'🔴', naam:'Expert Lezer',      beschrijving:'Niveau Expert bereikt in Lange Teksten',      cat:'begrip'   },
+  { id:'lt-niveau-2',    icon:'🟡', naam:'Vlotte Lezer',      beschrijving:'Niveau 2 bereikt met snelheid én begrip',     cat:'begrip'   },
+  { id:'lt-niveau-3',    icon:'🟠', naam:'Snelle Lezer',      beschrijving:'Niveau 3 bereikt met snelheid én begrip',     cat:'begrip'   },
+  { id:'lt-niveau-4',    icon:'🔵', naam:'Strategische Lezer', beschrijving:'Niveau 4 bereikt met sterke leesscore',      cat:'begrip'   },
+  { id:'lt-niveau-5',    icon:'🔴', naam:'Expert Lezer',      beschrijving:'Niveau 5 bereikt met snelheid én hoog begrip', cat:'begrip'   },
   // Woorden gelezen
   { id:'woorden-10k',    icon:'📄', naam:'Woordenverzamelaar', beschrijving:'10.000 woorden gelezen',                     cat:'woorden'  },
   { id:'woorden-25k',    icon:'📃', naam:'Bladzijdenvreter',   beschrijving:'25.000 woorden gelezen',                     cat:'woorden'  },
@@ -10322,7 +10411,7 @@ function checkAchievements() {
     check('app-install', !!gam.geinstalleerd ||
       (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches));
 
-    // Lange teksten
+    // Begrip en adaptief niveau
     let ltData;
     try { ltData = JSON.parse(localStorage.getItem('snellees_niveau') || '{}'); }
     catch(e) { ltData = {}; }
@@ -10332,6 +10421,8 @@ function checkAchievements() {
     check('perfect-begrip', ltSessies.some(s => s.begrip >= 100));
     check('lt-niveau-2',    ltNiveau >= 2);
     check('lt-niveau-3',    ltNiveau >= 3);
+    check('lt-niveau-4',    ltNiveau >= 4);
+    check('lt-niveau-5',    ltNiveau >= 5);
 
     if (nieuw.length > 0) {
       slaAchievementsOp([...verdiend, ...nieuw]);
@@ -10389,6 +10480,9 @@ function toonVoortgang() {
   // Stats summary
   const s   = stats.sessies || [];
   const gem = s.length ? Math.round(s.reduce((a,x) => a + x.wpm, 0) / s.length) : 0;
+  const metBegrip = s.filter(x => x.begrip != null);
+  const gemBegrip = metBegrip.length ? Math.round(metBegrip.slice(-10).reduce((a, x) => a + x.begrip, 0) / Math.min(10, metBegrip.length)) : null;
+  const gemScore = metBegrip.length ? Math.round(metBegrip.slice(-10).reduce((a, x) => a + (x.leesscore || _leesScore(x.wpm, x.begrip)), 0) / Math.min(10, metBegrip.length)) : null;
   const streakDagen = (typeof getGlobaalStreak === 'function') ? getGlobaalStreak().dagen : 0;
 
   const statsEl = document.getElementById('vg-stats-grid');
@@ -10402,18 +10496,16 @@ function toonVoortgang() {
       <div class="vg-stat-lbl">Best WPM</div>
     </div>
     <div class="vg-stat">
-      <div class="vg-stat-num">${gem}</div>
-      <div class="vg-stat-lbl">Gem. WPM</div>
+      <div class="vg-stat-num">${gemScore ?? gem}</div>
+      <div class="vg-stat-lbl">${gemScore != null ? 'Leesscore' : 'Gem. WPM'}</div>
     </div>
     <div class="vg-stat">
-      <div class="vg-stat-num" style="color:#ffaa33">${streakDagen}</div>
-      <div class="vg-stat-lbl">Streak 🔥</div>
+      <div class="vg-stat-num" style="color:#ffaa33">${gemBegrip ?? streakDagen}</div>
+      <div class="vg-stat-lbl">${gemBegrip != null ? 'Begrip %' : 'Streak 🔥'}</div>
     </div>`;
 
-  // Niveau Lange Teksten
-  let ltData;
-  try { ltData = JSON.parse(localStorage.getItem('snellees_niveau') || '{}'); }
-  catch(e) { ltData = {}; }
+  // Adaptief leesniveau
+  const ltData = _leesNiveauLaad();
   const niveau = ltData.niveau || 1;
   if (typeof _LTT_NIVEAUS !== 'undefined') {
     const cfg  = _LTT_NIVEAUS[niveau];
@@ -10424,9 +10516,9 @@ function toonVoortgang() {
     const fEl  = document.getElementById('vg-niveau-fill');
     if (emEl) emEl.textContent = cfg.emoji;
     if (nmEl) nmEl.textContent = `${cfg.naam} (Niveau ${niveau})`;
-    if (sbEl) sbEl.textContent = niveau < 3
-      ? `${ltSn} lange tekst(en) gelezen · ${_LTT_NIVEAUS[niveau + 1].naam} bij ${cfg.drempelOmhoog}+ WPM + goed begrip`
-      : `${ltSn} lange tekst(en) gelezen · 🏆 Hoogste niveau bereikt!`;
+    if (sbEl) sbEl.textContent = niveau < 5
+      ? `${ltSn} meetbare sessie(s) · volgende: ${_leesNiveauVolgendeHint(niveau)}`
+      : `${ltSn} meetbare sessie(s) · 🏆 Hoogste niveau bereikt!`;
     if (fEl) { fEl.style.width = cfg.barPct + '%'; fEl.style.background = cfg.kleur; }
   }
 
@@ -10673,12 +10765,24 @@ function elVerzend() {
 
 function _elToonResultaat(score, begrip_pct) {
   const wc = woorden(_elTekst.tekst).length;
-  slaaSessieOp(_elWpm, wc);
+  const heeftV = _elVragen.length > 0;
+  slaaSessieOp(_elWpm, wc, {
+    type: 'eigen-lees',
+    begrip: heeftV ? begrip_pct : null,
+    tekstId: _elTekst.uid ? 'e:' + _elTekst.uid : null,
+    tekstNiveau: null,
+  });
+  if (heeftV) {
+    Coach.registreerBegrip(begrip_pct, 'eigen-lees');
+    registreerLeesPrestatie('eigen-lees', _elWpm, begrip_pct, {
+      woorden: wc,
+      tekstId: _elTekst.uid ? 'e:' + _elTekst.uid : null,
+    });
+  }
   // Gelezen-vinkje voor de eigen tekst (demo-tekst heeft geen uid)
-  if (_elTekst.uid) markeerGelezen('e:' + _elTekst.uid, { wpm: _elWpm });
+  if (_elTekst.uid) markeerGelezen('e:' + _elTekst.uid, { wpm: _elWpm, begrip: heeftV ? begrip_pct : null });
 
   const leesscore  = Math.round(_elWpm * (begrip_pct / 100));
-  const heeftV     = _elVragen.length > 0;
   const begripKlr  = begrip_pct >= 67 ? 'var(--green)' : begrip_pct >= 34 ? 'var(--accent)' : '#ef4444';
 
   document.getElementById('el-score-kaart').innerHTML = `
@@ -10711,13 +10815,13 @@ function _elToonResultaat(score, begrip_pct) {
 // ── HOOKS: slaaSessieOp wrappen ───────────────────────────
 (function() {
   const _orig = slaaSessieOp;
-  slaaSessieOp = function(wpm, n) {
+  slaaSessieOp = function(wpm, n, meta = {}) {
     // Sanity check: sla onrealistische scores niet op
     if (typeof wpm !== 'number' || wpm < 30 || wpm > 1200) {
       console.warn('[FlowRead] WPM buiten bereik, sessie niet opgeslagen:', wpm);
       return;
     }
-    _orig(wpm, n);
+    _orig(wpm, n, meta);
     _registreerTraindag();
     setTimeout(checkAchievements, 80);
   };
@@ -11067,11 +11171,11 @@ const _aiAdaptief = {
   // Let op: sliders worden door Coach.adaptief gezet bij het openen van een
   // scherm — _aiAdaptief.pasAan() muteert ze niet meer (dubbel systeem).
   const _aiOrigSessie = slaaSessieOp;
-  slaaSessieOp = function(wpm, n) {
-    _aiOrigSessie(wpm, n);
+  slaaSessieOp = function(wpm, n, meta = {}) {
+    _aiOrigSessie(wpm, n, meta);
     _aiTts.sessieFeedback(wpm, n);
-    const scherm = (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'rsvp';
-    Coach.naSessie(scherm, wpm, n);
+    const scherm = meta.type || (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'rsvp';
+    Coach.naSessie(scherm, wpm, meta.begrip ?? null);
     // Gamification: daguitdaging generiek afvangen + badges + dagdoel + leerweg
     if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging(scherm);
     if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 600);
@@ -11694,8 +11798,8 @@ async function aiLangeTekstNieuwe() {
 (function() {
   // Hook slaaSessieOp voor AI Leescoach advies
   const _aiF2OrigSessie = slaaSessieOp;
-  slaaSessieOp = function(wpm, n) {
-    _aiF2OrigSessie(wpm, n);
+  slaaSessieOp = function(wpm, n, meta = {}) {
+    _aiF2OrigSessie(wpm, n, meta);
     if (_aiGemini.hasKey()) {
       _aiLeescoach.vraagAdvies(wpm, n);
     }

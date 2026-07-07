@@ -230,6 +230,28 @@ const Ronde = {
     // oefening het zelf al — niet dubbel tellen)
     try { if (begrip !== null && begripOverride === undefined) Coach.registreerBegrip(begrip, this.type); } catch (e) {}
 
+    // Verrijk de laatst opgeslagen sessie met begrip/leesscore zodra een
+    // ronde-checkpoint of directe toets klaar is. Hierdoor blijft sync naar
+    // ingelogde accounts volledig, ook voor RSVP en chunks.
+    try {
+      if (begrip !== null) {
+        const stats = JSON.parse(localStorage.getItem('snellees_stats') || '{"sessies":[]}');
+        const laatste = stats.sessies && stats.sessies[stats.sessies.length - 1];
+        let verrijkt = false;
+        if (laatste && Math.abs((laatste.wpm || 0) - (wpm || 0)) <= 3 && (laatste.begrip == null)) {
+          laatste.type = laatste.type || this.type;
+          laatste.begrip = Math.round(begrip);
+          laatste.leesscore = Math.round((wpm || 0) * (begrip / 100));
+          stats.sessies[stats.sessies.length - 1] = laatste;
+          localStorage.setItem('snellees_stats', JSON.stringify(stats));
+          verrijkt = true;
+        }
+        if (verrijkt && typeof registreerLeesPrestatie === 'function' && this.type !== 'oog') {
+          registreerLeesPrestatie(this.type, wpm, begrip, { woorden: aantalWoorden, tekstId });
+        }
+      }
+    } catch (e) { /* voortgang verrijken is optioneel */ }
+
     // Beste sterren per oefening bewaren
     try {
       const g = _gamLaad();
