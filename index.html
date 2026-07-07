@@ -1423,6 +1423,9 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 .lw-dag-rij.gedaan .lw-dag-naam { color:var(--muted);text-decoration:line-through; }
 .lw-vandaag-box { background:linear-gradient(135deg,rgba(124,111,247,.15),rgba(124,111,247,.05));border:1px solid rgba(124,111,247,.3);border-radius:14px;padding:18px 20px;margin-bottom:20px; }
 .lw-doel-box { background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:12px;font-size:.85rem;color:var(--muted); }
+.lw-testbar { display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border); }
+.lw-testbar .btn { font-size:.76rem; }
+.lw-testbar .actief { border-color:rgba(52,211,153,.45);background:rgba(52,211,153,.12);color:#34d399; }
 .lw-progress-rij { display:flex;gap:4px;margin-bottom:4px; }
 .lw-progress-dot { width:10px;height:10px;border-radius:50%;background:var(--border2);flex-shrink:0; }
 .lw-progress-dot.gedaan { background:#34d399; }
@@ -4072,6 +4075,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <button class="btn btn-ghost" style="font-size:.78rem" onclick="leerWegDagMarkeer()">✓ Al gedaan</button>
     </div>
     <div class="lw-doel-box" id="lw-wpm-doel-info"></div>
+    <div class="lw-testbar" id="lw-testbar">
+      <button class="btn btn-ghost" id="lw-testmode-btn" onclick="leerWegToggleTestmodus()">🧪 Testmodus</button>
+      <button class="btn btn-ghost" onclick="leerWegSkipVandaag()">⏭ Sla vandaag over</button>
+      <button class="btn btn-ghost" onclick="leerWegAllesVrij()">🔓 Alles vrijspelen</button>
+    </div>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -8306,12 +8314,15 @@ const LEERWEG_WEKEN = [
 ];
 
 const LW_KEY = 'leerweg_gedaan'; // ["w0d2","w1d0",...]
+const LW_TEST_KEY = 'leerweg_testmodus';
 function lwGedaan() { try { return JSON.parse(localStorage.getItem(LW_KEY) || '[]'); } catch(e) { return []; } }
 function lwKey(w,d) { return `w${w}d${d}`; }
 function lwIsDone(w,d) { return lwGedaan().includes(lwKey(w,d)); }
+function lwTestmodusAan() { return localStorage.getItem(LW_TEST_KEY) === '1'; }
 
 function leerWegInit() {
   const gedaan = lwGedaan();
+  const testmodus = lwTestmodusAan();
   // Zoek vandaag: eerste ongedane dag
   let vandaagWeek = -1, vandaagDag = -1;
   outer: for (let w = 0; w < LEERWEG_WEKEN.length; w++) {
@@ -8328,10 +8339,17 @@ function leerWegInit() {
     document.getElementById('lw-vandaag-duur').textContent = `⏱ ${dag.duur}`;
     document.getElementById('lw-vandaag-btn').dataset.week = vandaagWeek;
     document.getElementById('lw-vandaag-btn').dataset.dag = vandaagDag;
+    document.getElementById('lw-vandaag-btn').style.display = '';
   } else {
     document.getElementById('lw-vandaag-tekst').textContent = '🏆 Programma voltooid! Start opnieuw voor nog meer verbetering.';
     document.getElementById('lw-vandaag-duur').textContent = '';
     document.getElementById('lw-vandaag-btn').style.display = 'none';
+  }
+
+  const testBtn = document.getElementById('lw-testmode-btn');
+  if (testBtn) {
+    testBtn.classList.toggle('actief', testmodus);
+    testBtn.textContent = testmodus ? '🧪 Testmodus aan' : '🧪 Testmodus';
   }
 
   // WPM doel info
@@ -8362,7 +8380,7 @@ function leerWegInit() {
     const nodesHtml = week.dagen.map((dag, di) => {
       const done = gedaan.includes(lwKey(wi, di));
       const isNu = wi === vandaagWeek && di === vandaagDag;
-      const locked = !done && !isNu;
+      const locked = !testmodus && !done && !isNu;
       // Kronkelend pad: sinusvormige horizontale offset
       const offset = Math.round(Math.sin(globaal * 1.05) * 72);
       globaal++;
@@ -8416,6 +8434,7 @@ function leerWegVandaagDoen() {
 }
 
 function leerWegStartDag(w, d) {
+  if (lwTestmodusAan()) leerWegMarkeerTot(w, d);
   const dag = LEERWEG_WEKEN[w].dagen[d];
   if (dag.screen) {
     // Game-integriteit: de dag wordt pas afgevinkt zodra de oefening écht
@@ -8436,11 +8455,51 @@ function leerWegDagMarkeer() {
   leerWegDagDoen(w, d);
 }
 
+function leerWegSkipVandaag() {
+  const volgende = leerWegVolgendeDag();
+  if (!volgende) { toonFout('De hele leerweg is al voltooid.'); return; }
+  leerWegDagDoen(volgende.w, volgende.d);
+  if (typeof toonAchievement === 'function') toonAchievement('⏭', 'Dag overgeslagen voor test');
+}
+
+function leerWegToggleTestmodus() {
+  const aan = !lwTestmodusAan();
+  localStorage.setItem(LW_TEST_KEY, aan ? '1' : '0');
+  leerWegInit();
+  toonFout(aan
+    ? '🧪 Testmodus aan: je kunt toekomstige dagen direct openen.'
+    : 'Testmodus uit: de leerweg is weer stap voor stap.');
+}
+
+function leerWegMarkeerTot(w, d) {
+  const gedaan = lwGedaan();
+  for (let wi = 0; wi <= w; wi++) {
+    const maxDag = wi === w ? d - 1 : LEERWEG_WEKEN[wi].dagen.length - 1;
+    for (let di = 0; di <= maxDag; di++) {
+      const k = lwKey(wi, di);
+      if (!gedaan.includes(k)) gedaan.push(k);
+    }
+  }
+  localStorage.setItem(LW_KEY, JSON.stringify(gedaan));
+}
+
+function leerWegAllesVrij() {
+  if (!lwTestmodusAan() && !confirm('Alles vrijspelen is bedoeld om te testen. Testmodus inschakelen en alle dagen afvinken?')) return;
+  const alle = [];
+  LEERWEG_WEKEN.forEach((week, wi) => week.dagen.forEach((_, di) => alle.push(lwKey(wi, di))));
+  localStorage.setItem(LW_TEST_KEY, '1');
+  localStorage.setItem(LW_KEY, JSON.stringify(alle));
+  leerWegInit();
+  if (typeof leerWegHeroUpdate === 'function') leerWegHeroUpdate();
+  toonFout('🔓 Alle leerwegdagen zijn vrijgespeeld voor test.');
+}
+
 function leerWegDagDoen(w, d) {
   const gedaan = lwGedaan();
   const k = lwKey(w, d);
   if (!gedaan.includes(k)) { gedaan.push(k); localStorage.setItem(LW_KEY, JSON.stringify(gedaan)); }
   leerWegInit();
+  if (typeof leerWegHeroUpdate === 'function') leerWegHeroUpdate();
 }
 
 function leerWegReset() {
