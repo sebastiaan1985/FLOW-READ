@@ -1,0 +1,206 @@
+- generic [active] [ref=f2e1]:
+  - banner [ref=f2e2]:
+    - button "Menu openen" [ref=f2e3] [cursor=pointer]: ☰
+    - generic [ref=f2e4]: SnelLees Trainer
+    - button "Spraakbesturing" [ref=f2e5] [cursor=pointer]:
+      - img [ref=f2e6]
+    - button "Dyslexie instellingen" [ref=f2e9] [cursor=pointer]:
+      - img [ref=f2e10]
+      - generic [ref=f2e12]: Dyslexie
+    - button "👤 Maak profiel" [ref=f2e13] [cursor=pointer]
+  - generic [ref=f2e14]:
+    - generic [ref=f2e15]: Er is iets misgegaan.
+    - generic [ref=f2e16] [cursor=pointer]: ✕
+  - navigation "Hoofdmenu" [ref=f2e17]:
+    - generic [ref=f2e18]:
+      - generic [ref=f2e19]: SnelLees Trainer
+      - button "Menu sluiten" [ref=f2e20] [cursor=pointer]: ✕
+    - generic [ref=f2e22]: Test & Start
+    - navigation [ref=f2e23]:
+      - button "🏠 Home" [ref=f2e24] [cursor=pointer]:
+        - generic [ref=f2e25]: 🏠
+        - text: Home
+      - button "📚 Leerweg" [ref=f2e26] [cursor=pointer]:
+        - generic [ref=f2e27]: 📚
+        - generic [ref=f2e28]: Leerweg
+      - button "🎯 Begintest" [ref=f2e29] [cursor=pointer]:
+        - generic [ref=f2e30]: 🎯
+        - text: Begintest
+      - button "📏 Leestest" [ref=f2e31] [cursor=pointer]:
+        - generic [ref=f2e32]: 📏
+        - text: Leestest
+      - button "📚 Lange Teksten" [ref=f2e33] [cursor=pointer]:
+        - generic [ref=f2e34]: 📚
+        - text: Lange Teksten
+      - button "📊 Statistieken" [ref=f2e35] [cursor=pointer]:
+        - generic [ref=f2e36]: 📊
+        - text: Statistieken
+    - generic [ref=f2e38]: Training
+    - navigation [ref=f2e39]:
+      - button "⚡ RSVP" [ref=f2e40] [cursor=pointer]:
+        - generic [ref=f2e41]: ⚡
+        - text: RSVP
+      - button "📖 Chunks" [ref=f2e42] [cursor=pointer]:
+        - generic [ref=f2e43]: 📖
+        - text: Chunks
+      - button "👁 Oogbeweging" [ref=f2e44] [cursor=pointer]:
+        - generic [ref=f2e45]: 👁
+        - text: Oogbeweging
+      - button "🔭 Perifeer" [ref=f2e46] [cursor=pointer]:
+        - generic [ref=f2e47]: 🔭
+        - text: Perifeer
+      - button "📄 Papier" [ref=f2e48] [cursor=pointer]:
+        - generic [ref=f2e49]: 📄
+        - text: Papier
+      - button "🔕 Subvocalisatie" [ref=f2e50] [cursor=pointer]:
+        - generic [ref=f2e51]: 🔕
+        - text: Subvocalisatie
+      - button "⏩ Regressie" [ref=f2e52] [cursor=pointer]:
+        - generic [ref=f2e53]: ⏩
+        - text: Regressie
+      - button "🔲 Fixatie-training" [ref=f2e54] [cursor=pointer]:
+        - generic [ref=f2e55]: 🔲
+        - text: Fixatie-training
+      - button "🔍 Skim & Scan" [ref=f2e56] [cursor=pointer]:
+        - generic [ref=f2e57]: 🔍
+        - text: Skim & Scan
+      - button "😌 Oogontspanning" [ref=f2e58] [cursor=pointer]:
+        - generic [ref=f2e59]: 😌
+        - text: Oogontspanning
+    - generic [ref=f2e61]: Spelen
+    - navigation [ref=f2e62]:
+      - button "Profiel" [ref=f2e63] [cursor=pointer]:
+        - img [ref=f2e65]
+        - text: Profiel
+      - button "🌈 Dyslexie Spel" [ref=f2e68] [cursor=pointer]:
+        - generic [ref=f2e69]: 🌈
+        - text: Dyslexie Spel
+    - generic [ref=f2e71]: Beheer
+    - navigation [ref=f2e72]:
+      - button "✍️ Eigen tekst" [ref=f2e73] [cursor=pointer]:
+        - generic [ref=f2e74]: ✍️
+        - text: Eigen tekst
+    - generic [ref=f2e75]:
+      - button "🔔 Geluid aan" [ref=f2e76] [cursor=pointer]
+      - button "🔊 AI Coach spraak aan" [ref=f2e77] [cursor=pointer]
+      - button "🎨 Kids modus" [ref=f2e78] [cursor=pointer]
+      - button "🔤 Dyslexie instellingen" [ref=f2e79] [cursor=pointer]
+  - generic [ref=f2e80]:
+    - generic [ref=f2e81]:
+      - heading "🔤 Dyslexie Instellingen" [level=2] [ref=f2e82]
+      - button "✕" [ref=f2e83] [cursor=pointer]
+    - generic [ref=f2e84]:
+      - generic [ref=f2e85]: Aan / Uit
+      - generic [ref=f2e86]:
+        - generic [ref=f2e87]:
+          - generic [ref=f2e88]: Dyslexie modus
+          - generic [ref=f2e89]: Past alle instellingen toe
+        - generic [ref=f2e90]:
+          - checkbox
+      - generic [ref=f2e92]:
+        - generic [ref=f2e93]:
+          - generic [ref=f2e94]: Lettergreep kleuren
+          - generic [ref=f2e95]: ap-pel in afwisselende kleur
+        - generic [ref=f2e96]:
+          - checkbox [checked]
+      - generic [ref=f2e98]:
+        - generic [ref=f2e99]:
+          - generic [ref=f2e100]: Bionic lezen
+          - generic [ref=f2e101]: Eerste helft woord vetgedrukt
+        - generic [ref=f2e102]:
+          - checkbox [checked]
+      - generic [ref=f2e104]:
+        - generic [ref=f2e105]:
+          - generic [ref=f2e106]: Regelmarkering
+          - generic [ref=f2e107]: Huidige leesregel oplichten
+        - generic [ref=f2e108]:
+          - checkbox
+    - generic [ref=f2e110]:
+      - generic [ref=f2e111]: Lettertype
+      - generic [ref=f2e112]:
+        - button "Aa OpenDyslexic" [ref=f2e113] [cursor=pointer]:
+          - generic [ref=f2e114]: Aa
+          - text: OpenDyslexic
+        - button "Aa Comic Neue" [ref=f2e115] [cursor=pointer]:
+          - generic [ref=f2e116]: Aa
+          - text: Comic Neue
+        - button "Aa Normaal" [ref=f2e117] [cursor=pointer]:
+          - generic [ref=f2e118]: Aa
+          - text: Normaal
+    - generic [ref=f2e119]:
+      - generic [ref=f2e120]: Tekstgrootte & Spatiëring
+      - generic [ref=f2e121]:
+        - generic [ref=f2e122]:
+          - generic [ref=f2e123]: Lettergrootte
+          - generic [ref=f2e124]: 100%
+        - slider [ref=f2e125] [cursor=pointer]: "100"
+      - generic [ref=f2e126]:
+        - generic [ref=f2e127]:
+          - generic [ref=f2e128]: Letterafstand
+          - generic [ref=f2e129]: "0"
+        - slider [ref=f2e130] [cursor=pointer]: "0"
+      - generic [ref=f2e131]:
+        - generic [ref=f2e132]:
+          - generic [ref=f2e133]: Woordafstand
+          - generic [ref=f2e134]: "0"
+        - slider [ref=f2e135] [cursor=pointer]: "0"
+      - generic [ref=f2e136]:
+        - generic [ref=f2e137]:
+          - generic [ref=f2e138]: Regelafstand
+          - generic [ref=f2e139]: 1.5×
+        - slider [ref=f2e140] [cursor=pointer]: "15"
+    - generic [ref=f2e141]:
+      - generic [ref=f2e142]: Kleuroverlay
+      - generic [ref=f2e143]: Vermindert visuele "witruis" voor dyslectici
+      - generic [ref=f2e144]:
+        - button "✕" [ref=f2e145] [cursor=pointer]
+        - button "Geel" [ref=f2e146] [cursor=pointer]
+        - button "Blauw" [ref=f2e147] [cursor=pointer]
+        - button "Groen" [ref=f2e148] [cursor=pointer]
+        - button "Roze" [ref=f2e149] [cursor=pointer]
+        - button "Lavendel" [ref=f2e150] [cursor=pointer]
+      - generic [ref=f2e151]:
+        - generic [ref=f2e152]:
+          - generic [ref=f2e153]: Sterkte overlay
+          - generic [ref=f2e154]: 15%
+        - slider [ref=f2e155] [cursor=pointer]: "15"
+    - generic [ref=f2e156]:
+      - generic [ref=f2e157]: Achtergrond
+      - generic [ref=f2e158]:
+        - button "🌙" [ref=f2e159] [cursor=pointer]
+        - button "☀️" [ref=f2e160] [cursor=pointer]
+        - button "⬜" [ref=f2e161] [cursor=pointer]
+        - button "🌫️" [ref=f2e162] [cursor=pointer]
+    - button "↺ Alles terug naar standaard" [ref=f2e164] [cursor=pointer]
+  - main [ref=f2e165]:
+    - generic [ref=f2e173]:
+      - generic [ref=f2e174]: 👋
+      - generic [ref=f2e175]: Welkom bij SnelLees!
+      - generic [ref=f2e176]: Leer sneller lezen in 4 weken. Hoe mogen we je noemen?
+      - textbox "Jouw naam…" [ref=f2e177]
+      - generic [ref=f2e178]: "Kies een avatar:"
+      - generic [ref=f2e179]:
+        - generic [ref=f2e180] [cursor=pointer]: 🦊
+        - generic [ref=f2e181] [cursor=pointer]: 🐺
+        - generic [ref=f2e182] [cursor=pointer]: 🦁
+        - generic [ref=f2e183] [cursor=pointer]: 🐉
+        - generic [ref=f2e184] [cursor=pointer]: 🦅
+        - generic [ref=f2e185] [cursor=pointer]: 🧙
+        - generic [ref=f2e186] [cursor=pointer]: 🚀
+        - generic [ref=f2e187] [cursor=pointer]: ⚡
+        - generic [ref=f2e188] [cursor=pointer]: 🌟
+        - generic [ref=f2e189] [cursor=pointer]: 🎯
+      - button "Volgende →" [ref=f2e191] [cursor=pointer]
+  - navigation "Hoofdnavigatie" [ref=f2e192]:
+    - button "Home" [ref=f2e193] [cursor=pointer]:
+      - img [ref=f2e194]
+      - generic [ref=f2e197]: Home
+    - button "Leerweg" [ref=f2e198] [cursor=pointer]:
+      - img [ref=f2e199]
+      - generic [ref=f2e201]: Leerweg
+    - button "Trainen" [ref=f2e202] [cursor=pointer]:
+      - img [ref=f2e203]
+      - generic [ref=f2e205]: Trainen
+    - button "Voortgang" [ref=f2e206] [cursor=pointer]:
+      - img [ref=f2e207]
+      - generic [ref=f2e209]: Voortgang

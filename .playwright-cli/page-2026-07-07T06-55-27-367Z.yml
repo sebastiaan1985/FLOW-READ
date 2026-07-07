@@ -1,0 +1,321 @@
+- generic [active] [ref=f3e1]:
+  - banner [ref=f3e2]:
+    - button "Menu openen" [ref=f3e3] [cursor=pointer]: ☰
+    - generic [ref=f3e4]: SnelLees Trainer
+    - button "Spraakbesturing" [ref=f3e5] [cursor=pointer]:
+      - img [ref=f3e6]
+    - button "Dyslexie instellingen" [ref=f3e9] [cursor=pointer]:
+      - img [ref=f3e10]
+      - generic [ref=f3e12]: Dyslexie
+    - generic "Klik om je scores te bekijken" [ref=f3e13] [cursor=pointer]:
+      - generic [ref=f3e14]: ⚡
+      - generic [ref=f3e15]: Sebastiaan
+      - generic [ref=f3e16]: 🔥4
+      - generic [ref=f3e20]: Lv 3
+  - generic [ref=f3e21]:
+    - generic [ref=f3e22]: Er is iets misgegaan.
+    - generic [ref=f3e23] [cursor=pointer]: ✕
+  - navigation "Hoofdmenu" [ref=f3e24]:
+    - generic [ref=f3e25]:
+      - generic [ref=f3e26]: SnelLees Trainer
+      - button "Menu sluiten" [ref=f3e27] [cursor=pointer]: ✕
+    - generic [ref=f3e29]: Test & Start
+    - navigation [ref=f3e30]:
+      - button "🏠 Home" [ref=f3e31] [cursor=pointer]:
+        - generic [ref=f3e32]: 🏠
+        - text: Home
+      - button "📚 Leerweg" [ref=f3e33] [cursor=pointer]:
+        - generic [ref=f3e34]: 📚
+        - generic [ref=f3e35]: Leerweg
+      - button "🎯 Begintest" [ref=f3e36] [cursor=pointer]:
+        - generic [ref=f3e37]: 🎯
+        - text: Begintest
+      - button "📏 Leestest" [ref=f3e38] [cursor=pointer]:
+        - generic [ref=f3e39]: 📏
+        - text: Leestest
+      - button "📚 Lange Teksten" [ref=f3e40] [cursor=pointer]:
+        - generic [ref=f3e41]: 📚
+        - text: Lange Teksten
+      - button "📊 Statistieken" [ref=f3e42] [cursor=pointer]:
+        - generic [ref=f3e43]: 📊
+        - text: Statistieken
+    - generic [ref=f3e45]: Training
+    - navigation [ref=f3e46]:
+      - button "⚡ RSVP" [ref=f3e47] [cursor=pointer]:
+        - generic [ref=f3e48]: ⚡
+        - text: RSVP
+      - button "📖 Chunks" [ref=f3e49] [cursor=pointer]:
+        - generic [ref=f3e50]: 📖
+        - text: Chunks
+      - button "👁 Oogbeweging" [ref=f3e51] [cursor=pointer]:
+        - generic [ref=f3e52]: 👁
+        - text: Oogbeweging
+      - button "🔭 Perifeer" [ref=f3e53] [cursor=pointer]:
+        - generic [ref=f3e54]: 🔭
+        - text: Perifeer
+      - button "📄 Papier" [ref=f3e55] [cursor=pointer]:
+        - generic [ref=f3e56]: 📄
+        - text: Papier
+      - button "🔕 Subvocalisatie" [ref=f3e57] [cursor=pointer]:
+        - generic [ref=f3e58]: 🔕
+        - text: Subvocalisatie
+      - button "⏩ Regressie" [ref=f3e59] [cursor=pointer]:
+        - generic [ref=f3e60]: ⏩
+        - text: Regressie
+      - button "🔲 Fixatie-training" [ref=f3e61] [cursor=pointer]:
+        - generic [ref=f3e62]: 🔲
+        - text: Fixatie-training
+      - button "🔍 Skim & Scan" [ref=f3e63] [cursor=pointer]:
+        - generic [ref=f3e64]: 🔍
+        - text: Skim & Scan
+      - button "😌 Oogontspanning" [ref=f3e65] [cursor=pointer]:
+        - generic [ref=f3e66]: 😌
+        - text: Oogontspanning
+    - generic [ref=f3e68]: Spelen
+    - navigation [ref=f3e69]:
+      - button "Profiel" [ref=f3e70] [cursor=pointer]:
+        - img [ref=f3e72]
+        - text: Profiel
+      - button "🌈 Dyslexie Spel" [ref=f3e75] [cursor=pointer]:
+        - generic [ref=f3e76]: 🌈
+        - text: Dyslexie Spel
+    - generic [ref=f3e78]: Beheer
+    - navigation [ref=f3e79]:
+      - button "✍️ Eigen tekst" [ref=f3e80] [cursor=pointer]:
+        - generic [ref=f3e81]: ✍️
+        - text: Eigen tekst
+    - generic [ref=f3e82]:
+      - button "🔔 Geluid aan" [ref=f3e83] [cursor=pointer]
+      - button "🔊 AI Coach spraak aan" [ref=f3e84] [cursor=pointer]
+      - button "🎨 Kids modus" [ref=f3e85] [cursor=pointer]
+      - button "🔤 Dyslexie instellingen" [ref=f3e86] [cursor=pointer]
+  - generic [ref=f3e87]:
+    - generic [ref=f3e88]:
+      - heading "🔤 Dyslexie Instellingen" [level=2] [ref=f3e89]
+      - button "✕" [ref=f3e90] [cursor=pointer]
+    - generic [ref=f3e91]:
+      - generic [ref=f3e92]: Aan / Uit
+      - generic [ref=f3e93]:
+        - generic [ref=f3e94]:
+          - generic [ref=f3e95]: Dyslexie modus
+          - generic [ref=f3e96]: Past alle instellingen toe
+        - generic [ref=f3e97]:
+          - checkbox
+      - generic [ref=f3e99]:
+        - generic [ref=f3e100]:
+          - generic [ref=f3e101]: Lettergreep kleuren
+          - generic [ref=f3e102]: ap-pel in afwisselende kleur
+        - generic [ref=f3e103]:
+          - checkbox [checked]
+      - generic [ref=f3e105]:
+        - generic [ref=f3e106]:
+          - generic [ref=f3e107]: Bionic lezen
+          - generic [ref=f3e108]: Eerste helft woord vetgedrukt
+        - generic [ref=f3e109]:
+          - checkbox [checked]
+      - generic [ref=f3e111]:
+        - generic [ref=f3e112]:
+          - generic [ref=f3e113]: Regelmarkering
+          - generic [ref=f3e114]: Huidige leesregel oplichten
+        - generic [ref=f3e115]:
+          - checkbox
+    - generic [ref=f3e117]:
+      - generic [ref=f3e118]: Lettertype
+      - generic [ref=f3e119]:
+        - button "Aa OpenDyslexic" [ref=f3e120] [cursor=pointer]:
+          - generic [ref=f3e121]: Aa
+          - text: OpenDyslexic
+        - button "Aa Comic Neue" [ref=f3e122] [cursor=pointer]:
+          - generic [ref=f3e123]: Aa
+          - text: Comic Neue
+        - button "Aa Normaal" [ref=f3e124] [cursor=pointer]:
+          - generic [ref=f3e125]: Aa
+          - text: Normaal
+    - generic [ref=f3e126]:
+      - generic [ref=f3e127]: Tekstgrootte & Spatiëring
+      - generic [ref=f3e128]:
+        - generic [ref=f3e129]:
+          - generic [ref=f3e130]: Lettergrootte
+          - generic [ref=f3e131]: 100%
+        - slider [ref=f3e132] [cursor=pointer]: "100"
+      - generic [ref=f3e133]:
+        - generic [ref=f3e134]:
+          - generic [ref=f3e135]: Letterafstand
+          - generic [ref=f3e136]: "0"
+        - slider [ref=f3e137] [cursor=pointer]: "0"
+      - generic [ref=f3e138]:
+        - generic [ref=f3e139]:
+          - generic [ref=f3e140]: Woordafstand
+          - generic [ref=f3e141]: "0"
+        - slider [ref=f3e142] [cursor=pointer]: "0"
+      - generic [ref=f3e143]:
+        - generic [ref=f3e144]:
+          - generic [ref=f3e145]: Regelafstand
+          - generic [ref=f3e146]: 1.5×
+        - slider [ref=f3e147] [cursor=pointer]: "15"
+    - generic [ref=f3e148]:
+      - generic [ref=f3e149]: Kleuroverlay
+      - generic [ref=f3e150]: Vermindert visuele "witruis" voor dyslectici
+      - generic [ref=f3e151]:
+        - button "✕" [ref=f3e152] [cursor=pointer]
+        - button "Geel" [ref=f3e153] [cursor=pointer]
+        - button "Blauw" [ref=f3e154] [cursor=pointer]
+        - button "Groen" [ref=f3e155] [cursor=pointer]
+        - button "Roze" [ref=f3e156] [cursor=pointer]
+        - button "Lavendel" [ref=f3e157] [cursor=pointer]
+      - generic [ref=f3e158]:
+        - generic [ref=f3e159]:
+          - generic [ref=f3e160]: Sterkte overlay
+          - generic [ref=f3e161]: 15%
+        - slider [ref=f3e162] [cursor=pointer]: "15"
+    - generic [ref=f3e163]:
+      - generic [ref=f3e164]: Achtergrond
+      - generic [ref=f3e165]:
+        - button "🌙" [ref=f3e166] [cursor=pointer]
+        - button "☀️" [ref=f3e167] [cursor=pointer]
+        - button "⬜" [ref=f3e168] [cursor=pointer]
+        - button "🌫️" [ref=f3e169] [cursor=pointer]
+    - button "↺ Alles terug naar standaard" [ref=f3e171] [cursor=pointer]
+  - main [ref=f3e172]:
+    - generic [ref=f3e173]:
+      - generic [ref=f3e174]:
+        - generic [ref=f3e175]:
+          - generic [ref=f3e176]:
+            - generic [ref=f3e177]: Goedemorgen, Sebastiaan! 👋
+            - generic [ref=f3e178]: Klaar voor je training?
+            - generic [ref=f3e179]: Je hebt al 4.200 woorden gelezen — dat is 📚 0.07 boek!
+          - generic [ref=f3e180]:
+            - generic "Jouw dagdoel" [ref=f3e181]:
+              - img [ref=f3e182]:
+                - generic [ref=f3e185]: "0"
+                - generic [ref=f3e186]: van 10 min
+            - generic "Nog geen streak — train vandaag!" [ref=f3e187]: 🔥 0
+        - generic [ref=f3e188] [cursor=pointer]:
+          - generic [ref=f3e189]: ⚡
+          - generic [ref=f3e190]:
+            - generic [ref=f3e191]: Uitdaging van de dag
+            - generic [ref=f3e192]: Laden…
+          - generic [ref=f3e193]: →
+      - generic [ref=f3e194]:
+        - generic [ref=f3e195]:
+          - generic [ref=f3e196]: 4-weken leerweg
+          - generic [ref=f3e197]: Week 1 · dag 1 van 7
+        - button "Start de 4-weken Leerweg" [ref=f3e212] [cursor=pointer]:
+          - generic [ref=f3e213]: Start de 4-weken Leerweg
+          - img [ref=f3e214]
+      - generic [ref=f3e216]:
+        - generic [ref=f3e217]:
+          - text: 🚀 Eerste stappen
+          - button "Verbergen" [ref=f3e218] [cursor=pointer]: ✕
+        - generic [ref=f3e219]:
+          - generic [ref=f3e220]: ✓
+          - text: Doe de begintest (2 min)
+        - generic [ref=f3e221]:
+          - generic [ref=f3e222]: ✓
+          - text: Voltooi je eerste oefening
+        - generic [ref=f3e223] [cursor=pointer]:
+          - generic [ref=f3e224]: ○
+          - text: Zet de app op je beginscherm
+      - generic [ref=f3e225]:
+        - img [ref=f3e227]
+        - generic [ref=f3e229]:
+          - generic [ref=f3e230]: Leescoach
+          - generic [ref=f3e231]: "Leessnelheid is trainbaar: de meeste mensen kunnen hun tempo verdubbelen met behoud van begrip."
+      - button "Aanbevolen voor jou Oogtraining Nog niet geprobeerd — elke oefening traint iets anders." [ref=f3e233] [cursor=pointer]:
+        - generic [ref=f3e234]:
+          - generic [ref=f3e235]: Aanbevolen voor jou
+          - generic [ref=f3e236]: Oogtraining
+          - generic [ref=f3e237]: Nog niet geprobeerd — elke oefening traint iets anders.
+        - img [ref=f3e239]
+      - generic [ref=f3e241]:
+        - button "RSVP Lezen Woord voor woord — verhoog je snelheid" [ref=f3e242] [cursor=pointer]:
+          - img [ref=f3e244]
+          - generic [ref=f3e246]: RSVP Lezen
+          - generic [ref=f3e247]: Woord voor woord — verhoog je snelheid
+        - button "Leestest Lees een tekst, meet je WPM + begrip" [ref=f3e248] [cursor=pointer]:
+          - img [ref=f3e250]
+          - generic [ref=f3e253]: Leestest
+          - generic [ref=f3e254]: Lees een tekst, meet je WPM + begrip
+        - button "Lange Teksten Adaptief niveau · WPM × begrip score" [ref=f3e255] [cursor=pointer]:
+          - img [ref=f3e257]
+          - generic [ref=f3e260]: Lange Teksten
+          - generic [ref=f3e261]: Adaptief niveau · WPM × begrip score
+        - button "Chunk Lezen Woordgroepen in één oogopslag" [ref=f3e262] [cursor=pointer]:
+          - img [ref=f3e264]
+          - generic [ref=f3e265]: Chunk Lezen
+          - generic [ref=f3e266]: Woordgroepen in één oogopslag
+        - button "Oogtraining Blikveld vergroten en regressie stoppen" [ref=f3e267] [cursor=pointer]:
+          - img [ref=f3e269]
+          - generic [ref=f3e272]: Oogtraining
+          - generic [ref=f3e273]: Blikveld vergroten en regressie stoppen
+        - button "Dyslexie Spel Letter Jacht, Flits & Goed of Fout?" [ref=f3e274] [cursor=pointer]:
+          - img [ref=f3e276]
+          - generic [ref=f3e281]: Dyslexie Spel
+          - generic [ref=f3e282]: Letter Jacht, Flits & Goed of Fout?
+        - button "Perifeer Zien Train je zijdelings blikveld" [ref=f3e283] [cursor=pointer]:
+          - img [ref=f3e285]
+          - generic [ref=f3e291]: Perifeer Zien
+          - generic [ref=f3e292]: Train je zijdelings blikveld
+        - button "Begintest Meet je startniveau en volg voortgang" [ref=f3e293] [cursor=pointer]:
+          - img [ref=f3e295]
+          - generic [ref=f3e299]: Begintest
+          - generic [ref=f3e300]: Meet je startniveau en volg voortgang
+        - button "Subvocalisatie Schakel je innerlijke stem uit" [ref=f3e301] [cursor=pointer]:
+          - img [ref=f3e303]
+          - generic [ref=f3e308]: Subvocalisatie
+          - generic [ref=f3e309]: Schakel je innerlijke stem uit
+        - button "Regressie-stop Leer nooit terug te kijken" [ref=f3e310] [cursor=pointer]:
+          - img [ref=f3e312]
+          - generic [ref=f3e315]: Regressie-stop
+          - generic [ref=f3e316]: Leer nooit terug te kijken
+        - button "Fixatie-training Meer woorden per oogsprong" [ref=f3e317] [cursor=pointer]:
+          - img [ref=f3e319]
+          - generic [ref=f3e325]: Fixatie-training
+          - generic [ref=f3e326]: Meer woorden per oogsprong
+        - button "Skim & Scan Structuur en info razendsnel vinden" [ref=f3e327] [cursor=pointer]:
+          - img [ref=f3e329]
+          - generic [ref=f3e332]: Skim & Scan
+          - generic [ref=f3e333]: Structuur en info razendsnel vinden
+        - button "Oogontspanning Palming, focus & 20-20-20 regel" [ref=f3e334] [cursor=pointer]:
+          - img [ref=f3e336]
+          - generic [ref=f3e338]: Oogontspanning
+          - generic [ref=f3e339]: Palming, focus & 20-20-20 regel
+        - button "Eigen tekst Plak je eigen tekst en lees 'm op elke manier" [ref=f3e340] [cursor=pointer]:
+          - img [ref=f3e342]
+          - generic [ref=f3e344]: Eigen tekst
+          - generic [ref=f3e345]: Plak je eigen tekst en lees 'm op elke manier
+      - heading "Waarom snellezen trainen?" [level=3] [ref=f3e346]
+      - generic [ref=f3e347]:
+        - generic [ref=f3e348]:
+          - generic [ref=f3e349]: 📈 2× sneller
+          - text: De meeste mensen lezen 200–250 WPM. Met training haal je 400–500 WPM zónder begripsverlies.
+        - generic [ref=f3e350]:
+          - generic [ref=f3e351]: 🧠 Minder subvocalisatie
+          - text: Stil 'meelezen' in je hoofd vertraagt je. Oefening leert je hersenen woorden direct te verwerken.
+        - generic [ref=f3e352]:
+          - generic [ref=f3e353]: 👁 Groter blikveld
+          - text: Getrainde ogen vangen 5–7 woorden per fixatie, i.p.v. 1–2. Dat verdubbelt je tempo.
+        - generic [ref=f3e354]:
+          - generic [ref=f3e355]: 🔁 Geen regressie
+          - text: Onbewust terugspringen kost 30% van je leestijd. Oogtraining sloopt deze gewoonte af.
+      - generic [ref=f3e356]:
+        - button "🎯 Start met de Begintest" [ref=f3e357] [cursor=pointer]
+        - generic [ref=f3e358]: Of kies een oefening hierboven
+  - generic [ref=f3e359]:
+    - generic [ref=f3e360]: 🌱
+    - generic [ref=f3e361]:
+      - generic [ref=f3e362]: Badge verdiend!
+      - generic [ref=f3e363]: Eerste stap
+  - navigation "Hoofdnavigatie" [ref=f3e364]:
+    - button "Home" [ref=f3e365] [cursor=pointer]:
+      - img [ref=f3e366]
+      - generic [ref=f3e369]: Home
+    - button "Leerweg" [ref=f3e370] [cursor=pointer]:
+      - img [ref=f3e371]
+      - generic [ref=f3e373]: Leerweg
+    - button "Trainen" [ref=f3e374] [cursor=pointer]:
+      - img [ref=f3e375]
+      - generic [ref=f3e377]: Trainen
+    - button "Voortgang" [ref=f3e378] [cursor=pointer]:
+      - img [ref=f3e379]
+      - generic [ref=f3e381]: Voortgang

@@ -1,0 +1,18 @@
+- generic [ref=f1e2]:
+  - generic [ref=f1e3]: Snellees Trainer
+  - generic [ref=f1e4]: Log in om je voortgang op te slaan op alle apparaten
+  - generic [ref=f1e5]:
+    - button "Inloggen" [ref=f1e6] [cursor=pointer]
+    - button "Registreren" [ref=f1e7] [cursor=pointer]
+  - generic [ref=f1e8]:
+    - generic [ref=f1e9]:
+      - generic [ref=f1e10]: E-mailadres
+      - textbox "jouw@email.nl" [ref=f1e11]
+    - generic [ref=f1e12]:
+      - generic [ref=f1e13]: Wachtwoord
+      - textbox "••••••••" [ref=f1e14]
+    - link "Wachtwoord vergeten?" [ref=f1e16] [cursor=pointer]:
+      - /url: "#"
+    - button "Inloggen" [ref=f1e17] [cursor=pointer]
+  - generic [ref=f1e18]: of
+  - button "Doorgaan zonder account" [ref=f1e19] [cursor=pointer]
