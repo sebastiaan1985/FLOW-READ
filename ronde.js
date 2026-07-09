@@ -261,7 +261,7 @@ const Ronde = {
       _gamSla(g);
     } catch (e) {}
 
-    const res = { sterren, wpm, begrip, xp, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus, opts: opts || null };
+    const res = { sterren, wpm, begrip, xp, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus, opts: opts || null, ts: Date.now() };
     this._fluency = null;
 
     // Gelezen-collectie: vink de tekst af met de beste prestatie
@@ -274,7 +274,48 @@ const Ronde = {
     return res;
   },
 
+  _bewaarLaatsteResultaat(r) {
+    try {
+      localStorage.setItem('snellees_laatste_resultaat', JSON.stringify({
+        ts: r.ts || Date.now(),
+        type: r.type,
+        wpm: Math.round(r.wpm || 0),
+        begrip: r.begrip === null || r.begrip === undefined ? null : Math.round(r.begrip),
+        sterren: r.sterren,
+        xp: r.xp,
+        doelWpm: r.doelWpm,
+      }));
+    } catch (e) { /* laatste resultaat is alleen UX-suiker */ }
+  },
+
+  _resultaatInzicht(r) {
+    const begrip = r.begrip === null || r.begrip === undefined ? null : Math.round(r.begrip);
+    const leesscore = begrip === null ? Math.round(r.wpm || 0) : Math.round((r.wpm || 0) * (begrip / 100));
+    let kop = `Leesscore ${leesscore}`;
+    let tekst = 'Dit combineert snelheid en begrip. Zo belonen we niet alleen harder gaan, maar beter lezen.';
+
+    try {
+      const baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null');
+      if (baseline && r.wpm && r.wpm > baseline.wpm) {
+        kop = `+${Math.round(r.wpm - baseline.wpm)} WPM sinds je start`;
+        tekst = begrip !== null && begrip >= 70
+          ? 'Mooi: je versnelt zonder je begrip kwijt te raken. Dat is precies de trainingswinst die telt.'
+          : 'Je tempo groeit al. Herhaal deze tekst nu rustiger, zodat begrip weer boven 70% komt.';
+      }
+    } catch (e) {}
+
+    if (begrip !== null && begrip < 70) {
+      kop = 'Begrip eerst vastzetten';
+      tekst = 'Onder 70% is sneller lezen vooral skimmen. Herlees dezelfde tekst: dat bouwt vloeiendheid zonder giswerk.';
+    } else if (r.sterren >= 3) {
+      kop = 'Klaar voor een gecontroleerde sprong';
+      tekst = 'Je haalde snelheid én begrip. De beste volgende stap is dezelfde techniek net iets sneller proberen.';
+    }
+    return { kop, tekst };
+  },
+
   _toonResultaat(r) {
+    this._bewaarLaatsteResultaat(r);
     const kids = (typeof Coach !== 'undefined') && Coach.isKids();
     const sterHtml = [1, 2, 3].map(i =>
       `<span class="ronde-ster ${i <= r.sterren ? 'aan' : ''}" style="animation-delay:${i * .18}s">★</span>`).join('');
@@ -303,6 +344,7 @@ const Ronde = {
         ? `📈 Van ${r.fluencyBonus.van}% naar ${r.fluencyBonus.naar}% begrip — herlezen werkt! +10 bonus-XP`
         : `📈 Vloeiendheid-bonus: begrip steeg van ${r.fluencyBonus.van}% naar ${r.fluencyBonus.naar}%. +10 XP extra.`;
     }
+    const inzicht = this._resultaatInzicht(r);
 
     let missieHtml = '';
     try {
@@ -346,6 +388,7 @@ const Ronde = {
           <div><div class="ronde-res-num" style="color:${r.begrip === null ? 'var(--muted)' : r.begrip >= 70 ? 'var(--green)' : '#f59e0b'}">${r.begrip === null ? '—' : r.begrip + '%'}</div><div class="ronde-res-lbl">${r.opts && r.opts.label ? 'raak' : 'begrip'}</div></div>
           <div><div class="ronde-res-num" style="color:#f0b000">${r.maxCombo > 1 ? '×' + r.maxCombo : '—'}</div><div class="ronde-res-lbl">combo</div></div>
         </div>
+        <div class="ronde-res-inzicht"><b>${inzicht.kop}</b><span>${inzicht.tekst}</span></div>
         ${missieHtml}
         <div class="ronde-res-xp">+${r.xp} XP</div>
         <div class="ronde-res-knoppen">${knoppen}</div>

@@ -1820,6 +1820,27 @@ main { -webkit-overflow-scrolling: touch; }
 .vandaag-uitd-naam { font-size: .92rem; font-weight: 600; color: var(--text); margin: 2px 0; }
 .vandaag-uitd-sub { font-size: .78rem; color: var(--muted); }
 .vandaag-uitd-status { font-size: 1.2rem; flex-shrink: 0; }
+.momentum-card {
+  display: none;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid rgba(52,211,153,.24);
+  border-radius: 14px;
+  background: rgba(52,211,153,.08);
+  cursor: pointer;
+}
+.momentum-card.show { display: block; }
+.momentum-kop { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 8px; }
+.momentum-label { font-size: .68rem; font-weight: 800; letter-spacing: 1px; color: var(--green); text-transform: uppercase; }
+.momentum-tijd { font-size: .72rem; color: var(--muted); white-space: nowrap; }
+.momentum-titel { font-size: .92rem; font-weight: 800; color: var(--text); line-height: 1.25; }
+.momentum-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 11px 0; }
+.momentum-stat { padding: 8px 6px; border-radius: 10px; background: rgba(255,255,255,.04); text-align: center; }
+.momentum-stat b { display: block; font-size: .95rem; font-variant-numeric: tabular-nums; }
+.momentum-stat span { display: block; margin-top: 2px; font-size: .62rem; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; }
+.momentum-progress { height: 5px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+.momentum-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg,var(--green),#4cc9f0); width: 0; transition: width .4s ease; }
+.momentum-actie { margin-top: 9px; font-size: .78rem; font-weight: 800; color: #4cc9f0; }
 
 /* ── FASE 3: BOTTOM NAV ──────────────────────────────────── */
 .bottom-nav {
@@ -2059,6 +2080,26 @@ body.kids .eigen-mode small { color: #7a7a9a; }
 .ronde-res-grid > div { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 12px 6px; }
 .ronde-res-num { font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; }
 .ronde-res-lbl { font-size: .68rem; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; }
+.ronde-res-inzicht {
+  margin: -4px 0 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(76,201,240,.24);
+  border-radius: 14px;
+  background: rgba(76,201,240,.08);
+  text-align: left;
+}
+.ronde-res-inzicht b {
+  display: block;
+  margin-bottom: 4px;
+  color: #4cc9f0;
+  font-size: .82rem;
+}
+.ronde-res-inzicht span {
+  display: block;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.45;
+}
 .ronde-res-xp {
   display: inline-block; margin-bottom: 18px;
   background: linear-gradient(135deg, rgba(124,111,247,.25), rgba(76,201,240,.18));
@@ -3057,6 +3098,20 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
         <div class="vandaag-uitd-sub" id="vandaag-uitd-sub"></div>
       </div>
       <div class="vandaag-uitd-status" id="vandaag-uitd-status">→</div>
+    </div>
+    <div class="momentum-card" id="momentum-card" onclick="startMomentumActie()">
+      <div class="momentum-kop">
+        <div class="momentum-label">Laatste winst</div>
+        <div class="momentum-tijd" id="momentum-tijd"></div>
+      </div>
+      <div class="momentum-titel" id="momentum-titel"></div>
+      <div class="momentum-stats">
+        <div class="momentum-stat"><b id="momentum-wpm">—</b><span>WPM</span></div>
+        <div class="momentum-stat"><b id="momentum-begrip">—</b><span>Begrip</span></div>
+        <div class="momentum-stat"><b id="momentum-xp">—</b><span>XP</span></div>
+      </div>
+      <div class="momentum-progress"><div class="momentum-fill" id="momentum-fill"></div></div>
+      <div class="momentum-actie" id="momentum-actie">Volgende stap →</div>
     </div>
   </div>
 
@@ -10167,8 +10222,91 @@ function updateVandaagPanel() {
   // Dagelijkse uitdaging tonen
   _updateVandaagUitdaging();
 
+  // Laatste resultaat als momentum teruggeven
+  _updateMomentumCard();
+
   // Account pas na ervaren waarde aanbieden
   _updateAccountSaveCard();
+}
+
+function _haalLaatsteResultaat() {
+  try { return JSON.parse(localStorage.getItem('snellees_laatste_resultaat') || 'null'); }
+  catch(e) { return null; }
+}
+
+function _momentumTijdlabel(ts) {
+  if (!ts) return '';
+  const minuten = Math.max(1, Math.round((Date.now() - ts) / 60000));
+  if (minuten < 60) return `${minuten} min geleden`;
+  const uren = Math.round(minuten / 60);
+  if (uren < 24) return `${uren} uur geleden`;
+  return `${Math.round(uren / 24)} dagen geleden`;
+}
+
+function _momentumActie(resultaat) {
+  if (!resultaat) return { label: 'Start je dagmissie →', type: null };
+  const paced = resultaat.type === 'rsvp' || resultaat.type === 'chunk';
+  if (paced && resultaat.begrip !== null && resultaat.begrip < 70) {
+    return { label: 'Herlees voor 70% begrip →', type: resultaat.type, herhaal: true };
+  }
+  if (paced && resultaat.begrip !== null && resultaat.begrip >= 70) {
+    return { label: 'Probeer dezelfde training +10% →', type: resultaat.type, sneller: true };
+  }
+  return { label: 'Start je volgende missie →', type: null };
+}
+
+function _updateMomentumCard() {
+  const kaart = document.getElementById('momentum-card');
+  if (!kaart) return;
+  const r = _haalLaatsteResultaat();
+  if (!r || !r.ts) {
+    kaart.classList.remove('show');
+    return;
+  }
+
+  const baseline = (() => { try { return JSON.parse(localStorage.getItem('begintest_baseline') || 'null'); } catch(e) { return null; } })();
+  const begripTxt = r.begrip === null || r.begrip === undefined ? '—' : `${Math.round(r.begrip)}%`;
+  const score = r.begrip ? Math.round((r.wpm || 0) * (r.begrip / 100)) : r.wpm;
+  let titel = `Leesscore ${score || r.wpm}`;
+  if (baseline && r.wpm && r.wpm > baseline.wpm) titel = `+${Math.round(r.wpm - baseline.wpm)} WPM sinds je startmeting`;
+  if (r.begrip !== null && r.begrip < 70) titel = 'Je snelheid is er. Nu het begrip vastzetten.';
+  if (r.sterren >= 3) titel = 'Perfecte ronde: snelheid én begrip zitten goed.';
+
+  const actie = _momentumActie(r);
+  kaart.dataset.type = actie.type || '';
+  kaart.dataset.sneller = actie.sneller ? '1' : '';
+  kaart.dataset.herhaal = actie.herhaal ? '1' : '';
+
+  const zet = (id, waarde) => { const el = document.getElementById(id); if (el) el.textContent = waarde; };
+  zet('momentum-tijd', _momentumTijdlabel(r.ts));
+  zet('momentum-titel', titel);
+  zet('momentum-wpm', r.wpm || '—');
+  zet('momentum-begrip', begripTxt);
+  zet('momentum-xp', `+${r.xp || 0}`);
+  zet('momentum-actie', actie.label);
+  const fill = document.getElementById('momentum-fill');
+  const xp = (typeof avProfiel !== 'undefined' && avProfiel) ? (avProfiel.xp || 0) : (r.xp || 0);
+  if (fill) fill.style.width = `${Math.max(8, Math.min(100, xp % 100 || 100))}%`;
+  kaart.classList.add('show');
+}
+
+function startMomentumActie() {
+  const kaart = document.getElementById('momentum-card');
+  const type = kaart?.dataset.type;
+  const resultaat = _haalLaatsteResultaat();
+  if (!type) { startDagmissie(); return; }
+  sidebarNav(type);
+  if (kaart.dataset.sneller === '1') {
+    setTimeout(() => {
+      const slider = type === 'rsvp' ? document.getElementById('wpm-slider') : document.getElementById('chunk-wpm');
+      const stap = type === 'rsvp' ? 25 : 20;
+      if (slider) {
+        const basis = resultaat?.wpm || +slider.value;
+        slider.value = Math.min(+slider.max, Math.round((basis * 1.1) / stap) * stap);
+        slider.dispatchEvent(new Event('input'));
+      }
+    }, 100);
+  }
 }
 
 function _zetWaardeMoment() {
