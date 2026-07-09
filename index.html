@@ -446,6 +446,50 @@ select option { background: #1a1a40; }
 .account-save-card b { display: block; font-size: .9rem; }
 .account-save-card span { display: block; margin-top: 2px; font-size: .78rem; color: var(--muted); line-height: 1.35; }
 .account-save-card button { flex-shrink: 0; }
+.bt-missie-card {
+  margin: 14px 0 0;
+  padding: 16px;
+  border: 1px solid rgba(124,111,247,.32);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(124,111,247,.15), rgba(56,200,240,.08));
+  text-align: left;
+}
+.bt-missie-kop {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: var(--accent2);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.bt-missie-titel {
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.bt-missie-sub {
+  font-size: .84rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.bt-missie-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.bt-missie-stat {
+  padding: 10px 8px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,.04);
+  text-align: center;
+}
+.bt-missie-stat b { display: block; font-size: 1rem; }
+.bt-missie-stat span { display: block; margin-top: 2px; font-size: .66rem; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; }
+@media (max-width: 520px) {
+  .bt-missie-stats { grid-template-columns: 1fr; }
+}
 
 /* ── TIPS ─────────────────────────────────────────────────── */
 .tip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -3246,10 +3290,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
         </div>
       </div>
       <div id="bt-niveau-badge" class="score-badge" style="margin-bottom:16px">—</div>
+      <div id="bt-missie-card" class="bt-missie-card"></div>
     </div>
     <div class="begintest-reco" id="bt-reco"></div>
     <div class="btn-row mt2" style="justify-content:center;gap:12px">
-      <button class="btn btn-primary" onclick="begintestNaarTraining()">Start met trainen!</button>
+      <button class="btn btn-primary" onclick="begintestNaarTraining()">Start mijn eerste missie</button>
       <button class="btn btn-ghost" onclick="begintestStart()">Opnieuw testen</button>
     </div>
   </div>
@@ -5009,6 +5054,17 @@ function begintestControleer() {
 
     // Recommendations
     const startWpm = begrip >= 60 ? Math.round(wpm * 1.15) : Math.round(wpm * 0.9);
+    const missie = _maakEersteMissie(wpm, begrip, startWpm);
+    _slaEersteMissie(missie);
+    document.getElementById('bt-missie-card').innerHTML = `
+      <div class="bt-missie-kop">Jouw eerste missie</div>
+      <div class="bt-missie-titel">${missie.icon} ${missie.titel}</div>
+      <div class="bt-missie-sub">${missie.uitleg}</div>
+      <div class="bt-missie-stats">
+        <div class="bt-missie-stat"><b>${wpm}</b><span>Start WPM</span></div>
+        <div class="bt-missie-stat"><b>${begrip}%</b><span>Begrip</span></div>
+        <div class="bt-missie-stat"><b>${missie.doel}</b><span>Doel</span></div>
+      </div>`;
     const reco = document.getElementById('bt-reco');
     reco.innerHTML = `<h4>Aanbevolen startinstellingen</h4><ul>
       <li>Start RSVP op <b>${startWpm} WPM</b></li>
@@ -5031,6 +5087,56 @@ function begintestControleer() {
   }, 600);
 }
 
+function _rondMissieTempo(tempo, stap, min) {
+  return Math.max(min, Math.round(tempo / stap) * stap);
+}
+
+function _maakEersteMissie(wpm, begrip, startWpm) {
+  if (begrip < 65) {
+    const missieWpm = _rondMissieTempo(startWpm, 20, 80);
+    return {
+      type: 'chunk',
+      icon: '📖',
+      titel: 'Rustige chunk-missie',
+      doel: '70% begrip',
+      wpm: missieWpm,
+      uitleg: 'Je eerste winst zit in begrijpen wat je leest. Lees korte woordgroepen en mik op controle voordat we de snelheid opvoeren.',
+      aangemaakt: Date.now(),
+      voltooid: false,
+    };
+  }
+  const missieWpm = _rondMissieTempo(startWpm, 25, 100);
+  return {
+    type: 'rsvp',
+    icon: '⚡',
+    titel: 'Snelheidsstart',
+    doel: `${missieWpm} WPM`,
+    wpm: missieWpm,
+    uitleg: 'Je begrip is stevig genoeg om gecontroleerd sneller te gaan. Eén korte ronde, daarna kijken we of +10% verantwoord voelt.',
+    aangemaakt: Date.now(),
+    voltooid: false,
+  };
+}
+
+function _slaEersteMissie(missie) {
+  localStorage.setItem('snellees_eerste_missie', JSON.stringify(missie));
+}
+
+function _haalEersteMissie() {
+  try { return JSON.parse(localStorage.getItem('snellees_eerste_missie') || 'null'); }
+  catch(e) { return null; }
+}
+
+function _markeerEersteMissieVoltooid(type) {
+  const missie = _haalEersteMissie();
+  if (!missie || missie.voltooid || missie.type !== type) return false;
+  missie.voltooid = true;
+  missie.voltooidOp = Date.now();
+  _slaEersteMissie(missie);
+  if (typeof toonAchievement === 'function') toonAchievement('⚡', 'Eerste missie voltooid — je trainingslus is gestart!');
+  return true;
+}
+
 function begintestNaarTraining() {
   const baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null');
   if (baseline) {
@@ -5039,7 +5145,7 @@ function begintestNaarTraining() {
     document.getElementById('wpm-val').textContent = startWpm;
   }
   if (typeof _zetWaardeMoment === 'function') _zetWaardeMoment();
-  sidebarNav('rsvp');
+  startDagmissie();
 }
 
 // Auto-show begintest for first-time visitors
@@ -5939,11 +6045,13 @@ function tekenGrafieken() {
 }
 
 function slaaSessieOp(wpm, n) {
+  const scherm = (document.querySelector('.screen.active')?.id || '').replace('screen-', '');
   stats.sessies.push({ datum: new Date().toLocaleString('nl-NL'), ts: Date.now(), wpm, woorden: n });
   stats.totaalWoorden += n;
   if (wpm > stats.bestWpm) stats.bestWpm = wpm;
   localStorage.setItem('snellees_stats', JSON.stringify(stats));
   if (typeof _zetWaardeMoment === 'function') _zetWaardeMoment();
+  if (typeof _markeerEersteMissieVoltooid === 'function') _markeerEersteMissieVoltooid(scherm);
   // Bijwerken globale streak bij elke training
   if (typeof updateGlobaalStreak === 'function') updateGlobaalStreak();
 }
@@ -10102,7 +10210,24 @@ function startDagmissie() {
     sidebarNav('begintest');
     return;
   }
+  const eerste = _haalEersteMissie();
+  if (eerste && !eerste.voltooid) {
+    _startMissieType(eerste.type, eerste.wpm);
+    return;
+  }
   vandaagUitdagingOpen();
+}
+
+function _startMissieType(type, wpm) {
+  sidebarNav(type);
+  setTimeout(() => {
+    const sliderId = type === 'rsvp' ? 'wpm-slider' : type === 'chunk' ? 'chunk-wpm' : null;
+    const slider = sliderId && document.getElementById(sliderId);
+    if (slider && wpm) {
+      slider.value = Math.min(+slider.max || wpm, Math.max(+slider.min || wpm, wpm));
+      slider.dispatchEvent(new Event('input'));
+    }
+  }, 80);
 }
 
 const _WOORDVOS_TITELS = ['Woordvos', 'Snelsnuffel', 'Leesheld', 'Bladzijdebaas', 'Turbolezer', 'Leesraket'];
@@ -10148,6 +10273,16 @@ function _updateVandaagUitdaging() {
 
   const uitd = getDaguitdaging();
   if (!uitd) return;
+  const eerste = _haalEersteMissie();
+  if (eerste && !eerste.voltooid) {
+    iconEl.textContent = eerste.icon || '⚡';
+    naamEl.textContent = eerste.titel || 'Eerste missie';
+    subEl.textContent = eerste.uitleg || 'Start je eerste korte training.';
+    statEl.textContent = '→';
+    kaart.classList.remove('klaar');
+    kaart.onclick = startDagmissie;
+    return;
+  }
 
   // Check if today's challenge is completed
   let state = null;

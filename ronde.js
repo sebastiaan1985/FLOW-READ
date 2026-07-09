@@ -304,6 +304,14 @@ const Ronde = {
         : `📈 Vloeiendheid-bonus: begrip steeg van ${r.fluencyBonus.van}% naar ${r.fluencyBonus.naar}%. +10 XP extra.`;
     }
 
+    let missieHtml = '';
+    try {
+      const missie = JSON.parse(localStorage.getItem('snellees_eerste_missie') || 'null');
+      if (missie && missie.voltooid && missie.type === r.type && Date.now() - (missie.voltooidOp || 0) < 120000) {
+        missieHtml = `<div class="ronde-res-xp" style="background:rgba(52,211,153,.14);border-color:rgba(52,211,153,.28);color:#34d399">Eerste missie voltooid</div>`;
+      }
+    } catch (e) { /* missie-beloning is optioneel */ }
+
     // Knoppen: herlezen (slecht begrip) óf +10% (goed) · ketting · kaart/klaar
     const paced = r.type === 'rsvp' || r.type === 'chunk';
     const herleesbaar = paced && r.begrip !== null && r.begrip < 70;
@@ -338,6 +346,7 @@ const Ronde = {
           <div><div class="ronde-res-num" style="color:${r.begrip === null ? 'var(--muted)' : r.begrip >= 70 ? 'var(--green)' : '#f59e0b'}">${r.begrip === null ? '—' : r.begrip + '%'}</div><div class="ronde-res-lbl">${r.opts && r.opts.label ? 'raak' : 'begrip'}</div></div>
           <div><div class="ronde-res-num" style="color:#f0b000">${r.maxCombo > 1 ? '×' + r.maxCombo : '—'}</div><div class="ronde-res-lbl">combo</div></div>
         </div>
+        ${missieHtml}
         <div class="ronde-res-xp">+${r.xp} XP</div>
         <div class="ronde-res-knoppen">${knoppen}</div>
       </div>`;
