@@ -1,0 +1,7 @@
+[    2702ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ http://127.0.0.1:4173/:0
+[    2781ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ http://127.0.0.1:4173/login.html:0
+[    2781ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ http://127.0.0.1:4173/login.html:0
+[    2781ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ http://127.0.0.1:4173/login.html:0
+[    4994ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:4173/favicon.ico:0
+[   13888ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ http://127.0.0.1:4173/index.html:0
+[   13950ms] [LOG] [PWA] Service worker geregistreerd: http://127.0.0.1:4173/ @ http://127.0.0.1:4173/index.html:9616

@@ -63,6 +63,7 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -95,9 +96,10 @@ header {
 /* Hamburger toggle */
 .menu-toggle {
   display: flex; align-items: center; justify-content: center;
-  width: 38px; height: 38px; border: 1px solid var(--border2);
+  width: 44px; height: 44px; border: 1px solid var(--border2);
   border-radius: 10px; cursor: pointer; background: transparent;
   color: var(--muted); font-size: 20px; transition: all .2s;
+  flex: 0 0 44px;
 }
 .menu-toggle:hover { background: rgba(255,255,255,.06); color: var(--text); }
 .menu-toggle.open { background: rgba(124,111,247,.15); color: var(--accent); border-color: rgba(124,111,247,.3); }
@@ -110,7 +112,7 @@ header {
 .sidebar-backdrop.open { display: block; opacity: 1; }
 
 .sidebar {
-  position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+  position: fixed; top: 0; left: 0; width: 280px; height: 100vh; height: 100dvh;
   background: var(--surface); border-right: 1px solid var(--border);
   z-index: 250; transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
   display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden;
@@ -183,7 +185,7 @@ header {
 header > nav { display: none; }
 
 /* ── LAYOUT ───────────────────────────────────────────────── */
-main { flex: 1; padding: 28px 28px calc(88px + env(safe-area-inset-bottom, 0px)); max-width: 920px; width: 100%; margin: 0 auto; }
+main { flex: 1; padding: 28px 28px calc(112px + env(safe-area-inset-bottom, 0px)); max-width: 920px; width: 100%; margin: 0 auto; }
 .screen { display: none; animation: fadeIn .25s ease; }
 .screen.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -1049,6 +1051,11 @@ body.kids .bibl-actief-badge { background:rgba(255,107,107,.15) !important; colo
 }
 .oog-niveau-kaart:hover { transform:translateY(-2px); }
 .oog-niveau-kaart.actief { border-color:var(--accent); background:rgba(124,111,247,.08); }
+.oog-niveau-kaart.locked { opacity:.42; cursor:not-allowed; filter:grayscale(.35); }
+.oog-niveau-kaart.locked:hover { transform:none; }
+.oog-niveau-status { margin-top:10px; font-size:.7rem; font-weight:800; letter-spacing:.5px; color:var(--muted); text-transform:uppercase; }
+.oog-niveau-kaart.actief .oog-niveau-status { color:var(--accent); }
+.oog-niveau-kaart.voltooid .oog-niveau-status { color:var(--green); }
 body.kids .oog-niveau-kaart.actief { border-color:#ff6b6b; background:rgba(255,107,107,.08); }
 .oog-niveau-icon { font-size:2rem; margin-bottom:6px; }
 .oog-niveau-naam { font-size:.85rem; font-weight:700; margin-bottom:8px; color:var(--text); }
@@ -1134,7 +1141,10 @@ body.kids .oog-timer-num { color:#ff6b6b; }
    iPhone-statusbalk door (black-translucent) — extra ademruimte bovenin
    zodat de menuknop nooit onder de klok/batterij valt */
 @media (display-mode: standalone) {
-  header { padding-top: calc(16px + env(safe-area-inset-top, 0px)); }
+  header {
+    min-height: calc(60px + env(safe-area-inset-top, 0px));
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  }
 }
 .speler-avatar { font-size: 1.2rem; line-height: 1; }
 .speler-naam { font-size: 12px; font-weight: 600; color: #e07000; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
@@ -1144,98 +1154,30 @@ body.kids .oog-timer-num { color:#ff6b6b; }
 .speler-xp-fill { height: 100%; background: linear-gradient(90deg, #e07000, #f0c000); border-radius: 999px; transition: width .4s; }
 .speler-xp-label { font-size: 10px; color: #e07000; font-weight: 700; white-space: nowrap; }
 
-/* Reward toast */
-.reward-toast,
-.achievement-popup,
-.dyx-toast,
-.ach-toast {
-  position: fixed;
-  top: calc(18px + env(safe-area-inset-top, 0px));
-  right: calc(18px + env(safe-area-inset-right, 0px));
-  z-index: 9999;
-  width: min(360px, calc(100vw - 28px));
-  display: grid;
-  grid-template-columns: 46px 1fr;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 15px;
-  border-radius: 16px;
-  border: 1px solid rgba(124,111,247,.62);
+/* Achievement popup */
+.achievement-popup {
+  position: fixed; top: 20px; right: 20px; z-index: 9999;
   background:
-    radial-gradient(circle at 14% 16%, rgba(76,201,240,.22), transparent 38%),
-    linear-gradient(135deg, rgba(26,26,62,.98), rgba(18,15,46,.98));
-  box-shadow: 0 18px 46px rgba(0,0,0,.42), 0 0 28px rgba(124,111,247,.22);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  animation: rewardToastIn .34s cubic-bezier(.2,.9,.2,1), rewardToastOut .34s ease 3.35s forwards;
-  overflow: hidden;
+    radial-gradient(circle at 18% 0%, rgba(255,199,60,.22), transparent 34%),
+    linear-gradient(135deg, rgba(29,29,58,.98), rgba(20,18,42,.98));
+  border: 1.5px solid rgba(255,199,60,.72); border-radius: 14px;
+  padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 14px 42px rgba(0,0,0,.45), 0 0 28px rgba(255,199,60,.18);
+  animation: achPopIn .4s ease, achPopOut .4s ease 3s forwards;
+  font-family: 'Inter', sans-serif; color: var(--text);
+  max-width: min(420px, calc(100vw - 32px));
+  backdrop-filter: blur(16px);
 }
-.reward-toast::before,
-.achievement-popup::before,
-.dyx-toast::before,
-.ach-toast::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border-left: 4px solid var(--accent2);
-  pointer-events: none;
+@keyframes achPopIn { from { transform: translateX(120%); opacity:0; } to { transform: translateX(0); opacity:1; } }
+@keyframes achPopOut { from { transform: translateX(0); opacity:1; } to { transform: translateX(120%); opacity:0; } }
+.achievement-popup .ach-icon {
+  width: 38px; height: 38px; display: grid; place-items: center;
+  border-radius: 12px; background: rgba(255,199,60,.15);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+  font-size: 1.55rem; flex-shrink: 0;
 }
-.reward-toast .rt-icon,
-.achievement-popup .ach-icon,
-.dyx-toast .rt-icon,
-.ach-toast .at-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  font-size: 1.55rem;
-  background: linear-gradient(135deg, rgba(124,111,247,.34), rgba(76,201,240,.16));
-  border: 1px solid rgba(255,255,255,.12);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 0 22px rgba(124,111,247,.28);
-}
-.reward-toast .rt-kicker,
-.achievement-popup .ach-text,
-.dyx-toast .rt-kicker,
-.ach-toast .at-lbl {
-  font-size: .66rem;
-  color: var(--accent2);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 3px;
-}
-.reward-toast .rt-title,
-.dyx-toast .rt-title,
-.ach-toast .at-naam {
-  font-size: .96rem;
-  font-weight: 900;
-  color: #fff;
-  line-height: 1.15;
-}
-.reward-toast .rt-sub,
-.achievement-popup .ach-sub,
-.dyx-toast .rt-sub,
-.ach-toast .at-sub {
-  font-size: .76rem;
-  color: var(--muted);
-  line-height: 1.3;
-  margin-top: 2px;
-}
-@keyframes rewardToastIn { from { transform: translateX(115%) scale(.96); opacity:0; } to { transform: translateX(0) scale(1); opacity:1; } }
-@keyframes rewardToastOut { from { transform: translateX(0) scale(1); opacity:1; } to { transform: translateX(115%) scale(.98); opacity:0; } }
-@media (max-width: 520px) {
-  .reward-toast,
-  .achievement-popup,
-  .dyx-toast,
-  .ach-toast {
-    right: 12px;
-    left: 12px;
-    width: auto;
-  }
-}
+.achievement-popup .ach-text { font-size: 13px; font-weight: 800; color: #fff; }
+.achievement-popup .ach-sub { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.35; }
 
 /* Panel */
 #dyx-panel {
@@ -1408,6 +1350,16 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 .dyx-letter-btn.dyx-letter-goed { background: #d4f5d0; border-color: #34d399; color: #0a5c3a; animation: pop .3s ease; }
 .dyx-letter-btn.dyx-letter-fout { background: #fdd0d0; border-color: #f06292; color: #7a1a2a; animation: shake .3s ease; }
 
+.dyx-toast {
+  position: fixed; top: 20px; right: 20px; z-index: 9999;
+  background: linear-gradient(135deg, #fff3d0, #ffe8a0); border: 2px solid #f0a000;
+  border-radius: 16px; padding: 16px 24px; box-shadow: 0 8px 32px rgba(0,0,0,.2);
+  font-family: 'Comic Neue', cursive; font-weight: 700; color: #3a2000;
+  animation: dyx-toast-in .4s ease; max-width: 300px;
+}
+@keyframes dyx-toast-in { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes dyx-toast-out { from { transform: translateX(0); opacity: 1; } to { transform: translateX(120%); opacity: 0; } }
+
 .dyx-nieuw-record {
   animation: dyx-record-pulse 1s ease infinite;
   color: #e07000; font-weight: 800;
@@ -1490,19 +1442,6 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 .lw-dag-rij.gedaan .lw-dag-naam { color:var(--muted);text-decoration:line-through; }
 .lw-vandaag-box { background:linear-gradient(135deg,rgba(124,111,247,.15),rgba(124,111,247,.05));border:1px solid rgba(124,111,247,.3);border-radius:14px;padding:18px 20px;margin-bottom:20px; }
 .lw-doel-box { background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:12px;font-size:.85rem;color:var(--muted); }
-.lw-testbar { display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border); }
-.lw-testbar .btn { font-size:.76rem; }
-.lw-testbar .actief { border-color:rgba(52,211,153,.45);background:rgba(52,211,153,.12);color:#34d399; }
-.tekstbron-panel {
-  display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:12px 14px;margin:0 0 16px;
-}
-.tekstbron-panel .tekstbron-main { flex:1;min-width:220px; }
-.tekstbron-panel label { display:block;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:7px; }
-.tekstbron-panel select { width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-family:'Inter',sans-serif;font-size:13px; }
-.tekstbron-panel .tekstbron-actions { display:flex;gap:8px;flex-wrap:wrap; }
-.tekstbron-panel .tekstbron-meta { flex-basis:100%;font-size:12px;color:var(--muted); }
 .lw-progress-rij { display:flex;gap:4px;margin-bottom:4px; }
 .lw-progress-dot { width:10px;height:10px;border-radius:50%;background:var(--border2);flex-shrink:0; }
 .lw-progress-dot.gedaan { background:#34d399; }
@@ -1555,12 +1494,13 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   transition:transform .3s ease;display:flex;align-items:center;gap:10px;
 }
 #fout-toast.zichtbaar { transform:translateX(-50%) translateY(0); }
+#fout-toast[aria-hidden="true"] { display: none; }
 #fout-toast .fout-sluit { cursor:pointer;opacity:.7;font-size:1rem;flex-shrink:0; }
 
 /* ── MOBIELE UX ──────────────────────────────────────────────── */
 @media (max-width: 640px) {
   /* Basis layout */
-  main { padding: 12px 12px 88px; }
+  main { padding: 12px 12px calc(104px + env(safe-area-inset-bottom, 0px)); }
   .page-title { font-size: 1.3rem; }
   .page-sub   { font-size: .82rem; }
 
@@ -1568,15 +1508,24 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   .btn { padding: 11px 16px; font-size: .88rem; min-height: 44px; }
   .btn-primary { min-height: 44px; }
 
-  /* Header compacter + geen overflow */
-  header { padding: 0 10px; height: 52px; gap: 8px; overflow: hidden; }
+  /* Header compacter + safe-area proof voor iPhone/PWA */
+  header {
+    gap: 8px;
+    min-height: calc(56px + env(safe-area-inset-top, 0px));
+    height: auto;
+    padding-top: calc(8px + env(safe-area-inset-top, 0px));
+    padding-right: calc(10px + env(safe-area-inset-right, 0px));
+    padding-bottom: 8px;
+    padding-left: calc(10px + env(safe-area-inset-left, 0px));
+    overflow: visible;
+  }
   .logo  { font-size: 1rem; }
   .header-spacer { min-width: 0; }
   /* Gebruikersknop: alleen icoon op mobiel */
-  #sb-user-btn { font-size: 0 !important; padding: 6px 9px !important; min-width: 36px; justify-content: center; }
+  #sb-user-btn { font-size: 0 !important; padding: 6px 9px !important; min-width: 44px; min-height: 44px; justify-content: center; }
   #sb-user-btn span { font-size: 15px !important; }
   /* "Maak profiel" knop: alleen icoon */
-  #no-profiel-btn { font-size: 0 !important; padding: 6px 9px !important; }
+  #no-profiel-btn { font-size: 0 !important; padding: 6px 9px !important; min-width: 44px; min-height: 44px; }
   #no-profiel-btn::before { content: '👤'; font-size: 15px; }
 
   /* Kaarten in home volledig breed op klein scherm */
@@ -1643,6 +1592,11 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 /* Touch-targets algemeen — minimaal 44×44px */
 button, input[type="button"], input[type="submit"],
 a[role="button"] { touch-action: manipulation; }
+
+button {
+  min-width: 44px;
+  min-height: 44px;
+}
 
 /* Smooth scrolling voor mobiel */
 main { -webkit-overflow-scrolling: touch; }
@@ -2027,12 +1981,6 @@ body.kids .eigen-mode small { color: #7a7a9a; }
   font-size: 12px; letter-spacing: 1px; color: #f0c000;
   text-shadow: 0 0 8px rgba(240,192,0,.4);
 }
-/* Volg & Vang (oogtraining) */
-.oog-vang-kop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.oog-vang-score { font-size: 13px; font-weight: 700; color: #f0b000; font-variant-numeric: tabular-nums; }
-.oog-vang-score b { color: var(--text); }
-#oog-vang-knoppen .ronde-cp-optie { padding: 13px 8px; font-size: 15px; }
-
 /* Oogspanne-mini-test */
 .ogsp-flits {
   min-height: 90px; display: flex; align-items: center; justify-content: center;
@@ -2082,8 +2030,8 @@ body.focus-modus .progress-wrap { height: 3px; background: rgba(255,255,255,.09)
 body.focus-modus .progress-fill { background: linear-gradient(90deg,#7c6ff7,#a78bfa) !important; }
 .focus-exit {
   display: none; position: fixed; z-index: 400;
-  top: calc(58px + env(safe-area-inset-top, 0px)); right: 18px;
-  width: 36px; height: 36px; border-radius: 999px;
+  top: calc(16px + env(safe-area-inset-top, 0px)); right: calc(18px + env(safe-area-inset-right, 0px));
+  width: 44px; height: 44px; border-radius: 999px;
   border: none; background: rgba(255,255,255,.06);
   color: rgba(255,255,255,.7); font-size: 15px; cursor: pointer;
   transition: background .2s;
@@ -2094,6 +2042,68 @@ body.focus-modus .focus-exit { display: flex; align-items: center; justify-conte
 
 /* Selects met lange tekstnamen mogen nooit uit hun paneel steken */
 .control-group select { width: 100%; max-width: 100%; text-overflow: ellipsis; }
+
+/* Gedeelde tekstbron voor trainingen */
+.tekstbron-panel {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) auto auto;
+  gap: 10px;
+  align-items: end;
+  margin: 0 0 16px;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(124,111,247,.12), rgba(76,201,240,.06));
+  border: 1px solid rgba(124,111,247,.28);
+  border-radius: 14px;
+}
+.tekstbron-panel label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: .72rem;
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.tekstbron-select {
+  width: 100%;
+  background: var(--card2);
+  color: var(--text);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: .86rem;
+}
+.tekstbron-upload { display: none; }
+.tekstbron-paste {
+  grid-column: 1 / -1;
+  display: none;
+  gap: 8px;
+  align-items: start;
+}
+.tekstbron-paste.open { display: grid; grid-template-columns: 1fr auto; }
+.tekstbron-paste textarea {
+  min-height: 92px;
+  resize: vertical;
+  margin: 0;
+}
+.tekstbron-status {
+  grid-column: 1 / -1;
+  display: none;
+  color: var(--green);
+  font-size: .78rem;
+  font-weight: 700;
+}
+.tekstbron-status.zichtbaar { display: block; }
+
+@media (max-width: 640px) {
+  .tekstbron-panel { grid-template-columns: 1fr; }
+  .tekstbron-paste.open { grid-template-columns: 1fr; }
+  .achievement-popup {
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    left: calc(12px + env(safe-area-inset-left, 0px));
+  }
+}
 
 /* ── MICRO-INTERACTIES ───────────────────────────────────── */
 button { transition: transform .12s ease; }
@@ -2275,6 +2285,22 @@ button:active { transform: scale(.96); }
 .streak-dot { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .65rem; color: var(--muted); background: var(--border); font-weight: 600; }
 .streak-dot.actief { background: rgba(255,150,0,.25); color: #ffaa33; }
 .streak-dot.vandaag { border: 2px solid #ffaa33; }
+
+/* ── FASE 3: ACHIEVEMENT TOAST (styled variant) ───────────── */
+.ach-toast {
+  position: fixed; bottom: 74px; left: 50%; transform: translateX(-50%) translateY(0);
+  z-index: 9998; background: linear-gradient(135deg, #1a1a3e, #2a2060);
+  border: 1.5px solid rgba(124,111,247,.55); border-radius: 16px;
+  padding: 12px 20px; display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 8px 32px rgba(124,111,247,.35); max-width: 320px; width: calc(100% - 40px);
+  animation: achToastIn .4s ease, achToastOut .4s ease 3.2s forwards;
+}
+.ach-toast .at-icon { font-size: 1.8rem; flex-shrink: 0; }
+.ach-toast .at-lbl  { font-size: .7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.ach-toast .at-naam { font-size: .92rem; font-weight: 700; color: #fff; }
+.ach-toast .at-sub  { font-size: .75rem; color: var(--muted); }
+@keyframes achToastIn  { from { transform: translateX(-50%) translateY(20px); opacity:0; } to { transform: translateX(-50%) translateY(0); opacity:1; } }
+@keyframes achToastOut { from { transform: translateX(-50%) translateY(0); opacity:1; } to { transform: translateX(-50%) translateY(20px); opacity:0; } }
 
 /* ── FASE 2: LANGE TEKSTEN + ADAPTIEF NIVEAU ─────────────── */
 .ltt-niveau-strip { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:20px; padding:12px 16px; background:var(--card); border-radius:12px; border:1px solid var(--border); }
@@ -2528,9 +2554,6 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()" title="Menu" aria-label="Menu openen" aria-controls="sidebar">☰</button>
   <div class="logo">Snel<span>Lees</span> Trainer</div>
   <div class="header-spacer"></div>
-  <button class="ai-mic-btn" id="ai-mic-btn" onclick="aiVoiceToggle()" title="Voice control (zeg: Start, Stop, Sneller, Langzamer)" aria-label="Spraakbesturing">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-  </button>
   <button class="dyx-btn" id="header-dyx-btn" onclick="dyxOpenPanel()" title="Dyslexie instellingen" aria-label="Dyslexie instellingen">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>
     <span class="dyx-lbl">Dyslexie</span></button>
@@ -2550,7 +2573,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <button class="focus-exit" onclick="focusModusUit(true)" aria-label="Focus-modus verlaten" title="Terug">✕</button>
 
 <!-- Fout toast (error boundary UI) -->
-<div id="fout-toast">
+<div id="fout-toast" aria-hidden="true">
   <span id="fout-toast-msg">Er is iets misgegaan.</span>
   <span class="fout-sluit" onclick="sluitFoutToast()">✕</span>
 </div>
@@ -2568,12 +2591,6 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <button class="btn btn-ghost" onclick="aiKeyTest()" style="padding:8px 16px;margin-left:auto">🧪 Test</button>
     </div>
   </div>
-</div>
-
-<!-- AI Voice Status Indicator -->
-<div class="ai-voice-status" id="ai-voice-status">
-  <div class="ai-voice-dot"></div>
-  <span id="ai-voice-text">Luistert…</span>
 </div>
 
 <!-- Sidebar Navigation -->
@@ -2622,7 +2639,6 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="sidebar-bottom">
     <button id="sidebar-installeer-btn" onclick="_installatie.start()" style="display:none;color:var(--accent)">📲 Installeer de app</button>
     <button id="sidebar-geluid-btn" onclick="_geluid.toggle()">🔔 Geluid aan</button>
-    <button class="ai-tts-toggle" id="sidebar-tts-btn" onclick="aiTtsToggle()">🔊 AI Coach spraak</button>
     <button id="sidebar-kids-btn" onclick="toggleKids()">🎨 Kids modus</button>
     <button id="sidebar-dyx-btn" onclick="dyxOpenPanel();sluitSidebar()">🔤 Dyslexie instellingen</button>
   </div>
@@ -3168,6 +3184,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-rsvp" class="screen">
   <div class="page-title">RSVP — Woord voor Woord</div>
   <div class="page-sub">Elk woord verschijnt op hetzelfde punt. Geen oogbewegingen nodig — maximale leessnelheid.</div>
+  <div id="tekstbron-rsvp"></div>
 
   <div id="rsvp-display">
     <div id="rsvp-orp"></div>
@@ -3191,11 +3208,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <label>Woorden per flash</label>
       <input type="number" id="rsvp-chunk" value="1" min="1" max="5">
     </div>
-    <div class="control-group">
-      <label>Tekstbron</label>
-      <select id="rsvp-src" onchange="laadRsvpTekst()"></select>
-      <button class="btn btn-ghost" style="font-size:.76rem;margin-top:8px;padding:7px 10px" onclick="tekstBronUploadKlik('rsvp')">📁 Upload tekst</button>
-    </div>
+    <select id="rsvp-src" onchange="laadRsvpTekst()" style="display:none"></select>
   </div>
 
   <div class="btn-row">
@@ -3209,7 +3222,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-chunk" class="screen">
   <div class="page-title">Chunk Lezen</div>
   <div class="page-sub">Lees woordgroepen in één oogopslag. Vergroot uw blikveld stap voor stap.</div>
-  <div class="tekstbron-panel" data-tekstbron="chunk"></div>
+  <div id="tekstbron-chunk"></div>
 
   <div id="chunk-display"><span id="chunk-tekst">Druk Start</span></div>
 
@@ -3248,7 +3261,6 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-oog" class="screen">
   <div class="page-title">Oogbewegingstraining</div>
   <div class="page-sub">Volg de bal met uw ogen. Vergroot uw blikveld en verminder onbewust terugspringen (regressie).</div>
-  <div class="tekstbron-panel" data-tekstbron="oog"></div>
 
   <h3>Kies jouw niveau</h3>
   <div class="oog-niveau-grid">
@@ -3307,22 +3319,16 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <canvas id="eye-canvas" height="220"></canvas>
 
-  <!-- Volg & Vang: vangvragen onder het canvas (bal loopt door) -->
-  <div id="oog-vang-ui" style="display:none;margin-bottom:14px">
-    <div class="oog-vang-kop">
-      <span class="sectie-label">🎯 Vang het woord van de bal</span>
-      <span id="oog-vang-score" class="oog-vang-score"></span>
-    </div>
-    <div class="ronde-cp-opties" id="oog-vang-knoppen" style="min-height:54px"></div>
-  </div>
-
   <!-- ── OOG RESULTAAT KAART ──────────────────────────────── -->
   <div id="oog-resultaat" style="display:none;padding:28px 20px;background:rgba(124,111,247,.08);border:2px solid var(--accent);border-radius:16px;text-align:center;margin-bottom:16px">
     <div style="font-size:2.8rem;margin-bottom:10px">🎉</div>
     <div style="font-size:1.25rem;font-weight:800;margin-bottom:6px">Sessie voltooid!</div>
     <div id="oog-res-sub" style="font-size:.9rem;color:var(--muted);margin-bottom:14px"></div>
     <div id="oog-res-uitd" style="display:none;background:rgba(250,204,21,.12);border:1px solid #f59e0b;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:.9rem;font-weight:700;color:#f59e0b">⭐ Daguitdaging voltooid! +15 XP</div>
-    <button class="btn btn-primary" onclick="oogNieuweSessie()">▶ Nieuwe sessie starten</button>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" id="oog-next-btn" onclick="oogGaNaarVolgendNiveau()" style="display:none">▶ Naar volgend niveau</button>
+      <button class="btn btn-ghost" onclick="oogNieuweSessie()">↺ Opnieuw trainen</button>
+    </div>
   </div>
 
   <div class="controls-panel">
@@ -3358,7 +3364,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-perifeer" class="screen">
   <div class="page-title">Perifeer Zien</div>
   <div class="page-sub">Train je zijdelings blikveld — lees woorden zonder je ogen te bewegen. Dit is dé sleutel tot sneller lezen.</div>
-  <div class="tekstbron-panel" data-tekstbron="perifeer"></div>
+  <div id="tekstbron-perifeer"></div>
 
   <!-- Waarom uitleg -->
   <div class="card" style="margin-bottom:20px;border-left:3px solid var(--accent2)">
@@ -3479,7 +3485,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-papier" class="screen">
   <div class="page-title">Papier Lees Training</div>
   <div class="page-sub">Kies een gidstechniek en oefen met de animatie hieronder. Elke techniek heeft een eigen beweging.</div>
-  <div class="tekstbron-panel" data-tekstbron="papier"></div>
+  <div id="tekstbron-papier"></div>
 
   <!-- Techniek keuze kaarten -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
@@ -3555,7 +3561,6 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- Plak/laad tekst -->
   <div class="flex" style="margin-bottom:10px;gap:10px">
     <input class="text-input" id="tekst-naam" placeholder="Naam (optioneel)" style="flex:1;margin-bottom:0">
-    <button class="btn btn-ghost" onclick="plakVanKlembord()">📋 Plak</button>
     <button class="btn btn-ghost" onclick="document.getElementById('file-input').click()">📁 .txt</button>
     <input type="file" id="file-input" accept=".txt" style="display:none" onchange="laadBestand(this)">
   </div>
@@ -3884,8 +3889,8 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- Stats -->
   <div class="vg-stats-grid" id="vg-stats-grid"></div>
 
-  <!-- Adaptief leesniveau -->
-  <h3>📚 Adaptief Leesniveau</h3>
+  <!-- Niveau Lange Teksten -->
+  <h3>📚 Niveau Lange Teksten</h3>
   <div id="vg-niveau-card" class="vg-niveau-card">
     <div class="vg-niveau-dot" id="vg-niveau-emoji">🟢</div>
     <div class="vg-niveau-info">
@@ -4141,11 +4146,6 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <button class="btn btn-ghost" style="font-size:.78rem" onclick="leerWegDagMarkeer()">✓ Al gedaan</button>
     </div>
     <div class="lw-doel-box" id="lw-wpm-doel-info"></div>
-    <div class="lw-testbar" id="lw-testbar">
-      <button class="btn btn-ghost" id="lw-testmode-btn" onclick="leerWegToggleTestmodus()">🧪 Testmodus</button>
-      <button class="btn btn-ghost" onclick="leerWegSkipVandaag()">⏭ Sla vandaag over</button>
-      <button class="btn btn-ghost" onclick="leerWegAllesVrij()">🔓 Alles vrijspelen</button>
-    </div>
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -4161,7 +4161,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-subvocal" class="screen">
   <div class="page-title">🔕 Subvocalisatie-training</div>
   <div class="page-sub">De innerlijke stem is de grootste rem op je leessnelheid. Leer hem uitschakelen.</div>
-  <div class="tekstbron-panel" data-tekstbron="subvocal"></div>
+  <div id="tekstbron-subvocal"></div>
 
   <div class="card" style="margin-bottom:16px">
     <h3 style="margin:0 0 8px">Wat is subvocalisatie?</h3>
@@ -4230,7 +4230,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-regressie" class="screen">
   <div class="page-title">⏩ Regressie-training</div>
   <div class="page-sub">Stop met terugkijken. Ogen die teruggaan kosten tot 30% van je leestijd.</div>
-  <div class="tekstbron-panel" data-tekstbron="regressie"></div>
+  <div id="tekstbron-regressie"></div>
 
   <div class="card" style="margin-bottom:16px">
     <h3 style="margin:0 0 8px">Wat is regressie?</h3>
@@ -4261,7 +4261,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-fixatie" class="screen">
   <div class="page-title">👁 Fixatie-training</div>
   <div class="page-sub">Leer meer woorden te zien per oogfixatie. Snelle lezers maken 3× minder oogsprongen per regel.</div>
-  <div class="tekstbron-panel" data-tekstbron="fixatie"></div>
+  <div id="tekstbron-fixatie"></div>
 
   <div class="card" style="margin-bottom:16px">
     <h3 style="margin:0 0 6px">Hoe het werkt</h3>
@@ -4295,7 +4295,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-skim" class="screen">
   <div class="page-title">🔍 Skimmen &amp; Scannen</div>
   <div class="page-sub">Leer teksten razendsnel doorkijken voor structuur (skim) of gerichte informatie (scan).</div>
-  <div class="tekstbron-panel" data-tekstbron="skim"></div>
+  <div id="tekstbron-skim"></div>
 
   <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
     <button id="skim-tab-uitleg" class="btn btn-ghost" style="font-size:.82rem" onclick="skimTab('uitleg')">📖 Uitleg</button>
@@ -4440,7 +4440,6 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 </div>
 
 </main>
-<input type="file" id="training-tekst-file" accept=".txt,text/plain" style="display:none" onchange="tekstBronUploadBestand(this)">
 
 <script>
 // ─── DATA ────────────────────────────────────────────────────────────────
@@ -4529,21 +4528,13 @@ function huidigeBibTekst() {
 }
 
 function woorden(t) { return t.trim().split(/\s+/).filter(w => w.length > 0); }
-
-function tekstBronWoordenPool(min = 3, max = 14) {
-  const pool = [...new Set(
-    woorden(huidigeTekst())
-      .map(w => w.replace(/[^a-zA-ZÀ-ÖØ-öø-ÿ-]/g, '').replace(/^-+|-+$/g, ''))
-      .filter(w => w.length >= min && w.length <= max)
-  )];
-  return pool.length >= 6 ? pool : null;
-}
-
-function htmlEsc(s) {
+function htmlEscape(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-function tekstBronOptiesHtml() {
+const TRAINING_TEKST_SCHERMEN = ['rsvp','chunk','perifeer','papier','subvocal','regressie','fixatie','skim'];
+
+function tekstbronOptiesHtml() {
   const arr = bibliLaad();
   const actiefRaw = localStorage.getItem('tekst_actief') || '0';
   const gelezen = gelezenLaad();
@@ -4551,96 +4542,99 @@ function tekstBronOptiesHtml() {
     .sort((a, b) => (gelezen['b:'+a.id] ? 1 : 0) - (gelezen['b:'+b.id] ? 1 : 0)
       || a.niveau - b.niveau || a.titel.localeCompare(b.titel));
   const badge = (id) => { const b = gelezenBadge(id); return b ? b + ' ' : ''; };
-  return `<option value="0" ${actiefRaw==='0'?'selected':''}>Demo tekst (ingebouwd)</option>`
-    + (bieb.length ? `<optgroup label="📚 Bibliotheek">`
-        + bieb.map(t => `<option value="b:${htmlEsc(t.id)}" ${actiefRaw==='b:'+t.id?'selected':''}>${htmlEsc(badge('b:'+t.id) + t.titel)} (niv. ${t.niveau}, ${t.woorden} w.)</option>`).join('')
-        + `</optgroup>` : '')
-    + (arr.length ? `<optgroup label="✏️ Eigen teksten">`
-        + arr.map((t,i) => `<option value="${i+1}" ${actiefRaw===String(i+1)?'selected':''}>${htmlEsc(badge('e:'+t.uid) + (t.naam || 'Mijn tekst'))}</option>`).join('')
-        + `</optgroup>` : '');
+  return `<option value="0" ${actiefRaw==='0'?'selected':''}>Demo tekst</option>`
+    + (bieb.length ? `<optgroup label="Bibliotheek">`
+      + bieb.map(t => `<option value="b:${htmlEscape(t.id)}" ${actiefRaw==='b:'+t.id?'selected':''}>${htmlEscape(badge('b:'+t.id) + t.titel)} · niv. ${t.niveau} · ${t.woorden}w</option>`).join('')
+      + `</optgroup>` : '')
+    + (arr.length ? `<optgroup label="Eigen teksten">`
+      + arr.map((t,i) => `<option value="${i+1}" ${actiefRaw===String(i+1)?'selected':''}>${htmlEscape(badge('e:'+t.uid) + t.naam)}</option>`).join('')
+      + `</optgroup>` : '');
 }
 
-function tekstBronNaam() {
-  const raw = localStorage.getItem('tekst_actief') || '0';
-  if (raw === '0') return 'Demo tekst';
-  if (raw.startsWith('b:')) return tekstBijId(raw.slice(2))?.titel || 'Bibliotheektekst';
-  const idx = parseInt(raw, 10);
-  return bibliLaad()[idx - 1]?.naam || 'Eigen tekst';
+function tekstbronRender(screen) {
+  const host = document.getElementById(`tekstbron-${screen}`);
+  if (!host) return;
+  host.innerHTML = `
+    <div class="tekstbron-panel">
+      <div>
+        <label for="tekstbron-select-${screen}">Tekst voor deze training</label>
+        <select class="tekstbron-select" id="tekstbron-select-${screen}" onchange="tekstbronKies('${screen}', this.value)">
+          ${tekstbronOptiesHtml()}
+        </select>
+      </div>
+      <button class="btn btn-ghost" onclick="document.getElementById('tekstbron-file-${screen}').click()">📁 Laden</button>
+      <button class="btn btn-ghost" onclick="tekstbronPlakToggle('${screen}')">✍️ Plakken</button>
+      <input class="tekstbron-upload" type="file" id="tekstbron-file-${screen}" accept=".txt,text/plain" onchange="tekstbronBestand('${screen}', this)">
+      <div class="tekstbron-paste" id="tekstbron-paste-${screen}">
+        <textarea class="text-input" id="tekstbron-area-${screen}" placeholder="Plak hier je eigen oefentekst..."></textarea>
+        <button class="btn btn-primary" onclick="tekstbronPlakOpslaan('${screen}')">Gebruik tekst</button>
+      </div>
+      <div class="tekstbron-status" id="tekstbron-status-${screen}"></div>
+    </div>`;
 }
 
-function tekstBronMeta() {
-  const wc = woorden(huidigeTekst()).length;
-  return `${tekstBronNaam()} · ${wc} woorden`;
+function tekstbronRenderAlles() {
+  TRAINING_TEKST_SCHERMEN.forEach(tekstbronRender);
+  const rsvpSel = document.getElementById('rsvp-src');
+  if (rsvpSel) rsvpSel.innerHTML = tekstbronOptiesHtml();
 }
 
-function renderTekstBronPanelen() {
-  const html = (scope) => `
-    <div class="tekstbron-main">
-      <label>Tekstbron</label>
-      <select onchange="tekstBronKies(this.value, '${scope}')">${tekstBronOptiesHtml()}</select>
-    </div>
-    <div class="tekstbron-actions">
-      <button class="btn btn-ghost" style="font-size:.76rem;padding:8px 11px" onclick="tekstBronUploadKlik('${scope}')">📁 Upload .txt</button>
-      <button class="btn btn-ghost" style="font-size:.76rem;padding:8px 11px" onclick="sidebarNav('tekst')">✍️ Beheer</button>
-    </div>
-    <div class="tekstbron-meta">${htmlEsc(tekstBronMeta())}</div>`;
-  document.querySelectorAll('.tekstbron-panel[data-tekstbron]').forEach(el => {
-    el.innerHTML = html(el.dataset.tekstbron || 'training');
-  });
+function tekstbronStatus(screen, msg) {
+  const el = document.getElementById(`tekstbron-status-${screen}`);
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('zichtbaar');
+  setTimeout(() => el.classList.remove('zichtbaar'), 2400);
 }
 
-function tekstBronKies(value, scope = '') {
-  localStorage.setItem('tekst_actief', value || '0');
-  window._aiHuidigeTekst = null;
-  papierEigenTekst = '';
-  if (typeof rsvpStop === 'function') rsvpStop();
-  if (typeof chunkStop === 'function') chunkStop();
-  if (typeof vulRsvpDropdown === 'function') vulRsvpDropdown();
-  if (typeof laadRsvpTekst === 'function') laadRsvpTekst();
-  renderTekstBronPanelen();
-  tekstBronRefreshTraining(scope);
+function tekstbronKies(screen, value) {
+  localStorage.setItem('tekst_actief', value);
+  tekstbronRenderAlles();
+  tekstbronRefresh(screen);
 }
 
-let _tekstBronUploadScope = 'training';
-function tekstBronUploadKlik(scope = 'training') {
-  _tekstBronUploadScope = scope;
-  const input = document.getElementById('training-tekst-file');
-  if (input) { input.value = ''; input.click(); }
+function tekstbronPlakToggle(screen) {
+  document.getElementById(`tekstbron-paste-${screen}`)?.classList.toggle('open');
 }
 
-function tekstBronUploadBestand(input) {
-  const f = input.files && input.files[0];
-  if (!f) return;
-  const r = new FileReader();
-  r.onload = e => {
-    const tekst = String(e.target.result || '').trim();
-    if (woorden(tekst).length < 20) { toonFout('Tekst is te kort om goed mee te trainen.'); return; }
-    const arr = bibliLaad();
-    const naam = (f.name || 'Mijn tekst').replace(/\.txt$/i, '').slice(0, 60);
-    arr.push({ naam, tekst, vragen: [], uid: Date.now().toString(36) });
-    bibliSla(arr);
-    localStorage.setItem('tekst_actief', String(arr.length));
-    window._aiHuidigeTekst = null;
-    papierEigenTekst = '';
-    if (typeof toonBibliotheek === 'function') toonBibliotheek();
-    if (typeof vulRsvpDropdown === 'function') vulRsvpDropdown();
-    if (typeof laadRsvpTekst === 'function') laadRsvpTekst();
-    renderTekstBronPanelen();
-    tekstBronRefreshTraining(_tekstBronUploadScope);
-    toonFout(`📁 Tekst geladen: ${naam}`);
-  };
-  r.readAsText(f);
+function tekstbronVoegEigenToe(screen, tekst, naam) {
+  const schoon = tekst.replace(/\s+/g, ' ').trim();
+  if (schoon.split(/\s+/).length < 20) {
+    tekstbronStatus(screen, 'Plak minimaal ongeveer 20 woorden.');
+    return;
+  }
+  const arr = bibliLaad();
+  arr.push({ uid: Date.now().toString(36), naam: naam || `Eigen tekst ${arr.length + 1}`, tekst: schoon, datum: new Date().toISOString() });
+  bibliSla(arr);
+  localStorage.setItem('tekst_actief', String(arr.length));
+  tekstbronRenderAlles();
+  tekstbronRefresh(screen);
+  tekstbronStatus(screen, 'Tekst geladen en gekozen.');
 }
 
-function tekstBronRefreshTraining(scope = '') {
-  if (scope === 'papier' && typeof bouwPapierTekst === 'function') bouwPapierTekst();
-  if (scope === 'subvocal' && typeof svInit === 'function') svInit();
-  if (scope === 'regressie' && typeof regNieuwe === 'function') regNieuwe();
-  if (scope === 'fixatie' && typeof fixNieuwe === 'function') fixNieuwe();
-  if (scope === 'skim' && typeof skimInit === 'function') skimInit();
-  if (scope === 'chunk') document.getElementById('chunk-tekst').textContent = 'Druk Start';
-  if (scope === 'perifeer' && typeof periStop === 'function') periStop();
-  if (scope === 'oog' && typeof oogStop === 'function') oogStop();
+function tekstbronPlakOpslaan(screen) {
+  const area = document.getElementById(`tekstbron-area-${screen}`);
+  tekstbronVoegEigenToe(screen, area?.value || '', 'Geplakte trainingstekst');
+}
+
+function tekstbronBestand(screen, input) {
+  const file = input.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => tekstbronVoegEigenToe(screen, String(reader.result || ''), file.name.replace(/\.[^.]+$/, ''));
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function tekstbronRefresh(screen) {
+  if (screen === 'rsvp') { rsvpStop(); laadRsvpTekst(); document.getElementById('rsvp-word').textContent = 'Druk Start'; }
+  if (screen === 'chunk') { chunkStop(); document.getElementById('chunk-tekst').textContent = 'Druk Start'; }
+  if (screen === 'perifeer') periStop();
+  if (screen === 'papier') { papierEigenTekst = ''; bouwPapierTekst(); }
+  if (screen === 'subvocal') { svMetroStop(); svTelActief = false; clearInterval(svTelTimer); svMetroLaadTekst(); svTelLaadTekst(); svHumLaadTekst(); }
+  if (screen === 'regressie') regNieuwe();
+  if (screen === 'fixatie') fixNieuwe();
+  if (screen === 'skim') skimNieuweAlles();
 }
 
 // ─── SIDEBAR ─────────────────────────────────────────────────────────────
@@ -4667,13 +4661,12 @@ function sidebarNav(id) {
   // Show the correct screen
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
-  if (typeof renderTekstBronPanelen === 'function') renderTekstBronPanelen();
 
   // Trigger screen-specific init
   if (id === 'papier') bouwPapierTekst();
   if (id === 'stats') { toonStats(); toonWpmDoel(); }
   if (id === 'tekst') toonBibliotheek();
-  if (id === 'oog') setTimeout(resizeCanvas, 50);
+  if (id === 'oog') setTimeout(() => { resizeCanvas(); if (typeof oogInit === 'function') oogInit(); }, 50);
   if (id === 'begintest') begintestInit();
   if (id === 'avontuur') avLaad();
   if (id === 'leestest' && typeof leestestInit === 'function') leestestInit();
@@ -4689,6 +4682,7 @@ function sidebarNav(id) {
   if (id === 'skim') skimInit();
   if (id === 'oogrust') orInit();
   if (id === 'home') setTimeout(updateVandaagPanel, 50);
+  if (TRAINING_TEKST_SCHERMEN.includes(id)) tekstbronRender(id);
 
   sluitSidebar();
 }
@@ -4706,24 +4700,15 @@ function toon(id, btn) {
   if (id === 'papier') bouwPapierTekst();
   if (id === 'stats') toonStats();
   if (id === 'tekst') toonBibliotheek();
-  if (id === 'oog') setTimeout(resizeCanvas, 50);
+  if (id === 'oog') setTimeout(() => { resizeCanvas(); if (typeof oogInit === 'function') oogInit(); }, 50);
   if (id === 'begintest') begintestInit();
   if (id === 'avontuur') avLaad();
+  if (TRAINING_TEKST_SCHERMEN.includes(id)) tekstbronRender(id);
 }
 
-// Als je op de speler-indicator klikt: direct naar dashboard (scores)
+// Als je op de speler-indicator klikt: direct naar statistieken.
 function toonAvontuurDirect() {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.sidebar nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById('screen-avontuur').classList.add('active');
-  const sidebarBtn = document.querySelector('.sidebar nav button[data-screen="avontuur"]');
-  if (sidebarBtn) sidebarBtn.classList.add('active');
-  if (avProfiel) {
-    avUpdateDash();
-    avToonView('dash');
-  } else {
-    avLaad();
-  }
+  sidebarNav('stats');
 }
 
 // ─── BEGINTEST ────────────────────────────────────────────────────────────
@@ -4981,7 +4966,12 @@ let rsvpTimer = null, rsvpIdx = 0, rsvpWoorden = [], rsvpStart_t = null, rsvpEla
 
 function vulRsvpDropdown() {
   const sel = document.getElementById('rsvp-src');
-  if (sel) sel.innerHTML = tekstBronOptiesHtml();
+  const html = tekstbronOptiesHtml();
+  if (sel) sel.innerHTML = html;
+  TRAINING_TEKST_SCHERMEN.forEach(screen => {
+    const shared = document.getElementById(`tekstbron-select-${screen}`);
+    if (shared) shared.innerHTML = html;
+  });
 }
 
 function laadRsvpTekst() {
@@ -4993,7 +4983,6 @@ function laadRsvpTekst() {
   rsvpWoorden = woorden(huidigeTekst());
   document.getElementById('rsvp-total').textContent = rsvpWoorden.length;
   document.getElementById('rsvp-pos').textContent = 0;
-  if (typeof renderTekstBronPanelen === 'function') renderTekstBronPanelen();
 }
 
 function rsvpStart() {
@@ -5051,6 +5040,7 @@ document.getElementById('chunk-display')?.addEventListener('click', () => {
   if (Ronde.wachtOpAntwoord) return; // checkpoint open: alleen de knoppen tellen
   if (chunkTimer) { chunkStop(); } else { chunkStart(); }
 });
+tekstbronRenderAlles();
 vulRsvpDropdown();
 laadRsvpTekst();
 
@@ -5157,22 +5147,16 @@ function oogTeken(x, y) {
   glow.addColorStop(0, 'rgba(124,111,247,.35)');
   glow.addColorStop(1, 'rgba(124,111,247,0)');
   ctx.beginPath(); ctx.arc(x, y, 40, 0, Math.PI*2); ctx.fillStyle = glow; ctx.fill();
-  // bal (kids volgen de vos)
-  if (typeof kidsModus !== 'undefined' && kidsModus) {
-    ctx.font = '24px serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('🦊', x, y + 9);
-  } else {
-    const g = ctx.createRadialGradient(x, y, 2, x, y, 14);
-    g.addColorStop(0, '#fff'); g.addColorStop(.5, '#a78bfa'); g.addColorStop(1, 'rgba(124,111,247,0)');
-    ctx.beginPath(); ctx.arc(x, y, 14, 0, Math.PI*2); ctx.fillStyle = g; ctx.fill();
-  }
-  // vang-woord op de bal (Volg & Vang)
-  if (typeof _oogVang !== 'undefined') _oogVang.teken(x, y);
+  // bal
+  const g = ctx.createRadialGradient(x, y, 2, x, y, 14);
+  g.addColorStop(0, '#fff'); g.addColorStop(.5, '#a78bfa'); g.addColorStop(1, 'rgba(124,111,247,0)');
+  ctx.beginPath(); ctx.arc(x, y, 14, 0, Math.PI*2); ctx.fillStyle = g; ctx.fill();
 }
 
 function oogStart() {
-  oogStop(); oogT = 0;
+  if (oogAnim) cancelAnimationFrame(oogAnim);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  oogT = 0;
   function frame() {
     const W = canvas.width, H = canvas.height;
     const speed = +document.getElementById('eye-speed').value;
@@ -5191,7 +5175,6 @@ function oogStart() {
     } else {
       x = pad + (W-2*pad)*(.5+.5*Math.sin(oogT*2)); y = H/2 + 20*Math.sin(oogT*.7);
     }
-    if (typeof _oogVang !== 'undefined') _oogVang.tik(performance.now());
     oogTeken(x, y);
     oogAnim = requestAnimationFrame(frame);
   }
@@ -5199,136 +5182,16 @@ function oogStart() {
 }
 function oogStop() { if (oogAnim) cancelAnimationFrame(oogAnim); ctx.clearRect(0,0,canvas.width,canvas.height); }
 
-// ─── VOLG & VANG: game-laag over de oogtraining ─────────────
-// Tijdens de niveau-sessies verschijnt er af en toe een kort woord óp de
-// bewegende bal (~850ms). Daarna kies je in één tik welk woord je zag —
-// terwijl de bal gewoon doorloopt. Zo wordt saccade-training een vanggame.
-const _oogVang = {
-  actief: false, wachtOpAntwoord: false,
-  woord: null, toonTot: 0, volgende: 0,
-  score: 0, totaal: 0, combo: 0, maxCombo: 0, _timeout: null,
-
-  start() {
-    this.actief = true; this.wachtOpAntwoord = false; this.woord = null;
-    this.score = 0; this.totaal = 0; this.combo = 0; this.maxCombo = 0;
-    this.volgende = performance.now() + 2500;
-    this._ui(true);
-  },
-
-  stop() {
-    this.actief = false; this.woord = null; this.wachtOpAntwoord = false;
-    clearTimeout(this._timeout);
-    this._ui(false);
-  },
-
-  /** Elke animatieframe: woorden plannen en laten verlopen. */
-  tik(nu) {
-    if (!this.actief) return;
-    if (!this.woord && !this.wachtOpAntwoord && nu >= this.volgende) {
-      const pool = tekstBronWoordenPool(4, 12)
-        || ((typeof Ronde !== 'undefined') ? Ronde._AFLEIDERS : null)
-        || ['water','huis','vogel'];
-      this.woord = pool[Math.floor(Math.random() * pool.length)];
-      this.toonTot = nu + 850;
-    }
-    if (this.woord && nu > this.toonTot) {
-      const doel = this.woord;
-      this.woord = null; // van de bal af — nu de vangvraag
-      this._vraag(doel);
-    }
-  },
-
-  /** Woord op de bal tekenen (aangeroepen vanuit oogTeken). */
-  teken(x, y) {
-    if (!this.woord) return;
-    ctx.font = '700 17px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#fff';
-    ctx.shadowColor = 'rgba(124,111,247,.8)'; ctx.shadowBlur = 10;
-    ctx.fillText(this.woord, x, y - 26);
-    ctx.shadowBlur = 0;
-  },
-
-  _vraag(doel) {
-    this.wachtOpAntwoord = true;
-    this.totaal++;
-    const bron = tekstBronWoordenPool(4, 12)
-      || ((typeof Ronde !== 'undefined') ? Ronde._AFLEIDERS : []);
-    const pool = bron.filter(w => w !== doel && Math.abs(w.length - doel.length) <= 2);
-    const afleider = pool.length ? pool[Math.floor(Math.random() * pool.length)] : 'anders';
-    const opties = Math.random() < .5 ? [doel, afleider] : [afleider, doel];
-    const wrap = document.getElementById('oog-vang-knoppen');
-    if (!wrap) { this.wachtOpAntwoord = false; return; }
-    wrap.innerHTML = opties.map(o => `<button class="ronde-cp-optie" data-w="${o}">${o}</button>`).join('');
-    wrap.querySelectorAll('button').forEach(b => {
-      b.onclick = () => this._antwoord(b.dataset.w === doel, b, doel);
-    });
-    // 4 seconden bedenktijd — de bal loopt gewoon door
-    this._timeout = setTimeout(() => this._antwoord(false, null, doel), 4000);
-  },
-
-  _antwoord(goed, btn, doel) {
-    clearTimeout(this._timeout);
-    if (!this.wachtOpAntwoord) return;
-    this.wachtOpAntwoord = false;
-    const wrap = document.getElementById('oog-vang-knoppen');
-    if (wrap) wrap.querySelectorAll('button').forEach(b => {
-      b.disabled = true;
-      if (b.dataset.w === doel) b.classList.add('goed');
-      else if (b === btn) b.classList.add('fout');
-    });
-    if (goed) {
-      this.score++; this.combo++;
-      this.maxCombo = Math.max(this.maxCombo, this.combo);
-      if (typeof _geluid !== 'undefined') _geluid.goed();
-      if (typeof tril === 'function') tril(20);
-    } else {
-      this.combo = 0;
-      if (typeof _geluid !== 'undefined') _geluid.fout();
-    }
-    this._chip();
-    setTimeout(() => { if (wrap) wrap.innerHTML = ''; }, goed ? 450 : 800);
-    this.volgende = performance.now() + 2400 + Math.random() * 1800;
-  },
-
-  _chip() {
-    const el = document.getElementById('oog-vang-score');
-    if (el) el.innerHTML = `🎯 <b>${this.score}</b>/${this.totaal}${this.combo >= 2 ? ` · 🔥×${this.combo}` : ''}`;
-  },
-
-  _ui(aan) {
-    const ui = document.getElementById('oog-vang-ui');
-    if (ui) ui.style.display = aan ? '' : 'none';
-    if (aan) {
-      const w = document.getElementById('oog-vang-knoppen');
-      if (w) w.innerHTML = '';
-      this._chip();
-    }
-  },
-
-  /** Sessie-einde: sterren + XP via de Leesronde-motor (score-modus). */
-  einde() {
-    if (!this.actief) return;
-    const { score, totaal, maxCombo } = this;
-    this.stop();
-    if (!totaal) return;
-    const pct = Math.round((score / totaal) * 100);
-    Ronde.direct('oog', score, totaal, pct, null,
-      { label: 'gevangen', waarde: `${score}/${totaal}`, xpVast: 8 + score * 2 + maxCombo, topBij: 90 });
-  },
-};
-
 // ─── PERIFEER ZIEN ───────────────────────────────────────────────────────
 let periTimer = null;
 const periWoorden = ['vlug','hemel','boom','rivier','stad','licht','boek','regen',
   'zon','maan','wind','zee','berg','blad','hand','oog','deur','pad','ster','golf'];
-function periWoordenPool() {
-  return tekstBronWoordenPool(4, 10) || periWoorden;
-}
 
 function periStart() {
   periStop();
   const container = document.getElementById('peripheral-display');
+  const bronWoorden = woorden(huidigeTekst()).map(w => w.replace(/[^A-Za-zÀ-ÿ0-9-]/g, '')).filter(w => w.length >= 3 && w.length <= 14);
+  const woordbank = bronWoorden.length >= 8 ? bronWoorden : periWoorden;
   container.querySelectorAll('.peripheral-word').forEach(e => e.remove());
   function toon() {
     const breedte = +document.getElementById('peri-width').value;
@@ -5336,9 +5199,8 @@ function periStart() {
       e.style.opacity = 0; setTimeout(() => e.remove(), 200);
     });
     const kant = breedte / 2;
-    const pool = periWoordenPool();
-    [[-kant, pool[Math.floor(Math.random()*pool.length)]],
-     [kant,  pool[Math.floor(Math.random()*pool.length)]]].forEach(([pct, woord]) => {
+    [[-kant, woordbank[Math.floor(Math.random()*woordbank.length)]],
+     [kant,  woordbank[Math.floor(Math.random()*woordbank.length)]]].forEach(([pct, woord]) => {
       const el = document.createElement('span');
       el.className = 'peripheral-word'; el.textContent = woord;
       el.style.left = (50+pct)+'%'; el.style.top = (30+Math.random()*40)+'%';
@@ -5785,12 +5647,17 @@ function toonBibliotheek() {
 // ═══════════════════════════════════════════════════════════
 let _foutToastTimer = null;
 
+function magGlobaleFoutTonen() {
+  return !!localStorage.getItem('snellees_onboarding_done');
+}
+
 function toonFout(bericht, details) {
   const el = document.getElementById('fout-toast');
   const msg = document.getElementById('fout-toast-msg');
   if (!el || !msg) return;
   msg.textContent = bericht || 'Er is iets misgegaan. Probeer het opnieuw.';
   el.classList.add('zichtbaar');
+  el.setAttribute('aria-hidden', 'false');
   clearTimeout(_foutToastTimer);
   _foutToastTimer = setTimeout(sluitFoutToast, 5000);
   if (details) console.error('[SnelLees fout]', bericht, details);
@@ -5798,13 +5665,20 @@ function toonFout(bericht, details) {
 
 function sluitFoutToast() {
   const el = document.getElementById('fout-toast');
-  if (el) el.classList.remove('zichtbaar');
+  if (el) {
+    el.classList.remove('zichtbaar');
+    el.setAttribute('aria-hidden', 'true');
+  }
 }
 
 // Globale vangnet: onverwachte JS-fouten tonen als toast
 window.onerror = function(msg, src, line, col, err) {
   // Alleen tonen voor onze eigen code, niet externe scripts
   if (src && (src.includes('supabase') || src.includes('cdn.jsdelivr') || src.includes('chart.js'))) return false;
+  if (!magGlobaleFoutTonen()) {
+    console.warn('[SnelLees stille startfout]', msg, err || '');
+    return false;
+  }
   toonFout('Er is een onverwachte fout opgetreden. De pagina werkt mogelijk niet correct.');
   return false;
 };
@@ -5814,6 +5688,8 @@ window.addEventListener('unhandledrejection', function(e) {
     toonFout('Geen internetverbinding. Sommige functies werken mogelijk niet.');
   } else if (e.reason && String(e.reason).includes('supabase')) {
     // Supabase fouten stil afhandelen — app werkt ook offline
+  } else if (!magGlobaleFoutTonen()) {
+    console.warn('[SnelLees stille startfout]', e.reason || e);
   } else {
     toonFout('Er is een onverwachte fout opgetreden.');
   }
@@ -5974,21 +5850,8 @@ function tekenGrafieken() {
   }
 }
 
-function slaaSessieOp(wpm, n, meta = {}) {
-  const begrip = (typeof meta.begrip === 'number') ? Math.max(0, Math.min(100, Math.round(meta.begrip))) : null;
-  const leesscore = begrip !== null ? Math.round(wpm * (begrip / 100)) : null;
-  const scherm = meta.type || (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'onbekend';
-  stats.sessies.push({
-    datum: new Date().toLocaleString('nl-NL'),
-    ts: Date.now(),
-    type: scherm,
-    wpm,
-    woorden: n,
-    begrip,
-    leesscore,
-    tekstId: meta.tekstId || null,
-    tekstNiveau: meta.tekstNiveau || null,
-  });
+function slaaSessieOp(wpm, n) {
+  stats.sessies.push({ datum: new Date().toLocaleString('nl-NL'), ts: Date.now(), wpm, woorden: n });
   stats.totaalWoorden += n;
   if (wpm > stats.bestWpm) stats.bestWpm = wpm;
   localStorage.setItem('snellees_stats', JSON.stringify(stats));
@@ -6021,7 +5884,7 @@ function toonStats() {
 
   const lijst = [...stats.sessies].reverse().slice(0,10);
   document.getElementById('sessie-lijst').innerHTML = lijst.length
-    ? lijst.map(s => `<div class="sessie-item"><span>${s.datum}</span><span><b class="sessie-wpm">${s.wpm} WPM</b>${s.begrip != null ? ` · ${s.begrip}% begrip` : ''}${s.leesscore != null ? ` · score ${s.leesscore}` : ''} · ${s.woorden} woorden</span></div>`).join('')
+    ? lijst.map(s => `<div class="sessie-item"><span>${s.datum}</span><span><b class="sessie-wpm">${s.wpm} WPM</b> · ${s.woorden} woorden</span></div>`).join('')
     : '<span style="color:var(--muted);font-size:13px">Nog geen sessies — begin met trainen!</span>';
 
   // Render grafieken (klein delay zodat canvas zichtbaar is)
@@ -6501,31 +6364,13 @@ function showConfetti(x, y, force) {
 }
 
 // ─── ACHIEVEMENT POPUP ────────────────────────────────────
-let _rewardToastAantal = 0;
-function toonRewardToast({ icon = '🏆', kicker = 'Reward vrijgespeeld', titel = 'Badge verdiend!', sub = '' } = {}) {
-  const el = document.createElement('div');
-  el.className = 'reward-toast';
-  const offset = Math.min(_rewardToastAantal, 3) * 82;
-  el.style.top = `calc(${18 + offset}px + env(safe-area-inset-top, 0px))`;
-  el.innerHTML = `
-    <div class="rt-icon">${htmlEsc(icon)}</div>
-    <div>
-      <div class="rt-kicker">${htmlEsc(kicker)}</div>
-      <div class="rt-title">${htmlEsc(titel)}</div>
-      ${sub ? `<div class="rt-sub">${htmlEsc(sub)}</div>` : ''}
-    </div>`;
-  document.body.appendChild(el);
-  _rewardToastAantal++;
-  setTimeout(() => {
-    el.remove();
-    _rewardToastAantal = Math.max(0, _rewardToastAantal - 1);
-  }, 3900);
-  return el;
-}
-
 function toonAchievement(icon, naam) {
-  toonRewardToast({ icon, kicker: 'Badge verdiend', titel: naam, sub: 'Nieuwe beloning toegevoegd aan je profiel' });
+  const el = document.createElement('div');
+  el.className = 'achievement-popup';
+  el.innerHTML = `<span class="ach-icon">${icon}</span><div><div class="ach-text">Badge verdiend!</div><div class="ach-sub">${naam}</div></div>`;
+  document.body.appendChild(el);
   if (kidsModus) showConfetti(80, 10);
+  setTimeout(() => el.remove(), 3500);
 }
 
 // ─── DAGELIJKSE UITDAGING ─────────────────────────────────
@@ -6722,8 +6567,6 @@ const _oogspanne = {
   _n: 2, _fouten: 0, _goedOpN: 0, _bezig: false,
 
   woorden() {
-    const actief = tekstBronWoordenPool(3, 9);
-    if (actief) return actief;
     // Inhoudswoorden uit de bibliotheek als bron
     try {
       const t = tekstenKies({ collectie: 'kort' })[0];
@@ -7097,23 +6940,60 @@ function checkStreakGevaar() {
 
 // ─── OOGTRAINING TIMER & NIVEAUS ──────────────────────────
 const OOG_NIVEAUS = [
-  { naam:'Beginner', snelheid:3, patroon:'lr',     duur:180, label:'3 minuten' },
-  { naam:'Gevorderd',snelheid:5, patroon:'zigzag',  duur:360, label:'6 minuten' },
-  { naam:'Expert',   snelheid:8, patroon:'sprint',  duur:600, label:'10 minuten' },
+  { naam:'Beginner', snelheid:3, patroon:'lr',     duur:60,  label:'1 minuut' },
+  { naam:'Gevorderd',snelheid:5, patroon:'zigzag',  duur:90,  label:'1,5 minuut' },
+  { naam:'Expert',   snelheid:8, patroon:'sprint',  duur:120, label:'2 minuten' },
 ];
 let oogNiveauActief = 0;
 let oogTimerInterval = null;
 let oogTimerResterend = 0;
 
+function oogHoogsteVrij() {
+  return Math.min(2, Math.max(0, parseInt(localStorage.getItem('oog_hoogste_vrij') || '0', 10)));
+}
+
+function oogHoogsteVoltooid() {
+  return Math.min(2, Math.max(-1, parseInt(localStorage.getItem('oog_hoogste_voltooid') || '-1', 10)));
+}
+
+function oogRenderNiveaus() {
+  const vrij = oogHoogsteVrij();
+  const voltooid = oogHoogsteVoltooid();
+  document.querySelectorAll('.oog-niveau-kaart').forEach((kaart, i) => {
+    const locked = i > vrij;
+    kaart.classList.toggle('locked', locked);
+    kaart.classList.toggle('voltooid', i <= voltooid);
+    kaart.classList.toggle('actief', i === oogNiveauActief);
+    kaart.setAttribute('aria-disabled', locked ? 'true' : 'false');
+    let status = kaart.querySelector('.oog-niveau-status');
+    if (!status) {
+      status = document.createElement('div');
+      status.className = 'oog-niveau-status';
+      kaart.appendChild(status);
+    }
+    status.textContent = locked ? `Ontgrendel via niveau ${i}` : i <= voltooid ? 'Voltooid' : i === oogNiveauActief ? 'Actief' : 'Vrij';
+  });
+}
+
+function oogInit() {
+  if (oogNiveauActief > oogHoogsteVrij()) oogNiveauActief = oogHoogsteVrij();
+  oogKiesNiveau(oogNiveauActief, true);
+}
+
 function oogKiesNiveau(n) {
+  if (n > oogHoogsteVrij()) {
+    const lbl = document.getElementById('oog-timer-lbl');
+    if (lbl) lbl.textContent = `Rond eerst niveau ${n} af om ${OOG_NIVEAUS[n].naam} te ontgrendelen.`;
+    oogRenderNiveaus();
+    return;
+  }
   oogNiveauActief = n;
-  document.querySelectorAll('.oog-niveau-kaart').forEach((k, i) =>
-    k.classList.toggle('actief', i === n));
   const niv = OOG_NIVEAUS[n];
   document.getElementById('eye-speed').value = niv.snelheid;
   document.getElementById('eye-mode').value  = niv.patroon;
   document.getElementById('oog-timer-lbl').textContent = `${niv.naam} · ${niv.label} per sessie`;
   document.getElementById('oog-timer-num').textContent = '—';
+  oogRenderNiveaus();
 }
 
 function _oogUpdateRing(resterend, totaal) {
@@ -7149,15 +7029,9 @@ function _oogUpdateRing(resterend, totaal) {
 }
 
 function oogStartMetTimer() {
+  if (oogNiveauActief > oogHoogsteVrij()) return;
   clearInterval(oogTimerInterval);
   const niv = OOG_NIVEAUS[oogNiveauActief];
-
-  // EERST de animatie starten: oogStart() roept intern oogStop() aan, en de
-  // override daarvan wist timer + label. Daarna pas timer/label/vang zetten
-  // (dit was een sluimerende bug: de sessie-timer stierf direct na start).
-  oogStart();
-  _oogVang.start();
-
   oogTimerResterend = niv.duur;
   document.getElementById('oog-timer-lbl').textContent = `${niv.naam} · bezig…`;
   _oogUpdateRing(oogTimerResterend, niv.duur);
@@ -7166,12 +7040,12 @@ function oogStartMetTimer() {
     _oogUpdateRing(oogTimerResterend, niv.duur);
     if (oogTimerResterend <= 0) {
       clearInterval(oogTimerInterval);
-      _oogVang.einde(); // eerst afrekenen (sterren/XP), dan alles stoppen
       oogStop();
       document.getElementById('oog-timer-lbl').textContent = '✅ Sessie afgerond';
       _oogUpdateRing(0, 0);
       if (kidsModus) showConfetti(50, 30);
       _oogToonResultaat(niv);
+      oogVoltooiNiveau();
       voltooiDaguitdaging('oog');
       return;
     }
@@ -7179,13 +7053,13 @@ function oogStartMetTimer() {
   }
   tikTimer();
   oogTimerInterval = setInterval(tikTimer, 1000);
+  oogStart();
 }
 
-// Override oogStop om ook timer + vanggame te stoppen
+// Override oogStop om ook timer te stoppen
 const _oogStopOrigineel = oogStop;
 oogStop = function() {
   clearInterval(oogTimerInterval);
-  if (typeof _oogVang !== 'undefined') _oogVang.stop();
   _oogStopOrigineel();
   _oogUpdateRing(0, 0);
   document.getElementById('oog-timer-lbl').textContent = 'Druk Start om te beginnen';
@@ -7199,7 +7073,11 @@ function _oogToonResultaat(niv) {
   if (!res) return;
   const sub = document.getElementById('oog-res-sub');
   const uitdEl = document.getElementById('oog-res-uitd');
-  if (sub) sub.textContent = `${niv.naam} · ${niv.label} voltooid 💪`;
+  const volgend = Math.min(oogNiveauActief + 1, OOG_NIVEAUS.length - 1);
+  const heeftVolgend = oogNiveauActief < OOG_NIVEAUS.length - 1;
+  if (sub) sub.textContent = heeftVolgend
+    ? `${niv.naam} voltooid. Niveau ${volgend + 1} is nu vrij.`
+    : `${niv.naam} voltooid. Je zit op het hoogste oogtrainingniveau.`;
   // Toon daguitdaging-badge alleen als vandaag oog-uitdaging is
   if (uitdEl) {
     const dagU = (typeof getDaguitdaging === 'function') ? getDaguitdaging() : null;
@@ -7207,6 +7085,26 @@ function _oogToonResultaat(niv) {
   }
   res.style.display = 'block';
   res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  const nextBtn = document.getElementById('oog-next-btn');
+  if (nextBtn) {
+    nextBtn.style.display = heeftVolgend ? '' : 'none';
+    nextBtn.textContent = heeftVolgend ? `▶ Naar niveau ${volgend + 1}` : '▶ Naar volgend niveau';
+  }
+}
+
+function oogVoltooiNiveau() {
+  const voltooid = Math.max(oogHoogsteVoltooid(), oogNiveauActief);
+  const vrij = Math.max(oogHoogsteVrij(), Math.min(oogNiveauActief + 1, OOG_NIVEAUS.length - 1));
+  localStorage.setItem('oog_hoogste_voltooid', String(voltooid));
+  localStorage.setItem('oog_hoogste_vrij', String(vrij));
+  oogRenderNiveaus();
+}
+
+function oogGaNaarVolgendNiveau() {
+  const volgend = Math.min(oogNiveauActief + 1, OOG_NIVEAUS.length - 1);
+  oogNieuweSessie();
+  oogKiesNiveau(volgend);
+  document.getElementById('screen-oog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function oogNieuweSessie() {
@@ -7825,12 +7723,11 @@ function dyxVerdienBadge(id) {
   const badge = DYX_BADGES.find(b => b.id === id);
   if (badge) {
     dyxPlaySound('badge');
-    toonRewardToast({
-      icon: badge.icon,
-      kicker: 'Dyslexie-spel',
-      titel: 'Badge verdiend',
-      sub: badge.naam
-    });
+    const toast = document.createElement('div');
+    toast.className = 'dyx-toast';
+    toast.innerHTML = `<div style="font-size:1.5rem">${badge.icon}</div><div>Badge verdiend!<br><b>${badge.naam}</b></div>`;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.animation = 'dyx-toast-out .4s ease forwards'; setTimeout(() => toast.remove(), 400); }, 2500);
   }
   dyxToonBadges();
   return true;
@@ -8354,8 +8251,7 @@ function periSpelVolgende() {
   const pos = (lv.breedte / 2);
 
   // Kies 2 willekeurige woorden
-  const pool = tekstBronWoordenPool(4, 12) || PERI_SPEL_WOORDEN;
-  const shuffle = [...pool].sort(() => Math.random() - 0.5);
+  const shuffle = [...PERI_SPEL_WOORDEN].sort(() => Math.random() - 0.5);
   periSpelLinks = shuffle[0];
   periSpelRechts = shuffle[1];
   periSpelVraagKant = Math.random() > 0.5 ? 'links' : 'rechts';
@@ -8390,8 +8286,7 @@ function periSpelVolgende() {
 
 function periSpelStelVraag() {
   const gevraagd = periSpelVraagKant === 'links' ? periSpelLinks : periSpelRechts;
-  const pool = tekstBronWoordenPool(4, 12) || PERI_SPEL_WOORDEN;
-  const fout1 = pool.filter(w => w !== periSpelLinks && w !== periSpelRechts);
+  const fout1 = PERI_SPEL_WOORDEN.filter(w => w !== periSpelLinks && w !== periSpelRechts);
   const fout2 = [...fout1].sort(() => Math.random() - 0.5).slice(0, 3);
   const opties = dyxShuffle([gevraagd, ...fout2]);
 
@@ -8516,15 +8411,12 @@ const LEERWEG_WEKEN = [
 ];
 
 const LW_KEY = 'leerweg_gedaan'; // ["w0d2","w1d0",...]
-const LW_TEST_KEY = 'leerweg_testmodus';
 function lwGedaan() { try { return JSON.parse(localStorage.getItem(LW_KEY) || '[]'); } catch(e) { return []; } }
 function lwKey(w,d) { return `w${w}d${d}`; }
 function lwIsDone(w,d) { return lwGedaan().includes(lwKey(w,d)); }
-function lwTestmodusAan() { return localStorage.getItem(LW_TEST_KEY) === '1'; }
 
 function leerWegInit() {
   const gedaan = lwGedaan();
-  const testmodus = lwTestmodusAan();
   // Zoek vandaag: eerste ongedane dag
   let vandaagWeek = -1, vandaagDag = -1;
   outer: for (let w = 0; w < LEERWEG_WEKEN.length; w++) {
@@ -8541,17 +8433,10 @@ function leerWegInit() {
     document.getElementById('lw-vandaag-duur').textContent = `⏱ ${dag.duur}`;
     document.getElementById('lw-vandaag-btn').dataset.week = vandaagWeek;
     document.getElementById('lw-vandaag-btn').dataset.dag = vandaagDag;
-    document.getElementById('lw-vandaag-btn').style.display = '';
   } else {
     document.getElementById('lw-vandaag-tekst').textContent = '🏆 Programma voltooid! Start opnieuw voor nog meer verbetering.';
     document.getElementById('lw-vandaag-duur').textContent = '';
     document.getElementById('lw-vandaag-btn').style.display = 'none';
-  }
-
-  const testBtn = document.getElementById('lw-testmode-btn');
-  if (testBtn) {
-    testBtn.classList.toggle('actief', testmodus);
-    testBtn.textContent = testmodus ? '🧪 Testmodus aan' : '🧪 Testmodus';
   }
 
   // WPM doel info
@@ -8582,7 +8467,7 @@ function leerWegInit() {
     const nodesHtml = week.dagen.map((dag, di) => {
       const done = gedaan.includes(lwKey(wi, di));
       const isNu = wi === vandaagWeek && di === vandaagDag;
-      const locked = !testmodus && !done && !isNu;
+      const locked = !done && !isNu;
       // Kronkelend pad: sinusvormige horizontale offset
       const offset = Math.round(Math.sin(globaal * 1.05) * 72);
       globaal++;
@@ -8636,7 +8521,6 @@ function leerWegVandaagDoen() {
 }
 
 function leerWegStartDag(w, d) {
-  if (lwTestmodusAan()) leerWegMarkeerTot(w, d);
   const dag = LEERWEG_WEKEN[w].dagen[d];
   if (dag.screen) {
     // Game-integriteit: de dag wordt pas afgevinkt zodra de oefening écht
@@ -8657,51 +8541,11 @@ function leerWegDagMarkeer() {
   leerWegDagDoen(w, d);
 }
 
-function leerWegSkipVandaag() {
-  const volgende = leerWegVolgendeDag();
-  if (!volgende) { toonFout('De hele leerweg is al voltooid.'); return; }
-  leerWegDagDoen(volgende.w, volgende.d);
-  if (typeof toonAchievement === 'function') toonAchievement('⏭', 'Dag overgeslagen voor test');
-}
-
-function leerWegToggleTestmodus() {
-  const aan = !lwTestmodusAan();
-  localStorage.setItem(LW_TEST_KEY, aan ? '1' : '0');
-  leerWegInit();
-  toonFout(aan
-    ? '🧪 Testmodus aan: je kunt toekomstige dagen direct openen.'
-    : 'Testmodus uit: de leerweg is weer stap voor stap.');
-}
-
-function leerWegMarkeerTot(w, d) {
-  const gedaan = lwGedaan();
-  for (let wi = 0; wi <= w; wi++) {
-    const maxDag = wi === w ? d - 1 : LEERWEG_WEKEN[wi].dagen.length - 1;
-    for (let di = 0; di <= maxDag; di++) {
-      const k = lwKey(wi, di);
-      if (!gedaan.includes(k)) gedaan.push(k);
-    }
-  }
-  localStorage.setItem(LW_KEY, JSON.stringify(gedaan));
-}
-
-function leerWegAllesVrij() {
-  if (!lwTestmodusAan() && !confirm('Alles vrijspelen is bedoeld om te testen. Testmodus inschakelen en alle dagen afvinken?')) return;
-  const alle = [];
-  LEERWEG_WEKEN.forEach((week, wi) => week.dagen.forEach((_, di) => alle.push(lwKey(wi, di))));
-  localStorage.setItem(LW_TEST_KEY, '1');
-  localStorage.setItem(LW_KEY, JSON.stringify(alle));
-  leerWegInit();
-  if (typeof leerWegHeroUpdate === 'function') leerWegHeroUpdate();
-  toonFout('🔓 Alle leerwegdagen zijn vrijgespeeld voor test.');
-}
-
 function leerWegDagDoen(w, d) {
   const gedaan = lwGedaan();
   const k = lwKey(w, d);
   if (!gedaan.includes(k)) { gedaan.push(k); localStorage.setItem(LW_KEY, JSON.stringify(gedaan)); }
   leerWegInit();
-  if (typeof leerWegHeroUpdate === 'function') leerWegHeroUpdate();
 }
 
 function leerWegReset() {
@@ -8771,7 +8615,7 @@ function svSwitchTab(t) {
 }
 
 function svMetroLaadTekst() {
-  svMetroWoorden = woorden(huidigeTekst());
+  svMetroWoorden = woorden(huidigeTekst() || SV_TEKSTEN[Math.floor(Math.random()*SV_TEKSTEN.length)]);
   svMetroIdx = 0;
   document.getElementById('sv-metro-voortgang').textContent = '';
   document.getElementById('sv-metro-woord').textContent = '—';
@@ -8812,7 +8656,7 @@ function svMetroBpm(delta) {
 }
 
 function svTelLaadTekst() {
-  document.getElementById('sv-tel-tekst').textContent = huidigeTekst();
+  document.getElementById('sv-tel-tekst').textContent = huidigeTekst() || SV_TEKSTEN[Math.floor(Math.random()*SV_TEKSTEN.length)];
 }
 
 function svTelToggle() {
@@ -8833,7 +8677,7 @@ function svTelToggle() {
 function svTelNieuwe() { svTelLaadTekst(); }
 
 function svHumLaadTekst() {
-  document.getElementById('sv-hum-tekst').textContent = huidigeTekst();
+  document.getElementById('sv-hum-tekst').textContent = huidigeTekst() || SV_TEKSTEN[Math.floor(Math.random()*SV_TEKSTEN.length)];
   document.getElementById('sv-hum-timer-display').style.display = 'none';
 }
 
@@ -8907,7 +8751,8 @@ function regInit() {
 function regNieuwe() {
   regStop();
   regTekst = huidigeTekst() || REG_TEKSTEN[Math.floor(Math.random()*REG_TEKSTEN.length)];
-  regZinnen = regTekst.match(/[^.!?]+[.!?]?/g).filter(z=>z.trim().length>5).map(z=>z.trim());
+  regZinnen = (regTekst.match(/[^.!?]+[.!?]?/g) || woorden(regTekst).join(' ').match(/.{1,90}(?:\s|$)/g) || [])
+    .filter(z=>z.trim().length>5).map(z=>z.trim());
   regIdx = 0;
   document.getElementById('reg-zin-display').textContent = 'Klik op Start om te beginnen';
   document.getElementById('reg-prog-fill').style.width = '0%';
@@ -9360,21 +9205,27 @@ let skimTimerActief = false;
 let skimTimerSec = 30;
 let scanAutoZoekWrd = '';
 
-function skimDataActief() {
+function skimEigenData() {
+  const raw = localStorage.getItem('tekst_actief') || '0';
+  if (raw === '0') return null;
   const tekst = huidigeTekst();
-  let alineas = tekst.split(/\n{2,}/).map(a => a.trim()).filter(a => woorden(a).length > 3);
-  if (alineas.length < 2) {
-    const zinnen = tekst.match(/[^.!?]+[.!?]?/g) || [tekst];
-    alineas = [];
-    for (let i = 0; i < zinnen.length; i += 4) {
-      const al = zinnen.slice(i, i + 4).join(' ').trim();
-      if (al) alineas.push(al);
-    }
-  }
-  return { titel: tekstBronNaam(), alineas: alineas.length ? alineas : [tekst] };
+  const alineas = tekst.split(/\n{2,}/).map(a => a.replace(/\s+/g, ' ').trim()).filter(Boolean);
+  const basis = alineas.length ? alineas : tekst.match(/.{1,420}(?:\s|$)/g)?.map(a => a.trim()).filter(Boolean);
+  if (!basis?.length) return null;
+  return { titel: 'Gekozen trainingstekst', alineas: basis };
 }
 
-function skimInit() { skimTab('skim'); skimNieuwe(); scanNieuwe(); previewNieuwe(); }
+function skimDataKies() {
+  return skimEigenData() || SKIM_TEKSTEN_DATA[Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length)];
+}
+
+function skimNieuweAlles() {
+  skimNieuwe();
+  scanNieuwe();
+  previewNieuwe();
+}
+
+function skimInit() { skimTab('skim'); skimNieuweAlles(); }
 
 function skimTab(t) {
   skimHuidigeTab = t;
@@ -9385,15 +9236,16 @@ function skimTab(t) {
 }
 
 function skimNieuwe() {
-  const d = skimDataActief();
-  skimTekstIdx = 0;
+  const eigen = skimEigenData();
+  skimTekstIdx = eigen ? -1 : Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length);
+  const d = eigen || SKIM_TEKSTEN_DATA[skimTekstIdx];
   // Highlight eerste + laatste zin van elke alinea
-  const html = `<div class="skim-titel">${htmlEsc(d.titel)}</div>` +
+  const html = `<div class="skim-titel">${d.titel}</div>` +
     d.alineas.map(al => {
       const zinnen = al.match(/[^.!?]+[.!?]?/g)||[al];
       return zinnen.map((z,i)=> (i===0||i===zinnen.length-1)
-        ? `<span class="skim-hl">${htmlEsc(z)}</span>`
-        : `<span>${htmlEsc(z)}</span>`
+        ? `<span class="skim-hl">${z}</span>`
+        : `<span>${z}</span>`
       ).join('');
     }).map(a=>`<p>${a}</p>`).join('');
   document.getElementById('skim-tekst-box').innerHTML = html;
@@ -9415,10 +9267,10 @@ function skimTimerStart() {
       clearInterval(skimTimerRef); skimTimerActief=false;
       document.getElementById('skim-timer-display').textContent='⏱ Tijd!';
       // Toon begripsvraag
-      const d=skimDataActief();
+      const d = skimTekstIdx === -1 ? skimEigenData() : SKIM_TEKSTEN_DATA[skimTekstIdx];
       const wrap=document.getElementById('skim-vraag-wrap');
       wrap.style.display='';
-      wrap.innerHTML=`<div class="card"><b>Begripscheck:</b> Wat is het hoofdonderwerp van "${htmlEsc(d.titel)}"?
+      wrap.innerHTML=`<div class="card"><b>Begripscheck:</b> Wat is het hoofdonderwerp van "${d.titel}"?
         <div style="margin-top:8px;font-size:.88rem;color:var(--muted)">Bekijk je antwoord door de tekst nog eens te lezen. Kon je het hoofdidee vaststellen?</div>
         <button class="btn btn-primary" style="margin-top:8px;font-size:.82rem" onclick="skimNieuwe()">↺ Volgende tekst</button>
       </div>`;
@@ -9427,9 +9279,9 @@ function skimTimerStart() {
 }
 
 function scanNieuwe() {
-  const d = skimDataActief();
-  const html = `<div class="skim-titel">${htmlEsc(d.titel)}</div>` +
-    d.alineas.map(a=>`<p>${htmlEsc(a)}</p>`).join('');
+  const d = skimDataKies();
+  const html = `<div class="skim-titel">${d.titel}</div>` +
+    d.alineas.map(a=>`<p>${a}</p>`).join('');
   document.getElementById('scan-tekst-box').innerHTML = html;
   document.getElementById('scan-zoek-input').value='';
   document.getElementById('scan-zoek-doel').textContent='';
@@ -9454,25 +9306,24 @@ function scanZoek() {
 }
 
 function scanAutoZoek() {
-  const pool = [...new Set(woorden(huidigeTekst()).map(w => w.replace(/[^a-zA-Zà-üÀ-Ü]/g, '')).filter(w => w.length >= 5 && w.length <= 16))];
-  const wrd = (pool.length ? pool : SCAN_WOORDEN)[Math.floor(Math.random() * (pool.length ? pool.length : SCAN_WOORDEN.length))];
+  const wrd = SCAN_WOORDEN[Math.floor(Math.random()*SCAN_WOORDEN.length)];
   document.getElementById('scan-zoek-doel').textContent = `🎯 Zoek: "${wrd}"`;
   document.getElementById('scan-zoek-input').value = wrd;
   scanZoek();
 }
 
 function previewNieuwe() {
-  const d = skimDataActief();
+  const d = skimDataKies();
   // Stap 1: structuur (titels + eerste zinnen)
-  const strHtml = `<div class="skim-titel">${htmlEsc(d.titel)}</div>` +
+  const strHtml = `<div class="skim-titel">${d.titel}</div>` +
     d.alineas.map(a=>{
       const eer = (a.match(/[^.!?]+[.!?]?/)||[a])[0];
-      return `<p><span class="skim-hl">${htmlEsc(eer)}</span></p>`;
+      return `<p><span class="skim-hl">${eer}</span></p>`;
     }).join('');
   document.getElementById('preview-structuur-box').innerHTML = strHtml;
   // Stap 2: volledige tekst
-  document.getElementById('preview-tekst-box').innerHTML = `<div class="skim-titel">${htmlEsc(d.titel)}</div>` +
-    d.alineas.map(a=>`<p>${htmlEsc(a)}</p>`).join('');
+  document.getElementById('preview-tekst-box').innerHTML = `<div class="skim-titel">${d.titel}</div>` +
+    d.alineas.map(a=>`<p>${a}</p>`).join('');
   document.getElementById('preview-stap-1').style.display='';
   document.getElementById('preview-stap-2').style.display='none';
 }
@@ -9862,59 +9713,6 @@ _installatie.init();
   });
 })();
 
-// ── Deel-naar-de-app (manifest share_target, /?share-...) ───
-// Android/Chrome: artikel of tekst delen vanuit een andere app opent
-// SnelLees met de inhoud klaar om te snellezen.
-(function() {
-  const q = new URLSearchParams(location.search);
-  const gedeeldTekst = q.get('share-text');
-  const gedeeldUrl = q.get('share-url');
-  const gedeeldTitel = q.get('share-title');
-  if (!gedeeldTekst && !gedeeldUrl) return;
-
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      sidebarNav('tekst');
-      // Sommige apps stoppen de url in het text-veld — detecteer dat
-      const isUrl = (s) => /^https?:\/\/\S+$/.test((s || '').trim());
-      const url = gedeeldUrl || (isUrl(gedeeldTekst) ? gedeeldTekst.trim() : null);
-      if (url) {
-        const urlInput = document.getElementById('url-input');
-        if (urlInput) { urlInput.value = url; laadVanUrl(); }
-      } else {
-        const ta = document.getElementById('custom-text');
-        if (ta) { ta.value = gedeeldTekst; telWoorden(); }
-        const naam = document.getElementById('tekst-naam');
-        if (naam && gedeeldTitel) naam.value = gedeeldTitel.slice(0, 60);
-        toonAchievement('📥', 'Tekst ontvangen — kies hoe je wilt lezen!');
-      }
-      // Query opschonen zodat een refresh niet opnieuw importeert
-      history.replaceState(null, '', location.pathname);
-    }, 350);
-  });
-})();
-
-// ── Klembord: plak-knop op het Eigen-tekst-scherm ───────────
-async function plakVanKlembord() {
-  const ta = document.getElementById('custom-text');
-  if (!ta) return;
-  try {
-    const tekst = await navigator.clipboard.readText();
-    if (!tekst || tekst.trim().length < 5) {
-      toonFout('Je klembord is leeg. Kopieer eerst een stuk tekst.');
-      return;
-    }
-    ta.value = tekst;
-    telWoorden();
-    _geluid.klik();
-    ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  } catch (e) {
-    // iOS/permissie geweigerd: nette uitleg i.p.v. stille mislukking
-    toonFout('Plakken lukt niet automatisch — houd het tekstvak ingedrukt en kies "Plak".');
-    ta.focus();
-  }
-}
-
 // ═══════════════════════════════════════════════════════════
 // 🛡️  ERROR BOUNDARIES — kritieke functies wrappen
 // ═══════════════════════════════════════════════════════════
@@ -10252,100 +10050,34 @@ document.addEventListener('snellees:home', updateVandaagPanel);
 // LANGE_TEKSTEN is verhuisd naar teksten.js (collectie: lang) // einde LANGE_TEKSTEN
 
 // ── NIVEAU CONFIGURATIE ───────────────────────────────────
-// Een niveau is pas sterk wanneer snelheid en begrip samen stijgen.
-// Leesscore = WPM x begrip%, dus 400 WPM met 50% begrip telt als 200.
 const _LTT_NIVEAUS = {
-  1: { naam: 'Starter',             emoji: '🟢', kleur: '#4cc9f0', minWpm: 0,   minBegrip: 0,  minScore: 0,   barPct: 18 },
-  2: { naam: 'Vlotte Lezer',        emoji: '🟡', kleur: '#f59e0b', minWpm: 240, minBegrip: 70, minScore: 180, barPct: 38 },
-  3: { naam: 'Snelle Lezer',        emoji: '🟠', kleur: '#f97316', minWpm: 320, minBegrip: 75, minScore: 240, barPct: 58 },
-  4: { naam: 'Strategische Lezer',  emoji: '🔵', kleur: '#38c8f0', minWpm: 420, minBegrip: 80, minScore: 336, barPct: 78 },
-  5: { naam: 'Expert',              emoji: '🔴', kleur: '#ef4444', minWpm: 550, minBegrip: 82, minScore: 451, barPct: 100 },
+  1: { naam: 'Starter',   emoji: '🟢', kleur: '#4cc9f0', drempelWpm: 0,   drempelOmhoog: 280, barPct: 20 },
+  2: { naam: 'Gevorderd', emoji: '🟡', kleur: '#f59e0b', drempelWpm: 280, drempelOmhoog: 420, barPct: 60 },
+  3: { naam: 'Expert',    emoji: '🔴', kleur: '#ef4444', drempelWpm: 420, drempelOmhoog: 9999, barPct: 100 },
 };
-
-function _leesNiveauDefault() {
-  return { niveau: 1, besteNiveau: 1, sessies: [] };
-}
-
-function _leesNiveauLaad() {
-  try {
-    const d = JSON.parse(localStorage.getItem('snellees_niveau') || 'null') || _leesNiveauDefault();
-    d.niveau = Math.min(5, Math.max(1, parseInt(d.niveau || 1, 10)));
-    d.besteNiveau = Math.min(5, Math.max(d.niveau, parseInt(d.besteNiveau || d.niveau, 10)));
-    d.sessies = Array.isArray(d.sessies) ? d.sessies : [];
-    return d;
-  } catch(e) {
-    return _leesNiveauDefault();
-  }
-}
-
-function _leesScore(wpm, begripPct) {
-  return Math.round((wpm || 0) * ((begripPct || 0) / 100));
-}
-
-function _leesNiveauVoorGemiddelde(gemWpm, gemBegrip, gemScore) {
-  let niveau = 1;
-  for (let i = 2; i <= 5; i++) {
-    const cfg = _LTT_NIVEAUS[i];
-    if (gemWpm >= cfg.minWpm && gemBegrip >= cfg.minBegrip && gemScore >= cfg.minScore) niveau = i;
-  }
-  return niveau;
-}
-
-function _leesNiveauVolgendeHint(niveau) {
-  const next = _LTT_NIVEAUS[Math.min(5, niveau + 1)];
-  if (!next || niveau >= 5) return 'Hoogste niveau bereikt';
-  return `${next.minWpm}+ WPM · ${next.minBegrip}% begrip · score ${next.minScore}`;
-}
-
-function registreerLeesPrestatie(type, wpm, begripPct, opts = {}) {
-  if (typeof begripPct !== 'number') return { oud: lttGetNiveau(), nieuw: lttGetNiveau(), gewijzigd: false };
-  const d = _leesNiveauLaad();
-  const begrip = Math.max(0, Math.min(100, Math.round(begripPct)));
-  const leesscore = _leesScore(wpm, begrip);
-  const sessie = {
-    type,
-    wpm,
-    begrip,
-    leesscore,
-    woorden: opts.woorden || null,
-    tekstId: opts.tekstId || null,
-    tekstNiveau: opts.tekstNiveau || null,
-    datum: new Date().toISOString().split('T')[0],
-    ts: Date.now(),
-  };
-  d.sessies.push(sessie);
-  if (d.sessies.length > 120) d.sessies.splice(0, d.sessies.length - 120);
-
-  const oud = d.niveau;
-  const meetbaar = d.sessies.filter(s => typeof s.begrip === 'number' && typeof s.wpm === 'number');
-  const laatste3 = meetbaar.slice(-3);
-  if (laatste3.length >= 3) {
-    const gemWpm = Math.round(laatste3.reduce((a, s) => a + s.wpm, 0) / laatste3.length);
-    const gemBegrip = Math.round(laatste3.reduce((a, s) => a + s.begrip, 0) / laatste3.length);
-    const gemScore = Math.round(laatste3.reduce((a, s) => a + (s.leesscore || _leesScore(s.wpm, s.begrip)), 0) / laatste3.length);
-    const stabielNiveau = _leesNiveauVoorGemiddelde(gemWpm, gemBegrip, gemScore);
-    if (stabielNiveau > d.niveau) d.niveau = Math.min(d.niveau + 1, stabielNiveau);
-    else if (d.niveau > 1 && gemBegrip < Math.max(45, _LTT_NIVEAUS[d.niveau].minBegrip - 18)) d.niveau--;
-    d.laatsteGemiddelde = { wpm: gemWpm, begrip: gemBegrip, leesscore: gemScore };
-  }
-
-  d.besteNiveau = Math.max(d.besteNiveau || 1, d.niveau);
-  d.laatste = sessie;
-  localStorage.setItem('snellees_niveau', JSON.stringify(d));
-  return { oud, nieuw: d.niveau, gewijzigd: oud !== d.niveau, sessie };
-}
 
 // ── NIVEAU OPSLAG ─────────────────────────────────────────
 function lttGetNiveau() {
-  return _leesNiveauLaad().niveau;
+  try { return JSON.parse(localStorage.getItem('snellees_niveau') || '{"niveau":1}').niveau; }
+  catch(e) { return 1; }
 }
 
 function lttSlaOp(wpm, begrip_pct) {
-  return registreerLeesPrestatie('langetekst', wpm, begrip_pct, {
-    woorden: _lttTekst ? woorden(_lttTekst.tekst).length : null,
-    tekstId: _lttTekst ? 'lang-' + _lttTekst.id : null,
-    tekstNiveau: _lttTekst ? _lttTekst.niveau : null,
-  });
+  let d;
+  try { d = JSON.parse(localStorage.getItem('snellees_niveau') || '{"niveau":1,"sessies":[]}'); }
+  catch(e) { d = { niveau: 1, sessies: [] }; }
+  d.sessies = d.sessies || [];
+  d.sessies.push({ wpm, begrip: begrip_pct, datum: new Date().toISOString().split('T')[0] });
+
+  const oud = d.niveau;
+  // Niveau omhoog: wpm én begrip hoog genoeg
+  const omhoogWpm = d.niveau === 1 ? 280 : 420;
+  if (d.niveau < 3 && wpm >= omhoogWpm && begrip_pct >= 67) d.niveau++;
+  // Niveau omlaag: begrip < 34% (slechts begrip)
+  else if (d.niveau > 1 && begrip_pct < 34) d.niveau--;
+
+  localStorage.setItem('snellees_niveau', JSON.stringify(d));
+  return { oud, nieuw: d.niveau };
 }
 
 // ── STATE ─────────────────────────────────────────────────
@@ -10359,8 +10091,7 @@ let _lttWpm      = 0;
 function lttInit() {
   const niveau = lttGetNiveau();
   const cfg    = _LTT_NIVEAUS[niveau];
-  const tekstNiveau = Math.min(niveau, 3);
-  const opties = LANGE_TEKSTEN.filter(t => t.niveau === tekstNiveau);
+  const opties = LANGE_TEKSTEN.filter(t => t.niveau === niveau);
   _lttTekst    = opties[Math.floor(Math.random() * opties.length)];
   const wc     = woorden(_lttTekst.tekst).length;
 
@@ -10368,8 +10099,8 @@ function lttInit() {
   document.getElementById('ltt-niveau-badge').textContent =
     `${cfg.emoji} Niveau ${niveau} · ${cfg.naam}`;
   document.getElementById('ltt-niveau-hint').textContent =
-    niveau < 5
-      ? `Volgende: ${_leesNiveauVolgendeHint(niveau)} → ${_LTT_NIVEAUS[niveau + 1].naam}`
+    niveau < 3
+      ? `${cfg.drempelOmhoog}+ WPM + goed begrip (≥2/3) → ${_LTT_NIVEAUS[niveau + 1].naam}`
       : '🏆 Je zit op het hoogste niveau!';
 
   // Voortgangsbalk
@@ -10380,7 +10111,7 @@ function lttInit() {
   document.getElementById('ltt-tekst-naam').textContent = _lttTekst.titel;
   const lttG = gelezenLaad()['lang-' + _lttTekst.id];
   document.getElementById('ltt-tekst-info').textContent =
-    `${wc} woorden · tekstniveau ${tekstNiveau} · ${cfg.emoji} ${cfg.naam}` +
+    `${wc} woorden · ${cfg.emoji} ${cfg.naam}` +
     (lttG ? ` · ✓ eerder gelezen${lttG.besteWpm ? ' (beste ' + lttG.besteWpm + ' WPM)' : ''}` : '');
 
   // Views
@@ -10465,12 +10196,7 @@ function lttVerzend() {
   const leesscore  = Math.round(_lttWpm * (begrip_pct / 100));
 
   // Sla op in gewone stats + niveau systeem
-  slaaSessieOp(_lttWpm, woorden(_lttTekst.tekst).length, {
-    type: 'langetekst',
-    begrip: begrip_pct,
-    tekstId: 'lang-' + _lttTekst.id,
-    tekstNiveau: _lttTekst.niveau,
-  });
+  slaaSessieOp(_lttWpm, woorden(_lttTekst.tekst).length);
   Coach.registreerBegrip(begrip_pct, 'langetekst');
   // Sterren + XP + gelezen-vinkje via de Leesronde-motor (eigen vragen)
   Ronde.direct('langetekst', _lttWpm, woorden(_lttTekst.tekst).length, begrip_pct, 'lang-' + _lttTekst.id);
@@ -10545,10 +10271,8 @@ function _toonLevelUp(nieuwNiveau) {
       <div class="lu-titel">Je bent nu ${cfg.naam}</div>
       <div class="lu-niveau" style="background:${cfg.kleur}22;color:${cfg.kleur}">${cfg.emoji} Niveau ${nieuwNiveau} — ${cfg.naam}</div>
       <div class="lu-sub">${nieuwNiveau === 2
-        ? 'Je leest nu stabiel sneller met voldoende begrip. Langere teksten staan voor je klaar!'
-        : nieuwNiveau >= 5
-          ? 'Indrukwekkend — je combineert hoge snelheid met sterk begrip. Alleen de uitdagendste teksten kunnen je nog stoppen.'
-          : 'Mooi: je snelheid en begrip groeien samen. De volgende stap vraagt vooral om stabiel blijven onder hogere druk.'
+        ? 'Je leest nu sneller dan het gemiddelde. Langere en complexere teksten staan voor je klaar!'
+        : 'Indrukwekkend — je behoort nu tot de snelste lezers. Alleen de uitdagendste teksten kunnen je nog stoppen.'
       }</div>
       <button class="btn btn-primary" onclick="this.closest('.lu-overlay').remove()">Doorgaan →</button>
     </div>`;
@@ -10578,13 +10302,11 @@ const ACHIEVEMENTS = [
   { id:'streak-3',       icon:'🔥', naam:'Op Dreef',          beschrijving:'3 dagen op rij geoefend',                     cat:'streak'   },
   { id:'streak-7',       icon:'🌟', naam:'Weekkampioen',      beschrijving:'7 dagen op rij geoefend',                     cat:'streak'   },
   { id:'streak-30',      icon:'🌙', naam:'Maandmeester',      beschrijving:'30 dagen op rij geoefend',                    cat:'streak'   },
-  // Begrip en adaptief niveau
+  // Lange teksten
   { id:'eerste-lt',      icon:'📚', naam:'Lezer',             beschrijving:'Eerste lange tekst voltooid',                 cat:'begrip'   },
   { id:'perfect-begrip', icon:'🧠', naam:'Alleslezer',        beschrijving:'3/3 begripsvragen correct',                   cat:'begrip'   },
-  { id:'lt-niveau-2',    icon:'🟡', naam:'Vlotte Lezer',      beschrijving:'Niveau 2 bereikt met snelheid én begrip',     cat:'begrip'   },
-  { id:'lt-niveau-3',    icon:'🟠', naam:'Snelle Lezer',      beschrijving:'Niveau 3 bereikt met snelheid én begrip',     cat:'begrip'   },
-  { id:'lt-niveau-4',    icon:'🔵', naam:'Strategische Lezer', beschrijving:'Niveau 4 bereikt met sterke leesscore',      cat:'begrip'   },
-  { id:'lt-niveau-5',    icon:'🔴', naam:'Expert Lezer',      beschrijving:'Niveau 5 bereikt met snelheid én hoog begrip', cat:'begrip'   },
+  { id:'lt-niveau-2',    icon:'🟡', naam:'Gevorderd Lezer',   beschrijving:'Niveau Gevorderd bereikt in Lange Teksten',   cat:'begrip'   },
+  { id:'lt-niveau-3',    icon:'🔴', naam:'Expert Lezer',      beschrijving:'Niveau Expert bereikt in Lange Teksten',      cat:'begrip'   },
   // Woorden gelezen
   { id:'woorden-10k',    icon:'📄', naam:'Woordenverzamelaar', beschrijving:'10.000 woorden gelezen',                     cat:'woorden'  },
   { id:'woorden-25k',    icon:'📃', naam:'Bladzijdenvreter',   beschrijving:'25.000 woorden gelezen',                     cat:'woorden'  },
@@ -10687,7 +10409,7 @@ function checkAchievements() {
     check('app-install', !!gam.geinstalleerd ||
       (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches));
 
-    // Begrip en adaptief niveau
+    // Lange teksten
     let ltData;
     try { ltData = JSON.parse(localStorage.getItem('snellees_niveau') || '{}'); }
     catch(e) { ltData = {}; }
@@ -10697,8 +10419,6 @@ function checkAchievements() {
     check('perfect-begrip', ltSessies.some(s => s.begrip >= 100));
     check('lt-niveau-2',    ltNiveau >= 2);
     check('lt-niveau-3',    ltNiveau >= 3);
-    check('lt-niveau-4',    ltNiveau >= 4);
-    check('lt-niveau-5',    ltNiveau >= 5);
 
     if (nieuw.length > 0) {
       slaAchievementsOp([...verdiend, ...nieuw]);
@@ -10711,13 +10431,18 @@ function checkAchievements() {
 function _toonAchievementToast(id) {
   const ach = ACHIEVEMENTS.find(a => a.id === id);
   if (!ach) return;
-  toonRewardToast({
-    icon: ach.icon,
-    kicker: 'Achievement ontgrendeld',
-    titel: ach.naam,
-    sub: ach.beschrijving
-  });
+  const el = document.createElement('div');
+  el.className = 'ach-toast';
+  el.innerHTML = `
+    <div class="at-icon">${ach.icon}</div>
+    <div>
+      <div class="at-lbl">🏆 Achievement ontgrendeld!</div>
+      <div class="at-naam">${ach.naam}</div>
+      <div class="at-sub">${ach.beschrijving}</div>
+    </div>`;
+  document.body.appendChild(el);
   if (typeof showConfetti === 'function') showConfetti(30, 5);
+  setTimeout(() => el.remove(), 3700);
 }
 
 // ── BOTTOM NAV ────────────────────────────────────────────
@@ -10751,9 +10476,6 @@ function toonVoortgang() {
   // Stats summary
   const s   = stats.sessies || [];
   const gem = s.length ? Math.round(s.reduce((a,x) => a + x.wpm, 0) / s.length) : 0;
-  const metBegrip = s.filter(x => x.begrip != null);
-  const gemBegrip = metBegrip.length ? Math.round(metBegrip.slice(-10).reduce((a, x) => a + x.begrip, 0) / Math.min(10, metBegrip.length)) : null;
-  const gemScore = metBegrip.length ? Math.round(metBegrip.slice(-10).reduce((a, x) => a + (x.leesscore || _leesScore(x.wpm, x.begrip)), 0) / Math.min(10, metBegrip.length)) : null;
   const streakDagen = (typeof getGlobaalStreak === 'function') ? getGlobaalStreak().dagen : 0;
 
   const statsEl = document.getElementById('vg-stats-grid');
@@ -10767,16 +10489,18 @@ function toonVoortgang() {
       <div class="vg-stat-lbl">Best WPM</div>
     </div>
     <div class="vg-stat">
-      <div class="vg-stat-num">${gemScore ?? gem}</div>
-      <div class="vg-stat-lbl">${gemScore != null ? 'Leesscore' : 'Gem. WPM'}</div>
+      <div class="vg-stat-num">${gem}</div>
+      <div class="vg-stat-lbl">Gem. WPM</div>
     </div>
     <div class="vg-stat">
-      <div class="vg-stat-num" style="color:#ffaa33">${gemBegrip ?? streakDagen}</div>
-      <div class="vg-stat-lbl">${gemBegrip != null ? 'Begrip %' : 'Streak 🔥'}</div>
+      <div class="vg-stat-num" style="color:#ffaa33">${streakDagen}</div>
+      <div class="vg-stat-lbl">Streak 🔥</div>
     </div>`;
 
-  // Adaptief leesniveau
-  const ltData = _leesNiveauLaad();
+  // Niveau Lange Teksten
+  let ltData;
+  try { ltData = JSON.parse(localStorage.getItem('snellees_niveau') || '{}'); }
+  catch(e) { ltData = {}; }
   const niveau = ltData.niveau || 1;
   if (typeof _LTT_NIVEAUS !== 'undefined') {
     const cfg  = _LTT_NIVEAUS[niveau];
@@ -10787,9 +10511,9 @@ function toonVoortgang() {
     const fEl  = document.getElementById('vg-niveau-fill');
     if (emEl) emEl.textContent = cfg.emoji;
     if (nmEl) nmEl.textContent = `${cfg.naam} (Niveau ${niveau})`;
-    if (sbEl) sbEl.textContent = niveau < 5
-      ? `${ltSn} meetbare sessie(s) · volgende: ${_leesNiveauVolgendeHint(niveau)}`
-      : `${ltSn} meetbare sessie(s) · 🏆 Hoogste niveau bereikt!`;
+    if (sbEl) sbEl.textContent = niveau < 3
+      ? `${ltSn} lange tekst(en) gelezen · ${_LTT_NIVEAUS[niveau + 1].naam} bij ${cfg.drempelOmhoog}+ WPM + goed begrip`
+      : `${ltSn} lange tekst(en) gelezen · 🏆 Hoogste niveau bereikt!`;
     if (fEl) { fEl.style.width = cfg.barPct + '%'; fEl.style.background = cfg.kleur; }
   }
 
@@ -10919,10 +10643,8 @@ function slaaTekstOp() {
   document.getElementById('tekst-info').innerHTML =
     `<span class="success">✓ "${naam}" opgeslagen (${vragen.length} vra${vragen.length===1?'ag':'gen'})!</span>`;
 
-  vulRsvpDropdown();
   laadRsvpTekst();
   toonBibliotheek();
-  renderTekstBronPanelen();
 }
 
 // ── EIGEN LEESSESSIE ──────────────────────────────────────
@@ -11038,24 +10760,12 @@ function elVerzend() {
 
 function _elToonResultaat(score, begrip_pct) {
   const wc = woorden(_elTekst.tekst).length;
-  const heeftV = _elVragen.length > 0;
-  slaaSessieOp(_elWpm, wc, {
-    type: 'eigen-lees',
-    begrip: heeftV ? begrip_pct : null,
-    tekstId: _elTekst.uid ? 'e:' + _elTekst.uid : null,
-    tekstNiveau: null,
-  });
-  if (heeftV) {
-    Coach.registreerBegrip(begrip_pct, 'eigen-lees');
-    registreerLeesPrestatie('eigen-lees', _elWpm, begrip_pct, {
-      woorden: wc,
-      tekstId: _elTekst.uid ? 'e:' + _elTekst.uid : null,
-    });
-  }
+  slaaSessieOp(_elWpm, wc);
   // Gelezen-vinkje voor de eigen tekst (demo-tekst heeft geen uid)
-  if (_elTekst.uid) markeerGelezen('e:' + _elTekst.uid, { wpm: _elWpm, begrip: heeftV ? begrip_pct : null });
+  if (_elTekst.uid) markeerGelezen('e:' + _elTekst.uid, { wpm: _elWpm });
 
   const leesscore  = Math.round(_elWpm * (begrip_pct / 100));
+  const heeftV     = _elVragen.length > 0;
   const begripKlr  = begrip_pct >= 67 ? 'var(--green)' : begrip_pct >= 34 ? 'var(--accent)' : '#ef4444';
 
   document.getElementById('el-score-kaart').innerHTML = `
@@ -11088,13 +10798,13 @@ function _elToonResultaat(score, begrip_pct) {
 // ── HOOKS: slaaSessieOp wrappen ───────────────────────────
 (function() {
   const _orig = slaaSessieOp;
-  slaaSessieOp = function(wpm, n, meta = {}) {
+  slaaSessieOp = function(wpm, n) {
     // Sanity check: sla onrealistische scores niet op
     if (typeof wpm !== 'number' || wpm < 30 || wpm > 1200) {
       console.warn('[FlowRead] WPM buiten bereik, sessie niet opgeslagen:', wpm);
       return;
     }
-    _orig(wpm, n, meta);
+    _orig(wpm, n);
     _registreerTraindag();
     setTimeout(checkAchievements, 80);
   };
@@ -11260,104 +10970,40 @@ const _aiVoice = {
   }
 };
 
-function aiVoiceToggle() { _aiVoice.toggle(); }
+function aiVoiceToggle() { return; }
 
 
 // ── 2. TEXT-TO-SPEECH COACH ─────────────────────────────────
 const _aiTts = {
-  enabled: localStorage.getItem('ai_tts_enabled') !== '0',
-  synth: window.speechSynthesis || null,
+  enabled: false,
+  synth: null,
   
   toggle() {
-    this.enabled = !this.enabled;
-    localStorage.setItem('ai_tts_enabled', this.enabled ? '1' : '0');
-    const btn = document.getElementById('sidebar-tts-btn');
-    if (btn) {
-      btn.textContent = this.enabled ? '🔊 AI Coach spraak aan' : '🔇 AI Coach spraak uit';
-      btn.classList.toggle('aan', this.enabled);
-    }
-    if (this.enabled) this.spreek('AI Coach ingeschakeld.');
+    this.enabled = false;
   },
   
   init() {
-    const btn = document.getElementById('sidebar-tts-btn');
-    if (btn) {
-      btn.textContent = this.enabled ? '🔊 AI Coach spraak aan' : '🔇 AI Coach spraak uit';
-      btn.classList.toggle('aan', this.enabled);
-    }
+    this.enabled = false;
   },
   
   spreek(tekst) {
-    if (!this.enabled || !this.synth) return;
-    this.synth.cancel();
-    const utt = new SpeechSynthesisUtterance(tekst);
-    utt.lang = 'nl-NL';
-    utt.rate = 1.0;
-    utt.pitch = 1.0;
-    utt.volume = 0.8;
-    const voices = this.synth.getVoices();
-    const nlVoice = voices.find(v => v.lang.startsWith('nl'));
-    if (nlVoice) utt.voice = nlVoice;
-    this.synth.speak(utt);
+    return;
   },
   
   sessieFeedback(wpm, woordenAantal) {
-    if (!this.enabled) return;
-    const stats = (() => { try { return JSON.parse(localStorage.getItem('snellees_stats') || '{}'); } catch(e) { return {}; } })();
-    const sessies = stats.sessies || [];
-    const best = stats.bestWpm || 0;
-    
-    let tekst = '';
-    if (wpm >= best && sessies.length > 1) {
-      tekst = `Nieuw record! ${wpm} woorden per minuut! Fantastisch!`;
-    } else if (wpm > 250) {
-      tekst = `${wpm} woorden per minuut. Goed bezig!`;
-    } else if (wpm > 150) {
-      tekst = `${wpm} woorden per minuut. Je bouwt goed op.`;
-    } else {
-      tekst = `${wpm} woorden per minuut. Blijf oefenen!`;
-    }
-    
-    if (sessies.length >= 5) {
-      const recent = sessies.slice(-3).reduce((a,s) => a + s.wpm, 0) / 3;
-      const eerder = sessies.slice(-6, -3).reduce((a,s) => a + s.wpm, 0) / Math.min(3, sessies.length - 3);
-      const verschil = Math.round(recent - eerder);
-      if (verschil > 15) tekst += ` Je leest ${verschil} woorden sneller dan eerder!`;
-      else if (verschil < -10) tekst += ' Tip: probeer een kortere sessie met hogere snelheid.';
-    }
-    
-    setTimeout(() => this.spreek(tekst), 800);
+    return;
   },
   
   welkom() {
-    if (!this.enabled) return;
-    const gebruiker = (() => { try { return JSON.parse(localStorage.getItem('snellees_gebruiker') || '{}'); } catch(e) { return {}; } })();
-    const naam = gebruiker.naam || '';
-    const uur = new Date().getHours();
-    const groet = uur < 12 ? 'Goedemorgen' : uur < 18 ? 'Goedemiddag' : 'Goedenavond';
-    const streak = (() => { try { return JSON.parse(localStorage.getItem('snellees_streak') || '{}'); } catch(e) { return {}; } })();
-    
-    let tekst = naam ? `${groet}, ${naam}!` : `${groet}!`;
-    if (streak.dagen >= 7) tekst += ` ${streak.dagen} dagen op rij, je bent on fire!`;
-    else if (streak.dagen >= 3) tekst += ` ${streak.dagen} dagen op rij, goed bezig!`;
-    else tekst += ' Klaar voor je training?';
-    
-    setTimeout(() => this.spreek(tekst), 1200);
+    return;
   },
   
   trainingTip(type) {
-    if (!this.enabled) return;
-    const tips = {
-      rsvp: 'Focus je ogen op het midden van het scherm. Probeer niet terug te gaan.',
-      chunk: 'Lees de woordgroepen als geheel. Je ogen hoeven maar 1 keer te fixeren per groep.',
-      oog: 'Volg de bal met je ogen, niet met je hoofd. Houd je hoofd stil.',
-      perifeer: 'Kijk naar het middenpunt en probeer de letters aan de zijkant te lezen.'
-    };
-    if (tips[type]) setTimeout(() => this.spreek(tips[type]), 500);
+    return;
   }
 };
 
-function aiTtsToggle() { _aiTts.toggle(); }
+function aiTtsToggle() { return; }
 
 
 // ── 3. ADAPTIEF NIVEAU-SYSTEEM ──────────────────────────────
@@ -11444,11 +11090,11 @@ const _aiAdaptief = {
   // Let op: sliders worden door Coach.adaptief gezet bij het openen van een
   // scherm — _aiAdaptief.pasAan() muteert ze niet meer (dubbel systeem).
   const _aiOrigSessie = slaaSessieOp;
-  slaaSessieOp = function(wpm, n, meta = {}) {
-    _aiOrigSessie(wpm, n, meta);
+  slaaSessieOp = function(wpm, n) {
+    _aiOrigSessie(wpm, n);
     _aiTts.sessieFeedback(wpm, n);
-    const scherm = meta.type || (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'rsvp';
-    Coach.naSessie(scherm, wpm, meta.begrip ?? null);
+    const scherm = (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'rsvp';
+    Coach.naSessie(scherm, wpm, n);
     // Gamification: daguitdaging generiek afvangen + badges + dagdoel + leerweg
     if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging(scherm);
     if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 600);
@@ -12071,8 +11717,8 @@ async function aiLangeTekstNieuwe() {
 (function() {
   // Hook slaaSessieOp voor AI Leescoach advies
   const _aiF2OrigSessie = slaaSessieOp;
-  slaaSessieOp = function(wpm, n, meta = {}) {
-    _aiF2OrigSessie(wpm, n, meta);
+  slaaSessieOp = function(wpm, n) {
+    _aiF2OrigSessie(wpm, n);
     if (_aiGemini.hasKey()) {
       _aiLeescoach.vraagAdvies(wpm, n);
     }
@@ -12127,13 +11773,7 @@ async function aiLangeTekstNieuwe() {
 
 // ── AI INIT ─────────────────────────────────────────────────
 (function() {
-  _aiVoice.init();
   _aiTts.init();
-  if (localStorage.getItem('snellees_onboarding_done')) _aiTts.welkom();
-  if (window.speechSynthesis) {
-    window.speechSynthesis.getVoices();
-    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-  }
   // Toon laatste AI advies op home
   _aiLeescoach.toonLaatsteAdvies();
 
