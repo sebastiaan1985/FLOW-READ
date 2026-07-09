@@ -67,14 +67,16 @@ function _toonApp() {
 }
 
 // ── AUTH BEWAKER ──────────────────────────────────────────────────────────────
-// Als de gebruiker niet ingelogd is én geen gast: stuur naar login
+// Waarde-first: nieuwe gebruikers mogen eerst trainen. Een account is pas nodig
+// wanneer ze hun voortgang willen bewaren of op meerdere apparaten willen syncen.
 async function _checkAuth() {
   try {
     if (sessionStorage.getItem('gast_modus') === '1') { _toonApp(); return; }
 
     const { data: { session } } = await _sb.auth.getSession();
     if (!session) {
-      window.location.href = 'login.html';
+      sessionStorage.setItem('gast_modus', '1');
+      _toonApp();
       return;
     }
     _huidigeGebruiker = session.user;
@@ -278,8 +280,11 @@ window.addEventListener('beforeunload', () => {
 // Luister naar auth-wijzigingen (bv. token vernieuwd of sessie verlopen)
 _sb.auth.onAuthStateChange((event, session) => {
   if (event === 'SIGNED_OUT') {
-    window.location.href = 'login.html';
+    _huidigeGebruiker = null;
+    sessionStorage.setItem('gast_modus', '1');
+    if (!window.location.pathname.includes('login')) _toonApp();
   } else if (session) {
     _huidigeGebruiker = session.user;
+    sessionStorage.removeItem('gast_modus');
   }
 });
