@@ -5796,7 +5796,8 @@ async function laadVanUrl() {
   }
 
   if (!html) {
-    status.innerHTML = `<span style="color:var(--pink)">❌ Kon pagina niet ophalen. Probeer de tekst te kopiëren en hieronder te plakken.</span>`;
+    status.style.color = 'var(--pink)';
+    status.textContent = '❌ Kon pagina niet ophalen. Probeer de tekst te kopiëren en hieronder te plakken.';
     btn.disabled = false; return;
   }
 
@@ -5812,9 +5813,11 @@ async function laadVanUrl() {
     document.getElementById('custom-text').value = tekst;
     document.getElementById('tekst-naam').value = titel;
     telWoorden();
-    status.innerHTML = '<span style="color:var(--green)">✓ Tekst opgehaald! Controleer de tekst en klik "Opslaan".</span>';
+    status.style.color = 'var(--green)';
+    status.textContent = '✓ Tekst opgehaald! Controleer de tekst en klik "Opslaan".';
   } catch(e) {
-    status.innerHTML = `<span style="color:var(--pink)">❌ ${e.message}</span>`;
+    status.style.color = 'var(--pink)';
+    status.textContent = `❌ ${e.message}`;
   }
   btn.disabled = false;
 }
@@ -6335,8 +6338,8 @@ function avKiesScherm() {
     const niveauNamen = ['Begin','Woorden','Zinnen','Snelheid','Kampioen'];
     const info = `Level ${p.level} · ${p.totaleSterren || 0} ⭐`;
     return `<div class="av-profiel-kaart" onclick="avInloggen(${i})">
-      <div class="av-profiel-kaart-avatar">${p.avatar}</div>
-      <div class="av-profiel-kaart-naam">${p.naam}</div>
+      <div class="av-profiel-kaart-avatar">${htmlEscape(p.avatar)}</div>
+      <div class="av-profiel-kaart-naam">${htmlEscape(p.naam)}</div>
       <div class="av-profiel-kaart-info">${info}</div>
       <button class="av-profiel-kaart-del" onclick="event.stopPropagation();verwijderProfiel(${i})" title="Verwijder profiel">✕</button>
     </div>`;
@@ -11370,8 +11373,11 @@ function slaaTekstOp() {
     .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   document.getElementById('woord-tel').textContent = '';
   document.getElementById('lees-tijden').innerHTML = '';
-  document.getElementById('tekst-info').innerHTML =
-    `<span class="success">✓ "${naam}" opgeslagen (${vragen.length} vra${vragen.length===1?'ag':'gen'})!</span>`;
+  const info = document.getElementById('tekst-info');
+  if (info) {
+    info.innerHTML = '<span class="success"></span>';
+    info.firstElementChild.textContent = `✓ "${naam}" opgeslagen (${vragen.length} vra${vragen.length===1?'ag':'gen'})!`;
+  }
 
   laadRsvpTekst();
   toonBibliotheek();
@@ -11968,7 +11974,7 @@ ${gemBegrip !== null ? `- Gemiddelde begripsscore: ${gemBegrip}%` : '- Geen begr
 Geef concreet advies. Wees bemoedigend maar eerlijk. Gebruik je/jij. Noem specifieke oefeningen (RSVP, chunk lezen, oogtraining) als dat relevant is.`;
     
     // Toon loading
-    this._toonPanel('<div class="ai-loading">Advies genereren…</div>');
+    this._toonPanel('Advies genereren…');
     
     const result = await _aiGemini.send(prompt, 200);
     
@@ -11985,11 +11991,20 @@ Geef concreet advies. Wees bemoedigend maar eerlijk. Gebruik je/jij. Noem specif
     }
   },
   
-  _toonPanel(html) {
+  _toonPanel(tekst, meta = '') {
     const panel = document.getElementById('ai-coach-panel');
     const body = document.getElementById('ai-coach-body');
     if (panel && body) {
-      body.innerHTML = html;
+      body.replaceChildren();
+      const advies = document.createElement('div');
+      advies.textContent = tekst;
+      body.appendChild(advies);
+      if (meta) {
+        const details = document.createElement('div');
+        details.style.cssText = 'font-size:11px;color:var(--muted);margin-top:8px';
+        details.textContent = meta;
+        body.appendChild(details);
+      }
       panel.classList.add('active');
     }
   },
@@ -12000,7 +12015,7 @@ Geef concreet advies. Wees bemoedigend maar eerlijk. Gebruik je/jij. Noem specif
     if (data && data.tekst) {
       const uur = Math.round((Date.now() - new Date(data.datum).getTime()) / 3600000);
       const tijdLabel = uur < 1 ? 'Zojuist' : uur < 24 ? `${uur}u geleden` : `${Math.round(uur/24)}d geleden`;
-      this._toonPanel(`${data.tekst}<div style="font-size:11px;color:var(--muted);margin-top:8px">${tijdLabel} · ${data.wpm} WPM</div>`);
+      this._toonPanel(data.tekst, `${tijdLabel} · ${data.wpm} WPM`);
     }
   }
 };
@@ -12378,9 +12393,15 @@ async function aiSkimNieuwe() {
     skimTekstIdx = SKIM_TEKSTEN_DATA.length - 1;
     const container = document.getElementById('skim-tekst-area');
     if (container) {
-      let html = `<h4>${data.titel}</h4>`;
-      data.alineas.forEach(a => html += `<p>${a}</p>`);
-      container.innerHTML = html;
+      container.replaceChildren();
+      const titel = document.createElement('h4');
+      titel.textContent = data.titel;
+      container.appendChild(titel);
+      data.alineas.forEach(alinea => {
+        const p = document.createElement('p');
+        p.textContent = alinea;
+        container.appendChild(p);
+      });
     }
     // Stel scan woorden in als die er zijn
     if (data.sleutelwoorden && data.sleutelwoorden.length) {
