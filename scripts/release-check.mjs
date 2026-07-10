@@ -72,6 +72,12 @@ checkJavaScript('ronde.js');
 checkInlineScripts('index.html');
 checkInlineScripts('login.html');
 
+for (const pagina of ['index.html', 'login.html', 'reset-wachtwoord.html']) {
+  const html = lees(pagina);
+  verwacht(html.includes('Content-Security-Policy'), `${pagina} mist een Content Security Policy.`);
+  verwacht(html.includes('strict-origin-when-cross-origin'), `${pagina} mist een referrerbeleid.`);
+}
+
 const sync = lees('supabase-sync.js');
 for (const sleutel of ['snellees_startweek', 'snellees_events', 'snellees_streak']) {
   verwacht(sync.includes(`'${sleutel}'`), `Sync mist ${sleutel}.`);
