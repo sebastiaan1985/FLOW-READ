@@ -41,10 +41,15 @@ function checkInlineScripts(bestand) {
 }
 
 const manifest = JSON.parse(lees('manifest.json'));
+const manifestScreenshots = manifest.screenshots || [];
 verwacht(manifest.name && manifest.short_name, 'Manifest mist name of short_name.');
 verwacht(manifest.display === 'standalone', 'Manifest moet standalone starten.');
 verwacht(manifest.icons?.some(icon => icon.purpose?.includes('maskable')), 'Manifest mist een maskable icoon.');
 verwacht(manifest.shortcuts?.length >= 2, 'Manifest mist de twee app-shortcuts.');
+verwacht(manifestScreenshots.length >= 1, 'Manifest mist een mobiele app-screenshot.');
+for (const screenshot of manifestScreenshots) {
+  verwacht(screenshot.src && existsSync(resolve(root, screenshot.src.replace(/^\//, ''))), `Manifest-screenshot ontbreekt: ${screenshot.src || 'onbekend'}`);
+}
 
 const serviceWorker = lees('service-worker.js');
 verwacht(/const CACHE_NAAM = 'snellees-v\d+'/.test(serviceWorker), 'Service worker mist een versiecache.');
@@ -55,6 +60,9 @@ if (cacheBlok) {
   for (const asset of assets) {
     const bestand = asset === '/' ? 'index.html' : asset.replace(/^\//, '');
     verwacht(existsSync(resolve(root, bestand)), `Offline asset ontbreekt: ${asset}`);
+  }
+  for (const screenshot of manifestScreenshots) {
+    verwacht(assets.includes(screenshot.src), `Offline cache mist manifest-screenshot: ${screenshot.src}`);
   }
 }
 
@@ -89,6 +97,11 @@ verwacht(existsSync(resolve(root, 'ios/App/App/public/index.html')), 'iOS bevat 
 verwacht(existsSync(resolve(root, 'ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png')), 'iOS appicoon ontbreekt.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public/index.html')), 'Android bevat geen gesynchroniseerde webbuild.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png')), 'Android appicoon ontbreekt.');
+for (const screenshot of manifestScreenshots) {
+  const bron = screenshot.src.replace(/^\//, '');
+  verwacht(existsSync(resolve(root, 'ios/App/App/public', bron)), `iOS mist manifest-screenshot: ${screenshot.src}`);
+  verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public', bron)), `Android mist manifest-screenshot: ${screenshot.src}`);
+}
 
 const privacy = lees('PRIVACY_POLICY_TEMPLATE.md');
 const privacyKlaar = !/\[(BEDRIJFSNAAM|PRIVACYCONTACT|PRIVACY_URL|VESTIGINGSPLAATS|DATUM)\]/.test(privacy);

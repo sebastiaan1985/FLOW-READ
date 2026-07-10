@@ -58,5 +58,13 @@
     }
   ],
   "categories": ["education", "productivity"],
-  "screenshots": []
+  "screenshots": [
+    {
+      "src": "/screenshots/onboarding-mobile.png",
+      "sizes": "360x732",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "SnelLees onboarding op mobiel"
+    }
+  ]
 }

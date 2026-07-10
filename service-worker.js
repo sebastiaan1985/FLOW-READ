@@ -9,7 +9,7 @@
  * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM = 'snellees-v25';
+const CACHE_NAAM = 'snellees-v26';
 
 const CACHE_STATISCH = [
   '/',
@@ -26,6 +26,7 @@ const CACHE_STATISCH = [
   '/icons/icon-maskable-512.png',
   '/icons/apple-touch-icon.png',
   '/icons/favicon-32.png',
+  '/screenshots/onboarding-mobile.png',
   '/vendor/chart.umd.min.js',
   '/vendor/supabase.min.js',
   '/vendor/fonts.css',

@@ -15,7 +15,7 @@ const bestanden = [
   'coach.js',
   'ronde.js',
 ];
-const mappen = ['icons', 'vendor'];
+const mappen = ['icons', 'screenshots', 'vendor'];
 const lock = `${dist}.lock`;
 
 async function wachtOpBuildLock() {

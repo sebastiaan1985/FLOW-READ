@@ -10284,6 +10284,24 @@ function getGlobaalStreak() {
   } catch(e) { return { dagen: 0, laatste: null }; }
 }
 
+function _streakRitmeStatus(streak = getGlobaalStreak()) {
+  const dagen = Math.max(0, Number(streak.dagen) || 0);
+  if (!streak.laatste || !dagen) return { toestand: 'nieuw', dagen: 0, dagenWeg: null };
+
+  const vandaag = new Date();
+  vandaag.setHours(0, 0, 0, 0);
+  const laatste = new Date(streak.laatste);
+  if (Number.isNaN(laatste.getTime())) return { toestand: 'nieuw', dagen: 0, dagenWeg: null };
+  laatste.setHours(0, 0, 0, 0);
+  const dagenWeg = Math.max(0, Math.round((vandaag - laatste) / 86400000));
+
+  if (dagenWeg === 0) return { toestand: 'vandaag', dagen, dagenWeg };
+  if (dagenWeg === 1) return { toestand: 'vandaag_nodig', dagen, dagenWeg };
+  const bevriezingen = _gamLaad().streakBevriezingen || 0;
+  if (dagenWeg === 2 && bevriezingen > 0) return { toestand: 'redden', dagen, dagenWeg };
+  return { toestand: 'opnieuw', dagen: 0, vorigeDagen: dagen, dagenWeg };
+}
+
 function updateGlobaalStreak() {
   const streak = getGlobaalStreak();
   const vandaag = new Date().toDateString();
@@ -10320,15 +10338,23 @@ function updateGlobaalStreak() {
 function updateStreakBadge() {
   const badge = document.getElementById('streak-badge');
   if (!badge) return;
-  const streak = getGlobaalStreak();
-  const dagen = streak.dagen || 0;
+  const status = _streakRitmeStatus();
+  const dagen = status.dagen;
   badge.textContent = `🔥 ${dagen}`;
-  if (dagen > 0) {
+  if (status.toestand === 'vandaag') {
     badge.classList.remove('nul');
     badge.title = `${dagen} dag${dagen === 1 ? '' : 'en'} op rij getraind!`;
+  } else if (status.toestand === 'vandaag_nodig') {
+    badge.classList.remove('nul');
+    badge.title = `Train vandaag om je streak van ${dagen} dagen voort te zetten.`;
+  } else if (status.toestand === 'redden') {
+    badge.classList.remove('nul');
+    badge.title = `Train vandaag om je streak van ${dagen} dagen met een bevriezing te redden.`;
   } else {
     badge.classList.add('nul');
-    badge.title = 'Nog geen streak — train vandaag!';
+    badge.title = status.toestand === 'opnieuw'
+      ? 'Je kunt vandaag direct een nieuwe streak beginnen.'
+      : 'Nog geen streak — train vandaag!';
   }
 }
 
@@ -10458,10 +10484,14 @@ function updateVandaagPanel() {
 
   // Subtext met streak motivatie
   const streak = getGlobaalStreak();
+  const streakStatus = _streakRitmeStatus(streak);
   if (subEl) {
-    if (streak.dagen >= 7) subEl.textContent = `🔥 ${streak.dagen} dagen op rij — je bent on fire!`;
-    else if (streak.dagen >= 3) subEl.textContent = `${streak.dagen} dagen op rij — goed bezig!`;
-    else if (streak.dagen >= 1) subEl.textContent = `Dag ${streak.dagen} — hou het vol!`;
+    if (streakStatus.toestand === 'redden') subEl.textContent = `Je ${streakStatus.dagen}-dagenreeks kan nog doorlopen. Een korte sessie is genoeg.`;
+    else if (streakStatus.toestand === 'opnieuw') subEl.textContent = 'Welkom terug. Met een korte sessie begin je direct weer een fijn ritme.';
+    else if (streakStatus.toestand === 'vandaag_nodig') subEl.textContent = `Nog een korte sessie en je ${streakStatus.dagen}-dagenreeks loopt door.`;
+    else if (streakStatus.dagen >= 7) subEl.textContent = `🔥 ${streakStatus.dagen} dagen op rij — je bent on fire!`;
+    else if (streakStatus.dagen >= 3) subEl.textContent = `${streakStatus.dagen} dagen op rij — goed bezig!`;
+    else if (streakStatus.dagen >= 1) subEl.textContent = `Dag ${streakStatus.dagen} — hou het vol!`;
     else subEl.textContent = 'Klaar voor je training?';
   }
 
