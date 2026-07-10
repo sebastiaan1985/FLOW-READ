@@ -10023,6 +10023,79 @@ const _installatie = {
 };
 _installatie.init();
 
+// ── Gedeelde tekst uit de PWA share target ─────────────────
+function openGedeeldeTekst() {
+  const params = new URLSearchParams(location.search);
+  const heeftGedeeldeInhoud = ['share-title', 'share-text', 'share-url']
+    .some(sleutel => params.has(sleutel));
+  if (!heeftGedeeldeInhoud) return;
+
+  const titel = (params.get('share-title') || 'Gedeelde tekst')
+    .replace(/\s+/g, ' ').trim().slice(0, 120);
+  const tekst = (params.get('share-text') || '').replace(/\s+/g, ' ').trim();
+  const url = (params.get('share-url') || '').trim();
+
+  // Nieuwe lezers mogen eerst hun profiel instellen. Daarna keren ze terug
+  // naar precies deze tekst, in plaats van naar de standaard-begintest.
+  if (!localStorage.getItem('snellees_gebruiker') && !localStorage.getItem('begintest_baseline')) {
+    try { sessionStorage.setItem('snellees_na_onboarding', 'tekst'); } catch(e) { /* Niet kritisch. */ }
+  }
+
+  // Verwijder de inhoud direct uit de URL: zo wordt deze niet opnieuw
+  // verwerkt bij verversen of per ongeluk gedeeld via een screenshot/link.
+  ['share-title', 'share-text', 'share-url'].forEach(sleutel => params.delete(sleutel));
+  const schoneUrl = location.pathname + (params.toString() ? '?' + params : '') + location.hash;
+  history.replaceState({}, '', schoneUrl);
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      sidebarNav('tekst');
+      const info = document.getElementById('tekst-info');
+      const veld = document.getElementById('custom-text');
+      const naamVeld = document.getElementById('tekst-naam');
+      const urlVeld = document.getElementById('url-input');
+
+      if (woorden(tekst).length < 20) {
+        if (veld) veld.value = tekst;
+        if (naamVeld) naamVeld.value = titel;
+        if (url && urlVeld) urlVeld.value = url;
+        telWoorden();
+        if (info) info.textContent = tekst
+          ? 'De gedeelde tekst staat klaar. Voeg nog wat context toe en kies een trainingsvorm.'
+          : 'De gedeelde link staat klaar. Haal de tekst op of plak de inhoud om te trainen.';
+        gtmTrack('gedeelde_tekst_geopend', { heeft_tekst: Boolean(tekst), heeft_url: Boolean(url), auto_opgeslagen: false });
+        return;
+      }
+
+      const schoneTekst = tekst.slice(0, 60000);
+      const arr = bibliLaad();
+      const bestaandIdx = arr.findIndex(item => item.tekst === schoneTekst);
+      if (bestaandIdx >= 0) {
+        setActiveTekstIdx(bestaandIdx + 1);
+        if (info) info.textContent = 'Deze gedeelde tekst staat al in je bibliotheek en is opnieuw geselecteerd.';
+      } else {
+        arr.push({
+          uid: Date.now().toString(36),
+          naam: titel || 'Gedeelde tekst',
+          tekst: schoneTekst,
+          datum: new Date().toISOString(),
+          bron: 'gedeeld'
+        });
+        bibliSla(arr);
+        setActiveTekstIdx(arr.length);
+        if (info) info.textContent = schoneTekst.length < tekst.length
+          ? 'De eerste 60.000 tekens zijn als oefentekst opgeslagen en geselecteerd.'
+          : 'De gedeelde tekst is opgeslagen en geselecteerd. Kies hieronder je trainingsvorm.';
+      }
+      toonBibliotheek();
+      tekstbronRenderAlles();
+      gtmTrack('gedeelde_tekst_geopend', { heeft_tekst: true, heeft_url: Boolean(url), auto_opgeslagen: true });
+    }, 350);
+  });
+}
+
+openGedeeldeTekst();
+
 // ── App-shortcuts uit manifest.json (/?actie=...) ───────────
 (function() {
   const actie = new URLSearchParams(location.search).get('actie');
@@ -10190,14 +10263,18 @@ function obKlaar() {
   _obSlaOp();
   document.getElementById('screen-onboarding').style.display = 'none';
   _zetOnboardingFocus(false);
-  toon('begintest', document.querySelector('.sidebar nav button[data-screen="begintest"]'));
+  const vervolg = sessionStorage.getItem('snellees_na_onboarding');
+  sessionStorage.removeItem('snellees_na_onboarding');
+  toon(vervolg || 'begintest', document.querySelector(`.sidebar nav button[data-screen="${vervolg || 'begintest'}"]`));
 }
 
 function obSlaOver() {
   _obSlaOp();
   document.getElementById('screen-onboarding').style.display = 'none';
   _zetOnboardingFocus(false);
-  toon('home', document.querySelector('.sidebar nav button[data-screen="home"]'));
+  const vervolg = sessionStorage.getItem('snellees_na_onboarding');
+  sessionStorage.removeItem('snellees_na_onboarding');
+  toon(vervolg || 'home', document.querySelector(`.sidebar nav button[data-screen="${vervolg || 'home'}"]`));
 }
 
 // ── GLOBALE STREAK ────────────────────────────────────────
@@ -11209,7 +11286,7 @@ function toonBibliotheek() {
     return `<div class="bibl-item${isAct ? ' actief' : ''}">
       <div class="bibl-item-header">
         <div class="bibl-item-info">
-          <div class="bibl-item-naam">${t.naam}</div>
+          <div class="bibl-item-naam">${htmlEscape(t.naam)}</div>
           <div class="bibl-item-meta">${wc} woorden · ca. ${minW} min${heeftV ? ` · ${heeftV} vra${heeftV===1?'ag':'gen'}` : ''}${gBadge}</div>
         </div>
       </div>
