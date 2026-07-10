@@ -100,6 +100,13 @@ async function _checkAuth() {
   }
 }
 
+function _pasIosStandaloneLayoutToe() {
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  document.documentElement.classList.toggle('ios-standalone', isIos && standalone);
+}
+
 // ── DATA LADEN VAN SUPABASE ────────────────────────────────────────────────────
 async function _laadVanCloud() {
   if (!_huidigeGebruiker) return;
@@ -345,7 +352,10 @@ function _toonGebruikerHeader() {
 
 // ── START ────────────────────────────────────────────────────────────────────
 // Wacht tot de DOM klaar is, controleer dan auth
-document.addEventListener('DOMContentLoaded', _checkAuth);
+document.addEventListener('DOMContentLoaded', () => {
+  _pasIosStandaloneLayoutToe();
+  _checkAuth();
+});
 
 // Sync bij sluiten van het tabblad (als debounce nog loopt)
 window.addEventListener('beforeunload', () => {

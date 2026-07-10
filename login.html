@@ -214,6 +214,19 @@ input::placeholder { color: var(--muted); }
   color: var(--text);
 }
 
+/* Social login */
+.social-auth { display: grid; gap: 10px; margin: 20px 0; }
+.social-auth-btn {
+  min-height: 46px; display: flex; align-items: center; justify-content: center; gap: 10px;
+  border: 1px solid var(--border); border-radius: 10px; background: rgba(255,255,255,.04);
+  color: var(--text); font: 600 14px 'Inter', sans-serif; cursor: pointer; transition: border-color .2s, background .2s;
+}
+.social-auth-btn:hover { border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.08); }
+.social-auth-btn:disabled { opacity: .58; cursor: wait; }
+.provider-mark { width: 20px; text-align: center; font-size: 18px; font-weight: 800; line-height: 1; }
+.provider-google { color: #4cc9f0; }
+.provider-apple { color: #fff; font-size: 20px; }
+
 /* Feedback messages */
 .msg {
   padding: 11px 14px;
@@ -304,6 +317,15 @@ input::placeholder { color: var(--muted); }
     <button class="btn" id="reg-btn" onclick="registreer()">Account aanmaken</button>
   </div>
 
+  <div class="divider">of sneller verder</div>
+  <div class="social-auth" aria-label="Aanmelden met een accountprovider">
+    <button class="social-auth-btn" id="oauth-google" type="button" onclick="socialLogin('google')">
+      <span class="provider-mark provider-google" aria-hidden="true">G</span><span>Doorgaan met Google</span>
+    </button>
+    <button class="social-auth-btn" id="oauth-apple" type="button" onclick="socialLogin('apple')">
+      <span class="provider-mark provider-apple" aria-hidden="true">&#63743;</span><span>Doorgaan met Apple</span>
+    </button>
+  </div>
   <div class="divider">of</div>
   <button class="btn-guest" onclick="doorgaanAlsGast()">Doorgaan zonder account</button>
 </div>
@@ -347,6 +369,40 @@ function setLaden(btnId, laden) {
   btn.innerHTML = laden
     ? '<span class="spinner"></span> Bezig...'
     : (btnId === 'login-btn' ? 'Inloggen' : 'Account aanmaken');
+}
+
+function oauthRedirectUrl() {
+  return window.location.origin + '/index.html';
+}
+
+function setSocialLaden(provider, laden) {
+  document.querySelectorAll('.social-auth-btn').forEach(btn => {
+    btn.disabled = laden;
+    btn.setAttribute('aria-busy', laden ? 'true' : 'false');
+  });
+  const actief = document.getElementById(`oauth-${provider}`);
+  if (actief && laden) actief.lastElementChild.textContent = 'Even verbinden...';
+  if (!laden) {
+    document.querySelector('#oauth-google span:last-child').textContent = 'Doorgaan met Google';
+    document.querySelector('#oauth-apple span:last-child').textContent = 'Doorgaan met Apple';
+  }
+}
+
+async function socialLogin(provider) {
+  sessionStorage.removeItem('gast_modus');
+  sessionStorage.setItem('snellees_account_nieuw', '1');
+  setSocialLaden(provider, true);
+  toonMsg('');
+
+  const { error } = await sb.auth.signInWithOAuth({
+    provider,
+    options: { redirectTo: oauthRedirectUrl() }
+  });
+
+  if (error) {
+    setSocialLaden(provider, false);
+    toonMsg(vertaalFout(error.message));
+  }
 }
 
 // ── ENTER KEY SUPPORT ────────────────────────────────────────
@@ -430,6 +486,7 @@ function vertaalFout(msg) {
   if (msg.includes('Password should be'))   return 'Wachtwoord moet minimaal 6 tekens zijn.';
   if (msg.includes('Unable to validate'))   return 'Ongeldig e-mailadres.';
   if (msg.includes('rate limit'))           return 'Te veel pogingen. Wacht even en probeer opnieuw.';
+  if (msg.includes('provider is not enabled')) return 'Deze aanmeldmethode is nog niet ingeschakeld. Gebruik e-mail of probeer later opnieuw.';
   if (msg.includes('Network'))              return 'Geen verbinding. Controleer je internet.';
   return 'Er is een fout opgetreden. Probeer opnieuw.';
 }

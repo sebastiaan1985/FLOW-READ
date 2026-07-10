@@ -44,6 +44,7 @@ const manifest = JSON.parse(lees('manifest.json'));
 const manifestScreenshots = manifest.screenshots || [];
 verwacht(manifest.name && manifest.short_name, 'Manifest mist name of short_name.');
 verwacht(manifest.display === 'standalone', 'Manifest moet standalone starten.');
+verwacht(manifest.theme_color === '#08081a', 'Manifest moet de donkere PWA-statuskleur gebruiken.');
 verwacht(manifest.icons?.some(icon => icon.purpose?.includes('maskable')), 'Manifest mist een maskable icoon.');
 verwacht(manifest.shortcuts?.length >= 2, 'Manifest mist de twee app-shortcuts.');
 verwacht(manifestScreenshots.length >= 1, 'Manifest mist een mobiele app-screenshot.');
@@ -78,6 +79,15 @@ for (const pagina of ['index.html', 'login.html', 'reset-wachtwoord.html']) {
   verwacht(html.includes('strict-origin-when-cross-origin'), `${pagina} mist een referrerbeleid.`);
 }
 
+const appHtml = lees('index.html');
+verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black"'), 'iOS PWA gebruikt geen niet-overlappende zwarte statusbalk.');
+verwacht(appHtml.includes('ios-standalone'), 'iOS standalone-layoutdetectie ontbreekt.');
+const loginHtml = lees('login.html');
+for (const provider of ['google', 'apple']) {
+  verwacht(loginHtml.includes(`socialLogin('${provider}')`), `Login mist ${provider}-OAuth.`);
+}
+verwacht(loginHtml.includes('signInWithOAuth'), 'Login mist de OAuth-aanroep.');
+
 const sync = lees('supabase-sync.js');
 for (const sleutel of ['snellees_startweek', 'snellees_events', 'snellees_streak']) {
   verwacht(sync.includes(`'${sleutel}'`), `Sync mist ${sleutel}.`);
@@ -103,6 +113,11 @@ verwacht(existsSync(resolve(root, 'ios/App/App/public/index.html')), 'iOS bevat 
 verwacht(existsSync(resolve(root, 'ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png')), 'iOS appicoon ontbreekt.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public/index.html')), 'Android bevat geen gesynchroniseerde webbuild.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png')), 'Android appicoon ontbreekt.');
+for (const nativeLogin of ['ios/App/App/public/login.html', 'android/app/src/main/assets/public/login.html']) {
+  const html = lees(nativeLogin);
+  verwacht(html.includes("socialLogin('google')"), `${nativeLogin} mist Google-aanmelden.`);
+  verwacht(html.includes("socialLogin('apple')"), `${nativeLogin} mist Apple-aanmelden.`);
+}
 for (const screenshot of manifestScreenshots) {
   const bron = screenshot.src.replace(/^\//, '');
   verwacht(existsSync(resolve(root, 'ios/App/App/public', bron)), `iOS mist manifest-screenshot: ${screenshot.src}`);

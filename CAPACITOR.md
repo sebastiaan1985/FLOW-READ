@@ -25,6 +25,8 @@ npm run native:open:android
 
 Voor native wachtwoordherstel moet de redirect-URL van de Supabase Auth-configuratie ook de Capacitor origins toestaan. Controleer voor een echte device-test `capacitor://localhost` voor iOS en `https://localhost` voor Android. Gebruik daarna de store-builds voor de laatste privacy-, accountverwijder- en offline-tests.
 
+Dezelfde redirect origins zijn nodig voor Google- en Apple-aanmelden. De web- en PWA-flow gebruikt `signInWithOAuth`; de complete dashboardconfiguratie staat in `SUPABASE_SOCIAL_LOGIN_SETUP.md`. Voor een uiteindelijke native iOS-release is Apple's eigen native aanmeldcapability de beste vervolgstap; de PWA en webversie kunnen de huidige OAuth-flow al gebruiken.
+
 ## Lokale buildvoorwaarden
 
 - iOS: volledige Xcode-installatie met een iOS Simulator. Alleen Xcode Command Line Tools zijn niet genoeg voor een simulatorbuild.

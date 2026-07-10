@@ -7,10 +7,10 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>SnelLees Trainer</title>
 <meta name="description" content="Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.">
-<meta name="theme-color" content="#7c6ff7">
+<meta name="theme-color" content="#08081a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="SnelLees">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
@@ -1274,14 +1274,17 @@ body.kids .oog-timer-num { color:#ff6b6b; }
 @media (max-width: 360px) {
   #screen-home .streak-badge { display: none; }
 }
-/* Geïnstalleerd op het beginscherm (standalone): de pagina loopt onder de
-   iPhone-statusbalk door (black-translucent) — extra ademruimte bovenin
-   zodat de menuknop nooit onder de klok/batterij valt */
+/* iOS PWA: een ondoorzichtige zwarte statusbalk houdt klok en batterij los
+   van de appheader. Dit voorkomt dat inhoud achter de systeembalk belandt. */
 @media (display-mode: standalone) {
   header {
-    min-height: calc(60px + env(safe-area-inset-top, 0px));
-    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+    min-height: 60px;
+    padding-top: 12px;
   }
+}
+html.ios-standalone header {
+  min-height: 60px;
+  padding-top: 12px;
 }
 .speler-avatar { font-size: 1.2rem; line-height: 1; }
 .speler-naam { font-size: 12px; font-weight: 600; color: #e07000; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
