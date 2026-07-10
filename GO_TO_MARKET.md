@@ -38,7 +38,7 @@ Dit document is de releasevolgorde voor SnelLees. Het doel is niet een zo hoog m
 
 5. Releasehygiëne
 
-   Leg één productie-URL met HTTPS vast, pas `supabase/migrations/20260710_user_data_contract.sql` toe, controleer daarna Supabase RLS met twee testaccounts en voeg een korte release checklist toe aan iedere versie. Een service-worker cache-versie moet bij elke release omhoog.
+   Leg één productie-URL met HTTPS vast, pas `supabase/migrations/20260710_user_data_contract.sql` toe, controleer daarna Supabase RLS met twee testaccounts en voeg een korte release checklist toe aan iedere versie. Draai voor iedere release `npm run release:check`; gebruik `npm run release:check:production` zodra het privacybeleid is ingevuld. De service worker haalt appcode network-first op en houdt offline een fallback paraat.
 
 ## Beta-metrics
 
@@ -57,7 +57,7 @@ Gebruik deze als beslisgrenzen, niet als cosmetische KPI's.
 
 Gebruik de PWA eerst voor de beta. Wanneer de bovenstaande gates groen zijn, voeg een dunne Capacitor-shell toe rond dezelfde webapp. Daarmee blijven training, content en Supabase gedeeld, terwijl App Store en Play Store distributie mogelijk worden.
 
-De eerste native versie heeft alleen nodig: veilige WebView-configuratie, iconen en splash, deeplinks naar de twee PWA-shortcuts, in-app privacy/verwijdering, store-screenshots en een echte releasebuild. Pushmeldingen pas daarna toevoegen, en alleen na expliciete toestemming; de startweek en streak zijn al nuttig zonder meldingsdruk.
+De eerste native versie heeft nu een veilige WebView-configuratie, SnelLees-iconen en splashscreens, plus dezelfde webbuild als de PWA. Voor de release resten deeplinks naar de twee PWA-shortcuts, in-app privacy/verwijdering, store-screenshots, signing en een echte devicebuild. Die laatste stap vraagt volledige Xcode en een Android SDK; de huidige machine heeft die omgevingen nog niet volledig beschikbaar. De Capacitor-basis en buildflow staan in `CAPACITOR.md`. Pushmeldingen pas daarna toevoegen, en alleen na expliciete toestemming; de startweek en streak zijn al nuttig zonder meldingsdruk.
 
 ## Volgorde van uitvoering
 

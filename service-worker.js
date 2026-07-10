@@ -4,11 +4,12 @@
  *
  * Alle assets zijn nu lokaal gehost (geen CDN meer):
  * - HTML-pagina's → Network First (altijd vers, cache als offline-fallback)
- * - JS/CSS/fonts/iconen app shell → Cache First (snel laden, volledig offline)
+ * - JS/CSS/manifest → Network First met offline-fallback (altijd de laatste appcode)
+ * - Fonts en iconen → Cache First (snel laden, volledig offline)
  * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM = 'snellees-v24';
+const CACHE_NAAM = 'snellees-v25';
 
 const CACHE_STATISCH = [
   '/',
@@ -104,7 +105,20 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Overige GET-bestanden (JS, CSS, fonts, iconen): Cache First met netwerk-fallback
+  // Kritieke code altijd eerst van het netwerk. Zo krijgt een geinstalleerde
+  // app nieuwe trainingslogica direct, zonder afhankelijk te zijn van een
+  // handmatig verhoogde cacheversie. Offline valt hij terug op de laatste cache.
+  if (event.request.method === 'GET' && /\.(?:js|css|json)$/.test(url.pathname)) {
+    event.respondWith(
+      fetch(event.request).then(resp => {
+        if (resp.ok) caches.open(CACHE_NAAM).then(cache => cache.put(event.request, resp.clone()));
+        return resp;
+      }).catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Overige GET-bestanden (fonts en iconen): Cache First met netwerk-fallback
   if (event.request.method === 'GET') {
     event.respondWith(
       caches.match(event.request).then(cached => {

@@ -1,0 +1,22 @@
+{
+  "name": "snellees-trainer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-web.mjs",
+    "release:check": "node scripts/build-web.mjs && node scripts/release-check.mjs",
+    "release:check:production": "node scripts/build-web.mjs && node scripts/release-check.mjs --production",
+    "native:add:ios": "npm run build && npx cap add ios",
+    "native:add:android": "npm run build && npx cap add android",
+    "native:sync": "npm run build && npx cap sync",
+    "native:open:ios": "npx cap open ios",
+    "native:open:android": "npx cap open android"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/ios": "^8.0.0"
+  }
+}

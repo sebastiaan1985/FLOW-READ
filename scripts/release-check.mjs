@@ -1,0 +1,103 @@
+import { execFileSync } from 'node:child_process';
+import { readFileSync, existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
+const production = process.argv.includes('--production');
+const errors = [];
+const warnings = [];
+
+function lees(bestand) {
+  return readFileSync(resolve(root, bestand), 'utf8');
+}
+
+function verwacht(voorwaarde, bericht) {
+  if (!voorwaarde) errors.push(bericht);
+}
+
+function waarschuw(voorwaarde, bericht) {
+  if (!voorwaarde) warnings.push(bericht);
+}
+
+function checkJavaScript(bestand) {
+  try {
+    execFileSync(process.execPath, ['--check', resolve(root, bestand)], { stdio: 'pipe' });
+  } catch (error) {
+    errors.push(`${bestand} bevat een syntaxfout: ${error.stderr.toString().trim()}`);
+  }
+}
+
+function checkInlineScripts(bestand) {
+  try {
+    const html = lees(bestand);
+    const scripts = [...html.matchAll(/<script(?:[^>]*)>([\s\S]*?)<\/script>/g)]
+      .map(match => match[1])
+      .filter(script => script.trim());
+    scripts.forEach(script => new Function(script));
+  } catch (error) {
+    errors.push(`${bestand} bevat een inline script met een syntaxfout: ${error.message}`);
+  }
+}
+
+const manifest = JSON.parse(lees('manifest.json'));
+verwacht(manifest.name && manifest.short_name, 'Manifest mist name of short_name.');
+verwacht(manifest.display === 'standalone', 'Manifest moet standalone starten.');
+verwacht(manifest.icons?.some(icon => icon.purpose?.includes('maskable')), 'Manifest mist een maskable icoon.');
+verwacht(manifest.shortcuts?.length >= 2, 'Manifest mist de twee app-shortcuts.');
+
+const serviceWorker = lees('service-worker.js');
+verwacht(/const CACHE_NAAM = 'snellees-v\d+'/.test(serviceWorker), 'Service worker mist een versiecache.');
+const cacheBlok = serviceWorker.match(/const CACHE_STATISCH = \[([\s\S]*?)\];/);
+verwacht(!!cacheBlok, 'Service worker mist CACHE_STATISCH.');
+if (cacheBlok) {
+  const assets = [...cacheBlok[1].matchAll(/'([^']+)'/g)].map(match => match[1]);
+  for (const asset of assets) {
+    const bestand = asset === '/' ? 'index.html' : asset.replace(/^\//, '');
+    verwacht(existsSync(resolve(root, bestand)), `Offline asset ontbreekt: ${asset}`);
+  }
+}
+
+checkJavaScript('service-worker.js');
+checkJavaScript('supabase-sync.js');
+checkJavaScript('ronde.js');
+checkInlineScripts('index.html');
+checkInlineScripts('login.html');
+
+const sync = lees('supabase-sync.js');
+for (const sleutel of ['snellees_startweek', 'snellees_events', 'snellees_streak']) {
+  verwacht(sync.includes(`'${sleutel}'`), `Sync mist ${sleutel}.`);
+}
+verwacht(sync.includes("functions.invoke('delete-account')"), 'Client mist de accountverwijder-call.');
+
+const migratie = lees('supabase/migrations/20260710_user_data_contract.sql');
+for (const kolom of ['av_actief', 'extra', 'daily_challenge', 'snellees_gebruiker']) {
+  verwacht(migratie.includes(`add column if not exists ${kolom}`), `Migratie mist kolom ${kolom}.`);
+}
+verwacht(migratie.includes('enable row level security'), 'Migratie zet RLS niet aan.');
+
+const deleteFunction = lees('supabase/functions/delete-account/index.ts');
+verwacht(deleteFunction.includes('auth.getUser()'), 'Delete Function verifieert de gebruiker niet.');
+verwacht(deleteFunction.includes('auth.admin.deleteUser(user.id)'), 'Delete Function verwijdert geen Auth-account.');
+
+const packageJson = JSON.parse(lees('package.json'));
+verwacht(packageJson.scripts?.build === 'node scripts/build-web.mjs', 'Buildscript voor native packaging ontbreekt.');
+verwacht(existsSync(resolve(root, 'capacitor.config.json')), 'Capacitor-config ontbreekt.');
+verwacht(JSON.parse(lees('capacitor.config.json')).webDir === 'dist', 'Capacitor moet dist als webDir gebruiken.');
+verwacht(existsSync(resolve(root, 'resources/icon.png')), 'Native bronicoon ontbreekt.');
+verwacht(existsSync(resolve(root, 'ios/App/App/public/index.html')), 'iOS bevat geen gesynchroniseerde webbuild.');
+verwacht(existsSync(resolve(root, 'ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png')), 'iOS appicoon ontbreekt.');
+verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public/index.html')), 'Android bevat geen gesynchroniseerde webbuild.');
+verwacht(existsSync(resolve(root, 'android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png')), 'Android appicoon ontbreekt.');
+
+const privacy = lees('PRIVACY_POLICY_TEMPLATE.md');
+const privacyKlaar = !/\[(BEDRIJFSNAAM|PRIVACYCONTACT|PRIVACY_URL|VESTIGINGSPLAATS|DATUM)\]/.test(privacy);
+const privacyBericht = 'Privacybeleid bevat nog publicatie-placeholders.';
+if (production) verwacht(privacyKlaar, privacyBericht);
+else waarschuw(privacyKlaar, privacyBericht);
+
+for (const melding of warnings) console.warn(`WAARSCHUWING: ${melding}`);
+for (const melding of errors) console.error(`FOUT: ${melding}`);
+
+if (errors.length) process.exitCode = 1;
+else console.log(`Release preflight geslaagd${production ? ' (productie)' : ''}.`);

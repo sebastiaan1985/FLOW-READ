@@ -9929,7 +9929,8 @@ function leestestVerzend() {
 // ═══════════════════════════════════════════════════════════
 // 📱  PWA — Service Worker registratie
 // ═══════════════════════════════════════════════════════════
-if ('serviceWorker' in navigator) {
+const _isNativeShell = !!window.Capacitor?.isNativePlatform?.();
+if ('serviceWorker' in navigator && !_isNativeShell) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js')
       .then(reg => console.log('[PWA] Service worker geregistreerd:', reg.scope))
