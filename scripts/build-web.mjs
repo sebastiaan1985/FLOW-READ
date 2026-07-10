@@ -1,4 +1,4 @@
-import { cp, mkdir, rm } from 'node:fs/promises';
+import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -37,6 +37,7 @@ try {
   await mkdir(dist, { recursive: true });
   for (const bestand of bestanden) await cp(resolve(root, bestand), resolve(dist, bestand));
   for (const map of mappen) await cp(resolve(root, map), resolve(dist, map), { recursive: true });
+  await writeFile(resolve(dist, '.nojekyll'), '');
 } finally {
   await rm(lock, { recursive: true, force: true });
 }

@@ -274,7 +274,7 @@ function openAccountBeheer() {
       localStorage.clear();
       _huidigeGebruiker = null;
       try { await _sb.auth.signOut(); } catch(e) {}
-      window.location.replace('/?account=verwijderd');
+      window.location.replace(new URL('./?account=verwijderd', window.location.href).toString());
     } catch (e) {
       verwijderKnop.disabled = false;
       status.classList.add('fout');

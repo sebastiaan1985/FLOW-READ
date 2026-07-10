@@ -372,7 +372,7 @@ function setLaden(btnId, laden) {
 }
 
 function oauthRedirectUrl() {
-  return window.location.origin + '/index.html';
+  return new URL('index.html', window.location.href).toString();
 }
 
 function setSocialLaden(provider, laden) {
@@ -464,7 +464,7 @@ async function resetWachtwoord() {
   if (!email) { toonMsg('Vul eerst je e-mailadres in.'); return; }
 
   const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + '/reset-wachtwoord.html'
+    redirectTo: new URL('reset-wachtwoord.html', window.location.href).toString()
   });
 
   if (error) toonMsg(vertaalFout(error.message));

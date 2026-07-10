@@ -6,11 +6,12 @@ De SnelLees-login bevat al knoppen voor Google en Apple. De daadwerkelijke provi
 
 Ga naar `Authentication` > `URL Configuration` in het SnelLees Supabase-project en voeg toe:
 
-- De definitieve web-URL met `/**`, bijvoorbeeld `https://app.jouwdomein.nl/**`.
+- De GitHub Pages-test-URL met `/**`: `https://sebastiaan1985.github.io/FLOW-READ/**`.
+- Later de definitieve eigen web-URL met `/**`, bijvoorbeeld `https://app.jouwdomein.nl/**`.
 - Tijdelijk voor lokale test: `http://127.0.0.1:4173/**`.
 - Voor de Capacitor-shell: `capacitor://localhost/**` en `https://localhost/**`.
 
-Zet de productie-web-URL ook als `Site URL` zodra die bekend is. De app stuurt na OAuth terug naar `/index.html` op dezelfde origin.
+Zet de GitHub Pages-test-URL als tijdelijke `Site URL` totdat er een eigen domein is. De app stuurt na OAuth terug naar `index.html` binnen dezelfde site-scope.
 
 ## 2. Google
 

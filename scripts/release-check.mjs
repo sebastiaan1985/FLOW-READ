@@ -51,6 +51,14 @@ verwacht(manifestScreenshots.length >= 1, 'Manifest mist een mobiele app-screens
 for (const screenshot of manifestScreenshots) {
   verwacht(screenshot.src && existsSync(resolve(root, screenshot.src.replace(/^\//, ''))), `Manifest-screenshot ontbreekt: ${screenshot.src || 'onbekend'}`);
 }
+for (const icon of manifest.icons || []) {
+  verwacht(!icon.src.startsWith('/'), `Manifest-icoon mag niet root-absoluut zijn: ${icon.src}`);
+}
+for (const screenshot of manifestScreenshots) {
+  verwacht(!screenshot.src.startsWith('/'), `Manifest-screenshot mag niet root-absoluut zijn: ${screenshot.src}`);
+}
+verwacht(!manifest.start_url.startsWith('/'), 'Manifest start_url moet ook onder een projectsubmap werken.');
+verwacht(!manifest.scope.startsWith('/'), 'Manifest scope moet ook onder een projectsubmap werken.');
 
 const serviceWorker = lees('service-worker.js');
 verwacht(/const CACHE_NAAM = 'snellees-v\d+'/.test(serviceWorker), 'Service worker mist een versiecache.');
@@ -59,7 +67,7 @@ verwacht(!!cacheBlok, 'Service worker mist CACHE_STATISCH.');
 if (cacheBlok) {
   const assets = [...cacheBlok[1].matchAll(/'([^']+)'/g)].map(match => match[1]);
   for (const asset of assets) {
-    const bestand = asset === '/' ? 'index.html' : asset.replace(/^\//, '');
+    const bestand = asset === '/' || asset === './' ? 'index.html' : asset.replace(/^\//, '');
     verwacht(existsSync(resolve(root, bestand)), `Offline asset ontbreekt: ${asset}`);
   }
   for (const screenshot of manifestScreenshots) {

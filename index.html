@@ -13,9 +13,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="SnelLees">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
-<link rel="shortcut icon" href="/icons/favicon-32.png">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="shortcut icon" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <!-- Fonts lokaal gehost (geen CDN nodig, werkt offline) -->
 <link href="vendor/fonts.css" rel="stylesheet">
 <!-- Chart.js wordt lazy geladen zodra de statistieken geopend worden (zie laadChart) -->
@@ -9940,7 +9940,7 @@ function leestestVerzend() {
 const _isNativeShell = !!window.Capacitor?.isNativePlatform?.();
 if ('serviceWorker' in navigator && !_isNativeShell) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
+    navigator.serviceWorker.register('service-worker.js')
       .then(reg => console.log('[PWA] Service worker geregistreerd:', reg.scope))
       .catch(err => console.warn('[PWA] Service worker registratie mislukt:', err));
   });

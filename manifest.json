@@ -1,10 +1,10 @@
 {
-  "id": "/",
+  "id": "./",
   "name": "SnelLees Trainer",
   "short_name": "SnelLees",
   "description": "Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "display_override": ["standalone"],
   "background_color": "#0f0f1a",
@@ -13,26 +13,26 @@
   "lang": "nl",
   "icons": [
     {
-      "src": "/icons/icon-192.png",
+      "src": "icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/icon-512.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/icon-maskable-512.png",
+      "src": "icons/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
   "share_target": {
-    "action": "/",
+    "action": "./",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
     "params": {
@@ -46,21 +46,21 @@
       "name": "Daguitdaging",
       "short_name": "Uitdaging",
       "description": "Start direct de uitdaging van vandaag",
-      "url": "/?actie=uitdaging",
-      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+      "url": "./?actie=uitdaging",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Snelheidstraining",
       "short_name": "Trainen",
       "description": "Ga direct naar de training",
-      "url": "/?actie=trainen",
-      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+      "url": "./?actie=trainen",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
     }
   ],
   "categories": ["education", "productivity"],
   "screenshots": [
     {
-      "src": "/screenshots/onboarding-mobile.png",
+      "src": "screenshots/onboarding-mobile.png",
       "sizes": "360x732",
       "type": "image/png",
       "form_factor": "narrow",

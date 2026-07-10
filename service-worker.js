@@ -1,6 +1,6 @@
 /**
  * service-worker.js
- * SnelLees Trainer — PWA offline support (v4)
+ * SnelLees Trainer — PWA offline support
  *
  * Alle assets zijn nu lokaal gehost (geen CDN meer):
  * - HTML-pagina's → Network First (altijd vers, cache als offline-fallback)
@@ -9,52 +9,56 @@
  * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM = 'snellees-v26';
+const CACHE_NAAM = 'snellees-v27';
 
 const CACHE_STATISCH = [
-  '/',
-  '/index.html',
-  '/login.html',
-  '/reset-wachtwoord.html',
-  '/supabase-sync.js',
-  '/teksten.js',
-  '/coach.js',
-  '/ronde.js',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/icons/icon-maskable-512.png',
-  '/icons/apple-touch-icon.png',
-  '/icons/favicon-32.png',
-  '/screenshots/onboarding-mobile.png',
-  '/vendor/chart.umd.min.js',
-  '/vendor/supabase.min.js',
-  '/vendor/fonts.css',
-  '/vendor/fonts/4UaErEJDsxBrF37olUeD_xHM8pxULilENlY.woff2',
-  '/vendor/fonts/4UaHrEJDsxBrF37olUeD96rp57F2IwM.woff2',
-  '/vendor/fonts/OpenDyslexic-Bold.otf',
-  '/vendor/fonts/OpenDyslexic-Regular.otf',
-  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2',
-  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2',
-  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2',
-  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2',
-  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2',
-  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2',
-  '/vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2',
-  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx3cwgknk-6nFg.woff2',
-  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwgknk-6nFg.woff2',
-  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwgknk-4.woff2',
-  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxPcwgknk-6nFg.woff2',
-  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxTcwgknk-6nFg.woff2',
-  '/vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx_cwgknk-6nFg.woff2',
+  './',
+  'index.html',
+  'login.html',
+  'reset-wachtwoord.html',
+  'supabase-sync.js',
+  'teksten.js',
+  'coach.js',
+  'ronde.js',
+  'manifest.json',
+  'icons/icon-192.png',
+  'icons/icon-512.png',
+  'icons/icon-maskable-512.png',
+  'icons/apple-touch-icon.png',
+  'icons/favicon-32.png',
+  'screenshots/onboarding-mobile.png',
+  'vendor/chart.umd.min.js',
+  'vendor/supabase.min.js',
+  'vendor/fonts.css',
+  'vendor/fonts/4UaErEJDsxBrF37olUeD_xHM8pxULilENlY.woff2',
+  'vendor/fonts/4UaHrEJDsxBrF37olUeD96rp57F2IwM.woff2',
+  'vendor/fonts/OpenDyslexic-Bold.otf',
+  'vendor/fonts/OpenDyslexic-Regular.otf',
+  'vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2',
+  'vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2',
+  'vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2',
+  'vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2',
+  'vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2',
+  'vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2',
+  'vendor/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2',
+  'vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx3cwgknk-6nFg.woff2',
+  'vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwgknk-6nFg.woff2',
+  'vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwgknk-4.woff2',
+  'vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxPcwgknk-6nFg.woff2',
+  'vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxTcwgknk-6nFg.woff2',
+  'vendor/fonts/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx_cwgknk-6nFg.woff2',
 ];
+
+function scopeUrl(pad) {
+  return new URL(pad, self.registration.scope).toString();
+}
 
 // ── INSTALL: pre-cache app shell ─────────────────────────────
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAAM).then(cache => {
       // cache:'reload' zorgt dat altijd de nieuwste versie van de server wordt opgehaald
-      const verzoeken = CACHE_STATISCH.map(url => new Request(url, { cache: 'reload' }));
+      const verzoeken = CACHE_STATISCH.map(url => new Request(scopeUrl(url), { cache: 'reload' }));
       // Een ontbrekend optioneel bestand mag de volledige offline-installatie
       // niet blokkeren; de rest van de app-shell blijft gewoon beschikbaar.
       return Promise.allSettled(verzoeken.map(verzoek => cache.add(verzoek))).then(resultaten => {
@@ -101,7 +105,7 @@ self.addEventListener('fetch', event => {
           caches.open(CACHE_NAAM).then(cache => cache.put(event.request, resp.clone()));
         }
         return resp;
-      }).catch(() => caches.match(event.request).then(cached => cached || caches.match('/index.html')))
+      }).catch(() => caches.match(event.request).then(cached => cached || caches.match(scopeUrl('index.html'))))
     );
     return;
   }
