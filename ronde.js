@@ -316,6 +316,9 @@ const Ronde = {
 
   _toonResultaat(r) {
     this._bewaarLaatsteResultaat(r);
+    // Leestest en lange tekst gebruiken de ronde direct; zo telt ook hun
+    // resultaat mee als dit de volgende sessie in de startweek is.
+    if (typeof _markeerStartweekVoltooid === 'function') _markeerStartweekVoltooid(r.type);
     const kids = (typeof Coach !== 'undefined') && Coach.isKids();
     const sterHtml = [1, 2, 3].map(i =>
       `<span class="ronde-ster ${i <= r.sterren ? 'aan' : ''}" style="animation-delay:${i * .18}s">★</span>`).join('');

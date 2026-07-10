@@ -40,26 +40,25 @@ const SYNC_KEYS = [
   'gamificatie',            // Streak-bevriezingen, dagdoel, recap, geluid
   'leerweg_gedaan',         // Afgevinkte leerweg-dagen
   'teksten_gelezen',        // Gelezen-collectie: per tekst keren/beste prestatie
+  'snellees_eerste_missie', // Persoonlijke sessie direct na de begintest
+  'snellees_startweek',     // De 7 sessies die van startmeting naar hermeting leiden
+  'snellees_streak',        // Globale trainingsstreak voor de Home-weergave
+  'snellees_laatste_resultaat', // Laatste meetbare winst op Home
+  'snellees_events',        // Privacybewuste beta-events, maximaal 250 per gebruiker
 ];
 
 // Keys die in payload.extra terechtkomen (nooit meer losse kolommen nodig)
-const EXTRA_KEYS = ['coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan', 'teksten_gelezen'];
+const EXTRA_KEYS = [
+  'coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan', 'teksten_gelezen',
+  'snellees_eerste_missie', 'snellees_startweek', 'snellees_streak', 'snellees_laatste_resultaat', 'snellees_events',
+];
 
 let _huidigeGebruiker = null;
 let _syncTimer = null;
 
-// ── VOORKOM FLASH VAN ONBEVEILIGDE CONTENT ──────────────────────────────────
-// Verberg de body kort totdat auth is gecontroleerd
-(function() {
-  // Alleen verbergen op app-pagina's, NIET op login.html
-  if (window.location.pathname.includes('login')) return;
-  const s = document.createElement('style');
-  s.id = 'auth-hide';
-  s.textContent = 'body{opacity:0!important;transition:opacity .3s ease}';
-  document.head.appendChild(s);
-  // Veiligheids-fallback: na 3 seconden ALTIJD tonen (voorkomt zwart scherm)
-  setTimeout(_toonApp, 3000);
-})();
+// ── VALUE-FIRST START ───────────────────────────────────────────────────────
+// De training blijft meteen zichtbaar. Auth en cloud-sync verrijken daarna de
+// lokale staat, maar mogen nooit een offline of nieuwe gebruiker blokkeren.
 
 function _toonApp() {
   const s = document.getElementById('auth-hide');
@@ -83,7 +82,16 @@ async function _checkAuth() {
     await _laadVanCloud();
     _toonGebruikerHeader();
 
+    if (sessionStorage.getItem('snellees_account_nieuw') === '1') {
+      sessionStorage.removeItem('snellees_account_nieuw');
+      if (typeof gtmTrack === 'function') gtmTrack('account_aangemaakt');
+    }
+
     if (typeof _herlaadAppState === 'function') _herlaadAppState();
+
+    // Een gast die net een account heeft gemaakt, neemt zijn startweek en
+    // beta-events direct mee naar de cloud na het inladen van bestaande data.
+    _syncNaarCloud();
 
     _toonApp();
   } catch (e) {

@@ -8,7 +8,7 @@
  * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM = 'snellees-v23';
+const CACHE_NAAM = 'snellees-v24';
 
 const CACHE_STATISCH = [
   '/',
@@ -53,8 +53,11 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAAM).then(cache => {
       // cache:'reload' zorgt dat altijd de nieuwste versie van de server wordt opgehaald
       const verzoeken = CACHE_STATISCH.map(url => new Request(url, { cache: 'reload' }));
-      return cache.addAll(verzoeken).catch(err => {
-        console.warn('[SW] Niet alle bestanden gecached:', err);
+      // Een ontbrekend optioneel bestand mag de volledige offline-installatie
+      // niet blokkeren; de rest van de app-shell blijft gewoon beschikbaar.
+      return Promise.allSettled(verzoeken.map(verzoek => cache.add(verzoek))).then(resultaten => {
+        const mislukt = resultaten.filter(r => r.status === 'rejected').length;
+        if (mislukt) console.warn(`[SW] ${mislukt} bestand(en) niet gecached.`);
       });
     })
   );

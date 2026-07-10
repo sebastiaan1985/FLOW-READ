@@ -394,6 +394,7 @@ async function registreer() {
     toonMsg(vertaalFout(error.message));
     setLaden('reg-btn', false);
   } else {
+    sessionStorage.setItem('snellees_account_nieuw', '1');
     toonMsg('Account aangemaakt! Je bent nu ingelogd.', 'success');
     setTimeout(() => window.location.href = 'index.html', 800);
   }

@@ -1820,6 +1820,23 @@ main { -webkit-overflow-scrolling: touch; }
 .vandaag-uitd-naam { font-size: .92rem; font-weight: 600; color: var(--text); margin: 2px 0; }
 .vandaag-uitd-sub { font-size: .78rem; color: var(--muted); }
 .vandaag-uitd-status { font-size: 1.2rem; flex-shrink: 0; }
+.startweek-progress {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(76,201,240,.24);
+  border-radius: 12px;
+  background: rgba(76,201,240,.06);
+}
+.startweek-progress.show { display: block; }
+.startweek-kop { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.startweek-label { font-size: .7rem; font-weight: 800; letter-spacing: 1px; color: var(--accent2); text-transform: uppercase; }
+.startweek-status { font-size: .76rem; color: var(--muted); white-space: nowrap; }
+.startweek-punten { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin: 10px 0 8px; }
+.startweek-punt { height: 6px; border-radius: 999px; background: rgba(255,255,255,.1); }
+.startweek-punt.klaar { background: var(--green); }
+.startweek-punt.nu { background: var(--accent2); box-shadow: 0 0 10px rgba(76,201,240,.45); }
+.startweek-tekst { font-size: .8rem; color: var(--text); line-height: 1.35; }
 .momentum-card {
   display: none;
   margin-top: 12px;
@@ -3098,6 +3115,14 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
         <div class="vandaag-uitd-sub" id="vandaag-uitd-sub"></div>
       </div>
       <div class="vandaag-uitd-status" id="vandaag-uitd-status">→</div>
+    </div>
+    <div class="startweek-progress" id="startweek-progress">
+      <div class="startweek-kop">
+        <div class="startweek-label">Jouw startweek</div>
+        <div class="startweek-status" id="startweek-status"></div>
+      </div>
+      <div class="startweek-punten" id="startweek-punten" aria-label="Voortgang startweek"></div>
+      <div class="startweek-tekst" id="startweek-tekst"></div>
     </div>
     <div class="momentum-card" id="momentum-card" onclick="startMomentumActie()">
       <div class="momentum-kop">
@@ -5085,8 +5110,10 @@ function begintestControleer() {
   else { niveau = 'Snellezer'; niveauKleur = '#34d399'; }
 
   // Save baseline
+  const hadBaseline = !!localStorage.getItem('begintest_baseline');
   const datum = new Date().toLocaleDateString('nl-NL');
   localStorage.setItem('begintest_baseline', JSON.stringify({ wpm, begrip, datum }));
+  if (typeof gtmTrack === 'function') gtmTrack('begintest_voltooid', { begrip, wpm_band: Math.floor(wpm / 50) * 50, hermeting: hadBaseline });
   if (typeof _zetWaardeMoment === 'function') _zetWaardeMoment();
   voltooiDaguitdaging('begintest');
 
@@ -5111,6 +5138,7 @@ function begintestControleer() {
     const startWpm = begrip >= 60 ? Math.round(wpm * 1.15) : Math.round(wpm * 0.9);
     const missie = _maakEersteMissie(wpm, begrip, startWpm);
     _slaEersteMissie(missie);
+    _maakStartweek({ wpm, begrip, datum }, missie);
     document.getElementById('bt-missie-card').innerHTML = `
       <div class="bt-missie-kop">Jouw eerste missie</div>
       <div class="bt-missie-titel">${missie.icon} ${missie.titel}</div>
@@ -6658,6 +6686,7 @@ function voltooiDaguitdaging(type) {
   // (dekt oefeningen zónder sessie-opslag zoals oogrust/fixatie/regressie;
   // leerWegAutoVoltooi heeft een debounce tegen dubbel afvinken)
   if (typeof leerWegAutoVoltooi === 'function') leerWegAutoVoltooi(type);
+  if (typeof _markeerStartweekVoltooid === 'function') _markeerStartweekVoltooid(type);
 
   const data = JSON.parse(localStorage.getItem('daily_challenge') || '{}');
   const uitdaging = DAGELIJKSE_UITDAGINGEN[data.idx];
@@ -9901,6 +9930,7 @@ const _installatie = {
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       this._prompt = e;
+      if (typeof gtmTrack === 'function') gtmTrack('install_prompt_beschikbaar');
       this.toonKnoppen();
     });
 
@@ -9909,6 +9939,7 @@ const _installatie = {
       this.verbergKnoppen();
       localStorage.removeItem('installatie_hint');
       if (typeof _gamZet === 'function') _gamZet('geinstalleerd', true);
+      if (typeof gtmTrack === 'function') gtmTrack('install_voltooid');
       if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 800);
     });
 
@@ -9941,6 +9972,7 @@ const _installatie = {
 
   async start() {
     sluitSidebar();
+    if (typeof gtmTrack === 'function') gtmTrack('install_intentie', { ios: this.isIos() });
     if (this._prompt) {
       this._prompt.prompt();
       const keuze = await this._prompt.userChoice;
@@ -10107,6 +10139,7 @@ function _obSlaOp() {
   localStorage.setItem('snellees_gebruiker', JSON.stringify(gebruiker));
   localStorage.setItem('snellees_onboarding_done', '1');
   localStorage.setItem('snellees_profiel_modus', _obModus);
+  if (typeof gtmTrack === 'function') gtmTrack('onboarding_voltooid', { modus: _obModus, doel: _obDoel });
   // Maak ook direct een aventuur-profiel aan als er nog geen is
   const profielen = avGetProfielen();
   if (profielen.length === 0) {
@@ -10193,6 +10226,118 @@ function updateStreakBadge() {
 }
 
 // ── VANDAAG PANEL ─────────────────────────────────────────
+const _STARTWEEK_KEY = 'snellees_startweek';
+const _GTM_EVENT_KEY = 'snellees_events';
+
+function gtmTrack(naam, eigenschappen = {}) {
+  try {
+    const events = JSON.parse(localStorage.getItem(_GTM_EVENT_KEY) || '[]');
+    const veilig = {};
+    for (const [sleutel, waarde] of Object.entries(eigenschappen)) {
+      if (typeof waarde === 'string' || typeof waarde === 'number' || typeof waarde === 'boolean') veilig[sleutel] = waarde;
+    }
+    events.push({ naam, ts: Date.now(), ...veilig });
+    localStorage.setItem(_GTM_EVENT_KEY, JSON.stringify(events.slice(-250)));
+  } catch(e) { /* Meten mag een training nooit verstoren. */ }
+}
+
+function _maakStartweek(baseline, eersteMissie) {
+  const eerste = eersteMissie || _maakEersteMissie(
+    baseline.wpm,
+    baseline.begrip,
+    baseline.begrip >= 60 ? Math.round(baseline.wpm * 1.15) : Math.round(baseline.wpm * 0.9)
+  );
+  const rsvpWpm = _rondMissieTempo(Math.max(100, baseline.wpm * 1.1), 25, 100);
+  const chunkWpm = _rondMissieTempo(Math.max(80, baseline.wpm), 20, 80);
+  const tweede = eerste.type === 'rsvp'
+    ? { type: 'chunk', icon: '📖', titel: 'Begrip in blokken', uitleg: 'Lees woordgroepen in plaats van losse woorden. Controleer je begrip na afloop.', wpm: chunkWpm }
+    : { type: 'rsvp', icon: '⚡', titel: 'Tempo met controle', uitleg: 'Laat je ogen het tempo volgen en houd je aandacht bij de tekst.', wpm: rsvpWpm };
+  const startweek = {
+    aangemaakt: Date.now(),
+    baseline: { wpm: baseline.wpm, begrip: baseline.begrip },
+    sessies: [
+      { id: 'start', type: eerste.type, icon: eerste.icon, titel: eerste.titel, uitleg: eerste.uitleg, wpm: eerste.wpm, voltooid: false },
+      { id: 'chunks', ...tweede, voltooid: false },
+      { id: 'ogen', type: 'oog', icon: '👁', titel: 'Ogen in beweging', uitleg: 'Train soepel volgen en een rustiger blikpatroon.', voltooid: false },
+      { id: 'fixatie', type: 'fixatie', icon: '🔲', titel: 'Breder kijken', uitleg: 'Pak meer informatie per oogfixatie.', voltooid: false },
+      { id: 'regressie', type: 'regressie', icon: '⏩', titel: 'Vooruit blijven lezen', uitleg: 'Doorbreek de neiging om terug te springen.', voltooid: false },
+      { id: 'lange-tekst', type: 'langetekst', icon: '📚', titel: 'Toepassen op een echte tekst', uitleg: 'Combineer tempo en begrip in een langere leessessie.', voltooid: false },
+      { id: 'hermeting', type: 'leestest', icon: '🎯', titel: 'Jouw eindmeting', uitleg: 'Vergelijk je nieuwe snelheid en begrip met je startpunt.', voltooid: false },
+    ],
+  };
+  localStorage.setItem(_STARTWEEK_KEY, JSON.stringify(startweek));
+  return startweek;
+}
+
+function _haalStartweek() {
+  try { return JSON.parse(localStorage.getItem(_STARTWEEK_KEY) || 'null'); }
+  catch(e) { return null; }
+}
+
+function _zorgStartweek() {
+  const bestaand = _haalStartweek();
+  if (bestaand?.sessies?.length) return bestaand;
+  try {
+    const baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null');
+    if (!baseline) return null;
+    let eerste = _haalEersteMissie();
+    if (!eerste) {
+      const startWpm = baseline.begrip >= 60 ? Math.round(baseline.wpm * 1.15) : Math.round(baseline.wpm * 0.9);
+      eerste = _maakEersteMissie(baseline.wpm, baseline.begrip, startWpm);
+      _slaEersteMissie(eerste);
+    }
+    return _maakStartweek(baseline, eerste);
+  } catch(e) { return null; }
+}
+
+function _startweekVolgende() {
+  const week = _zorgStartweek();
+  return week?.sessies?.find(s => !s.voltooid) || null;
+}
+
+function _markeerStartweekVoltooid(type) {
+  const week = _zorgStartweek();
+  const volgende = week?.sessies?.find(s => !s.voltooid);
+  if (!week || !volgende || volgende.type !== type) return false;
+  volgende.voltooid = true;
+  volgende.voltooidOp = Date.now();
+  localStorage.setItem(_STARTWEEK_KEY, JSON.stringify(week));
+  const afgerond = week.sessies.filter(s => s.voltooid).length;
+  gtmTrack('startweek_sessie_voltooid', {
+    sessie: volgende.id,
+    type,
+    nummer: afgerond,
+    startweek_voltooid: afgerond === week.sessies.length,
+  });
+  if (afgerond === week.sessies.length) gtmTrack('startweek_voltooid');
+  if (afgerond === week.sessies.length) {
+    toonAchievement('🏁', 'Startweek voltooid. Je nieuwe startlijn is gezet!');
+  } else {
+    toonAchievement('✓', `Startweek: sessie ${afgerond} van ${week.sessies.length} voltooid`);
+  }
+  _updateStartweekProgress();
+  return true;
+}
+
+function _updateStartweekProgress() {
+  const kaart = document.getElementById('startweek-progress');
+  const week = _zorgStartweek();
+  if (!kaart || !week?.sessies?.length) return;
+  const afgerond = week.sessies.filter(s => s.voltooid).length;
+  const volgende = week.sessies.find(s => !s.voltooid);
+  const status = document.getElementById('startweek-status');
+  const punten = document.getElementById('startweek-punten');
+  const tekst = document.getElementById('startweek-tekst');
+  if (status) status.textContent = afgerond === week.sessies.length ? '7 van 7 afgerond' : `Sessie ${afgerond + 1} van ${week.sessies.length}`;
+  if (punten) punten.innerHTML = week.sessies.map((sessie, i) =>
+    `<span class="startweek-punt ${sessie.voltooid ? 'klaar' : i === afgerond ? 'nu' : ''}" title="${sessie.titel}"></span>`
+  ).join('');
+  if (tekst) tekst.textContent = volgende
+    ? `${volgende.icon} ${volgende.titel} — ${volgende.uitleg}`
+    : 'Je hebt alle fundamenten doorlopen. Houd nu je ritme vast met een korte dagelijkse sessie.';
+  kaart.classList.add('show');
+}
+
 function updateVandaagPanel() {
   // Begroeting op basis van tijd
   const uur = new Date().getHours();
@@ -10221,6 +10366,9 @@ function updateVandaagPanel() {
 
   // Dagelijkse uitdaging tonen
   _updateVandaagUitdaging();
+
+  // Startweek toont de volgende concrete sessie en de opgebouwde voortgang.
+  _updateStartweekProgress();
 
   // Laatste resultaat als momentum teruggeven
   _updateMomentumCard();
@@ -10334,6 +10482,7 @@ function _updateAccountSaveCard() {
 }
 
 function naarLoginVoorSync() {
+  if (typeof gtmTrack === 'function') gtmTrack('account_bewaren_geopend');
   try { sessionStorage.removeItem('gast_modus'); } catch(e) {}
   window.location.href = 'login.html?reason=save';
 }
@@ -10348,9 +10497,9 @@ function startDagmissie() {
     sidebarNav('begintest');
     return;
   }
-  const eerste = _haalEersteMissie();
-  if (eerste && !eerste.voltooid) {
-    _startMissieType(eerste.type, eerste.wpm);
+  const startweek = _startweekVolgende();
+  if (startweek) {
+    _startMissieType(startweek.type, startweek.wpm);
     return;
   }
   vandaagUitdagingOpen();
@@ -10411,11 +10560,15 @@ function _updateVandaagUitdaging() {
 
   const uitd = getDaguitdaging();
   if (!uitd) return;
-  const eerste = _haalEersteMissie();
-  if (eerste && !eerste.voltooid) {
-    iconEl.textContent = eerste.icon || '⚡';
-    naamEl.textContent = eerste.titel || 'Eerste missie';
-    subEl.textContent = eerste.uitleg || 'Start je eerste korte training.';
+  const startweek = _startweekVolgende();
+  if (startweek) {
+    const week = _haalStartweek();
+    const nummer = (week?.sessies?.findIndex(s => s.id === startweek.id) ?? 0) + 1;
+    iconEl.textContent = startweek.icon || '⚡';
+    naamEl.textContent = startweek.titel || 'Volgende sessie';
+    subEl.textContent = startweek.uitleg || 'Een korte, gerichte training.';
+    const label = kaart.querySelector('.vandaag-uitd-label');
+    if (label) label.textContent = `Startweek · sessie ${nummer} van ${week?.sessies?.length || 7}`;
     statEl.textContent = '→';
     kaart.classList.remove('klaar');
     kaart.onclick = startDagmissie;
@@ -10431,6 +10584,8 @@ function _updateVandaagUitdaging() {
   iconEl.textContent = _UITD_ICONEN[uitd.type] || '⚡';
   naamEl.textContent = uitd.beschrijving || 'Dagelijkse uitdaging';
   subEl.textContent  = klaar ? 'Vandaag voltooid. Morgen een nieuwe missie.' : '5 minuten training. Tik om te starten.';
+  const label = kaart.querySelector('.vandaag-uitd-label');
+  if (label) label.textContent = 'Uitdaging van de dag';
   statEl.textContent = klaar ? '✅' : '→';
 
   if (klaar) {
