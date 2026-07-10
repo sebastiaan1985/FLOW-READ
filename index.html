@@ -446,6 +446,35 @@ select option { background: #1a1a40; }
 .account-save-card b { display: block; font-size: .9rem; }
 .account-save-card span { display: block; margin-top: 2px; font-size: .78rem; color: var(--muted); line-height: 1.35; }
 .account-save-card button { flex-shrink: 0; }
+.account-beheer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(4,4,15,.76);
+}
+.account-beheer-dialog {
+  width: min(100%, 420px);
+  padding: 20px;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 20px 60px rgba(0,0,0,.55);
+}
+.account-beheer-kop { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.account-beheer-kop h2 { font-size: 1.05rem; line-height: 1.2; }
+.account-beheer-kop p { margin-top: 4px; font-size: .8rem; color: var(--muted); overflow-wrap: anywhere; }
+.account-beheer-sluit { border: none; background: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; line-height: 1; padding: 2px; }
+.account-beheer-blok { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+.account-beheer-blok b { display: block; font-size: .85rem; }
+.account-beheer-blok p { margin-top: 5px; font-size: .78rem; line-height: 1.45; color: var(--muted); }
+.account-beheer-acties { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.account-beheer-status { min-height: 18px; margin-top: 10px; font-size: .76rem; color: var(--muted); }
+.account-beheer-status.fout { color: var(--pink); }
+.account-beheer-verwijder { border-color: rgba(240,98,146,.45); color: var(--pink); }
 .bt-missie-card {
   margin: 14px 0 0;
   padding: 16px;

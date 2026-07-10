@@ -22,7 +22,7 @@ Dit document is de releasevolgorde voor SnelLees. Het doel is niet een zo hoog m
 
 1. Privacy en accountverwijdering
 
-   Voeg een privacybeleid toe in de app en op een publieke URL. Het moet accountgegevens, trainingsresultaten, opslagduur, Supabase en een contactpunt benoemen. Maak daarnaast een echte verwijderflow: Apple verlangt dat een app met accountaanmaak verwijdering in de app laat starten; Google Play verlangt een privacybeleid en een correcte Data Safety-opgave. Dit is blokkerend voor de stores.
+   Vul `PRIVACY_POLICY_TEMPLATE.md` met bedrijfsnaam, privacycontact en vaste HTTPS-URL, en toon die verklaring vervolgens in de app en op die URL. Het document benoemt accountgegevens, trainingsresultaten, opslagduur en Supabase. De app bevat nu een verwijderdialoog en een deploybare Supabase Edge Function in `supabase/functions/delete-account/`; deploy en test die functie voordat je publiceert. Apple verlangt dat een app met accountaanmaak verwijdering in de app laat starten; Google Play verlangt een privacybeleid en een correcte Data Safety-opgave. Het echte privacycontact blijft blokkerend voor de stores.
 
 2. Meetbare funnel
 
@@ -38,7 +38,7 @@ Dit document is de releasevolgorde voor SnelLees. Het doel is niet een zo hoog m
 
 5. Releasehygiëne
 
-   Leg één productie-URL met HTTPS vast, zet Supabase RLS en de `user_data`-toegang handmatig onder review, en voeg een korte release checklist toe aan iedere versie. Een service-worker cache-versie moet bij elke release omhoog.
+   Leg één productie-URL met HTTPS vast, pas `supabase/migrations/20260710_user_data_contract.sql` toe, controleer daarna Supabase RLS met twee testaccounts en voeg een korte release checklist toe aan iedere versie. Een service-worker cache-versie moet bij elke release omhoog.
 
 ## Beta-metrics
 

@@ -213,6 +213,76 @@ async function uitloggen() {
   window.location.href = 'login.html';
 }
 
+function openAccountBeheer() {
+  if (!_huidigeGebruiker || document.getElementById('account-beheer-overlay')) return;
+  const email = _huidigeGebruiker.email || '';
+  const veiligEmail = email.replace(/[&<>'"]/g, teken => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' })[teken]);
+  const overlay = document.createElement('div');
+  overlay.id = 'account-beheer-overlay';
+  overlay.className = 'account-beheer-overlay';
+  overlay.innerHTML = `
+    <section class="account-beheer-dialog" role="dialog" aria-modal="true" aria-labelledby="account-beheer-titel">
+      <div class="account-beheer-kop">
+        <div><h2 id="account-beheer-titel">Account</h2><p>${veiligEmail}</p></div>
+        <button class="account-beheer-sluit" type="button" aria-label="Sluiten" data-account-sluit>×</button>
+      </div>
+      <div class="account-beheer-blok">
+        <b>Uitloggen</b>
+        <p>Je lokale voortgang blijft op dit apparaat beschikbaar.</p>
+        <div class="account-beheer-acties"><button class="btn btn-ghost" type="button" data-account-uitloggen>Uitloggen</button></div>
+      </div>
+      <div class="account-beheer-blok">
+        <b>Account verwijderen</b>
+        <p>Dit verwijdert je account en de opgeslagen trainingsgegevens definitief. Dit kan niet ongedaan worden gemaakt.</p>
+        <div class="account-beheer-acties"><button class="btn btn-ghost account-beheer-verwijder" type="button" data-account-verwijder>Account verwijderen</button></div>
+        <div class="account-beheer-status" aria-live="polite" data-account-status></div>
+      </div>
+    </section>`;
+
+  let esc;
+  const sluit = () => {
+    overlay.remove();
+    if (esc) document.removeEventListener('keydown', esc);
+  };
+  const verwijderKnop = overlay.querySelector('[data-account-verwijder]');
+  const status = overlay.querySelector('[data-account-status]');
+  let bevestigd = false;
+  overlay.addEventListener('click', e => { if (e.target === overlay) sluit(); });
+  overlay.querySelector('[data-account-sluit]').addEventListener('click', sluit);
+  overlay.querySelector('[data-account-uitloggen]').addEventListener('click', () => { sluit(); uitloggen(); });
+  verwijderKnop.addEventListener('click', async () => {
+    if (!bevestigd) {
+      bevestigd = true;
+      verwijderKnop.textContent = 'Ja, verwijder definitief';
+      status.textContent = 'Tik nogmaals om definitief te verwijderen.';
+      return;
+    }
+    verwijderKnop.disabled = true;
+    status.classList.remove('fout');
+    status.textContent = 'Account wordt verwijderd…';
+    try {
+      const { error } = await _sb.functions.invoke('delete-account');
+      if (error) throw error;
+      sessionStorage.clear();
+      localStorage.clear();
+      _huidigeGebruiker = null;
+      try { await _sb.auth.signOut(); } catch(e) {}
+      window.location.replace('/?account=verwijderd');
+    } catch (e) {
+      verwijderKnop.disabled = false;
+      status.classList.add('fout');
+      status.textContent = 'Verwijderen lukte niet. Probeer het opnieuw.';
+    }
+  });
+  esc = e => {
+    if (e.key !== 'Escape') return;
+    sluit();
+  };
+  document.addEventListener('keydown', esc);
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.querySelector('[data-account-sluit]')?.focus(), 0);
+}
+
 // ── GEBRUIKER TONEN IN HEADER ────────────────────────────────────────────────
 function _toonGebruikerHeader() {
   const email = _huidigeGebruiker?.email || '';
@@ -231,9 +301,7 @@ function _toonGebruikerHeader() {
   btn.id = 'sb-user-btn';
   btn.title = email;
   btn.innerHTML = `<span style="font-size:13px">👤</span> ${kort}`;
-  btn.onclick = () => {
-    if (confirm(`Uitloggen als ${email}?`)) uitloggen();
-  };
+  btn.onclick = openAccountBeheer;
   Object.assign(btn.style, {
     padding: '7px 13px',
     border: '1px solid rgba(124,111,247,.35)',
