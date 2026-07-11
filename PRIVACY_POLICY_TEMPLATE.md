@@ -2,7 +2,7 @@
 
 Status: invultemplate. Vervang alle blokhaken en publiceer dit document op een vaste HTTPS-URL voordat SnelLees publiek beschikbaar komt.
 
-Laatst bijgewerkt: [DATUM]
+Laatst bijgewerkt: 11 juli 2026
 
 ## Wie wij zijn
 
@@ -40,4 +40,4 @@ Je kunt verzoeken om inzage, correctie, export of verwijdering van je persoonsge
 
 ## Wijzigingen
 
-Bij belangrijke wijzigingen passen we de datum bovenaan deze verklaring aan. De actuele versie staat op [PRIVACY_URL].
+Bij belangrijke wijzigingen passen we de datum bovenaan deze verklaring aan. De actuele versie staat op https://snel-lees-app.vercel.app/privacy.html.

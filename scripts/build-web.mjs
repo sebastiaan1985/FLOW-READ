@@ -7,6 +7,7 @@ const dist = resolve(root, 'dist');
 const bestanden = [
   'index.html',
   'login.html',
+  'privacy.html',
   'reset-wachtwoord.html',
   'manifest.json',
   'service-worker.js',

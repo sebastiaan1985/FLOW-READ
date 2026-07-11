@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#08081a">
+<title>Privacyverklaring - SnelLees</title>
+<link href="vendor/fonts.css" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  --bg: #08081a;
+  --surface: #10102a;
+  --border: rgba(255,255,255,.12);
+  --accent: #7c6ff7;
+  --text: #e8e8f5;
+  --muted: #9a9ab8;
+}
+html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.7 'Inter', system-ui, sans-serif;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 60px;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) 10px max(20px, env(safe-area-inset-left, 0px));
+  background: rgba(16,16,42,.96);
+  border-bottom: 1px solid var(--border);
+}
+header a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+header strong { font-size: 15px; }
+main {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  padding: 40px 24px calc(56px + env(safe-area-inset-bottom, 0px));
+}
+h1 { margin: 0 0 8px; font-size: clamp(28px, 7vw, 42px); line-height: 1.15; }
+h2 { margin: 34px 0 8px; font-size: 20px; }
+p, li { color: var(--muted); }
+ul { padding-left: 22px; }
+.status {
+  margin: 24px 0;
+  padding: 14px 16px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  color: var(--text);
+}
+a { color: #a99fff; }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" aria-label="Terug naar SnelLees">&#8592;</a>
+  <strong>SnelLees</strong>
+</header>
+<main>
+  <h1>Privacyverklaring</h1>
+  <p>Laatst bijgewerkt: 11 juli 2026</p>
+
+  <p class="status" data-privacy-status="draft"><strong>Voor publicatie:</strong> de bedrijfs- en contactgegevens op deze pagina worden nog definitief ingevuld.</p>
+
+  <h2>Wie wij zijn</h2>
+  <p>SnelLees wordt aangeboden door [BEDRIJFSNAAM], gevestigd te [VESTIGINGSPLAATS]. Voor privacyvragen kun je contact opnemen via [PRIVACYCONTACT].</p>
+
+  <h2>Welke gegevens we verwerken</h2>
+  <p>Je kunt SnelLees als gast gebruiken. In de gastmodus blijven naam, trainingsvoortgang, instellingen, geplakte teksten en scores op je apparaat.</p>
+  <p>Wanneer je een account maakt, slaan we de volgende gegevens op in Supabase:</p>
+  <ul>
+    <li>e-mailadres en accountidentificatie;</li>
+    <li>zelfgekozen profielnaam en avatar;</li>
+    <li>beginscore, trainingssessies, voortgang, streak en achievements;</li>
+    <li>eigen teksten die je ervoor kiest op te slaan in de app;</li>
+    <li>beperkte productevents, zoals een afgeronde begintest of startweek-sessie.</li>
+  </ul>
+  <p>We slaan geen inhoud van geplakte leesteksten op als productevent.</p>
+
+  <h2>Waarom we dit doen</h2>
+  <p>We gebruiken deze gegevens om voortgang te tonen, je training tussen apparaten te synchroniseren, de app te verbeteren en technische problemen op te lossen. We verkopen geen persoonsgegevens en gebruiken geen gegevens voor gepersonaliseerde advertenties.</p>
+
+  <h2>Bewaartermijn</h2>
+  <p>Gastgegevens blijven op je apparaat totdat je browserdata verwijdert. Accountgegevens blijven bewaard zolang je account bestaat. Je kunt je account en gekoppelde trainingsgegevens in de app verwijderen.</p>
+
+  <h2>Delen en beveiliging</h2>
+  <p>We gebruiken Supabase als verwerker voor accountauthenticatie en opslag. Gegevens worden versleuteld tijdens transport. Toegang tot accountgegevens is beperkt tot de eigenaar van het account en bevoegde beheerders voor beheer en beveiliging.</p>
+
+  <h2>Jouw rechten</h2>
+  <p>Je kunt verzoeken om inzage, correctie, export of verwijdering van je persoonsgegevens via [PRIVACYCONTACT]. Je kunt je account ook rechtstreeks in de app verwijderen.</p>
+
+  <h2>Wijzigingen</h2>
+  <p>Bij belangrijke wijzigingen passen we de datum bovenaan deze verklaring aan. De actuele versie staat op <a href="https://snel-lees-app.vercel.app/privacy.html">https://snel-lees-app.vercel.app/privacy.html</a>.</p>
+</main>
+</body>
+</html>

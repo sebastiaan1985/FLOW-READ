@@ -183,14 +183,16 @@ header {
   border-top: 1px solid var(--border);
   display: flex; flex-direction: column; gap: 4px;
 }
-.sidebar-bottom button {
+.sidebar-bottom button,
+.sidebar-bottom a {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 12px; border: 1px solid var(--border2); border-radius: 10px;
   cursor: pointer; background: transparent; color: var(--muted);
   font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif;
-  width: 100%; transition: all .2s;
+  width: 100%; transition: all .2s; text-decoration: none;
 }
-.sidebar-bottom button:hover { background: rgba(255,255,255,.06); color: var(--text); }
+.sidebar-bottom button:hover,
+.sidebar-bottom a:hover { background: rgba(255,255,255,.06); color: var(--text); }
 
 /* Old nav hidden (replaced by sidebar) */
 header > nav { display: none; }
@@ -2839,6 +2841,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button id="sidebar-geluid-btn" onclick="_geluid.toggle()">🔔 Geluid aan</button>
     <button id="sidebar-kids-btn" onclick="toggleKids()">🎨 Kids modus</button>
     <button id="sidebar-dyx-btn" onclick="dyxOpenPanel();sluitSidebar()">🔤 Dyslexie instellingen</button>
+    <a href="privacy.html"><span aria-hidden="true">🔒</span> Privacy</a>
   </div>
 </div>
 

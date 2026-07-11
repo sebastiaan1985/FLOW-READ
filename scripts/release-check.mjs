@@ -81,7 +81,7 @@ checkJavaScript('ronde.js');
 checkInlineScripts('index.html');
 checkInlineScripts('login.html');
 
-for (const pagina of ['index.html', 'login.html', 'reset-wachtwoord.html']) {
+for (const pagina of ['index.html', 'login.html', 'privacy.html', 'reset-wachtwoord.html']) {
   const html = lees(pagina);
   verwacht(html.includes('Content-Security-Policy'), `${pagina} mist een Content Security Policy.`);
   verwacht(html.includes('strict-origin-when-cross-origin'), `${pagina} mist een referrerbeleid.`);
@@ -90,12 +90,14 @@ for (const pagina of ['index.html', 'login.html', 'reset-wachtwoord.html']) {
 const appHtml = lees('index.html');
 verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black"'), 'iOS PWA gebruikt geen niet-overlappende zwarte statusbalk.');
 verwacht(appHtml.includes('ios-standalone'), 'iOS standalone-layoutdetectie ontbreekt.');
+verwacht(appHtml.includes('href="privacy.html"'), 'Appmenu linkt niet naar de privacyverklaring.');
 verwacht(appHtml.includes("const veiligWoord = String(woord ?? '');"), 'Leesweergave ontsmet eigen woorden niet.');
 verwacht(appHtml.includes('htmlEscape(d.titel)'), 'Skimweergave ontsmet eigen titels niet.');
 for (const eventNaam of ['onboarding_voltooid', 'begintest_voltooid', 'eerste_missie_voltooid', 'startweek_sessie_voltooid', 'startweek_voltooid', 'hermeting_voltooid', 'install_voltooid']) {
   verwacht(appHtml.includes(`gtmTrack('${eventNaam}'`), `Beta-event ontbreekt: ${eventNaam}.`);
 }
 const loginHtml = lees('login.html');
+verwacht(loginHtml.includes('href="privacy.html"'), 'Loginpagina linkt niet naar de privacyverklaring.');
 for (const provider of ['google', 'apple']) {
   verwacht(loginHtml.includes(`socialLogin('${provider}')`), `Login mist ${provider}-OAuth.`);
 }
@@ -148,7 +150,15 @@ for (const screenshot of manifestScreenshots) {
 }
 
 const privacy = lees('PRIVACY_POLICY_TEMPLATE.md');
-const privacyKlaar = !/\[(BEDRIJFSNAAM|PRIVACYCONTACT|PRIVACY_URL|VESTIGINGSPLAATS|DATUM)\]/.test(privacy);
+const privacyHtml = lees('privacy.html');
+const privacyPlaceholders = /\[(BEDRIJFSNAAM|PRIVACYCONTACT|PRIVACY_URL|VESTIGINGSPLAATS|DATUM)\]/;
+const privacyKlaar = !privacyPlaceholders.test(privacy) &&
+  !privacyPlaceholders.test(privacyHtml) &&
+  !privacyHtml.includes('data-privacy-status="draft"');
+verwacht(serviceWorker.includes("'privacy.html'"), 'Offline cache mist privacy.html.');
+verwacht(packageJson.scripts?.build && lees('scripts/build-web.mjs').includes("'privacy.html'"), 'Webbuild neemt privacy.html niet mee.');
+verwacht(existsSync(resolve(root, 'ios/App/App/public/privacy.html')), 'iOS bevat geen privacyverklaring.');
+verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public/privacy.html')), 'Android bevat geen privacyverklaring.');
 const privacyBericht = 'Privacybeleid bevat nog publicatie-placeholders.';
 if (production) verwacht(privacyKlaar, privacyBericht);
 else waarschuw(privacyKlaar, privacyBericht);

@@ -35,7 +35,8 @@ body {
   justify-content: center;
   min-height: 100vh;
   padding: 20px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Geanimeerde achtergrond — zwevende gloed-orbs (CSS-only, geen video) */
@@ -264,6 +265,20 @@ input::placeholder { color: var(--muted); }
 
 .form-panel { display: none; }
 .form-panel.active { display: block; }
+.legal-note {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+.legal-note a { color: #a99fff; }
+@media (max-height: 800px), (max-width: 360px) {
+  body { align-items: flex-start; }
+  .card { margin: auto 0; padding: 28px 22px; }
+  .tagline { margin-bottom: 22px; }
+  .tabs { margin-bottom: 20px; }
+}
 </style>
 </head>
 <body>
@@ -328,6 +343,7 @@ input::placeholder { color: var(--muted); }
   </div>
   <div class="divider">of</div>
   <button class="btn-guest" onclick="doorgaanAlsGast()">Doorgaan zonder account</button>
+  <p class="legal-note">Lees hoe SnelLees met je gegevens omgaat in de <a href="privacy.html">privacyverklaring</a>.</p>
 </div>
 
 <script>
