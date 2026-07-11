@@ -11,6 +11,7 @@ Dit document is de releasevolgorde voor SnelLees. Het doel is niet een zo hoog m
 - Installeerbare PWA met lokale assets en offline app-shell.
 - GitHub `main` bouwt en publiceert de webversie automatisch op Vercel vanuit `dist/`.
 - Privacyvriendelijke beta-events blijven lokaal, worden met een account gesynchroniseerd en bevatten geen geplakte leesteksten.
+- Google- en Apple-knoppen verschijnen alleen wanneer die provider in Supabase werkelijk is ingeschakeld; e-mail en gastmodus blijven altijd beschikbaar.
 
 ## Besliskader
 

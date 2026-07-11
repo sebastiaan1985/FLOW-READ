@@ -10,6 +10,7 @@
 <script src="vendor/supabase.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
 
 :root {
   --bg:      #08081a;
@@ -332,12 +333,12 @@ input::placeholder { color: var(--muted); }
     <button class="btn" id="reg-btn" onclick="registreer()">Account aanmaken</button>
   </div>
 
-  <div class="divider">of sneller verder</div>
-  <div class="social-auth" aria-label="Aanmelden met een accountprovider">
-    <button class="social-auth-btn" id="oauth-google" type="button" onclick="socialLogin('google')">
+  <div class="divider" id="social-divider" hidden>of sneller verder</div>
+  <div class="social-auth" id="social-auth" aria-label="Aanmelden met een accountprovider" hidden>
+    <button class="social-auth-btn" id="oauth-google" type="button" onclick="socialLogin('google')" hidden>
       <span class="provider-mark provider-google" aria-hidden="true">G</span><span>Doorgaan met Google</span>
     </button>
-    <button class="social-auth-btn" id="oauth-apple" type="button" onclick="socialLogin('apple')">
+    <button class="social-auth-btn" id="oauth-apple" type="button" onclick="socialLogin('apple')" hidden>
       <span class="provider-mark provider-apple" aria-hidden="true">&#63743;</span><span>Doorgaan met Apple</span>
     </button>
   </div>
@@ -354,6 +355,31 @@ const SUPABASE_URL  = 'https://hmxrwvxfmhsfgfubcpwb.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhteHJ3dnhmbWhzZmdmdWJjcHdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwOTMxMTQsImV4cCI6MjA4OTY2OTExNH0.2Xc-4R_MsBkLAK0q-ZW95tnxcNKorDgxzt77YrboNtM';
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// Toon alleen providers die in Supabase echt zijn ingeschakeld. Zo komt een
+// bezoeker nooit op een bekende "provider is not enabled"-fout terecht.
+async function laadSocialProviders() {
+  try {
+    const response = await fetch(`${SUPABASE_URL}/auth/v1/settings`, {
+      headers: { apikey: SUPABASE_ANON }
+    });
+    if (!response.ok) throw new Error('Auth-instellingen niet beschikbaar');
+    const { external = {} } = await response.json();
+    let aantal = 0;
+    for (const provider of ['google', 'apple']) {
+      const knop = document.getElementById(`oauth-${provider}`);
+      const actief = external[provider] === true;
+      knop.hidden = !actief;
+      if (actief) aantal++;
+    }
+    document.getElementById('social-divider').hidden = aantal === 0;
+    document.getElementById('social-auth').hidden = aantal === 0;
+  } catch (error) {
+    console.warn('[Auth] Aanmeldproviders konden niet worden gecontroleerd.', error);
+  }
+}
+
+laadSocialProviders();
 
 // ── CONTROLEER AL INGELOGD ───────────────────────────────────
 (async () => {

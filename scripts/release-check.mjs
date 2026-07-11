@@ -102,6 +102,8 @@ for (const provider of ['google', 'apple']) {
   verwacht(loginHtml.includes(`socialLogin('${provider}')`), `Login mist ${provider}-OAuth.`);
 }
 verwacht(loginHtml.includes('signInWithOAuth'), 'Login mist de OAuth-aanroep.');
+verwacht(loginHtml.includes('/auth/v1/settings'), 'Login controleert niet welke OAuth-providers werkelijk aanstaan.');
+verwacht(loginHtml.includes('external[provider] === true'), 'Login toont uitgeschakelde OAuth-providers mogelijk toch.');
 
 const sync = lees('supabase-sync.js');
 for (const sleutel of ['snellees_startweek', 'snellees_events', 'snellees_streak']) {
