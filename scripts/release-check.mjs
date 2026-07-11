@@ -90,6 +90,9 @@ for (const pagina of ['index.html', 'login.html', 'reset-wachtwoord.html']) {
 const appHtml = lees('index.html');
 verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black"'), 'iOS PWA gebruikt geen niet-overlappende zwarte statusbalk.');
 verwacht(appHtml.includes('ios-standalone'), 'iOS standalone-layoutdetectie ontbreekt.');
+for (const eventNaam of ['onboarding_voltooid', 'begintest_voltooid', 'eerste_missie_voltooid', 'startweek_sessie_voltooid', 'startweek_voltooid', 'hermeting_voltooid', 'install_voltooid']) {
+  verwacht(appHtml.includes(`gtmTrack('${eventNaam}'`), `Beta-event ontbreekt: ${eventNaam}.`);
+}
 const loginHtml = lees('login.html');
 for (const provider of ['google', 'apple']) {
   verwacht(loginHtml.includes(`socialLogin('${provider}')`), `Login mist ${provider}-OAuth.`);
@@ -114,6 +117,12 @@ verwacht(deleteFunction.includes('auth.admin.deleteUser(user.id)'), 'Delete Func
 
 const packageJson = JSON.parse(lees('package.json'));
 verwacht(packageJson.scripts?.build === 'node scripts/build-web.mjs', 'Buildscript voor native packaging ontbreekt.');
+verwacht(existsSync(resolve(root, 'vercel.json')), 'Vercel-config ontbreekt.');
+if (existsSync(resolve(root, 'vercel.json'))) {
+  const vercelConfig = JSON.parse(lees('vercel.json'));
+  verwacht(vercelConfig.buildCommand === 'npm run build', 'Vercel moet de webbuild uitvoeren.');
+  verwacht(vercelConfig.outputDirectory === 'dist', 'Vercel moet dist/ publiceren.');
+}
 verwacht(existsSync(resolve(root, 'capacitor.config.json')), 'Capacitor-config ontbreekt.');
 verwacht(JSON.parse(lees('capacitor.config.json')).webDir === 'dist', 'Capacitor moet dist als webDir gebruiken.');
 verwacht(existsSync(resolve(root, 'resources/icon.png')), 'Native bronicoon ontbreekt.');

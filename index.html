@@ -10450,6 +10450,8 @@ function _markeerStartweekVoltooid(type) {
     nummer: afgerond,
     startweek_voltooid: afgerond === week.sessies.length,
   });
+  if (afgerond === 1) gtmTrack('eerste_missie_voltooid', { type });
+  if (volgende.id === 'hermeting') gtmTrack('hermeting_voltooid');
   if (afgerond === week.sessies.length) gtmTrack('startweek_voltooid');
   if (afgerond === week.sessies.length) {
     toonAchievement('🏁', 'Startweek voltooid. Je nieuwe startlijn is gezet!');

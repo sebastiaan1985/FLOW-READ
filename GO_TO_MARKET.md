@@ -9,6 +9,8 @@ Dit document is de releasevolgorde voor SnelLees. Het doel is niet een zo hoog m
 - Startweek met zeven opeenvolgende sessies: tempo, begrip, oogbeweging, fixatie, regressie, langere tekst en een eindmeting.
 - Persoonlijke voortgang en startweek worden met een account naar Supabase gesynchroniseerd.
 - Installeerbare PWA met lokale assets en offline app-shell.
+- GitHub `main` bouwt en publiceert de webversie automatisch op Vercel vanuit `dist/`.
+- Privacyvriendelijke beta-events blijven lokaal, worden met een account gesynchroniseerd en bevatten geen geplakte leesteksten.
 
 ## Besliskader
 
@@ -26,7 +28,7 @@ Dit document is de releasevolgorde voor SnelLees. Het doel is niet een zo hoog m
 
 2. Meetbare funnel
 
-   Voeg voor de beta een privacyvriendelijke eventlaag toe. Minimaal: `onboarding_voltooid`, `begintest_voltooid`, `eerste_missie_voltooid`, `startweek_sessie_voltooid`, `startweek_voltooid`, `hermeting_voltooid`, `install_prompt_getoond`, `install_voltooid` en `account_aangemaakt`. Verzamel geen geplakte leesteksten in analytics.
+   De app registreert al `onboarding_voltooid`, `begintest_voltooid`, `eerste_missie_voltooid`, `startweek_sessie_voltooid`, `startweek_voltooid`, `hermeting_voltooid`, `install_voltooid` en `account_aangemaakt`, zonder geplakte leesteksten. Maak voor de gesloten beta nog een eenvoudige, afgeschermde analyse van deze gesynchroniseerde events per testaccount; verzamel geen externe advertentieprofielen of vrije tekst.
 
 3. Productclaims kalibreren
 
@@ -39,6 +41,10 @@ Dit document is de releasevolgorde voor SnelLees. Het doel is niet een zo hoog m
 5. Releasehygiëne
 
    Leg één productie-URL met HTTPS vast, pas `supabase/migrations/20260710_user_data_contract.sql` toe, controleer daarna Supabase RLS met twee testaccounts en voeg een korte release checklist toe aan iedere versie. Draai voor iedere release `npm run release:check`; gebruik `npm run release:check:production` zodra het privacybeleid is ingevuld. De service worker haalt appcode network-first op en houdt offline een fallback paraat.
+
+6. AI zonder verrassingskosten
+
+   De huidige AI-functies zijn opt-in en werken alleen met een door de gebruiker ingevoerde Gemini-sleutel, lokaal op dat apparaat. Maak dit niet de kern van de eerste beta en zet nooit een gedeelde betaalde API-sleutel in de browser. Voor een bredere release zijn een eigen serverroute, verbruiksgrenzen en duidelijke toestemming nodig.
 
 ## Beta-metrics
 
