@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "SnelLees Trainer",
-  "short_name": "SnelLees",
+  "name": "Snellezer",
+  "short_name": "Snellezer",
   "description": "Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.",
   "start_url": "./",
   "scope": "./",
@@ -64,7 +64,7 @@
       "sizes": "360x732",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "SnelLees onboarding op mobiel"
+      "label": "Snellezer onboarding op mobiel"
     }
   ]
 }

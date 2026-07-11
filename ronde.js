@@ -5,7 +5,7 @@
  *  - CHECKPOINTS: elke ±60 woorden pauzeert de tekst en kiest de speler
  *    in één tik welk woord net voorbijkwam (aandacht + begrip in de loop)
  *  - COMBO: opeenvolgende goede antwoorden stapelen (×2, ×3, …)
- *  - STERREN: ⭐ uitgelezen · ⭐⭐ begrip ≥70% · ⭐⭐⭐ begrip ≥70% op doeltempo
+ *  - STERREN: ⭐ uitgelezen · ⭐⭐ begrip op norm · ⭐⭐⭐ begrip op norm + doeltempo
  *  - XP: elke ronde betaalt uit in het avontuurprofiel (één economie)
  *  - PACING-RAMP: "Nog een keer, +10%?" — sluipend sneller trainen
  *
@@ -196,11 +196,12 @@ const Ronde = {
     this.actief = false;
 
     const begrip = (begripOverride !== undefined) ? begripOverride : this.begripPct();
+    const begripDoel = this.type === 'rsvp' || this.type === 'chunk' ? 67 : 70;
     const doelWpm = (typeof Coach !== 'undefined') ? Coach.adaptief.doelWpm(this.type) : 250;
 
     let sterren = 1;
-    if (begrip !== null && begrip >= 70) sterren = 2;
-    if (begrip !== null && begrip >= 70 && wpm >= doelWpm) sterren = 3;
+    if (begrip !== null && begrip >= begripDoel) sterren = 2;
+    if (begrip !== null && begrip >= begripDoel && wpm >= doelWpm) sterren = 3;
     // Score-rondes (bijv. oog-vanggame): derde ster op topscore i.p.v. tempo
     if (opts && opts.topBij && begrip !== null && begrip >= opts.topBij) sterren = 3;
 
@@ -261,8 +262,19 @@ const Ronde = {
       _gamSla(g);
     } catch (e) {}
 
-    const res = { sterren, wpm, begrip, xp, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus, opts: opts || null, ts: Date.now() };
+    const res = { sterren, wpm, begrip, begripDoel, xp, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus, opts: opts || null, ts: Date.now() };
     this._fluency = null;
+
+    // Tempo-levels vragen zowel uitspelen als minimaal 2 van de 3 vragen goed.
+    // Bij een lagere score blijft de kaartmissie open, maar gewone ronde-XP blijft staan.
+    if (this.type === 'rsvp' || this.type === 'chunk') {
+      if (begrip !== null && begrip >= begripDoel && typeof _markeerEersteMissieVoltooid === 'function') {
+        _markeerEersteMissieVoltooid(this.type);
+      }
+      if (typeof voltooiDaguitdaging === 'function') {
+        voltooiDaguitdaging(this.type, { begrip, sterren });
+      }
+    }
 
     // Gelezen-collectie: vink de tekst af met de beste prestatie
     try {
@@ -290,6 +302,7 @@ const Ronde = {
 
   _resultaatInzicht(r) {
     const begrip = r.begrip === null || r.begrip === undefined ? null : Math.round(r.begrip);
+    const begripDoel = r.begripDoel || 70;
     const leesscore = begrip === null ? Math.round(r.wpm || 0) : Math.round((r.wpm || 0) * (begrip / 100));
     let kop = `Leesscore ${leesscore}`;
     let tekst = 'Dit combineert snelheid en begrip. Zo belonen we niet alleen harder gaan, maar beter lezen.';
@@ -298,15 +311,15 @@ const Ronde = {
       const baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null');
       if (baseline && r.wpm && r.wpm > baseline.wpm) {
         kop = `+${Math.round(r.wpm - baseline.wpm)} WPM sinds je start`;
-        tekst = begrip !== null && begrip >= 70
+        tekst = begrip !== null && begrip >= begripDoel
           ? 'Mooi: je versnelt zonder je begrip kwijt te raken. Dat is precies de trainingswinst die telt.'
-          : 'Je tempo groeit al. Herhaal deze tekst nu rustiger, zodat begrip weer boven 70% komt.';
+          : 'Je tempo groeit al. Herhaal deze tekst nu rustiger, zodat je minstens 2 van de 3 vragen goed hebt.';
       }
     } catch (e) {}
 
-    if (begrip !== null && begrip < 70) {
+    if (begrip !== null && begrip < begripDoel) {
       kop = 'Begrip eerst vastzetten';
-      tekst = 'Onder 70% is sneller lezen vooral skimmen. Herlees dezelfde tekst: dat bouwt vloeiendheid zonder giswerk.';
+      tekst = 'Je begrip bleef onder de norm. Herlees dezelfde tekst: dat bouwt vloeiendheid zonder giswerk.';
     } else if (r.sterren >= 3) {
       kop = 'Klaar voor een gecontroleerde sprong';
       tekst = 'Je haalde snelheid én begrip. De beste volgende stap is dezelfde techniek net iets sneller proberen.';
@@ -316,10 +329,10 @@ const Ronde = {
 
   _toonResultaat(r) {
     this._bewaarLaatsteResultaat(r);
-    // Leestest en lange tekst gebruiken de ronde direct; zo telt ook hun
-    // resultaat mee als dit de volgende sessie in de startweek is.
-    if (typeof _markeerStartweekVoltooid === 'function') _markeerStartweekVoltooid(r.type);
+    // Startweek en leerweg worden centraal samen afgevinkt via
+    // voltooiDaguitdaging; hier nogmaals markeren kan een level overslaan.
     const kids = (typeof Coach !== 'undefined') && Coach.isKids();
+    const begripDoel = r.begripDoel || 70;
     const sterHtml = [1, 2, 3].map(i =>
       `<span class="ronde-ster ${i <= r.sterren ? 'aan' : ''}" style="animation-delay:${i * .18}s">★</span>`).join('');
 
@@ -336,8 +349,8 @@ const Ronde = {
         ? (kids ? 'WAUW! Alle sterren — jij bent een supervos! 🦊' : 'Perfect: snel én alles begrepen.')
         : r.sterren === 2
           ? (kids ? 'Goed gelezen! Haal je ook het doeltempo? 🚀' : `Sterk begrip. Derde ster bij ${r.doelWpm} WPM.`)
-          : (r.begrip !== null && r.begrip < 70
-              ? (kids ? 'Net gemist! Lees ’m nog een keer — dan vang je alle woorden. 🎯' : 'Begrip onder de 70% — herhaald lezen van dezelfde tekst is dé bewezen manier om dat te fixen.')
+          : (r.begrip !== null && r.begrip < begripDoel
+              ? (kids ? 'Net gemist! Lees ’m nog een keer — dan vang je alle woorden. 🎯' : 'Begrip onder de norm — herhaald lezen van dezelfde tekst is een sterke manier om dat te verbeteren.')
               : (kids ? 'Goed gedaan! Nog een keertje?' : 'Uitgelezen! Checkpoints goed beantwoorden geeft meer sterren.'));
     }
 
@@ -357,9 +370,17 @@ const Ronde = {
       }
     } catch (e) { /* missie-beloning is optioneel */ }
 
+    let leerwegHtml = '';
+    try {
+      const beloning = window._lwLaatsteBeloning;
+      if (beloning && beloning.type === r.type && Date.now() - beloning.ts < 120000) {
+        leerwegHtml = `<div class="ronde-res-xp" style="background:rgba(124,111,247,.15);border-color:rgba(124,111,247,.3);color:#b8b0ff">${beloning.boss ? 'Weekbaas verslagen' : 'Missie voltooid'} · +${beloning.xp} XP</div>`;
+      }
+    } catch (e) { /* leerweg-beloning is optioneel */ }
+
     // Knoppen: herlezen (slecht begrip) óf +10% (goed) · ketting · kaart/klaar
     const paced = r.type === 'rsvp' || r.type === 'chunk';
-    const herleesbaar = paced && r.begrip !== null && r.begrip < 70;
+    const herleesbaar = paced && r.begrip !== null && r.begrip < begripDoel;
     let knoppen = '';
     if (herleesbaar) {
       knoppen += `<button class="ronde-res-opnieuw" onclick="Ronde.herlees(${r.begrip})">📖 Lees nog eens <span style="opacity:.8">(zelfde tempo)</span></button>`;
@@ -388,11 +409,12 @@ const Ronde = {
         <div class="ronde-res-uitleg">${uitleg}</div>
         <div class="ronde-res-grid">
           <div><div class="ronde-res-num" id="ronde-res-wpm">${r.opts && r.opts.waarde ? r.opts.waarde : '0'}</div><div class="ronde-res-lbl">${r.opts && r.opts.label ? r.opts.label : 'WPM'}</div></div>
-          <div><div class="ronde-res-num" style="color:${r.begrip === null ? 'var(--muted)' : r.begrip >= 70 ? 'var(--green)' : '#f59e0b'}">${r.begrip === null ? '—' : r.begrip + '%'}</div><div class="ronde-res-lbl">${r.opts && r.opts.label ? 'raak' : 'begrip'}</div></div>
+          <div><div class="ronde-res-num" style="color:${r.begrip === null ? 'var(--muted)' : r.begrip >= begripDoel ? 'var(--green)' : '#f59e0b'}">${r.begrip === null ? '—' : r.begrip + '%'}</div><div class="ronde-res-lbl">${r.opts && r.opts.label ? 'raak' : 'begrip'}</div></div>
           <div><div class="ronde-res-num" style="color:#f0b000">${r.maxCombo > 1 ? '×' + r.maxCombo : '—'}</div><div class="ronde-res-lbl">combo</div></div>
         </div>
         <div class="ronde-res-inzicht"><b>${inzicht.kop}</b><span>${inzicht.tekst}</span></div>
         ${missieHtml}
+        ${leerwegHtml}
         <div class="ronde-res-xp">+${r.xp} XP</div>
         <div class="ronde-res-knoppen">${knoppen}</div>
       </div>`;

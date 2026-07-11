@@ -1,6 +1,6 @@
 {
   "appId": "nl.snellees.trainer",
-  "appName": "SnelLees",
+  "appName": "Snellezer",
   "webDir": "dist",
   "bundledWebRuntime": false,
   "server": {

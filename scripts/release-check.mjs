@@ -43,6 +43,7 @@ function checkInlineScripts(bestand) {
 const manifest = JSON.parse(lees('manifest.json'));
 const manifestScreenshots = manifest.screenshots || [];
 verwacht(manifest.name && manifest.short_name, 'Manifest mist name of short_name.');
+verwacht(manifest.name === 'Snellezer' && manifest.short_name === 'Snellezer', 'Manifest gebruikt niet overal de naam Snellezer.');
 verwacht(manifest.display === 'standalone', 'Manifest moet standalone starten.');
 verwacht(manifest.theme_color === '#08081a', 'Manifest moet de donkere PWA-statuskleur gebruiken.');
 verwacht(manifest.icons?.some(icon => icon.purpose?.includes('maskable')), 'Manifest mist een maskable icoon.');
@@ -78,6 +79,7 @@ if (cacheBlok) {
 checkJavaScript('service-worker.js');
 checkJavaScript('supabase-sync.js');
 checkJavaScript('ronde.js');
+checkJavaScript('coach.js');
 checkInlineScripts('index.html');
 checkInlineScripts('login.html');
 
@@ -88,15 +90,38 @@ for (const pagina of ['index.html', 'login.html', 'privacy.html', 'reset-wachtwo
 }
 
 const appHtml = lees('index.html');
+verwacht(appHtml.includes('<title>Snellezer</title>'), 'Apppagina gebruikt niet de naam Snellezer.');
+verwacht(appHtml.includes('function startInhoudsQuiz('), 'RSVP en chunks missen de quizfinale met drie inhoudsvragen.');
+verwacht(appHtml.includes("Coach.registreerBegrip(begripPct, type)"), 'Quizresultaat voedt de begripsscore niet.');
+verwacht(appHtml.includes("startInhoudsQuiz('rsvp'"), 'RSVP opent na het lezen geen inhoudsvragen.');
+verwacht(appHtml.includes("startInhoudsQuiz('chunk'"), 'Chunks opent na het lezen geen inhoudsvragen.');
+verwacht(!appHtml.includes('onclick="aiLangeTekstNieuwe()"'), 'Lange teksten toont nog een AI-tekstknop.');
+verwacht(!appHtml.includes("aiLaadTekstBronOpties();"), 'AI-tekstgenerator wordt nog aan de tekstkiezer gekoppeld.');
+verwacht(appHtml.includes("accept=\".txt,.md,text/plain,text/markdown\""), 'Eigen tekst ondersteunt geen duidelijke txt/md-upload.');
+verwacht(appHtml.includes("avatar-adult") && appHtml.includes("avatar-kid"), 'Volwassen- en kinderavatars ontbreken.');
+verwacht(existsSync(resolve(root, 'assets/avatars/adults-grid.jpg')), 'Volwassen avatarset ontbreekt.');
+verwacht(existsSync(resolve(root, 'assets/avatars/kids-grid.jpg')), 'Kinderavatarset ontbreekt.');
 verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black"'), 'iOS PWA gebruikt geen niet-overlappende zwarte statusbalk.');
 verwacht(appHtml.includes('ios-standalone'), 'iOS standalone-layoutdetectie ontbreekt.');
 verwacht(appHtml.includes('href="privacy.html"'), 'Appmenu linkt niet naar de privacyverklaring.');
+verwacht(appHtml.includes("const LW_ACTIEF_KEY = 'snellees_actieve_missie'"), 'Leerweg mist een persistente actieve missie.');
+verwacht(appHtml.includes('lwMissieBeloning'), 'Leerweg mist missie- en weekbaasbeloningen.');
+verwacht(appHtml.includes('Rond eerst de vorige missie af.'), 'Leerweg laat vergrendelde missies mogelijk overslaan.');
+verwacht(!appHtml.includes('onclick="leerWegDagMarkeer()"'), 'Leerweg bevat nog een handmatige voltooi-knop.');
+verwacht(appHtml.includes('const sessie = startweek?.sessies?.[d - 1]'), 'Startweek en eerste spelwereld zijn niet gekoppeld.');
+verwacht(appHtml.includes('kaartMissieVoltooid && typeof _markeerStartweekVoltooid'), 'Startweek kan buiten een echte kaartmissie voortgang krijgen.');
+verwacht(appHtml.includes("const kwaliteitNodig = type === 'rsvp' || type === 'chunk'"), 'Tempo-levels missen de begripspoort.');
+verwacht(!appHtml.includes("slaaSessieOp(wpm, rsvpWoorden.length); voltooiDaguitdaging('rsvp')"), 'RSVP kan een missie voltooien vóór de begripsmeting.');
+verwacht(!lees('ronde.js').includes("_markeerStartweekVoltooid(r.type)"), 'Ronde-resultaat kan onbedoeld een extra startweeksessie overslaan.');
+verwacht(lees('ronde.js').includes("begrip !== null && begrip >= begripDoel"), 'Leesronde voltooit de persoonlijke missie zonder begripspoort.');
+verwacht(lees('coach.js').includes("baselineKlaar && t.id === 'e1'"), 'Coach kan na de begintest nog vragen om de begintest te doen.');
 verwacht(appHtml.includes("const veiligWoord = String(woord ?? '');"), 'Leesweergave ontsmet eigen woorden niet.');
 verwacht(appHtml.includes('htmlEscape(d.titel)'), 'Skimweergave ontsmet eigen titels niet.');
 for (const eventNaam of ['onboarding_voltooid', 'begintest_voltooid', 'eerste_missie_voltooid', 'startweek_sessie_voltooid', 'startweek_voltooid', 'hermeting_voltooid', 'install_voltooid']) {
   verwacht(appHtml.includes(`gtmTrack('${eventNaam}'`), `Beta-event ontbreekt: ${eventNaam}.`);
 }
 const loginHtml = lees('login.html');
+verwacht(loginHtml.includes('<title>Inloggen — Snellezer</title>'), 'Loginpagina gebruikt niet de naam Snellezer.');
 verwacht(loginHtml.includes('href="privacy.html"'), 'Loginpagina linkt niet naar de privacyverklaring.');
 for (const provider of ['google', 'apple']) {
   verwacht(loginHtml.includes(`socialLogin('${provider}')`), `Login mist ${provider}-OAuth.`);

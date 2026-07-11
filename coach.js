@@ -220,8 +220,10 @@ const Coach = {
 
       // Template kiezen met anti-herhaling
       const recent = st.laatsteTemplates || [];
-      let pool = this.TEMPLATES.filter(t => t.cat === cat && !recent.includes(t.id));
-      if (!pool.length) pool = this.TEMPLATES.filter(t => t.cat === cat);
+      const baselineKlaar = !!localStorage.getItem('begintest_baseline');
+      const passend = t => t.cat === cat && !(baselineKlaar && t.id === 'e1');
+      let pool = this.TEMPLATES.filter(t => passend(t) && !recent.includes(t.id));
+      if (!pool.length) pool = this.TEMPLATES.filter(passend);
       const tpl = pool[Math.floor(Math.random() * pool.length)];
 
       st.laatsteTemplates = [...recent, tpl.id].slice(-5);

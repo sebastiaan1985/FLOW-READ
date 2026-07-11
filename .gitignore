@@ -1,3 +1,4 @@
 dist/
 node_modules/
 .playwright-cli/
+assets/avatars/*-grid.png

@@ -1,6 +1,6 @@
 /**
  * service-worker.js
- * SnelLees Trainer — PWA offline support
+ * Snellezer — PWA offline support
  *
  * Alle assets zijn nu lokaal gehost (geen CDN meer):
  * - HTML-pagina's → Network First (altijd vers, cache als offline-fallback)
@@ -9,7 +9,7 @@
  * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM = 'snellees-v28';
+const CACHE_NAAM = 'snellees-v29';
 
 const CACHE_STATISCH = [
   './',
@@ -22,6 +22,8 @@ const CACHE_STATISCH = [
   'coach.js',
   'ronde.js',
   'manifest.json',
+  'assets/avatars/adults-grid.jpg',
+  'assets/avatars/kids-grid.jpg',
   'icons/icon-192.png',
   'icons/icon-512.png',
   'icons/icon-maskable-512.png',

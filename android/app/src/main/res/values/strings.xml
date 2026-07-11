@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">SnelLees</string>
-    <string name="title_activity_main">SnelLees</string>
+    <string name="app_name">Snellezer</string>
+    <string name="title_activity_main">Snellezer</string>
     <string name="package_name">nl.snellees.trainer</string>
     <string name="custom_url_scheme">nl.snellees.trainer</string>
 </resources>
