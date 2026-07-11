@@ -28,7 +28,7 @@ Dit document is de releasevolgorde voor SnelLees. Het doel is niet een zo hoog m
 
 2. Meetbare funnel
 
-   De app registreert al `onboarding_voltooid`, `begintest_voltooid`, `eerste_missie_voltooid`, `startweek_sessie_voltooid`, `startweek_voltooid`, `hermeting_voltooid`, `install_voltooid` en `account_aangemaakt`, zonder geplakte leesteksten. Maak voor de gesloten beta nog een eenvoudige, afgeschermde analyse van deze gesynchroniseerde events per testaccount; verzamel geen externe advertentieprofielen of vrije tekst.
+   De app registreert al `onboarding_voltooid`, `begintest_voltooid`, `eerste_missie_voltooid`, `startweek_sessie_voltooid`, `startweek_voltooid`, `hermeting_voltooid`, `install_voltooid` en `account_aangemaakt`, zonder geplakte leesteksten. Gebruik `supabase/queries/beta_metrics.sql` in de afgeschermde Supabase SQL Editor voor de wekelijkse funnel; verzamel geen externe advertentieprofielen of vrije tekst.
 
 3. Productclaims kalibreren
 

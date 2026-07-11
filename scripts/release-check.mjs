@@ -113,6 +113,10 @@ for (const kolom of ['av_actief', 'extra', 'daily_challenge', 'snellees_gebruike
 }
 verwacht(migratie.includes('enable row level security'), 'Migratie zet RLS niet aan.');
 
+const betaMetrics = lees('supabase/queries/beta_metrics.sql');
+verwacht(betaMetrics.includes("extra -> 'snellees_events'"), 'Beta-metrics leest de gesynchroniseerde events niet.');
+verwacht(betaMetrics.includes('count(distinct account_id)'), 'Beta-metrics mist unieke accounttellingen.');
+
 const deleteFunction = lees('supabase/functions/delete-account/index.ts');
 verwacht(deleteFunction.includes('auth.getUser()'), 'Delete Function verifieert de gebruiker niet.');
 verwacht(deleteFunction.includes('auth.admin.deleteUser(user.id)'), 'Delete Function verwijdert geen Auth-account.');
