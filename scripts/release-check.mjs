@@ -127,6 +127,8 @@ verwacht(deleteFunction.includes('auth.admin.deleteUser(user.id)'), 'Delete Func
 
 const packageJson = JSON.parse(lees('package.json'));
 verwacht(packageJson.scripts?.build === 'node scripts/build-web.mjs', 'Buildscript voor native packaging ontbreekt.');
+verwacht(packageJson.scripts?.['release:check:live'] === 'node scripts/check-live-config.mjs', 'Live releasecheck ontbreekt.');
+verwacht(existsSync(resolve(root, 'scripts/check-live-config.mjs')), 'Script voor live releasecontrole ontbreekt.');
 verwacht(existsSync(resolve(root, 'vercel.json')), 'Vercel-config ontbreekt.');
 if (existsSync(resolve(root, 'vercel.json'))) {
   const vercelConfig = JSON.parse(lees('vercel.json'));

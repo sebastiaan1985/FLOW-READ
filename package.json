@@ -7,6 +7,7 @@
     "build": "node scripts/build-web.mjs",
     "release:check": "node scripts/build-web.mjs && node scripts/release-check.mjs",
     "release:check:production": "node scripts/build-web.mjs && node scripts/release-check.mjs --production",
+    "release:check:live": "node scripts/check-live-config.mjs",
     "native:add:ios": "npm run build && npx cap add ios",
     "native:add:android": "npm run build && npx cap add android",
     "native:sync": "npm run build && npx cap sync",

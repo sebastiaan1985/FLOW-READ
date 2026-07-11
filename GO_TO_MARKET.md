@@ -41,7 +41,7 @@ Dit document is de releasevolgorde voor SnelLees. Het doel is niet een zo hoog m
 
 5. Releasehygiëne
 
-   Leg één productie-URL met HTTPS vast, pas `supabase/migrations/20260710_user_data_contract.sql` toe, controleer daarna Supabase RLS met twee testaccounts en voeg een korte release checklist toe aan iedere versie. Draai voor iedere release `npm run release:check`; gebruik `npm run release:check:production` zodra het privacybeleid is ingevuld. De service worker haalt appcode network-first op en houdt offline een fallback paraat.
+   Leg één productie-URL met HTTPS vast, pas `supabase/migrations/20260710_user_data_contract.sql` toe, controleer daarna Supabase RLS met twee testaccounts en voeg een korte release checklist toe aan iedere versie. Draai voor iedere release `npm run release:check`; gebruik `npm run release:check:production` zodra het privacybeleid is ingevuld en `npm run release:check:live` voor Vercel, providerstatus, databaseschema, anonieme RLS en de verwijderfunctie. De service worker haalt appcode network-first op en houdt offline een fallback paraat.
 
 6. AI zonder verrassingskosten
 
