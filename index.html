@@ -1445,6 +1445,38 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 .dyx-mode-desc { font-size: .75rem; color: #8b5e3c; line-height: 1.3; }
 .dyx-mode-best { font-size: .7rem; color: #e07000; font-weight: 700; margin-top: 6px; min-height: 1em; }
 @media(max-width:600px){ .dyx-mode-grid { grid-template-columns: 1fr; } }
+.dyx-leer-kop { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px; align-items:center; margin:14px 0 12px; padding:16px; background:var(--card); border:1px solid var(--border); border-radius:8px; }
+.dyx-leer-kop b { display:block; font-size:1rem; }
+.dyx-leer-kop span { display:block; margin-top:4px; color:var(--muted); font-size:.78rem; line-height:1.45; }
+.dyx-leer-ring { width:58px; height:58px; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--accent) var(--dyx-pad-pct,0%),rgba(255,255,255,.08) 0); position:relative; font-size:.72rem; font-weight:850; }
+.dyx-leer-ring::before { content:''; position:absolute; inset:6px; border-radius:50%; background:var(--card); }
+.dyx-leer-ring span { position:relative; z-index:1; margin:0; color:var(--text); }
+.dyx-pad { display:grid; gap:8px; margin-bottom:18px; }
+.dyx-pad-les { display:grid; grid-template-columns:44px minmax(0,1fr) auto; gap:12px; align-items:center; width:100%; min-height:68px; padding:10px 12px; border:1px solid var(--border); border-radius:8px; background:var(--card2); color:var(--text); font:inherit; text-align:left; cursor:pointer; transition:border-color .15s,background .15s,transform .15s; }
+.dyx-pad-les:hover:not([aria-disabled="true"]) { border-color:rgba(124,111,247,.6); transform:translateY(-1px); }
+.dyx-pad-les.nu { border-color:var(--accent); background:rgba(124,111,247,.11); }
+.dyx-pad-les.klaar { border-color:rgba(52,211,153,.35); }
+.dyx-pad-les[aria-disabled="true"] { opacity:.42; cursor:not-allowed; }
+.dyx-pad-num { width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:rgba(124,111,247,.15); color:#c1bbff; font-weight:850; }
+.dyx-pad-les.klaar .dyx-pad-num { background:rgba(52,211,153,.16); color:#34d399; }
+.dyx-pad-tekst b { display:block; font-size:.9rem; }
+.dyx-pad-tekst span { display:block; margin-top:3px; color:var(--muted); font-size:.72rem; line-height:1.35; }
+.dyx-pad-score { color:#f0c000; font-size:.76rem; font-weight:800; white-space:nowrap; }
+.dyx-les-banner { display:none; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; padding:12px 14px; margin-bottom:12px; border:1px solid rgba(124,111,247,.35); border-radius:8px; background:rgba(124,111,247,.1); }
+.dyx-les-banner.actief { display:grid; }
+.dyx-les-banner b { display:block; font-size:.88rem; }
+.dyx-les-banner span { color:var(--muted); font-size:.72rem; }
+.dyx-vrij { margin:0 0 16px; border:1px solid var(--border); border-radius:8px; background:var(--card2); }
+.dyx-vrij > summary { cursor:pointer; padding:12px 14px; font-size:.82rem; font-weight:750; color:var(--muted); }
+.dyx-vrij-inhoud { padding:0 12px 12px; }
+.dyx-uitleg { margin-bottom:14px; padding:12px 14px; border-left:3px solid var(--accent2); background:rgba(56,200,240,.07); border-radius:4px; color:var(--muted); font-size:.78rem; line-height:1.5; }
+.dyx-uitleg b { color:var(--text); }
+.dyx-luister-knop { width:48px; height:48px; display:grid; place-items:center; margin:0 auto 12px; border:1px solid rgba(124,111,247,.5); border-radius:50%; background:rgba(124,111,247,.15); color:#fff; font-size:1.3rem; cursor:pointer; }
+.dyx-bouw-doel { min-height:54px; display:flex; gap:5px; justify-content:center; align-items:center; flex-wrap:wrap; margin:8px 0 14px; padding:8px; border-bottom:2px solid rgba(124,111,247,.4); }
+.dyx-bouw-tegel { padding:10px 14px; border:1px solid rgba(124,111,247,.45); border-radius:8px; background:rgba(124,111,247,.12); color:var(--text); font:inherit; font-weight:750; cursor:pointer; }
+.dyx-bouw-tegel.gekozen { opacity:.35; pointer-events:none; }
+.dyx-disclaimer { margin:0 0 14px; color:var(--muted); font-size:.72rem; line-height:1.45; }
+@media(max-width:520px){ .dyx-pad-les { grid-template-columns:40px minmax(0,1fr); } .dyx-pad-score { grid-column:2; } .dyx-leer-kop { padding:14px; } }
 
 .dyx-timer-wrap {
   height: 14px; background: rgba(0,0,0,.08); border-radius: 999px;
@@ -1517,7 +1549,9 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   background: linear-gradient(135deg, #fff8e7, #ffeec8);
   border: 2px solid #f0c040;
   box-shadow: 0 8px 40px rgba(240,160,0,.2);
+  color: #3a2000;
 }
+#screen-dyslexie .game-display .dyx-game-sub { color:#6b461a !important; }
 #screen-dyslexie .game-word {
   font-size: 3.2rem; font-weight: 700; color: #3a2000;
   font-family: 'Comic Neue', cursive;
@@ -3393,9 +3427,10 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div class="icon-big">📖</div>
       <h2 style="margin-bottom:8px">Ontdek jouw leesniveau!</h2>
       <p style="color:var(--muted);max-width:500px;margin:0 auto 20px">
-        Je krijgt een kort stukje tekst te lezen. Lees het op je normale tempo — niet te snel, niet te langzaam.
-        Daarna beantwoord je een paar vragen over wat je gelezen hebt.
+        Je krijgt een onbekende tekst uit een ruime testvoorraad. Lees op je normale tempo — niet te snel, niet te langzaam.
+        Daarna beantwoord je drie vragen. Zo meten we snelheid én begrip op een vergelijkbare manier.
       </p>
+      <div id="bt-tekstvoorraad" style="font-size:12px;color:var(--muted);margin:-8px 0 16px"></div>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
         <div class="card" style="padding:12px 18px;text-align:center;min-width:120px">
           <div style="font-size:1.5rem">⏱</div>
@@ -3413,7 +3448,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
           <div style="font-size:13px;font-weight:600">Bekijk je score</div>
         </div>
       </div>
-      <button class="btn btn-primary" onclick="begintestStart()" style="font-size:1rem;padding:12px 32px">Start de test</button>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="begintestStart()" style="font-size:1rem;padding:12px 32px">Start officiële begintest</button>
+        <button class="btn btn-ghost" onclick="begintestEigenTekst()">Meet met eigen tekst</button>
+      </div>
+      <p style="color:var(--muted);font-size:12px;max-width:520px;margin:12px auto 0">Een eigen of bekende tekst is handig als oefenmeting, maar telt niet als officiële beginscore omdat bekendheid je tempo kan beïnvloeden.</p>
     </div>
     <div id="bt-vorige-result" style="display:none;margin-top:16px">
       <div class="card" style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center">
@@ -4250,11 +4289,29 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
 <!-- ── DYSLEXIE SPEL ──────────────────────────────────────── -->
 <div id="screen-dyslexie" class="screen">
-  <div class="page-title">🌈 Dyslexie Leesavontuur</div>
-  <div class="page-sub">Train je woordherkenning met 3 verschillende spelmodi. Verdien badges en breek je records!</div>
+  <div class="page-title">Dyslexie Leeslab</div>
+  <div class="page-sub">Bouw stap voor stap nauwkeurigheid, woordherkenning en leesvloeiendheid op.</div>
+  <p class="dyx-disclaimer">Deze leerweg oefent leesvaardigheden en vervangt geen dyslexieonderzoek of begeleiding door een gespecialiseerde leerkracht.</p>
+
+  <div class="dyx-leer-kop">
+    <div><b>Jouw leerweg</b><span>Elke les bouwt voort op de vorige. Met 8 van de 10 goed beheers je een stap.</span></div>
+    <div class="dyx-leer-ring" id="dyx-leer-ring"><span id="dyx-leer-pct">0%</span></div>
+  </div>
+  <div class="dyx-pad" id="dyx-pad"></div>
+  <div class="dyx-les-banner" id="dyx-les-banner"><div><b id="dyx-les-titel"></b><span id="dyx-les-doel"></span></div><strong id="dyx-les-voortgang">0/10</strong></div>
+
+  <details class="dyx-vrij">
+    <summary>Vrij oefenen en records</summary>
+    <div class="dyx-vrij-inhoud">
 
   <!-- MODUS KIEZER -->
   <div class="dyx-mode-grid" id="dyx-mode-grid">
+    <div class="dyx-mode-card" onclick="dyxKiesModus('luister')" id="dyx-mode-luister">
+      <div class="dyx-mode-icon">🔊</div>
+      <div class="dyx-mode-naam">Luister &amp; Kies</div>
+      <div class="dyx-mode-desc">Koppel een gehoord woord aan het juiste woordbeeld</div>
+      <div class="dyx-mode-best" id="dyx-best-luister"></div>
+    </div>
     <div class="dyx-mode-card dyx-mode-active" onclick="dyxKiesModus('flits')" id="dyx-mode-flits">
       <div class="dyx-mode-icon">⚡</div>
       <div class="dyx-mode-naam">Flits &amp; Kies</div>
@@ -4267,13 +4324,29 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div class="dyx-mode-desc">Vind de foute letter in het woord</div>
       <div class="dyx-mode-best" id="dyx-best-jacht"></div>
     </div>
+    <div class="dyx-mode-card" onclick="dyxKiesModus('bouw')" id="dyx-mode-bouw">
+      <div class="dyx-mode-icon">🧩</div>
+      <div class="dyx-mode-naam">Woorddelen</div>
+      <div class="dyx-mode-desc">Zet klank- en woorddelen in de goede volgorde</div>
+      <div class="dyx-mode-best" id="dyx-best-bouw"></div>
+    </div>
+    <div class="dyx-mode-card" onclick="dyxKiesModus('context')" id="dyx-mode-context">
+      <div class="dyx-mode-icon">💬</div>
+      <div class="dyx-mode-naam">Zin &amp; Betekenis</div>
+      <div class="dyx-mode-desc">Kies welk woord logisch in de zin past</div>
+      <div class="dyx-mode-best" id="dyx-best-context"></div>
+    </div>
     <div class="dyx-mode-card" onclick="dyxKiesModus('snelronde')" id="dyx-mode-snelronde">
-      <div class="dyx-mode-icon">🏎️</div>
-      <div class="dyx-mode-naam">Snelronde</div>
-      <div class="dyx-mode-desc">60 seconden — zo veel mogelijk woorden!</div>
+      <div class="dyx-mode-icon">⚡</div>
+      <div class="dyx-mode-naam">Vloeiendheidsronde</div>
+      <div class="dyx-mode-desc">Pas na nauwkeurigheid: herken woorden vlot</div>
       <div class="dyx-mode-best" id="dyx-best-snelronde"></div>
     </div>
   </div>
+    </div>
+  </details>
+
+  <div class="dyx-uitleg" id="dyx-instructie"><b>Start bij les 1.</b> Luister, kijk en kies. Foute woorden komen later bewust terug in je herhaalset.</div>
 
   <!-- SCORE BALK -->
   <div class="score-display" id="dyx-score-display">
@@ -4294,8 +4367,8 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <!-- SPEELVELD -->
   <div class="game-display" id="game-display">
-    <div style="font-size:1.1rem;color:#8b5e3c;font-family:'Comic Neue',cursive">Kies een spelmodus en druk op Start!</div>
-    <div style="font-size:3rem">🦊 📖 ✨</div>
+    <div style="font-size:1.1rem;color:#8b5e3c;font-family:'Comic Neue',cursive">Start hierboven je volgende les of kies vrij oefenen.</div>
+    <div style="font-size:3rem">🔤 📖 ✨</div>
   </div>
 
   <div class="feedback-msg" id="game-feedback"></div>
@@ -4303,7 +4376,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <!-- KNOPPEN -->
   <div class="btn-row" style="justify-content:center;margin-top:8px;gap:8px;flex-wrap:wrap">
-    <button class="btn btn-primary" id="game-start-btn" onclick="gameStart()">🚀 Start spelletje</button>
+    <button class="btn btn-primary" id="game-start-btn" onclick="dyxStartVrijeRonde()">Start vrije ronde</button>
     <button class="btn btn-ghost" onclick="gameStop()">⏹ Stop</button>
     <select id="game-niveau-select" style="font-family:'Comic Neue',cursive;font-size:14px">
       <option value="0">⭐ Beginner (3 letters)</option>
@@ -4327,12 +4400,12 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="dyx-highscore-grid" id="dyx-highscore-grid"></div>
 
   <div class="divider"></div>
-  <h3>Waarom helpt dit?</h3>
+  <h3>Waarom deze opbouw?</h3>
   <div class="tip-grid">
-    <div class="tip"><b>🔤 Speciaal lettertype</b> Comic Neue heeft duidelijke, ronde letters — fijn voor dyslectische lezers.</div>
-    <div class="tip tip-cyan"><b>🔍 Letter Jacht</b> Traint specifiek op b/d, p/q en ie/ei verwarring — de kern van dyslexie.</div>
-    <div class="tip tip-green"><b>⚡ Snelronde</b> Bouwt leessnelheid op door steeds sneller woorden te herkennen.</div>
-    <div class="tip tip-pink"><b>🏆 Badges &amp; records</b> Motivatie door achievements en persoonlijke records bij te houden.</div>
+    <div class="tip"><b>Expliciet</b>Elke les vertelt precies welke koppeling of woordstructuur je oefent.</div>
+    <div class="tip tip-cyan"><b>Systematisch</b>Van horen en herkennen naar woorddelen, spelling, betekenis en vloeiendheid.</div>
+    <div class="tip tip-green"><b>Persoonlijke herhaling</b>Woorden die lastig waren komen vaker terug tot ze beheerst zijn.</div>
+    <div class="tip tip-pink"><b>Eigen leesweergave</b>Lettertype, afstand, grootte en achtergrond zijn naar persoonlijke voorkeur instelbaar.</div>
   </div>
 </div>
 
@@ -5138,13 +5211,46 @@ const BEGINTEST_PASSAGES = [
 
 let btHuidigePassage = null;
 
+function begintestPassagesBeschikbaar() {
+  const vaste = BEGINTEST_PASSAGES.map((passage, index) => ({
+    ...passage,
+    id:`vast-${index + 1}`,
+    titel:`Testtekst ${index + 1}`,
+    vragen:(passage.vragen || []).slice(0, 3),
+  }));
+  if (typeof tekstenKies !== 'function') return vaste;
+  const bibliotheek = tekstenKies({
+    doelgroep:typeof tekstDoelgroepen === 'function' ? tekstDoelgroepen() : undefined,
+    collectie:'kort',
+    minWoorden:170,
+    maxWoorden:300,
+  }).filter(tekst => Array.isArray(tekst.vragen) && tekst.vragen.length >= 3)
+    .map(tekst => ({
+      id:`b:${tekst.id}`,
+      titel:tekst.titel,
+      tekst:tekst.tekst,
+      vragen:tekst.vragen.slice(0, 3).map(vraag => ({
+        vraag:vraag.v,
+        correct:vraag.opties[vraag.correct],
+        fouten:vraag.opties.filter((optie, index) => index !== vraag.correct).slice(0, 3),
+      })),
+    }));
+  return [...vaste, ...bibliotheek];
+}
+
 function begintestKiesPassage() {
-  // Pick a different passage each time
-  const last = parseInt(localStorage.getItem('bt_laatste_passage') ?? '-1');
-  let idx;
-  do { idx = Math.floor(Math.random() * BEGINTEST_PASSAGES.length); } while (idx === last && BEGINTEST_PASSAGES.length > 1);
-  localStorage.setItem('bt_laatste_passage', String(idx));
-  btHuidigePassage = BEGINTEST_PASSAGES[idx];
+  const passages = begintestPassagesBeschikbaar();
+  let historie;
+  try { historie = JSON.parse(localStorage.getItem('bt_passage_history') || '{"aantallen":{},"laatste":null}'); }
+  catch(e) { historie = { aantallen:{}, laatste:null }; }
+  historie.aantallen = historie.aantallen || {};
+  const minstGebruikt = Math.min(...passages.map(passage => historie.aantallen[passage.id] || 0));
+  let kandidaten = passages.filter(passage => (historie.aantallen[passage.id] || 0) === minstGebruikt);
+  if (kandidaten.length > 1) kandidaten = kandidaten.filter(passage => passage.id !== historie.laatste);
+  btHuidigePassage = kandidaten[Math.floor(Math.random() * kandidaten.length)] || passages[0];
+  historie.aantallen[btHuidigePassage.id] = (historie.aantallen[btHuidigePassage.id] || 0) + 1;
+  historie.laatste = btHuidigePassage.id;
+  localStorage.setItem('bt_passage_history', JSON.stringify(historie));
   return btHuidigePassage;
 }
 
@@ -5164,7 +5270,18 @@ function begintestInit() {
   } else {
     el.style.display = 'none';
   }
+  const voorraad = document.getElementById('bt-tekstvoorraad');
+  if (voorraad) voorraad.textContent = `${begintestPassagesBeschikbaar().length} verschillende testteksten beschikbaar · een tekst komt pas terug nadat de minst gebruikte teksten aan bod zijn geweest.`;
   btToonStap('intro');
+}
+
+function begintestEigenTekst() {
+  sidebarNav('tekst');
+  setTimeout(() => {
+    const info = document.getElementById('tekst-info');
+    if (info) info.innerHTML = '<div class="card" style="padding:12px 14px">Plak of upload je tekst en kies <b>Leestest</b>. Dit is een oefenmeting; je officiële beginscore blijft ongewijzigd.</div>';
+    document.getElementById('custom-text')?.focus();
+  }, 80);
 }
 
 function btToonStap(stap) {
@@ -5232,7 +5349,14 @@ function begintestControleer() {
   // Save baseline
   const hadBaseline = !!localStorage.getItem('begintest_baseline');
   const datum = new Date().toLocaleDateString('nl-NL');
-  localStorage.setItem('begintest_baseline', JSON.stringify({ wpm, begrip, datum }));
+  const woordTelling = btHuidigePassage.tekst.trim().split(/\s+/).length;
+  localStorage.setItem('begintest_baseline', JSON.stringify({
+    wpm,
+    begrip,
+    datum,
+    passageId:btHuidigePassage.id,
+    woorden:woordTelling,
+  }));
   if (typeof gtmTrack === 'function') gtmTrack('begintest_voltooid', { begrip, wpm_band: Math.floor(wpm / 50) * 50, hermeting: hadBaseline });
   if (typeof _zetWaardeMoment === 'function') _zetWaardeMoment();
   voltooiDaguitdaging('begintest');
@@ -6715,7 +6839,7 @@ const KIDS_LABELS = {
   papier:    { nav:'Samen Lezen',    titel:'Samen Lezen',             sub:'Leer hoe je sneller kunt lezen op papier!' },
   tekst:     { nav:'Mijn tekst',     titel:'✍️ Mijn tekst',           sub:'Plak je eigen verhaal en lees het op elke manier!' },
   stats:     { nav:'Mijn Score',     titel:'Mijn Score',              sub:'Bekijk hoe goed je het doet!' },
-  dyslexie:  { nav:'Woordspel',      titel:'Woordspel',               sub:'Lees het woord en kies het juiste antwoord. Hoe meer sterren, hoe beter!' },
+  dyslexie:  { nav:'Leeslab',        titel:'Dyslexie Leeslab',        sub:'Oefen stap voor stap met klanken, letters, woorddelen, betekenis en vloeiend lezen.' },
   begintest:    { nav:'Hoe snel lees jij?', titel:'Hoe Snel Lees Jij?',  sub:'Lees een stukje tekst en ontdek hoe snel jij al leest!' },
   langetekst:   { nav:'Lange Teksten',      titel:'📚 Lange Teksten',       sub:'Train je leessnelheid én begrip met langere teksten. Leuk om te doen!' },
 };
@@ -6727,7 +6851,7 @@ const VOLW_LABELS = {
   papier:       { nav:'Papier',         titel:'Papier Lees Training',        sub:'Leer technieken voor fysieke tekst. De gidsaanwijzer-methode is bewezen effectief.' },
   tekst:        { nav:'Eigen tekst',    titel:'✍️ Eigen tekst',              sub:'Plak of upload je eigen tekst en train er direct mee op elke manier. Opslaan is optioneel.' },
   stats:        { nav:'Statistieken',   titel:'Uw Voortgang',                sub:'Alle sessies worden lokaal opgeslagen in uw browser.' },
-  dyslexie:     { nav:'Dyslexie Spel',  titel:'🌈 Dyslexie Leesavontuur',   sub:'Lees het woord goed en kies het juiste antwoord. Hoe meer sterren, hoe beter! Speciaal lettertype helpt letters uit elkaar houden.' },
+  dyslexie:     { nav:'Dyslexie Leeslab', titel:'Dyslexie Leeslab',         sub:'Een stapsgewijze leerweg voor klanken, letters, woorddelen, betekenis en leesvloeiendheid.' },
   begintest:    { nav:'Begintest',      titel:'Begintest',                    sub:'Meet uw leessnelheid en begripsniveau als startpunt voor uw training.' },
   langetekst:   { nav:'Lange Teksten',  titel:'📚 Lange Teksten',            sub:'Train leessnelheid én begrip met langere teksten op uw niveau. Het systeem past de moeilijkheidsgraad automatisch aan.' },
   trainen:      { nav:'Trainen',        titel:'⚡ Trainen',                   sub:'Kies een module en begin meteen.' },
@@ -8009,6 +8133,83 @@ const NIVEAUS = [
   { naam:'Moeilijk',  pool: _dyxNiveauRanges[3], flits:1000 },
 ];
 
+const DYX_LESSEN = [
+  { id:'horen', icon:'🔊', naam:'Horen en herkennen', doel:'Koppel een gehoord woord aan het juiste woordbeeld.', modus:'luister', niveau:0 },
+  { id:'letters', icon:'🔎', naam:'Letters scherp zien', doel:'Herken verwisselingen zoals b/d, p/b, v/f en z/s.', modus:'jacht', niveau:0 },
+  { id:'klankgroepen', icon:'🔤', naam:'Klankgroepen', doel:'Oefen ie/ei, ou/au en andere lettercombinaties.', modus:'jacht', niveau:1 },
+  { id:'woorddelen', icon:'🧩', naam:'Woorden bouwen', doel:'Zet betekenisvolle woorddelen in de juiste volgorde.', modus:'bouw', niveau:1 },
+  { id:'betekenis', icon:'💬', naam:'Zin en betekenis', doel:'Gebruik de zin om het passende woord te kiezen.', modus:'context', niveau:1 },
+  { id:'lange_woorden', icon:'🧱', naam:'Lange woorden', doel:'Bouw langere woorden zonder te gokken.', modus:'bouw', niveau:2 },
+  { id:'vloeiend', icon:'⚡', naam:'Vloeiend herkennen', doel:'Herken bekende woorden vlot, met nauwkeurigheid voorop.', modus:'flits', niveau:2 },
+];
+
+const DYX_BOUW_WOORDEN = [
+  {woord:'tafel',delen:['ta','fel'],hint:'Hierop zet je een bord.',niveau:0},
+  {woord:'zomer',delen:['zo','mer'],hint:'Het warme seizoen.',niveau:0},
+  {woord:'regen',delen:['re','gen'],hint:'Water dat uit wolken valt.',niveau:0},
+  {woord:'vogel',delen:['vo','gel'],hint:'Een dier met veren.',niveau:0},
+  {woord:'geheim',delen:['ge','heim'],hint:'Iets dat niet iedereen mag weten.',niveau:1},
+  {woord:'verhaal',delen:['ver','haal'],hint:'Een tekst met gebeurtenissen.',niveau:1},
+  {woord:'fietspad',delen:['fiets','pad'],hint:'Hier rijden fietsen veilig.',niveau:1},
+  {woord:'leesboek',delen:['lees','boek'],hint:'Een boek om zelf te lezen.',niveau:1},
+  {woord:'regenboog',delen:['re','gen','boog'],hint:'Kleuren in de lucht na regen.',niveau:2},
+  {woord:'bibliotheek',delen:['bi','bli','o','theek'],hint:'Een plek vol boeken.',niveau:2},
+  {woord:'vriendschap',delen:['vriend','schap'],hint:'Een goede band tussen mensen.',niveau:2},
+  {woord:'verjaardag',delen:['ver','jaar','dag'],hint:'De dag waarop je jarig bent.',niveau:2},
+  {woord:'aardappel',delen:['aard','ap','pel'],hint:'Een groente die onder de grond groeit.',niveau:2},
+  {woord:'ochtendzon',delen:['och','tend','zon'],hint:'De zon vroeg op de dag.',niveau:2},
+];
+
+const DYX_CONTEXT_ZINNEN = [
+  {zin:'De kat drinkt melk uit een ___.',antwoord:'bakje',opties:['bakje','takje','dakje'],niveau:0},
+  {zin:'Buiten valt regen, dus ik neem een ___ mee.',antwoord:'paraplu',opties:['paraplu','pantoffel','pannenkoek'],niveau:0},
+  {zin:'Ik lees een verhaal in mijn ___.',antwoord:'boek',opties:['boek','doek','hoek'],niveau:0},
+  {zin:'De trein stopt op het ___.',antwoord:'station',opties:['station','kasteel','strand'],niveau:1},
+  {zin:'Met een sleutel open je de ___.',antwoord:'deur',opties:['deur','geur','kleur'],niveau:1},
+  {zin:'Een dokter helpt mensen die ___ zijn.',antwoord:'ziek',opties:['ziek','zoet','zacht'],niveau:1},
+  {zin:'De vlinder vliegt van bloem naar ___.',antwoord:'bloem',opties:['bloem','broek','brood'],niveau:1},
+  {zin:'In de bibliotheek kun je boeken ___.',antwoord:'lenen',opties:['lenen','leunen','leren'],niveau:1},
+  {zin:'Na de bliksem hoorden we harde ___.',antwoord:'donder',opties:['donder','donker','dromen'],niveau:2},
+  {zin:'De onderzoeker schrijft de resultaten in een ___.',antwoord:'rapport',opties:['rapport','recept','rooster'],niveau:2},
+  {zin:'Door regelmatig te oefenen wordt lezen steeds ___.',antwoord:'vloeiender',opties:['vloeiender','vierkanter','zwaarder'],niveau:2},
+  {zin:'De astronaut reist met een raket naar de ___.',antwoord:'ruimte',opties:['ruimte','route','rivier'],niveau:2},
+];
+
+function dyxLeerData() {
+  try { return JSON.parse(localStorage.getItem('dyslexie_leerweg') || '{"lessen":{},"herhaal":{}}'); }
+  catch(e) { return { lessen:{}, herhaal:{} }; }
+}
+function dyxLeerSla(data) { localStorage.setItem('dyslexie_leerweg', JSON.stringify(data)); }
+
+function dyxLesOntgrendeld(index, data = dyxLeerData()) {
+  return index === 0 || !!data.lessen?.[DYX_LESSEN[index - 1]?.id]?.beheerst;
+}
+
+function dyxLeerpadRender() {
+  const data = dyxLeerData();
+  data.lessen = data.lessen || {};
+  const beheerst = DYX_LESSEN.filter(les => data.lessen[les.id]?.beheerst).length;
+  const pct = Math.round((beheerst / DYX_LESSEN.length) * 100);
+  const ring = document.getElementById('dyx-leer-ring');
+  if (ring) ring.style.setProperty('--dyx-pad-pct', pct + '%');
+  const pctEl = document.getElementById('dyx-leer-pct');
+  if (pctEl) pctEl.textContent = pct + '%';
+  const eersteOpen = DYX_LESSEN.findIndex((les, i) => dyxLesOntgrendeld(i, data) && !data.lessen[les.id]?.beheerst);
+  const pad = document.getElementById('dyx-pad');
+  if (!pad) return;
+  pad.innerHTML = DYX_LESSEN.map((les, i) => {
+    const info = data.lessen[les.id] || {};
+    const open = dyxLesOntgrendeld(i, data);
+    const klaar = !!info.beheerst;
+    const nu = i === (eersteOpen < 0 ? DYX_LESSEN.length - 1 : eersteOpen);
+    return `<button class="dyx-pad-les ${klaar?'klaar':''} ${nu?'nu':''}" type="button" onclick="dyxStartLes('${les.id}')" aria-disabled="${open?'false':'true'}">
+      <span class="dyx-pad-num">${klaar?'✓':open?les.icon:'🔒'}</span>
+      <span class="dyx-pad-tekst"><b>Les ${i+1} · ${les.naam}</b><span>${les.doel}</span></span>
+      <span class="dyx-pad-score">${info.beste != null ? info.beste + '%' : open ? 'Start' : 'Dicht'}</span>
+    </button>`;
+  }).join('');
+}
+
 const GOED_MSGS  = ['Super! 🌟','Top! 🎉','Geweldig! ⭐','Ja! 🏆','Knap! 🦁','Bravo! 🌈','Precies! 🎈','Fantastisch! 🎊','Uitstekend! 💫','Held! 🦸'];
 const FOUT_MSGS  = ['Bijna! Probeer nog eens 💪','Oeps! Kijk goed 👀','Niet erg, ga door! 🌻','Probeer het nog eens! 🔍','Volgende keer beter! 🍀'];
 
@@ -8173,10 +8374,13 @@ function dyxPlaySound(type) {
 // ── GAME STATE ──
 let gameLoop = null, gameScore = 0, gameStreak = 0, gameRonde = 0, gameTotaal = 20;
 let gameWacht = false, huidigWoord = null;
-let dyxModus = 'flits'; // 'flits' | 'jacht' | 'snelronde'
+let dyxModus = 'flits';
 let dyxTimerInterval = null, dyxTimerStart = 0;
 let dyxMaxStreak = 0, dyxGamesPlayed = 0;
 let jachtFouteIdx = -1, jachtOrigineel = '';
+let dyxActieveLes = null, dyxGoed = 0, dyxBeantwoord = 0;
+let dyxBouwHuidig = null, dyxBouwVolgorde = [];
+let dyxContextHuidig = null;
 
 // ── FISHER-YATES SHUFFLE ──
 function dyxShuffle(arr) {
@@ -8196,12 +8400,42 @@ function bionicWord(w) {
 }
 
 // ── MODUS KIEZER ──
-function dyxKiesModus(modus) {
+function dyxSelecteerModusUI(modus) {
   dyxModus = modus;
   document.querySelectorAll('.dyx-mode-card').forEach(c => c.classList.remove('dyx-mode-active'));
   const el = document.getElementById('dyx-mode-' + modus);
   if (el) el.classList.add('dyx-mode-active');
+}
+
+function dyxKiesModus(modus) {
+  dyxActieveLes = null;
+  document.getElementById('dyx-les-banner')?.classList.remove('actief');
+  dyxSelecteerModusUI(modus);
   gameStop();
+}
+
+function dyxStartLes(id) {
+  const index = DYX_LESSEN.findIndex(les => les.id === id);
+  const les = DYX_LESSEN[index];
+  if (!les || !dyxLesOntgrendeld(index)) {
+    toonFout('Rond eerst de vorige dyslexieles af.');
+    return;
+  }
+  gameStop();
+  dyxActieveLes = les;
+  dyxSelecteerModusUI(les.modus);
+  const niveau = document.getElementById('game-niveau-select');
+  if (niveau) niveau.value = String(les.niveau);
+  const banner = document.getElementById('dyx-les-banner');
+  banner?.classList.add('actief');
+  const titel = document.getElementById('dyx-les-titel');
+  const doel = document.getElementById('dyx-les-doel');
+  if (titel) titel.textContent = `${les.icon} Les ${index + 1} · ${les.naam}`;
+  if (doel) doel.textContent = les.doel;
+  const instructie = document.getElementById('dyx-instructie');
+  if (instructie) instructie.innerHTML = `<b>${htmlEscape(les.naam)}.</b> ${htmlEscape(les.doel)} Neem de tijd; nauwkeurig lezen telt zwaarder dan snelheid.`;
+  document.getElementById('game-display')?.scrollIntoView({ behavior:'smooth', block:'center' });
+  gameStart();
 }
 
 // ── HIGHSCORES ──
@@ -8222,7 +8456,14 @@ function dyxToonHighscores() {
   const hs = dyxGetHighscores();
   const grid = document.getElementById('dyx-highscore-grid');
   if (!grid) return;
-  const modi = [{key:'flits',naam:'Flits & Kies',icon:'⚡'},{key:'jacht',naam:'Letter Jacht',icon:'🔍'},{key:'snelronde',naam:'Snelronde',icon:'🏎️'}];
+  const modi = [
+    {key:'luister',naam:'Luister & Kies',icon:'🔊'},
+    {key:'jacht',naam:'Letter Jacht',icon:'🔍'},
+    {key:'bouw',naam:'Woorddelen',icon:'🧩'},
+    {key:'context',naam:'Zin & Betekenis',icon:'💬'},
+    {key:'flits',naam:'Flits & Kies',icon:'⚡'},
+    {key:'snelronde',naam:'Vloeiendheid',icon:'🏁'}
+  ];
   grid.innerHTML = modi.map(m => {
     let best = 0, datum = '';
     for (let n = 0; n < 4; n++) {
@@ -8254,6 +8495,8 @@ const DYX_BADGES = [
   {id:'marathon',naam:'Marathon',icon:'🏃',desc:'Speel 10 spellen'},
   {id:'alle_modi',naam:'Alle Modi',icon:'🌈',desc:'Speel elke spelmodus'},
   {id:'combo_king',naam:'Combo King',icon:'👑',desc:'3x combo multiplier'},
+  {id:'leerpad_3',naam:'Stevige Basis',icon:'🧱',desc:'Beheers de eerste 3 dyslexielessen'},
+  {id:'leerpad_klaar',naam:'Leeslab Meester',icon:'🏅',desc:'Beheers de volledige dyslexie-leerweg'},
 ];
 function dyxGetBadges() { return JSON.parse(localStorage.getItem('dyslexie_badges') || '[]'); }
 function dyxVerdienBadge(id) {
@@ -8292,8 +8535,12 @@ function dyxCheckBadges() {
   if (stats.maxStreak >= 10) dyxVerdienBadge('op_dreef');
   if (stats.modiGespeeld) {
     const s = stats.modiGespeeld;
-    if (s.flits && s.jacht && s.snelronde) dyxVerdienBadge('alle_modi');
+    if (['luister','jacht','bouw','context','flits','snelronde'].every(modus => s[modus])) dyxVerdienBadge('alle_modi');
   }
+  const leer = dyxLeerData();
+  const aantal = DYX_LESSEN.filter(les => leer.lessen?.[les.id]?.beheerst).length;
+  if (aantal >= 3) dyxVerdienBadge('leerpad_3');
+  if (aantal >= DYX_LESSEN.length) dyxVerdienBadge('leerpad_klaar');
 }
 
 function dyxUpdateStats() {
@@ -8307,28 +8554,207 @@ function dyxUpdateStats() {
   dyxCheckBadges();
 }
 
+function dyxRegistreerAntwoord(goed, woord) {
+  dyxBeantwoord++;
+  if (goed) dyxGoed++;
+  const data = dyxLeerData();
+  data.herhaal = data.herhaal || {};
+  if (woord) {
+    const sleutel = String(woord).toLowerCase();
+    if (goed) {
+      if (data.herhaal[sleutel]) data.herhaal[sleutel] = Math.max(0, data.herhaal[sleutel] - 1);
+      if (!data.herhaal[sleutel]) delete data.herhaal[sleutel];
+    } else {
+      data.herhaal[sleutel] = Math.min(6, (data.herhaal[sleutel] || 0) + 2);
+    }
+  }
+  dyxLeerSla(data);
+}
+
+function dyxLesAfronden(begrip) {
+  if (!dyxActieveLes) return null;
+  const data = dyxLeerData();
+  data.lessen = data.lessen || {};
+  const oud = data.lessen[dyxActieveLes.id] || { beste:0, pogingen:0, beheerst:false };
+  const beheerst = begrip >= 80;
+  const eersteKeer = beheerst && !oud.beheerst;
+  const vandaag = new Date().toISOString().slice(0, 10);
+  const dagHerhaling = beheerst && oud.beheerst && oud.laatsteBeloning !== vandaag;
+  data.lessen[dyxActieveLes.id] = {
+    beste:Math.max(oud.beste || 0, begrip),
+    pogingen:(oud.pogingen || 0) + 1,
+    beheerst:oud.beheerst || beheerst,
+    laatste:begrip,
+    laatsteBeloning:(eersteKeer || dagHerhaling) ? vandaag : oud.laatsteBeloning,
+    ts:Date.now(),
+  };
+  dyxLeerSla(data);
+  const xp = eersteKeer ? 20 : dagHerhaling ? 5 : 0;
+  if (xp > 0 && typeof avProfiel !== 'undefined' && avProfiel) {
+    avProfiel.xp = (avProfiel.xp || 0) + xp;
+    avSla();
+    updateSpelerIndicator();
+  }
+  dyxLeerpadRender();
+  dyxCheckBadges();
+  if (eersteKeer && typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('dyslexie');
+  return { les:dyxActieveLes, beheerst, eersteKeer, xp };
+}
+
 // ── GAME START ──
 function gameStart() {
   gameStop();
   gameScore = 0; gameStreak = 0; gameRonde = 0; gameWacht = false;
+  dyxGoed = 0; dyxBeantwoord = 0;
   dyxMaxStreak = 0;
   document.getElementById('game-feedback').textContent = '';
   document.getElementById('antwoord-grid').innerHTML = '';
   document.getElementById('dyx-timer-wrap').style.display = 'none';
 
-  if (dyxModus === 'flits') {
-    gameTotaal = 20;
+  if (dyxModus === 'luister') {
+    gameTotaal = dyxActieveLes ? 10 : 12;
+    updateGameUI();
+    luisterVolgende();
+  } else if (dyxModus === 'flits') {
+    gameTotaal = dyxActieveLes ? 10 : 20;
     updateGameUI();
     volgendeRonde();
   } else if (dyxModus === 'jacht') {
-    gameTotaal = 15;
+    gameTotaal = dyxActieveLes ? 10 : 15;
     updateGameUI();
     jachtVolgende();
+  } else if (dyxModus === 'bouw') {
+    gameTotaal = dyxActieveLes ? 10 : 12;
+    updateGameUI();
+    bouwVolgende();
+  } else if (dyxModus === 'context') {
+    gameTotaal = dyxActieveLes ? 10 : 12;
+    updateGameUI();
+    contextVolgende();
   } else if (dyxModus === 'snelronde') {
     gameTotaal = 999;
     updateGameUI();
     snelrondeStart();
   }
+}
+
+function dyxSpreekWoord(woord) {
+  if (!('speechSynthesis' in window) || !window.SpeechSynthesisUtterance) {
+    document.getElementById('game-feedback').textContent = `Luisterfunctie niet beschikbaar. Het woord is: ${woord}`;
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const stem = new SpeechSynthesisUtterance(String(woord));
+  stem.lang = 'nl-NL';
+  stem.rate = .78;
+  window.speechSynthesis.speak(stem);
+}
+
+function dyxWoordUitPool(niv) {
+  const conf = NIVEAUS[niv] || NIVEAUS[0];
+  const pool = conf.pool.map(index => WOORDENLIJST[index]).filter(Boolean);
+  return dyxKiesMetHerhaling(pool, item => item.woord);
+}
+
+function dyxKiesMetHerhaling(pool, sleutelVan) {
+  if (!pool.length) return null;
+  const herhaal = dyxLeerData().herhaal || {};
+  const lastig = pool.filter(item => herhaal[String(sleutelVan(item)).toLowerCase()] > 0);
+  const bron = lastig.length && Math.random() < .45 ? lastig : pool;
+  return bron[Math.floor(Math.random() * bron.length)] || pool[0];
+}
+
+// Lesmodus: auditief woord koppelen aan woordbeeld.
+function luisterVolgende() {
+  if (gameRonde >= gameTotaal) { gameEinde(); return; }
+  const niv = +document.getElementById('game-niveau-select').value;
+  huidigWoord = dyxWoordUitPool(niv);
+  gameRonde++;
+  updateGameUI();
+  document.getElementById('game-feedback').textContent = '';
+  const display = document.getElementById('game-display');
+  display.innerHTML = `<button class="dyx-luister-knop" type="button" onclick="dyxSpreekWoord('${htmlEscape(huidigWoord.woord)}')" aria-label="Luister opnieuw">🔊</button><div style="font-weight:750">Welk woord hoor je?</div><div class="dyx-game-sub" style="font-size:.75rem">Luister zo vaak als je nodig hebt.</div>`;
+  const opties = dyxShuffle([huidigWoord.woord, ...dyxShuffle(huidigWoord.fout).slice(0, 2)]);
+  document.getElementById('antwoord-grid').innerHTML = opties.map(optie => `<button class="antwoord-btn" onclick="luisterKies(this,'${htmlEscape(optie)}')">${htmlEscape(optie)}</button>`).join('');
+  dyxSpreekWoord(huidigWoord.woord);
+}
+
+function luisterKies(btn, keuze) {
+  if (gameWacht) return;
+  gameWacht = true;
+  const goed = keuze === huidigWoord.woord;
+  document.querySelectorAll('.antwoord-btn').forEach(knop => {
+    knop.disabled = true;
+    if (knop.textContent === huidigWoord.woord) knop.classList.add('goed');
+    else if (knop === btn) knop.classList.add('fout');
+  });
+  dyxRegistreerAntwoord(goed, huidigWoord.woord);
+  if (goed) { gameScore += 10; gameStreak++; dyxPlaySound('correct'); document.getElementById('game-feedback').textContent = 'Goed gekoppeld: luisteren en woordbeeld horen bij elkaar.'; }
+  else { gameStreak = 0; dyxPlaySound('wrong'); document.getElementById('game-feedback').textContent = `Luister nog eens: ${huidigWoord.woord}`; dyxSpreekWoord(huidigWoord.woord); }
+  dyxMaxStreak = Math.max(dyxMaxStreak, gameStreak);
+  updateGameUI();
+  gameLoop = setTimeout(() => { gameWacht = false; luisterVolgende(); }, goed ? 900 : 1700);
+}
+
+function bouwVolgende() {
+  if (gameRonde >= gameTotaal) { gameEinde(); return; }
+  const niv = +document.getElementById('game-niveau-select').value;
+  const pool = DYX_BOUW_WOORDEN.filter(item => item.niveau === niv || (niv === 3 && item.niveau === 2));
+  dyxBouwHuidig = dyxKiesMetHerhaling(pool, item => item.woord) || DYX_BOUW_WOORDEN[0];
+  dyxBouwVolgorde = [];
+  gameRonde++;
+  updateGameUI();
+  document.getElementById('game-feedback').textContent = '';
+  document.getElementById('game-display').innerHTML = `<button class="dyx-luister-knop" type="button" onclick="dyxSpreekWoord('${htmlEscape(dyxBouwHuidig.woord)}')" aria-label="Luister naar het woord">🔊</button><div class="dyx-game-sub" style="font-size:.78rem">${htmlEscape(dyxBouwHuidig.hint)}</div><div class="dyx-bouw-doel" id="dyx-bouw-doel"><span class="dyx-game-sub">Tik de delen in de goede volgorde</span></div>`;
+  const delen = dyxShuffle(dyxBouwHuidig.delen.map((deel, index) => ({ deel, index })));
+  document.getElementById('antwoord-grid').innerHTML = delen.map(item => `<button class="dyx-bouw-tegel" onclick="bouwKies(this,'${htmlEscape(item.deel)}')">${htmlEscape(item.deel)}</button>`).join('');
+  dyxSpreekWoord(dyxBouwHuidig.woord);
+}
+
+function bouwKies(btn, deel) {
+  if (gameWacht || btn.classList.contains('gekozen')) return;
+  btn.classList.add('gekozen');
+  dyxBouwVolgorde.push(deel);
+  const doel = document.getElementById('dyx-bouw-doel');
+  doel.innerHTML = dyxBouwVolgorde.map(stuk => `<span class="dyx-bouw-tegel">${htmlEscape(stuk)}</span>`).join('');
+  if (dyxBouwVolgorde.length < dyxBouwHuidig.delen.length) return;
+  gameWacht = true;
+  const goed = dyxBouwVolgorde.join('') === dyxBouwHuidig.woord;
+  dyxRegistreerAntwoord(goed, dyxBouwHuidig.woord);
+  if (goed) { gameScore += 12; gameStreak++; dyxPlaySound('correct'); document.getElementById('game-feedback').textContent = `${dyxBouwHuidig.delen.join(' · ')} maakt ${dyxBouwHuidig.woord}.`; }
+  else { gameStreak = 0; dyxPlaySound('wrong'); document.getElementById('game-feedback').textContent = `De goede volgorde is ${dyxBouwHuidig.delen.join(' · ')}.`; }
+  dyxMaxStreak = Math.max(dyxMaxStreak, gameStreak);
+  updateGameUI();
+  gameLoop = setTimeout(() => { gameWacht = false; bouwVolgende(); }, goed ? 1100 : 1900);
+}
+
+function contextVolgende() {
+  if (gameRonde >= gameTotaal) { gameEinde(); return; }
+  const niv = +document.getElementById('game-niveau-select').value;
+  const pool = DYX_CONTEXT_ZINNEN.filter(item => item.niveau === niv || (niv === 3 && item.niveau === 2));
+  dyxContextHuidig = dyxKiesMetHerhaling(pool, item => item.antwoord) || DYX_CONTEXT_ZINNEN[0];
+  gameRonde++;
+  updateGameUI();
+  document.getElementById('game-feedback').textContent = '';
+  document.getElementById('game-display').innerHTML = `<div class="dyx-game-sub" style="font-size:.78rem;margin-bottom:8px">Welk woord past bij de betekenis?</div><div class="game-word" style="font-size:1.45rem;line-height:1.6">${htmlEscape(dyxContextHuidig.zin)}</div>`;
+  document.getElementById('antwoord-grid').innerHTML = dyxShuffle(dyxContextHuidig.opties).map(optie => `<button class="antwoord-btn" onclick="contextKies(this,'${htmlEscape(optie)}')">${htmlEscape(optie)}</button>`).join('');
+}
+
+function contextKies(btn, keuze) {
+  if (gameWacht) return;
+  gameWacht = true;
+  const goed = keuze === dyxContextHuidig.antwoord;
+  document.querySelectorAll('.antwoord-btn').forEach(knop => {
+    knop.disabled = true;
+    if (knop.textContent === dyxContextHuidig.antwoord) knop.classList.add('goed');
+    else if (knop === btn) knop.classList.add('fout');
+  });
+  dyxRegistreerAntwoord(goed, dyxContextHuidig.antwoord);
+  if (goed) { gameScore += 12; gameStreak++; dyxPlaySound('correct'); document.getElementById('game-feedback').textContent = 'Goed: het woord past bij de betekenis van de hele zin.'; }
+  else { gameStreak = 0; dyxPlaySound('wrong'); document.getElementById('game-feedback').textContent = `Lees de hele zin nog eens. Het passende woord is ${dyxContextHuidig.antwoord}.`; }
+  dyxMaxStreak = Math.max(dyxMaxStreak, gameStreak);
+  updateGameUI();
+  gameLoop = setTimeout(() => { gameWacht = false; contextVolgende(); }, goed ? 1000 : 1800);
 }
 
 // ═══ MODUS 1: FLITS & KIES (verbeterd) ═══
@@ -8338,9 +8764,7 @@ function volgendeRonde() {
   const conf = NIVEAUS[niv];
   document.getElementById('game-niveau').textContent = '⭐'.repeat(niv+1) + ' ' + conf.naam;
 
-  const poolIdxs = conf.pool;
-  const idx = poolIdxs[Math.floor(Math.random() * poolIdxs.length)];
-  huidigWoord = WOORDENLIJST[idx];
+  huidigWoord = dyxWoordUitPool(niv);
 
   document.getElementById('antwoord-grid').innerHTML = '';
   document.getElementById('game-feedback').textContent = '';
@@ -8371,6 +8795,7 @@ function kiesAntwoord(btn, keuze) {
   if (gameWacht) return;
   gameWacht = true;
   const goed = keuze === huidigWoord.woord;
+  dyxRegistreerAntwoord(goed, huidigWoord.woord);
   const alleBtns = document.querySelectorAll('.antwoord-btn');
   alleBtns.forEach(b => {
     if (b.textContent === huidigWoord.woord) b.classList.add('goed');
@@ -8412,7 +8837,7 @@ function jachtVolgende() {
   const pool = jachtPool(niv);
   let foutWoord, foutLen = 1;
   if (pool.length > 0) {
-    const entry = pool[Math.floor(Math.random() * pool.length)];
+    const entry = dyxKiesMetHerhaling(pool, item => item.woord);
     jachtOrigineel = entry.woord;
     foutWoord = entry.fout;
     jachtFouteIdx = entry.fouteIdx;
@@ -8472,6 +8897,7 @@ function jachtKies(idx) {
   const letters = document.querySelectorAll('.dyx-letter-btn');
   // Goed als de geklkte positie binnen het foute bereik valt
   const goed = idx >= jachtFouteRange[0] && idx <= jachtFouteRange[1];
+  dyxRegistreerAntwoord(goed, jachtOrigineel);
   letters.forEach((l, i) => {
     if (i >= jachtFouteRange[0] && i <= jachtFouteRange[1]) l.classList.add('dyx-letter-goed');
     else if (i === idx && !goed) l.classList.add('dyx-letter-fout');
@@ -8593,6 +9019,7 @@ function snelrondeAntwoord(antwoordIsGoed) {
   gameWacht = true;
   document.querySelectorAll('#antwoord-grid button').forEach(b => b.disabled = true);
   const goed = antwoordIsGoed === snelrondeIsGoed;
+  dyxRegistreerAntwoord(goed, huidigWoord.woord);
   if (goed) {
     dyxPlaySound('correct');
     gameScore += 10 + gameStreak * 2;
@@ -8617,6 +9044,7 @@ function snelrondeEinde() {
   const wpm = Math.round(gameRonde / 1 * 1); // woorden in 60 sec
   const niv = +document.getElementById('game-niveau-select').value;
   const isRecord = dyxSaveHighscore('snelronde', niv, gameScore);
+  const nauwkeurigheid = dyxBeantwoord ? Math.round((dyxGoed / dyxBeantwoord) * 100) : 0;
 
   dyxPlaySound('einde');
   dyxUpdateStats();
@@ -8624,7 +9052,7 @@ function snelrondeEinde() {
   document.getElementById('game-display').innerHTML = `
     <div style="font-size:2.5rem">${gameScore >= 150 ? '⭐⭐⭐⭐⭐' : gameScore >= 100 ? '⭐⭐⭐⭐☆' : gameScore >= 60 ? '⭐⭐⭐☆☆' : gameScore >= 30 ? '⭐⭐☆☆☆' : '⭐☆☆☆☆'}</div>
     <div style="font-size:1.4rem;font-weight:700;color:#3a2000;font-family:'Comic Neue',cursive">${gameScore} punten in 60 seconden!</div>
-    <div style="font-size:1.1rem;color:#8b5e3c;font-family:'Comic Neue',cursive">${gameRonde} woorden bekeken &bull; ${dyxMaxStreak} max combo</div>
+    <div style="font-size:1.1rem;color:#8b5e3c;font-family:'Comic Neue',cursive">${gameRonde} woorden bekeken &bull; ${nauwkeurigheid}% nauwkeurig &bull; ${dyxMaxStreak} max combo</div>
     ${isRecord ? '<div class="dyx-nieuw-record" style="font-size:1.2rem;margin-top:8px">🏆 NIEUW RECORD! 🏆</div>' : ''}
     <div style="margin-top:16px;display:flex;gap:10px;justify-content:center">
       <button class="btn btn-primary" onclick="gameStart()" style="font-family:'Comic Neue',cursive">🔄 Opnieuw</button>
@@ -8633,15 +9061,33 @@ function snelrondeEinde() {
   document.getElementById('antwoord-grid').innerHTML = '';
   document.getElementById('game-feedback').textContent = '';
   if (wpm >= 30) dyxVerdienBadge('snelle_lezer');
+  if (nauwkeurigheid >= 80 && typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('dyslexie');
   dyxToonHighscores();
   dyxToonBadges();
 }
 
-// ═══ GAME EINDE (flits & jacht) ═══
+function dyxVolgendeLes() {
+  const index = DYX_LESSEN.findIndex(les => les.id === dyxActieveLes?.id);
+  const volgende = DYX_LESSEN[index + 1];
+  if (volgende) dyxStartLes(volgende.id);
+  else gameStop();
+}
+
+function dyxStartVrijeRonde() {
+  dyxActieveLes = null;
+  document.getElementById('dyx-les-banner')?.classList.remove('actief');
+  gameStart();
+}
+
+// ═══ GAME EINDE ═══
 function gameEinde() {
-  const sterren = gameScore >= 150 ? 5 : gameScore >= 100 ? 4 : gameScore >= 60 ? 3 : gameScore >= 30 ? 2 : 1;
+  const nauwkeurigheid = dyxBeantwoord ? Math.round((dyxGoed / dyxBeantwoord) * 100) : 0;
+  const sterren = nauwkeurigheid === 100 ? 5 : nauwkeurigheid >= 80 ? 4 : nauwkeurigheid >= 70 ? 3 : nauwkeurigheid >= 50 ? 2 : 1;
   const niv = +document.getElementById('game-niveau-select').value;
   const isRecord = dyxSaveHighscore(dyxModus, niv, gameScore);
+  const lesResultaat = dyxLesAfronden(nauwkeurigheid);
+  const lesIndex = lesResultaat ? DYX_LESSEN.findIndex(les => les.id === lesResultaat.les.id) : -1;
+  const heeftVolgendeLes = lesIndex >= 0 && lesIndex < DYX_LESSEN.length - 1;
 
   dyxPlaySound('einde');
   dyxUpdateStats();
@@ -8651,11 +9097,11 @@ function gameEinde() {
 
   document.getElementById('game-display').innerHTML = `
     <div style="font-size:2.5rem">${'⭐'.repeat(sterren)}${'☆'.repeat(5-sterren)}</div>
-    <div style="font-size:1.4rem;font-weight:700;color:#3a2000;font-family:'Comic Neue',cursive">Klaar! ${gameScore} punten!</div>
-    <div style="font-size:1rem;color:#8b5e3c;font-family:'Comic Neue',cursive">${dyxMaxStreak > 0 ? dyxMaxStreak + ' max combo &bull; ' : ''}${gameRonde} rondes voltooid</div>
+    <div style="font-size:1.4rem;font-weight:700;color:#3a2000;font-family:'Comic Neue',cursive">${lesResultaat ? (lesResultaat.beheerst ? 'Les beheerst!' : 'Nog één oefenronde') : 'Ronde klaar!'}</div>
+    <div style="font-size:1rem;color:#8b5e3c;font-family:'Comic Neue',cursive"><b>${dyxGoed} van ${dyxBeantwoord} goed · ${nauwkeurigheid}%</b><br>${lesResultaat ? (lesResultaat.beheerst ? `${lesResultaat.xp ? `Je verdient ${lesResultaat.xp} XP. ` : ''}${heeftVolgendeLes ? 'De volgende les is open.' : 'Je hebt de volledige leerweg beheerst.'}` : 'Voor beheersing zijn 8 van de 10 goede antwoorden nodig. Lastige woorden komen terug.') : `${gameScore} punten · ${dyxMaxStreak} max combo`}</div>
     ${isRecord ? '<div class="dyx-nieuw-record" style="font-size:1.2rem;margin-top:8px">🏆 NIEUW RECORD! 🏆</div>' : ''}
     <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button class="btn btn-primary" onclick="gameStart()" style="font-family:'Comic Neue',cursive">🔄 Opnieuw</button>
+      ${lesResultaat?.beheerst && heeftVolgendeLes ? '<button class="btn btn-primary" onclick="dyxVolgendeLes()">Volgende les</button>' : '<button class="btn btn-primary" onclick="gameStart()">Opnieuw oefenen</button>'}
       <button class="btn btn-ghost" onclick="gameStop()" style="font-family:'Comic Neue',cursive">🏠 Terug</button>
     </div>`;
   document.getElementById('antwoord-grid').innerHTML = '';
@@ -8664,7 +9110,7 @@ function gameEinde() {
 
   if (sterren >= 5) dyxVerdienBadge('perfectionist');
   if (dyxModus === 'jacht' && gameStreak === gameTotaal) dyxVerdienBadge('letter_held');
-  if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('dyslexie');
+  if (!lesResultaat && nauwkeurigheid >= 80 && typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('dyslexie');
 
   dyxToonHighscores();
   dyxToonBadges();
@@ -8674,26 +9120,30 @@ function gameStop() {
   clearTimeout(gameLoop); gameLoop = null;
   clearInterval(dyxTimerInterval); dyxTimerInterval = null;
   document.getElementById('dyx-timer-wrap').style.display = 'none';
-  document.getElementById('game-display').innerHTML = `<div style="font-size:1.1rem;color:#8b5e3c;font-family:'Comic Neue',cursive">Kies een spelmodus en druk op Start!</div><div style="font-size:3rem">🦊 📖 ✨</div>`;
+  document.getElementById('game-display').innerHTML = `<div style="font-size:1.1rem;color:#8b5e3c;font-family:'Comic Neue',cursive">Start je volgende les of kies vrij oefenen.</div><div style="font-size:3rem">🔤 📖 ✨</div>`;
   document.getElementById('antwoord-grid').innerHTML = '';
   document.getElementById('game-feedback').textContent = '';
   document.getElementById('dyx-timer-bar').style.background = 'linear-gradient(90deg, #f06292, #e07000, #f0c000)';
   dyxToonHighscores();
   dyxToonBadges();
+  dyxLeerpadRender();
 }
 
 function updateGameUI() {
   document.getElementById('game-score').textContent = gameScore;
   document.getElementById('game-streak').textContent = gameStreak;
   document.getElementById('game-ronde').textContent = gameRonde;
+  const lesVoortgang = document.getElementById('dyx-les-voortgang');
+  if (lesVoortgang) lesVoortgang.textContent = `${Math.min(gameRonde, gameTotaal)}/${gameTotaal}`;
   const pct = dyxModus === 'snelronde' ? 0 : Math.min(100, (gameRonde / gameTotaal) * 100);
   document.getElementById('game-progress-bar').style.width = pct + '%';
-  const sterren = gameScore >= 150 ? 5 : gameScore >= 100 ? 4 : gameScore >= 60 ? 3 : gameScore >= 30 ? 2 : 1;
+  const nauwkeurigheid = dyxBeantwoord ? Math.round((dyxGoed / dyxBeantwoord) * 100) : 0;
+  const sterren = dyxBeantwoord === 0 ? 0 : nauwkeurigheid === 100 ? 5 : nauwkeurigheid >= 80 ? 4 : nauwkeurigheid >= 70 ? 3 : nauwkeurigheid >= 50 ? 2 : 1;
   document.getElementById('game-sterren').textContent = '⭐'.repeat(sterren) + '☆'.repeat(5-sterren);
 }
 
 // Init badges & highscores bij laden
-setTimeout(() => { dyxToonBadges(); dyxToonHighscores(); }, 100);
+setTimeout(() => { dyxToonBadges(); dyxToonHighscores(); dyxLeerpadRender(); }, 100);
 
 // ─── AUTO BEGINTEST VOOR NIEUWE GEBRUIKERS (vervangen door onboarding) ───
 // checkBegintestEersteKeer wordt niet meer direct aangeroepen —

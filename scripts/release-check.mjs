@@ -99,6 +99,16 @@ verwacht(!appHtml.includes('onclick="aiLangeTekstNieuwe()"'), 'Lange teksten too
 verwacht(!appHtml.includes("aiLaadTekstBronOpties();"), 'AI-tekstgenerator wordt nog aan de tekstkiezer gekoppeld.');
 verwacht(appHtml.includes("accept=\".txt,.md,text/plain,text/markdown\""), 'Eigen tekst ondersteunt geen duidelijke txt/md-upload.');
 verwacht(appHtml.includes("avatar-adult") && appHtml.includes("avatar-kid"), 'Volwassen- en kinderavatars ontbreken.');
+verwacht(appHtml.includes('const DYX_LESSEN = ['), 'Dyslexie Leeslab mist een vaste leerweg.');
+verwacht(appHtml.includes('function dyxLeerpadRender()'), 'Dyslexie Leeslab toont geen voortgang per les.');
+verwacht(appHtml.includes('function dyxRegistreerAntwoord(goed, woord)'), 'Dyslexie Leeslab onthoudt lastige woorden niet.');
+verwacht(appHtml.includes('const beheerst = begrip >= 80'), 'Dyslexielessen missen de beheersingspoort van 80%.');
+verwacht(appHtml.includes('vervangt geen dyslexieonderzoek'), 'Dyslexie Leeslab mist de grens tussen oefenen en diagnostiek.');
+verwacht(!appHtml.includes('Speciaal lettertype helpt letters uit elkaar houden.'), 'Dyslexiecopy doet een ongefundeerde lettertypeclaim.');
+verwacht(appHtml.includes('function begintestPassagesBeschikbaar()'), 'Begintest gebruikt geen ruime tekstvoorraad.');
+verwacht(appHtml.includes("localStorage.getItem('bt_passage_history')"), 'Begintest roteert teksten niet op gebruiksgeschiedenis.');
+verwacht(appHtml.includes('function begintestEigenTekst()'), 'Begintest linkt niet naar een eigen oefentekst.');
+verwacht(appHtml.includes('passageId:btHuidigePassage.id'), 'Begintest bewaart niet welke testtekst is gebruikt.');
 verwacht(existsSync(resolve(root, 'assets/avatars/adults-grid.jpg')), 'Volwassen avatarset ontbreekt.');
 verwacht(existsSync(resolve(root, 'assets/avatars/kids-grid.jpg')), 'Kinderavatarset ontbreekt.');
 verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black"'), 'iOS PWA gebruikt geen niet-overlappende zwarte statusbalk.');
