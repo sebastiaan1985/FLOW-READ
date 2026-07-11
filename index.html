@@ -5678,7 +5678,7 @@ function bouwPapierTekst() {
     html += '<div style="position:relative">';
     zins.forEach(z => {
       const wds = woorden(z);
-      html += `<p class="line" style="position:relative;margin:6px 0;line-height:1.8">${wds.join(' ')}</p>`;
+      html += `<p class="line" style="position:relative;margin:6px 0;line-height:1.8">${wds.map(htmlEscape).join(' ')}</p>`;
     });
     html += '</div>';
   } else if (papierTechModus === 's') {
@@ -5691,14 +5691,14 @@ function bouwPapierTekst() {
     });
     regels.forEach((r, ri) => {
       const links = ri % 2 === 0;
-      html += `<span class="line" style="display:block;text-align:${links ? 'left' : 'right'};padding:2px ${links ? '40%' : '0'} 2px ${links ? '0' : '40%'}">${r}</span>`;
+      html += `<span class="line" style="display:block;text-align:${links ? 'left' : 'right'};padding:2px ${links ? '40%' : '0'} 2px ${links ? '0' : '40%'}">${htmlEscape(r)}</span>`;
     });
   } else {
     // Regelbegeleider (standaard): chunks van 3 woorden
     zins.forEach(z => {
       const wds = woorden(z), chunks = [];
       for (let i = 0; i < wds.length; i += 3) chunks.push(wds.slice(i,i+3).join(' '));
-      html += `<span class="line">${chunks.map(c => `<span class="chunk-marker">${c}</span>`).join(' ')}</span><br>`;
+      html += `<span class="line">${chunks.map(c => `<span class="chunk-marker">${htmlEscape(c)}</span>`).join(' ')}</span><br>`;
     });
   }
   pt.innerHTML = html;
@@ -7632,26 +7632,27 @@ function syllabify(w) {
 
 // ─── WOORD → HTML (bionic + syllabe) ─────────────────────
 function dyxWoordHtml(woord) {
-  if (!dyx.aan && !dyx.bionic && !dyx.sylkleuren) return woord;
+  const veiligWoord = String(woord ?? '');
+  if (!dyx.aan && !dyx.bionic && !dyx.sylkleuren) return htmlEscape(veiligWoord);
 
   if (dyx.aan && dyx.sylkleuren) {
-    const sylls = syllabify(woord);
+    const sylls = syllabify(veiligWoord);
     return sylls.map((s, i) => {
       const kleur = i % 2 === 0 ? '' : 'color:#7c3aed;';
       if (dyx.bionic) {
         const half = Math.ceil(s.length / 2);
-        return `<span style="${kleur}"><b>${s.slice(0,half)}</b>${s.slice(half)}</span>`;
+        return `<span style="${kleur}"><b>${htmlEscape(s.slice(0,half))}</b>${htmlEscape(s.slice(half))}</span>`;
       }
-      return `<span style="${kleur}">${s}</span>`;
+      return `<span style="${kleur}">${htmlEscape(s)}</span>`;
     }).join('<span style="opacity:.3">·</span>');
   }
 
   if (dyx.aan && dyx.bionic) {
-    const half = Math.ceil(woord.length / 2);
-    return `<b>${woord.slice(0,half)}</b>${woord.slice(half)}`;
+    const half = Math.ceil(veiligWoord.length / 2);
+    return `<b>${htmlEscape(veiligWoord.slice(0,half))}</b>${htmlEscape(veiligWoord.slice(half))}`;
   }
 
-  return woord;
+  return htmlEscape(veiligWoord);
 }
 
 // ─── INITIALISEREN ────────────────────────────────────────
@@ -7976,7 +7977,10 @@ function dyxShuffle(arr) {
 }
 
 function bionicWord(w) {
-  return w.split('').map((c,i) => i < Math.ceil(w.length/2) ? `<b class="bio-b">${c}</b>` : c).join('');
+  const veiligWoord = String(w ?? '');
+  return veiligWoord.split('').map((c,i) =>
+    i < Math.ceil(veiligWoord.length / 2) ? `<b class="bio-b">${htmlEscape(c)}</b>` : htmlEscape(c)
+  ).join('');
 }
 
 // ── MODUS KIEZER ──
@@ -9566,12 +9570,12 @@ function skimNieuwe() {
   skimTekstIdx = eigen ? -1 : Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length);
   const d = eigen || SKIM_TEKSTEN_DATA[skimTekstIdx];
   // Highlight eerste + laatste zin van elke alinea
-  const html = `<div class="skim-titel">${d.titel}</div>` +
+  const html = `<div class="skim-titel">${htmlEscape(d.titel)}</div>` +
     d.alineas.map(al => {
       const zinnen = al.match(/[^.!?]+[.!?]?/g)||[al];
       return zinnen.map((z,i)=> (i===0||i===zinnen.length-1)
-        ? `<span class="skim-hl">${z}</span>`
-        : `<span>${z}</span>`
+        ? `<span class="skim-hl">${htmlEscape(z)}</span>`
+        : `<span>${htmlEscape(z)}</span>`
       ).join('');
     }).map(a=>`<p>${a}</p>`).join('');
   document.getElementById('skim-tekst-box').innerHTML = html;
@@ -9596,7 +9600,7 @@ function skimTimerStart() {
       const d = skimTekstIdx === -1 ? skimEigenData() : SKIM_TEKSTEN_DATA[skimTekstIdx];
       const wrap=document.getElementById('skim-vraag-wrap');
       wrap.style.display='';
-      wrap.innerHTML=`<div class="card"><b>Begripscheck:</b> Wat is het hoofdonderwerp van "${d.titel}"?
+      wrap.innerHTML=`<div class="card"><b>Begripscheck:</b> Wat is het hoofdonderwerp van "${htmlEscape(d.titel)}"?
         <div style="margin-top:8px;font-size:.88rem;color:var(--muted)">Bekijk je antwoord door de tekst nog eens te lezen. Kon je het hoofdidee vaststellen?</div>
         <button class="btn btn-primary" style="margin-top:8px;font-size:.82rem" onclick="skimNieuwe()">↺ Volgende tekst</button>
       </div>`;
@@ -9606,8 +9610,8 @@ function skimTimerStart() {
 
 function scanNieuwe() {
   const d = skimDataKies();
-  const html = `<div class="skim-titel">${d.titel}</div>` +
-    d.alineas.map(a=>`<p>${a}</p>`).join('');
+  const html = `<div class="skim-titel">${htmlEscape(d.titel)}</div>` +
+    d.alineas.map(a=>`<p>${htmlEscape(a)}</p>`).join('');
   document.getElementById('scan-tekst-box').innerHTML = html;
   document.getElementById('scan-zoek-input').value='';
   document.getElementById('scan-zoek-doel').textContent='';
@@ -9641,15 +9645,15 @@ function scanAutoZoek() {
 function previewNieuwe() {
   const d = skimDataKies();
   // Stap 1: structuur (titels + eerste zinnen)
-  const strHtml = `<div class="skim-titel">${d.titel}</div>` +
+  const strHtml = `<div class="skim-titel">${htmlEscape(d.titel)}</div>` +
     d.alineas.map(a=>{
       const eer = (a.match(/[^.!?]+[.!?]?/)||[a])[0];
-      return `<p><span class="skim-hl">${eer}</span></p>`;
+      return `<p><span class="skim-hl">${htmlEscape(eer)}</span></p>`;
     }).join('');
   document.getElementById('preview-structuur-box').innerHTML = strHtml;
   // Stap 2: volledige tekst
-  document.getElementById('preview-tekst-box').innerHTML = `<div class="skim-titel">${d.titel}</div>` +
-    d.alineas.map(a=>`<p>${a}</p>`).join('');
+  document.getElementById('preview-tekst-box').innerHTML = `<div class="skim-titel">${htmlEscape(d.titel)}</div>` +
+    d.alineas.map(a=>`<p>${htmlEscape(a)}</p>`).join('');
   document.getElementById('preview-stap-1').style.display='';
   document.getElementById('preview-stap-2').style.display='none';
 }
