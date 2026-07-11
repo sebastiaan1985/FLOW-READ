@@ -5111,8 +5111,8 @@ function begintestKlaar() {
   lijst.innerHTML = vragen.map((v, i) => {
     const opties = [v.correct, ...v.fouten].sort(() => Math.random() - 0.5);
     return `<div class="vraag card" style="padding:16px;margin-bottom:12px">
-      <div class="vraag-q">${i + 1}. ${v.vraag}</div>
-      ${opties.map(o => `<label><input type="radio" name="bt-v${i}" value="${o}"> ${o}</label>`).join('')}
+      <div class="vraag-q">${i + 1}. ${htmlEscape(v.vraag)}</div>
+      ${opties.map(o => `<label><input type="radio" name="bt-v${i}" value="${htmlEscape(o)}"> ${htmlEscape(o)}</label>`).join('')}
     </div>`;
   }).join('');
   btToonStap('vragen');
@@ -5400,8 +5400,8 @@ function toonBegrip() {
   vragen.forEach((v, i) => {
     const opties = shuffle([v.correct, v.w1, v.w2]);
     c.innerHTML += `<div class="vraag">
-      <div class="vraag-q">Vraag ${i+1}: ${v.vraag}</div>
-      ${opties.map(o => `<label><input type="radio" name="v${i}" value="${o}"> ${o}</label>`).join('')}
+      <div class="vraag-q">Vraag ${i+1}: ${htmlEscape(v.vraag)}</div>
+      ${opties.map(o => `<label><input type="radio" name="v${i}" value="${htmlEscape(o)}"> ${htmlEscape(o)}</label>`).join('')}
     </div>`;
   });
   document.getElementById('begrip-section').style.display = 'block';
@@ -9876,14 +9876,14 @@ function leestestKlaar() {
   let html = `<div style="font-size:.9rem;color:var(--muted);margin-bottom:16px">Beantwoord de vragen over de tekst die je net las:</div>`;
   vragen.forEach((q, qi) => {
     html += `<div style="margin-bottom:20px">
-      <div style="font-size:.9rem;font-weight:600;margin-bottom:8px">${qi + 1}. ${q.v}</div>
+      <div style="font-size:.9rem;font-weight:600;margin-bottom:8px">${qi + 1}. ${htmlEscape(q.v)}</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
         ${q.opties.map((opt, oi) =>
           `<button onclick="leestestKiesAntwoord(${qi},${oi},this)"
             data-idx="${qi}" data-opt="${oi}"
             style="padding:10px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--card);
               color:var(--text);cursor:pointer;font-size:.82rem;text-align:left;transition:all .15s"
-            onmouseover="this.style.borderColor='var(--accent)'" onmouseout="if(!this.classList.contains('gekozen'))this.style.borderColor='var(--border2)'">${opt}</button>`
+            onmouseover="this.style.borderColor='var(--accent)'" onmouseout="if(!this.classList.contains('gekozen'))this.style.borderColor='var(--border2)'">${htmlEscape(opt)}</button>`
         ).join('')}
       </div>
     </div>`;
@@ -10894,7 +10894,7 @@ function lttKlaar() {
   let html = '';
   vragen.forEach((q, qi) => {
     html += `<div style="margin-bottom:20px">
-      <div style="font-size:.9rem;font-weight:600;margin-bottom:8px">${qi + 1}. ${q.v}</div>
+      <div style="font-size:.9rem;font-weight:600;margin-bottom:8px">${qi + 1}. ${htmlEscape(q.v)}</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
         ${q.opties.map((opt, oi) =>
           `<button onclick="lttKiesAntwoord(${qi},${oi},this)"
@@ -10903,7 +10903,7 @@ function lttKlaar() {
               color:var(--text);cursor:pointer;font-size:.82rem;text-align:left;transition:all .15s"
             onmouseover="this.style.borderColor='var(--accent)'"
             onmouseout="if(!this.classList.contains('ltt-g'))this.style.borderColor='var(--border2)'"
-          >${opt}</button>`
+          >${htmlEscape(opt)}</button>`
         ).join('')}
       </div>
     </div>`;
@@ -11460,7 +11460,7 @@ function elKlaar() {
   let html = '';
   _elVragen.forEach((q, qi) => {
     html += `<div style="margin-bottom:20px">
-      <div style="font-size:.9rem;font-weight:600;margin-bottom:8px">${qi + 1}. ${q.v}</div>
+      <div style="font-size:.9rem;font-weight:600;margin-bottom:8px">${qi + 1}. ${htmlEscape(q.v)}</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
         ${q.opties.map((opt, oi) =>
           `<button onclick="elKiesAntwoord(${qi},${oi},this)"
@@ -11470,7 +11470,7 @@ function elKlaar() {
               text-align:left;transition:all .15s"
             onmouseover="this.style.borderColor='var(--accent)'"
             onmouseout="if(!this.classList.contains('el-g'))this.style.borderColor='var(--border2)'"
-          >${opt}</button>`
+          >${htmlEscape(opt)}</button>`
         ).join('')}
       </div>
     </div>`;

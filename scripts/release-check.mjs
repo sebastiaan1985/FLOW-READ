@@ -90,6 +90,8 @@ for (const pagina of ['index.html', 'login.html', 'reset-wachtwoord.html']) {
 const appHtml = lees('index.html');
 verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black"'), 'iOS PWA gebruikt geen niet-overlappende zwarte statusbalk.');
 verwacht(appHtml.includes('ios-standalone'), 'iOS standalone-layoutdetectie ontbreekt.');
+verwacht(appHtml.includes("const veiligWoord = String(woord ?? '');"), 'Leesweergave ontsmet eigen woorden niet.');
+verwacht(appHtml.includes('htmlEscape(d.titel)'), 'Skimweergave ontsmet eigen titels niet.');
 for (const eventNaam of ['onboarding_voltooid', 'begintest_voltooid', 'eerste_missie_voltooid', 'startweek_sessie_voltooid', 'startweek_voltooid', 'hermeting_voltooid', 'install_voltooid']) {
   verwacht(appHtml.includes(`gtmTrack('${eventNaam}'`), `Beta-event ontbreekt: ${eventNaam}.`);
 }
