@@ -38,8 +38,11 @@ Geslaagd wanneer: de officiële test een onbekende tekst roteert, drie vragen st
 3. Rond drie beoordeelde sessies met minimaal twee goede antwoorden af en controleer dat het doeltempo slechts een kleine stap stijgt.
 4. Probeer een leestest en lange tekst direct af te ronden; controleer dat beide metingen worden geweigerd.
 5. Controleer na een geweigerde ronde dat sessieaantal, record, XP en leerweg niet zijn gewijzigd.
+6. Rond een geldige ronde af met minder dan 67% begrip en controleer dat alleen 2 oefen-XP wordt toegekend.
+7. Rond een nieuwe tekst af met minimaal 67% begrip en controleer dat volledige XP en eventueel een record worden toegekend.
+8. Herhaal exact dezelfde tekst op dezelfde dag en controleer achtereenvolgens 50%, 15% en daarna geen basis-XP; een nieuwe tekst moet weer 100% geven.
 
-Geslaagd wanneer: tempo zonder begrip nergens een missie, record, leerwegstap of adaptieve verhoging oplevert.
+Geslaagd wanneer: tempo zonder begrip nergens een missie, record, leerwegstap of adaptieve verhoging oplevert, en herhalen niet onbeperkt volledige XP geeft.
 
 ## Kernroute: Dyslexie Leeslab
 

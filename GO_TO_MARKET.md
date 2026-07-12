@@ -8,6 +8,7 @@ Dit document is de releasevolgorde voor Snellezer. Het doel is niet een zo hoog 
 - Een begintest met 58 doelgroep-passende teksten, drie begripsvragen en rotatie op minst gebruikt; een eigen tekst is bewust een aparte oefenmeting.
 - Eerlijke vrije leesmetingen: te korte teksten en onwaarschijnlijk snelle afrondingen worden niet opgeslagen; alle begripsvragen zijn verplicht.
 - Snelheidsmissies verhogen het doel pas na drie beoordeelde rondes met voldoende begrip en verlagen het tempo wanneer begrip achterblijft.
+- De speleconomie beloont begrip: onvoldoende begrip geeft alleen oefen-XP, records vereisen minimaal 67% en dezelfde ronde levert per dag afnemende XP op.
 - Persoonlijke eerste missie, dagelijkse uitdaging, XP en streak.
 - Dyslexie Leeslab met zeven cumulatieve lessen, een 80%-beheersingspoort, persoonlijke herhaling van lastige woorden en vloeiendheid pas na nauwkeurigheid.
 - Startweek met zeven opeenvolgende sessies: tempo, begrip, oogbeweging, fixatie, regressie, langere tekst en een eindmeting.

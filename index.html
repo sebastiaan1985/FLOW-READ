@@ -4258,11 +4258,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button class="chart-tab" onclick="chartTab('verdeling')">📊 Snelheidsverdeling</button>
   </div>
   <div class="chart-wrap" id="chart-wrap-wpm">
-    <div class="chart-leeg" id="chart-leeg-wpm">Nog geen sessies — begin met trainen!</div>
+    <div class="chart-leeg" id="chart-leeg-wpm">Na twee beoordeelde sessies verschijnt je trendlijn.</div>
     <canvas id="chart-wpm" style="display:none"></canvas>
   </div>
   <div class="chart-wrap" id="chart-wrap-verdeling" style="display:none">
-    <div class="chart-leeg" id="chart-leeg-verdeling">Nog geen sessies — begin met trainen!</div>
+    <div class="chart-leeg" id="chart-leeg-verdeling">Na drie beoordeelde sessies verschijnt je verdeling.</div>
     <canvas id="chart-verdeling" style="display:none"></canvas>
   </div>
 
@@ -4812,8 +4812,50 @@ const DEMO_VRAGEN = [
 
 // ─── TEKST BIBLIOTHEEK ───────────────────────────────────
 const DEMO_ENTRY = { naam: 'Demo tekst (ingebouwd)', tekst: DEMO_TEKST, vast: true };
-let stats = JSON.parse(localStorage.getItem('snellees_stats') || '{"sessies":[],"totaalWoorden":0,"bestWpm":0}');
+const VRIJE_MEETREGELS = Object.freeze({ minWoorden:80, minSeconden:8, maxWpm:900 });
+let stats;
+try { stats = JSON.parse(localStorage.getItem('snellees_stats') || '{"sessies":[],"totaalWoorden":0,"bestWpm":0}'); }
+catch(e) { stats = { sessies:[], totaalWoorden:0, bestWpm:0, bestLeesscore:0 }; }
 let vragen = [];
+
+function sessieTeltVoorRecord(sessie) {
+  const wpm = Number(sessie?.wpm);
+  const begrip = Number(sessie?.begrip);
+  return Number.isFinite(wpm) && wpm >= 50 && wpm <= VRIJE_MEETREGELS.maxWpm
+    && Number.isFinite(begrip) && begrip >= 67 && begrip <= 100;
+}
+
+function beoordeeldeLeesSessies() {
+  return (stats.sessies || []).filter(sessieTeltVoorRecord);
+}
+
+function normaliseerStatistiekRecords() {
+  stats.sessies = Array.isArray(stats.sessies) ? stats.sessies : [];
+  const beoordeeld = beoordeeldeLeesSessies();
+  stats.bestWpm = beoordeeld.reduce((beste, sessie) => Math.max(beste, Math.round(sessie.wpm)), 0);
+  stats.bestLeesscore = beoordeeld.reduce((beste, sessie) =>
+    Math.max(beste, Math.round(sessie.wpm * (sessie.begrip / 100))), 0);
+  stats.totaalWoorden = Math.max(0, Number(stats.totaalWoorden) || 0);
+  localStorage.setItem('snellees_stats', JSON.stringify(stats));
+}
+
+function registreerKwaliteitsRecord(wpm, begrip, type) {
+  try {
+    const opgeslagen = JSON.parse(localStorage.getItem('snellees_stats') || '{}');
+    if (Array.isArray(opgeslagen.sessies)) stats = { ...stats, ...opgeslagen };
+  } catch(e) { /* gebruik de al geladen statistieken */ }
+  const laatste = stats.sessies?.[stats.sessies.length - 1];
+  if (laatste && Math.abs((Number(laatste.wpm) || 0) - (Number(wpm) || 0)) <= 3) {
+    laatste.type = type || laatste.type;
+    laatste.begrip = Math.round(Number(begrip) || 0);
+    laatste.leesscore = Math.round((Number(wpm) || 0) * (laatste.begrip / 100));
+  }
+  const nieuwRecord = sessieTeltVoorRecord({ wpm, begrip }) && Number(wpm) > (Number(stats.bestWpm) || 0);
+  normaliseerStatistiekRecords();
+  return nieuwRecord;
+}
+
+normaliseerStatistiekRecords();
 
 function bibliLaad() {
   try {
@@ -4858,7 +4900,7 @@ function markeerGelezen(tekstId, res = {}) {
   g[tekstId] = {
     keren: (oud.keren || 0) + 1,
     laatsteTs: Date.now(),
-    besteWpm: Math.max(oud.besteWpm || 0, res.wpm || 0),
+    besteWpm: (res.sterren || 0) >= 2 ? Math.max(oud.besteWpm || 0, res.wpm || 0) : (oud.besteWpm || 0),
     besteSterren: Math.max(oud.besteSterren || 0, res.sterren || 0),
   };
   localStorage.setItem('teksten_gelezen', JSON.stringify(g));
@@ -4934,8 +4976,6 @@ function huidigeBibTekst() {
 }
 
 function woorden(t) { return t.trim().split(/\s+/).filter(w => w.length > 0); }
-
-const VRIJE_MEETREGELS = Object.freeze({ minWoorden:80, minSeconden:8, maxWpm:900 });
 
 function laadGeldigeBegintestBaseline(opschonen = false) {
   let baseline = null;
@@ -6388,7 +6428,7 @@ function tekenGrafieken() {
     laadChart().then(() => tekenGrafieken()).catch(() => {});
     return;
   }
-  const sessies = (stats.sessies || []).filter(s => s.wpm > 0);
+  const sessies = beoordeeldeLeesSessies();
 
   // ── WPM over tijd ──────────────────────────────────────
   const wpmCanvas  = document.getElementById('chart-wpm');
@@ -6495,7 +6535,6 @@ function slaaSessieOp(wpm, n) {
   const scherm = (document.querySelector('.screen.active')?.id || '').replace('screen-', '');
   stats.sessies.push({ datum: new Date().toLocaleString('nl-NL'), ts: Date.now(), wpm, woorden: n });
   stats.totaalWoorden += n;
-  if (wpm > stats.bestWpm) stats.bestWpm = wpm;
   localStorage.setItem('snellees_stats', JSON.stringify(stats));
   if (typeof _zetWaardeMoment === 'function') _zetWaardeMoment();
   // Bijwerken globale streak bij elke training
@@ -6503,14 +6542,15 @@ function slaaSessieOp(wpm, n) {
 }
 
 function toonStats() {
-  const gem = stats.sessies.length
-    ? Math.round(stats.sessies.reduce((s,x)=>s+x.wpm,0)/stats.sessies.length) : 0;
+  const sessies = beoordeeldeLeesSessies();
+  const gem = sessies.length
+    ? Math.round(sessies.reduce((som, sessie) => som + sessie.wpm, 0) / sessies.length) : 0;
 
   // Trend: vergelijk laatste 5 met de 5 daarvoor
   let trendHtml = '';
-  if (stats.sessies.length >= 6) {
-    const recent = stats.sessies.slice(-5).reduce((a,s)=>a+s.wpm,0)/5;
-    const eerder = stats.sessies.slice(-10,-5).reduce((a,s)=>a+s.wpm,0)/Math.min(5,stats.sessies.length-5);
+  if (sessies.length >= 6) {
+    const recent = sessies.slice(-5).reduce((a,s)=>a+s.wpm,0)/5;
+    const eerder = sessies.slice(-10,-5).reduce((a,s)=>a+s.wpm,0)/Math.min(5,sessies.length-5);
     const diff = Math.round(recent - eerder);
     trendHtml = diff > 0
       ? `<span style="font-size:.7rem;color:#34d399">▲ +${diff} vs vorige 5</span>`
@@ -6520,22 +6560,22 @@ function toonStats() {
   }
 
   document.getElementById('stat-cards').innerHTML = `
-    <div class="stat-card"><div class="stat-num">${stats.sessies.length}</div><div class="stat-lbl">Sessies</div></div>
-    <div class="stat-card"><div class="stat-num">${gem}</div><div class="stat-lbl">Gem. WPM${trendHtml?`<br>${trendHtml}`:''}</div></div>
-    <div class="stat-card"><div class="stat-num">${stats.bestWpm}</div><div class="stat-lbl">Best WPM</div></div>
+    <div class="stat-card"><div class="stat-num">${sessies.length}</div><div class="stat-lbl">Beoordeelde sessies</div></div>
+    <div class="stat-card"><div class="stat-num">${gem}</div><div class="stat-lbl">Gem. WPM met begrip${trendHtml?`<br>${trendHtml}`:''}</div></div>
+    <div class="stat-card"><div class="stat-num">${stats.bestWpm}</div><div class="stat-lbl">Beste WPM met begrip</div></div>
     <div class="stat-card"><div class="stat-num">${stats.totaalWoorden.toLocaleString()}</div><div class="stat-lbl">Woorden totaal</div></div>`;
 
-  const lijst = [...stats.sessies].reverse().slice(0,10);
+  const lijst = [...sessies].reverse().slice(0,10);
   document.getElementById('sessie-lijst').innerHTML = lijst.length
-    ? lijst.map(s => `<div class="sessie-item"><span>${s.datum}</span><span><b class="sessie-wpm">${s.wpm} WPM</b> · ${s.woorden} woorden</span></div>`).join('')
-    : '<span style="color:var(--muted);font-size:13px">Nog geen sessies — begin met trainen!</span>';
+    ? lijst.map(s => `<div class="sessie-item"><span>${s.datum}</span><span><b class="sessie-wpm">${s.wpm} WPM</b> · ${s.begrip}% begrip</span></div>`).join('')
+    : '<span style="color:var(--muted);font-size:13px">Nog geen beoordeelde sessies — rond een tekst en de vragen af.</span>';
 
   // Render grafieken (klein delay zodat canvas zichtbaar is)
   setTimeout(tekenGrafieken, 50);
 }
 
 function resetStats() {
-  stats = { sessies: [], totaalWoorden: 0, bestWpm: 0 };
+  stats = { sessies: [], totaalWoorden: 0, bestWpm: 0, bestLeesscore: 0 };
   localStorage.setItem('snellees_stats', JSON.stringify(stats));
   toonStats();
 }
@@ -7230,7 +7270,7 @@ function telOp(el, naar, duurMs = 700) {
   }
   const start = performance.now();
   const tick = (t) => {
-    const p = Math.min(1, (t - start) / duurMs);
+    const p = Math.max(0, Math.min(1, (t - start) / duurMs));
     el.textContent = Math.round(naar * (1 - Math.pow(1 - p, 3))); // ease-out
     if (p < 1) requestAnimationFrame(tick);
   };
@@ -10543,8 +10583,8 @@ function or2020Herinnering(){
 // ═══════════════════════════════════════════════════════════
 function toonWpmDoel() {
   const doel = parseInt(localStorage.getItem('wpm_doel')||'0');
-  const stats = JSON.parse(localStorage.getItem('snellees_stats')||'{"sessies":[]}');
-  const sessies = (stats.sessies||[]).filter(s=>s.wpm>0);
+  const opgeslagen = JSON.parse(localStorage.getItem('snellees_stats')||'{"sessies":[]}');
+  const sessies = (opgeslagen.sessies||[]).filter(sessieTeltVoorRecord);
   const gem = sessies.length
     ? Math.round(sessies.slice(-10).reduce((a,s)=>a+s.wpm,0)/Math.min(10,sessies.length))
     : 0;
@@ -10558,7 +10598,7 @@ function toonWpmDoel() {
     document.getElementById('doel-pct').textContent=`${pct}% van doel`;
     const over=doel-gem;
     document.getElementById('doel-motivatie').textContent = over<=0
-      ? '🏆 Doel bereikt! Stel een nieuw, hoger doel in!'
+      ? '🏆 Doel bereikt met begrip! Kies pas een kleine volgende stap als dit meerdere sessies stabiel blijft.'
       : `💪 Nog ${over} WPM te gaan — blijf oefenen!`;
   } else {
     document.getElementById('doel-fill').style.width='0%';
@@ -11345,7 +11385,7 @@ function _updateMomentumCard() {
   let titel = `Leesscore ${score || r.wpm}`;
   if (baseline && r.wpm && r.wpm > baseline.wpm) titel = `+${Math.round(r.wpm - baseline.wpm)} WPM sinds je startmeting`;
   if (r.begrip !== null && r.begrip < 67) titel = 'Je snelheid is er. Nu het begrip vastzetten.';
-  if (r.sterren >= 3) titel = 'Perfecte ronde: snelheid én begrip zitten goed.';
+  if (r.sterren >= 3) titel = 'Tempo en begrip waren beide op doel.';
 
   const actie = _momentumActie(r);
   kaart.dataset.type = actie.type || '';
@@ -11788,8 +11828,6 @@ function lttVerzend() {
   document.getElementById('ltt-view-vragen').style.display = 'none';
   document.getElementById('ltt-view-resultaat').style.display = '';
 
-  // Daguitdaging voltooien
-  if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('eigen-lees', { begrip:begrip_pct });
   // Vandaag panel bijwerken
   if (typeof updateVandaagPanel === 'function') updateVandaagPanel();
   // Achievements checken (na localStorage-update)
@@ -11812,8 +11850,8 @@ function _toonLevelUp(nieuwNiveau) {
       <div class="lu-titel">Je bent nu ${cfg.naam}</div>
       <div class="lu-niveau" style="background:${cfg.kleur}22;color:${cfg.kleur}">${cfg.emoji} Niveau ${nieuwNiveau} — ${cfg.naam}</div>
       <div class="lu-sub">${nieuwNiveau === 2
-        ? 'Je leest nu sneller dan het gemiddelde. Langere en complexere teksten staan voor je klaar!'
-        : 'Indrukwekkend — je behoort nu tot de snelste lezers. Alleen de uitdagendste teksten kunnen je nog stoppen.'
+        ? 'Je hield tempo en begrip samen op niveau. Langere en complexere teksten staan nu voor je klaar.'
+        : 'Je hebt het hoogste oefenniveau geopend. Hier vergelijk je jezelf met je eigen eerdere metingen op uitdagende teksten.'
       }</div>
       <button class="btn btn-primary" onclick="this.closest('.lu-overlay').remove()">Doorgaan →</button>
     </div>`;
@@ -12321,8 +12359,7 @@ function _elToonResultaat(score, begrip_pct) {
   const wc = woorden(_elTekst.tekst).length;
   slaaSessieOp(_elWpm, wc);
   if (_elVragen.length > 0) Coach.registreerBegrip(begrip_pct, 'eigen-lees');
-  // Gelezen-vinkje voor de eigen tekst (demo-tekst heeft geen uid)
-  if (_elTekst.uid) markeerGelezen('e:' + _elTekst.uid, { wpm: _elWpm });
+  Ronde.direct('eigen-lees', _elWpm, wc, begrip_pct, _elTekst.uid ? 'e:' + _elTekst.uid : null);
 
   const leesscore  = Math.round(_elWpm * (begrip_pct / 100));
   const heeftV     = _elVragen.length > 0;
@@ -12350,7 +12387,6 @@ function _elToonResultaat(score, begrip_pct) {
   document.getElementById('el-feedback').textContent = feedback;
   document.getElementById('el-view-resultaat').style.display = '';
 
-  if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('langetekst');
   if (typeof updateVandaagPanel  === 'function') updateVandaagPanel();
   setTimeout(checkAchievements, 80);
 }
@@ -12360,7 +12396,7 @@ function _elToonResultaat(score, begrip_pct) {
   const _orig = slaaSessieOp;
   slaaSessieOp = function(wpm, n) {
     // Sanity check: sla onrealistische scores niet op
-    if (typeof wpm !== 'number' || wpm < 30 || wpm > 1200) {
+    if (typeof wpm !== 'number' || wpm < 30 || wpm > VRIJE_MEETREGELS.maxWpm) {
       console.warn('[FlowRead] WPM buiten bereik, sessie niet opgeslagen:', wpm);
       return;
     }

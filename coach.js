@@ -167,7 +167,7 @@ const Coach = {
       // vooruitgang
       { id: 'v1', cat: 'vooruitgang', kids: 'WAUW {naam}! Je las {wpm} woorden per minuut — {delta}% sneller dan eerst! 🎉', volw: 'Sterke sessie: {wpm} WPM, {delta}% boven je gemiddelde van de afgelopen week.' },
       { id: 'v2', cat: 'vooruitgang', kids: 'Je tempo groeit en je antwoorden blijven goed. Dat is echte vooruitgang! 🚀', volw: 'Je tempo stijgt met behoud van begrip. Bevestig dit nog op een paar vergelijkbare teksten.' },
-      { id: 'v3', cat: 'vooruitgang', kids: 'Sneller én alles begrepen — jij bent een leeskampioen! 🏆', volw: 'Sneller lezen mét behoud van begrip — precies de juiste balans. Uitstekend.' },
+      { id: 'v3', cat: 'vooruitgang', kids: 'Sneller én je begrip op peil — sterke ronde! 🏆', volw: 'Een hoger tempo met begrip op peil: dat is een bruikbare trainingsstap.' },
       { id: 'v4', cat: 'vooruitgang', kids: 'Je las {wpm} woorden per minuut en hield het verhaal vast. Knap! 💪', volw: '{wpm} WPM in deze sessie, {delta}% boven je recente gemiddelde. Controleer of dit over meerdere teksten standhoudt.' },
       // begrip-waarschuwing (snelheid-begrip trade-off)
       { id: 'b1', cat: 'begrip', kids: 'Hé snelheidsduivel! 😄 Je leest supersnel, maar de vragen waren lastig, hè? Ga een tikkeltje langzamer.', volw: 'Je snelheid stijgt, maar je begrip zakte onder de 70%. Ga 10% langzamer — snelheid zonder begrip telt niet.' },

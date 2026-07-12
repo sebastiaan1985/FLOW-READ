@@ -199,13 +199,52 @@ const Ronde = {
     document.getElementById('ronde-cp')?.remove();
   },
 
+  _berekenXpBeloning(basisXp, sleutel, kwaliteitBehaald, bonusXp = 0) {
+    const vandaag = new Date().toDateString();
+    let dag;
+    try { dag = JSON.parse(localStorage.getItem('snellees_xp_dag') || 'null'); }
+    catch(e) { dag = null; }
+    if (!dag || dag.datum !== vandaag) dag = { datum:vandaag, rondes:{} };
+    const item = dag.rondes[sleutel] || { pogingen:0, geslaagd:0, mislukt:0 };
+    item.pogingen++;
+
+    let xp;
+    let factor = 1;
+    let reden = 'Volledige rondebeloning';
+    if (!kwaliteitBehaald) {
+      xp = item.mislukt < 2 ? 2 : 0;
+      factor = 0;
+      item.mislukt++;
+      reden = xp
+        ? 'Oefen-XP; haal minimaal 2 van de 3 vragen voor de volledige beloning'
+        : 'Geen extra oefen-XP meer voor deze tekst vandaag; probeer een nieuwe tekst of kom morgen terug';
+    } else {
+      factor = item.geslaagd === 0 ? 1 : item.geslaagd === 1 ? 0.5 : item.geslaagd === 2 ? 0.15 : 0;
+      xp = (factor > 0 ? Math.max(1, Math.round(basisXp * factor)) : 0) + bonusXp;
+      item.geslaagd++;
+      if (factor === 0.5) reden = 'Halve herhaalbeloning voor dezelfde ronde vandaag';
+      if (factor === 0.15) reden = 'Kleine herhaalbeloning; kies een nieuwe tekst voor volledige XP';
+      if (factor === 0) reden = 'Deze ronde is vandaag al vaak beloond; kies een nieuwe tekst voor XP';
+      if (bonusXp) reden += ` · +${bonusXp} XP voor beter begrip bij herlezen`;
+    }
+
+    dag.rondes[sleutel] = item;
+    localStorage.setItem('snellees_xp_dag', JSON.stringify(dag));
+    return { xp, factor, reden, poging:item.pogingen, geslaagd:item.geslaagd };
+  },
+
   einde(wpm, aantalWoorden, begripOverride, tekstId, opts) {
     if (!this.actief) return null;
     this.actief = false;
 
     const begrip = (begripOverride !== undefined) ? begripOverride : this.begripPct();
-    const begripDoel = this.type === 'rsvp' || this.type === 'chunk' ? 67 : 70;
+    const kwaliteitTypes = ['rsvp', 'chunk', 'regressie', 'leestest', 'langetekst', 'eigen-lees'];
+    const kwaliteitNodig = kwaliteitTypes.includes(this.type);
+    const begripDoel = kwaliteitNodig ? 67 : 70;
+    const kwaliteitBehaald = !kwaliteitNodig || (begrip !== null && begrip >= begripDoel);
     const doelWpm = (typeof Coach !== 'undefined') ? Coach.adaptief.doelWpm(this.type) : 250;
+    const tid = (tekstId !== undefined) ? tekstId
+      : (typeof actieveTekstId === 'function' ? actieveTekstId() : null);
 
     let sterren = 1;
     if (begrip !== null && begrip >= begripDoel) sterren = 2;
@@ -213,18 +252,27 @@ const Ronde = {
     // Score-rondes (bijv. oog-vanggame): derde ster op topscore i.p.v. tempo
     if (opts && opts.topBij && begrip !== null && begrip >= opts.topBij) sterren = 3;
 
-    // XP: woorden × begrip-multiplier + combo-bonus (5..80)
+    // XP: begrip bepaalt of de ronde volledig beloond wordt; dezelfde
+    // tekst levert per dag afnemende XP op zodat variatie aantrekkelijk blijft.
     const basis = Math.round(aantalWoorden / 12);
     const mult = 0.4 + 0.6 * ((begrip ?? 50) / 100);
-    let xp = Math.max(5, Math.min(80, Math.round(basis * mult) + this._maxCombo * 2));
-    if (opts && opts.xpVast) xp = Math.max(5, Math.min(80, opts.xpVast));
+    let basisXp = Math.max(5, Math.min(80, Math.round(basis * mult) + this._maxCombo * 2));
+    if (opts && opts.xpVast) basisXp = Math.max(5, Math.min(80, opts.xpVast));
 
-    // Vloeiendheid-bonus (herhaald lezen): tweede keer beter begrip = +10 XP
+    // Vloeiendheid-bonus: een aantoonbare begripsverbetering bij herlezen.
     let fluencyBonus = false;
-    if (this._fluency && begrip !== null && begrip > this._fluency.begrip) {
-      xp += 10;
+    let bonusXp = 0;
+    if (this._fluency && kwaliteitBehaald && begrip !== null && begrip > this._fluency.begrip) {
+      bonusXp = 5;
       fluencyBonus = { van: this._fluency.begrip, naar: begrip };
     }
+    const beloning = this._berekenXpBeloning(
+      basisXp,
+      `${this.type}:${tid || 'standaard'}`,
+      kwaliteitBehaald,
+      bonusXp
+    );
+    const xp = beloning.xp;
 
     // Eén economie: XP naar het avontuurprofiel (level-balk in de header)
     try {
@@ -239,25 +287,11 @@ const Ronde = {
     // oefening het zelf al — niet dubbel tellen)
     try { if (begrip !== null && begripOverride === undefined) Coach.registreerBegrip(begrip, this.type); } catch (e) {}
 
-    // Verrijk de laatst opgeslagen sessie met begrip/leesscore zodra een
-    // ronde-checkpoint of directe toets klaar is. Hierdoor blijft sync naar
-    // ingelogde accounts volledig, ook voor RSVP en chunks.
+    // Verrijk de sessie en werk een record pas bij na voldoende begrip.
+    let recordNieuw = false;
     try {
-      if (begrip !== null) {
-        const stats = JSON.parse(localStorage.getItem('snellees_stats') || '{"sessies":[]}');
-        const laatste = stats.sessies && stats.sessies[stats.sessies.length - 1];
-        let verrijkt = false;
-        if (laatste && Math.abs((laatste.wpm || 0) - (wpm || 0)) <= 3 && (laatste.begrip == null)) {
-          laatste.type = laatste.type || this.type;
-          laatste.begrip = Math.round(begrip);
-          laatste.leesscore = Math.round((wpm || 0) * (begrip / 100));
-          stats.sessies[stats.sessies.length - 1] = laatste;
-          localStorage.setItem('snellees_stats', JSON.stringify(stats));
-          verrijkt = true;
-        }
-        if (verrijkt && typeof registreerLeesPrestatie === 'function' && this.type !== 'oog') {
-          registreerLeesPrestatie(this.type, wpm, begrip, { woorden: aantalWoorden, tekstId });
-        }
+      if (begrip !== null && typeof registreerKwaliteitsRecord === 'function') {
+        recordNieuw = registreerKwaliteitsRecord(wpm, begrip, this.type);
       }
     } catch (e) { /* voortgang verrijken is optioneel */ }
 
@@ -270,7 +304,7 @@ const Ronde = {
       _gamSla(g);
     } catch (e) {}
 
-    const res = { sterren, wpm, begrip, begripDoel, xp, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus, opts: opts || null, ts: Date.now() };
+    const res = { sterren, wpm, begrip, begripDoel, xp, xpReden:beloning.reden, xpFactor:beloning.factor, kwaliteitBehaald, recordNieuw, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus, opts: opts || null, ts: Date.now() };
     this._fluency = null;
 
     // Tempo-levels vragen zowel uitspelen als minimaal 2 van de 3 vragen goed.
@@ -286,8 +320,6 @@ const Ronde = {
 
     // Gelezen-collectie: vink de tekst af met de beste prestatie
     try {
-      const tid = (tekstId !== undefined) ? tekstId
-        : (typeof actieveTekstId === 'function' ? actieveTekstId() : null);
       if (tid && typeof markeerGelezen === 'function') markeerGelezen(tid, { wpm, sterren });
     } catch (e) { /* geen collectie beschikbaar */ }
     this._toonResultaat(res);
@@ -303,6 +335,7 @@ const Ronde = {
         begrip: r.begrip === null || r.begrip === undefined ? null : Math.round(r.begrip),
         sterren: r.sterren,
         xp: r.xp,
+        kwaliteitBehaald: r.kwaliteitBehaald,
         doelWpm: r.doelWpm,
       }));
     } catch (e) { /* laatste resultaat is alleen UX-suiker */ }
@@ -354,7 +387,7 @@ const Ronde = {
           : (kids ? 'Blijf de bal goed volgen — dan vang je er steeds meer! 🎯' : 'Blijf de bal volgen met je ogen — elke vangst telt.');
     } else {
       uitleg = r.sterren === 3
-        ? (kids ? 'WAUW! Alle sterren — jij bent een supervos! 🦊' : 'Perfect: snel én alles begrepen.')
+        ? (kids ? 'WAUW! Alle sterren — tempo én begrip op doel! 🦊' : 'Doel gehaald: tempo én begrip zijn op norm.')
         : r.sterren === 2
           ? (kids ? 'Goed gelezen! Haal je ook het doeltempo? 🚀' : `Sterk begrip. Derde ster bij ${r.doelWpm} WPM.`)
           : (r.begrip !== null && r.begrip < begripDoel
@@ -365,8 +398,8 @@ const Ronde = {
     // Vloeiendheid-bonus (herhaald lezen met beter begrip)
     if (r.fluencyBonus) {
       uitleg = kids
-        ? `📈 Van ${r.fluencyBonus.van}% naar ${r.fluencyBonus.naar}% begrip — herlezen werkt! +10 bonus-XP`
-        : `📈 Vloeiendheid-bonus: begrip steeg van ${r.fluencyBonus.van}% naar ${r.fluencyBonus.naar}%. +10 XP extra.`;
+        ? `📈 Van ${r.fluencyBonus.van}% naar ${r.fluencyBonus.naar}% begrip — mooi herlezen! +5 bonus-XP`
+        : `📈 Vloeiendheid-bonus: begrip steeg van ${r.fluencyBonus.van}% naar ${r.fluencyBonus.naar}%. +5 XP extra.`;
     }
     const inzicht = this._resultaatInzicht(r);
 
@@ -423,7 +456,7 @@ const Ronde = {
         <div class="ronde-res-inzicht"><b>${inzicht.kop}</b><span>${inzicht.tekst}</span></div>
         ${missieHtml}
         ${leerwegHtml}
-        <div class="ronde-res-xp">+${r.xp} XP</div>
+        <div class="ronde-res-xp">+${r.xp} XP · ${r.xpReden}${r.recordNieuw ? ' · nieuw begripsrecord' : ''}</div>
         <div class="ronde-res-knoppen">${knoppen}</div>
       </div>`;
     document.body.appendChild(overlay);

@@ -90,6 +90,7 @@ for (const pagina of ['index.html', 'login.html', 'privacy.html', 'reset-wachtwo
 }
 
 const appHtml = lees('index.html');
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v32'"), 'Service worker gebruikt niet de actuele v32-cache.');
 verwacht(appHtml.includes('<title>Snellezer</title>'), 'Apppagina gebruikt niet de naam Snellezer.');
 verwacht(appHtml.includes('function startInhoudsQuiz('), 'RSVP en chunks missen de quizfinale met drie inhoudsvragen.');
 verwacht(appHtml.includes("Coach.registreerBegrip(begripPct, type)"), 'Quizresultaat voedt de begripsscore niet.');
@@ -114,6 +115,11 @@ verwacht(appHtml.includes('function begintestEigenTekst()'), 'Begintest linkt ni
 verwacht(appHtml.includes('passageId:btHuidigePassage.id'), 'Begintest bewaart niet welke testtekst is gebruikt.');
 verwacht(appHtml.includes('const VRIJE_MEETREGELS = Object.freeze({ minWoorden:80, minSeconden:8, maxWpm:900 })'), 'Vrije leesmetingen missen centrale betrouwbaarheidsgrenzen.');
 verwacht(appHtml.includes('function laadGeldigeBegintestBaseline(opschonen = false)'), 'Oude ongeldige beginscores worden niet gemigreerd.');
+verwacht(appHtml.includes('function registreerKwaliteitsRecord(wpm, begrip, type)'), 'WPM-records worden niet centraal aan begrip gekoppeld.');
+verwacht(appHtml.includes('function beoordeeldeLeesSessies()'), 'Statistieken scheiden beoordeelde leesmetingen niet van losse oefeningen.');
+verwacht(appHtml.includes("const sessies = (opgeslagen.sessies||[]).filter(sessieTeltVoorRecord);"), 'WPM-doel gebruikt nog ongetoetste sessies als huidig gemiddelde.');
+verwacht(appHtml.includes('Math.max(0, Math.min(1, (t - start) / duurMs))'), 'Getalanimatie kan met een negatief resultaat beginnen.');
+verwacht(!appHtml.includes('if (wpm > stats.bestWpm) stats.bestWpm = wpm;'), 'Een ongetoetste sessie kan nog direct het WPM-record verhogen.');
 verwacht((appHtml.match(/valideerVrijeLeesmeting\(/g) || []).length >= 5, 'Niet alle vrije leesmetingen gebruiken de centrale validatie.');
 verwacht(appHtml.includes('Beantwoord alle ${vragen.length} vragen.'), 'Begintest kan worden afgerond zonder alle begripsvragen.');
 verwacht(appHtml.includes('let btResultaatVerwerkt = false'), 'Begintest mist bescherming tegen dubbel verwerken.');
@@ -122,6 +128,9 @@ verwacht(appHtml.includes('let _lttVerwerkt = false') && appHtml.includes('let _
 verwacht(appHtml.includes("Ronde.start('regressie', woorden(regTekst))"), 'Vooruit-lezen start geen begripsgestuurde leesronde.');
 verwacht(appHtml.includes("startInhoudsQuiz('regressie', regWpm"), 'Vooruit-lezen eindigt niet met drie begripsvragen.');
 verwacht(appHtml.includes("Ronde.annuleer();\n    toonFout('Deze tekst heeft nog geen complete begripstoets."), 'Leesronde zonder complete begripstoets kan nog worden opgeslagen.');
+verwacht(appHtml.includes("Ronde.direct('eigen-lees'"), 'Eigen tekst loopt niet via de centrale belonings- en begripspoort.');
+verwacht(!appHtml.includes("voltooiDaguitdaging('eigen-lees', { begrip:begrip_pct })"), 'Lange tekst kan nog als eigen-tekstuitdaging worden geregistreerd.');
+verwacht(!appHtml.includes("voltooiDaguitdaging('langetekst');"), 'Eigen tekst kan nog als lange-tekstenuitdaging worden geregistreerd.');
 for (const claim of ['2× sneller', 'zonder begripsverlies', '5–7 woorden', '30% van je leestijd', 'Schakel je innerlijke stem uit']) {
   verwacht(!appHtml.includes(claim), `Ongefundeerde snel-leesclaim staat nog in de app: ${claim}`);
 }
@@ -143,6 +152,13 @@ verwacht(!appHtml.includes("leerWegAutoVoltooi(scherm);"), 'Generieke sessie-hoo
 verwacht(appHtml.includes("slaaSessieOp(wpm, aantalWoorden);\n    Coach.registreerBegrip(begripPct, type);"), 'Begrip wordt vóór de bijbehorende sessie geregistreerd.');
 verwacht(lees('teksten.js').includes("t.collectie === 'leestest' && t.woorden >= 80"), 'Leestest kan een tekst onder de minimale meetlengte selecteren.');
 verwacht(lees('ronde.js').includes('annuleer() {'), 'Leesrondemotor kan een ongeldige ronde niet schoon annuleren.');
+verwacht(lees('ronde.js').includes("localStorage.getItem('snellees_xp_dag')"), 'Ronde-XP heeft geen dagelijkse anti-herhaaladministratie.');
+verwacht(lees('ronde.js').includes("item.geslaagd === 0 ? 1 : item.geslaagd === 1 ? 0.5 : item.geslaagd === 2 ? 0.15 : 0"), 'Herhaalde rondes leveren nog onbeperkt XP op.');
+verwacht(lees('ronde.js').includes('xp = item.mislukt < 2 ? 2 : 0'), 'Mislukte rondes leveren nog onbeperkt oefen-XP op.');
+verwacht(lees('ronde.js').includes("? 'Oefen-XP; haal minimaal 2 van de 3 vragen"), 'Laag begrip krijgt geen duidelijke oefenbeloning in plaats van volledige XP.');
+verwacht(lees('ronde.js').includes('const begripDoel = kwaliteitNodig ? 67 : 70'), 'Twee van drie goede antwoorden halen de centrale begripspoort niet.');
+verwacht(!lees('ronde.js').includes('Perfect: snel én alles begrepen.'), 'Drie sterren claimt ten onrechte perfect begrip.');
+verwacht(!appHtml.includes('Perfecte ronde: snelheid én begrip zitten goed.'), 'Momentumkaart noemt voldoende begrip ten onrechte perfect.');
 verwacht(!lees('ronde.js').includes("_markeerStartweekVoltooid(r.type)"), 'Ronde-resultaat kan onbedoeld een extra startweeksessie overslaan.');
 verwacht(lees('ronde.js').includes("begrip !== null && begrip >= begripDoel"), 'Leesronde voltooit de persoonlijke missie zonder begripspoort.');
 verwacht(lees('coach.js').includes("baselineKlaar && t.id === 'e1'"), 'Coach kan na de begintest nog vragen om de begintest te doen.');
