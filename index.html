@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data: blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://corsproxy.io https://api.allorigins.win https://api.codetabs.com https://generativelanguage.googleapis.com; worker-src 'self' blob:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data: blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; worker-src 'self' blob:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Snellezer</title>
 <meta name="description" content="Train je leessnelheid, vergroot je blikveld en lees slimmer — niet harder.">
@@ -633,6 +633,14 @@ textarea:focus { border-color: rgba(124,111,247,.5); }
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .begintest-label { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.meet-waarschuwing {
+  display:none; margin:16px 0; padding:14px 16px; border:1px solid rgba(245,158,11,.55);
+  border-left:4px solid #f59e0b; border-radius:8px; background:rgba(245,158,11,.1);
+  color:var(--text); font-size:.84rem; line-height:1.5;
+}
+.meet-waarschuwing.zichtbaar { display:block; }
+.meet-waarschuwing b { display:block; margin-bottom:3px; }
+.meet-waarschuwing .btn { margin-top:10px; }
 .begintest-meter { display: flex; gap: 20px; justify-content: center; margin: 20px 0; }
 .begintest-meter-item { text-align: center; }
 .begintest-reco {
@@ -2909,8 +2917,8 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button onclick="sidebarNav('oog')" data-screen="oog"><span class="icon">👁</span> Oogbeweging</button>
     <button onclick="sidebarNav('perifeer')" data-screen="perifeer"><span class="icon">🔭</span> Perifeer</button>
     <button onclick="sidebarNav('papier')" data-screen="papier"><span class="icon">📄</span> Papier</button>
-    <button onclick="sidebarNav('subvocal')" data-screen="subvocal"><span class="icon">🔕</span> Subvocalisatie</button>
-    <button onclick="sidebarNav('regressie')" data-screen="regressie"><span class="icon">⏩</span> Regressie</button>
+    <button onclick="sidebarNav('subvocal')" data-screen="subvocal"><span class="icon">🔕</span> Leesritme</button>
+    <button onclick="sidebarNav('regressie')" data-screen="regressie"><span class="icon">⏩</span> Vooruit lezen</button>
     <button onclick="sidebarNav('fixatie')" data-screen="fixatie"><span class="icon">🔲</span> Fixatie-training</button>
     <button onclick="sidebarNav('skim')" data-screen="skim"><span class="icon">🔍</span> Skim &amp; Scan</button>
     <button onclick="sidebarNav('oogrust')" data-screen="oogrust"><span class="icon">😌</span> Oogontspanning</button>
@@ -2919,7 +2927,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="sidebar-section" id="sidebar-section-avontuur"><div class="sidebar-section-title">Spelen</div></div>
   <nav id="sidebar-nav-games">
     <button onclick="sidebarNav('avontuur')" data-screen="avontuur"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Profiel</button>
-    <button onclick="sidebarNav('dyslexie')" data-screen="dyslexie"><span class="icon">🌈</span> Dyslexie Spel</button>
+    <button onclick="sidebarNav('dyslexie')" data-screen="dyslexie"><span class="icon">🌈</span> Dyslexie Leeslab</button>
   </nav>
 
   <div class="sidebar-section"><div class="sidebar-section-title">Beheer</div></div>
@@ -2946,7 +2954,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button onclick="toon('papier', this)"><span class="icon">📄</span> Papier</button>
     <button onclick="toon('tekst', this)"><span class="icon">✍️</span> Eigen tekst</button>
     <button onclick="toon('stats', this)"><span class="icon">📊</span> Statistieken</button>
-    <button onclick="toon('dyslexie', this)"><span class="icon">🌈</span> Dyslexie Spel</button>
+    <button onclick="toon('dyslexie', this)"><span class="icon">🌈</span> Dyslexie Leeslab</button>
     <button onclick="toon('avontuur', this)"><span class="icon">👤</span> Profiel</button>
 </nav>
 
@@ -3350,11 +3358,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button class="home-kaart" onclick="sidebarNav('oog')">
       <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
       <div class="home-kaart-titel">Oogtraining</div>
-      <div class="home-kaart-sub">Blikveld vergroten en regressie stoppen</div>
+      <div class="home-kaart-sub">Visuele focus en gecontroleerde blikverplaatsing</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('dyslexie')">
       <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v12"/><path d="M12 3a6 6 0 0 1 6 6v12"/><path d="M12 7a2 2 0 0 0-2 2v12"/><path d="M12 7a2 2 0 0 1 2 2v12"/></svg></div>
-      <div class="home-kaart-titel">Dyslexie Spel</div>
+      <div class="home-kaart-titel">Dyslexie Leeslab</div>
       <div class="home-kaart-sub">Letter Jacht, Flits & Goed of Fout?</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('perifeer')">
@@ -3369,13 +3377,13 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     </button>
     <button class="home-kaart" onclick="sidebarNav('subvocal')">
       <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 2 20 20"/><path d="M8.7 3A6 6 0 0 1 18 8c0 2.4.5 4 1.2 5"/><path d="M6 8a6 6 0 0 0-.6 2.6c0 3.5-1.4 5.4-1.4 5.4h13"/><path d="M9 17v1a3 3 0 0 0 5.2 2"/></svg></div>
-      <div class="home-kaart-titel">Subvocalisatie</div>
-      <div class="home-kaart-sub">Schakel je innerlijke stem uit</div>
+      <div class="home-kaart-titel">Leesritme</div>
+      <div class="home-kaart-sub">Vergelijk ritme, innerlijke stem en begrip</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('regressie')">
       <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg></div>
-      <div class="home-kaart-titel">Regressie-stop</div>
-      <div class="home-kaart-sub">Leer nooit terug te kijken</div>
+      <div class="home-kaart-titel">Vooruit lezen</div>
+      <div class="home-kaart-sub">Oefen tempo en bewust herlezen</div>
     </button>
     <button class="home-kaart" onclick="sidebarNav('fixatie')">
       <div class="home-kaart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg></div>
@@ -3403,10 +3411,10 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <details class="home-training-details">
     <summary>Waarom deze training werkt</summary>
     <div class="tip-grid" style="margin-top:12px">
-      <div class="tip"><b>📈 2× sneller</b>De meeste mensen lezen 200–250 WPM. Met training haal je 400–500 WPM zónder begripsverlies.</div>
-      <div class="tip tip-cyan"><b>🧠 Minder subvocalisatie</b>Stil 'meelezen' in je hoofd vertraagt je. Oefening leert je hersenen woorden direct te verwerken.</div>
-      <div class="tip tip-green"><b>👁 Groter blikveld</b>Getrainde ogen vangen 5–7 woorden per fixatie, i.p.v. 1–2. Dat verdubbelt je tempo.</div>
-      <div class="tip tip-pink"><b>🔁 Geen regressie</b>Onbewust terugspringen kost 30% van je leestijd. Oogtraining sloopt deze gewoonte af.</div>
+      <div class="tip"><b>📈 Meetbare groei</b>Vergelijk teksten van vergelijkbare lengte en moeilijkheid. Alleen tempo mét begrip telt als vooruitgang.</div>
+      <div class="tip tip-cyan"><b>🧠 Flexibel lezen</b>Je innerlijke stem kan begrip ondersteunen. Oefen daarnaast met ritme en woordgroepen, zonder begrip te forceren.</div>
+      <div class="tip tip-green"><b>🎯 Lezen met een doel</b>Diep lezen, skimmen en gericht zoeken vragen elk een ander tempo. Kies de strategie die bij je taak past.</div>
+      <div class="tip tip-pink"><b>🔁 Begrip eerst</b>Zak je onder de begripsgrens, dan verlaagt Snellezer je tempo en komen tekst of woorden gericht terug.</div>
     </div>
   </details>
 
@@ -3472,6 +3480,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div style="font-size:14px;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums" id="bt-timer">0:00</div>
     </div>
     <div class="begintest-passage" id="bt-passage"></div>
+    <div class="meet-waarschuwing" id="bt-meetwaarschuwing" role="alert" aria-live="assertive"></div>
     <div class="btn-row" style="justify-content:center">
       <button class="btn btn-primary" onclick="begintestKlaar()" style="font-size:1rem;padding:12px 32px">Klaar met lezen!</button>
     </div>
@@ -3483,6 +3492,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div style="font-size:14px;font-weight:600">Beantwoord de vragen over wat je net las</div>
     </div>
     <div id="bt-vragen-lijst"></div>
+    <div class="meet-waarschuwing" id="bt-vragen-waarschuwing" role="alert" aria-live="assertive"></div>
     <div class="btn-row" style="justify-content:center">
       <button class="btn btn-primary" onclick="begintestControleer()" style="font-size:1rem;padding:12px 32px">Controleer antwoorden</button>
     </div>
@@ -3516,7 +3526,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <!-- ── RSVP ─────────────────────────────────────────────── -->
 <div id="screen-rsvp" class="screen">
   <div class="page-title">RSVP — Woord voor Woord</div>
-  <div class="page-sub">Elk woord verschijnt op hetzelfde punt. Geen oogbewegingen nodig — maximale leessnelheid.</div>
+  <div class="page-sub">Woorden verschijnen op een vast punt. Experimenteer met tempo en controleer na afloop altijd je begrip.</div>
   <div id="tekstbron-rsvp"></div>
 
   <div id="rsvp-display">
@@ -3554,7 +3564,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <!-- ── CHUNKS ─────────────────────────────────────────────── -->
 <div id="screen-chunk" class="screen">
   <div class="page-title">Chunk Lezen</div>
-  <div class="page-sub">Lees woordgroepen in één oogopslag. Vergroot uw blikveld stap voor stap.</div>
+  <div class="page-sub">Oefen met betekenisvolle woordgroepen en bouw tempo alleen op zolang het begrip behouden blijft.</div>
   <div id="tekstbron-chunk"></div>
 
   <div id="chunk-display"><span id="chunk-tekst">Druk Start</span></div>
@@ -3584,7 +3594,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <!-- ── OOGBEWEGING ────────────────────────────────────────── -->
 <div id="screen-oog" class="screen">
   <div class="page-title">Oogbewegingstraining</div>
-  <div class="page-sub">Volg de bal met uw ogen. Vergroot uw blikveld en verminder onbewust terugspringen (regressie).</div>
+  <div class="page-sub">Volg het doel met uw ogen en oefen gecontroleerde blikverplaatsing als korte coördinatietraining.</div>
 
   <h3>Kies jouw niveau</h3>
   <div class="oog-niveau-grid">
@@ -3677,26 +3687,26 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <h3>Waarom oogtraining?</h3>
   <div class="tip-grid">
-    <div class="tip"><b>🚫 Regressie stoppen</b>Onbewust terugspringen kost 30% van je leestijd. Training sloopt deze gewoonte af.</div>
-    <div class="tip tip-cyan"><b>↔️ Blikveld vergroten</b>Een getraind oog vangt 5–7 woorden per fixatie i.p.v. 1–2. Dat verdubbelt je snelheid.</div>
-    <div class="tip tip-green"><b>⏩ Vloeiende beweging</b>Ogen bewegen in sprongetjes (saccades). Training maakt die sprongen groter en vlotter.</div>
-    <div class="tip tip-pink"><b>🧘 Ontspannen lezen</b>Knijp nooit — gespannen ogen lezen langzamer. Knipper normaal, adem rustig.</div>
+    <div class="tip"><b>🎯 Visuele focus</b>Volg het doel zonder je hoofd mee te bewegen. Zie dit als coördinatie-oefening, niet als bewijs van sneller lezen.</div>
+    <div class="tip tip-cyan"><b>↔️ Aandacht verplaatsen</b>Oefen gecontroleerd links, rechts en diagonaal kijken en keer daarna terug naar echte tekst.</div>
+    <div class="tip tip-green"><b>⏩ Rustig ritme</b>Ogen lezen met korte sprongen en rustmomenten. Een regelmatig ritme kan onnodig zoeken helpen verminderen.</div>
+    <div class="tip tip-pink"><b>🧘 Visueel comfort</b>Knipper normaal, ontspan je gezicht en stop bij vermoeide, droge of pijnlijke ogen.</div>
   </div>
 </div>
 
 <!-- ── PERIFEER ───────────────────────────────────────────── -->
 <div id="screen-perifeer" class="screen">
   <div class="page-title">Perifeer Zien</div>
-  <div class="page-sub">Train je zijdelings blikveld — lees woorden zonder je ogen te bewegen. Dit is dé sleutel tot sneller lezen.</div>
+  <div class="page-sub">Train aandacht rond je fixatiepunt en merk signalen aan de zijkant sneller op.</div>
   <div id="tekstbron-perifeer"></div>
 
   <!-- Waarom uitleg -->
   <div class="card" style="margin-bottom:20px;border-left:3px solid var(--accent2)">
     <div style="font-size:.8rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Waarom perifeer zien trainen?</div>
     <div style="font-size:.85rem;color:var(--muted);line-height:1.6">
-      Getrainde lezers vangen <b style="color:var(--text)">5–7 woorden</b> per oogfixatie i.p.v. 1–2.
-      Door je blikveld te vergroten, maak je minder oogsprongen per regel — en lees je <b style="color:var(--text)">tot 3× sneller</b>.
-      Fixeer altijd op het kruisje en probeer de zijwoorden toch te lezen. Beweeg je ogen <em>niet</em>.
+      Perifeer zicht helpt je oriënteren, terwijl gedetailleerde woordherkenning vooral rond je fixatie plaatsvindt.
+      Deze oefening traint het vasthouden van een kijkpunt en het opmerken van zijsignalen. Een hogere spelscore is niet automatisch een hogere leessnelheid.
+      Fixeer op het kruisje, merk de zijwoorden op en kies nauwkeurig boven snel.
     </div>
   </div>
 
@@ -3836,7 +3846,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- Uitleg per techniek -->
   <div id="papier-uitleg-lijn" class="card" style="margin-bottom:12px;border-left:3px solid var(--accent)">
     <b>🖊️ Regelbegeleider — hoe werkt het?</b><br>
-    <span style="font-size:.85rem;color:var(--muted)">Beweeg een pen of vinger ONDER de tekstregel. Je ogen volgen automatisch de punt. Verhoog geleidelijk de snelheid. Dit voorkomt regressie (terugspringen) en traint vloeiende oogbewegingen. Start traag, bouw in weken op.</span>
+    <span style="font-size:.85rem;color:var(--muted)">Beweeg een pen of vinger onder de tekstregel als tempo-aanwijzer. Start rustig en controleer na afloop of je de hoofdgedachte nog kunt navertellen.</span>
   </div>
   <div id="papier-uitleg-s" class="card" style="margin-bottom:12px;border-left:3px solid var(--accent2);display:none">
     <b>📏 S-patroon — hoe werkt het?</b><br>
@@ -3990,6 +4000,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <button class="btn btn-primary" onclick="leestestKlaar()">✅ Klaar met lezen</button>
     </div>
     <div id="lt-tekst-inhoud" style="font-size:1rem;line-height:1.9;color:var(--text);background:var(--card);padding:24px;border-radius:14px;border:1px solid var(--border);white-space:pre-wrap"></div>
+    <div class="meet-waarschuwing" id="lt-meetwaarschuwing" role="alert" aria-live="assertive"></div>
     <div style="text-align:center;margin-top:16px">
       <button class="btn btn-primary" onclick="leestestKlaar()" style="padding:14px 32px;font-size:1rem">✅ Klaar met lezen → naar vragen</button>
     </div>
@@ -4070,6 +4081,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <button class="btn btn-primary" onclick="lttKlaar()">✅ Klaar met lezen</button>
     </div>
     <div id="ltt-tekst-inhoud" style="font-size:1rem;line-height:1.9;color:var(--text);background:var(--card);padding:24px;border-radius:14px;border:1px solid var(--border);white-space:pre-wrap"></div>
+    <div class="meet-waarschuwing" id="ltt-meetwaarschuwing" role="alert" aria-live="assertive"></div>
     <div style="text-align:center;margin-top:16px">
       <button class="btn btn-primary" onclick="lttKlaar()" style="padding:14px 32px;font-size:1rem">✅ Klaar met lezen → naar vragen</button>
     </div>
@@ -4135,6 +4147,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <button class="btn btn-primary" onclick="elKlaar()">✅ Klaar met lezen</button>
     </div>
     <div id="el-tekst-inhoud" style="font-size:1rem;line-height:1.9;color:var(--text);background:var(--card);padding:24px;border-radius:14px;border:1px solid var(--border);white-space:pre-wrap"></div>
+    <div class="meet-waarschuwing" id="el-meetwaarschuwing" role="alert" aria-live="assertive"></div>
     <div style="text-align:center;margin-top:16px">
       <button class="btn btn-primary" onclick="elKlaar()" style="padding:14px 32px;font-size:1rem">✅ Klaar met lezen → verder</button>
     </div>
@@ -4185,18 +4198,18 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <h3>Oogtraining</h3>
   <div class="tr-grid">
-    <button class="tr-kaart" onclick="sidebarNav('oog')"><div class="tr-icon">👁</div><div class="tr-naam">Oogbeweging</div><div class="tr-sub">Blikveld vergroten</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('oog')"><div class="tr-icon">👁</div><div class="tr-naam">Oogbeweging</div><div class="tr-sub">Visuele coördinatie</div></button>
     <button class="tr-kaart" onclick="sidebarNav('perifeer')"><div class="tr-icon">🔭</div><div class="tr-naam">Perifeer</div><div class="tr-sub">Breed zien oefenen</div></button>
-    <button class="tr-kaart" onclick="sidebarNav('fixatie')"><div class="tr-icon">🔲</div><div class="tr-naam">Fixatie</div><div class="tr-sub">Minder oogstops</div></button>
-    <button class="tr-kaart" onclick="sidebarNav('regressie')"><div class="tr-icon">⏩</div><div class="tr-naam">Regressie</div><div class="tr-sub">Niet terug kijken</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('fixatie')"><div class="tr-icon">🔲</div><div class="tr-naam">Woordgroepen</div><div class="tr-sub">Vast kijkpunt oefenen</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('regressie')"><div class="tr-icon">⏩</div><div class="tr-naam">Vooruit lezen</div><div class="tr-sub">Vast tempo + begrip</div></button>
     <button class="tr-kaart" onclick="sidebarNav('skim')"><div class="tr-icon">🔍</div><div class="tr-naam">Skim &amp; Scan</div><div class="tr-sub">Snel doorzoeken</div></button>
     <button class="tr-kaart" onclick="sidebarNav('oogrust')"><div class="tr-icon">😌</div><div class="tr-naam">Oogontspanning</div><div class="tr-sub">Palming + oefeningen</div></button>
   </div>
 
   <h3>Extra</h3>
   <div class="tr-grid">
-    <button class="tr-kaart" onclick="sidebarNav('subvocal')"><div class="tr-icon">🔕</div><div class="tr-naam">Subvocalisatie</div><div class="tr-sub">Meelezen stoppen</div></button>
-    <button class="tr-kaart" onclick="sidebarNav('dyslexie')"><div class="tr-icon">🌈</div><div class="tr-naam">Dyslexie Spel</div><div class="tr-sub">Letter-avontuur</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('subvocal')"><div class="tr-icon">🔕</div><div class="tr-naam">Leesritme</div><div class="tr-sub">Ritme en innerlijke stem</div></button>
+    <button class="tr-kaart" onclick="sidebarNav('dyslexie')"><div class="tr-icon">🌈</div><div class="tr-naam">Dyslexie Leeslab</div><div class="tr-sub">Leerweg voor nauwkeurig lezen</div></button>
     <button class="tr-kaart" onclick="sidebarNav('avontuur')" style="border-color:rgba(224,112,0,.3)"><div class="tr-icon">🗺️</div><div class="tr-naam">Leesavontuur</div><div class="tr-sub">Gamified training</div></button>
     <button class="tr-kaart" onclick="sidebarNav('leerweg')" style="border-color:rgba(167,139,250,.35)"><div class="tr-icon">📅</div><div class="tr-naam">Leerweg</div><div class="tr-sub">4-weken programma</div></button>
     <button class="tr-kaart" onclick="sidebarNav('tekst')" style="border-color:rgba(76,201,240,.3)"><div class="tr-icon">📂</div><div class="tr-naam">Eigen Teksten</div><div class="tr-sub">Bibliotheek + leessessie</div></button>
@@ -4265,7 +4278,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="doel-wrap" id="doel-wrap">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
       <span style="font-size:.9rem">Doelsnelheid:</span>
-      <input type="number" id="doel-input" class="doel-input" min="100" max="2000" step="50" placeholder="bv. 400" onchange="slaDoelOp()"/>
+      <input type="number" id="doel-input" class="doel-input" min="100" max="900" step="25" placeholder="bv. 300" onchange="slaDoelOp()"/>
       <span style="font-size:.85rem;color:var(--muted)">WPM</span>
       <button class="btn btn-primary" style="font-size:.8rem" onclick="slaDoelOp()">Opslaan</button>
     </div>
@@ -4278,12 +4291,12 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   </div>
 
   <div class="divider"></div>
-  <h3>Snellees principes</h3>
+  <h3>Leesprincipes</h3>
   <div class="tip-grid">
-    <div class="tip"><b>🎯 Gemiddelde lezer</b>200–250 WPM. Met training haalbaar: 400–600 WPM zonder begrips­verlies.</div>
-    <div class="tip tip-pink"><b>🧩 De drie vijanden</b>Subvocalisatie · Regressie · Te smal blikveld. Elk trainingsonderdeel pakt één aan.</div>
-    <div class="tip tip-cyan"><b>📈 Trainingsadvies</b>15–20 min per dag. Wissel RSVP, chunks en papier af. Test begrip altijd!</div>
-    <div class="tip tip-green"><b>🔁 Consistentie wint</b>Dagelijkse korte sessies zijn effectiever dan lange sessies één keer per week.</div>
+    <div class="tip"><b>🎯 Vergelijk eerlijk</b>Gebruik teksten van vergelijkbare lengte en moeilijkheid. Eén uitschieter is nog geen nieuw leesniveau.</div>
+    <div class="tip tip-pink"><b>🧠 Begrip bepaalt</b>Een hoger tempo telt pas als je ook de vragen goed blijft beantwoorden.</div>
+    <div class="tip tip-cyan"><b>📈 Klein bijstellen</b>Verhoog of verlaag het tempo in kleine stappen en oefen dezelfde strategie meerdere keren.</div>
+    <div class="tip tip-green"><b>🔁 Regelmaat</b>Korte, herhaalde oefenmomenten maken ontwikkeling beter zichtbaar dan losse recordsessies.</div>
   </div>
 </div>
 
@@ -4506,14 +4519,14 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
      🔕  SUBVOCALISATIE TRAINING
 ══════════════════════════════════════════════════════════ -->
 <div id="screen-subvocal" class="screen">
-  <div class="page-title">🔕 Subvocalisatie-training</div>
-  <div class="page-sub">De innerlijke stem is de grootste rem op je leessnelheid. Leer hem uitschakelen.</div>
+  <div class="page-title">🔕 Leesritme &amp; innerlijke stem</div>
+  <div class="page-sub">Ontdek welk ritme bij lichte en moeilijke teksten past, zonder je begrip weg te drukken.</div>
   <div id="tekstbron-subvocal"></div>
 
   <div class="card" style="margin-bottom:16px">
-    <h3 style="margin:0 0 8px">Wat is subvocalisatie?</h3>
-    <p style="font-size:.88rem;color:var(--muted);margin:0 0 8px">Bijna iedereen "spreekt" elk woord innerlijk uit tijdens het lezen. Dit beperkt je snelheid tot maximaal jouw spreektempo (~150–200 WPM). Door dit patroon te doorbreken kun je 2–3× sneller lezen zonder begripsverlies.</p>
-    <p style="font-size:.88rem;color:var(--muted);margin:0">De drie methodes hieronder trainen je brein om woorden direct te <em>herkennen</em> in plaats van ze te <em>uitspreken</em>.</p>
+    <h3 style="margin:0 0 8px">Wat is de innerlijke stem?</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin:0 0 8px">Veel lezers horen woorden gedeeltelijk in gedachten. Dat is normaal en kan helpen bij moeilijke zinnen, nieuwe woorden en nauwkeurig begrip.</p>
+    <p style="font-size:.88rem;color:var(--muted);margin:0">Gebruik de oefeningen hieronder om ritme en aandacht te vergelijken. Wordt navertellen moeilijker, kies dan een rustiger tempo.</p>
   </div>
 
   <!-- Modus tabs -->
@@ -4526,7 +4539,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- METRONOOM -->
   <div id="sv-view-metro">
     <div class="card" style="margin-bottom:12px">
-      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Lees de tekst mee terwijl je het ritme volgt. De metronoom gaat sneller dan je spreektempo — je brein leert de woorden direct te herkennen.</div>
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Lees de tekst mee op een gelijkmatig ritme. Begin comfortabel en verhoog pas wanneer je de hoofdgedachte kunt navertellen.</div>
       <div class="sv-woord" id="sv-metro-woord">—</div>
       <div class="sv-metro-bar"><div class="sv-metro-fill" id="sv-metro-fill"></div></div>
       <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-bottom:12px">
@@ -4539,13 +4552,13 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
         <button class="btn btn-ghost" onclick="svMetroBpm(+20)">+ Sneller</button>
       </div>
     </div>
-    <div class="lw-doel-box">💡 <b>Tip:</b> Begin op een tempo dat net te snel voelt om alles na te zeggen. Na 3 dagen merk je al verschil.</div>
+    <div class="lw-doel-box">💡 <b>Tip:</b> Vergelijk twee korte rondes. Het hoogste tempo waarbij je de kern nog kunt navertellen is je bruikbare oefentempo.</div>
   </div>
 
   <!-- TEL-METHODE -->
   <div id="sv-view-tel" style="display:none">
     <div class="card" style="margin-bottom:12px">
-      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Lees de onderstaande tekst terwijl je hardop (of fluisterend) telt: 1-2-3-4-1-2-3-4. Je mond is bezig met tellen, dus kan de woorden niet meer uitspreken.</div>
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Lees een korte tekst terwijl je zacht 1-2-3-4 telt. Dit verdeelt bewust je aandacht: vergelijk achteraf wat er met je begrip gebeurt.</div>
       <div id="sv-tel-tekst" style="font-size:1rem;line-height:1.9;padding:16px;background:var(--card2);border-radius:10px;min-height:120px"></div>
       <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         <div class="sv-teller" id="sv-tel-teller" style="font-size:1.5rem">—</div>
@@ -4553,13 +4566,13 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
         <button class="btn btn-ghost" onclick="svTelNieuwe()">↺ Nieuwe tekst</button>
       </div>
     </div>
-    <div class="lw-doel-box">💡 <b>Tip:</b> Na 2 weken dagelijkse tel-oefening van 5 min zal je innerlijke stem vanzelf stiller worden.</div>
+    <div class="lw-doel-box">💡 <b>Let op:</b> Deze contrastoefening hoeft niet sneller te maken. Stop als tellen je begrip of comfort duidelijk verlaagt.</div>
   </div>
 
   <!-- HUMMING -->
   <div id="sv-view-hum" style="display:none">
     <div class="card" style="margin-bottom:12px">
-      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Hum een toon (mmm…) terwijl je leest. Net als tellen bezet dit je stem zodat je de woorden niet meer kunt uitspreken. Lees de tekst zo snel mogelijk.</div>
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Hum zacht terwijl je een korte, eenvoudige tekst leest. Gebruik dit alleen om te merken hoeveel je op klank steunt; jaag niet op snelheid.</div>
       <div id="sv-hum-tekst" style="font-size:1rem;line-height:1.9;padding:16px;background:var(--card2);border-radius:10px;min-height:120px"></div>
       <div style="margin-top:12px;display:flex;gap:8px">
         <button class="btn btn-primary" onclick="svHumNieuw()">↺ Nieuwe tekst</button>
@@ -4567,7 +4580,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       </div>
       <div id="sv-hum-timer-display" style="font-size:1.8rem;font-weight:800;color:var(--accent);text-align:center;margin-top:10px;display:none"></div>
     </div>
-    <div class="lw-doel-box">🎵 <b>Tip:</b> Zacht "mmm" of "lalalala" werkt het best. Doe dit 5 minuten per dag gedurende 2 weken.</div>
+    <div class="lw-doel-box">🎵 <b>Tip:</b> Doe één korte ronde en vergelijk die met normaal lezen. De versie met het beste begrip wint.</div>
   </div>
 </div>
 
@@ -4575,13 +4588,13 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
      ⏩  REGRESSIE-TRAINING
 ══════════════════════════════════════════════════════════ -->
 <div id="screen-regressie" class="screen">
-  <div class="page-title">⏩ Regressie-training</div>
-  <div class="page-sub">Stop met terugkijken. Ogen die teruggaan kosten tot 30% van je leestijd.</div>
+  <div class="page-title">⏩ Vooruit lezen</div>
+  <div class="page-sub">Oefen een gelijkmatig tempo en leer bewust herlezen onderscheiden van onnodig terugzoeken.</div>
   <div id="tekstbron-regressie"></div>
 
   <div class="card" style="margin-bottom:16px">
     <h3 style="margin:0 0 8px">Wat is regressie?</h3>
-    <p style="font-size:.88rem;color:var(--muted);margin:0">Ogen springen onbewust terug naar woorden die je al gelezen hebt — gemiddeld 20–30% van alle oogbewegingen. In deze training verdwijnt tekst nadat je hem gepasseerd bent: terugkijken is onmogelijk. Je brein leert snel genoeg te verwerken om verder te gaan.</p>
+    <p style="font-size:.88rem;color:var(--muted);margin:0">Teruglezen kan nuttig zijn wanneer een zin moeilijk is. In deze oefening verdwijnt tekst om een vast voorwaarts ritme te ervaren. Gebruik daarna een begripstoets om te bepalen of dat tempo bruikbaar was.</p>
   </div>
 
   <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
@@ -4599,7 +4612,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button class="btn btn-ghost" onclick="regNieuwe()">↺ Nieuwe tekst</button>
   </div>
   <div id="reg-einde-msg" style="display:none;margin-top:16px"></div>
-  <div class="lw-doel-box" style="margin-top:16px">💡 <b>Tip:</b> Begin op een tempo dat comfortabel aanvoelt, verhoog het elke dag met 10–20 WPM. Na 2 weken merk je dat je ogen niet meer terugspringen, ook bij normaal lezen.</div>
+  <div class="lw-doel-box" style="margin-top:16px">💡 <b>Tip:</b> Begin comfortabel. Verhoog pas na een ronde waarin je de hoofdgedachte nog helder kunt navertellen.</div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
@@ -4607,7 +4620,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 ══════════════════════════════════════════════════════════ -->
 <div id="screen-fixatie" class="screen">
   <div class="page-title">👁 Fixatie-training</div>
-  <div class="page-sub">Leer meer woorden te zien per oogfixatie. Snelle lezers maken 3× minder oogsprongen per regel.</div>
+  <div class="page-sub">Oefen betekenisvolle woordgroepen op een vast kijkpunt en controleer wat je werkelijk herkent.</div>
   <div id="tekstbron-fixatie"></div>
 
   <div class="card" style="margin-bottom:16px">
@@ -4641,7 +4654,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 ══════════════════════════════════════════════════════════ -->
 <div id="screen-skim" class="screen">
   <div class="page-title">🔍 Skimmen &amp; Scannen</div>
-  <div class="page-sub">Leer teksten razendsnel doorkijken voor structuur (skim) of gerichte informatie (scan).</div>
+  <div class="page-sub">Kies doelgericht tussen structuur verkennen (skim) en specifieke informatie zoeken (scan).</div>
   <div id="tekstbron-skim"></div>
 
   <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
@@ -4655,7 +4668,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div id="skim-view-uitleg" style="display:none">
     <div class="card" style="margin-bottom:12px">
       <h3 style="margin:0 0 8px">⚡ Skimmen</h3>
-      <p style="font-size:.88rem;color:var(--muted);margin:0">Vliegensvlug de <b>structuur</b> van een tekst begrijpen. Je leest: titels, eerste en laatste zin van elke alinea, vetgedrukte woorden. Doel: 70% begrip in 20% van de normale leestijd. Gebruik voor: kranten, rapporten, e-mails.</p>
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Verken de <b>structuur</b> via titels, tussenkoppen en kernzinnen. Gebruik dit om te beslissen welke delen daarna diep gelezen moeten worden.</p>
     </div>
     <div class="card" style="margin-bottom:12px">
       <h3 style="margin:0 0 8px">🎯 Scannen</h3>
@@ -4663,7 +4676,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     </div>
     <div class="card">
       <h3 style="margin:0 0 8px">👁 Previewing</h3>
-      <p style="font-size:.88rem;color:var(--muted);margin:0">Vóór het lezen: scan 30–60 seconden de titels, afbeeldingen, eerste/laatste zinnen. Dit activeert je brein zodat het tijdens het lezen sneller herkent. Versnelt begrip met 20–40%.</p>
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Bekijk vóór het lezen kort de titel, afbeeldingen, tussenkoppen en slot. Zo bepaal je onderwerp, structuur en leesdoel voordat je details verwerkt.</p>
     </div>
   </div>
 
@@ -4790,11 +4803,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
 <script>
 // ─── DATA ────────────────────────────────────────────────────────────────
-const DEMO_TEKST = `Snellezen is een vaardigheid die iedereen kan leren met de juiste technieken en voldoende oefening. De meeste mensen lezen gemiddeld tweehonderd tot tweehonderdvijftig woorden per minuut, maar met gerichte training is het mogelijk om dit te verdubbelen of zelfs te verdrievoudigen. De sleutel ligt in het overwinnen van drie belangrijke gewoonten die ons vertragen. Ten eerste is er subvocalisatie, het stille meespreken van woorden in ons hoofd. Ten tweede speelt regressie een grote rol, het onbewust terugspringen naar eerder gelezen woorden. Ten derde heeft de meeste mensen een te smal blikveld, waardoor ze slechts één of twee woorden per oogfixatie kunnen opnemen. Door systematisch te oefenen met technieken zoals RSVP, chunkslezen en perifeer zien kunt u deze beperkingen doorbreken. Gebruik een gids voor papier lezen en vertrouw op uw hersenen om betekenis te vormen zonder elk woord apart te verwerken. Begrip en snelheid gaan hand in hand als u de juiste methode volgt.`;
+const DEMO_TEKST = `Goed lezen begint met een duidelijk doel. Een roman lees je anders dan een handleiding, een nieuwsbericht of een tabel. Soms wil je ieder detail begrijpen. Op een ander moment zoek je alleen een naam, datum of hoofdgedachte. Het beste tempo hangt daarom af van de tekst en van wat je ermee wilt doen. Voor je begint, kun je kort naar de titel, tussenkoppen en eerste zinnen kijken. Zo maak je een verwachting van de inhoud. Tijdens het lezen helpt het om na een alinea in eigen woorden te bedenken wat er stond. Lukt dat niet, dan is langzamer lezen of een stukje herlezen een verstandige keuze. Vooruitgang meet je het eerlijkst met onbekende teksten van vergelijkbare lengte en moeilijkheid. Noteer niet alleen woorden per minuut, maar controleer ook wat je hebt onthouden. Een hoger tempo met veel foute antwoorden is geen verbetering. Een kleine snelheidsstijging met stabiel begrip kan dat wel zijn. Daarom combineert Snellezer tempo, vragen en herhaalde metingen in plaats van alleen een record te tonen.`;
 const DEMO_VRAGEN = [
-  { v:'Welke drie gewoonten vertragen volgens de tekst het lezen?', opties:['Subvocalisatie, regressie en een smal blikveld','Spelling, grammatica en woordenschat','Vermoeidheid, licht en lettergrootte'], correct:0 },
-  { v:'Wat betekent regressie bij lezen?', opties:['Onbewust terugspringen naar eerder gelezen woorden','Woorden stil uitspreken in je hoofd','Meerdere woorden tegelijk opnemen'], correct:0 },
-  { v:'Welke combinatie noemt de tekst als training?', opties:['RSVP, chunkslezen en perifeer zien','Alleen hardop lezen en samenvatten','Langzamer lezen en elk woord herhalen'], correct:0 },
+  { v:'Waarvan hangt volgens de tekst het beste leestempo af?', opties:['Van de tekst en het leesdoel','Alleen van de lettergrootte','Alleen van het aantal pagina’s'], correct:0 },
+  { v:'Wat kun je doen als je een alinea niet kunt navertellen?', opties:['Langzamer lezen of een stukje herlezen','De rest van de tekst overslaan','Alleen de laatste zin onthouden'], correct:0 },
+  { v:'Hoe meet je vooruitgang het eerlijkst?', opties:['Met tempo én begrip op vergelijkbare onbekende teksten','Met alleen het hoogste WPM-record','Door steeds dezelfde bekende tekst te lezen'], correct:0 },
 ];
 
 // ─── TEKST BIBLIOTHEEK ───────────────────────────────────
@@ -4921,6 +4934,76 @@ function huidigeBibTekst() {
 }
 
 function woorden(t) { return t.trim().split(/\s+/).filter(w => w.length > 0); }
+
+const VRIJE_MEETREGELS = Object.freeze({ minWoorden:80, minSeconden:8, maxWpm:900 });
+
+function laadGeldigeBegintestBaseline(opschonen = false) {
+  let baseline = null;
+  try { baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null'); }
+  catch(e) { baseline = null; }
+  const geldig = baseline
+    && Number.isFinite(Number(baseline.wpm))
+    && Number(baseline.wpm) >= 50
+    && Number(baseline.wpm) <= VRIJE_MEETREGELS.maxWpm
+    && Number.isFinite(Number(baseline.begrip))
+    && Number(baseline.begrip) >= 0
+    && Number(baseline.begrip) <= 100;
+  if (!geldig && baseline && opschonen) localStorage.removeItem('begintest_baseline');
+  return geldig ? baseline : null;
+}
+
+laadGeldigeBegintestBaseline(true);
+
+function valideerVrijeLeesmeting(woordenAantal, seconden, regels = {}) {
+  const minWoorden = regels.minWoorden ?? VRIJE_MEETREGELS.minWoorden;
+  const minSeconden = Math.max(
+    regels.minSeconden ?? VRIJE_MEETREGELS.minSeconden,
+    (woordenAantal / (regels.maxWpm ?? VRIJE_MEETREGELS.maxWpm)) * 60
+  );
+  const wpm = seconden > 0 ? Math.round((woordenAantal / seconden) * 60) : 0;
+  if (!Number.isFinite(wpm) || woordenAantal < minWoorden) {
+    return {
+      geldig:false,
+      code:'tekst_te_kort',
+      wpm:0,
+      bericht:`Voor een bruikbare meting zijn minimaal ${minWoorden} woorden nodig. Gebruik een langere tekst.`,
+    };
+  }
+  if (seconden < minSeconden || wpm > (regels.maxWpm ?? VRIJE_MEETREGELS.maxWpm)) {
+    return {
+      geldig:false,
+      code:'te_snel',
+      wpm,
+      bericht:`Deze ronde duurde te kort voor een betrouwbare meting. Lees de volgende tekst volledig; pas daarna telt je WPM en begrip.`,
+    };
+  }
+  return { geldig:true, code:'geldig', wpm, seconden, woorden:woordenAantal };
+}
+
+function meetWaarschuwingWis(id) {
+  const host = document.getElementById(id);
+  if (!host) return;
+  host.classList.remove('zichtbaar');
+  host.replaceChildren();
+}
+
+function meetWaarschuwingToon(id, controle, actie, knopTekst) {
+  const host = document.getElementById(id);
+  if (!host) return;
+  const titel = document.createElement('b');
+  titel.textContent = 'Deze meting telt niet mee';
+  const tekst = document.createElement('span');
+  tekst.textContent = controle.bericht;
+  const knop = document.createElement('button');
+  knop.type = 'button';
+  knop.className = 'btn btn-primary';
+  knop.textContent = knopTekst;
+  knop.addEventListener('click', actie, { once:true });
+  host.replaceChildren(titel, tekst, document.createElement('br'), knop);
+  host.classList.add('zichtbaar');
+  host.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
 function htmlEscape(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -5118,12 +5201,12 @@ function toonAvontuurDirect() {
 // ─── BEGINTEST ────────────────────────────────────────────────────────────
 const BEGINTEST_PASSAGES = [
   {
-    tekst: `Het menselijk brein is een wonderlijk orgaan. Elke seconde verwerkt het miljoenen signalen van onze zintuigen. Wanneer we lezen, volgen onze ogen geen vloeiende lijn over de pagina. In plaats daarvan maken ze kleine sprongen, saccades genoemd. Tussen deze sprongen staan de ogen even stil om informatie op te nemen. Dit noemen wetenschappers fixaties.\n\nEen gemiddelde lezer maakt ongeveer vier fixaties per regel tekst. Snelle lezers maken er maar twee of drie. Het verschil zit niet alleen in de snelheid van de oogbewegingen, maar vooral in hoeveel woorden er per fixatie worden verwerkt. Een geoefend lezer kan drie tot vijf woorden tegelijk opnemen, terwijl een langzame lezer vaak woord voor woord leest.\n\nInteressant genoeg heeft de leessnelheid weinig te maken met intelligentie. Het is een vaardigheid die iedereen kan trainen. Regelmatige oefening kan de leessnelheid met dertig tot vijftig procent verhogen, zonder dat het begrip vermindert.\n\nDe sleutel tot sneller lezen is het verminderen van subvocalisatie. Dit is de gewoonte om woorden in gedachten uit te spreken terwijl je leest. Door dit bewust te oefenen, kun je een aanzienlijke snelheidswinst behalen.`,
+    tekst: `Openbare bibliotheken veranderen mee met de samenleving. Vroeger kwamen bezoekers er vooral om boeken te lenen of in stilte te studeren. Tegenwoordig organiseren veel bibliotheken ook taallessen, digitale spreekuren, lezingen en activiteiten voor kinderen. Toch blijft de boekencollectie het hart van het gebouw.\n\nEen moderne bibliotheek helpt mensen bovendien bij het vinden en beoordelen van informatie. Medewerkers leggen uit hoe zoekmachines werken, hoe je betrouwbare bronnen herkent en hoe je veilig omgaat met persoonlijke gegevens. Dat is belangrijk omdat online informatie snel verspreidt, ook wanneer die onjuist of onvolledig is.\n\nNiet iedere bezoeker heeft thuis een rustige werkplek, een computer of snel internet. Daarom bieden bibliotheken studieplaatsen, computers en toegang tot digitale kranten en naslagwerken. Sommige vestigingen lenen zelfs gereedschap, muziekinstrumenten of meetapparatuur uit.\n\nDe functie van de bibliotheek is daarmee breder geworden, maar het basisidee is hetzelfde gebleven: kennis en cultuur toegankelijk maken voor iedereen. Wie binnenloopt, hoeft meestal niets te kopen. Daardoor is de bibliotheek een van de weinige publieke plekken waar leren, ontmoeten en zelfstandig ontdekken naast elkaar kunnen bestaan.`,
     vragen: [
-      { vraag: 'Hoe noemen wetenschappers de kleine oogsprongen bij het lezen?', correct: 'Saccades', fouten: ['Fixaties', 'Regressies'] },
-      { vraag: 'Hoeveel fixaties maakt een gemiddelde lezer per regel?', correct: 'Ongeveer vier', fouten: ['Ongeveer twee', 'Ongeveer acht'] },
-      { vraag: 'Wat is subvocalisatie?', correct: 'Woorden in gedachten uitspreken tijdens het lezen', fouten: ['Hardop voorlezen', 'Woorden overslaan'] },
-      { vraag: 'Met hoeveel procent kan oefening de leessnelheid verhogen?', correct: 'Dertig tot vijftig procent', fouten: ['Vijf tot tien procent', 'Honderd procent'] },
+      { vraag: 'Wat blijft volgens de tekst het hart van de bibliotheek?', correct: 'De boekencollectie', fouten: ['Het digitale spreekuur', 'De studieplekken'] },
+      { vraag: 'Waarmee helpen bibliotheekmedewerkers bezoekers?', correct: 'Met het vinden en beoordelen van informatie', fouten: ['Met het verkopen van computers', 'Met het schrijven van nieuwsberichten'] },
+      { vraag: 'Waarom bieden bibliotheken computers en studieplaatsen?', correct: 'Niet iedereen heeft die voorzieningen thuis', fouten: ['Boeken mogen niet thuis worden gelezen', 'Alle bezoekers moeten digitaal lenen'] },
+      { vraag: 'Wat is het basisidee van de bibliotheek gebleven?', correct: 'Kennis en cultuur toegankelijk maken', fouten: ['Zoveel mogelijk producten verkopen', 'Alleen stille werkplekken aanbieden'] },
     ]
   },
   {
@@ -5257,10 +5340,11 @@ function begintestKiesPassage() {
 let btStartTijd = null;
 let btTimerInterval = null;
 let btGemetenWpm = 0;
+let btResultaatVerwerkt = false;
 
 function begintestInit() {
   // Show previous result if exists
-  const baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null');
+  const baseline = laadGeldigeBegintestBaseline();
   const el = document.getElementById('bt-vorige-result');
   if (baseline) {
     el.style.display = 'block';
@@ -5291,6 +5375,9 @@ function btToonStap(stap) {
 
 function begintestStart() {
   const passage = begintestKiesPassage();
+  btResultaatVerwerkt = false;
+  meetWaarschuwingWis('bt-meetwaarschuwing');
+  meetWaarschuwingWis('bt-vragen-waarschuwing');
   btToonStap('lezen');
   document.getElementById('bt-passage').textContent = passage.tekst;
   btStartTijd = Date.now();
@@ -5303,10 +5390,19 @@ function begintestStart() {
 }
 
 function begintestKlaar() {
+  if (!btStartTijd || !btHuidigePassage) return;
   clearInterval(btTimerInterval);
   const seconden = (Date.now() - btStartTijd) / 1000;
   const woordTelling = btHuidigePassage.tekst.trim().split(/\s+/).length;
-  btGemetenWpm = Math.round((woordTelling / seconden) * 60);
+  const controle = valideerVrijeLeesmeting(woordTelling, seconden, { minWoorden:150 });
+  if (!controle.geldig) {
+    btStartTijd = null;
+    btGemetenWpm = 0;
+    meetWaarschuwingToon('bt-meetwaarschuwing', controle, begintestStart, 'Opnieuw met een nieuwe tekst');
+    return;
+  }
+  btGemetenWpm = controle.wpm;
+  btStartTijd = null;
 
   // Build questions from the selected passage
   const vragen = btHuidigePassage.vragen;
@@ -5315,15 +5411,28 @@ function begintestKlaar() {
     const opties = [v.correct, ...v.fouten].sort(() => Math.random() - 0.5);
     return `<div class="vraag card" style="padding:16px;margin-bottom:12px">
       <div class="vraag-q">${i + 1}. ${htmlEscape(v.vraag)}</div>
-      ${opties.map(o => `<label><input type="radio" name="bt-v${i}" value="${htmlEscape(o)}"> ${htmlEscape(o)}</label>`).join('')}
+      ${opties.map(o => `<label><input type="radio" name="bt-v${i}" value="${htmlEscape(o)}" onchange="meetWaarschuwingWis('bt-vragen-waarschuwing')"> ${htmlEscape(o)}</label>`).join('')}
     </div>`;
   }).join('');
   btToonStap('vragen');
 }
 
 function begintestControleer() {
+  if (btResultaatVerwerkt) return;
   let goed = 0;
   const vragen = btHuidigePassage.vragen;
+  const openVraag = vragen.findIndex((vraag, i) => !document.querySelector(`input[name="bt-v${i}"]:checked`));
+  if (openVraag >= 0) {
+    meetWaarschuwingToon(
+      'bt-vragen-waarschuwing',
+      { bericht:`Beantwoord alle ${vragen.length} vragen. Alleen dan kunnen we snelheid en begrip eerlijk combineren.` },
+      () => document.querySelector(`input[name="bt-v${openVraag}"]`)?.focus(),
+      'Ga naar de open vraag'
+    );
+    return;
+  }
+  btResultaatVerwerkt = true;
+  meetWaarschuwingWis('bt-vragen-waarschuwing');
   vragen.forEach((v, i) => {
     const gekozen = document.querySelector(`input[name="bt-v${i}"]:checked`);
     const labels = document.querySelectorAll(`input[name="bt-v${i}"]`);
@@ -5341,13 +5450,13 @@ function begintestControleer() {
 
   // Determine level
   let niveau, niveauKleur;
-  if (wpm < 150) { niveau = 'Beginner'; niveauKleur = '#f06292'; }
-  else if (wpm < 250) { niveau = 'Gemiddeld'; niveauKleur = '#e07000'; }
-  else if (wpm < 400) { niveau = 'Gevorderd'; niveauKleur = '#38c8f0'; }
-  else { niveau = 'Snellezer'; niveauKleur = '#34d399'; }
+  if (wpm < 150) { niveau = 'Rustig starttempo'; niveauKleur = '#f06292'; }
+  else if (wpm < 250) { niveau = 'Basis starttempo'; niveauKleur = '#e07000'; }
+  else if (wpm < 400) { niveau = 'Vlot starttempo'; niveauKleur = '#38c8f0'; }
+  else { niveau = 'Zeer vlot gemeten'; niveauKleur = '#34d399'; }
 
   // Save baseline
-  const hadBaseline = !!localStorage.getItem('begintest_baseline');
+  const hadBaseline = !!laadGeldigeBegintestBaseline();
   const datum = new Date().toLocaleDateString('nl-NL');
   const woordTelling = btHuidigePassage.tekst.trim().split(/\s+/).length;
   localStorage.setItem('begintest_baseline', JSON.stringify({
@@ -5369,17 +5478,18 @@ function begintestControleer() {
     document.getElementById('bt-niveau-badge').style.background = niveauKleur;
 
     // Personalized text
-    const snelTekst = wpm < 150 ? 'Je leest nog wat langzaam, maar daar gaan we verandering in brengen!'
-      : wpm < 250 ? 'Je leest op een gemiddeld tempo. Er zit nog veel ruimte voor groei!'
-      : wpm < 400 ? 'Goed bezig! Je leest al boven gemiddeld.'
-      : 'Indrukwekkend! Je bent al een snelle lezer.';
+    const snelTekst = wpm < 150 ? 'Dit is je rustige starttempo.'
+      : wpm < 250 ? 'Dit is je basisstarttempo.'
+      : wpm < 400 ? 'Dit is een vlot gemeten starttempo.'
+      : 'Dit is een zeer vlotte meting; bevestig die later met een tweede onbekende tekst.';
     const begripTekst = begrip >= 80 ? 'Je begrip is uitstekend.'
       : begrip >= 60 ? 'Je begrip is redelijk. Focus eerst op begrip, dan op snelheid.'
       : 'Je begrip kan beter. Begin met langzamer lezen en bouw dan snelheid op.';
     document.getElementById('bt-resultaat-tekst').textContent = snelTekst + ' ' + begripTekst;
 
     // Recommendations
-    const startWpm = begrip >= 60 ? Math.round(wpm * 1.15) : Math.round(wpm * 0.9);
+    const doelgroepMax = Coach.adaptief.MAX_WPM[Coach.doelgroep()] || 700;
+    const startWpm = Math.min(doelgroepMax, Math.round(wpm * (begrip >= 80 ? 1.08 : 0.9)));
     const missie = _maakEersteMissie(wpm, begrip, startWpm);
     _slaEersteMissie(missie);
     _maakStartweek({ wpm, begrip, datum }, missie);
@@ -5394,33 +5504,33 @@ function begintestControleer() {
       </div>`;
     const reco = document.getElementById('bt-reco');
     reco.innerHTML = `<h4>Aanbevolen startinstellingen</h4><ul>
-      <li>Start RSVP op <b>${startWpm} WPM</b></li>
+      <li>Start ${missie.type === 'chunk' ? 'Chunks' : 'RSVP'} op <b>${missie.wpm} WPM</b></li>
       <li>Begin met <b>${wpm < 200 ? '1 woord' : '2 woorden'}</b> per flash</li>
       <li>Chunk grootte: <b>${wpm < 200 ? '2-3' : '3-4'}</b> woorden</li>
-      <li>Doe elke dag <b>${wpm < 200 ? '10' : '15'}</b> minuten oefenen</li>
+      <li>Begin met een korte ronde en stop wanneer je aandacht of visueel comfort afneemt</li>
       ${begrip < 60 ? '<li>Focus eerst op het <b>Chunks</b> scherm voor beter begrip</li>' : ''}
-      ${wpm < 200 ? '<li>Probeer de <b>Oogtraining</b> om je ogen sneller te maken</li>' : ''}
+      ${wpm < 200 ? '<li>Gebruik <b>Leesritme</b> om een comfortabel tempo te vergelijken</li>' : ''}
     </ul>
     <div style="margin-top:10px;padding:10px 12px;background:rgba(124,111,247,.1);border-left:3px solid var(--accent);border-radius:8px;font-size:.85rem">
       🧠 <b>Coach:</b> ${Coach.isKids()
-        ? 'Dit is jouw startpunt — vanaf nu word je elke dag een beetje sneller! 🚀'
-        : `Geoefende lezers halen vaak het dubbele van hun startniveau. Met 10 minuten per dag zit jij daar over enkele weken ook.`}
+        ? 'Dit is jouw startpunt. Tempo én goede antwoorden horen vanaf nu bij elkaar! 🚀'
+        : `Dit is je betrouwbare startpunt. Vergelijk straks onbekende teksten van hetzelfde niveau en laat het tempo alleen stijgen als je begrip stabiel blijft.`}
     </div>
     <button class="btn btn-ghost" style="width:100%;margin-top:10px;justify-content:center" onclick="_oogspanne.start()">
-      👁 Bonus: meet je oogspanne (30 sec) — bepaalt je ideale chunk-grootte
+      👁 Bonus: vergelijk welke chunk-grootte voor jou leesbaar voelt (30 sec)
     </button>`;
 
     btToonStap('resultaat');
   }, 600);
 }
 
-function _rondMissieTempo(tempo, stap, min) {
-  return Math.max(min, Math.round(tempo / stap) * stap);
+function _rondMissieTempo(tempo, stap, min, max = 700) {
+  return Math.min(max, Math.max(min, Math.round(tempo / stap) * stap));
 }
 
 function _maakEersteMissie(wpm, begrip, startWpm) {
   if (begrip < 65) {
-    const missieWpm = _rondMissieTempo(startWpm, 20, 80);
+    const missieWpm = _rondMissieTempo(startWpm, 20, 80, 500);
     return {
       type: 'chunk',
       icon: '📖',
@@ -5432,14 +5542,15 @@ function _maakEersteMissie(wpm, begrip, startWpm) {
       voltooid: false,
     };
   }
-  const missieWpm = _rondMissieTempo(startWpm, 25, 100);
+  const doelgroepMax = Coach.adaptief.MAX_WPM[Coach.doelgroep()] || 700;
+  const missieWpm = _rondMissieTempo(startWpm, 25, 100, doelgroepMax);
   return {
     type: 'rsvp',
     icon: '⚡',
     titel: 'Snelheidsstart',
     doel: `${missieWpm} WPM`,
     wpm: missieWpm,
-    uitleg: 'Je begrip is stevig genoeg om gecontroleerd sneller te gaan. Eén korte ronde, daarna kijken we of +10% verantwoord voelt.',
+    uitleg: 'Je begrip is stevig genoeg om gecontroleerd sneller te gaan. Eén korte ronde, daarna kijken we of een kleine stap van 8% verantwoord voelt.',
     aangemaakt: Date.now(),
     voltooid: false,
   };
@@ -5465,12 +5576,6 @@ function _markeerEersteMissieVoltooid(type) {
 }
 
 function begintestNaarTraining() {
-  const baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null');
-  if (baseline) {
-    const startWpm = baseline.begrip >= 60 ? Math.round(baseline.wpm * 1.15) : Math.round(baseline.wpm * 0.9);
-    document.getElementById('wpm-slider').value = startWpm;
-    document.getElementById('wpm-val').textContent = startWpm;
-  }
   if (typeof _zetWaardeMoment === 'function') _zetWaardeMoment();
   startDagmissie();
 }
@@ -5605,8 +5710,8 @@ function chunkStop() { clearTimeout(chunkTimer); chunkTimer = null; document.get
 function startInhoudsQuiz(type, wpm, aantalWoorden) {
   const bronVragen = inhoudsvragenVoorActieveTekst();
   if (bronVragen.length < 3) {
-    slaaSessieOp(wpm, aantalWoorden);
-    Ronde.einde(wpm, aantalWoorden, Ronde.begripPct());
+    Ronde.annuleer();
+    toonFout('Deze tekst heeft nog geen complete begripstoets. Kies een andere tekst; deze ronde is niet opgeslagen.');
     return;
   }
   document.getElementById('inhoud-quiz')?.remove();
@@ -5640,8 +5745,8 @@ function startInhoudsQuiz(type, wpm, aantalWoorden) {
     const goed = antwoorden.filter(a => a.correct).length;
     const begripPct = Math.round((goed / 3) * 100);
     quiz.remove();
-    Coach.registreerBegrip(begripPct, type);
     slaaSessieOp(wpm, aantalWoorden);
+    Coach.registreerBegrip(begripPct, type);
     Ronde.einde(wpm, aantalWoorden, begripPct, actieveTekstId());
   });
   quiz.querySelector('input')?.focus();
@@ -6804,15 +6909,15 @@ const DAGELIJKSE_UITDAGINGEN = [
   { beschrijving: 'Lees 1 tekst met RSVP', type: 'rsvp' },
   { beschrijving: 'Voltooi 1 Chunk leessessie', type: 'chunk' },
   { beschrijving: 'Doe 3 minuten oogtraining', type: 'oog' },
-  { beschrijving: 'Speel 1 ronde van het Dyslexie Spel', type: 'dyslexie' },
+  { beschrijving: 'Voltooi 1 ronde in het Dyslexie Leeslab', type: 'dyslexie' },
   { beschrijving: 'Lees een tekst op Papier modus', type: 'papier' },
   { beschrijving: 'Oefen 2 minuten Breed Kijken', type: 'perifeer' },
   { beschrijving: 'Doe de Begintest (opnieuw)', type: 'begintest' },
   { beschrijving: 'Lees 1 lange tekst op jouw niveau', type: 'langetekst' },
   { beschrijving: 'Lees een lange tekst en beantwoord de vragen', type: 'langetekst' },
   { beschrijving: 'Doe een Leestest met begripsvragen', type: 'leestest' },
-  { beschrijving: 'Train 2 minuten met de subvocalisatie-metronoom', type: 'subvocal' },
-  { beschrijving: 'Lees een tekst zonder terug te springen (Regressie)', type: 'regressie' },
+  { beschrijving: 'Oefen 2 minuten met de leesritme-metronoom', type: 'subvocal' },
+  { beschrijving: 'Lees op vast tempo en toets daarna je begrip', type: 'regressie' },
   { beschrijving: 'Voltooi een fixatie-training', type: 'fixatie' },
   { beschrijving: 'Zoek de sleutelwoorden met Skim & Scan', type: 'skim' },
   { beschrijving: 'Gun je ogen 30 seconden rust (Palming)', type: 'oogrust' },
@@ -6834,8 +6939,8 @@ let kidsModus = localStorage.getItem('kids_modus') === '1';
 const KIDS_LABELS = {
   rsvp:      { nav:'Flitswoorden',  titel:'Flitswoorden',            sub:'Woorden flitsen op het scherm. Lees ze zo snel als je kunt!' },
   chunk:     { nav:'Woordgroepen',   titel:'Woordgroepen Lezen',      sub:'Lees een paar woorden tegelijk. Zo word je steeds sneller!' },
-  oog:       { nav:'Oogtraining',    titel:'Oogtraining',             sub:'Volg de bal met je ogen. Goed voor sneller lezen!' },
-  perifeer:  { nav:'Breed Kijken',   titel:'Breed Kijken',            sub:'Kijk naar het midden en probeer de woorden aan de zijkant te lezen!' },
+  oog:       { nav:'Oogtraining',    titel:'Oogtraining',             sub:'Volg het doel rustig met je ogen en houd je hoofd stil.' },
+  perifeer:  { nav:'Breed Kijken',   titel:'Breed Kijken',            sub:'Kijk naar het midden en merk op wat er aan de zijkant verschijnt.' },
   papier:    { nav:'Samen Lezen',    titel:'Samen Lezen',             sub:'Leer hoe je sneller kunt lezen op papier!' },
   tekst:     { nav:'Mijn tekst',     titel:'✍️ Mijn tekst',           sub:'Plak je eigen verhaal en lees het op elke manier!' },
   stats:     { nav:'Mijn Score',     titel:'Mijn Score',              sub:'Bekijk hoe goed je het doet!' },
@@ -6844,11 +6949,11 @@ const KIDS_LABELS = {
   langetekst:   { nav:'Lange Teksten',      titel:'📚 Lange Teksten',       sub:'Train je leessnelheid én begrip met langere teksten. Leuk om te doen!' },
 };
 const VOLW_LABELS = {
-  rsvp:         { nav:'RSVP',           titel:'RSVP — Woord voor Woord',     sub:'Elk woord verschijnt op hetzelfde punt. Geen oogbewegingen nodig — maximale leessnelheid.' },
-  chunk:        { nav:'Chunks',         titel:'Chunk Lezen',                  sub:'Lees woordgroepen in één oogopslag. Vergroot uw blikveld stap voor stap.' },
-  oog:          { nav:'Oogbeweging',    titel:'Oogbewegingstraining',         sub:'Volg de bal met uw ogen. Vergroot uw blikveld en verminder onbewust terugspringen (regressie).' },
-  perifeer:     { nav:'Perifeer',       titel:'Perifeer Zien',               sub:'Fixeer op het rode kruis. Probeer de woorden aan de zijkanten te lezen zonder uw ogen te bewegen.' },
-  papier:       { nav:'Papier',         titel:'Papier Lees Training',        sub:'Leer technieken voor fysieke tekst. De gidsaanwijzer-methode is bewezen effectief.' },
+  rsvp:         { nav:'RSVP',           titel:'RSVP — Woord voor Woord',     sub:'Woorden verschijnen op een vast punt. Experimenteer met tempo en controleer na afloop altijd uw begrip.' },
+  chunk:        { nav:'Chunks',         titel:'Chunk Lezen',                  sub:'Oefen met betekenisvolle woordgroepen en bouw tempo alleen op zolang het begrip behouden blijft.' },
+  oog:          { nav:'Oogbeweging',    titel:'Oogbewegingstraining',         sub:'Oefen visuele focus en gecontroleerde blikverplaatsing als korte coördinatietraining.' },
+  perifeer:     { nav:'Perifeer',       titel:'Perifeer Zien',               sub:'Fixeer op het kruis en merk zijsignalen op. Nauwkeurigheid gaat voor snelheid.' },
+  papier:       { nav:'Papier',         titel:'Papier Lees Training',        sub:'Gebruik een visuele aanwijzer om een gelijkmatig leestempo te oefenen en controleer daarna uw begrip.' },
   tekst:        { nav:'Eigen tekst',    titel:'✍️ Eigen tekst',              sub:'Plak of upload je eigen tekst en train er direct mee op elke manier. Opslaan is optioneel.' },
   stats:        { nav:'Statistieken',   titel:'Uw Voortgang',                sub:'Alle sessies worden lokaal opgeslagen in uw browser.' },
   dyslexie:     { nav:'Dyslexie Leeslab', titel:'Dyslexie Leeslab',         sub:'Een stapsgewijze leerweg voor klanken, letters, woorddelen, betekenis en leesvloeiendheid.' },
@@ -6992,7 +7097,8 @@ function voltooiDaguitdaging(type, resultaat = null) {
   // Elke afgeronde oefening telt ook mee voor de leerweg-dag van vandaag
   // (dekt oefeningen zónder sessie-opslag zoals oogrust/fixatie/regressie;
   // leerWegAutoVoltooi heeft een debounce tegen dubbel afvinken)
-  const kwaliteitNodig = type === 'rsvp' || type === 'chunk';
+  const kwaliteitTypes = ['rsvp','chunk','regressie','leestest','langetekst','eigen-lees'];
+  const kwaliteitNodig = kwaliteitTypes.includes(type);
   const begrip = resultaat?.begrip;
   const kwaliteitBehaald = !kwaliteitNodig || (begrip !== null && begrip !== undefined && begrip >= 67);
   const kaartMissieVoltooid = kwaliteitBehaald && typeof leerWegAutoVoltooi === 'function' && leerWegAutoVoltooi(type);
@@ -7000,7 +7106,7 @@ function voltooiDaguitdaging(type, resultaat = null) {
 
   const data = JSON.parse(localStorage.getItem('daily_challenge') || '{}');
   const uitdaging = DAGELIJKSE_UITDAGINGEN[data.idx];
-  if (uitdaging && uitdaging.type === type && !data.voltooid) {
+  if (kwaliteitBehaald && uitdaging && uitdaging.type === type && !data.voltooid) {
     data.voltooid = true;
     localStorage.setItem('daily_challenge', JSON.stringify(data));
     updateDaguitdaging();
@@ -9346,8 +9452,8 @@ function periSpelHerstart() {
 const LEERWEG_WEKEN = [
   {
     naam: 'Week 1: Fundament', icon: '🏗️', kleur: '#7c6ff7',
-    doel: 'Leer je beginsnelheid kennen en train je ogen op de juiste beweging',
-    uitleg: 'Ogen die correct bewegen zijn de basis van alles. Meten is weten: zonder beginmeting weet je niet hoeveel je verbetert.',
+    doel: 'Leer je betrouwbare beginsnelheid kennen en houd tempo en begrip samen bij',
+    uitleg: 'Een goede beginmeting gebruikt een onbekende tekst en inhoudsvragen. Zo vergelijk je later dezelfde soort prestatie.',
     dagen: [
       { naam: 'Begintest — meet je startsnelheid', duur: '10 min', screen: 'begintest' },
       { naam: 'Persoonlijke startmissie', duur: '5 min', screen: null },
@@ -9361,36 +9467,36 @@ const LEERWEG_WEKEN = [
   },
   {
     naam: 'Week 2: Snelheid', icon: '⚡', kleur: '#f59e0b',
-    doel: 'Verminder het aantal oogfixaties en elimineer regressie',
-    uitleg: 'De gemiddelde lezer kijkt 3–4× terug per regel. Dat kost 30% van je leestijd. Fixatie-training en regressie-training pakken dit direct aan.',
+    doel: 'Oefen een gelijkmatig leestempo en verminder onnodig terugzoeken',
+    uitleg: 'Teruglezen kan nuttig zijn voor begrip. In deze week oefen je het verschil tussen bewust herlezen en onnodig zoeken.',
     dagen: [
       { naam: 'Fixatie-training (2 woorden per fixatie)', duur: '10 min', screen: 'fixatie' },
-      { naam: 'Regressie-training — lees zonder terug te kijken', duur: '10 min', screen: 'regressie' },
+      { naam: 'Vooruit lezen — vast tempo met begrip', duur: '10 min', screen: 'regressie' },
       { naam: 'RSVP op jouw WPM + 50', duur: '10 min', screen: 'rsvp' },
       { naam: 'Chunk lezen — groepen van 3 woorden', duur: '10 min', screen: 'chunk' },
-      { naam: 'Fixatie op 3 woorden + Regressie combo', duur: '15 min', screen: 'fixatie' },
+      { naam: 'Woordgroepen + vooruit-lezen-combinatie', duur: '15 min', screen: 'fixatie' },
       { naam: 'Leestest: bewust geen oog terug', duur: '15 min', screen: 'leestest' },
       { naam: 'Weektest: vergelijk met week 1', duur: '10 min', screen: 'leestest' },
     ]
   },
   {
     naam: 'Week 3: Techniek', icon: '🎯', kleur: '#10b981',
-    doel: 'Breek de innerlijke stem en lees met ritme en cadans',
-    uitleg: 'Subvocalisatie — de innerlijke stem — beperkt je tot jouw spreektempo (~150 WPM). Door dit patroon te doorbreken kun je verdubbelen zonder begripsverlies.',
+    doel: 'Ontdek ritme, woordgroepen en verschillende manieren van lezen',
+    uitleg: 'De innerlijke stem kan begrip ondersteunen. Oefen flexibel met ritme en woordgroepen en behoud wat voor jouw tekstdoel werkt.',
     dagen: [
-      { naam: 'Subvocalisatie uitleg + eerste tel-oefening', duur: '10 min', screen: 'subvocal' },
+      { naam: 'Innerlijke stem + eerste ritmevergelijking', duur: '10 min', screen: 'subvocal' },
       { naam: 'Metronoom lezen op 280 WPM', duur: '10 min', screen: 'subvocal' },
       { naam: 'S-beweging papier lezen', duur: '10 min', screen: 'papier' },
       { naam: 'RSVP fors boven jouw comfortzone', duur: '10 min', screen: 'rsvp' },
       { naam: 'Perifeer niveau 4–6', duur: '10 min', screen: 'perifeer' },
-      { naam: 'Subvocal humming + regressie', duur: '15 min', screen: 'subvocal' },
+      { naam: 'Hum-contrast + begrip vergelijken', duur: '15 min', screen: 'subvocal' },
       { naam: 'Weektest', duur: '10 min', screen: 'leestest' },
     ]
   },
   {
     naam: 'Week 4: Begrip & Integratie', icon: '🧠', kleur: '#ef4444',
     doel: 'Combineer snelheid met diep begrip via slimme leesstrategieën',
-    uitleg: 'Snelheid zonder begrip is waardeloos. Previewing, skimmen en scannen zijn technieken die je 70% begrip geven in 20% van de normale leestijd.',
+    uitleg: 'Snelheid zonder begrip is geen winst. Previewing, skimmen en scannen helpen je gericht kiezen welke delen diep gelezen moeten worden.',
     dagen: [
       { naam: 'Previewing-techniek — structuur eerst lezen', duur: '10 min', screen: 'skim' },
       { naam: 'Skimmen — snel hoofdidee begrijpen', duur: '10 min', screen: 'skim' },
@@ -9572,36 +9678,21 @@ function leerWegReset() {
 // 🔕  SUBVOCALISATIE-TRAINING
 // ═══════════════════════════════════════════════════════════
 const SV_TEKSTEN = [
-  'Het brein kan woorden herkennen zonder ze uit te spreken. Dit is een vaardigheid die met oefening te ontwikkelen is. Snelle lezers zien woorden als beelden, niet als klanken.',
-  'Elke dag lezen vergroot je woordenschat en verbetert je begrip. Consistentie is belangrijker dan intensiteit. Tien minuten per dag levert meer op dan één uur per week.',
-  'Concentratie is een spier die vermoeid raakt. Plan moeilijke leestaken in de ochtend wanneer je energie het hoogst is. Vermijd afleiding door je telefoon weg te leggen.',
-  'Informatie die je koppelt aan iets wat je al weet beklijft beter. Verbind nieuwe feiten met bestaande kennis. Zo bouw je een sterk kennisnetwerk in je brein.',
-  'Ogen bewegen in sprongen, niet vloeiend. Elke sprong heet een saccade. Snelle lezers maken minder maar grotere sprongen, waardoor ze meer woorden per fixatie zien.',
-  'Regelmatig pauzeren tijdens het lezen verhoogt de retentie. Elke twintig minuten even stoppen en nadenken over wat je las verankert informatie in je langetermijngeheugen.',
-  'Subvocalisatie beperkt je leessnelheid tot je spreektempo. De meeste mensen spreken rond honderdvijftig woorden per minuut. Door subvocalisatie te doorbreken kun je twee tot drie keer sneller lezen.',
-  'Je hersenen verwerken visuele patronen veel sneller dan geluid. Wanneer je stopt met innerlijk uitspreken en woorden als geheel herkent, benut je de snelheid van je visuele systeem.',
-  'Muziek beluisteren tijdens het lezen kan subvocalisatie onderdrukken. Je innerlijke stem raakt bezet door de melodie, waardoor je ogen de leiding overnemen bij het verwerken van tekst.',
-  'Het tellen van een-twee-drie-vier terwijl je leest blokkeert de innerlijke stem. Dit voelt onwennig maar traint je brein om woorden zonder geluid te verwerken.',
-  'Snellezers rapporteren dat woorden op een gegeven moment direct betekenis krijgen, zonder vertaling naar klank. Het is vergelijkbaar met het zien van een verkeersbord: je begrijpt het onmiddellijk.',
-  'Je werkgeheugen kan vier tot zeven elementen tegelijk vasthouden. Door woorden te groeperen vergroot je de hoeveelheid informatie die je per fixatie opneemt.',
-  'Neuroplasticiteit betekent dat je brein zich aanpast aan nieuwe taken. Na twee weken dagelijks oefenen vormt je brein nieuwe verbindingen die sneller lezen ondersteunen.',
-  'Goede verlichting vermindert vermoeidheid van de ogen. Lees bij indirect daglicht of een goede bureaulamp. Vermijd felle schermen in donkere kamers.',
-  'Actief lezen is effectiever dan passief lezen. Stel jezelf voortdurend vragen over de tekst. Wat wil de auteur zeggen? Hoe past dit bij wat ik al weet?',
-  'De hersenen van ervaren lezers tonen minder activiteit bij het lezen dan die van beginners. Efficiëntie ontstaat door automatisering van het leesproces.',
-  'Tweetalige mensen lezen sneller dan eentaligen. Het schakelen tussen talen traint het brein in het snel verwerken van verschillende taalsystemen.',
-  'Het lettertype waarin je leest beïnvloedt je snelheid. Schreefloze lettertypes zoals Arial en Verdana zijn op beeldschermen sneller te lezen dan schreeflettertypes.',
-  'Slaap is essentieel voor het consolideren van wat je hebt gelezen. Tijdens de REM-slaap verwerkt je brein nieuwe informatie en verbindt deze met bestaande kennis.',
-  'De beste lezers variëren hun snelheid. Ze lezen bekende stof snel en vertragen bij moeilijke of nieuwe concepten. Flexibiliteit is de sleutel tot efficiënt lezen.',
-  'Voorkennis van een onderwerp maakt lezen sneller. Hoe meer je al weet over een thema, hoe sneller je nieuwe informatie kunt plaatsen en verwerken.',
-  'Je ogen nemen tijdens het lezen slechts een klein gebied scherp waar: de fovea. Training helpt om meer informatie uit de perifere gebieden op te vangen.',
-  'Stress verlaagt je leessnelheid en begrip drastisch. Ademhalingsoefeningen voor het lezen verlagen cortisol en verbeteren je concentratie en opnamevermogen.',
-  'De gemiddelde volwassene leest tweehonderd tot tweehonderdvijftig woorden per minuut. Met training is vierhonderd tot vijfhonderd woorden per minuut haalbaar zonder begripsverlies.',
-  'Lezen op papier levert gemiddeld beter tekstbegrip op dan lezen op een scherm. Dit komt deels doordat schermen meer afleidingsmogelijkheden bieden.',
-  'Het hummen van een monotone toon terwijl je leest is een effectieve methode om subvocalisatie te doorbreken. Je mond is bezet, waardoor je brein visueel moet verwerken.',
-  'Kinderen die veel worden voorgelezen ontwikkelen een grotere woordenschat. Dit effect is meetbaar tot in de volwassenheid en correleert met hogere leessnelheden.',
-  'Metacognitie, het denken over je eigen denken, verbetert je leesproces. Bewust monitoren of je de tekst begrijpt helpt je om tijdig bij te sturen.',
-  'Dagelijkse blootstelling aan diverse teksten verbetert je leesvaardigheid het snelst. Wissel af tussen fictie, non-fictie, nieuwsartikelen en wetenschappelijke teksten.',
-  'De hersenstam verwerkt woordklanken terwijl de visuele cortex woordvormen herkent. Bij snellezen verschuift de balans naar de visuele cortex, waardoor klanken minder nodig zijn.',
+  'Een bruikbaar leestempo hangt af van je doel. Een verhaal, handleiding en tabel vragen niet om dezelfde aanpak. Kies eerst wat je na afloop wilt weten.',
+  'De innerlijke stem is een normaal onderdeel van lezen. Bij moeilijke zinnen kan hij helpen om woordvolgorde en betekenis zorgvuldig te verwerken.',
+  'Bekijk voor het lezen kort de titel en tussenkoppen. Zo krijg je een kaart van de tekst en weet je waar belangrijke informatie waarschijnlijk staat.',
+  'Vat na een alinea in één zin samen wat er stond. Als dat niet lukt, is langzamer lezen of bewust herlezen een verstandige keuze.',
+  'Bekende onderwerpen lezen vaak makkelijker dan nieuwe onderwerpen. Voorkennis helpt om nieuwe feiten sneller aan bestaande kennis te koppelen.',
+  'Een gelijkmatig ritme kan prettig zijn bij eenvoudige tekst. Bij een nieuw begrip of ingewikkelde redenering mag je tempo juist omlaag.',
+  'Zet meldingen uit en leg je telefoon buiten bereik als je diep wilt lezen. Minder onderbrekingen maken een eerlijke meting eenvoudiger.',
+  'Vergelijk vooruitgang met onbekende teksten van ongeveer dezelfde lengte en moeilijkheid. Alleen zo zegt een verschil in WPM iets bruikbaars.',
+  'Een record zonder begripsvragen vertelt weinig. Combineer tempo altijd met een korte toets of een samenvatting in je eigen woorden.',
+  'Skimmen is bedoeld om structuur te verkennen. Scannen is bedoeld om een specifiek gegeven te vinden. Geen van beide vervangt diep lezen.',
+  'Kies een lettergrootte, regelafstand en achtergrond die voor jou comfortabel zijn. Persoonlijke leesbaarheid is belangrijker dan één vast lettertype.',
+  'Stop even als je ogen droog, vermoeid of pijnlijk aanvoelen. Knipper, kijk in de verte en hervat alleen wanneer lezen weer comfortabel is.',
+  'Oefen één verandering tegelijk. Pas bijvoorbeeld alleen tempo of woordgroepsgrootte aan, zodat je weet waardoor een resultaat veranderde.',
+  'Een kleine vooruitgang die op meerdere teksten terugkomt is waardevoller dan één extreem snelle ronde. Stabiliteit maakt groei geloofwaardig.',
+  'Lees de vragen pas nadat een officiële testtekst is verdwenen. Zo meet je wat je werkelijk uit de tekst hebt onthouden.',
 ];
 
 let svModus = 'metro';
@@ -9717,36 +9808,18 @@ function svHumTimer() {
 // ⏩  REGRESSIE-TRAINING
 // ═══════════════════════════════════════════════════════════
 const REG_TEKSTEN = [
-  'Regressie kost lezers gemiddeld dertig procent van hun leestijd. Ogen keren terug uit gewoonte, niet uit noodzaak. Door bewust vooruit te lezen train je dit patroon weg. Het brein past zich snel aan als terugkijken simpelweg niet meer mogelijk is.',
-  'Elke dag een kleine verbetering maakt na een jaar een enorm verschil. Consistente oefening van tien minuten per dag is effectiever dan sporadische sessies van een uur. Bouw ritme op en houd dat vast.',
-  'Begrip volgt snelheid, niet andersom. Als je sneller leest, dwingt je brein zich om efficiënter te verwerken. Langzamer lezen geeft het brein de kans te dwalen. Sneller lezen houdt de aandacht scherp.',
-  'Woorden zijn niet gelijk: functiewoorden zoals de en het verwerkt je brein razendsnel. Inhoudswoorden zoals resultaten en experimenten vereisen meer aandacht. Oefen om functiewoorden over te slaan zonder ze te missen.',
-  'Focus is een beperkte hulpbron. De hersenen kunnen slechts vier tot zeven elementen tegelijk in het werkgeheugen houden. Goede lezers groeperen informatie automatisch, waardoor ze meer inhoud per fixatie opslaan.',
-  'Snelheid en begrip zijn geen tegenpolen. Onderzoek toont aan dat mensen die sneller lezen vaak beter begrip hebben, omdat hun aandacht scherpter is en hun geest minder afdwaalt.',
-  'Een vinger of pen onder de tekst plaatsen voorkomt regressie op natuurlijke wijze. Je ogen volgen het object en worden meegetrokken in een voorwaartse beweging. Dit is een van de oudste en effectiefste leestechnieken.',
-  'Het menselijk brein houdt van patronen. Wanneer je een vast leesritme aanhoudt, gaat je brein voorspellen wat er komt. Regressie doorbreekt dat ritme en kost extra verwerkingscapaciteit.',
-  'Kinderen leren lezen door terug te kijken. Dat is normaal en noodzakelijk in de leerfase. Bij volwassenen is het echter een overgebleven gewoonte die de leessnelheid afremt.',
-  'Onderzoek aan de Universiteit van Massachusetts toonde aan dat ervaren lezers slechts tien tot vijftien procent regressie vertonen. Onervaren lezers gaan tot veertig procent terug. Het verschil zit in vertrouwen.',
-  'Je brein verwerkt tekst het beste wanneer het in een flow-toestand is. Regressie haalt je uit die flow. Elke terugblik kost twee tot drie fixaties extra en onderbrekend de informatiestroming.',
-  'Een tekst waarvan je de structuur kent is makkelijker om vooruit te lezen. Preview altijd de koppen en tussentitels voordat je begint. Zo weet je brein wat er komt.',
-  'Saccadische oogbewegingen zijn niet perfect. Soms landt je oog op de verkeerde plek in een woord. Geoefende lezers corrigeren dit automatisch naar voren in plaats van terug te gaan.',
-  'De angst om iets te missen drijft regressie aan. Vertrouw erop dat je brein de context gebruikt om kleine hiaten op te vullen. Je mist minder dan je denkt.',
-  'Wanneer je een moeilijk woord tegenkomt, is de neiging om terug te gaan sterk. Train jezelf om door te lezen. De omringende woorden geven vaak genoeg context om het woord alsnog te begrijpen.',
-  'Leessnelheid meten zonder regressie toont je werkelijke verwerkingssnelheid. De meeste mensen ontdekken dat ze vijfentwintig tot vijfendertig procent sneller kunnen lezen zonder terugkijken.',
-  'Snellezers gebruiken perifeer zicht om alvast de komende woorden te scannen. Hierdoor worden ze minder verrast door onverwachte woorden en is de neiging tot regressie kleiner.',
-  'Een vast dagelijks leesmoment creëert een gewoonte. Gewoontes vereisen minder wilskracht. Koppel je leestraining aan een bestaande routine, zoals na het ontbijt of voor het slapen.',
-  'De prefrontale cortex stuurt je oogbewegingen aan. Vermoeidheid vermindert de controle van dit hersengebied en vergroot de kans op regressie. Lees daarom op momenten dat je uitgerust bent.',
-  'Teksten met korte zinnen en bekende woorden nodigen minder uit tot regressie. Begin je training met eenvoudige teksten en bouw langzaam op naar complexere stof.',
-  'Het tonen van tekst woord voor woord, zoals bij RSVP, elimineert regressie volledig. Na deze training merk je dat de neiging tot terugkijken ook bij normaal lezen afneemt.',
-  'Lezen zonder regressie traint je werkgeheugen. Je brein leert om informatie langer vast te houden omdat het weet dat terugkijken geen optie is.',
-  'Studies tonen aan dat tachtig procent van de regressies onnodig is. De lezer had de informatie al correct verwerkt maar keek toch terug uit onzekerheid.',
-  'Een timer gebruiken tijdens het lezen geeft urgentie en vermindert regressie. Het gevoel van tijdsdruk houdt je ogen naar voren gericht.',
-  'Snellezen is een vaardigheid die net als autorijden automatisch wordt. In het begin is het bewust en vermoeiend. Na weken oefening doe je het zonder nadenken.',
-  'Het lezen van kranten traint voorwaarste lezing op natuurlijke wijze. Nauwe kolommen zorgen ervoor dat je ogen snelle verticale sprongen maken met weinig ruimte voor regressie.',
-  'Regressie neemt toe wanneer je ongeïnteresseerd bent in de tekst. Kies oefenteksten die je aanspreken. Motivatie is een onderschatte factor in leessnelheid.',
-  'Oogtrackingonderzoek laat zien dat regressie vooral optreedt bij het einde van een regel. Train specifiek het soepel overspringen naar de volgende regel zonder terugkijken.',
-  'Je lichaamhouding beïnvloedt je leesefficiëntie. Een rechte rug en de tekst op ooghoogte houden verminderen oogvermoeidheid en daarmee de neiging tot regressie.',
-  'Elke sessie zonder regressie versterkt het neurale pad voor voorwaarts lezen. Na dertig dagen dagelijks oefenen is het een tweede natuur geworden.',
+  'Een reiziger stapte vroeg op de trein en zocht een rustige plaats bij het raam. Buiten schoof het landschap langzaam van stad naar open veld.',
+  'De bakker zette het deeg de avond ervoor klaar. In de ochtend hoefde hij alleen de oven te verwarmen en de gevormde broden te bakken.',
+  'Na de vergadering noteerde Mila drie besluiten en één open vraag. Ze stuurde de samenvatting naar het team zodat iedereen dezelfde afspraken had.',
+  'In het park stonden nieuwe informatieborden bij de vijver. Bezoekers lazen welke vogels er broeden en waarom honden in dat deel aan de lijn blijven.',
+  'De monteur controleerde eerst de batterij en daarna de verlichting. Pas toen beide in orde waren, maakte hij een korte proefrit met de fiets.',
+  'Een moeilijke zin mag bewust opnieuw worden gelezen. Deze oefening laat alleen ervaren hoe een vast voorwaarts tempo voelt bij eenvoudige tekst.',
+  'Voor het koken legde Amir alle ingrediënten klaar. Daardoor hoefde hij tijdens het recept niet telkens naar een ontbrekend potje te zoeken.',
+  'De klas verdeelde het onderzoek in kleine taken. Eén groep verzamelde gegevens, een tweede maakte grafieken en een derde controleerde de conclusies.',
+  'Op het strand vond Noor verschillende schelpen. Ze sorteerde ze op vorm en kleur en liet de levende dieren daarna voorzichtig bij het water achter.',
+  'De bibliotheek opende een uur eerder tijdens de examenweek. Studenten konden daardoor voor hun eerste les nog rustig lezen en aantekeningen ordenen.',
+  'Een goed leesritme blijft flexibel. Bij een bekend voorbeeld kun je doorlezen, terwijl een nieuwe uitleg soms om een korte pauze of herlezing vraagt.',
+  'Na de wandeling vergeleek de groep de route met de kaart. Eén afslag was anders gelopen, maar iedereen had het eindpunt zonder haast bereikt.',
 ];
 
 let regWpm = 220;
@@ -9776,6 +9849,7 @@ function regNieuwe() {
 function regToggle() {
   if (regActief) { regStop(); return; }
   regActief = true;
+  Ronde.start('regressie', woorden(regTekst));
   document.getElementById('reg-start-btn').textContent = '⏹ Stop';
   document.getElementById('reg-einde-msg').style.display = 'none';
   regVolgende();
@@ -9800,12 +9874,12 @@ function regStop() {
 }
 
 function regEinde() {
-  voltooiDaguitdaging('regressie');
   _geluid.goed();
-  document.getElementById('reg-zin-display').textContent = '✅ Tekst voltooid!';
+  document.getElementById('reg-zin-display').textContent = '✅ Tekst voltooid — controleer je begrip';
   document.getElementById('reg-einde-msg').innerHTML =
-    `<div class="card"><b>Goed gedaan!</b> Je hebt de hele tekst gelezen zonder terug te kijken. Verhoog het tempo met 10–20 WPM en probeer opnieuw.</div>`;
+    `<div class="card"><b>Goed gedaan.</b> Beantwoord nu drie vragen. Alleen met voldoende begrip telt deze ronde mee.</div>`;
   document.getElementById('reg-einde-msg').style.display = '';
+  startInhoudsQuiz('regressie', regWpm, woorden(regTekst).length);
 }
 
 function regTempoPas(delta) {
@@ -9818,29 +9892,21 @@ function regTempoPas(delta) {
 // 👁  FIXATIE-TRAINING
 // ═══════════════════════════════════════════════════════════
 const FIX_TEKSTEN = [
-  'Het menselijk oog kan vijf woorden tegelijk herkennen als ze gecentreerd zijn op het fixatiepunt. De kunst is om dat blikveld bewust te benutten bij het lezen van gewone tekst.',
-  'Iedere lezer begint met één woord per fixatie. Met training groeit dat naar twee dan drie dan vier woorden. Dit klinkt simpel maar vereist weken van dagelijkse oefening.',
-  'Periferisch zien is niet alleen voor snellezen handig. Sportcoaches trainen het bij voetballers en basketbalspelers zodat ze het veld overzien zonder hun hoofd te draaien.',
-  'Lezen met brede fixaties kost aanvankelijk meer concentratie. Dat is normaal. Het brein moet een nieuw patroon opbouwen. Na twee weken voelt het vanzelf en gemakkelijk.',
-  'Een fixatie duurt gemiddeld tweehonderd tot driehonderd milliseconden. Bij drie woorden per fixatie en tweehonderd fixaties per minuut lees je zeshonderd woorden per minuut.',
-  'Het blikveld is verdeeld in drie zones. De fovea ziet scherp in het centrum. De parafovea verwerkt de woorden ernaast. De periferie vangt globale vormen op maar geen details.',
-  'Snellezers fixeren bij voorkeur op het midden van een woordgroep. Daar is de informatiedichtheid het hoogst en kan het brein de omringende woorden meelezen.',
-  'Het verminderen van het aantal fixaties per regel is effectiever dan het verkorten van elke fixatie. Minder sprongen betekent meer woorden in minder tijd.',
-  'Kinderen maken gemiddeld vijftien fixaties per regel. Ervaren volwassenen maken er vijf tot zeven. Snellezers brengen dat terug naar drie tot vier fixaties per regel.',
-  'Saccade-suppressie is het fenomeen waarbij je brein tijdens een oogsprong geen visuele informatie verwerkt. Hoe korter de saccade, hoe minder verwerkingstijd verloren gaat.',
-  'Oogspieren zijn de snelst bewegende spieren in het menselijk lichaam. Ze kunnen tot vijfhonderd graden per seconde roteren. Training maakt deze bewegingen nog preciezer.',
-  'Het optimale fixatiepunt in een woord ligt iets links van het midden. Daar herkent het brein het woord het snelst. Dit wordt het optimale kijkpunt genoemd.',
-  'Bij het lezen van een tekst in kolommen, zoals in een krant, zijn minder fixaties nodig per regel. Dit is een van de redenen waarom kranten in kolommen worden gezet.',
-  'Je perifere zicht registreert woordlengte en woordvorm voordat je ogen daar aankomen. Dit voorbereidend scannen versnelt de herkenning bij de volgende fixatie.',
-  'Geoefende fixatie verlaagt de cognitieve belasting van het lezen. Je brein hoeft minder energie te besteden aan het decoderen van individuele woorden en kan meer investeren in begrip.',
-  'De Stroop-test laat zien hoe sterk ons brein woorden automatisch leest. Zelfs als je instructie hebt om de kleur te benoemen, lees je onwillekeurig het woord. Fixatietraining benut dit automatisme.',
-  'Brede fixatie werkt het beste bij teksten met bekende vocabulaire. Bij onbekende woorden vernauwt het blikveld automatisch. Dit is een natuurlijk aanpassingsmechanisme.',
-  'Speed reading kampioen Anne Jones las Harry Potter in vijfenveertig minuten. Zij gebruikte fixaties van vijf tot zes woorden breed met minimale regressie.',
-  'Het gebruik van een leeskaart, een kaart die de gelezen tekst bedekt, dwingt je ogen om breed te fixeren op de zichtbare woorden. Dit is een effectieve trainingsmethode.',
-  'Digitale teksten met een breedte van vijftig tot zeventig tekens per regel zijn optimaal voor leessnelheid. Langere regels vergroten het risico op fixatiefouten bij de regelovergang.',
-  'Bij muziek lezen gebruiken pianisten brede fixaties om meerdere noten tegelijk waar te nemen. Dezelfde vaardigheid is overdraagbaar naar het lezen van tekst.',
-  'Je blikveld wordt breder wanneer je ontspannen bent. Stress en angst vernauwen letterlijk je gezichtsveld. Begin elke leessessie met een kort moment van ontspanning.',
-  'Het oefenen met flitsen van woordgroepen traint je brein om meer informatie per fixatie te verwerken. Begin met twee woorden en bouw op naar vijf.',
+  'de trein vertrekt',
+  'een rustige ochtend',
+  'boeken op tafel',
+  'licht door ramen',
+  'vragen na afloop',
+  'tempo met begrip',
+  'een helder leesdoel',
+  'woorden vormen betekenis',
+  'pauze bij moeilijke uitleg',
+  'vergelijk gelijke teksten',
+  'kleine stappen vooruit',
+  'aandacht bij de kern',
+  'zoek naam en datum',
+  'vat de alinea samen',
+  'rustig naar de volgende groep',
   'Ervaren typisten kijken vooruit in de tekst terwijl ze de huidige woorden typen. Hetzelfde principe geldt voor lezen: je ogen zijn altijd een stap vooruit op je verwerking.',
   'De gemiddelde oogfixatie bij het lezen van een webpagina is korter dan bij het lezen van een boek. Dit komt door de scan-modus die we online hanteren.',
   'Fixatietraining verbetert niet alleen je leessnelheid maar ook je visuele waarneming in het dagelijks leven. Je wordt beter in het opmerken van details in je omgeving.',
@@ -10069,7 +10135,7 @@ const SKIM_TEKSTEN_DATA = [
       'Het geheugen is geen opslag maar een reconstructieproces. Elke keer dat je een herinnering ophaalt, wordt deze enigszins aangepast door je huidige kennis en emotionele toestand.',
       'Het werkgeheugen kan vier tot zeven items tegelijk vasthouden. Dit verklaart waarom telefoonnummers in groepjes worden gepresenteerd en waarom opsommingen boven zeven punten moeilijker te onthouden zijn.',
       'Emotionele gebeurtenissen worden sterker opgeslagen dan neutrale. De amygdala, het emotiecentrum van het brein, versterkt de geheugenconsolidatie van ervaringen met een hoge emotionele lading.',
-      'De geheugenpaleis-techniek, waarbij je informatie koppelt aan locaties in een denkbeeldig gebouw, wordt al sinds de Griekse oudheid gebruikt en is wetenschappelijk bewezen effectief.',
+      'Bij de geheugenpaleis-techniek koppel je informatie aan herkenbare plekken in een denkbeeldige route. Sommige mensen gebruiken die structuur om een reeks feiten terug te halen.',
     ]
   },
   {
@@ -10104,7 +10170,7 @@ const SKIM_TEKSTEN_DATA = [
     alineas: [
       'Stress activeert het sympathische zenuwstelsel en zet het vecht-of-vluchtmechanisme in gang. Adrenaline en cortisol worden vrijgemaakt, het hart gaat sneller kloppen en de spieren spannen aan.',
       'Kortdurende stress is nuttig en verhoogt je prestaties. Chronische stress daarentegen beschadigt het immuunsysteem, verhoogt de bloeddruk en vergroot het risico op depressie.',
-      'Mindfulness-meditatie verlaagt aantoonbaar het cortisolgehalte en vermindert symptomen van angst en depressie. Al tien minuten per dag heeft meetbaar effect na acht weken.',
+      'Mindfulness-oefeningen richten de aandacht op het huidige moment. Mensen gebruiken ze bijvoorbeeld om gedachten op te merken en daarna terug te keren naar hun gekozen taak.',
       'Sociale verbinding is een van de krachtigste buffers tegen stress. Mensen met sterke sociale netwerken hebben lagere stressniveaus en leven gemiddeld langer dan sociaal geïsoleerde personen.',
     ]
   },
@@ -10504,7 +10570,9 @@ function toonWpmDoel() {
 }
 
 function slaDoelOp() {
-  const val = parseInt(document.getElementById('doel-input').value)||0;
+  const invoer = parseInt(document.getElementById('doel-input').value) || 0;
+  const val = invoer > 0 ? Math.min(900, Math.max(100, invoer)) : 0;
+  if (val) document.getElementById('doel-input').value = val;
   if(val>0) localStorage.setItem('wpm_doel', val);
   toonWpmDoel();
 }
@@ -10514,9 +10582,15 @@ let leestestStart = 0;
 let leestestTekstIdx = 0;
 let leestestAntwoorden = [];
 let leestestScore = 0;
+let leestestWpm = 0;
+let leestestResultaatVerwerkt = false;
 
 function leestestInit() {
   leestestActief = false;
+  leestestStart = 0;
+  leestestWpm = 0;
+  leestestResultaatVerwerkt = false;
+  meetWaarschuwingWis('lt-meetwaarschuwing');
   leestestTekstIdx = Math.floor(Math.random() * LEESTEST_TEKSTEN.length);
   const tekst = LEESTEST_TEKSTEN[leestestTekstIdx];
   const wc = woorden(tekst.tekst).length;
@@ -10531,6 +10605,7 @@ function leestestInit() {
 
 function leestestBegin() {
   const tekst = LEESTEST_TEKSTEN[leestestTekstIdx];
+  meetWaarschuwingWis('lt-meetwaarschuwing');
   document.getElementById('lt-tekst-inhoud').textContent = tekst.tekst;
   document.getElementById('lt-view-intro').style.display = 'none';
   document.getElementById('lt-view-lezen').style.display = '';
@@ -10540,18 +10615,22 @@ function leestestBegin() {
 
 function leestestKlaar() {
   if (!leestestActief) return;
-  const elapsed = (Date.now() - leestestStart) / 1000 / 60; // minuten
+  const seconden = (Date.now() - leestestStart) / 1000;
   const tekst = LEESTEST_TEKSTEN[leestestTekstIdx];
   const wc = woorden(tekst.tekst).length;
-  const wpm = Math.round(wc / elapsed);
+  const controle = valideerVrijeLeesmeting(wc, seconden);
 
   leestestActief = false;
+  if (!controle.geldig) {
+    leestestStart = 0;
+    leestestWpm = 0;
+    meetWaarschuwingToon('lt-meetwaarschuwing', controle, leestestInit, 'Opnieuw met een nieuwe tekst');
+    return;
+  }
+  leestestWpm = controle.wpm;
   leestestAntwoorden = [];
 
-  // Sla WPM op
-  slaaSessieOp(wpm, wc);
-
-  document.getElementById('lt-wpm-result').textContent = wpm;
+  document.getElementById('lt-wpm-result').textContent = leestestWpm;
   document.getElementById('lt-view-lezen').style.display = 'none';
 
   // Bouw vragen
@@ -10595,17 +10674,21 @@ function leestestKiesAntwoord(vraagIdx, optieIdx, btn) {
 }
 
 function leestestVerzend() {
+  if (leestestResultaatVerwerkt) return;
   const tekst = LEESTEST_TEKSTEN[leestestTekstIdx];
   const vragen = tekst.vragen;
+  if (leestestAntwoorden.filter(a => a !== undefined).length !== vragen.length) return;
+  leestestResultaatVerwerkt = true;
   let score = 0;
   vragen.forEach((q, qi) => {
     if (leestestAntwoorden[qi] === q.correct) score++;
   });
   leestestScore = score;
 
-  const wpm = parseInt(document.getElementById('lt-wpm-result').textContent) || 0;
+  const wpm = leestestWpm;
   const pct = Math.round((score / vragen.length) * 100);
 
+  slaaSessieOp(wpm, woorden(tekst.tekst).length);
   document.getElementById('lt-res-wpm').textContent = wpm;
   document.getElementById('lt-res-score').textContent = `${score} / ${vragen.length} (${pct}%)`;
   Coach.registreerBegrip(pct, 'leestest');
@@ -11082,10 +11165,11 @@ function _maakStartweek(baseline, eersteMissie) {
   const eerste = eersteMissie || _maakEersteMissie(
     baseline.wpm,
     baseline.begrip,
-    baseline.begrip >= 60 ? Math.round(baseline.wpm * 1.15) : Math.round(baseline.wpm * 0.9)
+    baseline.begrip >= 80 ? Math.round(baseline.wpm * 1.08) : Math.round(baseline.wpm * 0.9)
   );
-  const rsvpWpm = _rondMissieTempo(Math.max(100, baseline.wpm * 1.1), 25, 100);
-  const chunkWpm = _rondMissieTempo(Math.max(80, baseline.wpm), 20, 80);
+  const doelgroepMax = Coach.adaptief.MAX_WPM[Coach.doelgroep()] || 700;
+  const rsvpWpm = _rondMissieTempo(Math.max(100, baseline.wpm * 1.08), 25, 100, doelgroepMax);
+  const chunkWpm = _rondMissieTempo(Math.max(80, baseline.wpm), 20, 80, 500);
   const tweede = eerste.type === 'rsvp'
     ? { type: 'chunk', icon: '📖', titel: 'Begrip in blokken', uitleg: 'Lees woordgroepen in plaats van losse woorden. Controleer je begrip na afloop.', wpm: chunkWpm }
     : { type: 'rsvp', icon: '⚡', titel: 'Tempo met controle', uitleg: 'Laat je ogen het tempo volgen en houd je aandacht bij de tekst.', wpm: rsvpWpm };
@@ -11095,9 +11179,9 @@ function _maakStartweek(baseline, eersteMissie) {
     sessies: [
       { id: 'start', type: eerste.type, icon: eerste.icon, titel: eerste.titel, uitleg: eerste.uitleg, wpm: eerste.wpm, voltooid: false },
       { id: 'chunks', ...tweede, voltooid: false },
-      { id: 'ogen', type: 'oog', icon: '👁', titel: 'Ogen in beweging', uitleg: 'Train soepel volgen en een rustiger blikpatroon.', voltooid: false },
-      { id: 'fixatie', type: 'fixatie', icon: '🔲', titel: 'Breder kijken', uitleg: 'Pak meer informatie per oogfixatie.', voltooid: false },
-      { id: 'regressie', type: 'regressie', icon: '⏩', titel: 'Vooruit blijven lezen', uitleg: 'Doorbreek de neiging om terug te springen.', voltooid: false },
+      { id: 'ogen', type: 'oog', icon: '👁', titel: 'Visuele coördinatie', uitleg: 'Volg gecontroleerd en let op visueel comfort.', voltooid: false },
+      { id: 'fixatie', type: 'fixatie', icon: '🔲', titel: 'Woordgroepen herkennen', uitleg: 'Vergelijk welke groepsgrootte je nauwkeurig kunt lezen.', voltooid: false },
+      { id: 'regressie', type: 'regressie', icon: '⏩', titel: 'Vooruit blijven lezen', uitleg: 'Oefen een vast tempo en controleer daarna je begrip.', voltooid: false },
       { id: 'lange-tekst', type: 'langetekst', icon: '📚', titel: 'Toepassen op een echte tekst', uitleg: 'Combineer tempo en begrip in een langere leessessie.', voltooid: false },
       { id: 'hermeting', type: 'leestest', icon: '🎯', titel: 'Jouw eindmeting', uitleg: 'Vergelijk je nieuwe snelheid en begrip met je startpunt.', voltooid: false },
     ],
@@ -11115,11 +11199,11 @@ function _zorgStartweek() {
   const bestaand = _haalStartweek();
   if (bestaand?.sessies?.length) return bestaand;
   try {
-    const baseline = JSON.parse(localStorage.getItem('begintest_baseline') || 'null');
+    const baseline = laadGeldigeBegintestBaseline();
     if (!baseline) return null;
     let eerste = _haalEersteMissie();
     if (!eerste) {
-      const startWpm = baseline.begrip >= 60 ? Math.round(baseline.wpm * 1.15) : Math.round(baseline.wpm * 0.9);
+      const startWpm = baseline.begrip >= 80 ? Math.round(baseline.wpm * 1.08) : Math.round(baseline.wpm * 0.9);
       eerste = _maakEersteMissie(baseline.wpm, baseline.begrip, startWpm);
       _slaEersteMissie(eerste);
     }
@@ -11241,7 +11325,7 @@ function _momentumActie(resultaat) {
     return { label: 'Herlees voor 2 van de 3 goed →', type: resultaat.type, herhaal: true };
   }
   if (paced && resultaat.begrip !== null && resultaat.begrip >= 67) {
-    return { label: 'Probeer dezelfde training +10% →', type: resultaat.type, sneller: true };
+    return { label: 'Probeer dezelfde training +8% →', type: resultaat.type, sneller: true };
   }
   return { label: 'Start je volgende missie →', type: null };
 }
@@ -11255,7 +11339,7 @@ function _updateMomentumCard() {
     return;
   }
 
-  const baseline = (() => { try { return JSON.parse(localStorage.getItem('begintest_baseline') || 'null'); } catch(e) { return null; } })();
+  const baseline = laadGeldigeBegintestBaseline();
   const begripTxt = r.begrip === null || r.begrip === undefined ? '—' : `${Math.round(r.begrip)}%`;
   const score = r.begrip ? Math.round((r.wpm || 0) * (r.begrip / 100)) : r.wpm;
   let titel = `Leesscore ${score || r.wpm}`;
@@ -11293,7 +11377,7 @@ function startMomentumActie() {
       const stap = type === 'rsvp' ? 25 : 20;
       if (slider) {
         const basis = resultaat?.wpm || +slider.value;
-        slider.value = Math.min(+slider.max, Math.round((basis * 1.1) / stap) * stap);
+        slider.value = Math.min(+slider.max, Math.round((basis * 1.08) / stap) * stap);
         slider.dispatchEvent(new Event('input'));
       }
     }, 100);
@@ -11528,6 +11612,7 @@ let _lttStart    = 0;
 let _lttActief   = false;
 let _lttAntwoorden = [];
 let _lttWpm      = 0;
+let _lttVerwerkt = false;
 
 // ── INITIALISATIE ─────────────────────────────────────────
 function lttInit() {
@@ -11563,11 +11648,15 @@ function lttInit() {
   document.getElementById('ltt-view-resultaat').style.display = 'none';
   _lttActief = false;
   _lttAntwoorden = [];
+  _lttWpm = 0;
+  _lttVerwerkt = false;
+  meetWaarschuwingWis('ltt-meetwaarschuwing');
 }
 
 // ── STARTEN ───────────────────────────────────────────────
 function lttBegin() {
   if (!_lttTekst) return;
+  meetWaarschuwingWis('ltt-meetwaarschuwing');
   document.getElementById('ltt-tekst-inhoud').textContent = _lttTekst.tekst;
   document.getElementById('ltt-view-intro').style.display = 'none';
   document.getElementById('ltt-view-lezen').style.display = '';
@@ -11578,10 +11667,17 @@ function lttBegin() {
 // ── KLAAR MET LEZEN ───────────────────────────────────────
 function lttKlaar() {
   if (!_lttActief) return;
-  const elapsed = (Date.now() - _lttStart) / 1000 / 60;
+  const seconden = (Date.now() - _lttStart) / 1000;
   const wc = woorden(_lttTekst.tekst).length;
-  _lttWpm   = Math.round(wc / elapsed);
+  const controle = valideerVrijeLeesmeting(wc, seconden);
   _lttActief = false;
+  if (!controle.geldig) {
+    _lttStart = 0;
+    _lttWpm = 0;
+    meetWaarschuwingToon('ltt-meetwaarschuwing', controle, lttInit, 'Opnieuw met een nieuwe tekst');
+    return;
+  }
+  _lttWpm = controle.wpm;
   _lttAntwoorden = [];
 
   document.getElementById('ltt-wpm-result').textContent = _lttWpm;
@@ -11631,7 +11727,10 @@ function lttKiesAntwoord(qi, oi, btn) {
 
 // ── RESULTAAT VERWERKEN ───────────────────────────────────
 function lttVerzend() {
+  if (_lttVerwerkt) return;
   const vragen = _lttTekst.vragen;
+  if (_lttAntwoorden.filter(a => a !== undefined).length !== vragen.length) return;
+  _lttVerwerkt = true;
   let score = 0;
   vragen.forEach((q, qi) => { if (_lttAntwoorden[qi] === q.correct) score++; });
   const begrip_pct = Math.round((score / vragen.length) * 100);
@@ -11690,7 +11789,7 @@ function lttVerzend() {
   document.getElementById('ltt-view-resultaat').style.display = '';
 
   // Daguitdaging voltooien
-  if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('langetekst');
+  if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('eigen-lees', { begrip:begrip_pct });
   // Vandaag panel bijwerken
   if (typeof updateVandaagPanel === 'function') updateVandaagPanel();
   // Achievements checken (na localStorage-update)
@@ -12091,6 +12190,7 @@ let _elActief     = false;
 let _elAntwoorden = [];
 let _elWpm        = 0;
 let _elVragen     = []; // shuffled vragen for current sessie
+let _elVerwerkt   = false;
 
 function eigenLeesStart(idx) {
   const alle  = [{ naam: 'Demo tekst (ingebouwd)', tekst: DEMO_TEKST, vragen: DEMO_VRAGEN }, ...bibliLaad()];
@@ -12110,6 +12210,9 @@ function eigenLeesStart(idx) {
   _elActief = false;
   _elAntwoorden = [];
   _elVragen = v.map(q => _elShuffleVraag(q));
+  _elWpm = 0;
+  _elVerwerkt = false;
+  meetWaarschuwingWis('el-meetwaarschuwing');
 
   sidebarNav('eigen-lees');
 }
@@ -12123,6 +12226,7 @@ function _elShuffleVraag(q) {
 
 function elBegin() {
   if (!_elTekst) return;
+  meetWaarschuwingWis('el-meetwaarschuwing');
   document.getElementById('el-tekst-inhoud').textContent = _elTekst.tekst;
   document.getElementById('el-view-intro').style.display = 'none';
   document.getElementById('el-view-lezen').style.display = '';
@@ -12132,10 +12236,23 @@ function elBegin() {
 
 function elKlaar() {
   if (!_elActief) return;
-  const elapsed = (Date.now() - _elStart) / 1000 / 60;
+  const seconden = (Date.now() - _elStart) / 1000;
   const wc = woorden(_elTekst.tekst).length;
-  _elWpm   = Math.round(wc / elapsed);
+  const controle = valideerVrijeLeesmeting(wc, seconden);
   _elActief = false;
+  if (!controle.geldig) {
+    _elStart = 0;
+    _elWpm = 0;
+    const tekstTeKort = controle.code === 'tekst_te_kort';
+    meetWaarschuwingToon(
+      'el-meetwaarschuwing',
+      controle,
+      tekstTeKort ? () => sidebarNav('tekst') : elBegin,
+      tekstTeKort ? 'Kies een langere tekst' : 'Opnieuw meten'
+    );
+    return;
+  }
+  _elWpm = controle.wpm;
   _elAntwoorden = [];
 
   document.getElementById('el-wpm-result').textContent = _elWpm;
@@ -12189,6 +12306,8 @@ function elKiesAntwoord(qi, oi, btn) {
 }
 
 function elVerzend() {
+  if (_elVerwerkt) return;
+  if (_elAntwoorden.filter(a => a !== undefined).length !== _elVragen.length) return;
   let score = 0;
   _elVragen.forEach((q, qi) => { if (_elAntwoorden[qi] === q.correct) score++; });
   const begrip_pct = _elVragen.length > 0 ? Math.round((score / _elVragen.length) * 100) : 100;
@@ -12197,8 +12316,11 @@ function elVerzend() {
 }
 
 function _elToonResultaat(score, begrip_pct) {
+  if (_elVerwerkt) return;
+  _elVerwerkt = true;
   const wc = woorden(_elTekst.tekst).length;
   slaaSessieOp(_elWpm, wc);
+  if (_elVragen.length > 0) Coach.registreerBegrip(begrip_pct, 'eigen-lees');
   // Gelezen-vinkje voor de eigen tekst (demo-tekst heeft geen uid)
   if (_elTekst.uid) markeerGelezen('e:' + _elTekst.uid, { wpm: _elWpm });
 
@@ -12444,89 +12566,11 @@ const _aiTts = {
 function aiTtsToggle() { return; }
 
 
-// ── 3. ADAPTIEF NIVEAU-SYSTEEM ──────────────────────────────
-const _aiAdaptief = {
-  analyseer() {
-    const stats = (() => { try { return JSON.parse(localStorage.getItem('snellees_stats') || '{}'); } catch(e) { return {}; } })();
-    const sessies = stats.sessies || [];
-    if (sessies.length < 3) return null;
-    
-    const laatste3 = sessies.slice(-3);
-    const gemWpm = Math.round(laatste3.reduce((a,s) => a + s.wpm, 0) / 3);
-    const begrip = (() => { try { return JSON.parse(localStorage.getItem('snellees_begrip_scores') || '[]'); } catch(e) { return []; } })();
-    const gemBegrip = begrip.length >= 2 
-      ? Math.round(begrip.slice(-3).reduce((a,s) => a + s, 0) / Math.min(3, begrip.length)) : null;
-    
-    const result = { gemWpm, gemBegrip, suggestie: null, nieuwWpm: gemWpm };
-    
-    if (gemBegrip !== null) {
-      if (gemBegrip >= 80 && this._isStabiel(sessies)) {
-        result.nieuwWpm = Math.round(gemWpm * 1.1);
-        result.suggestie = 'verhoog';
-      } else if (gemBegrip < 60) {
-        result.nieuwWpm = Math.round(gemWpm * 0.85);
-        result.suggestie = 'verlaag';
-      }
-    } else if (this._isStabiel(sessies) && sessies.length >= 5) {
-      result.nieuwWpm = Math.round(gemWpm * 1.05);
-      result.suggestie = 'licht_verhoog';
-    }
-    
-    if (this._isPlateau(sessies)) result.suggestie = 'plateau';
-    return result;
-  },
-  
-  _isStabiel(sessies) {
-    if (sessies.length < 5) return false;
-    const laatste5 = sessies.slice(-5).map(s => s.wpm);
-    const gem = laatste5.reduce((a,v) => a + v, 0) / 5;
-    return Math.sqrt(laatste5.reduce((a,v) => a + Math.pow(v - gem, 2), 0) / 5) < gem * 0.1;
-  },
-  
-  _isPlateau(sessies) {
-    if (sessies.length < 10) return false;
-    const recent = sessies.slice(-5).reduce((a,s) => a + s.wpm, 0) / 5;
-    const eerder = sessies.slice(-10, -5).reduce((a,s) => a + s.wpm, 0) / 5;
-    return Math.abs(recent - eerder) < 5;
-  },
-  
-  pasAan() {
-    const result = this.analyseer();
-    if (!result || !result.suggestie) return;
-    
-    const wpmSlider = document.getElementById('wpm-slider');
-    const chunkWpm = document.getElementById('chunk-wpm');
-    
-    if (result.suggestie === 'verhoog' || result.suggestie === 'licht_verhoog') {
-      if (wpmSlider) wpmSlider.value = Math.min(+wpmSlider.max, result.nieuwWpm);
-      if (chunkWpm) chunkWpm.value = Math.min(+chunkWpm.max, result.nieuwWpm);
-      _aiTts.spreek(`Snelheid verhoogd naar ${result.nieuwWpm} woorden per minuut.`);
-    } else if (result.suggestie === 'verlaag') {
-      if (wpmSlider) wpmSlider.value = Math.max(+wpmSlider.min, result.nieuwWpm);
-      if (chunkWpm) chunkWpm.value = Math.max(+chunkWpm.min, result.nieuwWpm);
-      _aiTts.spreek(`Snelheid verlaagd naar ${result.nieuwWpm}. Focus op begrip.`);
-    } else if (result.suggestie === 'plateau') {
-      const tips = ['oogtraining', 'chunk lezen', 'perifeer zien', 'fixatie-training'];
-      _aiTts.spreek(`Je zit op een plateau. Probeer eens ${tips[Math.floor(Math.random() * tips.length)]}.`);
-    }
-    
-    localStorage.setItem('ai_laatste_analyse', JSON.stringify({ ...result, datum: new Date().toISOString() }));
-  },
-  
-  registreerBegrip(score) {
-    const scores = (() => { try { return JSON.parse(localStorage.getItem('snellees_begrip_scores') || '[]'); } catch(e) { return []; } })();
-    scores.push(score);
-    if (scores.length > 50) scores.splice(0, scores.length - 50);
-    localStorage.setItem('snellees_begrip_scores', JSON.stringify(scores));
-  }
-};
+// Adaptieve moeilijkheid wordt uitsluitend door Coach.adaptief beheerd.
 
-
-// ── AI HOOKS ────────────────────────────────────────────────
+// ── SESSIE-HOOKS ────────────────────────────────────────────
 (function() {
-  // Hook slaaSessieOp voor TTS + Coach (adaptieve moeilijkheid)
-  // Let op: sliders worden door Coach.adaptief gezet bij het openen van een
-  // scherm — _aiAdaptief.pasAan() muteert ze niet meer (dubbel systeem).
+  // Hook slaaSessieOp voor coach, dagdoel en leerweg.
   const _aiOrigSessie = slaaSessieOp;
   slaaSessieOp = function(wpm, n) {
     _aiOrigSessie(wpm, n);
@@ -12534,16 +12578,11 @@ const _aiAdaptief = {
     const scherm = (document.querySelector('.screen.active')?.id || '').replace('screen-', '') || 'rsvp';
     Coach.naSessie(scherm, wpm, n);
     // Gamification: daguitdaging generiek afvangen + badges + dagdoel + leerweg
-    if (typeof voltooiDaguitdaging === 'function' && scherm !== 'rsvp' && scherm !== 'chunk') voltooiDaguitdaging(scherm);
+    const kwaliteitTypes = ['rsvp','chunk','regressie','leestest','langetekst','eigen-lees'];
+    if (typeof voltooiDaguitdaging === 'function' && !kwaliteitTypes.includes(scherm)) voltooiDaguitdaging(scherm);
     if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 600);
     if (typeof updateDagdoelRing === 'function') updateDagdoelRing();
-    if (typeof leerWegAutoVoltooi === 'function') leerWegAutoVoltooi(scherm);
     if (typeof eersteStappenUpdate === 'function') eersteStappenUpdate();
-    // Analyse blijven vastleggen voor het coach-panel (zonder sliders aan te passen)
-    setTimeout(() => {
-      const r = _aiAdaptief.analyseer();
-      if (r) localStorage.setItem('ai_laatste_analyse', JSON.stringify({ ...r, datum: new Date().toISOString() }));
-    }, 1500);
   };
   
   // Hook navigatie voor training tips
@@ -12561,614 +12600,7 @@ const _aiAdaptief = {
 
 
 // ════════════════════════════════════════════════════════════
-//  🤖  AI FASE 2: GEMINI API — LEESCOACH + BEGRIPSVRAGEN
-// ════════════════════════════════════════════════════════════
-
-// ── GEMINI API MODULE ───────────────────────────────────────
-const _aiGemini = {
-  endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent',
-
-  getKey() {
-    const userKey = localStorage.getItem('gemini_api_key');
-    if (userKey && userKey.trim()) return userKey.trim();
-    return null;
-  },
-
-  hasKey() {
-    return !!this.getKey();
-  },
-  
-  async send(prompt, maxTokens = 300) {
-    const key = this.getKey();
-    if (!key) {
-      return { ok: false, error: 'no_key', text: 'Geen AI-sleutel ingesteld. Voeg je gratis Gemini-sleutel toe via ⚙️ AI Instellingen.' };
-    }
-    
-    try {
-      const res = await fetch(`${this.endpoint}?key=${key}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            maxOutputTokens: maxTokens,
-            temperature: 0.7
-          }
-        })
-      });
-      
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        console.warn('[AI Gemini] API error:', res.status, JSON.stringify(err));
-        if (res.status === 429) {
-          return { ok: false, error: 'rate_limit', text: 'Dagelijkse limiet bereikt. Probeer het morgen opnieuw.' };
-        }
-        if (res.status === 400 && JSON.stringify(err).includes('API_KEY')) {
-          return { ok: false, error: 'invalid_key', text: 'Ongeldige API key. Controleer je key in AI Instellingen.' };
-        }
-        const errMsg = err?.error?.message || `Status ${res.status}`;
-        return { ok: false, error: 'api_error', text: `API fout: ${errMsg}` };
-      }
-      
-      const data = await res.json();
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-      return { ok: true, text };
-    } catch(e) {
-      return { ok: false, error: 'network', text: 'Geen internetverbinding. Controleer je netwerk.' };
-    }
-  },
-  
-  async testKey(key) {
-    try {
-      const res = await fetch(`${this.endpoint}?key=${key}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: 'Zeg alleen: "Verbinding gelukt!"' }] }],
-          generationConfig: { maxOutputTokens: 20 }
-        })
-      });
-      if (res.ok) return { ok: true };
-      const err = await res.json().catch(() => ({}));
-      const msg = err?.error?.message || `Status ${res.status}`;
-      console.warn('[AI] testKey fout:', res.status, msg);
-      return { ok: false, msg };
-    } catch(e) { return { ok: false, msg: 'Geen internetverbinding: ' + e.message }; }
-  }
-};
-
-
-// ── AI LEESCOACH ────────────────────────────────────────────
-const _aiLeescoach = {
-  
-  async vraagAdvies(wpm, woordenAantal) {
-    if (!_aiGemini.hasKey()) return;
-    
-    // Stats verzamelen
-    const stats = (() => { try { return JSON.parse(localStorage.getItem('snellees_stats') || '{}'); } catch(e) { return {}; } })();
-    const sessies = stats.sessies || [];
-    const best = stats.bestWpm || 0;
-    const gem = sessies.length ? Math.round(sessies.reduce((a,s) => a + s.wpm, 0) / sessies.length) : wpm;
-    
-    // Begrips-scores
-    const begrip = (() => { try { return JSON.parse(localStorage.getItem('snellees_begrip_scores') || '[]'); } catch(e) { return []; } })();
-    const gemBegrip = begrip.length >= 2 
-      ? Math.round(begrip.slice(-5).reduce((a,s) => a + s, 0) / Math.min(5, begrip.length)) 
-      : null;
-    
-    // Trend
-    let trend = 'stabiel';
-    if (sessies.length >= 5) {
-      const recent = sessies.slice(-3).reduce((a,s) => a + s.wpm, 0) / 3;
-      const eerder = sessies.slice(-6, -3).reduce((a,s) => a + s.wpm, 0) / Math.min(3, sessies.length - 3);
-      if (recent - eerder > 10) trend = 'stijgend';
-      else if (eerder - recent > 10) trend = 'dalend';
-    }
-    
-    const prompt = `Je bent een Nederlandse snellees-coach. Geef kort, persoonlijk advies (max 3 zinnen) op basis van deze data:
-- Zojuist gelezen: ${wpm} WPM (${woordenAantal} woorden)
-- Gemiddelde WPM: ${gem}
-- Beste WPM ooit: ${best}
-- Totaal sessies: ${sessies.length}
-- Trend: ${trend}
-${gemBegrip !== null ? `- Gemiddelde begripsscore: ${gemBegrip}%` : '- Geen begripsscore beschikbaar'}
-
-Geef concreet advies. Wees bemoedigend maar eerlijk. Gebruik je/jij. Noem specifieke oefeningen (RSVP, chunk lezen, oogtraining) als dat relevant is.`;
-    
-    // Toon loading
-    this._toonPanel('Advies genereren…');
-    
-    const result = await _aiGemini.send(prompt, 200);
-    
-    if (result.ok) {
-      this._toonPanel(result.text);
-      // Sla laatste advies op
-      localStorage.setItem('ai_laatste_advies', JSON.stringify({
-        tekst: result.text,
-        wpm,
-        datum: new Date().toISOString()
-      }));
-    } else {
-      this._toonPanel(result.text);
-    }
-  },
-  
-  _toonPanel(tekst, meta = '') {
-    const panel = document.getElementById('ai-coach-panel');
-    const body = document.getElementById('ai-coach-body');
-    if (panel && body) {
-      body.replaceChildren();
-      const advies = document.createElement('div');
-      advies.textContent = tekst;
-      body.appendChild(advies);
-      if (meta) {
-        const details = document.createElement('div');
-        details.style.cssText = 'font-size:11px;color:var(--muted);margin-top:8px';
-        details.textContent = meta;
-        body.appendChild(details);
-      }
-      panel.classList.add('active');
-    }
-  },
-  
-  // Toon laatste advies als er al een is
-  toonLaatsteAdvies() {
-    const data = (() => { try { return JSON.parse(localStorage.getItem('ai_laatste_advies') || 'null'); } catch(e) { return null; } })();
-    if (data && data.tekst) {
-      const uur = Math.round((Date.now() - new Date(data.datum).getTime()) / 3600000);
-      const tijdLabel = uur < 1 ? 'Zojuist' : uur < 24 ? `${uur}u geleden` : `${Math.round(uur/24)}d geleden`;
-      this._toonPanel(data.tekst, `${tijdLabel} · ${data.wpm} WPM`);
-    }
-  }
-};
-
-
-// ── AI BEGRIPSVRAGEN GENERATOR ──────────────────────────────
-const _aiBegripGen = {
-  
-  async genereer(tekst) {
-    if (!_aiGemini.hasKey()) {
-      return null;
-    }
-    
-    // Beperk tekst tot ~500 woorden om tokens te sparen
-    const woorden = tekst.split(/\s+/);
-    const beperkTekst = woorden.slice(0, 500).join(' ');
-    
-    const prompt = `Genereer precies 3 meerkeuzevragen over de volgende Nederlandse tekst. Elke vraag heeft 1 correct antwoord en 2 foute antwoorden.
-
-TEKST:
-"""
-${beperkTekst}
-"""
-
-Antwoord ALLEEN in dit exacte JSON format, geen andere tekst:
-[
-  {"vraag": "vraag tekst", "correct": "juiste antwoord", "w1": "fout antwoord 1", "w2": "fout antwoord 2"},
-  {"vraag": "vraag tekst", "correct": "juiste antwoord", "w1": "fout antwoord 1", "w2": "fout antwoord 2"},
-  {"vraag": "vraag tekst", "correct": "juiste antwoord", "w1": "fout antwoord 1", "w2": "fout antwoord 2"}
-]`;
-    
-    const result = await _aiGemini.send(prompt, 500);
-    
-    if (!result.ok) {
-      alert(result.text);
-      return null;
-    }
-    
-    // Parse JSON uit de response (kan markdown code block bevatten)
-    try {
-      let json = result.text;
-      // Strip markdown code fences als Gemini die toevoegt
-      json = json.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
-      const parsed = JSON.parse(json);
-      
-      if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].vraag && parsed[0].correct) {
-        return parsed;
-      }
-      console.warn('[AI] Onverwacht response format:', parsed);
-      return null;
-    } catch(e) {
-      console.warn('[AI] JSON parse error:', e, result.text);
-      return null;
-    }
-  }
-};
-
-// Globale functie voor onclick
-async function aiBegripGenStart() {
-  const btn = document.getElementById('ai-begrip-gen-btn');
-
-  // Bibliotheektekst? Dan hebben we de vragen al — geen AI-key nodig.
-  const bibVragen = Coach.vragen.voorHuidigeTekst();
-  if (bibVragen) {
-    vragen = bibVragen;
-    toonBegrip();
-    _aiTts.spreek('Hier zijn drie vragen over de tekst.');
-    return;
-  }
-
-  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
-
-  // Huidige tekst ophalen
-  const tekst = huidigeTekst();
-  if (!tekst || tekst.length < 50) {
-    alert('Te weinig tekst om vragen te genereren. Laad eerst een tekst.');
-    if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Vragen'; }
-    return;
-  }
-
-  const result = await _aiBegripGen.genereer(tekst);
-
-  if (result) {
-    // Zet de globale vragen array en toon ze
-    vragen = result;
-    toonBegrip();
-    // Registreer dat we AI vragen gebruiken
-    _aiTts.spreek('Ik heb 3 begripsvragen voor je gemaakt.');
-  } else if (!_aiGemini.hasKey()) {
-    alert('Voor AI-vragen heb je een gratis Gemini-sleutel nodig. Stel deze in via ⚙️ AI Instellingen.');
-  }
-  
-  if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Vragen'; }
-}
-
-
-// ── AI SETTINGS FUNCTIES ────────────────────────────────────
-function aiSettingsOpen() {
-  const overlay = document.getElementById('ai-settings-overlay');
-  const input = document.getElementById('ai-key-input');
-  if (overlay) overlay.classList.add('active');
-  if (input) input.value = _aiGemini.getKey() || '';
-}
-
-function aiSettingsSluit() {
-  const overlay = document.getElementById('ai-settings-overlay');
-  if (overlay) overlay.classList.remove('active');
-}
-
-function aiKeySave() {
-  const input = document.getElementById('ai-key-input');
-  const status = document.getElementById('ai-key-status');
-  if (!input) return;
-  const key = input.value.trim();
-  
-  if (!key) {
-    localStorage.removeItem('gemini_api_key');
-    if (status) { status.style.background = 'rgba(239,68,68,.15)'; status.style.color = '#ef4444'; status.textContent = '⚠️ Key verwijderd'; }
-    return;
-  }
-  
-  localStorage.setItem('gemini_api_key', key);
-  // Leeg AI cache zodat oude (mogelijk foute) items niet hergebruikt worden
-  Object.keys(localStorage).filter(k => k.startsWith('ai_tekst_cache_')).forEach(k => localStorage.removeItem(k));
-  if (status) { status.style.background = 'rgba(52,211,153,.15)'; status.style.color = '#34d399'; status.textContent = '✅ Key opgeslagen (cache geleegd)'; }
-}
-
-async function aiKeyTest() {
-  const input = document.getElementById('ai-key-input');
-  const status = document.getElementById('ai-key-status');
-  if (!input) return;
-  const key = input.value.trim();
-  
-  if (!key) {
-    if (status) { status.style.background = 'rgba(239,68,68,.15)'; status.style.color = '#ef4444'; status.textContent = '⚠️ Voer eerst een key in'; }
-    return;
-  }
-  
-  if (status) { status.style.background = 'rgba(124,111,247,.15)'; status.style.color = 'var(--accent)'; status.textContent = '🔄 Testen…'; }
-  
-  const result = await _aiGemini.testKey(key);
-
-  if (result.ok) {
-    if (status) { status.style.background = 'rgba(52,211,153,.15)'; status.style.color = '#34d399'; status.textContent = '✅ Verbinding gelukt! Key werkt.'; }
-    _aiTts.spreek('API key werkt! AI features zijn nu actief.');
-  } else {
-    if (status) { status.style.background = 'rgba(239,68,68,.15)'; status.style.color = '#ef4444'; status.textContent = '❌ ' + (result.msg || 'Key werkt niet.'); }
-  }
-}
-
-
-// ════════════════════════════════════════════════════════════
-//  🤖  AI FASE 3: TEKST GENERATOR
-// ════════════════════════════════════════════════════════════
-
-const _aiTekstGen = {
-  CACHE_PREFIX: 'ai_tekst_cache_',
-  MAX_CACHE: 8,
-
-  // ── Cache management ──────────────────────────────────────
-  _getCache(type) {
-    try { return JSON.parse(localStorage.getItem(this.CACHE_PREFIX + type) || '[]'); }
-    catch(e) { return []; }
-  },
-  _setCache(type, arr) {
-    // Bewaar max MAX_CACHE items
-    localStorage.setItem(this.CACHE_PREFIX + type, JSON.stringify(arr.slice(-this.MAX_CACHE)));
-  },
-  _popCache(type) {
-    const cache = this._getCache(type);
-    if (!cache.length) return null;
-    const item = cache.shift(); // Pak oudste
-    this._setCache(type, cache);
-    return item;
-  },
-  _pushCache(type, item) {
-    const cache = this._getCache(type);
-    cache.push(item);
-    this._setCache(type, cache);
-  },
-
-  // ── Pre-fetch op achtergrond ──────────────────────────────
-  async prefetch(type, count = 2) {
-    if (!_aiGemini.hasKey()) return;
-    const cache = this._getCache(type);
-    if (cache.length >= count) return; // Genoeg in cache
-    const needed = count - cache.length;
-    for (let i = 0; i < needed; i++) {
-      try {
-        const item = await this._generate(type);
-        if (item) this._pushCache(type, item);
-      } catch(e) { break; } // Stop bij fout (rate limit etc)
-    }
-  },
-
-  // ── Tekst ophalen (cache first, anders genereren) ─────────
-  async get(type) {
-    // Probeer eerst uit cache
-    const cached = this._popCache(type);
-    if (cached) {
-      // Vul cache aan op achtergrond
-      this.prefetch(type, 2);
-      return cached;
-    }
-    // Genereer live
-    const item = await this._generate(type);
-    if (item) {
-      // Pre-fetch een extra op achtergrond
-      this.prefetch(type, 1);
-      return item;
-    }
-    return null; // Fallback nodig
-  },
-
-  // ── Genereer per type ─────────────────────────────────────
-  async _generate(type) {
-    const prompts = {
-      leestekst: `Schrijf een informatieve Nederlandse tekst van precies 120-160 woorden over een willekeurig interessant onderwerp (wetenschap, natuur, geschiedenis, technologie, sport, psychologie). Wissel steeds van onderwerp. Gebruik korte zinnen. Geen titel, geen opsomming, alleen vloeiende tekst. Schrijf alleen de tekst, geen inleiding of uitleg.`,
-
-      fixatie: `Schrijf een korte Nederlandse oefentekst van 40-60 woorden over een willekeurig onderwerp. Gebruik duidelijke, goed leesbare zinnen. Geen titel. Alleen de tekst.`,
-
-      subvocalisatie: `Schrijf een Nederlandse tekst van 50-70 woorden over een willekeurig kennisfeit. Gebruik korte, feitelijke zinnen. Varieer in onderwerp (natuur, wetenschap, geschiedenis, sport). Geen titel, alleen tekst.`,
-
-      regressie: `Schrijf een vloeiende Nederlandse tekst van 60-80 woorden over een willekeurig onderwerp. Gebruik zinnen die logisch op elkaar volgen zodat de lezer niet hoeft terug te lezen. Geen titel, alleen tekst.`,
-
-      skim: `Genereer een Nederlandse informatieve tekst voor een skim-lees oefening. Geef het resultaat als JSON:
-{"titel":"korte titel","alineas":["alinea 1 (40-50 woorden)","alinea 2 (40-50 woorden)","alinea 3 (40-50 woorden)","alinea 4 (40-50 woorden)"],"sleutelwoorden":["woord1","woord2","woord3"]}
-Kies een willekeurig onderwerp. Alleen JSON, geen andere tekst.`,
-
-      langetekst: `Schrijf een boeiende en meeslepende Nederlandse tekst van ongeveer 1000 woorden over een interessant willekeurig onderwerp (bijv. historie, wetenschap, of natuur). Gebruik alinea's gescheiden door witregels. Bedenk een titel. Bedenk vervolgens precies 3 meerkeuzevragen over de tekst (met 3 opties, 1 correct). Geef alles in dit exacte JSON formaat: 
-{"titel": "Titel", "tekst": "Lange tekst hier...\n\nVolgende alinea...", "vragen": [{"v": "Vraag 1", "opties": ["Fout", "Vraag 1 Correct", "Fout 2"], "c": 1}]}
-De property "c" geeft de index van het juiste antwoord (0, 1 of 2). Alleen JSON, geen Markdown blocks.`,
-
-      woordparen: `Genereer 15 Nederlandse woorden met voor elk woord 4 visueel gelijkende fout-gespelde varianten. Wissel in moeilijkheid (3-8 letters). Geef het resultaat als JSON array:
-[{"woord":"correct","fout":["fout1","fout2","fout3","fout4"]}]
-Alleen JSON, geen andere tekst.`,
-
-      periwoorden: `Genereer een lijst van 30 korte, goed herkenbare Nederlandse woorden (2-5 letters). Mix van dieren, kleuren, objecten, acties. Geef als JSON array: ["woord1","woord2","woord3",...]. Alleen JSON.`
-    };
-
-    if (!prompts[type]) return null;
-
-    const maxTokens = type === 'skim' || type === 'woordparen' ? 600 : (type === 'langetekst' ? 8000 : 300);
-    const result = await _aiGemini.send(prompts[type], maxTokens);
-    if (!result.ok) {
-      console.warn('[AI TekstGen] API fout voor', type, ':', result.text);
-      return null;
-    }
-
-    // Parse response afhankelijk van type
-    try {
-      if (type === 'skim' || type === 'woordparen' || type === 'periwoorden' || type === 'langetekst') {
-        let json = result.text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
-        // Fix truncated JSON: sluit ontbrekende haakjes
-        const openBraces = (json.match(/\{/g) || []).length;
-        const closeBraces = (json.match(/\}/g) || []).length;
-        const openBrackets = (json.match(/\[/g) || []).length;
-        const closeBrackets = (json.match(/\]/g) || []).length;
-        for (let i = 0; i < openBrackets - closeBrackets; i++) json += ']';
-        for (let i = 0; i < openBraces - closeBraces; i++) json += '}';
-        return JSON.parse(json);
-      }
-      return result.text.trim();
-    } catch(e) {
-      console.warn('[AI TekstGen] Parse error voor', type, e);
-      return type === 'skim' || type === 'woordparen' || type === 'periwoorden' || type === 'langetekst' ? null : result.text.trim();
-    }
-  }
-};
-
-
-// ── AI TEKST KNOPPEN + HOOKS ────────────────────────────────
-
-// Helper: voeg "🤖 AI tekst" knop toe aan een element
-function _aiAddRefreshBtn(containerId, onclick) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  // Check of er al een AI knop is
-  if (container.querySelector('.ai-gen-btn')) return;
-  const btn = document.createElement('button');
-  btn.className = 'ai-gen-btn';
-  btn.innerHTML = '🤖 Nieuwe AI tekst';
-  btn.onclick = onclick;
-  btn.style.marginTop = '8px';
-  container.appendChild(btn);
-}
-
-// RSVP/Chunk: voeg "AI Tekst" toe als tekstbron optie
-function aiLaadTekstBronOpties() {
-  const sel = document.getElementById('rsvp-src');
-  if (!sel) return;
-  // Check of AI optie al bestaat
-  if ([...sel.options].some(o => o.value === 'ai')) return;
-  const opt = document.createElement('option');
-  opt.value = 'ai';
-  opt.textContent = '🤖 AI Tekst (uniek)';
-  sel.appendChild(opt);
-}
-
-// Genereer AI tekst voor RSVP/Chunk
-async function aiLaadLeestekst() {
-  const display = document.getElementById('rsvp-woord') || document.getElementById('chunk-display');
-  if (display) display.textContent = '🤖 Tekst genereren…';
-
-  const tekst = await _aiTekstGen.get('leestekst');
-  if (tekst) {
-    // Sla op als tijdelijke tekst
-    window._aiHuidigeTekst = tekst;
-    if (display) display.textContent = 'AI tekst geladen! Klik Start.';
-    return tekst;
-  } else {
-    if (display) display.textContent = 'AI niet beschikbaar, demo tekst geladen.';
-    return null;
-  }
-}
-
-// Fixatie: AI tekst laden
-async function aiFixNieuwe() {
-  const btn = event?.target;
-  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
-  const tekst = await _aiTekstGen.get('fixatie');
-  if (tekst) {
-    fixStop();
-    fixWoorden = tekst.split(/\s+/);
-    fixGroepen = [];
-    for (let i=0; i<fixWoorden.length; i+=fixBreedte) fixGroepen.push(fixWoorden.slice(i,i+fixBreedte));
-    fixGrpIdx = 0;
-    fixRender(-1);
-    document.getElementById('fix-score-msg').style.display='none';
-    document.getElementById('fix-start-btn').textContent='▶ Starten';
-  }
-  if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
-}
-
-// Subvocalisatie: AI tekst laden
-async function aiSvNieuwe() {
-  const btn = event?.target;
-  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
-  const tekst = await _aiTekstGen.get('subvocalisatie');
-  if (tekst) {
-    svMetroWoorden = tekst.split(/\s+/);
-    svMetroIdx = 0;
-    document.getElementById('sv-metro-voortgang').textContent = '';
-    document.getElementById('sv-metro-woord').textContent = '—';
-  }
-  if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
-}
-
-// Regressie: AI tekst laden
-async function aiRegNieuwe() {
-  const btn = event?.target;
-  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
-  const tekst = await _aiTekstGen.get('regressie');
-  if (tekst) {
-    regStop();
-    regTekst = tekst;
-    regZinnen = regTekst.match(/[^.!?]+[.!?]?/g).filter(z=>z.trim().length>5).map(z=>z.trim());
-    regIdx = 0;
-    document.getElementById('reg-zin-display').textContent = 'AI tekst geladen! Klik op Start.';
-    document.getElementById('reg-prog-fill').style.width = '0%';
-    document.getElementById('reg-einde-msg').style.display = 'none';
-    document.getElementById('reg-start-btn').textContent = '▶ Starten';
-  }
-  if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
-}
-
-// Skim & Scan: AI tekst
-async function aiSkimNieuwe() {
-  const btn = event?.target;
-  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren…'; }
-  const data = await _aiTekstGen.get('skim');
-  if (data && data.titel && data.alineas) {
-    // Voeg toe aan SKIM_TEKSTEN_DATA tijdelijk
-    SKIM_TEKSTEN_DATA.push(data);
-    skimTekstIdx = SKIM_TEKSTEN_DATA.length - 1;
-    const container = document.getElementById('skim-tekst-area');
-    if (container) {
-      container.replaceChildren();
-      const titel = document.createElement('h4');
-      titel.textContent = data.titel;
-      container.appendChild(titel);
-      data.alineas.forEach(alinea => {
-        const p = document.createElement('p');
-        p.textContent = alinea;
-        container.appendChild(p);
-      });
-    }
-    // Stel scan woorden in als die er zijn
-    if (data.sleutelwoorden && data.sleutelwoorden.length) {
-      scanAutoZoekWrd = data.sleutelwoorden[0];
-    }
-  }
-  if (btn) { btn.disabled = false; btn.textContent = '🤖 Nieuwe AI tekst'; }
-}
-
-// Lange Teksten: AI tekst gegenereerd uit langetekst JSON
-async function aiLangeTekstNieuwe() {
-  const btn = event?.target || document.getElementById('ai-langetekst-btn');
-  if (btn) { btn.disabled = true; btn.textContent = '🤖 Genereren… (even geduld)'; }
-
-  let data = null;
-  try {
-    data = await _aiTekstGen.get('langetekst');
-  } catch(e) {
-    console.warn('[AI LangeTekst] Generatie mislukt:', e);
-    data = { _error: 'Onverwachte fout: ' + e.message };
-  }
-
-  if (data && data.titel && data.tekst && data.vragen) {
-    const gemapteVragen = data.vragen.map(q => ({
-      v: q.v,
-      opties: q.opties,
-      correct: typeof q.c !== 'undefined' ? q.c : 0
-    }));
-
-    _lttTekst = {
-      niveau: lttGetNiveau(),
-      titel: "🤖 " + data.titel,
-      tekst: data.tekst,
-      vragen: gemapteVragen
-    };
-
-    document.getElementById('ltt-niveau-badge').textContent = '🤖 AI · Lange Tekst';
-    document.getElementById('ltt-niveau-hint').textContent = '1000+ woorden met dynamische vragen';
-    
-    const bar = document.getElementById('ltt-niveau-bar');
-    if (bar) { bar.style.width = '100%'; bar.style.background = 'var(--accent)'; }
-    
-    const wc = woorden(_lttTekst.tekst).length;
-    document.getElementById('ltt-tekst-naam').textContent = _lttTekst.titel;
-    document.getElementById('ltt-tekst-info').textContent = `${wc} woorden · AI Gegenereerd`;
-    
-    document.getElementById('ltt-view-intro').style.display = '';
-    document.getElementById('ltt-view-lezen').style.display = 'none';
-    document.getElementById('ltt-view-vragen').style.display = 'none';
-    document.getElementById('ltt-view-resultaat').style.display = 'none';
-    
-    _lttActief = false;
-    _lttAntwoorden = [];
-    
-    _aiTts.spreek('Ik heb een nieuwe tekst voor je gegenereerd. Klik op start zodra je klaar bent.');
-  } else {
-    alert('AI tekst generatie mislukt. Klik op ⚙️ AI Key om je Gemini API key in te stellen of te vernieuwen.');
-  }
-  
-  if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Tekst (~1000 woorden)'; }
-}
-
-// De app genereert geen teksten meer. Bibliotheek- en eigen teksten blijven
-// volledig lokaal werken; de offline coach start zonder externe API-sleutel.
-_aiTts.init();
+// Externe AI-generatie is verwijderd. Teksten, vragen en coaching werken lokaal.
 
 // ── SLIMME COACH HOOKS (offline, geen key nodig) ────────────
 (function() {

@@ -7,7 +7,7 @@
  *  - COMBO: opeenvolgende goede antwoorden stapelen (×2, ×3, …)
  *  - STERREN: ⭐ uitgelezen · ⭐⭐ begrip op norm · ⭐⭐⭐ begrip op norm + doeltempo
  *  - XP: elke ronde betaalt uit in het avontuurprofiel (één economie)
- *  - PACING-RAMP: "Nog een keer, +10%?" — sluipend sneller trainen
+ *  - PACING-RAMP: "Nog een keer, +8%?" — kleine stap na voldoende begrip
  *
  * Gebruik vanuit een oefening (zie RSVP-hooks in index.html):
  *   Ronde.start(type, woordenArray)            — bij start van een verse ronde
@@ -191,6 +191,14 @@ const Ronde = {
     return this.einde(wpm, aantalWoorden, begripPct, tekstId, opts);
   },
 
+  annuleer() {
+    clearTimeout(this._cpTimeout);
+    this._cpTimeout = null;
+    this.actief = false;
+    this.wachtOpAntwoord = false;
+    document.getElementById('ronde-cp')?.remove();
+  },
+
   einde(wpm, aantalWoorden, begripOverride, tekstId, opts) {
     if (!this.actief) return null;
     this.actief = false;
@@ -267,7 +275,7 @@ const Ronde = {
 
     // Tempo-levels vragen zowel uitspelen als minimaal 2 van de 3 vragen goed.
     // Bij een lagere score blijft de kaartmissie open, maar gewone ronde-XP blijft staan.
-    if (this.type === 'rsvp' || this.type === 'chunk') {
+    if (['rsvp', 'chunk', 'regressie', 'leestest', 'langetekst', 'eigen-lees'].includes(this.type)) {
       if (begrip !== null && begrip >= begripDoel && typeof _markeerEersteMissieVoltooid === 'function') {
         _markeerEersteMissieVoltooid(this.type);
       }
@@ -378,14 +386,14 @@ const Ronde = {
       }
     } catch (e) { /* leerweg-beloning is optioneel */ }
 
-    // Knoppen: herlezen (slecht begrip) óf +10% (goed) · ketting · kaart/klaar
+    // Knoppen: herlezen (slecht begrip) of +8% (goed), plus ketting en kaart/klaar
     const paced = r.type === 'rsvp' || r.type === 'chunk';
     const herleesbaar = paced && r.begrip !== null && r.begrip < begripDoel;
     let knoppen = '';
     if (herleesbaar) {
       knoppen += `<button class="ronde-res-opnieuw" onclick="Ronde.herlees(${r.begrip})">📖 Lees nog eens <span style="opacity:.8">(zelfde tempo)</span></button>`;
     } else if (paced) {
-      knoppen += `<button class="ronde-res-opnieuw" onclick="Ronde.opnieuw()">🚀 Nog een keer <span style="opacity:.8">(+10%)</span></button>`;
+      knoppen += `<button class="ronde-res-opnieuw" onclick="Ronde.opnieuw()">🚀 Nog een keer <span style="opacity:.8">(+8%)</span></button>`;
     }
     // Ketting: houd de speler in de loop met de coach-aanbeveling
     try {
@@ -451,20 +459,20 @@ const Ronde = {
     if (typeof sidebarNav === 'function') sidebarNav(type);
   },
 
-  /** Pacing-ramp: zelfde tekst, 10% sneller. */
+  /** Pacing-ramp: zelfde tekst, 8% sneller na voldoende begrip. */
   opnieuw() {
     this.sluit();
     if (this.type === 'rsvp') {
       const slider = document.getElementById('wpm-slider');
       if (slider) {
-        slider.value = Math.min(+slider.max, Math.round((+slider.value * 1.1) / 5) * 5);
+        slider.value = Math.min(+slider.max, Math.round((+slider.value * 1.08) / 5) * 5);
         slider.dispatchEvent(new Event('input'));
       }
       if (typeof rsvpStart === 'function') { rsvpIdx = 0; rsvpElapsed = 0; rsvpStart_t = null; rsvpStart(); }
     } else if (this.type === 'chunk') {
       const slider = document.getElementById('chunk-wpm');
       if (slider) {
-        slider.value = Math.min(+slider.max, Math.round((+slider.value * 1.1) / 5) * 5);
+        slider.value = Math.min(+slider.max, Math.round((+slider.value * 1.08) / 5) * 5);
         slider.dispatchEvent(new Event('input'));
       }
       if (typeof chunkStart === 'function') chunkStart();

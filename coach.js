@@ -7,8 +7,7 @@
  *  - Coach.vragen   : begripsvragen uit de bibliotheek, zonder AI-key
  *  - Coach.planner  : "volgende beste oefening"-aanbeveling
  *
- * Werkt volledig offline. Met een Gemini-key (zie _aiGemini in index.html)
- * komt daar async AI-advies bovenop.
+ * Werkt volledig offline en gebruikt geen betaalde API of gedeelde sleutel.
  *
  * State: localStorage 'coach_state' (gesynct via supabase-sync.js → extra).
  */
@@ -78,7 +77,10 @@ const Coach = {
     const st = this.laad();
     const oef = st.perOefening[type];
     const laatste = oef && oef.sessies[oef.sessies.length - 1];
-    if (laatste && laatste.begrip == null) { laatste.begrip = Math.round(pct); this.sla(); }
+    if (laatste && laatste.begrip == null) {
+      laatste.begrip = Math.round(pct);
+      this.adaptief.herbereken(type);
+    }
   },
 
   // ── ADAPTIEVE MOEILIJKHEID ─────────────────────────────────
@@ -99,17 +101,13 @@ const Coach = {
       const oef = st.perOefening[type];
       if (oef && oef.doelWpm) return oef.doelWpm;
       const basis = Coach.baseline();
-      const start = basis ? Math.round(basis.wpm * 1.1)
+      const start = basis ? Math.round(basis.wpm * 1.05)
                           : this.START_WPM[Coach.doelgroep()] || 220;
       const { min, max } = this._grens();
       return Math.min(max, Math.max(min, start));
     },
 
-    /**
-     * Sessie verwerken → doel-WPM bijstellen (flow-zone ~80% succes).
-     * succes = begrip ≥ 67% (of true als er geen vragen waren maar de
-     * sessie is afgemaakt op/boven doel-tempo).
-     */
+    /** Sessie verwerken. Tempo stijgt alleen na drie beoordeelde rondes. */
     naSessie(type, wpm, begripPct) {
       const st = Coach.laad();
       const oef = st.perOefening[type] = st.perOefening[type] ||
@@ -118,11 +116,18 @@ const Coach = {
       oef.sessies.push({ wpm, begrip: begripPct ?? null, ts: Date.now() });
       if (oef.sessies.length > 30) oef.sessies.splice(0, oef.sessies.length - 30);
 
+      Coach.sla();
+      return this.herbereken(type);
+    },
+
+    herbereken(type) {
+      const st = Coach.laad();
+      const oef = st.perOefening[type];
+      if (!oef) return this.doelWpm(type);
       const laatste3 = oef.sessies.slice(-3);
-      if (laatste3.length >= 3) {
-        const succes = laatste3.filter(s =>
-          s.begrip != null ? s.begrip >= 67 : s.wpm >= oef.doelWpm * 0.95
-        ).length / laatste3.length;
+      const beoordeeld = laatste3.filter(s => s.begrip != null);
+      if (beoordeeld.length === 3) {
+        const succes = beoordeeld.filter(s => s.begrip >= 67).length / beoordeeld.length;
 
         const { min, max } = this._grens();
         if (succes >= 0.8) {
@@ -137,7 +142,9 @@ const Coach = {
 
     /** Plateau: gemiddelde van laatste 5 sessies wijkt <2% af van de 5 ervoor. */
     isPlateau() {
-      const sessies = (Coach.stats().sessies || []);
+      const sessies = (Coach.stats().sessies || []).filter(s =>
+        Number.isFinite(s.wpm) && s.wpm > 0 && s.wpm <= 900 && s.begrip != null
+      );
       if (sessies.length < 10) return false;
       const wpms = sessies.slice(-10).map(s => s.wpm);
       const recent = wpms.slice(5).reduce((a, v) => a + v, 0) / 5;
@@ -156,24 +163,24 @@ const Coach = {
       // eerste keer / weinig data
       { id: 'e1', cat: 'eerste', kids: 'Welkom {naam}! 🚀 Elke keer dat je oefent, worden je lees-spieren sterker!', volw: 'Welkom {naam}. Doe eerst de begintest — dan weet je precies waar je start en zie je je vooruitgang.' },
       { id: 'e2', cat: 'eerste', kids: 'Goed bezig! Nog een paar oefeningen en ik kan zien waar jij super goed in bent! ⭐', volw: 'Na een paar sessies herken ik je patronen en krijg je persoonlijk advies.' },
-      { id: 'e3', cat: 'eerste', kids: 'Wist je dat je ogen kunnen trainen, net als voetballen? Hoe vaker je oefent, hoe sneller je wordt! ⚽', volw: 'Leessnelheid is trainbaar: de meeste mensen kunnen hun tempo verdubbelen met behoud van begrip.' },
+      { id: 'e3', cat: 'eerste', kids: 'Oefen rustig en kijk hoeveel je van het verhaal onthoudt. Dát is jouw echte score! ⭐', volw: 'Leestempo verschilt per tekst en leesdoel. We bouwen alleen op wanneer je begrip stabiel blijft.' },
       // vooruitgang
       { id: 'v1', cat: 'vooruitgang', kids: 'WAUW {naam}! Je las {wpm} woorden per minuut — {delta}% sneller dan eerst! 🎉', volw: 'Sterke sessie: {wpm} WPM, {delta}% boven je gemiddelde van de afgelopen week.' },
-      { id: 'v2', cat: 'vooruitgang', kids: 'Je wordt steeds sneller! 🚀 Jouw record komt dichterbij!', volw: 'Je snelheid stijgt gestaag. Houd dit tempo een week vol en je zit op een nieuw niveau.' },
+      { id: 'v2', cat: 'vooruitgang', kids: 'Je tempo groeit en je antwoorden blijven goed. Dat is echte vooruitgang! 🚀', volw: 'Je tempo stijgt met behoud van begrip. Bevestig dit nog op een paar vergelijkbare teksten.' },
       { id: 'v3', cat: 'vooruitgang', kids: 'Sneller én alles begrepen — jij bent een leeskampioen! 🏆', volw: 'Sneller lezen mét behoud van begrip — precies de juiste balans. Uitstekend.' },
-      { id: 'v4', cat: 'vooruitgang', kids: 'Je leest nu {wpm} woorden per minuut. Dat is sneller dan gisteren — knap hoor! 💪', volw: '{wpm} WPM vandaag. Je zit {delta}% boven je weekgemiddelde — de training werkt.' },
+      { id: 'v4', cat: 'vooruitgang', kids: 'Je las {wpm} woorden per minuut en hield het verhaal vast. Knap! 💪', volw: '{wpm} WPM in deze sessie, {delta}% boven je recente gemiddelde. Controleer of dit over meerdere teksten standhoudt.' },
       // begrip-waarschuwing (snelheid-begrip trade-off)
       { id: 'b1', cat: 'begrip', kids: 'Hé snelheidsduivel! 😄 Je leest supersnel, maar de vragen waren lastig, hè? Ga een tikkeltje langzamer.', volw: 'Je snelheid stijgt, maar je begrip zakte onder de 70%. Ga 10% langzamer — snelheid zonder begrip telt niet.' },
-      { id: 'b2', cat: 'begrip', kids: 'Snelheid is cool, maar het verhaal snappen is het echte goud! 🏅 Probeer de vragen goed te lezen.', volw: 'Tip: lees eerst de vragen vluchtig door, dán de tekst. Je begrip stijgt vaak direct met 20%.' },
+      { id: 'b2', cat: 'begrip', kids: 'Snelheid is leuk, maar het verhaal snappen is het echte goud! 🏅 Vertel na elke alinea kort wat er gebeurde.', volw: 'Vat na iedere alinea de hoofdgedachte in één zin samen. Lukt dat niet, verlaag dan het tempo.' },
       { id: 'b3', cat: 'begrip', kids: 'Even op de rem! 🚦 Lees het volgende verhaal iets rustiger, dan snap je alles weer.', volw: 'Twee sessies op rij begrip onder de 60%. Ik heb je doeltempo iets verlaagd — kwaliteit eerst.' },
       // streak
-      { id: 's1', cat: 'streak', kids: '{streak} dagen op rij geoefend! 🔥 Jouw vuur brandt steeds feller!', volw: '{streak} dagen op rij getraind. Consistentie is de grootste voorspeller van vooruitgang.' },
-      { id: 's2', cat: 'streak', kids: 'Weer terug! Dag {streak} van jouw super-streak! ⚡', volw: 'Dag {streak} van je streak. Tien minuten per dag verslaat twee uur in het weekend.' },
+      { id: 's1', cat: 'streak', kids: '{streak} dagen op rij geoefend! 🔥 Jouw vuur brandt steeds feller!', volw: '{streak} dagen op rij getraind. Regelmaat maakt je metingen beter vergelijkbaar.' },
+      { id: 's2', cat: 'streak', kids: 'Weer terug! Dag {streak} van jouw super-streak! ⚡', volw: 'Dag {streak} van je streak. Een korte, aandachtige sessie is vandaag genoeg.' },
       { id: 's3', cat: 'streak', kids: 'Jij bent een echte volhouder, {naam}! {streak} dagen! 🌟', volw: 'Sterke discipline, {naam} — {streak} dagen op rij. Dit is hoe gewoontes ontstaan.' },
       // plateau
       { id: 'p1', cat: 'plateau', kids: 'Je snelheid staat even stil — tijd voor iets anders! Probeer {oefening} eens! 🎯', volw: 'Je WPM is al even stabiel. Doorbreek het plateau met {oefening} — dat traint een andere vaardigheid.' },
       { id: 'p2', cat: 'plateau', kids: 'Nieuwe uitdaging = sneller leren! Zullen we {oefening} proberen? 🧩', volw: 'Plateau gedetecteerd. Wissel je routine af: {oefening} pakt vaak de ontbrekende schakel.' },
-      { id: 'p3', cat: 'plateau', kids: 'Jouw ogen willen een nieuw spelletje! Probeer {oefening}! 👀', volw: 'Wanneer snelheid stagneert, zit de winst meestal in blikveld of fixaties. Probeer {oefening}.' },
+      { id: 'p3', cat: 'plateau', kids: 'Tijd voor een andere uitdaging! Probeer {oefening}! 👀', volw: 'Je resultaten zijn stabiel. Wissel tekstsoort of strategie en probeer {oefening} voor een nieuwe prikkel.' },
       // comeback (paar dagen weggeweest)
       { id: 'c1', cat: 'comeback', kids: 'Daar ben je weer, {naam}! Ik heb je gemist! 🤗 Zullen we er een topdag van maken?', volw: 'Welkom terug, {naam}. Een korte sessie vandaag en je zit weer in het ritme.' },
       { id: 'c2', cat: 'comeback', kids: 'Yes, je bent er weer! Je lees-spieren zijn uitgerust en klaar voor actie! 💪', volw: 'Even weggeweest — geen probleem. Begin rustig op je vertrouwde tempo; het niveau komt snel terug.' },
@@ -181,19 +188,21 @@ const Coach = {
       { id: 't1', cat: 'terugval', kids: 'Vandaag ging het ietsje langzamer — dat is oké! Zelfs kampioenen hebben rustdagen. 😊', volw: 'Iets onder je gemiddelde vandaag. Normaal: vermoeidheid en tijdstip spelen mee. Morgen weer een kans.' },
       { id: 't2', cat: 'terugval', kids: 'Niet elke dag is een recorddag. Morgen vlieg je er weer overheen! 🛫', volw: 'Een dip na een groeispurt is normaal — je brein verwerkt de nieuwe vaardigheid. Blijf oefenen.' },
       // dagdeel
-      { id: 'd1', cat: 'algemeen', kids: 'Lezen maakt je slimmer, sneller én je fantasie groter. Drie dingen tegelijk! ✨', volw: 'Wist je dat je leesniveau het hoogst is in de ochtend? Plan je moeilijkste teksten vroeg.' },
-      { id: 'd2', cat: 'algemeen', kids: 'Elke bladzijde die je leest, maakt je hersens een beetje sterker! 🧠', volw: 'Kleine sessies, vaak herhaald — zo bouw je leessnelheid het snelst op.' },
-      { id: 'd3', cat: 'algemeen', kids: 'Weet je wat cool is? Jij traint nu iets waar je je hele leven plezier van hebt! 📚', volw: 'Gemiddeld lees je {wpm} WPM. De meeste geoefende lezers halen het dubbele — er zit nog ruimte in.' },
+      { id: 'd1', cat: 'algemeen', kids: 'Een verhaal goed begrijpen is een superkracht die je vaak kunt gebruiken! ✨', volw: 'Plan moeilijke teksten op een moment waarop jij alert bent en weinig wordt onderbroken.' },
+      { id: 'd2', cat: 'algemeen', kids: 'Na elke alinea één zin navertellen helpt je het verhaal vasthouden. 🧠', volw: 'Korte, gerichte sessies maken het makkelijker om tempo en begrip eerlijk te vergelijken.' },
+      { id: 'd3', cat: 'algemeen', kids: 'Jij oefent tempo én onthouden. Die twee horen bij elkaar! 📚', volw: 'Je laatste geldige sessie was {wpm} WPM. Gebruik dat als richtpunt, niet als vaste grens voor iedere tekst.' },
       // doel
-      { id: 'g1', cat: 'doel', kids: 'Nog even en je haalt de {doel}! Zet hem op! 🎯', volw: 'Je volgende doel: {doel} WPM. Op je huidige tempo haal je dat binnen enkele weken.' },
-      { id: 'g2', cat: 'doel', kids: 'Jouw nieuwe missie: {doel} woorden per minuut. Jij kan dit! 🚀', volw: 'Richtpunt: {doel} WPM met 80% begrip. Dat is de flow-zone waarin je het snelst leert.' },
+      { id: 'g1', cat: 'doel', kids: 'Nog even en je haalt de {doel} met goed begrip. Zet hem op! 🎯', volw: 'Je volgende richtpunt is {doel} WPM met stabiel begrip. Verhoog pas na meerdere geldige rondes.' },
+      { id: 'g2', cat: 'doel', kids: 'Jouw missie: {doel} woorden per minuut én de vragen goed! 🚀', volw: 'Richtpunt: {doel} WPM met minimaal 80% begrip. Kwaliteit bepaalt of het tempo omhooggaat.' },
     ],
 
     /** Analyseer de situatie → kies categorie + template + vul slots. */
     genereer() {
       const st = Coach.laad();
       const stats = Coach.stats();
-      const sessies = stats.sessies || [];
+      const sessies = (stats.sessies || []).filter(s =>
+        Number.isFinite(s.wpm) && s.wpm > 0 && s.wpm <= 900 && s.begrip != null
+      );
       const begrip = Coach.begripScores();
       const streak = parseInt(localStorage.getItem('snellees_streak') || '0', 10);
 
@@ -231,7 +240,8 @@ const Coach = {
 
       // Slots vullen
       const aanb = Coach.planner.aanbeveling();
-      const doelWpm = laatste ? Math.round((laatste.wpm * 1.15) / 10) * 10 : 250;
+      const doelgroepMax = Coach.adaptief.MAX_WPM[Coach.doelgroep()] || 700;
+      const doelWpm = laatste ? Math.min(doelgroepMax, Math.round((laatste.wpm * 1.08) / 10) * 10) : 250;
       const tekst = (Coach.isKids() ? tpl.kids : tpl.volw)
         .replace(/\{naam\}/g, Coach.naam() || (Coach.isKids() ? 'kanjer' : ''))
         .replace(/\{wpm\}/g, laatste ? laatste.wpm : '—')
@@ -250,15 +260,8 @@ const Coach = {
       const panel = document.getElementById('ai-coach-panel');
       if (!body || !panel) return;
       const f = this.genereer();
-      body.innerHTML = f.tekst;
+      body.textContent = f.tekst;
       panel.classList.add('active');
-      // Vorige AI-analyse (werd voorheen nooit getoond)
-      try {
-        const analyse = JSON.parse(localStorage.getItem('ai_laatste_analyse') || 'null');
-        if (analyse && analyse.suggestie === 'plateau') {
-          body.innerHTML += `<div style="font-size:11px;color:var(--muted);margin-top:6px">📊 Analyse: je zit rond ${analyse.gemWpm} WPM${analyse.gemBegrip != null ? ` · begrip ${analyse.gemBegrip}%` : ''}</div>`;
-        }
-      } catch (e) { /* geen analyse */ }
     },
   },
 
@@ -290,8 +293,8 @@ const Coach = {
       fixatie:  { naam: 'Fixatie-training', icon: '🔲' },
       leestest: { naam: 'Leestest',         icon: '📏' },
       langetekst: { naam: 'Lange teksten',  icon: '📚' },
-      subvocal: { naam: 'Subvocalisatie',   icon: '🔕' },
-      regressie:{ naam: 'Regressie-training', icon: '⏩' },
+      subvocal: { naam: 'Leesritme',           icon: '🔕' },
+      regressie:{ naam: 'Vooruit lezen',       icon: '⏩' },
       skim:     { naam: 'Skim & Scan',      icon: '🔍' },
     },
 

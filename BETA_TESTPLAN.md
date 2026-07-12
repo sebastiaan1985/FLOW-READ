@@ -4,8 +4,8 @@ Gebruik dit plan voor een gesloten beta met 5 tot 10 lezers. Test met iPhone Saf
 
 ## Voorbereiding
 
-- Gebruik een testaccount dat nog geen training heeft gedaan.
-- Test minstens eenmaal als gast en eenmaal met een account.
+- Gebruik een schoon gastprofiel dat nog geen training heeft gedaan.
+- Test accounts en synchronisatie pas in de laatste productfase, nadat het kernspel de gesloten beta doorstaat.
 - Noteer toestel, browser, datum en of de app als PWA is geinstalleerd.
 - Deel geen echte prive- of bedrijfsgevoelige teksten tijdens de test.
 
@@ -23,11 +23,23 @@ Geslaagd wanneer: de gebruiker begrijpt zonder uitleg wat hij moet doen, ziet wa
 
 1. Open de begintest en noteer hoeveel testteksten beschikbaar zijn.
 2. Start de officiële test twee keer en controleer dat een andere tekst verschijnt.
-3. Beantwoord de drie vragen en controleer dat WPM en begrip samen worden getoond.
-4. Kies `Meet met eigen tekst` en controleer dat de app naar Eigen tekst gaat.
-5. Meet een bekende eigen tekst en controleer dat de officiële beginscore niet wordt overschreven.
+3. Klik direct op `Klaar met lezen` en controleer dat de te snelle meting wordt geweigerd en niet wordt opgeslagen.
+4. Voer een normale meting uit, laat een vraag open en controleer dat afronden wordt geblokkeerd.
+5. Beantwoord alle drie de vragen en controleer dat WPM en begrip samen worden getoond.
+6. Kies `Meet met eigen tekst` en controleer dat de app naar Eigen tekst gaat.
+7. Meet een bekende eigen tekst en controleer dat de officiële beginscore niet wordt overschreven.
 
 Geslaagd wanneer: de officiële test een onbekende tekst roteert, drie vragen stelt en de eigen oefenmeting duidelijk apart houdt.
+
+## Kernroute: eerlijke beloning
+
+1. Rond RSVP, chunks en Vooruit lezen af en controleer dat iedere modus drie inhoudsvragen stelt.
+2. Beantwoord minder dan twee vragen goed en controleer dat de missie niet voltooit en het doeltempo niet stijgt.
+3. Rond drie beoordeelde sessies met minimaal twee goede antwoorden af en controleer dat het doeltempo slechts een kleine stap stijgt.
+4. Probeer een leestest en lange tekst direct af te ronden; controleer dat beide metingen worden geweigerd.
+5. Controleer na een geweigerde ronde dat sessieaantal, record, XP en leerweg niet zijn gewijzigd.
+
+Geslaagd wanneer: tempo zonder begrip nergens een missie, record, leerwegstap of adaptieve verhoging oplevert.
 
 ## Kernroute: Dyslexie Leeslab
 
@@ -52,11 +64,12 @@ Geslaagd wanneer: de gedeelde tekst als actieve oefentekst verschijnt. Bij minde
 
 ## Betrouwbaarheid en privacy
 
-1. Maak een account aan en voltooi een sessie.
-2. Log uit en weer in; controleer voortgang en startweek.
-3. Herhaal met een tweede testaccount om te bevestigen dat gegevens niet zichtbaar zijn tussen accounts.
-4. Open accountbeheer en doorloop de tweestaps-verwijdering met een apart testaccount.
-5. Open de app na een eerdere online sessie zonder netwerkverbinding.
+1. Open de app na een eerdere online sessie zonder netwerkverbinding.
+2. Controleer dat geplakte en geuploade teksten alleen lokaal worden gebruikt.
+3. Maak in de laatste productfase een account aan en voltooi een sessie.
+4. Log uit en weer in; controleer voortgang en startweek.
+5. Herhaal met een tweede testaccount om te bevestigen dat gegevens niet zichtbaar zijn tussen accounts.
+6. Open accountbeheer en doorloop de tweestaps-verwijdering met een apart testaccount.
 
 Geslaagd wanneer: de app-shell offline opent, sessies lokaal blijven werken, synchronisatie geen fouten toont en accountverwijdering daadwerkelijk in Supabase is bevestigd.
 

@@ -97,6 +97,9 @@ verwacht(appHtml.includes("startInhoudsQuiz('rsvp'"), 'RSVP opent na het lezen g
 verwacht(appHtml.includes("startInhoudsQuiz('chunk'"), 'Chunks opent na het lezen geen inhoudsvragen.');
 verwacht(!appHtml.includes('onclick="aiLangeTekstNieuwe()"'), 'Lange teksten toont nog een AI-tekstknop.');
 verwacht(!appHtml.includes("aiLaadTekstBronOpties();"), 'AI-tekstgenerator wordt nog aan de tekstkiezer gekoppeld.');
+verwacht(!appHtml.includes('generativelanguage.googleapis.com'), 'App-CSP staat nog externe Gemini-aanroepen toe.');
+verwacht(!appHtml.includes('const _aiGemini'), 'Dode Gemini-clientcode staat nog in de appbundle.');
+verwacht(!appHtml.includes('const _aiAdaptief'), 'Dubbel adaptief coachsysteem staat nog in de appbundle.');
 verwacht(appHtml.includes("accept=\".txt,.md,text/plain,text/markdown\""), 'Eigen tekst ondersteunt geen duidelijke txt/md-upload.');
 verwacht(appHtml.includes("avatar-adult") && appHtml.includes("avatar-kid"), 'Volwassen- en kinderavatars ontbreken.');
 verwacht(appHtml.includes('const DYX_LESSEN = ['), 'Dyslexie Leeslab mist een vaste leerweg.');
@@ -109,6 +112,19 @@ verwacht(appHtml.includes('function begintestPassagesBeschikbaar()'), 'Begintest
 verwacht(appHtml.includes("localStorage.getItem('bt_passage_history')"), 'Begintest roteert teksten niet op gebruiksgeschiedenis.');
 verwacht(appHtml.includes('function begintestEigenTekst()'), 'Begintest linkt niet naar een eigen oefentekst.');
 verwacht(appHtml.includes('passageId:btHuidigePassage.id'), 'Begintest bewaart niet welke testtekst is gebruikt.');
+verwacht(appHtml.includes('const VRIJE_MEETREGELS = Object.freeze({ minWoorden:80, minSeconden:8, maxWpm:900 })'), 'Vrije leesmetingen missen centrale betrouwbaarheidsgrenzen.');
+verwacht(appHtml.includes('function laadGeldigeBegintestBaseline(opschonen = false)'), 'Oude ongeldige beginscores worden niet gemigreerd.');
+verwacht((appHtml.match(/valideerVrijeLeesmeting\(/g) || []).length >= 5, 'Niet alle vrije leesmetingen gebruiken de centrale validatie.');
+verwacht(appHtml.includes('Beantwoord alle ${vragen.length} vragen.'), 'Begintest kan worden afgerond zonder alle begripsvragen.');
+verwacht(appHtml.includes('let btResultaatVerwerkt = false'), 'Begintest mist bescherming tegen dubbel verwerken.');
+verwacht(appHtml.includes('let leestestResultaatVerwerkt = false'), 'Leestest mist bescherming tegen dubbel verwerken.');
+verwacht(appHtml.includes('let _lttVerwerkt = false') && appHtml.includes('let _elVerwerkt   = false'), 'Lange/eigen leestest mist bescherming tegen dubbel verwerken.');
+verwacht(appHtml.includes("Ronde.start('regressie', woorden(regTekst))"), 'Vooruit-lezen start geen begripsgestuurde leesronde.');
+verwacht(appHtml.includes("startInhoudsQuiz('regressie', regWpm"), 'Vooruit-lezen eindigt niet met drie begripsvragen.');
+verwacht(appHtml.includes("Ronde.annuleer();\n    toonFout('Deze tekst heeft nog geen complete begripstoets."), 'Leesronde zonder complete begripstoets kan nog worden opgeslagen.');
+for (const claim of ['2× sneller', 'zonder begripsverlies', '5–7 woorden', '30% van je leestijd', 'Schakel je innerlijke stem uit']) {
+  verwacht(!appHtml.includes(claim), `Ongefundeerde snel-leesclaim staat nog in de app: ${claim}`);
+}
 verwacht(existsSync(resolve(root, 'assets/avatars/adults-grid.jpg')), 'Volwassen avatarset ontbreekt.');
 verwacht(existsSync(resolve(root, 'assets/avatars/kids-grid.jpg')), 'Kinderavatarset ontbreekt.');
 verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black"'), 'iOS PWA gebruikt geen niet-overlappende zwarte statusbalk.');
@@ -120,8 +136,13 @@ verwacht(appHtml.includes('Rond eerst de vorige missie af.'), 'Leerweg laat verg
 verwacht(!appHtml.includes('onclick="leerWegDagMarkeer()"'), 'Leerweg bevat nog een handmatige voltooi-knop.');
 verwacht(appHtml.includes('const sessie = startweek?.sessies?.[d - 1]'), 'Startweek en eerste spelwereld zijn niet gekoppeld.');
 verwacht(appHtml.includes('kaartMissieVoltooid && typeof _markeerStartweekVoltooid'), 'Startweek kan buiten een echte kaartmissie voortgang krijgen.');
-verwacht(appHtml.includes("const kwaliteitNodig = type === 'rsvp' || type === 'chunk'"), 'Tempo-levels missen de begripspoort.');
+verwacht(appHtml.includes("const kwaliteitTypes = ['rsvp','chunk','regressie','leestest','langetekst','eigen-lees']"), 'Leesmetingen missen de centrale begripspoort.');
+verwacht(appHtml.includes('if (kwaliteitBehaald && uitdaging'), 'Daguitdaging kan nog voltooien zonder vereiste begripsscore.');
 verwacht(!appHtml.includes("slaaSessieOp(wpm, rsvpWoorden.length); voltooiDaguitdaging('rsvp')"), 'RSVP kan een missie voltooien vóór de begripsmeting.');
+verwacht(!appHtml.includes("leerWegAutoVoltooi(scherm);"), 'Generieke sessie-hook kan de leerweg nog vóór de begripstoets afvinken.');
+verwacht(appHtml.includes("slaaSessieOp(wpm, aantalWoorden);\n    Coach.registreerBegrip(begripPct, type);"), 'Begrip wordt vóór de bijbehorende sessie geregistreerd.');
+verwacht(lees('teksten.js').includes("t.collectie === 'leestest' && t.woorden >= 80"), 'Leestest kan een tekst onder de minimale meetlengte selecteren.');
+verwacht(lees('ronde.js').includes('annuleer() {'), 'Leesrondemotor kan een ongeldige ronde niet schoon annuleren.');
 verwacht(!lees('ronde.js').includes("_markeerStartweekVoltooid(r.type)"), 'Ronde-resultaat kan onbedoeld een extra startweeksessie overslaan.');
 verwacht(lees('ronde.js').includes("begrip !== null && begrip >= begripDoel"), 'Leesronde voltooit de persoonlijke missie zonder begripspoort.');
 verwacht(lees('coach.js').includes("baselineKlaar && t.id === 'e1'"), 'Coach kan na de begintest nog vragen om de begintest te doen.');
@@ -145,6 +166,10 @@ for (const sleutel of ['snellees_startweek', 'snellees_events', 'snellees_streak
   verwacht(sync.includes(`'${sleutel}'`), `Sync mist ${sleutel}.`);
 }
 verwacht(sync.includes("functions.invoke('delete-account')"), 'Client mist de accountverwijder-call.');
+
+const coach = lees('coach.js');
+verwacht(coach.includes('const beoordeeld = laatste3.filter(s => s.begrip != null)'), 'Coach kan tempo nog verhogen zonder drie begripsscores.');
+verwacht(!coach.includes('tempo verdubbelen met behoud van begrip'), 'Coach bevat nog een verdubbelingsbelofte.');
 
 const migratie = lees('supabase/migrations/20260710_user_data_contract.sql');
 for (const kolom of ['av_actief', 'extra', 'daily_challenge', 'snellees_gebruiker']) {

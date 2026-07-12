@@ -6111,5 +6111,5 @@ function tekstDoelgroepen() {
 const LANGE_TEKSTEN = TEKST_BIB.filter(t => t.collectie === 'lang')
   .map(t => ({ id: t.id.replace(/^lang-/, ''), niveau: t.niveau, titel: t.titel, tekst: t.tekst, vragen: t.vragen }));
 
-const LEESTEST_TEKSTEN = TEKST_BIB.filter(t => t.collectie === 'leestest')
+const LEESTEST_TEKSTEN = TEKST_BIB.filter(t => t.collectie === 'leestest' && t.woorden >= 80)
   .map(t => ({ titel: t.titel, tekst: t.tekst, vragen: t.vragen }));

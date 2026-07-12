@@ -6,6 +6,8 @@ Dit document is de releasevolgorde voor Snellezer. Het doel is niet een zo hoog 
 
 - Waarde-first onboarding: een bezoeker kan trainen zonder direct een account te maken.
 - Een begintest met 58 doelgroep-passende teksten, drie begripsvragen en rotatie op minst gebruikt; een eigen tekst is bewust een aparte oefenmeting.
+- Eerlijke vrije leesmetingen: te korte teksten en onwaarschijnlijk snelle afrondingen worden niet opgeslagen; alle begripsvragen zijn verplicht.
+- Snelheidsmissies verhogen het doel pas na drie beoordeelde rondes met voldoende begrip en verlagen het tempo wanneer begrip achterblijft.
 - Persoonlijke eerste missie, dagelijkse uitdaging, XP en streak.
 - Dyslexie Leeslab met zeven cumulatieve lessen, een 80%-beheersingspoort, persoonlijke herhaling van lastige woorden en vloeiendheid pas na nauwkeurigheid.
 - Startweek met zeven opeenvolgende sessies: tempo, begrip, oogbeweging, fixatie, regressie, langere tekst en een eindmeting.
@@ -40,7 +42,7 @@ Dit document is de releasevolgorde voor Snellezer. Het doel is niet een zo hoog 
 
 4. Productclaims kalibreren
 
-   Positioneer Snellezer als een oefenapp die het eigen tempo en begrip meet. Vermijd een universele belofte als "iedereen leest 2x sneller". De coach mag snelheid pas verhogen als begrip op of boven 70% blijft; bij lager begrip is herlezen of chunk-lezen de volgende stap. Positioneer het Dyslexie Leeslab als oefening, niet als diagnose of vervanging van gespecialiseerde begeleiding.
+   Positioneer Snellezer als een oefenapp die het eigen tempo en begrip meet. Vermijd een universele belofte als "iedereen leest 2x sneller". De coach mag snelheid pas verhogen na drie beoordeelde rondes met stabiel begrip; bij lager begrip is vertragen, herlezen of chunk-lezen de volgende stap. Positioneer het Dyslexie Leeslab als oefening, niet als diagnose of vervanging van gespecialiseerde begeleiding.
 
 5. Testprotocol
 
