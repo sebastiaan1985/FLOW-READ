@@ -44,21 +44,23 @@
 [hidden] { display: none !important; }
 
 :root {
-  --bg:       #08081a;
-  --surface:  #10102a;
-  --card:     #15153a;
-  --border:   rgba(255,255,255,.06);
-  --border2:  rgba(255,255,255,.12);
+  /* Donkere 'speed'-identiteit: diepe indigo-nacht met paars→cyaan energie.
+     Duidelijke elevatiestappen (bg < surface < card) voor een premium diepte. */
+  --bg:       #07071a;
+  --surface:  #10112e;
+  --card:     #181a44;
+  --border:   rgba(150,160,255,.10);
+  --border2:  rgba(150,160,255,.18);
   --accent:   #7c6ff7;
-  --accent2:  #38c8f0;
+  --accent2:  #22d3ee;
   --pink:     #f06292;
   --green:    #34d399;
-  --text:     #e8e8f5;
-  --muted:    #7070a0;
+  --text:     #ececfb;
+  --muted:    #8286b8;
   --radius:   14px;
   --radius-sm:8px;
-  --shadow:   0 8px 32px rgba(0,0,0,.5);
-  --glow:     0 0 40px rgba(124,111,247,.25);
+  --shadow:   0 10px 34px rgba(0,0,0,.55);
+  --glow:     0 0 44px rgba(124,111,247,.30);
 
   /* Veilige zones (notch / statusbalk / home-indicator).
      Standaard exact de device-inset; op iOS-PWA krijgen ze een bodemwaarde
@@ -212,6 +214,63 @@ header {
 }
 .sidebar-bottom button:hover,
 .sidebar-bottom a:hover { background: rgba(255,255,255,.06); color: var(--text); }
+/* Doneerknop springt er warm uit tussen de grijze beheerknoppen */
+.sidebar-doneer-btn {
+  color: #ffd0d8 !important;
+  border-color: rgba(240,98,146,.45) !important;
+  background: linear-gradient(135deg, rgba(240,98,146,.16), rgba(124,111,247,.12)) !important;
+}
+.sidebar-doneer-btn:hover {
+  color: #fff !important;
+  border-color: rgba(240,98,146,.7) !important;
+  background: linear-gradient(135deg, rgba(240,98,146,.28), rgba(124,111,247,.2)) !important;
+}
+
+/* ── DONATIE / IMPACT MODAL ───────────────────────────────── */
+.donatie-overlay {
+  position: fixed; inset: 0; z-index: 10050;
+  display: flex; align-items: center; justify-content: center;
+  padding: max(20px, var(--safe-top)) 18px max(20px, var(--safe-bottom));
+  background: rgba(5,5,18,.82); backdrop-filter: blur(10px);
+  animation: fadeIn .2s ease; overflow-y: auto;
+}
+.donatie-overlay[hidden] { display: none; }
+.donatie-kaart {
+  position: relative; width: min(440px, 100%);
+  background: radial-gradient(120% 90% at 50% -10%, rgba(240,98,146,.16), transparent 60%), var(--card);
+  border: 1px solid rgba(240,98,146,.30); border-radius: 22px;
+  padding: 30px 26px 26px; text-align: center;
+  box-shadow: 0 30px 90px rgba(0,0,0,.6), var(--glow);
+  animation: levelupPop .3s cubic-bezier(.2,1.6,.4,1);
+}
+.donatie-sluit {
+  position: absolute; top: 14px; right: 16px; width: 34px; height: 34px;
+  border: none; border-radius: 10px; background: rgba(255,255,255,.07);
+  color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; transition: all .2s;
+}
+.donatie-sluit:hover { background: rgba(255,255,255,.14); color: var(--text); }
+.donatie-hart { font-size: 2.6rem; margin-bottom: 6px; filter: drop-shadow(0 4px 14px rgba(240,98,146,.5)); }
+.donatie-titel {
+  font-size: 1.5rem; font-weight: 800; letter-spacing: -.5px; margin-bottom: 10px;
+  background: linear-gradient(135deg, #fff 30%, var(--pink)); -webkit-background-clip: text;
+  background-clip: text; -webkit-text-fill-color: transparent;
+}
+.donatie-tekst { font-size: .95rem; line-height: 1.55; color: var(--text); opacity: .9; margin-bottom: 18px; }
+.donatie-tekst strong { color: var(--pink); }
+.donatie-doel {
+  display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; margin-bottom: 18px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 12px;
+}
+.donatie-doel-label { font-size: .68rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); }
+.donatie-doel-naam { font-size: 1.02rem; font-weight: 700; color: var(--text); }
+.donatie-knop {
+  display: block; width: 100%; padding: 16px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--pink), var(--accent));
+  color: #fff; font-size: 1.05rem; font-weight: 800; text-decoration: none;
+  box-shadow: 0 10px 30px rgba(240,98,146,.35); transition: transform .15s, box-shadow .2s;
+}
+.donatie-knop:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(240,98,146,.5); }
+.donatie-klein { font-size: .74rem; color: var(--muted); margin-top: 12px; line-height: 1.4; }
 
 /* Old nav hidden (replaced by sidebar) */
 header > nav { display: none; }
@@ -2960,11 +3019,39 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   </nav>
 
   <div class="sidebar-bottom">
+    <button id="sidebar-doneer-btn" class="sidebar-doneer-btn" onclick="openDonatie();sluitSidebar()">❤️ Steun &amp; doneer</button>
     <button id="sidebar-installeer-btn" onclick="_installatie.start()" style="display:none;color:var(--accent)">📲 Installeer de app</button>
     <button id="sidebar-geluid-btn" onclick="_geluid.toggle()">🔔 Geluid aan</button>
     <button id="sidebar-kids-btn" onclick="toggleKids()">🎨 Kids modus</button>
     <button id="sidebar-dyx-btn" onclick="dyxOpenPanel();sluitSidebar()">🔤 Dyslexie instellingen</button>
     <a href="privacy.html"><span aria-hidden="true">🔒</span> Privacy</a>
+  </div>
+</div>
+
+<!-- ── DONATIE / IMPACT MODAL ─────────────────────────────────
+     De doneerknop opent deze modal. De bestemming staat als één
+     configureerbare constante DONATIE_URL in het script hieronder;
+     vervang die door je eigen Stripe/Mollie-betaallink als je zelf
+     wilt innen. Standaard: officiële doneerpagina van Stichting
+     Lezen & Schrijven (100% gaat rechtstreeks naar het goede doel). -->
+<div id="donatie-overlay" class="donatie-overlay" role="dialog" aria-modal="true" aria-labelledby="donatie-titel" hidden>
+  <div class="donatie-kaart">
+    <button class="donatie-sluit" onclick="sluitDonatie()" aria-label="Sluiten">×</button>
+    <div class="donatie-hart">❤️</div>
+    <h2 id="donatie-titel" class="donatie-titel">Lezen is een cadeau</h2>
+    <p class="donatie-tekst">
+      Snellezer helpt jou sneller en met meer begrip lezen. In Nederland zijn er
+      <strong>2,5 miljoen mensen</strong> voor wie lezen elke dag een drempel is.
+      Met een kleine gift help je hen leren lezen, schrijven en meedoen.
+    </p>
+    <div class="donatie-doel">
+      <span class="donatie-doel-label">Jouw gift gaat naar</span>
+      <span class="donatie-doel-naam">Stichting Lezen &amp; Schrijven</span>
+    </div>
+    <a id="donatie-knop" class="donatie-knop" href="#" target="_blank" rel="noopener noreferrer" onclick="_donatieGeklikt()">
+      Doneer nu →
+    </a>
+    <p class="donatie-klein">Je opent de veilige doneerpagina in een nieuw venster. Geen account nodig.</p>
   </div>
 </div>
 
@@ -3349,8 +3436,8 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- Account pas vragen nadat er waarde is ervaren -->
   <div class="account-save-card" id="account-save-card">
     <div>
-      <b>Bewaar je scores op elk apparaat</b>
-      <span>Je hebt je startpunt gezien. Maak nu gratis een account om je streak, XP en voortgang veilig te bewaren.</span>
+      <b>Bewaar je voortgang op elk apparaat</b>
+      <span>Je hebt je startpunt gezien. Maak nu gratis een account om je streak, XP, voortgang én je geüploade teksten veilig te bewaren — ze staan er weer zodra je opnieuw inlogt.</span>
     </div>
     <button class="btn btn-primary" onclick="naarLoginVoorSync()" style="width:auto;padding:10px 14px">Account</button>
   </div>
@@ -3915,6 +4002,14 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-tekst" class="screen">
   <div class="page-title">✍️ Eigen tekst</div>
   <div class="page-sub">Plak of upload je eigen tekst — een hoofdstuk, artikel of samenvatting — en train er direct mee op elke manier. Je hoeft niets op te slaan om te beginnen.</div>
+
+  <div class="account-save-card" id="tekst-save-hint" style="margin-bottom:14px">
+    <div>
+      <b>Bewaar je teksten op elk apparaat</b>
+      <span>Maak gratis een account, dan blijven je geüploade teksten en je hele bibliotheek bewaard en staan ze er weer zodra je opnieuw inlogt.</span>
+    </div>
+    <button class="btn btn-primary" onclick="naarLoginVoorSync()" style="width:auto;padding:10px 14px">Account</button>
+  </div>
 
   <!-- Plak/laad tekst -->
   <div class="flex" style="margin-bottom:10px;gap:10px">
@@ -5203,6 +5298,37 @@ function sluitSidebar() {
   document.getElementById('menu-toggle').classList.remove('open');
 }
 
+// ── DONATIE ──────────────────────────────────────────────────────────────────
+// Bestemming van de doneerknop. Standaard: officiële doneerpagina van Stichting
+// Lezen & Schrijven (100% gaat rechtstreeks naar het goede doel, geen boekhouding
+// voor jou). Wil je zelf innen en daarna doorgeven? Vervang deze ene regel door
+// je eigen Stripe/Mollie/Ko-fi-betaallink.
+const DONATIE_URL = 'https://doneren.lezenenschrijven.nl/';
+
+function openDonatie() {
+  const overlay = document.getElementById('donatie-overlay');
+  const knop = document.getElementById('donatie-knop');
+  if (!overlay || !knop) return;
+  knop.href = DONATIE_URL;
+  overlay.hidden = false;
+  document.addEventListener('keydown', _donatieEsc);
+}
+function sluitDonatie() {
+  const overlay = document.getElementById('donatie-overlay');
+  if (overlay) overlay.hidden = true;
+  document.removeEventListener('keydown', _donatieEsc);
+}
+function _donatieEsc(e) { if (e.key === 'Escape') sluitDonatie(); }
+function _donatieGeklikt() {
+  // Registreer lokaal dat er op doneren is geklikt (privacyvriendelijk, geen bedragen).
+  try { localStorage.setItem('donatie_geklikt', new Date().toISOString()); } catch (e) {}
+}
+// Sluit de modal bij klik op de donkere achtergrond (niet op de kaart zelf).
+document.addEventListener('click', (e) => {
+  const overlay = document.getElementById('donatie-overlay');
+  if (overlay && !overlay.hidden && e.target === overlay) sluitDonatie();
+});
+
 function sidebarNav(id) {
   // Update sidebar active states
   document.querySelectorAll('.sidebar nav button').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
@@ -5224,6 +5350,7 @@ function sidebarNav(id) {
   if (id === 'langetekst' && typeof lttInit === 'function') lttInit();
   if (id === 'voortgang' && typeof toonVoortgang === 'function') toonVoortgang();
   if (id === 'tekst') toonBibliotheek();
+  if (typeof _updateAccountSaveCard === 'function') _updateAccountSaveCard();
   // Bottom nav active state synchroniseren
   _syncBottomNav(id);
   if (id === 'leerweg') leerWegInit();
@@ -11466,10 +11593,13 @@ function _isIngelogdOfGeenGast() {
 }
 
 function _updateAccountSaveCard() {
+  const gast = !_isIngelogdOfGeenGast();
   const el = document.getElementById('account-save-card');
-  if (!el) return;
-  const tonen = _heeftWaardeMoment() && !_isIngelogdOfGeenGast();
-  el.classList.toggle('show', tonen);
+  if (el) el.classList.toggle('show', _heeftWaardeMoment() && gast);
+  // Hint op het 'Eigen tekst'-scherm: toon voor gasten (los van waarde-moment),
+  // want juist daar willen mensen zekerheid dat hun uploads bewaard blijven.
+  const th = document.getElementById('tekst-save-hint');
+  if (th) th.classList.toggle('show', gast);
 }
 
 function naarLoginVoorSync() {
