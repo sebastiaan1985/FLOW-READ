@@ -1978,6 +1978,12 @@ main { -webkit-overflow-scrolling: touch; }
   flex-shrink: 0;
 }
 .streak-badge.nul { background: rgba(255,255,255,.05); border-color: var(--border); color: var(--muted); }
+/* Streak staat op het spel: rustig pulserend vlammetje dat om één sessie vraagt */
+.streak-badge.risico { animation: streakPuls 2s ease-in-out infinite; border-color: rgba(255,150,0,.6); }
+@keyframes streakPuls {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,150,0,0); }
+  50%      { box-shadow: 0 0 14px 2px rgba(255,150,0,.35); }
+}
 .vandaag-uitdaging {
   background: var(--card2); border-radius: 12px; padding: 14px;
   display: flex; align-items: center; gap: 12px;
@@ -2360,6 +2366,13 @@ body.kids .inhoud-optie { background:#f4f8ff; border-color:rgba(0,0,0,.1); }
   background: linear-gradient(135deg, rgba(124,111,247,.25), rgba(76,201,240,.18));
   border: 1px solid rgba(124,111,247,.45); color: #cfc7ff;
   font-size: 15px; font-weight: 800; padding: 8px 20px; border-radius: 999px;
+}
+/* Verrassingsbonus: gouden XP-pil die even 'ademt' */
+.ronde-res-xp-bonus {
+  background: linear-gradient(135deg, rgba(240,176,0,.28), rgba(240,98,146,.2)) !important;
+  border-color: rgba(240,176,0,.6) !important; color: #ffd54f !important;
+  animation: recordPop .5s cubic-bezier(.2,1.6,.4,1);
+  box-shadow: 0 0 26px rgba(240,176,0,.25);
 }
 .ronde-res-knoppen { display: flex; flex-direction: column; gap: 10px; }
 .ronde-res-opnieuw {
@@ -11373,14 +11386,17 @@ function updateStreakBadge() {
   const status = _streakRitmeStatus();
   const dagen = status.dagen;
   badge.textContent = `🔥 ${dagen}`;
+  badge.classList.remove('risico');
   if (status.toestand === 'vandaag') {
     badge.classList.remove('nul');
     badge.title = `${dagen} dag${dagen === 1 ? '' : 'en'} op rij getraind!`;
   } else if (status.toestand === 'vandaag_nodig') {
     badge.classList.remove('nul');
+    if (dagen >= 2) badge.classList.add('risico');
     badge.title = `Train vandaag om je streak van ${dagen} dagen voort te zetten.`;
   } else if (status.toestand === 'redden') {
     badge.classList.remove('nul');
+    badge.classList.add('risico');
     badge.title = `Train vandaag om je streak van ${dagen} dagen met een bevriezing te redden.`;
   } else {
     badge.classList.add('nul');
