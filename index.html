@@ -2648,6 +2648,47 @@ button:active { transform: scale(.96); }
 .tr-sub  { font-size: .72rem; color: var(--muted); }
 
 /* ── FASE 3: VOORTGANG + ACHIEVEMENTS ────────────────────── */
+/* ── JOUW GROEI (voor/na sinds begintest) ─────────────────── */
+.vg-groei-kaart {
+  position: relative; overflow: hidden;
+  background: radial-gradient(130% 100% at 50% -20%, rgba(34,211,238,.14), transparent 55%), var(--card);
+  border: 1px solid rgba(34,211,238,.28); border-radius: 16px;
+  padding: 18px 16px 16px; margin-bottom: 18px; text-align: center;
+}
+.vg-groei-lbl { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent2); margin-bottom: 12px; }
+.vg-groei-rij { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 12px; }
+.vg-groei-blok { flex: 1; max-width: 130px; }
+.vg-groei-num {
+  font-size: 1.9rem; font-weight: 800; letter-spacing: -1px; font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.vg-groei-sub { font-size: .68rem; color: var(--muted); margin-top: 2px; line-height: 1.35; }
+.vg-groei-pijl { font-size: 1.3rem; color: var(--accent2); flex-shrink: 0; }
+.vg-groei-badge {
+  display: inline-block; padding: 5px 14px; border-radius: 999px; margin-bottom: 12px;
+  background: rgba(52,211,153,.14); border: 1px solid rgba(52,211,153,.35);
+  color: var(--green); font-size: .82rem; font-weight: 700;
+}
+.vg-groei-badge.neutraal { background: rgba(255,255,255,.05); border-color: var(--border2); color: var(--muted); }
+.vg-groei-deel {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
+  border: none; border-radius: 12px; cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; font-size: .88rem; font-weight: 700; font-family: 'Inter', sans-serif;
+  box-shadow: 0 8px 24px rgba(124,111,247,.35); transition: transform .15s, box-shadow .2s;
+}
+.vg-groei-deel:hover { transform: translateY(-1px); box-shadow: 0 12px 30px rgba(124,111,247,.5); }
+
+/* Lege toestand op Voortgang: uitnodigen i.p.v. nullen tonen */
+.vg-leeg {
+  background: var(--card); border: 1px dashed var(--border2); border-radius: 16px;
+  padding: 26px 20px; text-align: center; margin-bottom: 24px;
+}
+.vg-leeg-icoon { font-size: 2rem; margin-bottom: 8px; }
+.vg-leeg b { display: block; font-size: 1rem; margin-bottom: 4px; }
+.vg-leeg span { display: block; font-size: .82rem; color: var(--muted); line-height: 1.5; margin-bottom: 14px; }
+
 .vg-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
 @media (min-width: 480px) { .vg-stats-grid { grid-template-columns: repeat(4, 1fr); } }
 .vg-stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 12px; text-align: center; }
@@ -4339,6 +4380,9 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-voortgang" class="screen">
   <div class="page-title">📊 Jouw Voortgang</div>
   <div class="page-sub">Statistieken, achievements en niveau.</div>
+
+  <!-- Jouw groei: voor/na sinds de begintest (gevuld in toonVoortgang) -->
+  <div id="vg-groei"></div>
 
   <!-- Stats -->
   <div class="vg-stats-grid" id="vg-stats-grid"></div>
@@ -12178,6 +12222,89 @@ function _toonAchievementToast(id) {
   setTimeout(() => el.remove(), 3700);
 }
 
+// ── JOUW GROEI: voor/na sinds de begintest ────────────────
+// Eerlijk meetmoment: pas tonen na minimaal 3 beoordeelde sessies (zelfde
+// lat als de snelheidsmissies), gemeten als gemiddelde van de laatste 5.
+function _toonGroeiKaart() {
+  const host = document.getElementById('vg-groei');
+  if (!host) return;
+  host.innerHTML = '';
+
+  const baseline = (typeof laadGeldigeBegintestBaseline === 'function') ? laadGeldigeBegintestBaseline() : null;
+  if (!baseline) return;
+
+  const beoordeeld = (typeof beoordeeldeLeesSessies === 'function') ? beoordeeldeLeesSessies() : [];
+  if (beoordeeld.length < 3) {
+    const nog = 3 - beoordeeld.length;
+    host.innerHTML = `
+      <div class="vg-groei-kaart">
+        <div class="vg-groei-lbl">📈 Jouw groeimeting</div>
+        <div class="vg-groei-sub" style="font-size:.82rem">Startpunt vastgelegd: <b style="color:var(--text)">${Math.round(baseline.wpm)} WPM</b> met ${Math.round(baseline.begrip)}% begrip.<br>
+        Nog <b style="color:var(--accent2)">${nog} beoordeelde sessie${nog === 1 ? '' : 's'}</b> en je ziet hier hoeveel je bent gegroeid.</div>
+      </div>`;
+    return;
+  }
+
+  const recent = beoordeeld.slice(-5);
+  const naWpm    = Math.round(recent.reduce((a, x) => a + x.wpm, 0) / recent.length);
+  const naBegrip = Math.round(recent.reduce((a, x) => a + (x.begrip || 0), 0) / recent.length);
+  const voorWpm  = Math.round(baseline.wpm);
+  const groei    = voorWpm > 0 ? Math.round(((naWpm - voorWpm) / voorWpm) * 100) : 0;
+
+  const badge = groei >= 5
+    ? `<div class="vg-groei-badge">▲ ${groei}% sneller — met begrip</div>`
+    : `<div class="vg-groei-badge neutraal">Stabiel tempo — sterk fundament</div>`;
+
+  host.innerHTML = `
+    <div class="vg-groei-kaart">
+      <div class="vg-groei-lbl">📈 Jouw groei sinds de begintest</div>
+      <div class="vg-groei-rij">
+        <div class="vg-groei-blok">
+          <div class="vg-groei-num">${voorWpm}</div>
+          <div class="vg-groei-sub">WPM bij start<br>${baseline.datum || ''}</div>
+        </div>
+        <div class="vg-groei-pijl">→</div>
+        <div class="vg-groei-blok">
+          <div class="vg-groei-num">${naWpm}</div>
+          <div class="vg-groei-sub">WPM nu<br>${naBegrip}% begrip</div>
+        </div>
+      </div>
+      ${badge}
+      <div>
+        <button class="vg-groei-deel" onclick="deelGroei(${voorWpm}, ${naWpm}, ${groei})">📤 Deel je groei</button>
+      </div>
+    </div>`;
+}
+
+function deelGroei(voor, na, groei) {
+  const zin = groei >= 5
+    ? `Ik lees nu ${groei}% sneller — mét begrip! Van ${voor} naar ${na} woorden per minuut met Snellezer 🚀`
+    : `Ik train mijn leessnelheid met Snellezer: van ${voor} naar ${na} woorden per minuut — mét begrip 📚`;
+  const url = 'https://snel-lees-app.vercel.app';
+  const tekst = `${zin}\n${url}`;
+  if (typeof gtmTrack === 'function') gtmTrack('groei_gedeeld', { groei_band: Math.floor(groei / 10) * 10 });
+  if (navigator.share) {
+    navigator.share({ title: 'Mijn leesgroei', text: zin, url }).catch(() => {});
+    return;
+  }
+  (navigator.clipboard ? navigator.clipboard.writeText(tekst) : Promise.reject())
+    .then(() => _deelToast('📋', 'Gekopieerd!', 'Plak je groei in een bericht naar wie je wilt.'))
+    .catch(() => _deelToast('✍️', 'Kopieer handmatig', tekst));
+}
+
+function _deelToast(icoon, titel, sub) {
+  const el = document.createElement('div');
+  el.className = 'ach-toast';
+  el.innerHTML = `
+    <div class="at-icon">${icoon}</div>
+    <div>
+      <div class="at-naam">${titel}</div>
+      <div class="at-sub">${sub}</div>
+    </div>`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+
 // ── BOTTOM NAV ────────────────────────────────────────────
 const _BNAV_MAP = {
   home:'home', trainen:'trainen', voortgang:'voortgang', stats:'voortgang',
@@ -12212,7 +12339,18 @@ function toonVoortgang() {
   const streakDagen = (typeof getGlobaalStreak === 'function') ? getGlobaalStreak().dagen : 0;
 
   const statsEl = document.getElementById('vg-stats-grid');
-  if (statsEl) statsEl.innerHTML = `
+  if (statsEl) {
+    if (!s.length) {
+      // Lege toestand: uitnodigen in plaats van vier nullen
+      statsEl.innerHTML = `
+        <div class="vg-leeg" style="grid-column:1/-1">
+          <div class="vg-leeg-icoon">🚀</div>
+          <b>Je grafiek wacht op je eerste sessie</b>
+          <span>Doe de begintest van 2 minuten en zie hier meteen je startsnelheid, streak en groei verschijnen.</span>
+          <button class="btn btn-primary" onclick="sidebarNav('begintest')" style="width:auto;padding:11px 22px">🎯 Start de begintest</button>
+        </div>`;
+    } else {
+      statsEl.innerHTML = `
     <div class="vg-stat">
       <div class="vg-stat-num">${s.length}</div>
       <div class="vg-stat-lbl">Sessies</div>
@@ -12229,6 +12367,11 @@ function toonVoortgang() {
       <div class="vg-stat-num">${streakDagen}</div>
       <div class="vg-stat-lbl">Streak 🔥</div>
     </div>`;
+    }
+  }
+
+  // Jouw groei: voor/na sinds de begintest, alleen met een eerlijke meting
+  _toonGroeiKaart();
 
   // Niveau Lange Teksten
   let ltData;
