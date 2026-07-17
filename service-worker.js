@@ -9,7 +9,7 @@
  * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM = 'snellees-v33';
+const CACHE_NAAM = 'snellees-v35';
 
 const CACHE_STATISCH = [
   './',

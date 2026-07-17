@@ -76,6 +76,22 @@ Geslaagd wanneer: de gedeelde tekst als actieve oefentekst verschijnt. Bij minde
 
 Geslaagd wanneer: de app-shell offline opent, sessies lokaal blijven werken, synchronisatie geen fouten toont en accountverwijdering daadwerkelijk in Supabase is bevestigd.
 
+## Nieuw in deze release: gerichte testchecklist
+
+Test deze punten expliciet; ze zijn recent toegevoegd of aangepast.
+
+1. **Statusbalk (belangrijkste fix).** Installeer de app op een iPhone-beginscherm, open hem en controleer op elk scherm dat de klok en statusbalk nooit over de app-header vallen — ook na scrollen en na draaien/terugkeren uit een andere app.
+2. **Doneerknop.** Open het zijmenu → `❤️ Steun & doneer`. Controleer dat de impact-modal opent, sluit met ×, Escape en een tik naast de kaart, en dat `Doneer nu →` de doneerpagina van Stichting Lezen & Schrijven in een nieuw venster opent.
+3. **Groeimeting.** Doe de begintest en controleer dat Voortgang eerst "nog X beoordeelde sessies" toont. Rond drie beoordeelde sessies af (minimaal 2 van de 3 vragen goed) en controleer dat de voor/na-kaart verschijnt met een kloppend groeipercentage. Test `📤 Deel je groei`: op de telefoon opent het deelmenu, op desktop volgt een "Gekopieerd!"-melding.
+4. **Lege toestand.** Open Voortgang met een schoon profiel: er horen geen nullen te staan, maar een uitnodiging met een knop naar de begintest.
+5. **Recordviering.** Zet een nieuw persoonlijk record met voldoende begrip en controleer de gouden recordbanner met confetti in de ronde-uitslag.
+6. **Verrassingsbonus.** Speel meerdere kwaliteitsrondes op verschillende dagen; af en toe hoort een gouden "🎁 Verrassingsbonus — dubbele XP"-pil te verschijnen, hooguit één keer per dag.
+7. **Streak-signaal.** Train op dag 1 en 2, sla dag 3 tot de avond over en controleer dat de streakbadge zachtjes pulseert totdat je die dag een sessie doet.
+8. **Opslaan-hints.** Controleer als gast dat de account-kaart op Home je geüploade teksten noemt, en dat op `Eigen tekst` een hint staat dat teksten met een account bewaard blijven. Na inloggen horen beide hints te verdwijnen.
+9. **Vernieuwde stijl.** Beoordeel Trainen (icoontegels), Voortgang (uniforme cijferkleuren) en de algemene diepte/kleuren op zowel het donkere thema als kids-modus.
+
+Geslaagd wanneer: alle negen punten kloppen op iPhone Safari (geïnstalleerde PWA), Android Chrome en een desktopbrowser.
+
 ## Waarnemingen per tester
 
 Leg na afloop vast:

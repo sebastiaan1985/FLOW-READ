@@ -211,6 +211,7 @@ const Ronde = {
     let xp;
     let factor = 1;
     let reden = 'Volledige rondebeloning';
+    let verrassing = false;
     if (!kwaliteitBehaald) {
       xp = item.mislukt < 2 ? 2 : 0;
       factor = 0;
@@ -226,11 +227,20 @@ const Ronde = {
       if (factor === 0.15) reden = 'Kleine herhaalbeloning; kies een nieuwe tekst voor volledige XP';
       if (factor === 0) reden = 'Deze ronde is vandaag al vaak beloond; kies een nieuwe tekst voor XP';
       if (bonusXp) reden += ` · +${bonusXp} XP voor beter begrip bij herlezen`;
+      // Verrassingsbonus: af en toe dubbele XP, alleen op een eerste
+      // volwaardige kwaliteitsronde (begrip op norm). Max één per dag,
+      // zodat de verrassing bijzonder blijft en niet te farmen is.
+      if (factor === 1 && !dag.verrassingGehad && Math.random() < 0.16) {
+        xp *= 2;
+        verrassing = true;
+        dag.verrassingGehad = true;
+        reden = '🎁 Verrassingsbonus — dubbele XP voor deze ronde!';
+      }
     }
 
     dag.rondes[sleutel] = item;
     localStorage.setItem('snellees_xp_dag', JSON.stringify(dag));
-    return { xp, factor, reden, poging:item.pogingen, geslaagd:item.geslaagd };
+    return { xp, factor, reden, poging:item.pogingen, geslaagd:item.geslaagd, verrassing };
   },
 
   einde(wpm, aantalWoorden, begripOverride, tekstId, opts) {
@@ -304,7 +314,7 @@ const Ronde = {
       _gamSla(g);
     } catch (e) {}
 
-    const res = { sterren, wpm, begrip, begripDoel, xp, xpReden:beloning.reden, xpFactor:beloning.factor, kwaliteitBehaald, recordNieuw, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus, opts: opts || null, ts: Date.now() };
+    const res = { sterren, wpm, begrip, begripDoel, xp, xpReden:beloning.reden, xpFactor:beloning.factor, verrassing:beloning.verrassing, kwaliteitBehaald, recordNieuw, maxCombo: this._maxCombo, doelWpm, type: this.type, fluencyBonus, opts: opts || null, ts: Date.now() };
     this._fluency = null;
 
     // Tempo-levels vragen zowel uitspelen als minimaal 2 van de 3 vragen goed.
@@ -446,6 +456,7 @@ const Ronde = {
     overlay.id = 'ronde-res';
     overlay.innerHTML = `
       <div class="ronde-res-kaart" role="dialog" aria-modal="true" aria-label="Ronde-resultaat">
+        ${r.recordNieuw ? `<div class="ronde-res-record">🏆 Nieuw record: ${r.wpm} WPM — mét begrip!</div>` : ''}
         <div class="ronde-sterren">${sterHtml}</div>
         <div class="ronde-res-uitleg">${uitleg}</div>
         <div class="ronde-res-grid">
@@ -456,7 +467,7 @@ const Ronde = {
         <div class="ronde-res-inzicht"><b>${inzicht.kop}</b><span>${inzicht.tekst}</span></div>
         ${missieHtml}
         ${leerwegHtml}
-        <div class="ronde-res-xp">+${r.xp} XP · ${r.xpReden}${r.recordNieuw ? ' · nieuw begripsrecord' : ''}</div>
+        <div class="ronde-res-xp${r.verrassing ? ' ronde-res-xp-bonus' : ''}">+${r.xp} XP · ${r.xpReden}${r.recordNieuw ? ' · nieuw begripsrecord' : ''}</div>
         <div class="ronde-res-knoppen">${knoppen}</div>
       </div>`;
     document.body.appendChild(overlay);
@@ -467,8 +478,9 @@ const Ronde = {
       else document.getElementById('ronde-res-wpm').textContent = r.wpm;
     }
 
-    if (r.sterren >= 3 && typeof showConfetti === 'function') showConfetti(50, 20, true);
-    if (typeof _geluid !== 'undefined') (r.sterren >= 2 ? _geluid.fanfare() : _geluid.goed());
+    if (r.recordNieuw && typeof showConfetti === 'function') showConfetti(100, 30, true);
+    else if ((r.sterren >= 3 || r.verrassing) && typeof showConfetti === 'function') showConfetti(50, 20, true);
+    if (typeof _geluid !== 'undefined') ((r.sterren >= 2 || r.recordNieuw) ? _geluid.fanfare() : _geluid.goed());
   },
 
   sluit() {

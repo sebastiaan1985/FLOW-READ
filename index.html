@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#061416">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Snellezer">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -61,6 +61,25 @@
   --radius-sm:8px;
   --shadow:   0 8px 32px rgba(0,8,10,.46);
   --glow:     0 0 36px rgba(32,201,195,.18);
+
+  /* Veilige zones (notch / statusbalk / home-indicator).
+     Standaard exact de device-inset; op iOS-PWA krijgen ze een bodemwaarde
+     (zie hieronder) omdat iOS in standalone soms 0 rapporteert. */
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left, 0px);
+  --safe-right:  env(safe-area-inset-right, 0px);
+}
+
+/* iOS (Safari/WebKit) draaiend als geïnstalleerde PWA: garandeer dat de
+   statusbalk/klok nooit over de header valt, ook als env() 0 teruggeeft. */
+@supports (-webkit-touch-callout: none) {
+  @media all and (display-mode: standalone) {
+    :root {
+      --safe-top:    max(env(safe-area-inset-top, 0px), 50px);
+      --safe-bottom: max(env(safe-area-inset-bottom, 0px), 18px);
+    }
+  }
 }
 
 html { height: 100%; overflow-x: hidden; }
@@ -90,9 +109,9 @@ header {
   align-items: center;
   gap: 14px;
   padding: 12px 20px;
-  padding-top: calc(12px + env(safe-area-inset-top, 0px));
-  padding-left: calc(20px + env(safe-area-inset-left, 0px));
-  padding-right: calc(20px + env(safe-area-inset-right, 0px));
+  padding-top: calc(12px + var(--safe-top));
+  padding-left: calc(20px + var(--safe-left));
+  padding-right: calc(20px + var(--safe-right));
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   position: sticky; top: 0; z-index: 100;
@@ -131,8 +150,8 @@ header {
   display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden;
   box-shadow: none;
   transform: translateX(-100%);
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-left: env(safe-area-inset-left, 0px);
+  padding-top: var(--safe-top);
+  padding-left: var(--safe-left);
 }
 .sidebar.open { transform: translateX(0); box-shadow: 8px 0 30px rgba(0,0,0,.3); }
 
@@ -195,12 +214,69 @@ header {
 }
 .sidebar-bottom button:hover,
 .sidebar-bottom a:hover { background: rgba(255,255,255,.06); color: var(--text); }
+/* Doneerknop springt er warm uit tussen de grijze beheerknoppen */
+.sidebar-doneer-btn {
+  color: #ffd6d2 !important;
+  border-color: rgba(255,107,97,.45) !important;
+  background: linear-gradient(135deg, rgba(255,107,97,.16), rgba(32,201,195,.10)) !important;
+}
+.sidebar-doneer-btn:hover {
+  color: #fff !important;
+  border-color: rgba(255,107,97,.7) !important;
+  background: linear-gradient(135deg, rgba(255,107,97,.28), rgba(32,201,195,.18)) !important;
+}
+
+/* ── DONATIE / IMPACT MODAL ───────────────────────────────── */
+.donatie-overlay {
+  position: fixed; inset: 0; z-index: 10050;
+  display: flex; align-items: center; justify-content: center;
+  padding: max(20px, var(--safe-top)) 18px max(20px, var(--safe-bottom));
+  background: rgba(5,5,18,.82); backdrop-filter: blur(10px);
+  animation: fadeIn .2s ease; overflow-y: auto;
+}
+.donatie-overlay[hidden] { display: none; }
+.donatie-kaart {
+  position: relative; width: min(440px, 100%);
+  background: radial-gradient(120% 90% at 50% -10%, rgba(255,107,97,.16), transparent 60%), var(--card);
+  border: 1px solid rgba(255,107,97,.30); border-radius: 22px;
+  padding: 30px 26px 26px; text-align: center;
+  box-shadow: 0 30px 90px rgba(0,0,0,.6), var(--glow);
+  animation: levelupPop .3s cubic-bezier(.2,1.6,.4,1);
+}
+.donatie-sluit {
+  position: absolute; top: 14px; right: 16px; width: 34px; height: 34px;
+  border: none; border-radius: 10px; background: rgba(255,255,255,.07);
+  color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; transition: all .2s;
+}
+.donatie-sluit:hover { background: rgba(255,255,255,.14); color: var(--text); }
+.donatie-hart { font-size: 2.6rem; margin-bottom: 6px; filter: drop-shadow(0 4px 14px rgba(255,107,97,.5)); }
+.donatie-titel {
+  font-size: 1.5rem; font-weight: 800; letter-spacing: -.5px; margin-bottom: 10px;
+  background: linear-gradient(135deg, #fff 30%, var(--pink)); -webkit-background-clip: text;
+  background-clip: text; -webkit-text-fill-color: transparent;
+}
+.donatie-tekst { font-size: .95rem; line-height: 1.55; color: var(--text); opacity: .9; margin-bottom: 18px; }
+.donatie-tekst strong { color: var(--pink); }
+.donatie-doel {
+  display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; margin-bottom: 18px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 12px;
+}
+.donatie-doel-label { font-size: .68rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); }
+.donatie-doel-naam { font-size: 1.02rem; font-weight: 700; color: var(--text); }
+.donatie-knop {
+  display: block; width: 100%; padding: 16px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--pink), var(--accent));
+  color: #fff; font-size: 1.05rem; font-weight: 800; text-decoration: none;
+  box-shadow: 0 10px 30px rgba(255,107,97,.35); transition: transform .15s, box-shadow .2s;
+}
+.donatie-knop:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(255,107,97,.5); }
+.donatie-klein { font-size: .74rem; color: var(--muted); margin-top: 12px; line-height: 1.4; }
 
 /* Old nav hidden (replaced by sidebar) */
 header > nav { display: none; }
 
 /* ── LAYOUT ───────────────────────────────────────────────── */
-main { flex: 1; padding: 28px 28px calc(112px + env(safe-area-inset-bottom, 0px)); max-width: 920px; width: 100%; margin: 0 auto; }
+main { flex: 1; padding: 28px 28px calc(112px + var(--safe-bottom)); max-width: 920px; width: 100%; margin: 0 auto; }
 .screen { display: none; animation: fadeIn .25s ease; }
 .screen.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -1275,7 +1351,7 @@ body.kids .oog-timer-num { color:#ff6b6b; }
 
 /* Compacte header op smalle schermen: geen overloop meer */
 @media (max-width: 600px) {
-  header { gap: 8px; padding-left: calc(12px + env(safe-area-inset-left, 0px)); padding-right: calc(12px + env(safe-area-inset-right, 0px)); }
+  header { gap: 8px; padding-left: calc(12px + var(--safe-left)); padding-right: calc(12px + var(--safe-right)); }
   .logo { font-size: .95rem; }
   .dyx-lbl { display: none; }
   .speler-naam { display: none !important; }
@@ -1291,13 +1367,13 @@ body.kids .oog-timer-num { color:#ff6b6b; }
    van de appheader. Dit voorkomt dat inhoud achter de systeembalk belandt. */
 @media (display-mode: standalone) {
   header {
-    min-height: 60px;
-    padding-top: 12px;
+    min-height: calc(60px + var(--safe-top));
+    padding-top: calc(12px + var(--safe-top));
   }
 }
 html.ios-standalone header {
-  min-height: 60px;
-  padding-top: 12px;
+  min-height: calc(60px + var(--safe-top));
+  padding-top: calc(12px + var(--safe-top));
 }
 .speler-avatar { width:30px; height:30px; border-radius:50%; overflow:hidden; line-height:1; flex-shrink:0; }
 .speler-naam { font-size: 12px; font-weight: 600; color: #e07000; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
@@ -1687,7 +1763,7 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
 /* ── MOBIELE UX ──────────────────────────────────────────────── */
 @media (max-width: 640px) {
   /* Basis layout */
-  main { padding: 12px 12px calc(104px + env(safe-area-inset-bottom, 0px)); }
+  main { padding: 12px 12px calc(104px + var(--safe-bottom)); }
   .page-title { font-size: 1.3rem; }
   .page-sub   { font-size: .82rem; }
 
@@ -1698,12 +1774,12 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   /* Header compacter + safe-area proof voor iPhone/PWA */
   header {
     gap: 8px;
-    min-height: calc(56px + env(safe-area-inset-top, 0px));
+    min-height: calc(56px + var(--safe-top));
     height: auto;
-    padding-top: calc(8px + env(safe-area-inset-top, 0px));
-    padding-right: calc(10px + env(safe-area-inset-right, 0px));
+    padding-top: calc(8px + var(--safe-top));
+    padding-right: calc(10px + var(--safe-right));
     padding-bottom: 8px;
-    padding-left: calc(10px + env(safe-area-inset-left, 0px));
+    padding-left: calc(10px + var(--safe-left));
     overflow: visible;
   }
   .logo  { font-size: 1rem; }
@@ -1902,6 +1978,12 @@ main { -webkit-overflow-scrolling: touch; }
   flex-shrink: 0;
 }
 .streak-badge.nul { background: rgba(255,255,255,.05); border-color: var(--border); color: var(--muted); }
+/* Streak staat op het spel: rustig pulserend vlammetje dat om één sessie vraagt */
+.streak-badge.risico { animation: streakPuls 2s ease-in-out infinite; border-color: rgba(255,150,0,.6); }
+@keyframes streakPuls {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,150,0,0); }
+  50%      { box-shadow: 0 0 14px 2px rgba(255,150,0,.35); }
+}
 .vandaag-uitdaging {
   background: var(--card2); border-radius: 12px; padding: 14px;
   display: flex; align-items: center; gap: 12px;
@@ -1959,8 +2041,8 @@ main { -webkit-overflow-scrolling: touch; }
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
   background: var(--surface); border-top: 1px solid var(--border);
-  display: flex; height: calc(62px + env(safe-area-inset-bottom, 0px));
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  display: flex; height: calc(62px + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
 .bn-btn {
@@ -2210,7 +2292,7 @@ body.kids .eigen-mode small { color: #7a7a9a; }
 }
 .inhoud-quiz {
   position:fixed; inset:0; z-index:10002; display:flex; align-items:center; justify-content:center;
-  padding:max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
+  padding:max(18px, var(--safe-top)) 18px max(18px, var(--safe-bottom));
   background:rgba(4,15,17,.9); backdrop-filter:blur(8px); overflow-y:auto;
 }
 .inhoud-quiz-kaart { width:min(620px,100%); max-height:calc(100dvh - 36px); overflow-y:auto; background:#0b2023; border:1px solid rgba(32,201,195,.35); border-radius:16px; padding:22px; box-shadow:0 24px 80px rgba(0,0,0,.55); }
@@ -2241,6 +2323,16 @@ body.kids .inhoud-optie { background:#f4f8ff; border-color:rgba(0,0,0,.1); }
   animation: levelupPop .35s cubic-bezier(.2,1.5,.4,1);
 }
 .ronde-sterren { font-size: 44px; letter-spacing: 8px; line-height: 1; margin-bottom: 10px; }
+/* Nieuw persoonlijk record: hét beloningsmoment, dus prominent vieren */
+.ronde-res-record {
+  display: inline-block; margin: 0 auto 12px; padding: 8px 18px; border-radius: 999px;
+  background: linear-gradient(135deg, rgba(240,176,0,.22), rgba(255,107,97,.18));
+  border: 1.5px solid rgba(240,176,0,.55); color: #ffd54f;
+  font-size: .92rem; font-weight: 800; letter-spacing: .3px;
+  animation: recordPop .5s cubic-bezier(.2,1.6,.4,1);
+  box-shadow: 0 0 30px rgba(240,176,0,.25);
+}
+@keyframes recordPop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .ronde-ster { color: rgba(255,255,255,.14); display: inline-block; }
 .ronde-ster.aan { color: #f0c000; animation: sterPop .45s cubic-bezier(.2,1.8,.4,1) both; text-shadow: 0 0 22px rgba(240,192,0,.45); }
 @keyframes sterPop { from { transform: scale(0) rotate(-30deg); } to { transform: scale(1) rotate(0); } }
@@ -2274,6 +2366,13 @@ body.kids .inhoud-optie { background:#f4f8ff; border-color:rgba(0,0,0,.1); }
   background: linear-gradient(135deg, rgba(32,201,195,.25), rgba(76,201,240,.18));
   border: 1px solid rgba(32,201,195,.45); color: #d4f279;
   font-size: 15px; font-weight: 800; padding: 8px 20px; border-radius: 999px;
+}
+/* Verrassingsbonus: gouden XP-pil die even 'ademt' */
+.ronde-res-xp-bonus {
+  background: linear-gradient(135deg, rgba(240,176,0,.28), rgba(255,107,97,.2)) !important;
+  border-color: rgba(240,176,0,.6) !important; color: #ffd54f !important;
+  animation: recordPop .5s cubic-bezier(.2,1.6,.4,1);
+  box-shadow: 0 0 26px rgba(240,176,0,.25);
 }
 .ronde-res-knoppen { display: flex; flex-direction: column; gap: 10px; }
 .ronde-res-opnieuw {
@@ -2324,7 +2423,7 @@ body.focus-modus #begrip-section { display: none !important; }
 body.focus-modus main {
   position: fixed; inset: 0; z-index: 350; margin: 0;
   display: flex; flex-direction: column;
-  padding: calc(64px + env(safe-area-inset-top,0px)) 24px calc(44px + env(safe-area-inset-bottom,0px));
+  padding: calc(64px + var(--safe-top)) 24px calc(44px + var(--safe-bottom));
   background: #071719;
 }
 body.focus-modus .screen.active { flex: 1; display: flex; flex-direction: column; }
@@ -2346,7 +2445,7 @@ body.focus-modus .progress-wrap { height: 3px; background: rgba(255,255,255,.09)
 body.focus-modus .progress-fill { background: linear-gradient(90deg,#20c9c3,#b7df48) !important; }
 .focus-exit {
   display: none; position: fixed; z-index: 400;
-  top: calc(16px + env(safe-area-inset-top, 0px)); right: calc(18px + env(safe-area-inset-right, 0px));
+  top: calc(16px + var(--safe-top)); right: calc(18px + var(--safe-right));
   width: 44px; height: 44px; border-radius: 999px;
   border: none; background: rgba(255,255,255,.06);
   color: rgba(255,255,255,.7); font-size: 15px; cursor: pointer;
@@ -2415,9 +2514,9 @@ body.focus-modus .focus-exit { display: flex; align-items: center; justify-conte
   .tekstbron-panel { grid-template-columns: 1fr; }
   .tekstbron-paste.open { grid-template-columns: 1fr; }
   .achievement-popup {
-    top: calc(14px + env(safe-area-inset-top, 0px));
-    right: calc(12px + env(safe-area-inset-right, 0px));
-    left: calc(12px + env(safe-area-inset-left, 0px));
+    top: calc(14px + var(--safe-top));
+    right: calc(12px + var(--safe-right));
+    left: calc(12px + var(--safe-left));
   }
 }
 
@@ -2539,7 +2638,7 @@ button:active { transform: scale(.96); }
 .ios-installeer-overlay.open { display: flex; }
 .ios-installeer-kaart {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px 20px 0 0; padding: 26px 22px calc(26px + env(safe-area-inset-bottom, 0px));
+  border-radius: 20px 20px 0 0; padding: 26px 22px calc(26px + var(--safe-bottom));
   width: 100%; max-width: 480px; animation: slideUp .3s ease;
 }
 .ios-installeer-kaart h3 { margin: 0 0 6px; font-size: 1.1rem; }
@@ -2567,15 +2666,68 @@ button:active { transform: scale(.96); }
 }
 .tr-kaart:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(32,201,195,.18); }
 .tr-kaart:active { transform: scale(.97); }
-.tr-icon { font-size: 1.6rem; }
+/* Icoontegel: geeft de gemengde emoji één visuele massa en maakt het raster rustig */
+.tr-icon {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem; line-height: 1; margin-bottom: 4px;
+  background: linear-gradient(135deg, rgba(32,201,195,.14), rgba(183,223,72,.08));
+  border: 1px solid rgba(32,201,195,.22);
+}
 .tr-naam { font-size: .88rem; font-weight: 700; }
 .tr-sub  { font-size: .72rem; color: var(--muted); }
 
 /* ── FASE 3: VOORTGANG + ACHIEVEMENTS ────────────────────── */
+/* ── JOUW GROEI (voor/na sinds begintest) ─────────────────── */
+.vg-groei-kaart {
+  position: relative; overflow: hidden;
+  background: radial-gradient(130% 100% at 50% -20%, rgba(32,201,195,.14), transparent 55%), var(--card);
+  border: 1px solid rgba(32,201,195,.28); border-radius: 16px;
+  padding: 18px 16px 16px; margin-bottom: 18px; text-align: center;
+}
+.vg-groei-lbl { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent2); margin-bottom: 12px; }
+.vg-groei-rij { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 12px; }
+.vg-groei-blok { flex: 1; max-width: 130px; }
+.vg-groei-num {
+  font-size: 1.9rem; font-weight: 800; letter-spacing: -1px; font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.vg-groei-sub { font-size: .68rem; color: var(--muted); margin-top: 2px; line-height: 1.35; }
+.vg-groei-pijl { font-size: 1.3rem; color: var(--accent2); flex-shrink: 0; }
+.vg-groei-badge {
+  display: inline-block; padding: 5px 14px; border-radius: 999px; margin-bottom: 12px;
+  background: rgba(52,211,153,.14); border: 1px solid rgba(52,211,153,.35);
+  color: var(--green); font-size: .82rem; font-weight: 700;
+}
+.vg-groei-badge.neutraal { background: rgba(255,255,255,.05); border-color: var(--border2); color: var(--muted); }
+.vg-groei-deel {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
+  border: none; border-radius: 12px; cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; font-size: .88rem; font-weight: 700; font-family: 'Inter', sans-serif;
+  box-shadow: 0 8px 24px rgba(32,201,195,.30); transition: transform .15s, box-shadow .2s;
+}
+.vg-groei-deel:hover { transform: translateY(-1px); box-shadow: 0 12px 30px rgba(32,201,195,.45); }
+
+/* Lege toestand op Voortgang: uitnodigen i.p.v. nullen tonen */
+.vg-leeg {
+  background: var(--card); border: 1px dashed var(--border2); border-radius: 16px;
+  padding: 26px 20px; text-align: center; margin-bottom: 24px;
+}
+.vg-leeg-icoon { font-size: 2rem; margin-bottom: 8px; }
+.vg-leeg b { display: block; font-size: 1rem; margin-bottom: 4px; }
+.vg-leeg span { display: block; font-size: .82rem; color: var(--muted); line-height: 1.5; margin-bottom: 14px; }
+
 .vg-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
 @media (min-width: 480px) { .vg-stats-grid { grid-template-columns: repeat(4, 1fr); } }
 .vg-stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 12px; text-align: center; }
-.vg-stat-num { font-size: 1.7rem; font-weight: 800; }
+.vg-stat-num {
+  font-size: 1.7rem; font-weight: 800; letter-spacing: -.5px;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
 .vg-stat-lbl { font-size: .7rem; color: var(--muted); margin-top: 2px; }
 .ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
 .ach-badge {
@@ -2936,11 +3088,39 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   </nav>
 
   <div class="sidebar-bottom">
+    <button id="sidebar-doneer-btn" class="sidebar-doneer-btn" onclick="openDonatie();sluitSidebar()">❤️ Steun &amp; doneer</button>
     <button id="sidebar-installeer-btn" onclick="_installatie.start()" style="display:none;color:var(--accent)">📲 Installeer de app</button>
     <button id="sidebar-geluid-btn" onclick="_geluid.toggle()">🔔 Geluid aan</button>
     <button id="sidebar-kids-btn" onclick="toggleKids()">🎨 Kids modus</button>
     <button id="sidebar-dyx-btn" onclick="dyxOpenPanel();sluitSidebar()">🔤 Dyslexie instellingen</button>
     <a href="privacy.html"><span aria-hidden="true">🔒</span> Privacy</a>
+  </div>
+</div>
+
+<!-- ── DONATIE / IMPACT MODAL ─────────────────────────────────
+     De doneerknop opent deze modal. De bestemming staat als één
+     configureerbare constante DONATIE_URL in het script hieronder;
+     vervang die door je eigen Stripe/Mollie-betaallink als je zelf
+     wilt innen. Standaard: officiële doneerpagina van Stichting
+     Lezen & Schrijven (100% gaat rechtstreeks naar het goede doel). -->
+<div id="donatie-overlay" class="donatie-overlay" role="dialog" aria-modal="true" aria-labelledby="donatie-titel" hidden>
+  <div class="donatie-kaart">
+    <button class="donatie-sluit" onclick="sluitDonatie()" aria-label="Sluiten">×</button>
+    <div class="donatie-hart">❤️</div>
+    <h2 id="donatie-titel" class="donatie-titel">Lezen is een cadeau</h2>
+    <p class="donatie-tekst">
+      Snellezer helpt jou sneller en met meer begrip lezen. In Nederland zijn er
+      <strong>2,5 miljoen mensen</strong> voor wie lezen elke dag een drempel is.
+      Met een kleine gift help je hen leren lezen, schrijven en meedoen.
+    </p>
+    <div class="donatie-doel">
+      <span class="donatie-doel-label">Jouw gift gaat naar</span>
+      <span class="donatie-doel-naam">Stichting Lezen &amp; Schrijven</span>
+    </div>
+    <a id="donatie-knop" class="donatie-knop" href="#" target="_blank" rel="noopener noreferrer" onclick="_donatieGeklikt()">
+      Doneer nu →
+    </a>
+    <p class="donatie-klein">Je opent de veilige doneerpagina in een nieuw venster. Geen account nodig.</p>
   </div>
 </div>
 
@@ -3325,8 +3505,8 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- Account pas vragen nadat er waarde is ervaren -->
   <div class="account-save-card" id="account-save-card">
     <div>
-      <b>Bewaar je scores op elk apparaat</b>
-      <span>Je hebt je startpunt gezien. Maak nu gratis een account om je streak, XP en voortgang veilig te bewaren.</span>
+      <b>Bewaar je voortgang op elk apparaat</b>
+      <span>Je hebt je startpunt gezien. Maak nu gratis een account om je streak, XP, voortgang én je geüploade teksten veilig te bewaren — ze staan er weer zodra je opnieuw inlogt.</span>
     </div>
     <button class="btn btn-primary" onclick="naarLoginVoorSync()" style="width:auto;padding:10px 14px">Account</button>
   </div>
@@ -3892,6 +4072,14 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="page-title">✍️ Eigen tekst</div>
   <div class="page-sub">Plak of upload je eigen tekst — een hoofdstuk, artikel of samenvatting — en train er direct mee op elke manier. Je hoeft niets op te slaan om te beginnen.</div>
 
+  <div class="account-save-card" id="tekst-save-hint" style="margin-bottom:14px">
+    <div>
+      <b>Bewaar je teksten op elk apparaat</b>
+      <span>Maak gratis een account, dan blijven je geüploade teksten en je hele bibliotheek bewaard en staan ze er weer zodra je opnieuw inlogt.</span>
+    </div>
+    <button class="btn btn-primary" onclick="naarLoginVoorSync()" style="width:auto;padding:10px 14px">Account</button>
+  </div>
+
   <!-- Plak/laad tekst -->
   <div class="flex" style="margin-bottom:10px;gap:10px">
     <input class="text-input" id="tekst-naam" placeholder="Naam (optioneel)" style="flex:1;margin-bottom:0">
@@ -4220,6 +4408,9 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <div id="screen-voortgang" class="screen">
   <div class="page-title">📊 Jouw Voortgang</div>
   <div class="page-sub">Statistieken, achievements en niveau.</div>
+
+  <!-- Jouw groei: voor/na sinds de begintest (gevuld in toonVoortgang) -->
+  <div id="vg-groei"></div>
 
   <!-- Stats -->
   <div class="vg-stats-grid" id="vg-stats-grid"></div>
@@ -5179,6 +5370,37 @@ function sluitSidebar() {
   document.getElementById('menu-toggle').classList.remove('open');
 }
 
+// ── DONATIE ──────────────────────────────────────────────────────────────────
+// Bestemming van de doneerknop. Standaard: officiële doneerpagina van Stichting
+// Lezen & Schrijven (100% gaat rechtstreeks naar het goede doel, geen boekhouding
+// voor jou). Wil je zelf innen en daarna doorgeven? Vervang deze ene regel door
+// je eigen Stripe/Mollie/Ko-fi-betaallink.
+const DONATIE_URL = 'https://doneren.lezenenschrijven.nl/';
+
+function openDonatie() {
+  const overlay = document.getElementById('donatie-overlay');
+  const knop = document.getElementById('donatie-knop');
+  if (!overlay || !knop) return;
+  knop.href = DONATIE_URL;
+  overlay.hidden = false;
+  document.addEventListener('keydown', _donatieEsc);
+}
+function sluitDonatie() {
+  const overlay = document.getElementById('donatie-overlay');
+  if (overlay) overlay.hidden = true;
+  document.removeEventListener('keydown', _donatieEsc);
+}
+function _donatieEsc(e) { if (e.key === 'Escape') sluitDonatie(); }
+function _donatieGeklikt() {
+  // Registreer lokaal dat er op doneren is geklikt (privacyvriendelijk, geen bedragen).
+  try { localStorage.setItem('donatie_geklikt', new Date().toISOString()); } catch (e) {}
+}
+// Sluit de modal bij klik op de donkere achtergrond (niet op de kaart zelf).
+document.addEventListener('click', (e) => {
+  const overlay = document.getElementById('donatie-overlay');
+  if (overlay && !overlay.hidden && e.target === overlay) sluitDonatie();
+});
+
 function sidebarNav(id) {
   // Update sidebar active states
   document.querySelectorAll('.sidebar nav button').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
@@ -5200,6 +5422,7 @@ function sidebarNav(id) {
   if (id === 'langetekst' && typeof lttInit === 'function') lttInit();
   if (id === 'voortgang' && typeof toonVoortgang === 'function') toonVoortgang();
   if (id === 'tekst') toonBibliotheek();
+  if (typeof _updateAccountSaveCard === 'function') _updateAccountSaveCard();
   // Bottom nav active state synchroniseren
   _syncBottomNav(id);
   if (id === 'leerweg') leerWegInit();
@@ -11183,14 +11406,17 @@ function updateStreakBadge() {
   const status = _streakRitmeStatus();
   const dagen = status.dagen;
   badge.textContent = `🔥 ${dagen}`;
+  badge.classList.remove('risico');
   if (status.toestand === 'vandaag') {
     badge.classList.remove('nul');
     badge.title = `${dagen} dag${dagen === 1 ? '' : 'en'} op rij getraind!`;
   } else if (status.toestand === 'vandaag_nodig') {
     badge.classList.remove('nul');
+    if (dagen >= 2) badge.classList.add('risico');
     badge.title = `Train vandaag om je streak van ${dagen} dagen voort te zetten.`;
   } else if (status.toestand === 'redden') {
     badge.classList.remove('nul');
+    badge.classList.add('risico');
     badge.title = `Train vandaag om je streak van ${dagen} dagen met een bevriezing te redden.`;
   } else {
     badge.classList.add('nul');
@@ -11497,10 +11723,13 @@ function _isIngelogdOfGeenGast() {
 }
 
 function _updateAccountSaveCard() {
+  const gast = !_isIngelogdOfGeenGast();
   const el = document.getElementById('account-save-card');
-  if (!el) return;
-  const tonen = _heeftWaardeMoment() && !_isIngelogdOfGeenGast();
-  el.classList.toggle('show', tonen);
+  if (el) el.classList.toggle('show', _heeftWaardeMoment() && gast);
+  // Hint op het 'Eigen tekst'-scherm: toon voor gasten (los van waarde-moment),
+  // want juist daar willen mensen zekerheid dat hun uploads bewaard blijven.
+  const th = document.getElementById('tekst-save-hint');
+  if (th) th.classList.toggle('show', gast);
 }
 
 function naarLoginVoorSync() {
@@ -12086,6 +12315,89 @@ function _toonAchievementToast(id) {
   setTimeout(() => el.remove(), 3700);
 }
 
+// ── JOUW GROEI: voor/na sinds de begintest ────────────────
+// Eerlijk meetmoment: pas tonen na minimaal 3 beoordeelde sessies (zelfde
+// lat als de snelheidsmissies), gemeten als gemiddelde van de laatste 5.
+function _toonGroeiKaart() {
+  const host = document.getElementById('vg-groei');
+  if (!host) return;
+  host.innerHTML = '';
+
+  const baseline = (typeof laadGeldigeBegintestBaseline === 'function') ? laadGeldigeBegintestBaseline() : null;
+  if (!baseline) return;
+
+  const beoordeeld = (typeof beoordeeldeLeesSessies === 'function') ? beoordeeldeLeesSessies() : [];
+  if (beoordeeld.length < 3) {
+    const nog = 3 - beoordeeld.length;
+    host.innerHTML = `
+      <div class="vg-groei-kaart">
+        <div class="vg-groei-lbl">📈 Jouw groeimeting</div>
+        <div class="vg-groei-sub" style="font-size:.82rem">Startpunt vastgelegd: <b style="color:var(--text)">${Math.round(baseline.wpm)} WPM</b> met ${Math.round(baseline.begrip)}% begrip.<br>
+        Nog <b style="color:var(--accent2)">${nog} beoordeelde sessie${nog === 1 ? '' : 's'}</b> en je ziet hier hoeveel je bent gegroeid.</div>
+      </div>`;
+    return;
+  }
+
+  const recent = beoordeeld.slice(-5);
+  const naWpm    = Math.round(recent.reduce((a, x) => a + x.wpm, 0) / recent.length);
+  const naBegrip = Math.round(recent.reduce((a, x) => a + (x.begrip || 0), 0) / recent.length);
+  const voorWpm  = Math.round(baseline.wpm);
+  const groei    = voorWpm > 0 ? Math.round(((naWpm - voorWpm) / voorWpm) * 100) : 0;
+
+  const badge = groei >= 5
+    ? `<div class="vg-groei-badge">▲ ${groei}% sneller — met begrip</div>`
+    : `<div class="vg-groei-badge neutraal">Stabiel tempo — sterk fundament</div>`;
+
+  host.innerHTML = `
+    <div class="vg-groei-kaart">
+      <div class="vg-groei-lbl">📈 Jouw groei sinds de begintest</div>
+      <div class="vg-groei-rij">
+        <div class="vg-groei-blok">
+          <div class="vg-groei-num">${voorWpm}</div>
+          <div class="vg-groei-sub">WPM bij start<br>${baseline.datum || ''}</div>
+        </div>
+        <div class="vg-groei-pijl">→</div>
+        <div class="vg-groei-blok">
+          <div class="vg-groei-num">${naWpm}</div>
+          <div class="vg-groei-sub">WPM nu<br>${naBegrip}% begrip</div>
+        </div>
+      </div>
+      ${badge}
+      <div>
+        <button class="vg-groei-deel" onclick="deelGroei(${voorWpm}, ${naWpm}, ${groei})">📤 Deel je groei</button>
+      </div>
+    </div>`;
+}
+
+function deelGroei(voor, na, groei) {
+  const zin = groei >= 5
+    ? `Ik lees nu ${groei}% sneller — mét begrip! Van ${voor} naar ${na} woorden per minuut met Snellezer 🚀`
+    : `Ik train mijn leessnelheid met Snellezer: van ${voor} naar ${na} woorden per minuut — mét begrip 📚`;
+  const url = 'https://snel-lees-app.vercel.app';
+  const tekst = `${zin}\n${url}`;
+  if (typeof gtmTrack === 'function') gtmTrack('groei_gedeeld', { groei_band: Math.floor(groei / 10) * 10 });
+  if (navigator.share) {
+    navigator.share({ title: 'Mijn leesgroei', text: zin, url }).catch(() => {});
+    return;
+  }
+  (navigator.clipboard ? navigator.clipboard.writeText(tekst) : Promise.reject())
+    .then(() => _deelToast('📋', 'Gekopieerd!', 'Plak je groei in een bericht naar wie je wilt.'))
+    .catch(() => _deelToast('✍️', 'Kopieer handmatig', tekst));
+}
+
+function _deelToast(icoon, titel, sub) {
+  const el = document.createElement('div');
+  el.className = 'ach-toast';
+  el.innerHTML = `
+    <div class="at-icon">${icoon}</div>
+    <div>
+      <div class="at-naam">${titel}</div>
+      <div class="at-sub">${sub}</div>
+    </div>`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+
 // ── BOTTOM NAV ────────────────────────────────────────────
 const _BNAV_MAP = {
   home:'home', trainen:'trainen', voortgang:'voortgang', stats:'voortgang',
@@ -12120,13 +12432,24 @@ function toonVoortgang() {
   const streakDagen = (typeof getGlobaalStreak === 'function') ? getGlobaalStreak().dagen : 0;
 
   const statsEl = document.getElementById('vg-stats-grid');
-  if (statsEl) statsEl.innerHTML = `
+  if (statsEl) {
+    if (!s.length) {
+      // Lege toestand: uitnodigen in plaats van vier nullen
+      statsEl.innerHTML = `
+        <div class="vg-leeg" style="grid-column:1/-1">
+          <div class="vg-leeg-icoon">🚀</div>
+          <b>Je grafiek wacht op je eerste sessie</b>
+          <span>Doe de begintest van 2 minuten en zie hier meteen je startsnelheid, streak en groei verschijnen.</span>
+          <button class="btn btn-primary" onclick="sidebarNav('begintest')" style="width:auto;padding:11px 22px">🎯 Start de begintest</button>
+        </div>`;
+    } else {
+      statsEl.innerHTML = `
     <div class="vg-stat">
-      <div class="vg-stat-num" style="color:var(--accent)">${s.length}</div>
+      <div class="vg-stat-num">${s.length}</div>
       <div class="vg-stat-lbl">Sessies</div>
     </div>
     <div class="vg-stat">
-      <div class="vg-stat-num" style="color:var(--green)">${stats.bestWpm || 0}</div>
+      <div class="vg-stat-num">${stats.bestWpm || 0}</div>
       <div class="vg-stat-lbl">Best WPM</div>
     </div>
     <div class="vg-stat">
@@ -12134,9 +12457,14 @@ function toonVoortgang() {
       <div class="vg-stat-lbl">Gem. WPM</div>
     </div>
     <div class="vg-stat">
-      <div class="vg-stat-num" style="color:#ffaa33">${streakDagen}</div>
+      <div class="vg-stat-num">${streakDagen}</div>
       <div class="vg-stat-lbl">Streak 🔥</div>
     </div>`;
+    }
+  }
+
+  // Jouw groei: voor/na sinds de begintest, alleen met een eerlijke meting
+  _toonGroeiKaart();
 
   // Niveau Lange Teksten
   let ltData;
