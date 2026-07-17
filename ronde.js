@@ -438,18 +438,28 @@ const Ronde = {
     } else if (paced) {
       knoppen += `<button class="ronde-res-opnieuw" onclick="Ronde.opnieuw()">🚀 Nog een keer <span style="opacity:.8">(+8%)</span></button>`;
     }
-    // Ketting: houd de speler in de loop met de coach-aanbeveling
-    try {
-      const aanb = Coach.planner.aanbeveling();
-      if (aanb && aanb.type !== r.type) {
-        knoppen += `<button class="ronde-res-volgende" onclick="Ronde.volgende('${aanb.type}')">Volgende: ${aanb.icon} ${aanb.naam} →</button>`;
-      }
-    } catch (e) { /* planner niet beschikbaar */ }
-    // Net een leerweg-dag afgevinkt? Dan is de kaart hét beloningsmoment
+    // Net een leerweg-dag afgevinkt? Dan direct door kunnen naar de volgende
+    // missie (de kaart blijft als rustiger alternatief beschikbaar).
     const lwNet = (Date.now() - (window._lwLaatstAfgevinkt || 0)) < 90000;
-    knoppen += lwNet
-      ? `<button class="ronde-res-klaar" onclick="Ronde.sluit();sidebarNav('leerweg')">🗺️ Naar de kaart</button>`
-      : `<button class="ronde-res-klaar" onclick="Ronde.sluit()">Klaar</button>`;
+    const lwVolgende = lwNet && typeof leerWegVolgendeDag === 'function' ? leerWegVolgendeDag() : null;
+    // Ketting: coach-aanbeveling alleen buiten de leerweg-flow, anders staan
+    // er twee concurrerende "volgende"-knoppen in de overlay
+    if (!(lwNet && lwVolgende)) {
+      try {
+        const aanb = Coach.planner.aanbeveling();
+        if (aanb && aanb.type !== r.type) {
+          knoppen += `<button class="ronde-res-volgende" onclick="Ronde.volgende('${aanb.type}')">Volgende: ${aanb.icon} ${aanb.naam} →</button>`;
+        }
+      } catch (e) { /* planner niet beschikbaar */ }
+    }
+    if (lwNet && lwVolgende) {
+      knoppen += `<button class="ronde-res-volgende" onclick="Ronde.sluit();leerWegHeroActie()">▶ Volgende missie: ${lwVolgende.dag.naam}</button>`;
+      knoppen += `<button class="ronde-res-klaar" onclick="Ronde.sluit();sidebarNav('leerweg')">🗺️ Naar de kaart</button>`;
+    } else if (lwNet) {
+      knoppen += `<button class="ronde-res-klaar" onclick="Ronde.sluit();sidebarNav('leerweg')">🗺️ Naar de kaart</button>`;
+    } else {
+      knoppen += `<button class="ronde-res-klaar" onclick="Ronde.sluit()">Klaar</button>`;
+    }
 
     const overlay = document.createElement('div');
     overlay.className = 'ronde-res';

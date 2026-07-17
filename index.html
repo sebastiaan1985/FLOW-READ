@@ -272,6 +272,23 @@ header {
 .donatie-knop:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(255,107,97,.5); }
 .donatie-klein { font-size: .74rem; color: var(--muted); margin-top: 12px; line-height: 1.4; }
 
+/* Doorstroom-banner: na een voltooide leerweg-missie direct door kunnen */
+.lw-volgende-cta {
+  position: fixed; left: 12px; right: 12px; bottom: calc(76px + var(--safe-bottom));
+  z-index: 9990; display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1.5px solid rgba(32,201,195,.45);
+  border-radius: 14px; padding: 12px 14px; box-shadow: 0 16px 48px rgba(0,0,0,.5);
+  animation: levelupPop .35s cubic-bezier(.2,1.6,.4,1);
+}
+.lw-volgende-cta-tekst { flex: 1; min-width: 0; }
+.lw-volgende-cta-tekst b { display: block; font-size: .85rem; color: var(--accent); }
+.lw-volgende-cta-tekst span { display: block; font-size: .75rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lw-volgende-cta .btn { width: auto; padding: 10px 16px; flex-shrink: 0; }
+.lw-volgende-cta-sluit {
+  width: 30px; height: 30px; border: none; border-radius: 8px; flex-shrink: 0;
+  background: rgba(255,255,255,.06); color: var(--muted); font-size: 18px; cursor: pointer;
+}
+
 /* Old nav hidden (replaced by sidebar) */
 header > nav { display: none; }
 
@@ -5271,6 +5288,7 @@ function tekstbronRender(screen) {
       </div>
       <button class="btn btn-ghost" onclick="document.getElementById('tekstbron-file-${screen}').click()">📁 Laden</button>
       <button class="btn btn-ghost" onclick="tekstbronPlakToggle('${screen}')">✍️ Plakken</button>
+      <button class="btn btn-ghost" onclick="tekstbronVanUrl('${screen}')">🌐 URL</button>
       <input class="tekstbron-upload" type="file" id="tekstbron-file-${screen}" accept=".txt,.md,text/plain,text/markdown" onchange="tekstbronBestand('${screen}', this)">
       <div class="tekstbron-paste" id="tekstbron-paste-${screen}">
         <textarea class="text-input" id="tekstbron-area-${screen}" placeholder="Plak hier je eigen oefentekst..."></textarea>
@@ -5322,6 +5340,20 @@ function tekstbronVoegEigenToe(screen, tekst, naam) {
 function tekstbronPlakOpslaan(screen) {
   const area = document.getElementById(`tekstbron-area-${screen}`);
   tekstbronVoegEigenToe(screen, area?.value || '', 'Geplakte trainingstekst');
+}
+
+async function tekstbronVanUrl(screen) {
+  const invoer = prompt('Plak de link naar een artikel (https://...):');
+  if (!invoer) return;
+  const url = invoer.trim();
+  if (!/^https?:\/\//i.test(url)) { tekstbronStatus(screen, '❌ Gebruik een volledige link die met https:// begint.'); return; }
+  tekstbronStatus(screen, '⏳ Artikel ophalen…');
+  try {
+    const { tekst, titel } = await _haalTekstVanUrl(url);
+    tekstbronVoegEigenToe(screen, tekst, titel);
+  } catch (e) {
+    tekstbronStatus(screen, `❌ ${e.message}`);
+  }
 }
 
 function tekstbronBestand(screen, input) {
@@ -5423,6 +5455,8 @@ function sidebarNav(id) {
   if (id === 'voortgang' && typeof toonVoortgang === 'function') toonVoortgang();
   if (id === 'tekst') toonBibliotheek();
   if (typeof _updateAccountSaveCard === 'function') _updateAccountSaveCard();
+  // Elke les/oefening begint bovenaan de pagina, niet halverwege
+  window.scrollTo(0, 0);
   // Bottom nav active state synchroniseren
   _syncBottomNav(id);
   if (id === 'leerweg') leerWegInit();
@@ -6383,6 +6417,32 @@ function eigenVragenUitFormulier() {
   return resultaat;
 }
 
+// Kern van het URL-ophalen: haalt een artikel op (met CORS-proxyfallbacks) en
+// destilleert de leestekst. Retourneert { tekst, titel } of gooit een fout.
+async function _haalTekstVanUrl(url) {
+  const proxies = [
+    u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+    u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+  ];
+  let html = null;
+  for (const makeUrl of proxies) {
+    try {
+      const resp = await fetch(makeUrl(url), { signal: AbortSignal.timeout(8000) });
+      if (resp.ok) { html = await resp.text(); break; }
+    } catch(e) { /* probeer de volgende proxy */ }
+  }
+  if (!html) throw new Error('Kon pagina niet ophalen. Kopieer de tekst en plak hem.');
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  doc.querySelectorAll('script,style,nav,header,footer,aside,form,iframe,noscript,[role="banner"],[role="navigation"],[role="complementary"]').forEach(e => e.remove());
+  const container = doc.querySelector('article') || doc.querySelector('[class*="article"]') || doc.querySelector('[class*="content"]') || doc.querySelector('main') || doc.body;
+  let tekst = container.textContent.replace(/\s+/g, ' ').trim();
+  tekst = tekst.split('\n').filter(r => r.trim().length > 20).join(' ').replace(/\s+/g,' ').trim();
+  if (tekst.length < 200) throw new Error('Te weinig bruikbare tekst gevonden. Kopieer de tekst en plak hem.');
+  const titel = doc.querySelector('title')?.textContent?.trim() || new URL(url).hostname;
+  return { tekst, titel };
+}
+
 async function laadVanUrl() {
   const url = document.getElementById('url-input').value.trim();
   if (!url) return;
@@ -6391,36 +6451,8 @@ async function laadVanUrl() {
   status.textContent = '⏳ Bezig met ophalen...';
   btn.disabled = true;
 
-  // Meerdere CORS proxy fallbacks
-  const proxies = [
-    u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
-    u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
-    u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
-  ];
-
-  let html = null, lastError = '';
-  for (const makeUrl of proxies) {
-    try {
-      const resp = await fetch(makeUrl(url), { signal: AbortSignal.timeout(8000) });
-      if (resp.ok) { html = await resp.text(); break; }
-    } catch(e) { lastError = e.message; }
-  }
-
-  if (!html) {
-    status.style.color = 'var(--pink)';
-    status.textContent = '❌ Kon pagina niet ophalen. Probeer de tekst te kopiëren en hieronder te plakken.';
-    btn.disabled = false; return;
-  }
-
   try {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    doc.querySelectorAll('script,style,nav,header,footer,aside,form,iframe,noscript,[role="banner"],[role="navigation"],[role="complementary"]').forEach(e => e.remove());
-    const container = doc.querySelector('article') || doc.querySelector('[class*="article"]') || doc.querySelector('[class*="content"]') || doc.querySelector('main') || doc.body;
-    let tekst = container.textContent.replace(/\s+/g, ' ').trim();
-    // Verwijder te korte regels (navigatie-resten, etc.)
-    tekst = tekst.split('\n').filter(r => r.trim().length > 20).join(' ').replace(/\s+/g,' ').trim();
-    if (tekst.length < 200) throw new Error('Te weinig bruikbare tekst gevonden. Kopieer de tekst en plak hem hieronder.');
-    const titel = doc.querySelector('title')?.textContent?.trim() || new URL(url).hostname;
+    const { tekst, titel } = await _haalTekstVanUrl(url);
     document.getElementById('custom-text').value = tekst;
     document.getElementById('tekst-naam').value = titel;
     telWoorden();
@@ -7909,7 +7941,27 @@ function leerWegAutoVoltooi(scherm) {
   leerWegHeroUpdate();
   if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 400);
   if (document.getElementById('screen-leerweg')?.classList.contains('active')) leerWegInit();
+  // Trainingen zonder ronde-overlay (oogtraining, skim, oogontspanning):
+  // toon een duidelijke knop naar de volgende missie, anders strandt de speler.
+  setTimeout(() => {
+    if (!document.getElementById('ronde-res')) _lwToonVolgendeCta();
+  }, 900);
   return true;
+}
+
+function _lwToonVolgendeCta() {
+  if (document.getElementById('lw-volgende-cta')) return;
+  const volgende = leerWegVolgendeDag();
+  if (!volgende) return;
+  const el = document.createElement('div');
+  el.id = 'lw-volgende-cta';
+  el.className = 'lw-volgende-cta';
+  el.innerHTML = `
+    <div class="lw-volgende-cta-tekst"><b>◆ Missie voltooid!</b><span>Volgende: ${volgende.dag.naam}</span></div>
+    <button class="btn btn-primary" onclick="document.getElementById('lw-volgende-cta').remove();leerWegHeroActie()">▶ Start</button>
+    <button class="lw-volgende-cta-sluit" onclick="document.getElementById('lw-volgende-cta').remove()" aria-label="Sluiten">×</button>`;
+  document.body.appendChild(el);
+  setTimeout(() => { document.getElementById('lw-volgende-cta')?.remove(); }, 20000);
 }
 
 function leerWegHeroUpdate() {
@@ -7984,7 +8036,13 @@ let oogTimerInterval = null;
 let oogTimerResterend = 0;
 
 function oogHoogsteVrij() {
-  return Math.min(2, Math.max(0, parseInt(localStorage.getItem('oog_hoogste_vrij') || '0', 10)));
+  const opgeslagen = localStorage.getItem('oog_hoogste_vrij');
+  if (opgeslagen !== null) return Math.min(2, Math.max(0, parseInt(opgeslagen, 10) || 0));
+  // Nog geen oogtraining gedaan: startniveau volgt uit de gemeten leessnelheid,
+  // zodat vlotte lezers niet verplicht bij Beginner hoeven te starten.
+  const basis = (typeof laadGeldigeBegintestBaseline === 'function') ? laadGeldigeBegintestBaseline() : null;
+  const wpm = basis ? Number(basis.wpm) || 0 : 0;
+  return wpm >= 280 ? 2 : wpm >= 180 ? 1 : 0;
 }
 
 function oogHoogsteVoltooid() {
@@ -10623,6 +10681,8 @@ function skimTimerStart() {
     if(skimTimerSec<=0){
       clearInterval(skimTimerRef); skimTimerActief=false;
       document.getElementById('skim-timer-display').textContent='⏱ Tijd!';
+      // Skim-ronde uitgelezen: telt als voltooide skim-sessie voor leerweg/uitdaging
+      if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('skim');
       // Toon begripsvraag
       const d = skimTekstIdx === -1 ? skimEigenData() : SKIM_TEKSTEN_DATA[skimTekstIdx];
       const wrap=document.getElementById('skim-vraag-wrap');
@@ -10649,10 +10709,6 @@ function scanNieuwe() {
 function scanZoek() {
   const zoek = document.getElementById('scan-zoek-input').value.trim().toLowerCase();
   const box = document.getElementById('scan-tekst-box');
-  // Reset highlights
-  const d = SKIM_TEKSTEN_DATA[Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length)];
-  // Re-render with highlights
-  let html = box.innerHTML.replace(/<mark[^>]*>(.*?)<\/mark>/gi,'$1'); // strip old marks
   if (zoek.length>1) {
     const re = new RegExp(`(${zoek.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
     box.innerHTML = box.innerHTML.replace(/<mark[^>]*>(.*?)<\/mark>/gi,'$1').replace(re,'<mark class="scan-hl">$1</mark>');
@@ -10663,7 +10719,13 @@ function scanZoek() {
 }
 
 function scanAutoZoek() {
-  const wrd = SCAN_WOORDEN[Math.floor(Math.random()*SCAN_WOORDEN.length)];
+  // Kies het zoekwoord uit de tekst die nu op het scherm staat, zodat het
+  // doelwoord altijd vindbaar is (inhoudswoorden van 5-12 letters).
+  const box = document.getElementById('scan-tekst-box');
+  const kandidaten = [...new Set(((box?.textContent) || '').toLowerCase().match(/[a-zà-ü]{5,12}/g) || [])];
+  const wrd = kandidaten.length
+    ? kandidaten[Math.floor(Math.random() * kandidaten.length)]
+    : SCAN_WOORDEN[Math.floor(Math.random() * SCAN_WOORDEN.length)];
   document.getElementById('scan-zoek-doel').textContent = `🎯 Zoek: "${wrd}"`;
   document.getElementById('scan-zoek-input').value = wrd;
   scanZoek();
@@ -10688,6 +10750,9 @@ function previewNieuwe() {
 function previewNaarStap2() {
   document.getElementById('preview-stap-1').style.display='none';
   document.getElementById('preview-stap-2').style.display='';
+  // Previewing-oefening doorlopen telt als voltooide skim-sessie
+  // (anders kan de leerweg-dag 'Previewing' nooit worden afgerond)
+  if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('skim');
 }
 
 // ═══════════════════════════════════════════════════════════
