@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Snellezer merk-icoon: opengeslagen boek dat rechts overgaat in een
+       vleugel (lezen geeft vleugels). Crème op vermiljoen, navy rug. -->
+  <rect width="1024" height="1024" fill="#E8492B"/>
+  <!-- Linkerpagina met opwippende hoek en boek-punt onder de rug -->
+  <path fill="#F8EFD9" d="
+    M 205 240
+    C 262 274 318 292 362 299
+    C 336 303 314 309 298 317
+    C 392 352 502 412 574 472
+    L 620 472
+    L 620 800
+    C 617 806 614 810 612 814
+    C 500 792 366 760 254 706
+    C 188 664 152 590 149 502
+    C 147 402 170 302 205 240
+    Z"/>
+  <!-- Vleugel: bovenste veer -->
+  <path fill="#F8EFD9" d="
+    M 640 470
+    C 668 400 738 342 822 306
+    C 868 286 916 266 950 244
+    C 928 322 878 394 806 440
+    C 760 468 716 482 684 500
+    C 664 512 650 524 640 538
+    Z"/>
+  <!-- Vleugel: onderste veer, loopt door als rechterrand van het boek -->
+  <path fill="#F8EFD9" d="
+    M 640 590
+    C 682 552 748 530 830 520
+    C 884 512 934 500 970 484
+    C 940 560 884 614 810 644
+    C 744 670 690 682 656 706
+    C 646 736 632 772 610 804
+    L 610 590
+    Z"/>
+  <!-- Boekrug -->
+  <rect x="588" y="466" width="52" height="306" rx="26" fill="#1D2B4F"/>
+</svg>
