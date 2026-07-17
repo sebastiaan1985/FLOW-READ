@@ -446,6 +446,7 @@ const Ronde = {
     overlay.id = 'ronde-res';
     overlay.innerHTML = `
       <div class="ronde-res-kaart" role="dialog" aria-modal="true" aria-label="Ronde-resultaat">
+        ${r.recordNieuw ? `<div class="ronde-res-record">🏆 Nieuw record: ${r.wpm} WPM — mét begrip!</div>` : ''}
         <div class="ronde-sterren">${sterHtml}</div>
         <div class="ronde-res-uitleg">${uitleg}</div>
         <div class="ronde-res-grid">
@@ -467,8 +468,9 @@ const Ronde = {
       else document.getElementById('ronde-res-wpm').textContent = r.wpm;
     }
 
-    if (r.sterren >= 3 && typeof showConfetti === 'function') showConfetti(50, 20, true);
-    if (typeof _geluid !== 'undefined') (r.sterren >= 2 ? _geluid.fanfare() : _geluid.goed());
+    if (r.recordNieuw && typeof showConfetti === 'function') showConfetti(100, 30, true);
+    else if (r.sterren >= 3 && typeof showConfetti === 'function') showConfetti(50, 20, true);
+    if (typeof _geluid !== 'undefined') ((r.sterren >= 2 || r.recordNieuw) ? _geluid.fanfare() : _geluid.goed());
   },
 
   sluit() {

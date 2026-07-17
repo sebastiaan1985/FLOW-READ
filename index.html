@@ -2317,6 +2317,16 @@ body.kids .inhoud-optie { background:#f4f8ff; border-color:rgba(0,0,0,.1); }
   animation: levelupPop .35s cubic-bezier(.2,1.5,.4,1);
 }
 .ronde-sterren { font-size: 44px; letter-spacing: 8px; line-height: 1; margin-bottom: 10px; }
+/* Nieuw persoonlijk record: hét beloningsmoment, dus prominent vieren */
+.ronde-res-record {
+  display: inline-block; margin: 0 auto 12px; padding: 8px 18px; border-radius: 999px;
+  background: linear-gradient(135deg, rgba(240,176,0,.22), rgba(240,98,146,.18));
+  border: 1.5px solid rgba(240,176,0,.55); color: #ffd54f;
+  font-size: .92rem; font-weight: 800; letter-spacing: .3px;
+  animation: recordPop .5s cubic-bezier(.2,1.6,.4,1);
+  box-shadow: 0 0 30px rgba(240,176,0,.25);
+}
+@keyframes recordPop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .ronde-ster { color: rgba(255,255,255,.14); display: inline-block; }
 .ronde-ster.aan { color: #f0c000; animation: sterPop .45s cubic-bezier(.2,1.8,.4,1) both; text-shadow: 0 0 22px rgba(240,192,0,.45); }
 @keyframes sterPop { from { transform: scale(0) rotate(-30deg); } to { transform: scale(1) rotate(0); } }
