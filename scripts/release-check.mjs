@@ -45,7 +45,7 @@ const manifestScreenshots = manifest.screenshots || [];
 verwacht(manifest.name && manifest.short_name, 'Manifest mist name of short_name.');
 verwacht(manifest.name === 'Snellezer' && manifest.short_name === 'Snellezer', 'Manifest gebruikt niet overal de naam Snellezer.');
 verwacht(manifest.display === 'standalone', 'Manifest moet standalone starten.');
-verwacht(manifest.theme_color === '#08081a', 'Manifest moet de donkere PWA-statuskleur gebruiken.');
+verwacht(manifest.theme_color === '#061416', 'Manifest moet de inktgroene PWA-statuskleur gebruiken.');
 verwacht(manifest.icons?.some(icon => icon.purpose?.includes('maskable')), 'Manifest mist een maskable icoon.');
 verwacht(manifest.shortcuts?.length >= 2, 'Manifest mist de twee app-shortcuts.');
 verwacht(manifestScreenshots.length >= 1, 'Manifest mist een mobiele app-screenshot.');
@@ -90,7 +90,16 @@ for (const pagina of ['index.html', 'login.html', 'privacy.html', 'reset-wachtwo
 }
 
 const appHtml = lees('index.html');
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v32'"), 'Service worker gebruikt niet de actuele v32-cache.');
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v35'"), 'Service worker gebruikt niet de actuele v35-cache.');
+verwacht(/--accent:\s+#20c9c3;/.test(appHtml), 'App mist de turquoise primaire merkkleur.');
+verwacht(/--accent2:\s+#b7df48;/.test(appHtml), 'App mist lime als voortgangskleur.');
+verwacht(/--bg:\s+#061416;/.test(appHtml), 'App mist de rustige inktgroene leesachtergrond.');
+for (const bestand of ['index.html', 'login.html', 'privacy.html', 'reset-wachtwoord.html', 'ronde.js', 'supabase-sync.js']) {
+  const inhoud = lees(bestand).toLowerCase();
+  for (const oudeKleur of ['#7c6ff7', 'rgba(124,111,247', '#a78bfa', '#9f8fff', '#14142e', '#a99fff', '#5b4fd4']) {
+    verwacht(!inhoud.includes(oudeKleur), `${bestand} bevat nog de oude paarse merkkleur ${oudeKleur}.`);
+  }
+}
 verwacht(appHtml.includes('<title>Snellezer</title>'), 'Apppagina gebruikt niet de naam Snellezer.');
 verwacht(appHtml.includes('function startInhoudsQuiz('), 'RSVP en chunks missen de quizfinale met drie inhoudsvragen.');
 verwacht(appHtml.includes("Coach.registreerBegrip(begripPct, type)"), 'Quizresultaat voedt de begripsscore niet.');
@@ -144,9 +153,19 @@ verwacht(appHtml.includes('ios-standalone'), 'iOS standalone-layoutdetectie ontb
 verwacht(appHtml.includes('href="privacy.html"'), 'Appmenu linkt niet naar de privacyverklaring.');
 verwacht(appHtml.includes("const LW_ACTIEF_KEY = 'snellees_actieve_missie'"), 'Leerweg mist een persistente actieve missie.');
 verwacht(appHtml.includes('lwMissieBeloning'), 'Leerweg mist missie- en weekbaasbeloningen.');
+verwacht(!appHtml.includes("toonAchievement(d === LEERWEG_WEKEN[w].dagen.length - 1"), 'Missiestart toont nog voortijdig een verdiende badge.');
+verwacht(!appHtml.includes('Missie gestart · +'), 'Missiestart doet nog alsof XP al is verdiend.');
 verwacht(appHtml.includes('Rond eerst de vorige missie af.'), 'Leerweg laat vergrendelde missies mogelijk overslaan.');
 verwacht(!appHtml.includes('onclick="leerWegDagMarkeer()"'), 'Leerweg bevat nog een handmatige voltooi-knop.');
 verwacht(appHtml.includes('const sessie = startweek?.sessies?.[d - 1]'), 'Startweek en eerste spelwereld zijn niet gekoppeld.');
+verwacht(appHtml.includes("localStorage.setItem(LW_ACTIEF_KEY, JSON.stringify({ w:0, d:0, screen:'begintest'"), 'Directe begintest wordt niet als eerste kaartmissie voltooid.');
+verwacht(appHtml.includes('function synchroniseerStartweekMetLeerweg()'), 'Bestaande startweek- en kaartvoortgang wordt niet hersteld.');
+verwacht(appHtml.includes("gedaan.filter(sleutel => !sleutel.startsWith('w0d'))"), 'Oude week-1-voortgang blijft staan na het verwijderen van een ongeldige baseline.');
+verwacht(appHtml.includes('leerWegStartDag(kaartMissie.w, kaartMissie.d);'), 'Dagmissie loopt niet via één centrale kaartmissie.');
+verwacht(!appHtml.includes('_startMissieType(startweek.type, startweek.wpm);'), 'Dagmissie kan de kaart nog omzeilen via een losse startweekroute.');
+verwacht(appHtml.includes("if (!laadGeldigeBegintestBaseline() && !(w === 0 && d === 0))"), 'Leerweg kan zonder geldige begintest worden gestart.');
+verwacht(appHtml.includes("tekstEl.textContent = 'Doe eerst de begintest'"), 'Leerweg-CTA noemt zonder baseline niet de begintest.');
+verwacht(appHtml.includes("label.textContent = 'Jouw eerste missie'"), 'Vandaagkaart toont zonder baseline nog een willekeurige daguitdaging.');
 verwacht(appHtml.includes('kaartMissieVoltooid && typeof _markeerStartweekVoltooid'), 'Startweek kan buiten een echte kaartmissie voortgang krijgen.');
 verwacht(appHtml.includes("const kwaliteitTypes = ['rsvp','chunk','regressie','leestest','langetekst','eigen-lees']"), 'Leesmetingen missen de centrale begripspoort.');
 verwacht(appHtml.includes('if (kwaliteitBehaald && uitdaging'), 'Daguitdaging kan nog voltooien zonder vereiste begripsscore.');
@@ -164,7 +183,8 @@ verwacht(!lees('ronde.js').includes('Perfect: snel én alles begrepen.'), 'Drie 
 verwacht(!appHtml.includes('Perfecte ronde: snelheid én begrip zitten goed.'), 'Momentumkaart noemt voldoende begrip ten onrechte perfect.');
 verwacht(!lees('ronde.js').includes("_markeerStartweekVoltooid(r.type)"), 'Ronde-resultaat kan onbedoeld een extra startweeksessie overslaan.');
 verwacht(lees('ronde.js').includes("begrip !== null && begrip >= begripDoel"), 'Leesronde voltooit de persoonlijke missie zonder begripspoort.');
-verwacht(lees('coach.js').includes("baselineKlaar && t.id === 'e1'"), 'Coach kan na de begintest nog vragen om de begintest te doen.');
+verwacht(lees('coach.js').includes("? t.cat === cat && t.id !== 'e1'"), 'Coach kan na de begintest nog vragen om de begintest te doen.');
+verwacht(lees('coach.js').includes('if (!Coach.baseline())'), 'Coach beveelt zonder baseline niet altijd de begintest aan.');
 verwacht(appHtml.includes("const veiligWoord = String(woord ?? '');"), 'Leesweergave ontsmet eigen woorden niet.');
 verwacht(appHtml.includes('htmlEscape(d.titel)'), 'Skimweergave ontsmet eigen titels niet.');
 for (const eventNaam of ['onboarding_voltooid', 'begintest_voltooid', 'eerste_missie_voltooid', 'startweek_sessie_voltooid', 'startweek_voltooid', 'hermeting_voltooid', 'install_voltooid']) {
@@ -217,6 +237,7 @@ if (existsSync(resolve(root, 'vercel.json'))) {
 verwacht(existsSync(resolve(root, 'capacitor.config.json')), 'Capacitor-config ontbreekt.');
 verwacht(JSON.parse(lees('capacitor.config.json')).webDir === 'dist', 'Capacitor moet dist als webDir gebruiken.');
 verwacht(existsSync(resolve(root, 'resources/icon.png')), 'Native bronicoon ontbreekt.');
+verwacht(existsSync(resolve(root, 'DESIGN_SYSTEM.md')), 'Vastgelegde kleur- en leesrichtlijnen ontbreken.');
 verwacht(existsSync(resolve(root, 'ios/App/App/public/index.html')), 'iOS bevat geen gesynchroniseerde webbuild.');
 verwacht(existsSync(resolve(root, 'ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png')), 'iOS appicoon ontbreekt.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public/index.html')), 'Android bevat geen gesynchroniseerde webbuild.');

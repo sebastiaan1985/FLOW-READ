@@ -205,6 +205,7 @@ const Coach = {
       );
       const begrip = Coach.begripScores();
       const streak = parseInt(localStorage.getItem('snellees_streak') || '0', 10);
+      const baselineKlaar = !!Coach.baseline();
 
       // Context berekenen
       const laatste = sessies[sessies.length - 1];
@@ -218,7 +219,7 @@ const Coach = {
 
       // Categorie kiezen (belangrijkste eerst)
       let cat;
-      if (sessies.length < 3) cat = 'eerste';
+      if (!baselineKlaar || sessies.length < 3) cat = 'eerste';
       else if (begripLaag) cat = 'begrip';
       else if (dagenWeg > 3) cat = 'comeback';
       else if (Coach.adaptief.isPlateau()) cat = 'plateau';
@@ -229,8 +230,9 @@ const Coach = {
 
       // Template kiezen met anti-herhaling
       const recent = st.laatsteTemplates || [];
-      const baselineKlaar = !!localStorage.getItem('begintest_baseline');
-      const passend = t => t.cat === cat && !(baselineKlaar && t.id === 'e1');
+      const passend = t => baselineKlaar
+        ? t.cat === cat && t.id !== 'e1'
+        : t.id === 'e1';
       let pool = this.TEMPLATES.filter(t => passend(t) && !recent.includes(t.id));
       if (!pool.length) pool = this.TEMPLATES.filter(passend);
       const tpl = pool[Math.floor(Math.random() * pool.length)];
@@ -286,6 +288,7 @@ const Coach = {
   // ── PLANNER: volgende beste oefening ───────────────────────
   planner: {
     OEFENINGEN: {
+      begintest:{ naam: 'Begintest',          icon: '🎯' },
       rsvp:     { naam: 'RSVP-lezen',       icon: '⚡' },
       chunk:    { naam: 'Chunk-lezen',      icon: '📖' },
       oog:      { naam: 'Oogtraining',      icon: '👁' },
@@ -300,6 +303,15 @@ const Coach = {
 
     /** {type, naam, icon, reden} — of null zolang er geen begintest is. */
     aanbeveling() {
+      if (!Coach.baseline()) {
+        return {
+          type:'begintest',
+          ...this.OEFENINGEN.begintest,
+          reden:Coach.isKids()
+            ? 'Ontdek eerst jouw starttempo en hoeveel je onthoudt.'
+            : 'Meet eerst je tempo én begrip; daarna bouwt de leerweg persoonlijk verder.',
+        };
+      }
       // Leerweg-dag van vandaag heeft altijd topprioriteit
       if (typeof leerWegVolgendeDag === 'function') {
         const lw = leerWegVolgendeDag();
