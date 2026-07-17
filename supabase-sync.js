@@ -311,9 +311,9 @@ function _toonGebruikerHeader() {
   btn.onclick = openAccountBeheer;
   Object.assign(btn.style, {
     padding: '7px 13px',
-    border: '1px solid rgba(124,111,247,.35)',
+    border: '1px solid rgba(32,201,195,.35)',
     borderRadius: '8px',
-    background: 'rgba(124,111,247,.1)',
+    background: 'rgba(32,201,195,.1)',
     color: '#a090f7',
     fontSize: '12px',
     fontWeight: '600',

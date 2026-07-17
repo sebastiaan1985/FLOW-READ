@@ -415,7 +415,7 @@ const Ronde = {
     try {
       const beloning = window._lwLaatsteBeloning;
       if (beloning && beloning.type === r.type && Date.now() - beloning.ts < 120000) {
-        leerwegHtml = `<div class="ronde-res-xp" style="background:rgba(124,111,247,.15);border-color:rgba(124,111,247,.3);color:#b8b0ff">${beloning.boss ? 'Weekbaas verslagen' : 'Missie voltooid'} · +${beloning.xp} XP</div>`;
+        leerwegHtml = `<div class="ronde-res-xp" style="background:rgba(32,201,195,.15);border-color:rgba(32,201,195,.3);color:#84e5df">${beloning.boss ? 'Weekbaas verslagen' : 'Missie voltooid'} · +${beloning.xp} XP</div>`;
       }
     } catch (e) { /* leerweg-beloning is optioneel */ }
 

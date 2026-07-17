@@ -2,15 +2,14 @@
 /**
  * genereer-iconen.mjs — SnelLees Trainer app-iconen
  *
- * Genereert alle PWA-iconen als PNG, zonder dependencies:
+ * Genereert alle PWA- en native app-iconen als PNG, zonder dependencies:
  * de PNG-encoding gebeurt met Node's ingebouwde zlib (deflate + CRC32).
  *
- * Ontwerp: afgeronde rechthoek in het app-paars (#7c6ff7 → #6a5ce0 verloop)
- * met een gestileerd wit open boek + twee "snelheidsstrepen".
+ * Ontwerp: afgeronde rechthoek in Snellezer-turquoise met een gestileerd
+ * wit open boek en twee limekleurige snelheidsstrepen.
  *
  * Gebruik:  node scripts/genereer-iconen.mjs
- * Output:   icons/icon-192.png, icon-512.png, icon-maskable-512.png,
- *           apple-touch-icon.png (180), favicon-32.png
+ * Output:   /icons plus de iOS- en Android-launchericonen.
  */
 
 import { deflateSync } from 'node:zlib';
@@ -75,9 +74,11 @@ function maakPng(breedte, hoogte, rgba) {
 
 // ── TEKENEN (per-pixel shapetests in 512-ontwerpruimte) ─────
 // Kleuren
-const PAARS_BOVEN = [0x8b, 0x7f, 0xf8];
-const PAARS_ONDER = [0x66, 0x58, 0xdd];
+const TURQUOISE_BOVEN = [0x2a, 0xd6, 0xce];
+const TURQUOISE_ONDER = [0x08, 0x78, 0x80];
 const WIT = [0xff, 0xff, 0xff];
+const LIME = [0xb7, 0xdf, 0x48];
+const INKT = [0x06, 0x14, 0x16];
 
 function inAfgerondeRect(x, y, r) {
   // 512×512 met hoekradius r
@@ -115,39 +116,47 @@ const STREPEN = [
 
 /**
  * Kleur van ontwerppunt (x,y) in 512-ruimte.
- * maskable: volle achtergrond (geen ronde hoeken), tekening op 80%.
+ * maskable: volle achtergrond (geen ronde hoeken), tekening op 72%.
  * volVlak: volle achtergrond, tekening op 100% (apple-touch-icon).
+ * rond: rond legacy Android-icoon.
+ * foregroundOnly: transparante Android adaptive-icon voorgrond.
  */
-function kleurOp(x, y, { maskable = false, volVlak = false } = {}) {
+function kleurOp(x, y, { maskable = false, volVlak = false, rond = false, foregroundOnly = false } = {}) {
   let dx = x, dy = y;
   if (maskable) { dx = (x - 256) / 0.72 + 256; dy = (y - 256) / 0.72 + 256; }
+  if (foregroundOnly) { dx = (x - 256) / 0.85 + 256; dy = (y - 256) / 0.85 + 256; }
 
-  const inBg = (maskable || volVlak) ? true : inAfgerondeRect(x, y, 100);
+  const inBg = foregroundOnly
+    ? true
+    : rond
+      ? (x - 256) ** 2 + (y - 256) ** 2 <= 256 ** 2
+      : (maskable || volVlak) ? true : inAfgerondeRect(x, y, 100);
   if (!inBg) return [0, 0, 0, 0];
 
   // Verticaal verloop
   const t = y / 512;
   const bg = [
-    Math.round(PAARS_BOVEN[0] + (PAARS_ONDER[0] - PAARS_BOVEN[0]) * t),
-    Math.round(PAARS_BOVEN[1] + (PAARS_ONDER[1] - PAARS_BOVEN[1]) * t),
-    Math.round(PAARS_BOVEN[2] + (PAARS_ONDER[2] - PAARS_BOVEN[2]) * t),
+    Math.round(TURQUOISE_BOVEN[0] + (TURQUOISE_ONDER[0] - TURQUOISE_BOVEN[0]) * t),
+    Math.round(TURQUOISE_BOVEN[1] + (TURQUOISE_ONDER[1] - TURQUOISE_BOVEN[1]) * t),
+    Math.round(TURQUOISE_BOVEN[2] + (TURQUOISE_ONDER[2] - TURQUOISE_BOVEN[2]) * t),
   ];
 
   // Boek (wit)
   if (inQuad(dx, dy, LINKS) || inQuad(dx, dy, RECHTS)) return [...WIT, 255];
-  // Snelheidsstrepen (wit, iets doorzichtig → meng met bg)
+  // Snelheidsstrepen (lime, iets doorzichtig, gemengd met de achtergrond)
   for (const [sx, sy, sw, sh] of STREPEN) {
     if (inBalk(dx, dy, sx, sy, sw, sh)) {
+      if (foregroundOnly) return [...LIME, 255];
       const a = 0.82;
       return [
-        Math.round(WIT[0] * a + bg[0] * (1 - a)),
-        Math.round(WIT[1] * a + bg[1] * (1 - a)),
-        Math.round(WIT[2] * a + bg[2] * (1 - a)),
+        Math.round(LIME[0] * a + bg[0] * (1 - a)),
+        Math.round(LIME[1] * a + bg[1] * (1 - a)),
+        Math.round(LIME[2] * a + bg[2] * (1 - a)),
         255,
       ];
     }
   }
-  return [...bg, 255];
+  return foregroundOnly ? [0, 0, 0, 0] : [...bg, 255];
 }
 
 /** Render met 3×3 supersampling voor gladde randen */
@@ -178,9 +187,50 @@ function render(maat, opties) {
 }
 
 function schrijf(naam, maat, opties) {
+  schrijfNaar(join(UIT, naam), maat, opties, `icons/${naam}`);
+}
+
+function schrijfNaar(pad, maat, opties, label) {
+  mkdirSync(dirname(pad), { recursive: true });
   const png = maakPng(maat, maat, render(maat, opties));
-  writeFileSync(join(UIT, naam), png);
-  console.log(`✓ icons/${naam} (${maat}×${maat}, ${(png.length / 1024).toFixed(1)} kB)`);
+  writeFileSync(pad, png);
+  console.log(`✓ ${label} (${maat}×${maat}, ${(png.length / 1024).toFixed(1)} kB)`);
+}
+
+function renderSplash(breedte, hoogte) {
+  const rgba = new Uint8Array(breedte * hoogte * 4);
+  const icoonMaat = Math.round(Math.min(breedte, hoogte) * 0.32);
+  const links = Math.round((breedte - icoonMaat) / 2);
+  const boven = Math.round((hoogte - icoonMaat) / 2);
+  for (let y = 0; y < hoogte; y++) {
+    for (let x = 0; x < breedte; x++) {
+      const i = (y * breedte + x) * 4;
+      let kleur = [...INKT, 255];
+      if (x >= links && x < links + icoonMaat && y >= boven && y < boven + icoonMaat) {
+        const dx = ((x - links) / icoonMaat) * 512;
+        const dy = ((y - boven) / icoonMaat) * 512;
+        const icoon = kleurOp(dx, dy);
+        if (icoon[3]) kleur = icoon;
+      }
+      rgba[i] = kleur[0];
+      rgba[i + 1] = kleur[1];
+      rgba[i + 2] = kleur[2];
+      rgba[i + 3] = kleur[3];
+    }
+  }
+  return rgba;
+}
+
+const splashCache = new Map();
+function schrijfSplash(pad, breedte, hoogte, label) {
+  mkdirSync(dirname(pad), { recursive: true });
+  const sleutel = `${breedte}x${hoogte}`;
+  if (!splashCache.has(sleutel)) {
+    splashCache.set(sleutel, maakPng(breedte, hoogte, renderSplash(breedte, hoogte)));
+  }
+  const png = splashCache.get(sleutel);
+  writeFileSync(pad, png);
+  console.log(`✓ ${label} (${breedte}×${hoogte}, ${(png.length / 1024).toFixed(1)} kB)`);
 }
 
 schrijf('icon-192.png', 192, {});
@@ -189,4 +239,70 @@ schrijf('icon-maskable-512.png', 512, { maskable: true });
 schrijf('apple-touch-icon.png', 180, { volVlak: true });
 schrijf('favicon-32.png', 32, {});
 
-console.log('\nKlaar! Alle iconen staan in /icons.');
+schrijfNaar(
+  join(ROOT, 'resources/icon.png'),
+  1024,
+  { volVlak: true },
+  'Capacitor resources/icon.png',
+);
+
+schrijfNaar(
+  join(ROOT, 'ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png'),
+  1024,
+  { volVlak: true },
+  'iOS AppIcon-512@2x.png',
+);
+
+const ANDROID_MATEN = {
+  mdpi: [48, 108],
+  hdpi: [72, 162],
+  xhdpi: [96, 216],
+  xxhdpi: [144, 324],
+  xxxhdpi: [192, 432],
+};
+
+for (const [dichtheid, [legacyMaat, voorgrondMaat]] of Object.entries(ANDROID_MATEN)) {
+  const map = join(ROOT, `android/app/src/main/res/mipmap-${dichtheid}`);
+  schrijfNaar(join(map, 'ic_launcher.png'), legacyMaat, { volVlak: true }, `Android ${dichtheid} launcher`);
+  schrijfNaar(join(map, 'ic_launcher_round.png'), legacyMaat, { rond: true }, `Android ${dichtheid} round`);
+  schrijfNaar(
+    join(map, 'ic_launcher_foreground.png'),
+    voorgrondMaat,
+    { foregroundOnly: true },
+    `Android ${dichtheid} foreground`,
+  );
+}
+
+for (const naam of ['splash-2732x2732.png', 'splash-2732x2732-1.png', 'splash-2732x2732-2.png']) {
+  schrijfSplash(
+    join(ROOT, 'ios/App/App/Assets.xcassets/Splash.imageset', naam),
+    2732,
+    2732,
+    `iOS ${naam}`,
+  );
+}
+
+const ANDROID_SPLASHES = {
+  'drawable/splash.png': [480, 320],
+  'drawable-port-mdpi/splash.png': [320, 480],
+  'drawable-port-hdpi/splash.png': [480, 800],
+  'drawable-port-xhdpi/splash.png': [720, 1280],
+  'drawable-port-xxhdpi/splash.png': [960, 1600],
+  'drawable-port-xxxhdpi/splash.png': [1280, 1920],
+  'drawable-land-mdpi/splash.png': [480, 320],
+  'drawable-land-hdpi/splash.png': [800, 480],
+  'drawable-land-xhdpi/splash.png': [1280, 720],
+  'drawable-land-xxhdpi/splash.png': [1600, 960],
+  'drawable-land-xxxhdpi/splash.png': [1920, 1280],
+};
+
+for (const [pad, [breedte, hoogte]] of Object.entries(ANDROID_SPLASHES)) {
+  schrijfSplash(
+    join(ROOT, 'android/app/src/main/res', pad),
+    breedte,
+    hoogte,
+    `Android ${pad}`,
+  );
+}
+
+console.log('\nKlaar! Alle web- en native iconen zijn bijgewerkt.');

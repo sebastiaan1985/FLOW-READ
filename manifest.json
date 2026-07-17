@@ -7,8 +7,8 @@
   "scope": "./",
   "display": "standalone",
   "display_override": ["standalone"],
-  "background_color": "#0f0f1a",
-  "theme_color": "#08081a",
+  "background_color": "#061416",
+  "theme_color": "#061416",
   "orientation": "portrait-primary",
   "lang": "nl",
   "icons": [
@@ -64,7 +64,7 @@
       "sizes": "360x732",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Snellezer onboarding op mobiel"
+      "label": "Snellezer startscherm op mobiel"
     }
   ]
 }
