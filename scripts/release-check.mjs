@@ -136,7 +136,10 @@ for (const claim of ['2× sneller', 'zonder begripsverlies', '5–7 woorden', '3
 }
 verwacht(existsSync(resolve(root, 'assets/avatars/adults-grid.jpg')), 'Volwassen avatarset ontbreekt.');
 verwacht(existsSync(resolve(root, 'assets/avatars/kids-grid.jpg')), 'Kinderavatarset ontbreekt.');
-verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black"'), 'iOS PWA gebruikt geen niet-overlappende zwarte statusbalk.');
+// De statusbalk is translucent mét een gegarandeerde safe-area-bodem: iOS
+// rapporteerde in standalone soms inset 0 waardoor de klok over de header viel.
+verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black-translucent"'), 'iOS PWA gebruikt geen translucente statusbalk met safe-area.');
+verwacht(appHtml.includes('--safe-top:    max(env(safe-area-inset-top, 0px), 50px)'), 'Safe-area-bodem voor de iOS-statusbalk ontbreekt.');
 verwacht(appHtml.includes('ios-standalone'), 'iOS standalone-layoutdetectie ontbreekt.');
 verwacht(appHtml.includes('href="privacy.html"'), 'Appmenu linkt niet naar de privacyverklaring.');
 verwacht(appHtml.includes("const LW_ACTIEF_KEY = 'snellees_actieve_missie'"), 'Leerweg mist een persistente actieve missie.');

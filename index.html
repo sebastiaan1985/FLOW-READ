@@ -2666,7 +2666,14 @@ button:active { transform: scale(.96); }
 }
 .tr-kaart:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(124,111,247,.18); }
 .tr-kaart:active { transform: scale(.97); }
-.tr-icon { font-size: 1.6rem; }
+/* Icoontegel: geeft de gemengde emoji één visuele massa en maakt het raster rustig */
+.tr-icon {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem; line-height: 1; margin-bottom: 4px;
+  background: linear-gradient(135deg, rgba(124,111,247,.16), rgba(34,211,238,.10));
+  border: 1px solid rgba(124,111,247,.22);
+}
 .tr-naam { font-size: .88rem; font-weight: 700; }
 .tr-sub  { font-size: .72rem; color: var(--muted); }
 
