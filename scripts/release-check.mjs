@@ -267,6 +267,11 @@ const privacyBericht = 'Privacybeleid bevat nog publicatie-placeholders.';
 if (production) verwacht(privacyKlaar, privacyBericht);
 else waarschuw(privacyKlaar, privacyBericht);
 
+// Test-/ontwikkelhulpen mogen nooit mee naar productie
+const devTestKnop = appHtml.includes('lw-dev-skip');
+if (production) verwacht(!devTestKnop, 'DEV-testknop (leerweg overslaan) staat nog in de app — verwijderen vóór livegang.');
+else waarschuw(!devTestKnop, 'DEV-testknop (leerweg overslaan) staat in de app; verwijderen vóór livegang.');
+
 for (const melding of warnings) console.warn(`WAARSCHUWING: ${melding}`);
 for (const melding of errors) console.error(`FOUT: ${melding}`);
 

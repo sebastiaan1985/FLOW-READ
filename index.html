@@ -272,6 +272,43 @@ header {
 .donatie-knop:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(255,107,97,.5); }
 .donatie-klein { font-size: .74rem; color: var(--muted); margin-top: 12px; line-height: 1.4; }
 
+/* Founders / lifetime aanbod */
+.sidebar-founders-btn {
+  color: #ffe9a8 !important;
+  border-color: rgba(243,201,105,.5) !important;
+  background: linear-gradient(135deg, rgba(243,201,105,.16), rgba(32,201,195,.10)) !important;
+}
+.sidebar-founders-btn:hover {
+  color: #fff !important;
+  border-color: rgba(243,201,105,.75) !important;
+  background: linear-gradient(135deg, rgba(243,201,105,.28), rgba(32,201,195,.18)) !important;
+}
+.founders-kaart { border-color: rgba(243,201,105,.4); text-align: left; }
+.founders-badge {
+  display: inline-block; padding: 5px 14px; border-radius: 999px; margin-bottom: 12px;
+  background: rgba(243,201,105,.14); border: 1px solid rgba(243,201,105,.45);
+  color: var(--warning); font-size: .7rem; font-weight: 800; letter-spacing: 1.2px;
+}
+.founders-titel { text-align: left; background: linear-gradient(135deg, #fff 30%, var(--warning)); -webkit-background-clip: text; background-clip: text; }
+.founders-kaart .donatie-tekst { text-align: left; }
+.founders-kaart .donatie-tekst strong { color: var(--warning); }
+.founders-stack { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.founders-stack li { font-size: .88rem; line-height: 1.45; padding-left: 2px; }
+.founders-prijs {
+  display: flex; flex-direction: column; gap: 2px; text-align: center;
+  padding: 14px; margin-bottom: 16px; border-radius: 12px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border);
+}
+.founders-prijs-anker { font-size: .8rem; color: var(--muted); text-decoration: line-through; }
+.founders-prijs-nu { font-size: 1.45rem; font-weight: 800; color: var(--warning); }
+.founders-prijs-sub { font-size: .72rem; color: var(--muted); }
+.founders-knop {
+  border: none; cursor: pointer; font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--warning), var(--accent));
+  box-shadow: 0 10px 30px rgba(243,201,105,.3);
+}
+.founders-knop:hover { box-shadow: 0 14px 38px rgba(243,201,105,.45); }
+
 /* Doorstroom-banner: na een voltooide leerweg-missie direct door kunnen */
 .lw-volgende-cta {
   position: fixed; left: 12px; right: 12px; bottom: calc(76px + var(--safe-bottom));
@@ -2061,6 +2098,9 @@ main { -webkit-overflow-scrolling: touch; }
   display: flex; height: calc(62px + var(--safe-bottom));
   padding-bottom: var(--safe-bottom);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  /* iOS WebKit-bug: fixed + backdrop-filter kan de balk na scrollen op een
+     verkeerde positie schilderen. Eigen compositing-laag voorkomt dat. */
+  transform: translateZ(0); will-change: transform;
 }
 .bn-btn {
   flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -3105,12 +3145,46 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   </nav>
 
   <div class="sidebar-bottom">
+    <button id="sidebar-founders-btn" class="sidebar-founders-btn" onclick="openFounders();sluitSidebar()">⭐ Lifetime toegang</button>
     <button id="sidebar-doneer-btn" class="sidebar-doneer-btn" onclick="openDonatie();sluitSidebar()">❤️ Steun &amp; doneer</button>
     <button id="sidebar-installeer-btn" onclick="_installatie.start()" style="display:none;color:var(--accent)">📲 Installeer de app</button>
     <button id="sidebar-geluid-btn" onclick="_geluid.toggle()">🔔 Geluid aan</button>
     <button id="sidebar-kids-btn" onclick="toggleKids()">🎨 Kids modus</button>
     <button id="sidebar-dyx-btn" onclick="dyxOpenPanel();sluitSidebar()">🔤 Dyslexie instellingen</button>
     <a href="privacy.html"><span aria-hidden="true">🔒</span> Privacy</a>
+  </div>
+</div>
+
+<!-- ── FOUNDERS / LIFETIME AANBOD ─────────────────────────────
+     Eenmalig aanbod voor de eerste lichting gebruikers: levenslange toegang
+     vóórdat het maandabonnement start. De betaallink en prijs staan als
+     constantes in het script (MOLLIE_BETAALLINK, FOUNDERS_*). -->
+<div id="founders-overlay" class="donatie-overlay" role="dialog" aria-modal="true" aria-labelledby="founders-titel" hidden>
+  <div class="donatie-kaart founders-kaart">
+    <button class="donatie-sluit" onclick="sluitFounders()" aria-label="Sluiten">×</button>
+    <div class="founders-badge">⭐ FOUNDERS-AANBOD · EENMALIG</div>
+    <h2 id="founders-titel" class="donatie-titel founders-titel">Levenslang Snellezer</h2>
+    <p class="donatie-tekst">
+      Snellezer wordt straks een abonnement. De eerste lichting lezers krijgt
+      iets wat daarna nooit meer terugkomt: <strong>alles, voor altijd, voor één
+      eenmalig bedrag.</strong>
+    </p>
+    <ul class="founders-stack">
+      <li>✅ Alle trainingen &amp; de volledige 4-weken leerweg</li>
+      <li>✅ Onbeperkt eigen teksten en artikelen laden</li>
+      <li>✅ Alle toekomstige functies en updates — inbegrepen, voor altijd</li>
+      <li>✅ Founders-badge op je profiel</li>
+      <li>❤️ 80% van de netto-opbrengst gaat naar leesonderwijs</li>
+    </ul>
+    <div class="founders-prijs">
+      <span class="founders-prijs-anker" id="founders-anker">straks €4,99 per maand</span>
+      <span class="founders-prijs-nu" id="founders-prijs">nu eenmalig €29</span>
+      <span class="founders-prijs-sub" id="founders-plekken">alleen voor de eerste 100 lezers</span>
+    </div>
+    <button id="founders-knop" class="donatie-knop founders-knop" onclick="foundersBetaal()">
+      Ja, ik word Founding Reader →
+    </button>
+    <p class="donatie-klein">30 dagen niet-goed-geld-terug. Veilige betaling via Mollie (iDEAL, kaart).</p>
   </div>
 </div>
 
@@ -4721,6 +4795,13 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button class="btn btn-ghost" style="font-size:.75rem" onclick="leerWegReset()">↺ Opnieuw starten</button>
   </div>
   <div id="lw-weken-container"></div>
+
+  <!-- ⚠️ DEV-ONLY TESTKNOP — VERWIJDEREN VÓÓR LIVEGANG.
+       release-check --production blokkeert de release zolang deze knop bestaat. -->
+  <button id="lw-dev-skip" onclick="lwDevSkipMissie()"
+    style="width:100%;margin-top:18px;padding:12px;border:2px dashed rgba(243,201,105,.6);border-radius:12px;background:rgba(243,201,105,.08);color:#f3c969;font-size:.85rem;font-weight:700;cursor:pointer">
+    🧪 TESTMODUS: volgende missie afvinken (weghalen vóór livegang)
+  </button>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
@@ -5408,6 +5489,47 @@ function sluitSidebar() {
 // voor jou). Wil je zelf innen en daarna doorgeven? Vervang deze ene regel door
 // je eigen Stripe/Mollie/Ko-fi-betaallink.
 const DONATIE_URL = 'https://doneren.lezenenschrijven.nl/';
+
+// ── FOUNDERS / LIFETIME AANBOD ───────────────────────────────────────────────
+// Plak hier je Mollie-betaallink (Mollie Dashboard → Payment Links) zodra die
+// bestaat. Zolang hij leeg is, meldt de knop dat de betaling binnenkort opent.
+const MOLLIE_BETAALLINK = '';
+const FOUNDERS_PRIJS    = 'nu eenmalig €29';
+const FOUNDERS_ANKER    = 'straks €4,99 per maand';
+const FOUNDERS_PLEKKEN  = 'alleen voor de eerste 100 lezers';
+
+function openFounders() {
+  const overlay = document.getElementById('founders-overlay');
+  if (!overlay) return;
+  document.getElementById('founders-prijs').textContent = FOUNDERS_PRIJS;
+  document.getElementById('founders-anker').textContent = FOUNDERS_ANKER;
+  document.getElementById('founders-plekken').textContent = FOUNDERS_PLEKKEN;
+  overlay.hidden = false;
+  if (typeof gtmTrack === 'function') gtmTrack('founders_aanbod_geopend');
+  document.addEventListener('keydown', _foundersEsc);
+}
+function sluitFounders() {
+  const overlay = document.getElementById('founders-overlay');
+  if (overlay) overlay.hidden = true;
+  document.removeEventListener('keydown', _foundersEsc);
+}
+function _foundersEsc(e) { if (e.key === 'Escape') sluitFounders(); }
+function foundersBetaal() {
+  if (typeof gtmTrack === 'function') gtmTrack('founders_betaal_geklikt');
+  if (MOLLIE_BETAALLINK) {
+    window.open(MOLLIE_BETAALLINK, '_blank', 'noopener');
+    return;
+  }
+  const knop = document.getElementById('founders-knop');
+  if (knop) {
+    knop.textContent = 'Betaling opent binnenkort — we koppelen Mollie nu aan';
+    setTimeout(() => { knop.textContent = 'Ja, ik word Founding Reader →'; }, 3200);
+  }
+}
+document.addEventListener('click', (e) => {
+  const overlay = document.getElementById('founders-overlay');
+  if (overlay && !overlay.hidden && e.target === overlay) sluitFounders();
+});
 
 function openDonatie() {
   const overlay = document.getElementById('donatie-overlay');
@@ -7840,6 +7962,22 @@ function eersteStappenVerberg() {
 }
 
 // ── Leerweg: automatisch afvinken + voortgang op home ──────
+// ⚠️ DEV-ONLY: vinkt de eerstvolgende leerweg-missie af zonder te trainen,
+// zodat de hele leerweg snel te testen is. Verwijderen vóór livegang samen
+// met de knop #lw-dev-skip (release-check --production dwingt dat af).
+function lwDevSkipMissie() {
+  const volgende = leerWegVolgendeDag();
+  if (!volgende) { toonAchievement('🧪', 'TEST: leerweg is al volledig voltooid'); return; }
+  const gedaan = lwGedaan();
+  gedaan.push(lwKey(volgende.w, volgende.d));
+  localStorage.setItem(LW_KEY, JSON.stringify(gedaan));
+  localStorage.removeItem(LW_ACTIEF_KEY);
+  lwMissieHudUpdate();
+  leerWegHeroUpdate();
+  if (document.getElementById('screen-leerweg')?.classList.contains('active')) leerWegInit();
+  toonAchievement('🧪', `TEST: "${volgende.dag.naam}" afgevinkt`);
+}
+
 function leerWegVolgendeDag() {
   if (typeof LEERWEG_WEKEN === 'undefined') return null;
   const gedaan = lwGedaan();
