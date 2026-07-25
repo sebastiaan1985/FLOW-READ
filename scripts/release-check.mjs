@@ -90,7 +90,13 @@ for (const pagina of ['index.html', 'login.html', 'privacy.html', 'reset-wachtwo
 }
 
 const appHtml = lees('index.html');
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v33'"), 'Service worker gebruikt niet de actuele v33-cache.');
+const appMarkup = appHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+const htmlIds = [...appMarkup.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+const dubbeleIds = [...new Set(htmlIds.filter((id, index) => htmlIds.indexOf(id) !== index))];
+verwacht(dubbeleIds.length === 0, `App bevat dubbele HTML-id's: ${dubbeleIds.join(', ')}`);
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v34'"), 'Service worker gebruikt niet de actuele v34-cache.');
+verwacht(!appHtml.includes('`<span class="success">✓ "${naam}"'), 'Opslagmelding verwerkt een zelfgekozen tekstnaam nog als HTML.');
+verwacht(appHtml.includes("subtitel.textContent = String(naam ?? '')"), 'Achievementmeldingen verwerken namen niet veilig als tekst.');
 verwacht(/--accent:\s+#20c9c3;/.test(appHtml), 'App mist de turquoise primaire merkkleur.');
 verwacht(/--accent2:\s+#b7df48;/.test(appHtml), 'App mist lime als voortgangskleur.');
 verwacht(/--bg:\s+#061416;/.test(appHtml), 'App mist de rustige inktgroene leesachtergrond.');
@@ -118,6 +124,14 @@ verwacht(appHtml.includes('function dyxRegistreerAntwoord(goed, woord)'), 'Dysle
 verwacht(appHtml.includes('const beheerst = begrip >= 80'), 'Dyslexielessen missen de beheersingspoort van 80%.');
 verwacht(appHtml.includes('vervangt geen dyslexieonderzoek'), 'Dyslexie Leeslab mist de grens tussen oefenen en diagnostiek.');
 verwacht(!appHtml.includes('Speciaal lettertype helpt letters uit elkaar houden.'), 'Dyslexiecopy doet een ongefundeerde lettertypeclaim.');
+verwacht(!appHtml.includes('<div class="dyx-mode-card" onclick='), 'Dyslexiemodi zijn nog niet als toetsenbordbedienbare knoppen opgebouwd.');
+verwacht(appHtml.includes('aria-pressed="true"') && appHtml.includes("c.setAttribute('aria-pressed', 'false')"), 'Dyslexiemodi melden hun geselecteerde toestand niet.');
+verwacht(appHtml.includes('<button type="button" class="dyx-letter-btn"'), 'Letterjachtletters zijn niet toetsenbordbedienbaar.');
+verwacht(appHtml.includes('function jachtToonHint()'), 'Letterjachthint is niet toegankelijk te onthullen.');
+verwacht(!appHtml.includes('filter:blur(4px)'), 'Letterjacht zet het geheime antwoord nog leesbaar in de DOM.');
+verwacht(appHtml.includes("voltooiDaguitdaging('perifeer', { begrip: Math.round(pct * 100) })"), 'Een geslaagd perifeer spellevel rondt de actieve leerwegmissie niet af.');
+verwacht(appHtml.includes("localStorage.setItem('peri_hoogste_voltooid'"), 'Perifere levels bewaren niet afzonderlijk welke levels voltooid zijn.');
+verwacht(appHtml.includes("const unlocked = i <= hoogsteVrij"), 'Perifere levelselectie ontgrendelt mogelijk een level te vroeg.');
 verwacht(appHtml.includes('function begintestPassagesBeschikbaar()'), 'Begintest gebruikt geen ruime tekstvoorraad.');
 verwacht(appHtml.includes("localStorage.getItem('bt_passage_history')"), 'Begintest roteert teksten niet op gebruiksgeschiedenis.');
 verwacht(appHtml.includes('function begintestEigenTekst()'), 'Begintest linkt niet naar een eigen oefentekst.');
@@ -129,6 +143,10 @@ verwacht(appHtml.includes('function beoordeeldeLeesSessies()'), 'Statistieken sc
 verwacht(appHtml.includes("const sessies = (opgeslagen.sessies||[]).filter(sessieTeltVoorRecord);"), 'WPM-doel gebruikt nog ongetoetste sessies als huidig gemiddelde.');
 verwacht(appHtml.includes('Math.max(0, Math.min(1, (t - start) / duurMs))'), 'Getalanimatie kan met een negatief resultaat beginnen.');
 verwacht(!appHtml.includes('if (wpm > stats.bestWpm) stats.bestWpm = wpm;'), 'Een ongetoetste sessie kan nog direct het WPM-record verhogen.');
+verwacht(appHtml.includes('function veiligeArtikelUrl(ruweUrl)'), 'Artikelimport valideert externe URL’s niet centraal.');
+verwacht(appHtml.includes("url.protocol !== 'https:'"), 'Artikelimport staat nog onbeveiligde URL’s toe.');
+verwacht(appHtml.includes('Lokale of privé-adressen zijn niet toegestaan.'), 'Artikelimport blokkeert lokale en privé-adressen niet.');
+verwacht((appHtml.match(/via een externe ophaaldienst verwerkt/g) || []).length >= 2, 'Gebruikers krijgen geen duidelijke privacywaarschuwing bij URL-import.');
 verwacht((appHtml.match(/valideerVrijeLeesmeting\(/g) || []).length >= 5, 'Niet alle vrije leesmetingen gebruiken de centrale validatie.');
 verwacht(appHtml.includes('Beantwoord alle ${vragen.length} vragen.'), 'Begintest kan worden afgerond zonder alle begripsvragen.');
 verwacht(appHtml.includes('let btResultaatVerwerkt = false'), 'Begintest mist bescherming tegen dubbel verwerken.');
@@ -198,10 +216,27 @@ verwacht(loginHtml.includes('/auth/v1/settings'), 'Login controleert niet welke 
 verwacht(loginHtml.includes('external[provider] === true'), 'Login toont uitgeschakelde OAuth-providers mogelijk toch.');
 
 const sync = lees('supabase-sync.js');
-for (const sleutel of ['snellees_startweek', 'snellees_events', 'snellees_streak']) {
+for (const sleutel of [
+  'snellees_startweek',
+  'snellees_events',
+  'snellees_streak',
+  'oog_hoogste_vrij',
+  'oog_hoogste_voltooid',
+  'peri_hoogste_level',
+  'peri_hoogste_voltooid',
+  'dyslexie_leerweg',
+  'dyslexie_highscores',
+  'dyslexie_badges',
+  'dyslexie_stats',
+]) {
   verwacht(sync.includes(`'${sleutel}'`), `Sync mist ${sleutel}.`);
 }
 verwacht(sync.includes("functions.invoke('delete-account')"), 'Client mist de accountverwijder-call.');
+verwacht(sync.includes("btn.append(icoon, document.createTextNode(kort))"), 'Accountnaam wordt niet veilig als tekst in de header geplaatst.');
+verwacht(!sync.includes('btn.innerHTML = `<span style="font-size:13px">👤</span> ${kort}`'), 'Accountnaam kan nog via HTML in de header terechtkomen.');
+verwacht(sync.includes("document.addEventListener('visibilitychange'"), 'Mobiele cloudsync start niet wanneer de app naar de achtergrond gaat.');
+verwacht(sync.includes("window.addEventListener('pagehide', _syncBijAchtergrond)"), 'Cloudsync mist de pagehide-reservecontrole.');
+verwacht(!sync.includes("window.addEventListener('beforeunload'"), 'Cloudsync leunt nog op een onbetrouwbare async beforeunload-handler.');
 
 const coach = lees('coach.js');
 verwacht(coach.includes('const beoordeeld = laatste3.filter(s => s.begrip != null)'), 'Coach kan tempo nog verhogen zonder drie begripsscores.');
@@ -220,6 +255,14 @@ verwacht(betaMetrics.includes('count(distinct account_id)'), 'Beta-metrics mist 
 const deleteFunction = lees('supabase/functions/delete-account/index.ts');
 verwacht(deleteFunction.includes('auth.getUser()'), 'Delete Function verifieert de gebruiker niet.');
 verwacht(deleteFunction.includes('auth.admin.deleteUser(user.id)'), 'Delete Function verwijdert geen Auth-account.');
+verwacht(!deleteFunction.includes("'Access-Control-Allow-Origin': '*'"), 'Delete Function staat accountverwijdering vanaf iedere browserherkomst toe.');
+verwacht(deleteFunction.includes('DELETE_ACCOUNT_ALLOWED_ORIGINS'), 'Delete Function mist een instelbare herkomstlijst.');
+const loginAuthHtml = lees('login.html');
+const resetHtml = lees('reset-wachtwoord.html');
+verwacht(loginAuthHtml.includes('id="reg-pw" placeholder="Minimaal 8 tekens" minlength="8"'), 'Registratie vraagt niet minimaal 8 wachtwoordtekens.');
+verwacht(loginAuthHtml.includes('pw.length < 8'), 'Registratie controleert de minimale wachtwoordlengte niet.');
+verwacht(resetHtml.includes('id="new-pw" placeholder="Minimaal 8 tekens" minlength="8"'), 'Wachtwoordherstel vraagt niet minimaal 8 tekens.');
+verwacht(resetHtml.includes('pw.length < 8'), 'Wachtwoordherstel controleert de minimale wachtwoordlengte niet.');
 
 const packageJson = JSON.parse(lees('package.json'));
 verwacht(packageJson.scripts?.build === 'node scripts/build-web.mjs', 'Buildscript voor native packaging ontbreekt.');
@@ -230,6 +273,12 @@ if (existsSync(resolve(root, 'vercel.json'))) {
   const vercelConfig = JSON.parse(lees('vercel.json'));
   verwacht(vercelConfig.buildCommand === 'npm run build', 'Vercel moet de webbuild uitvoeren.');
   verwacht(vercelConfig.outputDirectory === 'dist', 'Vercel moet dist/ publiceren.');
+  const algemeneHeaders = vercelConfig.headers?.find(regel => regel.source === '/(.*)')?.headers || [];
+  const headerMap = Object.fromEntries(algemeneHeaders.map(header => [header.key.toLowerCase(), header.value]));
+  verwacht(headerMap['content-security-policy']?.includes("frame-ancestors 'none'"), 'Vercel-responses blokkeren framing niet via CSP.');
+  verwacht(headerMap['x-frame-options'] === 'DENY', 'Vercel-responses missen X-Frame-Options DENY.');
+  verwacht(headerMap['x-content-type-options'] === 'nosniff', 'Vercel-responses missen nosniff.');
+  verwacht(headerMap['permissions-policy']?.includes('camera=()'), 'Vercel-responses missen een beperkende Permissions-Policy.');
 }
 verwacht(existsSync(resolve(root, 'capacitor.config.json')), 'Capacitor-config ontbreekt.');
 verwacht(JSON.parse(lees('capacitor.config.json')).webDir === 'dist', 'Capacitor moet dist als webDir gebruiken.');
@@ -239,6 +288,15 @@ verwacht(existsSync(resolve(root, 'ios/App/App/public/index.html')), 'iOS bevat 
 verwacht(existsSync(resolve(root, 'ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png')), 'iOS appicoon ontbreekt.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public/index.html')), 'Android bevat geen gesynchroniseerde webbuild.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png')), 'Android appicoon ontbreekt.');
+for (const nativeIndex of ['ios/App/App/public/index.html', 'android/app/src/main/assets/public/index.html']) {
+  verwacht(lees(nativeIndex) === appHtml, `${nativeIndex} loopt achter op de actuele webapp.`);
+}
+for (const nativeSync of ['ios/App/App/public/supabase-sync.js', 'android/app/src/main/assets/public/supabase-sync.js']) {
+  verwacht(lees(nativeSync) === sync, `${nativeSync} loopt achter op de actuele cloudsync.`);
+}
+const androidManifest = lees('android/app/src/main/AndroidManifest.xml');
+verwacht(androidManifest.includes('android:allowBackup="false"'), 'Android kan lokale account- en trainingsdata nog automatisch back-uppen.');
+verwacht(androidManifest.includes('android:usesCleartextTraffic="false"'), 'Android staat mogelijk onversleuteld netwerkverkeer toe.');
 for (const nativeLogin of ['ios/App/App/public/login.html', 'android/app/src/main/assets/public/login.html']) {
   const html = lees(nativeLogin);
   verwacht(html.includes("socialLogin('google')"), `${nativeLogin} mist Google-aanmelden.`);

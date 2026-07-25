@@ -175,7 +175,7 @@ input::placeholder { color: var(--muted); }
 
   <div class="form-group">
     <label>Nieuw wachtwoord</label>
-    <input type="password" id="new-pw" placeholder="Minimaal 6 tekens" autocomplete="new-password">
+    <input type="password" id="new-pw" placeholder="Minimaal 8 tekens" minlength="8" autocomplete="new-password">
   </div>
   <div class="form-group">
     <label>Wachtwoord herhalen</label>
@@ -208,7 +208,7 @@ async function resetWachtwoord() {
   const pw2 = document.getElementById('new-pw2').value;
 
   if (!pw)           { toonMsg('Vul een nieuw wachtwoord in.'); return; }
-  if (pw.length < 6) { toonMsg('Wachtwoord moet minimaal 6 tekens zijn.'); return; }
+  if (pw.length < 8) { toonMsg('Wachtwoord moet minimaal 8 tekens zijn.'); return; }
   if (pw !== pw2)    { toonMsg('Wachtwoorden komen niet overeen.'); return; }
 
   const btn = document.getElementById('reset-btn');

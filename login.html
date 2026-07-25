@@ -302,7 +302,7 @@ input::placeholder { color: var(--muted); }
     </div>
     <div class="form-group">
       <label>Wachtwoord</label>
-      <input type="password" id="reg-pw" placeholder="Minimaal 6 tekens" autocomplete="new-password">
+      <input type="password" id="reg-pw" placeholder="Minimaal 8 tekens" minlength="8" autocomplete="new-password">
     </div>
     <div class="form-group">
       <label>Wachtwoord herhalen</label>
@@ -461,7 +461,7 @@ async function registreer() {
 
   if (!email || !pw) { toonMsg('Vul alle velden in.'); return; }
   if (pw !== pw2)    { toonMsg('Wachtwoorden komen niet overeen.'); return; }
-  if (pw.length < 6) { toonMsg('Wachtwoord moet minimaal 6 tekens zijn.'); return; }
+  if (pw.length < 8) { toonMsg('Wachtwoord moet minimaal 8 tekens zijn.'); return; }
 
   setLaden('reg-btn', true);
   toonMsg('');
@@ -503,7 +503,7 @@ function vertaalFout(msg) {
   if (msg.includes('Email not confirmed'))  return 'Bevestig eerst je e-mailadres.';
   if (msg.includes('already registered'))   return 'Dit e-mailadres is al in gebruik.';
   if (msg.includes('User already registered')) return 'Dit e-mailadres is al in gebruik.';
-  if (msg.includes('Password should be'))   return 'Wachtwoord moet minimaal 6 tekens zijn.';
+  if (msg.includes('Password should be'))   return 'Wachtwoord voldoet niet aan de ingestelde veiligheidseisen.';
   if (msg.includes('Unable to validate'))   return 'Ongeldig e-mailadres.';
   if (msg.includes('rate limit'))           return 'Te veel pogingen. Wacht even en probeer opnieuw.';
   if (msg.includes('provider is not enabled')) return 'Deze aanmeldmethode is nog niet ingeschakeld. Gebruik e-mail of probeer later opnieuw.';

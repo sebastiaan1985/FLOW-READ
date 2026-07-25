@@ -45,12 +45,22 @@ const SYNC_KEYS = [
   'snellees_streak',        // Globale trainingsstreak voor de Home-weergave
   'snellees_laatste_resultaat', // Laatste meetbare winst op Home
   'snellees_events',        // Privacybewuste beta-events, maximaal 250 per gebruiker
+  'oog_hoogste_vrij',       // Hoogste vrijgespeelde oogtraining
+  'oog_hoogste_voltooid',   // Hoogste voltooide oogtraining
+  'peri_hoogste_level',     // Hoogste vrijgespeelde perifere level
+  'peri_hoogste_voltooid',  // Hoogste voltooide perifere level
+  'dyslexie_leerweg',       // Beheersing en herhaalset per dyslexieles
+  'dyslexie_highscores',
+  'dyslexie_badges',
+  'dyslexie_stats',
 ];
 
 // Keys die in payload.extra terechtkomen (nooit meer losse kolommen nodig)
 const EXTRA_KEYS = [
   'coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan', 'teksten_gelezen',
   'snellees_eerste_missie', 'snellees_startweek', 'snellees_streak', 'snellees_laatste_resultaat', 'snellees_events',
+  'oog_hoogste_vrij', 'oog_hoogste_voltooid', 'peri_hoogste_level', 'peri_hoogste_voltooid',
+  'dyslexie_leerweg', 'dyslexie_highscores', 'dyslexie_badges', 'dyslexie_stats',
 ];
 
 let _huidigeGebruiker = null;
@@ -294,8 +304,9 @@ function openAccountBeheer() {
 function _toonGebruikerHeader() {
   const email = _huidigeGebruiker?.email || '';
   const meta  = _huidigeGebruiker?.user_metadata || {};
-  const naam  = meta.full_name || meta.name || meta.display_name || '';
-  const kort  = (naam || email.split('@')[0]).substring(0, 16);
+  const naam  = [meta.full_name, meta.name, meta.display_name]
+    .find(waarde => typeof waarde === 'string' && waarde.trim()) || '';
+  const kort  = (naam || email.split('@')[0]).trim().substring(0, 16);
 
   // Voeg user-knop toe aan de header (rechts van bestaande knoppen)
   const header = document.querySelector('header');
@@ -307,7 +318,12 @@ function _toonGebruikerHeader() {
   const btn = document.createElement('button');
   btn.id = 'sb-user-btn';
   btn.title = email;
-  btn.innerHTML = `<span style="font-size:13px">👤</span> ${kort}`;
+  btn.setAttribute('aria-label', kort ? `Account van ${kort}` : 'Account');
+  const icoon = document.createElement('span');
+  icoon.style.fontSize = '13px';
+  icoon.setAttribute('aria-hidden', 'true');
+  icoon.textContent = '👤';
+  btn.append(icoon, document.createTextNode(kort));
   btn.onclick = openAccountBeheer;
   Object.assign(btn.style, {
     padding: '7px 13px',
@@ -357,11 +373,21 @@ document.addEventListener('DOMContentLoaded', () => {
   _checkAuth();
 });
 
-// Sync bij sluiten van het tabblad (als debounce nog loopt)
-window.addEventListener('beforeunload', () => {
+// Start de laatste sync zodra de app naar de achtergrond gaat. Dit gebeurt op
+// mobiel eerder en betrouwbaarder dan wachten tot het tabblad al wordt gesloten.
+let _achtergrondSyncGestart = false;
+function _syncBijAchtergrond() {
+  if (_achtergrondSyncGestart) return;
+  _achtergrondSyncGestart = true;
   clearTimeout(_syncTimer);
-  if (_huidigeGebruiker) _syncNuNaarCloud();
+  if (_huidigeGebruiker) void _syncNuNaarCloud();
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') _syncBijAchtergrond();
+  else _achtergrondSyncGestart = false;
 });
+window.addEventListener('pagehide', _syncBijAchtergrond);
 
 // Luister naar auth-wijzigingen (bv. token vernieuwd of sessie verlopen)
 _sb.auth.onAuthStateChange((event, session) => {

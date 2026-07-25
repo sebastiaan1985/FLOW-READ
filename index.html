@@ -1447,6 +1447,7 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   background: #fff8e7; border: 2px solid #e8d090; border-radius: 16px;
   padding: 20px 14px; text-align: center; cursor: pointer;
   transition: all .25s; font-family: 'Comic Neue', cursive;
+  width: 100%; color: inherit; appearance: none;
 }
 .dyx-mode-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(240,160,0,.25); }
 .dyx-mode-active { border-color: #e07000; background: linear-gradient(135deg, #fff3d0, #ffe8a0); box-shadow: 0 4px 20px rgba(224,112,0,.3); }
@@ -1530,10 +1531,13 @@ body { --dyx-font: 'Inter', sans-serif; --dyx-size: 1rem; --dyx-ls: 0em; --dyx-w
   display: inline-block; font-size: 2.8rem; font-weight: 700; padding: 4px 8px;
   cursor: pointer; border-radius: 8px; transition: all .15s;
   font-family: 'Comic Neue', cursive; color: #3a2000; border: 2px solid transparent;
+  background: transparent; line-height: 1; appearance: none;
 }
 .dyx-letter-btn:hover { background: rgba(240,160,0,.15); border-color: #f0a000; transform: scale(1.15); }
 .dyx-letter-btn.dyx-letter-goed { background: #d4f5d0; border-color: #34d399; color: #0a5c3a; animation: pop .3s ease; }
 .dyx-letter-btn.dyx-letter-fout { background: #fdd0d0; border-color: #f06292; color: #7a1a2a; animation: shake .3s ease; }
+.dyx-jacht-hint { margin-top:10px; padding:7px 10px; border:1px solid #d5b46b; border-radius:8px; background:#fff8e7; color:#6f431e; font:700 .8rem 'Comic Neue',cursive; cursor:pointer; }
+.dyx-jacht-hint:disabled { cursor:default; opacity:1; }
 
 .dyx-toast {
   position: fixed; top: 20px; right: 20px; z-index: 9999;
@@ -3740,9 +3744,12 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <div id="peri-resultaat" style="display:none;padding:24px 20px;background:rgba(52,211,153,.07);border:2px solid var(--green);border-radius:16px;text-align:center;margin-bottom:12px">
       <div style="font-size:2.5rem;margin-bottom:8px">🎉</div>
       <div style="font-size:1.15rem;font-weight:800;margin-bottom:6px">2 minuten voltooid!</div>
-      <div id="peri-res-sub" style="font-size:.88rem;color:var(--muted);margin-bottom:14px">Goed gedaan — je blikveld is getraind!</div>
+      <div id="peri-vrij-res-sub" style="font-size:.88rem;color:var(--muted);margin-bottom:14px">Goed gedaan — je blikveld is getraind!</div>
       <div id="peri-res-uitd" style="display:none;background:rgba(250,204,21,.12);border:1px solid #f59e0b;border-radius:8px;padding:9px 14px;margin-bottom:14px;font-size:.88rem;font-weight:700;color:#f59e0b">⭐ Daguitdaging voltooid! +15 XP</div>
-      <button class="btn btn-primary" onclick="periNieuweSessie()">▶ Opnieuw starten</button>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="periNieuweSessie()">▶ Opnieuw starten</button>
+        <button class="btn btn-ghost" id="peri-vrij-leerweg-btn" style="display:none" onclick="sidebarNav('leerweg')">→ Naar de leerweg</button>
+      </div>
     </div>
 
     <div id="peripheral-display">
@@ -3806,10 +3813,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <div id="peri-spel-resultaat" style="display:none;text-align:center;padding:20px">
       <div style="font-size:3rem" id="peri-res-sterren"></div>
       <div style="font-size:1.3rem;font-weight:700;margin:8px 0" id="peri-res-score"></div>
-      <div style="font-size:.85rem;color:var(--muted);margin-bottom:16px" id="peri-res-sub"></div>
-      <div style="display:flex;gap:10px;justify-content:center">
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:16px" id="peri-spel-res-sub"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
         <button class="btn btn-primary" onclick="periSpelHerstart()">🔄 Opnieuw</button>
         <button class="btn btn-ghost" onclick="periSwitchTab('spel')">📋 Levels</button>
+        <button class="btn btn-ghost" id="peri-spel-leerweg-btn" style="display:none" onclick="sidebarNav('leerweg')">→ Naar de leerweg</button>
       </div>
     </div>
   </div>
@@ -3865,6 +3873,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <input class="text-input" id="papier-url-input" placeholder="https://... artikel URL" style="flex:1;min-width:180px;margin-bottom:0;font-size:.8rem;padding:8px 12px">
     <button class="btn btn-ghost" id="papier-url-btn" onclick="papierLaadUrl()" style="font-size:.8rem;padding:6px 12px">🌐 Ophalen</button>
     <span id="papier-url-status" style="font-size:.75rem;color:var(--muted)"></span>
+    <span style="flex-basis:100%;font-size:.68rem;color:var(--muted)">Bij URL-ophalen wordt de link via een externe ophaaldienst verwerkt. Plak de tekst handmatig als je dat niet wilt.</span>
   </div>
 
   <div class="controls-panel">
@@ -3903,6 +3912,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button class="btn btn-ghost" id="url-ophalen-btn" onclick="laadVanUrl()">🌐 Ophalen</button>
   </div>
   <div id="url-status" style="font-size:13px;color:var(--muted);margin-bottom:10px"></div>
+  <p style="font-size:.7rem;color:var(--muted);margin:-4px 0 10px">Bij URL-ophalen wordt de link via een externe ophaaldienst verwerkt. Plak de tekst hieronder als je dat niet wilt.</p>
   <textarea id="custom-text" placeholder="Plak hier je tekst…"></textarea>
   <div class="flex mt" style="justify-content:space-between;align-items:center">
     <span id="woord-tel" style="font-size:13px;color:var(--muted)"></span>
@@ -4319,42 +4329,42 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <!-- MODUS KIEZER -->
   <div class="dyx-mode-grid" id="dyx-mode-grid">
-    <div class="dyx-mode-card" onclick="dyxKiesModus('luister')" id="dyx-mode-luister">
+    <button type="button" class="dyx-mode-card" onclick="dyxKiesModus('luister')" id="dyx-mode-luister" aria-pressed="false">
       <div class="dyx-mode-icon">🔊</div>
       <div class="dyx-mode-naam">Luister &amp; Kies</div>
       <div class="dyx-mode-desc">Koppel een gehoord woord aan het juiste woordbeeld</div>
       <div class="dyx-mode-best" id="dyx-best-luister"></div>
-    </div>
-    <div class="dyx-mode-card dyx-mode-active" onclick="dyxKiesModus('flits')" id="dyx-mode-flits">
+    </button>
+    <button type="button" class="dyx-mode-card dyx-mode-active" onclick="dyxKiesModus('flits')" id="dyx-mode-flits" aria-pressed="true">
       <div class="dyx-mode-icon">⚡</div>
       <div class="dyx-mode-naam">Flits &amp; Kies</div>
       <div class="dyx-mode-desc">Lees het woord en kies het juiste antwoord</div>
       <div class="dyx-mode-best" id="dyx-best-flits"></div>
-    </div>
-    <div class="dyx-mode-card" onclick="dyxKiesModus('jacht')" id="dyx-mode-jacht">
+    </button>
+    <button type="button" class="dyx-mode-card" onclick="dyxKiesModus('jacht')" id="dyx-mode-jacht" aria-pressed="false">
       <div class="dyx-mode-icon">🔍</div>
       <div class="dyx-mode-naam">Letter Jacht</div>
       <div class="dyx-mode-desc">Vind de foute letter in het woord</div>
       <div class="dyx-mode-best" id="dyx-best-jacht"></div>
-    </div>
-    <div class="dyx-mode-card" onclick="dyxKiesModus('bouw')" id="dyx-mode-bouw">
+    </button>
+    <button type="button" class="dyx-mode-card" onclick="dyxKiesModus('bouw')" id="dyx-mode-bouw" aria-pressed="false">
       <div class="dyx-mode-icon">🧩</div>
       <div class="dyx-mode-naam">Woorddelen</div>
       <div class="dyx-mode-desc">Zet klank- en woorddelen in de goede volgorde</div>
       <div class="dyx-mode-best" id="dyx-best-bouw"></div>
-    </div>
-    <div class="dyx-mode-card" onclick="dyxKiesModus('context')" id="dyx-mode-context">
+    </button>
+    <button type="button" class="dyx-mode-card" onclick="dyxKiesModus('context')" id="dyx-mode-context" aria-pressed="false">
       <div class="dyx-mode-icon">💬</div>
       <div class="dyx-mode-naam">Zin &amp; Betekenis</div>
       <div class="dyx-mode-desc">Kies welk woord logisch in de zin past</div>
       <div class="dyx-mode-best" id="dyx-best-context"></div>
-    </div>
-    <div class="dyx-mode-card" onclick="dyxKiesModus('snelronde')" id="dyx-mode-snelronde">
+    </button>
+    <button type="button" class="dyx-mode-card" onclick="dyxKiesModus('snelronde')" id="dyx-mode-snelronde" aria-pressed="false">
       <div class="dyx-mode-icon">⚡</div>
       <div class="dyx-mode-naam">Vloeiendheidsronde</div>
       <div class="dyx-mode-desc">Pas na nauwkeurigheid: herken woorden vlot</div>
       <div class="dyx-mode-best" id="dyx-best-snelronde"></div>
-    </div>
+    </button>
   </div>
     </div>
   </details>
@@ -5949,8 +5959,10 @@ function periStartMetTimer() {
       periStop();
       document.getElementById('peri-timer-lbl').textContent = '✅ Sessie afgerond';
       _periUpdateRing(0, 0);
-      _periToonResultaat();
-      if (typeof voltooiDaguitdaging === 'function') voltooiDaguitdaging('perifeer');
+      const kaartMissieVoltooid = typeof voltooiDaguitdaging === 'function'
+        ? voltooiDaguitdaging('perifeer')
+        : false;
+      _periToonResultaat(kaartMissieVoltooid);
       if (typeof kidsModus !== 'undefined' && kidsModus && typeof showConfetti === 'function') showConfetti(40, 30);
       return;
     }
@@ -5960,12 +5972,14 @@ function periStartMetTimer() {
   _periInterval = setInterval(tik, 1000);
 }
 
-function _periToonResultaat() {
+function _periToonResultaat(kaartMissieVoltooid = false) {
   const res = document.getElementById('peri-resultaat');
   if (!res) return;
   const dagU = (typeof getDaguitdaging === 'function') ? getDaguitdaging() : null;
   const uitdEl = document.getElementById('peri-res-uitd');
+  const leerwegBtn = document.getElementById('peri-vrij-leerweg-btn');
   if (uitdEl) uitdEl.style.display = (dagU && dagU.type === 'perifeer') ? 'block' : 'none';
+  if (leerwegBtn) leerwegBtn.style.display = kaartMissieVoltooid ? '' : 'none';
   res.style.display = 'block';
   res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -5973,6 +5987,8 @@ function _periToonResultaat() {
 function periNieuweSessie() {
   const res = document.getElementById('peri-resultaat');
   if (res) res.style.display = 'none';
+  const leerwegBtn = document.getElementById('peri-vrij-leerweg-btn');
+  if (leerwegBtn) leerwegBtn.style.display = 'none';
   document.getElementById('peri-timer-lbl').textContent = 'Druk Start om te beginnen (2 min)';
   _periUpdateRing(0, 0);
 }
@@ -6011,11 +6027,36 @@ function papierLaadBestand(input) {
   r.readAsText(f);
 }
 
+function veiligeArtikelUrl(ruweUrl) {
+  let url;
+  try { url = new URL(ruweUrl); }
+  catch(e) { throw new Error('Vul een geldige https-link in.'); }
+  if (url.protocol !== 'https:') throw new Error('Alleen beveiligde https-links zijn toegestaan.');
+  if (url.username || url.password) throw new Error('Links met inloggegevens zijn niet toegestaan.');
+  if (url.href.length > 2048) throw new Error('Deze link is te lang.');
+  const host = url.hostname.toLowerCase().replace(/\.$/, '');
+  const lokaalOfPrive =
+    !host ||
+    host === 'localhost' ||
+    host.endsWith('.localhost') ||
+    host.endsWith('.local') ||
+    host.startsWith('[') ||
+    /^(?:0|10|127)\./.test(host) ||
+    /^169\.254\./.test(host) ||
+    /^192\.168\./.test(host) ||
+    /^172\.(?:1[6-9]|2\d|3[01])\./.test(host);
+  if (lokaalOfPrive) throw new Error('Lokale of privé-adressen zijn niet toegestaan.');
+  return url.href;
+}
+
 async function papierLaadUrl() {
-  const url = document.getElementById('papier-url-input').value.trim();
-  if (!url) return;
   const status = document.getElementById('papier-url-status');
   const btn = document.getElementById('papier-url-btn');
+  const invoer = document.getElementById('papier-url-input').value.trim();
+  if (!invoer) return;
+  let url;
+  try { url = veiligeArtikelUrl(invoer); }
+  catch(e) { status.textContent = `❌ ${e.message}`; return; }
   status.textContent = '⏳ Ophalen...'; btn.disabled = true;
   const proxies = [
     u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
@@ -6161,10 +6202,17 @@ function eigenVragenUitFormulier() {
 }
 
 async function laadVanUrl() {
-  const url = document.getElementById('url-input').value.trim();
-  if (!url) return;
   const status = document.getElementById('url-status');
   const btn = document.getElementById('url-ophalen-btn');
+  const invoer = document.getElementById('url-input').value.trim();
+  if (!invoer) return;
+  let url;
+  try { url = veiligeArtikelUrl(invoer); }
+  catch(e) {
+    status.style.color = 'var(--pink)';
+    status.textContent = `❌ ${e.message}`;
+    return;
+  }
   status.textContent = '⏳ Bezig met ophalen...';
   btn.disabled = true;
 
@@ -6277,7 +6325,11 @@ function slaaTekstOp() {
   naamEl.value = '';
   document.getElementById('woord-tel').textContent = '';
   document.getElementById('lees-tijden').innerHTML = '';
-  document.getElementById('tekst-info').innerHTML = `<span class="success">✓ "${naam}" opgeslagen en actief gezet!</span>`;
+  const info = document.getElementById('tekst-info');
+  if (info) {
+    info.className = 'mt success';
+    info.textContent = `✓ "${naam}" opgeslagen en actief gezet!`;
+  }
   toonBibliotheek();
   laadRsvpTekst();
 }
@@ -6317,7 +6369,7 @@ function toonBibliotheek() {
     const n = woorden(t.tekst).length;
     return `<div class="bibl-item ${isActief ? 'actief' : ''}">
       <div class="bibl-item-info">
-        <div class="bibl-item-naam">${t.naam}</div>
+        <div class="bibl-item-naam">${htmlEscape(t.naam)}</div>
         <div class="bibl-item-meta">${n} woorden · ${Math.ceil(n/250)} min bij 250 WPM</div>
       </div>
       ${isActief ? '<span class="bibl-actief-badge">✓ Actief</span>' : `<button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="activeerTekst(${i})">Gebruik</button>`}
@@ -7103,7 +7155,18 @@ function showConfetti(x, y, force) {
 function toonAchievement(icon, naam) {
   const el = document.createElement('div');
   el.className = 'achievement-popup';
-  el.innerHTML = `<span class="ach-icon">${icon}</span><div><div class="ach-text">Badge verdiend!</div><div class="ach-sub">${naam}</div></div>`;
+  const iconEl = document.createElement('span');
+  iconEl.className = 'ach-icon';
+  iconEl.textContent = String(icon ?? '');
+  const tekst = document.createElement('div');
+  const titel = document.createElement('div');
+  titel.className = 'ach-text';
+  titel.textContent = 'Badge verdiend!';
+  const subtitel = document.createElement('div');
+  subtitel.className = 'ach-sub';
+  subtitel.textContent = String(naam ?? '');
+  tekst.append(titel, subtitel);
+  el.append(iconEl, tekst);
   document.body.appendChild(el);
   if (kidsModus) showConfetti(80, 10);
   setTimeout(() => el.remove(), 3500);
@@ -7171,6 +7234,7 @@ function voltooiDaguitdaging(type, resultaat = null) {
     if (typeof updateAppBadge === 'function') updateAppBadge();
     if (typeof checkAchievements === 'function') setTimeout(checkAchievements, 400);
   }
+  return !!kaartMissieVoltooid;
 }
 
 function updateDaguitdaging() {
@@ -8360,7 +8424,7 @@ function dyxLeerpadRender() {
     const open = dyxLesOntgrendeld(i, data);
     const klaar = !!info.beheerst;
     const nu = i === (eersteOpen < 0 ? DYX_LESSEN.length - 1 : eersteOpen);
-    return `<button class="dyx-pad-les ${klaar?'klaar':''} ${nu?'nu':''}" type="button" onclick="dyxStartLes('${les.id}')" aria-disabled="${open?'false':'true'}">
+    return `<button class="dyx-pad-les ${klaar?'klaar':''} ${nu?'nu':''}" type="button" ${open ? `onclick="dyxStartLes('${les.id}')"` : 'disabled'} aria-disabled="${open?'false':'true'}">
       <span class="dyx-pad-num">${klaar?'✓':open?les.icon:'🔒'}</span>
       <span class="dyx-pad-tekst"><b>Les ${i+1} · ${les.naam}</b><span>${les.doel}</span></span>
       <span class="dyx-pad-score">${info.beste != null ? info.beste + '%' : open ? 'Start' : 'Dicht'}</span>
@@ -8560,9 +8624,15 @@ function bionicWord(w) {
 // ── MODUS KIEZER ──
 function dyxSelecteerModusUI(modus) {
   dyxModus = modus;
-  document.querySelectorAll('.dyx-mode-card').forEach(c => c.classList.remove('dyx-mode-active'));
+  document.querySelectorAll('.dyx-mode-card').forEach(c => {
+    c.classList.remove('dyx-mode-active');
+    c.setAttribute('aria-pressed', 'false');
+  });
   const el = document.getElementById('dyx-mode-' + modus);
-  if (el) el.classList.add('dyx-mode-active');
+  if (el) {
+    el.classList.add('dyx-mode-active');
+    el.setAttribute('aria-pressed', 'true');
+  }
 }
 
 function dyxKiesModus(modus) {
@@ -9042,11 +9112,18 @@ function jachtVolgende() {
     <div style="font-size:.9rem;color:#8b5e3c;font-family:'Comic Neue',cursive;font-weight:700;margin-bottom:8px">Welke letter klopt NIET? Tik erop! 🔍</div>
     <div class="game-word" style="letter-spacing:.18em">${
       foutWoord.split('').map((c, i) =>
-        `<span class="dyx-letter-btn" onclick="jachtKies(${i})">${c}</span>`
+        `<button type="button" class="dyx-letter-btn" aria-label="Letter ${htmlEscape(c)}, positie ${i + 1}" onclick="jachtKies(${i})">${htmlEscape(c)}</button>`
       ).join('')
     }</div>
-    <div style="font-size:.8rem;color:#a07040;margin-top:10px;font-family:'Comic Neue',cursive">Het juiste woord is: <b style="filter:blur(4px);transition:filter .3s;cursor:pointer" id="jacht-hint" onclick="this.style.filter='none'">${jachtOrigineel}</b> <span style="opacity:.5;font-size:.7rem">(tik om te onthullen)</span></div>
+    <button class="dyx-jacht-hint" type="button" id="jacht-hint" onclick="jachtToonHint()">Toon het juiste woord</button>
   `;
+}
+
+function jachtToonHint() {
+  const hint = document.getElementById('jacht-hint');
+  if (!hint) return;
+  hint.textContent = `Het juiste woord is: ${jachtOrigineel}`;
+  hint.disabled = true;
 }
 
 function jachtKies(idx) {
@@ -9061,8 +9138,7 @@ function jachtKies(idx) {
     else if (i === idx && !goed) l.classList.add('dyx-letter-fout');
   });
   // Toon het juiste woord
-  const hint = document.getElementById('jacht-hint');
-  if (hint) hint.style.filter = 'none';
+  jachtToonHint();
 
   if (goed) {
     dyxPlaySound('correct');
@@ -9352,7 +9428,22 @@ let periSpelTimer = null;
 let periSpelLinks = '';
 let periSpelRechts = '';
 let periSpelVraagKant = 'links';
-let periSpelHoogsteLevel = parseInt(localStorage.getItem('peri_hoogste_level') || '0');
+
+function periSpelHoogsteVrij() {
+  const waarde = parseInt(localStorage.getItem('peri_hoogste_level') || '0', 10);
+  return Math.min(PERI_LEVELS.length - 1, Math.max(0, Number.isFinite(waarde) ? waarde : 0));
+}
+
+function periSpelHoogsteVoltooid() {
+  const opgeslagen = localStorage.getItem('peri_hoogste_voltooid');
+  if (opgeslagen === null) {
+    // Migratie van de oude betekenis: `peri_hoogste_level` was het eerstvolgende
+    // vrije level, waardoor alle lagere levels al voltooid waren.
+    return Math.max(-1, periSpelHoogsteVrij() - 1);
+  }
+  const waarde = parseInt(opgeslagen, 10);
+  return Math.min(PERI_LEVELS.length - 1, Math.max(-1, Number.isFinite(waarde) ? waarde : -1));
+}
 
 function periSwitchTab(tab) {
   document.getElementById('peri-tab-vrij').className = tab === 'vrij' ? 'btn btn-primary' : 'btn btn-ghost';
@@ -9367,14 +9458,17 @@ function periToonLevels() {
   document.getElementById('peri-spel-actief').style.display = 'none';
   document.getElementById('peri-spel-resultaat').style.display = 'none';
   const grid = document.getElementById('peri-level-grid');
+  const hoogsteVrij = periSpelHoogsteVrij();
+  const hoogsteVoltooid = periSpelHoogsteVoltooid();
   grid.innerHTML = PERI_LEVELS.map((lv, i) => {
-    const unlocked = i <= periSpelHoogsteLevel + 1;
-    const voltooid = i < periSpelHoogsteLevel;
+    const unlocked = i <= hoogsteVrij;
+    const voltooid = i <= hoogsteVoltooid;
     return `<button onclick="${unlocked ? `periSpelStart(${i})` : ''}"
       style="padding:14px 10px;border-radius:12px;border:2px solid ${voltooid ? 'var(--green)' : unlocked ? 'var(--border2)' : 'var(--border)'};
         background:${voltooid ? 'rgba(52,211,153,.1)' : unlocked ? 'var(--card)' : 'rgba(0,0,0,.2)'};
         color:${unlocked ? 'var(--text)' : 'var(--muted)'};cursor:${unlocked ? 'pointer' : 'default'};
-        text-align:center;width:100%;transition:all .2s" ${unlocked ? `onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='${voltooid ? 'var(--green)' : 'var(--border2)'}'"` : ''}>
+        text-align:center;width:100%;transition:all .2s"
+        aria-disabled="${unlocked ? 'false' : 'true'}" ${unlocked ? `onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='${voltooid ? 'var(--green)' : 'var(--border2)'}'"` : 'disabled'}>
       <div style="font-size:1.5rem">${lv.icon}${voltooid ? ' ✅' : !unlocked ? ' 🔒' : ''}</div>
       <div style="font-weight:700;font-size:.8rem;margin-top:4px">${lv.naam}</div>
       <div style="font-size:.7rem;color:var(--muted);margin-top:2px">${lv.omschrijving}</div>
@@ -9383,6 +9477,12 @@ function periToonLevels() {
 }
 
 function periSpelStart(levelIdx) {
+  if (levelIdx < 0 || levelIdx > periSpelHoogsteVrij() || !PERI_LEVELS[levelIdx]) {
+    toonFout('Rond eerst het vorige perifere level af.');
+    return;
+  }
+  const leerwegBtn = document.getElementById('peri-spel-leerweg-btn');
+  if (leerwegBtn) leerwegBtn.style.display = 'none';
   periSpelLevel = levelIdx;
   periSpelScore = 0;
   periSpelVraag = 0;
@@ -9467,17 +9567,28 @@ function periSpelEinde() {
   const pct = periSpelScore / periSpelTotaal;
   const sterren = pct >= 0.9 ? 5 : pct >= 0.7 ? 4 : pct >= 0.5 ? 3 : pct >= 0.3 ? 2 : 1;
   const geslaagd = pct >= 0.7;
-  if (geslaagd && periSpelLevel >= periSpelHoogsteLevel) {
-    periSpelHoogsteLevel = Math.min(periSpelLevel + 1, PERI_LEVELS.length - 1);
-    localStorage.setItem('peri_hoogste_level', periSpelHoogsteLevel);
+  let kaartMissieVoltooid = false;
+  if (geslaagd) {
+    const hoogsteVoltooid = Math.max(periSpelHoogsteVoltooid(), periSpelLevel);
+    const hoogsteVrij = Math.max(
+      periSpelHoogsteVrij(),
+      Math.min(periSpelLevel + 1, PERI_LEVELS.length - 1)
+    );
+    localStorage.setItem('peri_hoogste_voltooid', String(hoogsteVoltooid));
+    localStorage.setItem('peri_hoogste_level', String(hoogsteVrij));
+    kaartMissieVoltooid = typeof voltooiDaguitdaging === 'function'
+      ? voltooiDaguitdaging('perifeer', { begrip: Math.round(pct * 100) })
+      : false;
   }
   document.getElementById('peri-spel-actief').style.display = 'none';
   document.getElementById('peri-spel-resultaat').style.display = '';
   document.getElementById('peri-res-sterren').textContent = '⭐'.repeat(sterren) + '☆'.repeat(5 - sterren);
   document.getElementById('peri-res-score').textContent = `${periSpelScore} van ${periSpelTotaal} goed`;
-  document.getElementById('peri-res-sub').textContent = geslaagd
+  document.getElementById('peri-spel-res-sub').textContent = geslaagd
     ? (periSpelLevel < PERI_LEVELS.length - 1 ? `✅ Level voltooid! Level ${periSpelLevel + 2} ontgrendeld 🎉` : '🏆 Je hebt alle levels gehaald! Meesterlezer!')
     : `Probeer opnieuw — je hebt ${Math.round(pct * 100)}% goed. (70% nodig om door te gaan)`;
+  const leerwegBtn = document.getElementById('peri-spel-leerweg-btn');
+  if (leerwegBtn) leerwegBtn.style.display = kaartMissieVoltooid ? '' : 'none';
 }
 
 function periSpelStop() {
@@ -9489,6 +9600,8 @@ function periSpelStop() {
 }
 
 function periSpelHerstart() {
+  const leerwegBtn = document.getElementById('peri-spel-leerweg-btn');
+  if (leerwegBtn) leerwegBtn.style.display = 'none';
   periSpelStart(periSpelLevel);
 }
 
@@ -12275,8 +12388,8 @@ function slaaTekstOp() {
   document.getElementById('lees-tijden').innerHTML = '';
   const info = document.getElementById('tekst-info');
   if (info) {
-    info.innerHTML = '<span class="success"></span>';
-    info.firstElementChild.textContent = `✓ "${naam}" opgeslagen (${vragen.length} vra${vragen.length===1?'ag':'gen'})!`;
+    info.className = 'mt success';
+    info.textContent = `✓ "${naam}" opgeslagen (${vragen.length} vra${vragen.length===1?'ag':'gen'})!`;
   }
 
   laadRsvpTekst();
