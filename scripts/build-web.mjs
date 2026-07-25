@@ -1,4 +1,5 @@
-import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { constants } from 'node:fs';
+import { copyFile, mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -8,6 +9,7 @@ const bestanden = [
   'index.html',
   'login.html',
   'privacy.html',
+  'account-verwijderen.html',
   'reset-wachtwoord.html',
   'manifest.json',
   'service-worker.js',
@@ -32,12 +34,26 @@ async function wachtOpBuildLock() {
   throw new Error('Build lock bleef te lang bezet.');
 }
 
+async function kopieerMap(bron, doel) {
+  await mkdir(doel, { recursive:true });
+  const items = await readdir(bron, { withFileTypes:true });
+  await Promise.all(items.map(async item => {
+    const van = resolve(bron, item.name);
+    const naar = resolve(doel, item.name);
+    if (item.isDirectory()) return kopieerMap(van, naar);
+    if (!item.isFile()) throw new Error(`Niet-ondersteund webasset: ${van}`);
+    await copyFile(van, naar, constants.COPYFILE_FICLONE);
+  }));
+}
+
 await wachtOpBuildLock();
 try {
   await rm(dist, { recursive: true, force: true });
   await mkdir(dist, { recursive: true });
-  for (const bestand of bestanden) await cp(resolve(root, bestand), resolve(dist, bestand));
-  for (const map of mappen) await cp(resolve(root, map), resolve(dist, map), { recursive: true });
+  await Promise.all(bestanden.map(bestand =>
+    copyFile(resolve(root, bestand), resolve(dist, bestand), constants.COPYFILE_FICLONE)
+  ));
+  await Promise.all(mappen.map(map => kopieerMap(resolve(root, map), resolve(dist, map))));
   await writeFile(resolve(dist, '.nojekyll'), '');
 } finally {
   await rm(lock, { recursive: true, force: true });

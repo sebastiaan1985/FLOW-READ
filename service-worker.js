@@ -9,13 +9,14 @@
  * - Supabase API-calls → Network Only (gebruikersdata altijd vers)
  */
 
-const CACHE_NAAM = 'snellees-v34';
+const CACHE_NAAM = 'snellees-v39';
 
 const CACHE_STATISCH = [
   './',
   'index.html',
   'login.html',
   'privacy.html',
+  'account-verwijderen.html',
   'reset-wachtwoord.html',
   'supabase-sync.js',
   'teksten.js',

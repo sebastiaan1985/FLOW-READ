@@ -330,7 +330,7 @@ function _toonGebruikerHeader() {
     border: '1px solid rgba(32,201,195,.35)',
     borderRadius: '8px',
     background: 'rgba(32,201,195,.1)',
-    color: '#a090f7',
+    color: '#effaf8',
     fontSize: '12px',
     fontWeight: '600',
     cursor: 'pointer',

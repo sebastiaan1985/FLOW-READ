@@ -1196,9 +1196,11 @@ body.kids .bibl-actief-badge { background:rgba(255,107,107,.15) !important; colo
 .oog-niveau-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
 @media(max-width:560px){ .oog-niveau-grid { grid-template-columns:1fr; } }
 .oog-niveau-kaart {
+  appearance:none; width:100%; color:inherit; font:inherit;
   border-radius:14px; padding:16px; border:2px solid var(--border);
   background:var(--surface); cursor:pointer; transition:all .2s; text-align:center;
 }
+.oog-niveau-kaart:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
 .oog-niveau-kaart:hover { transform:translateY(-2px); }
 .oog-niveau-kaart.actief { border-color:var(--accent); background:rgba(32,201,195,.08); }
 .oog-niveau-kaart.locked { opacity:.42; cursor:not-allowed; filter:grayscale(.35); }
@@ -1217,15 +1219,6 @@ body.kids .oog-timer-num { color:#ff6b6b; }
 .peri-timer-wrap { display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:12px; }
 .peri-timer-num  { font-size:1.6rem;font-weight:800;color:var(--accent2);font-variant-numeric:tabular-nums;min-width:3.5ch;text-align:center; }
 /* ── LEVEL-UP OVERLAY ────────────────────────────────────── */
-.lu-overlay { position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9998;display:flex;align-items:center;justify-content:center;animation:luFI .2s ease;cursor:pointer; }
-.lu-card    { background:var(--card);border:2px solid var(--accent);border-radius:24px;padding:40px 28px;text-align:center;max-width:300px;width:90%;animation:luPop .45s cubic-bezier(.34,1.56,.64,1);cursor:default; }
-.lu-badge   { font-size:3.5rem;margin-bottom:8px; }
-.lu-suptitel{ font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:6px; }
-.lu-titel   { font-size:1.6rem;font-weight:900;margin-bottom:6px; }
-.lu-niveau  { font-size:1.1rem;font-weight:700;margin-bottom:14px;padding:8px 16px;border-radius:30px;display:inline-block; }
-.lu-sub     { font-size:.85rem;color:var(--muted);line-height:1.55;margin-bottom:20px; }
-@keyframes luFI  { from{opacity:0} to{opacity:1} }
-@keyframes luPop { from{transform:scale(.6);opacity:0} to{transform:scale(1);opacity:1} }
 
 /* Kids modus toggle knop */
 .kids-toggle-btn {
@@ -3602,39 +3595,36 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <h3>Kies jouw niveau</h3>
   <div class="oog-niveau-grid">
-    <div class="oog-niveau-kaart actief" id="oog-niv-0" onclick="oogKiesNiveau(0)">
+    <button type="button" class="oog-niveau-kaart actief" id="oog-niv-0" onclick="oogKiesNiveau(0)">
       <div class="oog-niveau-icon">🌱</div>
       <div class="oog-niveau-naam">Beginner</div>
       <div class="oog-niveau-info">
-        <b>3–5 min</b> per dag<br>
-        2× per dag oefenen<br>
+        <b>1 minuut</b> per sessie<br>
+        Start met één rustige ronde<br>
         Snelheid: 2–3<br>
-        Patroon: Links–Rechts<br>
-        <small style="opacity:.7">0–3 maanden training</small>
+        Patroon: Links–Rechts
       </div>
-    </div>
-    <div class="oog-niveau-kaart" id="oog-niv-1" onclick="oogKiesNiveau(1)">
+    </button>
+    <button type="button" class="oog-niveau-kaart" id="oog-niv-1" onclick="oogKiesNiveau(1)">
       <div class="oog-niveau-icon">⚡</div>
       <div class="oog-niveau-naam">Gevorderd</div>
       <div class="oog-niveau-info">
-        <b>5–10 min</b> per dag<br>
-        3× per dag oefenen<br>
+        <b>1,5 minuut</b> per sessie<br>
+        Pauzeer bij visuele vermoeidheid<br>
         Snelheid: 4–6<br>
-        Patroon: Zigzag<br>
-        <small style="opacity:.7">3–12 maanden training</small>
+        Patroon: Zigzag
       </div>
-    </div>
-    <div class="oog-niveau-kaart" id="oog-niv-2" onclick="oogKiesNiveau(2)">
+    </button>
+    <button type="button" class="oog-niveau-kaart" id="oog-niv-2" onclick="oogKiesNiveau(2)">
       <div class="oog-niveau-icon">🏆</div>
       <div class="oog-niveau-naam">Expert</div>
       <div class="oog-niveau-info">
-        <b>10–15 min</b> per dag<br>
-        Mix van patronen<br>
+        <b>2 minuten</b> per sessie<br>
+        Hoog tempo, gecontroleerde blik<br>
         Snelheid: 7–10<br>
-        Patroon: Sprint<br>
-        <small style="opacity:.7">1+ jaar training</small>
+        Patroon: Sprint
       </div>
-    </div>
+    </button>
   </div>
 
   <div class="oog-timer-wrap">
@@ -3889,6 +3879,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   </div>
 
   <div id="paper-text"><div id="paper-guide" style="top:0"></div><div id="paper-guide-diag" style="display:none;position:absolute;top:0;left:50%;width:3px;height:20px;background:rgba(52,211,153,.7);border-radius:2px;transform:translateX(-50%);transition:top .3s linear"></div></div>
+  <div id="papier-resultaat" class="card" role="status" aria-live="polite" style="display:none;margin-top:14px;border-color:rgba(52,211,153,.35)">
+    <b>✅ Gidssessie afgerond</b>
+    <div style="font-size:.84rem;color:var(--muted);margin-top:5px">De hele tekst is doorlopen. Kun je de hoofdgedachte nog in één zin navertellen?</div>
+    <button class="btn btn-primary" id="papier-leerweg-btn" style="display:none;margin-top:12px" onclick="sidebarNav('leerweg')">→ Naar de leerweg</button>
+  </div>
 
   <!-- Snelheidslegenda -->
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
@@ -4704,17 +4699,17 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <!-- SCANNEN OEFENING -->
   <div id="skim-view-scan" style="display:none">
-    <div style="font-size:.85rem;color:var(--muted);margin-bottom:10px">Zoek zo snel mogelijk naar het gevraagde woord of gegeven. Klik het woord aan als je het vindt.</div>
+    <div style="font-size:.85rem;color:var(--muted);margin-bottom:10px">Zoek zo snel mogelijk naar het gevraagde woord. Typ het woord pas in wanneer je het in de tekst hebt gevonden.</div>
     <div style="margin-bottom:10px">
       <input id="scan-zoek-input" class="scan-input" placeholder="Voer een zoekwoord in..." oninput="scanZoek()" />
     </div>
     <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="scanNieuwe()">↺ Nieuwe tekst</button>
-      <button class="btn btn-ghost" id="scan-auto-btn" onclick="scanAutoZoek()">🎯 Willekeurig zoekwoord</button>
+      <button class="btn btn-ghost" id="scan-auto-btn" onclick="scanAutoZoek()">🎯 Nieuw zoekwoord</button>
     </div>
     <div id="scan-zoek-doel" style="font-size:.9rem;font-weight:700;color:var(--accent);margin-bottom:8px;min-height:24px"></div>
     <div class="skim-tekst" id="scan-tekst-box"></div>
-    <div id="scan-resultaat" style="margin-top:10px;min-height:24px;font-size:.88rem"></div>
+    <div id="scan-resultaat" role="status" aria-live="polite" style="margin-top:10px;min-height:24px;font-size:.88rem"></div>
   </div>
 
   <!-- PREVIEWING OEFENING -->
@@ -4728,7 +4723,10 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <div id="preview-stap-2" style="display:none">
       <div style="font-size:.9rem;font-weight:600;color:var(--accent);margin-bottom:8px">📖 Stap 2 — Volledige tekst</div>
       <div class="skim-tekst" id="preview-tekst-box"></div>
-      <button class="btn btn-primary" style="margin-top:12px" onclick="previewNieuwe()">↺ Volgende tekst</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn btn-primary" id="preview-klaar-btn" onclick="previewAfronden()">✓ Preview afronden</button>
+        <button class="btn btn-ghost" onclick="previewNieuwe()">↺ Volgende tekst</button>
+      </div>
     </div>
   </div>
 </div>
@@ -5157,7 +5155,7 @@ function tekstbronRefresh(screen) {
   if (screen === 'chunk') { chunkStop(); document.getElementById('chunk-tekst').textContent = 'Druk Start'; }
   if (screen === 'perifeer') periStop();
   if (screen === 'papier') { papierEigenTekst = ''; bouwPapierTekst(); }
-  if (screen === 'subvocal') { svMetroStop(); svTelActief = false; clearInterval(svTelTimer); svMetroLaadTekst(); svTelLaadTekst(); svHumLaadTekst(); }
+  if (screen === 'subvocal') { svMetroStop(); svTelStop(false); svHumStop(false); svMetroLaadTekst(); svTelLaadTekst(); svHumLaadTekst(); }
   if (screen === 'regressie') regNieuwe();
   if (screen === 'fixatie') fixNieuwe();
   if (screen === 'skim') skimNieuweAlles();
@@ -5200,7 +5198,6 @@ function sidebarNav(id) {
   document.getElementById('screen-' + id).classList.add('active');
 
   // Trigger screen-specific init
-  if (id === 'papier') bouwPapierTekst();
   if (id === 'stats') { toonStats(); toonWpmDoel(); }
   if (id === 'tekst') toonBibliotheek();
   if (id === 'oog') setTimeout(() => { resizeCanvas(); if (typeof oogInit === 'function') oogInit(); }, 50);
@@ -5220,6 +5217,8 @@ function sidebarNav(id) {
   if (id === 'oogrust') orInit();
   if (id === 'home') setTimeout(updateVandaagPanel, 50);
   if (TRAINING_TEKST_SCHERMEN.includes(id)) tekstbronRender(id);
+  if (id === 'papier') papierInit();
+  if (id === 'perifeer' && lwActieveVariant('perifeer') === 'levels') periSwitchTab('spel');
 
   sluitSidebar();
 }
@@ -5960,7 +5959,7 @@ function periStartMetTimer() {
       document.getElementById('peri-timer-lbl').textContent = '✅ Sessie afgerond';
       _periUpdateRing(0, 0);
       const kaartMissieVoltooid = typeof voltooiDaguitdaging === 'function'
-        ? voltooiDaguitdaging('perifeer')
+        ? voltooiDaguitdaging('perifeer', { variant:'vrij' })
         : false;
       _periToonResultaat(kaartMissieVoltooid);
       if (typeof kidsModus !== 'undefined' && kidsModus && typeof showConfetti === 'function') showConfetti(40, 30);
@@ -5997,6 +5996,11 @@ function periNieuweSessie() {
 let papierTimer = null;
 let papierTechModus = 'lijn';
 let papierEigenTekst = null; // override van globale tekst
+
+function papierInit() {
+  const missieVariant = lwActieveVariant('papier');
+  papierKiesTech(['lijn','s','diag'].includes(missieVariant) ? missieVariant : papierTechModus);
+}
 
 function papierKiesTech(modus) {
   papierTechModus = modus;
@@ -6118,6 +6122,10 @@ function bouwPapierTekst() {
 
 function papierStart() {
   papierStop();
+  const resultaat = document.getElementById('papier-resultaat');
+  if (resultaat) resultaat.style.display = 'none';
+  const leerwegBtn = document.getElementById('papier-leerweg-btn');
+  if (leerwegBtn) leerwegBtn.style.display = 'none';
   const ms = +document.getElementById('guide-speed').value * 100;
 
   if (papierTechModus === 'diag') {
@@ -6129,7 +6137,7 @@ function papierStart() {
       diagGuide.style.display = 'block';
       let i = 0;
       function stapDiag() {
-        if (i >= regels.length) { papierStop(); return; }
+        if (i >= regels.length) { papierEinde(); return; }
         const top = regels[i].offsetTop + regels[i].offsetHeight / 2;
         diagGuide.style.top = top + 'px';
         i++;
@@ -6144,7 +6152,7 @@ function papierStart() {
     const guide = document.getElementById('paper-guide');
     let i = 0;
     function stapS() {
-      if (i >= regels.length) { papierStop(); return; }
+      if (i >= regels.length) { papierEinde(); return; }
       const top = regels[i].offsetTop + regels[i].offsetHeight / 2;
       guide.style.top = top + 'px';
       // Wisselt richting visueel via breedte
@@ -6162,7 +6170,7 @@ function papierStart() {
     guide.style.left = '0'; guide.style.right = 'auto';
     let i = 0;
     function stap() {
-      if (i >= regels.length) { papierStop(); return; }
+      if (i >= regels.length) { papierEinde(); return; }
       const top = regels[i].offsetTop + regels[i].offsetHeight / 2;
       guide.style.top = top + 'px';
       i++;
@@ -6170,6 +6178,21 @@ function papierStart() {
     }
     stap();
   }
+}
+
+function papierEinde() {
+  papierStop();
+  const kaartMissieVoltooid = typeof voltooiDaguitdaging === 'function'
+    ? voltooiDaguitdaging('papier', { variant:papierTechModus })
+    : false;
+  const resultaat = document.getElementById('papier-resultaat');
+  if (resultaat) {
+    resultaat.style.display = '';
+    resultaat.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+  const leerwegBtn = document.getElementById('papier-leerweg-btn');
+  if (leerwegBtn) leerwegBtn.style.display = kaartMissieVoltooid ? '' : 'none';
+  if (typeof _geluid !== 'undefined') _geluid.goed();
 }
 
 function papierStop() {
@@ -6308,32 +6331,6 @@ function eigenSnelStart(mode) {
 }
 document.getElementById('custom-text').addEventListener('input', telWoorden);
 
-function slaaTekstOp() {
-  const tekst = document.getElementById('custom-text').value.trim();
-  if (!tekst) { document.getElementById('tekst-info').innerHTML = '<span style="color:var(--pink)">Plak eerst een tekst.</span>'; return; }
-  const naamEl = document.getElementById('tekst-naam');
-  const naam = naamEl.value.trim() || ('Tekst ' + (bibliLaad().length + 1));
-  const arr = bibliLaad();
-  const eigenVragen = eigenVragenUitFormulier();
-  arr.push({ uid:Date.now().toString(36), naam, tekst, vragen:eigenVragen });
-  bibliSla(arr);
-  const nieuweIdx = arr.length; // 1-based (0 = demo)
-  setActiveTekstIdx(nieuweIdx);
-  vragen = eigenVragen.map(v => ({ vraag:v.v, correct:v.opties[0], w1:v.opties[1], w2:v.opties[2] }));
-  // reset form
-  document.getElementById('custom-text').value = '';
-  naamEl.value = '';
-  document.getElementById('woord-tel').textContent = '';
-  document.getElementById('lees-tijden').innerHTML = '';
-  const info = document.getElementById('tekst-info');
-  if (info) {
-    info.className = 'mt success';
-    info.textContent = `✓ "${naam}" opgeslagen en actief gezet!`;
-  }
-  toonBibliotheek();
-  laadRsvpTekst();
-}
-
 function activeerTekst(idx) {
   setActiveTekstIdx(idx);
   // Direct de dropdown herbouwen met deze tekst geselecteerd en de RSVP-woorden
@@ -6356,26 +6353,6 @@ function verwijderTekst(idx) {
   if (activeTekstIdx() >= arr.length + 1) setActiveTekstIdx(0);
   toonBibliotheek();
   laadRsvpTekst();
-}
-
-function toonBibliotheek() {
-  const arr = bibliLaad();
-  const actief = activeTekstIdx();
-  const container = document.getElementById('bibl-lijst');
-  if (!container) return;
-  const alle = [{ naam: 'Demo tekst (ingebouwd)', tekst: DEMO_TEKST, vast: true }, ...arr];
-  container.innerHTML = alle.map((t, i) => {
-    const isActief = i === actief;
-    const n = woorden(t.tekst).length;
-    return `<div class="bibl-item ${isActief ? 'actief' : ''}">
-      <div class="bibl-item-info">
-        <div class="bibl-item-naam">${htmlEscape(t.naam)}</div>
-        <div class="bibl-item-meta">${n} woorden · ${Math.ceil(n/250)} min bij 250 WPM</div>
-      </div>
-      ${isActief ? '<span class="bibl-actief-badge">✓ Actief</span>' : `<button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="activeerTekst(${i})">Gebruik</button>`}
-      ${i > 0 ? `<button class="btn btn-danger" style="padding:6px 10px;font-size:12px" onclick="verwijderTekst(${i})">🗑</button>` : ''}
-    </div>`;
-  }).join('') || '<p style="color:var(--muted);font-size:13px">Nog geen eigen teksten opgeslagen.</p>';
 }
 
 // ─── STATISTIEKEN ─────────────────────────────────────────────────────────
@@ -7208,7 +7185,7 @@ function voltooiDaguitdaging(type, resultaat = null) {
   const kwaliteitNodig = kwaliteitTypes.includes(type);
   const begrip = resultaat?.begrip;
   const kwaliteitBehaald = !kwaliteitNodig || (begrip !== null && begrip !== undefined && begrip >= 67);
-  const kaartMissieVoltooid = kwaliteitBehaald && typeof leerWegAutoVoltooi === 'function' && leerWegAutoVoltooi(type);
+  const kaartMissieVoltooid = kwaliteitBehaald && typeof leerWegAutoVoltooi === 'function' && leerWegAutoVoltooi(type, resultaat);
   if (kaartMissieVoltooid && typeof _markeerStartweekVoltooid === 'function') _markeerStartweekVoltooid(type);
 
   const data = JSON.parse(localStorage.getItem('daily_challenge') || '{}');
@@ -7665,6 +7642,11 @@ function lwActieveMissie() {
   try { return JSON.parse(localStorage.getItem(LW_ACTIEF_KEY) || 'null'); }
   catch (e) { return null; }
 }
+function lwActieveVariant(scherm) {
+  const missie = lwActieveMissie();
+  if (!missie || missie.screen !== scherm || lwIsDone(missie.w, missie.d)) return null;
+  return missie.variant || lwDag(missie.w, missie.d)?.variant || null;
+}
 function lwMissieBeloning(w, d) {
   const basis = 20 + w * 5;
   return d === LEERWEG_WEKEN[w].dagen.length - 1 ? basis + 20 : basis;
@@ -7708,10 +7690,12 @@ function leerWegHeroActie() {
 }
 
 let _lwAutoLaatst = 0;
-function leerWegAutoVoltooi(scherm) {
+function leerWegAutoVoltooi(scherm, resultaat = null) {
   const volgende = leerWegVolgendeDag();
   const missie = lwActieveMissie();
   if (!volgende || !missie || missie.w !== volgende.w || missie.d !== volgende.d || missie.screen !== scherm) return false;
+  if (missie.variant && resultaat?.variant !== missie.variant) return false;
+  if (missie.minLevel && (resultaat?.level || 0) < missie.minLevel) return false;
   // Debounce: één voltooiing = één afgevinkte dag, ook als meerdere
   // hooks (sessie-opslag + daguitdaging) vlak na elkaar vuren
   const nu = Date.now();
@@ -7840,7 +7824,9 @@ function oogRenderNiveaus() {
     kaart.classList.toggle('locked', locked);
     kaart.classList.toggle('voltooid', i <= voltooid);
     kaart.classList.toggle('actief', i === oogNiveauActief);
+    kaart.disabled = locked;
     kaart.setAttribute('aria-disabled', locked ? 'true' : 'false');
+    kaart.setAttribute('aria-pressed', i === oogNiveauActief ? 'true' : 'false');
     let status = kaart.querySelector('.oog-niveau-status');
     if (!status) {
       status = document.createElement('div');
@@ -9577,7 +9563,11 @@ function periSpelEinde() {
     localStorage.setItem('peri_hoogste_voltooid', String(hoogsteVoltooid));
     localStorage.setItem('peri_hoogste_level', String(hoogsteVrij));
     kaartMissieVoltooid = typeof voltooiDaguitdaging === 'function'
-      ? voltooiDaguitdaging('perifeer', { begrip: Math.round(pct * 100) })
+      ? voltooiDaguitdaging('perifeer', {
+          begrip: Math.round(pct * 100),
+          variant: 'levels',
+          level: periSpelLevel + 1,
+        })
       : false;
   }
   document.getElementById('peri-spel-actief').style.display = 'none';
@@ -9649,12 +9639,12 @@ const LEERWEG_WEKEN = [
     doel: 'Ontdek ritme, woordgroepen en verschillende manieren van lezen',
     uitleg: 'De innerlijke stem kan begrip ondersteunen. Oefen flexibel met ritme en woordgroepen en behoud wat voor jouw tekstdoel werkt.',
     dagen: [
-      { naam: 'Innerlijke stem + eerste ritmevergelijking', duur: '10 min', screen: 'subvocal' },
-      { naam: 'Metronoom lezen op 280 WPM', duur: '10 min', screen: 'subvocal' },
-      { naam: 'S-beweging papier lezen', duur: '10 min', screen: 'papier' },
+      { naam: 'Innerlijke stem + eerste ritmevergelijking', duur: '10 min', screen: 'subvocal', variant: 'tel' },
+      { naam: 'Metronoom lezen op 280 WPM', duur: '10 min', screen: 'subvocal', variant: 'metro' },
+      { naam: 'S-beweging papier lezen', duur: '10 min', screen: 'papier', variant: 's' },
       { naam: 'RSVP fors boven jouw comfortzone', duur: '10 min', screen: 'rsvp' },
-      { naam: 'Perifeer niveau 4–6', duur: '10 min', screen: 'perifeer' },
-      { naam: 'Hum-contrast + begrip vergelijken', duur: '15 min', screen: 'subvocal' },
+      { naam: 'Perifeer niveau 4–6', duur: '10 min', screen: 'perifeer', variant: 'levels', minLevel: 4 },
+      { naam: 'Hum-contrast + begrip vergelijken', duur: '15 min', screen: 'subvocal', variant: 'hum' },
       { naam: 'Weektest', duur: '10 min', screen: 'leestest' },
     ]
   },
@@ -9663,9 +9653,9 @@ const LEERWEG_WEKEN = [
     doel: 'Combineer snelheid met diep begrip via slimme leesstrategieën',
     uitleg: 'Snelheid zonder begrip is geen winst. Previewing, skimmen en scannen helpen je gericht kiezen welke delen diep gelezen moeten worden.',
     dagen: [
-      { naam: 'Previewing-techniek — structuur eerst lezen', duur: '10 min', screen: 'skim' },
-      { naam: 'Skimmen — snel hoofdidee begrijpen', duur: '10 min', screen: 'skim' },
-      { naam: 'Scannen — doelgericht zoeken in tekst', duur: '10 min', screen: 'skim' },
+      { naam: 'Previewing-techniek — structuur eerst lezen', duur: '10 min', screen: 'skim', variant: 'preview' },
+      { naam: 'Skimmen — snel hoofdidee begrijpen', duur: '10 min', screen: 'skim', variant: 'skim' },
+      { naam: 'Scannen — doelgericht zoeken in tekst', duur: '10 min', screen: 'skim', variant: 'scan' },
       { naam: 'Lange leestekst + alle begripsvragen', duur: '20 min', screen: 'leestest' },
       { naam: 'Maak jouw persoonlijke top-3 technieken', duur: '15 min', screen: null },
       { naam: 'Oogontspanning — volledig herstelroutine', duur: '10 min', screen: 'oogrust' },
@@ -9824,6 +9814,8 @@ function leerWegStartDag(w, d) {
   }
   const missie = {
     w, d, screen, gestartOp: Date.now(),
+    variant: dag.variant || null,
+    minLevel: dag.minLevel || null,
     keuzeNaam: dag.screen ? null : (fallback?.naam || 'Aanbevolen training'),
   };
   localStorage.setItem(LW_ACTIEF_KEY, JSON.stringify(missie));
@@ -9871,14 +9863,27 @@ let svMetroWoorden = [];
 let svMetroIdx = 0;
 let svTelActief = false;
 let svTelTimer = null;
+let svTelEindeTimer = null;
 let svTelTeller = 1;
 let svHumTimerActief = false;
 let svHumCountdown = 0;
 let svHumTimerRef = null;
 
-function svInit() { svSwitchTab('metro'); svMetroLaadTekst(); svTelLaadTekst(); svHumLaadTekst(); }
+function svInit() {
+  svMetroStop();
+  svTelStop(false);
+  svHumStop(false);
+  svMetroLaadTekst();
+  svTelLaadTekst();
+  svHumLaadTekst();
+  const missieVariant = lwActieveVariant('subvocal');
+  svSwitchTab(['metro','tel','hum'].includes(missieVariant) ? missieVariant : 'metro');
+}
 
 function svSwitchTab(t) {
+  if (t !== 'metro') svMetroStop();
+  if (t !== 'tel') svTelStop(false);
+  if (t !== 'hum') svHumStop(false);
   svModus = t;
   ['metro','tel','hum'].forEach(id => {
     document.getElementById(`sv-tab-${id}`).className = t===id ? 'btn btn-primary' : 'btn btn-ghost';
@@ -9902,7 +9907,13 @@ function svMetroToggle() {
 
 function svMetroTick() {
   if (!svMetroActief) return;
-  if (svMetroIdx >= svMetroWoorden.length) { svMetroStop(); svMetroLaadTekst(); voltooiDaguitdaging('subvocal'); _geluid.goed(); return; }
+  if (svMetroIdx >= svMetroWoorden.length) {
+    svMetroStop();
+    svMetroLaadTekst();
+    voltooiDaguitdaging('subvocal', { variant:'metro' });
+    _geluid.goed();
+    return;
+  }
   document.getElementById('sv-metro-woord').textContent = svMetroWoorden[svMetroIdx];
   document.getElementById('sv-metro-voortgang').textContent = `${svMetroIdx+1} / ${svMetroWoorden.length}`;
   // Animate bar
@@ -9933,9 +9944,7 @@ function svTelLaadTekst() {
 
 function svTelToggle() {
   if (svTelActief) {
-    svTelActief = false; clearInterval(svTelTimer);
-    document.getElementById('sv-tel-btn').textContent = '▶ Start tellen';
-    document.getElementById('sv-tel-teller').textContent = '—';
+    svTelStop(false);
     return;
   }
   svTelActief = true; svTelTeller = 1;
@@ -9944,6 +9953,20 @@ function svTelToggle() {
     document.getElementById('sv-tel-teller').textContent = svTelTeller;
     svTelTeller = svTelTeller >= 4 ? 1 : svTelTeller + 1;
   }, 350);
+  clearTimeout(svTelEindeTimer);
+  svTelEindeTimer = setTimeout(() => svTelStop(true), 30000);
+}
+
+function svTelStop(afgerond = false) {
+  svTelActief = false;
+  clearInterval(svTelTimer);
+  clearTimeout(svTelEindeTimer);
+  document.getElementById('sv-tel-btn').textContent = '▶ Start tellen';
+  document.getElementById('sv-tel-teller').textContent = afgerond ? '✅ Klaar' : '—';
+  if (afgerond) {
+    voltooiDaguitdaging('subvocal', { variant:'tel' });
+    _geluid.goed();
+  }
 }
 
 function svTelNieuwe() { svTelLaadTekst(); }
@@ -9955,6 +9978,15 @@ function svHumLaadTekst() {
 
 function svHumNieuw() { svHumLaadTekst(); }
 
+function svHumStop(verberg = false) {
+  clearInterval(svHumTimerRef);
+  svHumTimerActief = false;
+  const knop = document.getElementById('sv-hum-timer-btn');
+  if (knop) knop.disabled = false;
+  const display = document.getElementById('sv-hum-timer-display');
+  if (display && verberg) display.style.display = 'none';
+}
+
 function svHumTimer() {
   if (svHumTimerActief) return;
   svHumTimerActief = true; svHumCountdown = 60;
@@ -9965,9 +9997,11 @@ function svHumTimer() {
     const m = Math.floor(svHumCountdown/60), s = svHumCountdown%60;
     document.getElementById('sv-hum-timer-display').textContent = `${m}:${String(s).padStart(2,'0')}`;
     if (svHumCountdown <= 0) {
-      clearInterval(svHumTimerRef); svHumTimerActief = false;
+      svHumStop(false);
       document.getElementById('sv-hum-timer-display').textContent = '✅ Klaar!';
       document.getElementById('sv-hum-timer-btn').disabled = false;
+      voltooiDaguitdaging('subvocal', { variant:'hum' });
+      _geluid.goed();
     }
   }, 1000);
 }
@@ -10443,7 +10477,10 @@ const SKIM_TEKSTEN_DATA = [
   },
 ];
 
-const SCAN_WOORDEN = ['dertig','BDNF','ARPANET','Netscape','dopamine','cortisol','browsers','Tim Berners-Lee','adolescentie','mRNA','fotovoltaïsch','siliciumatomen','Fibonacci','fermentatie','hippocampus','phishing','tweefactorauthenticatie','Gutenberg','oxytocine','microplastics','cortisolgehalte','neocortex','biofilie','Sapir-Whorf','groepsimmuniteit'];
+const SCAN_STOPWOORDEN = new Set([
+  'worden','hebben','kunnen','zullen','omdat','waarin','waarbij','tussen',
+  'zonder','onder','boven','tijdens','vanuit','daarom','echter','iedere',
+]);
 
 let skimHuidigeTab = 'skim';
 let skimTekstIdx = 0;
@@ -10472,7 +10509,11 @@ function skimNieuweAlles() {
   previewNieuwe();
 }
 
-function skimInit() { skimTab('skim'); skimNieuweAlles(); }
+function skimInit() {
+  skimNieuweAlles();
+  const missieVariant = lwActieveVariant('skim');
+  skimTab(['skim','scan','preview'].includes(missieVariant) ? missieVariant : 'skim');
+}
 
 function skimTab(t) {
   skimHuidigeTab = t;
@@ -10512,6 +10553,7 @@ function skimTimerStart() {
     document.getElementById('skim-timer-display').textContent=`${skimTimerSec}s`;
     if(skimTimerSec<=0){
       clearInterval(skimTimerRef); skimTimerActief=false;
+      document.getElementById('skim-timer-btn').textContent='⏱ Nogmaals 30s';
       document.getElementById('skim-timer-display').textContent='⏱ Tijd!';
       // Toon begripsvraag
       const d = skimTekstIdx === -1 ? skimEigenData() : SKIM_TEKSTEN_DATA[skimTekstIdx];
@@ -10519,10 +10561,30 @@ function skimTimerStart() {
       wrap.style.display='';
       wrap.innerHTML=`<div class="card"><b>Begripscheck:</b> Wat is het hoofdonderwerp van "${htmlEscape(d.titel)}"?
         <div style="margin-top:8px;font-size:.88rem;color:var(--muted)">Bekijk je antwoord door de tekst nog eens te lezen. Kon je het hoofdidee vaststellen?</div>
-        <button class="btn btn-primary" style="margin-top:8px;font-size:.82rem" onclick="skimNieuwe()">↺ Volgende tekst</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+          <button class="btn btn-primary" style="font-size:.82rem" onclick="skimBegripAfronden()">✓ Ja, hoofdidee gevonden</button>
+          <button class="btn btn-ghost" style="font-size:.82rem" onclick="skimNieuwe()">↺ Nog eens oefenen</button>
+        </div>
       </div>`;
     }
   },1000);
+}
+
+function skimBegripAfronden() {
+  const kaartMissieVoltooid = voltooiDaguitdaging('skim', { variant:'skim' });
+  const wrap = document.getElementById('skim-vraag-wrap');
+  if (wrap) {
+    wrap.innerHTML = '<div class="card" role="status"><b>✅ Skimronde afgerond.</b></div>';
+    if (kaartMissieVoltooid) {
+      const knop = document.createElement('button');
+      knop.className = 'btn btn-primary';
+      knop.style.marginTop = '10px';
+      knop.textContent = '→ Naar de leerweg';
+      knop.addEventListener('click', () => sidebarNav('leerweg'), { once:true });
+      wrap.firstElementChild.appendChild(knop);
+    }
+  }
+  _geluid.goed();
 }
 
 function scanNieuwe() {
@@ -10534,29 +10596,44 @@ function scanNieuwe() {
   document.getElementById('scan-zoek-doel').textContent='';
   document.getElementById('scan-resultaat').textContent='';
   scanAutoZoekWrd='';
+  scanAutoZoek();
 }
 
 function scanZoek() {
   const zoek = document.getElementById('scan-zoek-input').value.trim().toLowerCase();
   const box = document.getElementById('scan-tekst-box');
-  // Reset highlights
-  const d = SKIM_TEKSTEN_DATA[Math.floor(Math.random()*SKIM_TEKSTEN_DATA.length)];
-  // Re-render with highlights
-  let html = box.innerHTML.replace(/<mark[^>]*>(.*?)<\/mark>/gi,'$1'); // strip old marks
+  box.innerHTML = box.innerHTML.replace(/<mark[^>]*>(.*?)<\/mark>/gi,'$1');
+  if (scanAutoZoekWrd && zoek !== scanAutoZoekWrd.toLowerCase()) {
+    document.getElementById('scan-resultaat').textContent = zoek
+      ? 'Nog niet — typ het volledige gevraagde woord.'
+      : '';
+    return;
+  }
   if (zoek.length>1) {
     const re = new RegExp(`(${zoek.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
-    box.innerHTML = box.innerHTML.replace(/<mark[^>]*>(.*?)<\/mark>/gi,'$1').replace(re,'<mark class="scan-hl">$1</mark>');
+    box.innerHTML = box.innerHTML.replace(re,'<mark class="scan-hl">$1</mark>');
     const ct = (box.innerHTML.match(/<mark/gi)||[]).length;
     document.getElementById('scan-resultaat').textContent = ct>0?`✅ ${ct} keer gevonden.`:'❌ Niet gevonden in deze tekst.';
-    if (ct > 0) { voltooiDaguitdaging('skim'); _geluid.goed(); }
+    if (ct > 0) { voltooiDaguitdaging('skim', { variant:'scan' }); _geluid.goed(); }
   }
 }
 
 function scanAutoZoek() {
-  const wrd = SCAN_WOORDEN[Math.floor(Math.random()*SCAN_WOORDEN.length)];
+  const tekst = document.getElementById('scan-tekst-box')?.textContent || '';
+  const kandidaten = [...new Set((tekst.match(/[A-Za-zÀ-ÿ]{6,}/g) || [])
+    .filter(w => !SCAN_STOPWOORDEN.has(w.toLowerCase())))];
+  if (!kandidaten.length) {
+    scanAutoZoekWrd = '';
+    document.getElementById('scan-zoek-doel').textContent = 'Kies een andere tekst om te scannen.';
+    return;
+  }
+  const wrd = kandidaten[Math.floor(Math.random()*kandidaten.length)];
+  scanAutoZoekWrd = wrd;
   document.getElementById('scan-zoek-doel').textContent = `🎯 Zoek: "${wrd}"`;
-  document.getElementById('scan-zoek-input').value = wrd;
-  scanZoek();
+  const invoer = document.getElementById('scan-zoek-input');
+  invoer.value = '';
+  document.getElementById('scan-resultaat').textContent = '';
+  invoer.focus();
 }
 
 function previewNieuwe() {
@@ -10573,11 +10650,21 @@ function previewNieuwe() {
     d.alineas.map(a=>`<p>${htmlEscape(a)}</p>`).join('');
   document.getElementById('preview-stap-1').style.display='';
   document.getElementById('preview-stap-2').style.display='none';
+  const klaarBtn = document.getElementById('preview-klaar-btn');
+  if (klaarBtn) { klaarBtn.disabled = false; klaarBtn.textContent = '✓ Preview afronden'; }
 }
 
 function previewNaarStap2() {
   document.getElementById('preview-stap-1').style.display='none';
   document.getElementById('preview-stap-2').style.display='';
+}
+
+function previewAfronden() {
+  const kaartMissieVoltooid = voltooiDaguitdaging('skim', { variant:'preview' });
+  const knop = document.getElementById('preview-klaar-btn');
+  if (knop) { knop.disabled = true; knop.textContent = '✅ Preview afgerond'; }
+  _geluid.goed();
+  if (kaartMissieVoltooid) sidebarNav('leerweg');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -11986,8 +12073,8 @@ function lttVerzend() {
       <div class="am-sub">${omhoog
         ? 'Indrukwekkend! Je leesscore was hoog genoeg voor het volgende niveau.'
         : 'Geen zorgen — oefen meer voor beter begrip en probeer het opnieuw.'}</div>`;
-    // Level-up: grote overlay animatie
-    if (omhoog) setTimeout(() => _toonLevelUp(niveauResult.nieuw), 600);
+    // De niveaupromotie staat al op deze resultaatkaart. Een tweede modaal
+    // level-upvenster zou boven op het ronde-resultaat komen te liggen.
   } else {
     niveauEl.style.display = 'none';
   }
@@ -12007,33 +12094,6 @@ function lttVerzend() {
   if (typeof updateVandaagPanel === 'function') updateVandaagPanel();
   // Achievements checken (na localStorage-update)
   setTimeout(checkAchievements, 50);
-}
-
-// ── LEVEL-UP OVERLAY ──────────────────────────────────────
-function _toonLevelUp(nieuwNiveau) {
-  const cfg = _LTT_NIVEAUS[nieuwNiveau];
-  if (!cfg) return;
-  // Confetti
-  if (typeof showConfetti === 'function') showConfetti(120, 40);
-  // Overlay
-  const ov = document.createElement('div');
-  ov.className = 'lu-overlay';
-  ov.innerHTML = `
-    <div class="lu-card" onclick="event.stopPropagation()">
-      <div class="lu-badge">${cfg.emoji}</div>
-      <div class="lu-suptitel">🎉 Niveau omhoog!</div>
-      <div class="lu-titel">Je bent nu ${cfg.naam}</div>
-      <div class="lu-niveau" style="background:${cfg.kleur}22;color:${cfg.kleur}">${cfg.emoji} Niveau ${nieuwNiveau} — ${cfg.naam}</div>
-      <div class="lu-sub">${nieuwNiveau === 2
-        ? 'Je hield tempo en begrip samen op niveau. Langere en complexere teksten staan nu voor je klaar.'
-        : 'Je hebt het hoogste oefenniveau geopend. Hier vergelijk je jezelf met je eigen eerdere metingen op uitdagende teksten.'
-      }</div>
-      <button class="btn btn-primary" onclick="this.closest('.lu-overlay').remove()">Doorgaan →</button>
-    </div>`;
-  ov.addEventListener('click', () => ov.remove());
-  document.body.appendChild(ov);
-  // Auto-dismiss na 6 seconden
-  setTimeout(() => { if (ov.parentNode) ov.remove(); }, 6000);
 }
 
 // ════════════════════════════════════════════════════════════

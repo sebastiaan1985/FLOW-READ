@@ -83,7 +83,7 @@ checkJavaScript('coach.js');
 checkInlineScripts('index.html');
 checkInlineScripts('login.html');
 
-for (const pagina of ['index.html', 'login.html', 'privacy.html', 'reset-wachtwoord.html']) {
+for (const pagina of ['index.html', 'login.html', 'privacy.html', 'account-verwijderen.html', 'reset-wachtwoord.html']) {
   const html = lees(pagina);
   verwacht(html.includes('Content-Security-Policy'), `${pagina} mist een Content Security Policy.`);
   verwacht(html.includes('strict-origin-when-cross-origin'), `${pagina} mist een referrerbeleid.`);
@@ -94,9 +94,41 @@ const appMarkup = appHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
 const htmlIds = [...appMarkup.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
 const dubbeleIds = [...new Set(htmlIds.filter((id, index) => htmlIds.indexOf(id) !== index))];
 verwacht(dubbeleIds.length === 0, `App bevat dubbele HTML-id's: ${dubbeleIds.join(', ')}`);
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v34'"), 'Service worker gebruikt niet de actuele v34-cache.');
+const schermen = new Set([...appMarkup.matchAll(/\bid="screen-([^"]+)"/g)].map(match => match[1]));
+const vasteNavigatiedoelen = [...appHtml.matchAll(/sidebarNav\(['"]([^'"$]+)['"]\)/g)].map(match => match[1]);
+const sidebarDoelen = [...appMarkup.matchAll(/\bdata-screen="([^"]+)"/g)].map(match => match[1]);
+const leerwegDoelen = [...appHtml.matchAll(/\bscreen\s*:\s*'([^']+)'/g)].map(match => match[1]);
+for (const doel of [...new Set([...vasteNavigatiedoelen, ...sidebarDoelen, ...leerwegDoelen])]) {
+  verwacht(schermen.has(doel), `Navigatie verwijst naar ontbrekend scherm: ${doel}.`);
+}
+const onclickHandlers = [...appHtml.matchAll(/\bonclick="([^"]+)"/g)].map(match => match[1]);
+const handlerBases = onclickHandlers.flatMap(handler =>
+  [...handler.matchAll(/(?:^|[;?:]\s*|\s)([A-Za-z_$][\w$]*)\s*(?:\.|\()/g)].map(match => match[1])
+);
+const globaleDefinities = new Set([
+  ...[...appHtml.matchAll(/function\s+([A-Za-z_$][\w$]*)\s*\(/g)].map(match => match[1]),
+  ...[...appHtml.matchAll(/(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=/g)].map(match => match[1]),
+]);
+const browserGlobals = new Set([
+  'this', 'document', 'window', 'event', 'history', 'location', 'navigator',
+  'Math', 'Date', 'setTimeout', 'clearTimeout', 'alert', 'confirm', 'if',
+]);
+const ontbrekendeHandlers = [...new Set(handlerBases.filter(naam =>
+  !globaleDefinities.has(naam) && !browserGlobals.has(naam)
+))];
+verwacht(ontbrekendeHandlers.length === 0, `Klikactie verwijst naar ontbrekende code: ${ontbrekendeHandlers.join(', ')}.`);
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v39'"), 'Service worker gebruikt niet de actuele v39-cache.');
 verwacht(!appHtml.includes('`<span class="success">✓ "${naam}"'), 'Opslagmelding verwerkt een zelfgekozen tekstnaam nog als HTML.');
 verwacht(appHtml.includes("subtitel.textContent = String(naam ?? '')"), 'Achievementmeldingen verwerken namen niet veilig als tekst.');
+verwacht((appHtml.match(/<button type="button" class="oog-niveau-kaart/g) || []).length === 3, 'Oogtrainingsniveaus zijn niet alle drie toetsenbordvriendelijke knoppen.');
+verwacht(appHtml.includes('kaart.disabled = locked'), 'Vergrendelde oogtrainingsniveaus zijn nog bedienbaar.');
+verwacht(appHtml.includes("kaart.setAttribute('aria-pressed'"), 'Oogtrainingsniveaus melden de actieve keuze niet toegankelijk.');
+verwacht(!appHtml.includes('<b>10–15 min</b> per dag'), 'Oogtraining belooft nog een sessieduur die niet overeenkomt met de timer.');
+verwacht(!appHtml.includes('function _toonLevelUp('), 'Lange Teksten bevat nog het dubbele modale level-upvenster.');
+for (const kernFunctie of ['slaaTekstOp', 'toonBibliotheek']) {
+  const aantalDefinities = [...appHtml.matchAll(new RegExp(`function\\s+${kernFunctie}\\s*\\(`, 'g'))].length;
+  verwacht(aantalDefinities === 1, `${kernFunctie} is ${aantalDefinities} keer gedefinieerd; verwacht precies één bron van waarheid.`);
+}
 verwacht(/--accent:\s+#20c9c3;/.test(appHtml), 'App mist de turquoise primaire merkkleur.');
 verwacht(/--accent2:\s+#b7df48;/.test(appHtml), 'App mist lime als voortgangskleur.');
 verwacht(/--bg:\s+#061416;/.test(appHtml), 'App mist de rustige inktgroene leesachtergrond.');
@@ -129,9 +161,24 @@ verwacht(appHtml.includes('aria-pressed="true"') && appHtml.includes("c.setAttri
 verwacht(appHtml.includes('<button type="button" class="dyx-letter-btn"'), 'Letterjachtletters zijn niet toetsenbordbedienbaar.');
 verwacht(appHtml.includes('function jachtToonHint()'), 'Letterjachthint is niet toegankelijk te onthullen.');
 verwacht(!appHtml.includes('filter:blur(4px)'), 'Letterjacht zet het geheime antwoord nog leesbaar in de DOM.');
-verwacht(appHtml.includes("voltooiDaguitdaging('perifeer', { begrip: Math.round(pct * 100) })"), 'Een geslaagd perifeer spellevel rondt de actieve leerwegmissie niet af.');
+verwacht(appHtml.includes("variant: 'levels'") && appHtml.includes('level: periSpelLevel + 1'), 'Een geslaagd perifeer spellevel geeft variant en level niet aan de leerweg door.');
 verwacht(appHtml.includes("localStorage.setItem('peri_hoogste_voltooid'"), 'Perifere levels bewaren niet afzonderlijk welke levels voltooid zijn.');
 verwacht(appHtml.includes("const unlocked = i <= hoogsteVrij"), 'Perifere levelselectie ontgrendelt mogelijk een level te vroeg.');
+verwacht(appHtml.includes("function papierEinde()"), 'Papiertraining mist een echte natuurlijke afronding.');
+verwacht(appHtml.includes("voltooiDaguitdaging('papier', { variant:papierTechModus })"), 'Papiertraining kan week 3, opdracht 3 niet via de gekozen techniek afronden.');
+verwacht((appHtml.match(/i >= regels\.length\) \{ papierEinde\(\); return; \}/g) || []).length === 3, 'Niet alle drie papierleestechnieken ronden de missie af.');
+verwacht(appHtml.includes('id="papier-resultaat" class="card" role="status" aria-live="polite"'), 'Papiertraining geeft na afronding geen toegankelijke bevestiging.');
+verwacht(appHtml.includes("screen: 'papier', variant: 's'"), 'Week 3, opdracht 3 opent niet expliciet het S-patroon.');
+verwacht(appHtml.includes("voltooiDaguitdaging('subvocal', { variant:'hum' })"), 'De hummingmissie kan niet via de bedoelde oefening afronden.');
+verwacht(appHtml.includes("voltooiDaguitdaging('subvocal', { variant:'tel' })"), 'De telmissie kan niet via de bedoelde oefening afronden.');
+verwacht(appHtml.includes("voltooiDaguitdaging('skim', { variant:'preview' })"), 'De previewmissie kan niet via de bedoelde oefening afronden.');
+verwacht(appHtml.includes("voltooiDaguitdaging('skim', { variant:'skim' })"), 'De skim-missie kan niet via de bedoelde oefening afronden.');
+verwacht(appHtml.includes("voltooiDaguitdaging('skim', { variant:'scan' })"), 'De scanmissie kan niet via de bedoelde oefening afronden.');
+verwacht(appHtml.includes("document.getElementById('skim-timer-btn').textContent='⏱ Nogmaals 30s'"), 'De skimtimer blijft na afloop ten onrechte op “Bezig” staan.');
+verwacht(appHtml.includes("const kandidaten = [...new Set((tekst.match(/[A-Za-zÀ-ÿ]{6,}/g) || [])"), 'Scantraining kiest het zoekwoord niet uit de zichtbare tekst.');
+verwacht(!appHtml.includes("document.getElementById('scan-zoek-input').value = wrd"), 'Scantraining vult het gezochte antwoord nog zelf in.');
+verwacht(appHtml.includes("if (missie.variant && resultaat?.variant !== missie.variant) return false;"), 'Leerweg controleert niet of de bedoelde oefenvariant is afgerond.');
+verwacht(appHtml.includes("if (missie.minLevel && (resultaat?.level || 0) < missie.minLevel) return false;"), 'Leerweg controleert een vereist minimumlevel niet.');
 verwacht(appHtml.includes('function begintestPassagesBeschikbaar()'), 'Begintest gebruikt geen ruime tekstvoorraad.');
 verwacht(appHtml.includes("localStorage.getItem('bt_passage_history')"), 'Begintest roteert teksten niet op gebruiksgeschiedenis.');
 verwacht(appHtml.includes('function begintestEigenTekst()'), 'Begintest linkt niet naar een eigen oefentekst.');
@@ -234,6 +281,7 @@ for (const sleutel of [
 verwacht(sync.includes("functions.invoke('delete-account')"), 'Client mist de accountverwijder-call.');
 verwacht(sync.includes("btn.append(icoon, document.createTextNode(kort))"), 'Accountnaam wordt niet veilig als tekst in de header geplaatst.');
 verwacht(!sync.includes('btn.innerHTML = `<span style="font-size:13px">👤</span> ${kort}`'), 'Accountnaam kan nog via HTML in de header terechtkomen.');
+verwacht(!sync.includes("color: '#a090f7'"), 'Accountknop bevat nog een los oud paars kleuraccent.');
 verwacht(sync.includes("document.addEventListener('visibilitychange'"), 'Mobiele cloudsync start niet wanneer de app naar de achtergrond gaat.');
 verwacht(sync.includes("window.addEventListener('pagehide', _syncBijAchtergrond)"), 'Cloudsync mist de pagehide-reservecontrole.');
 verwacht(!sync.includes("window.addEventListener('beforeunload'"), 'Cloudsync leunt nog op een onbetrouwbare async beforeunload-handler.');
@@ -268,6 +316,10 @@ const packageJson = JSON.parse(lees('package.json'));
 verwacht(packageJson.scripts?.build === 'node scripts/build-web.mjs', 'Buildscript voor native packaging ontbreekt.');
 verwacht(packageJson.scripts?.['release:check:live'] === 'node scripts/check-live-config.mjs', 'Live releasecheck ontbreekt.');
 verwacht(existsSync(resolve(root, 'scripts/check-live-config.mjs')), 'Script voor live releasecontrole ontbreekt.');
+const liveCheck = lees('scripts/check-live-config.mjs');
+verwacht(liveCheck.includes('/account-verwijderen.html'), 'Live releasecontrole test de openbare accountverwijderpagina niet.');
+verwacht(liveCheck.includes('niet-vertrouwd.example'), 'Live releasecontrole test de herkomstbeperking van accountverwijdering niet.');
+verwacht(liveCheck.includes("zonderTokenResponse.status === 401"), 'Live releasecontrole test accountverwijdering zonder token niet.');
 verwacht(existsSync(resolve(root, 'vercel.json')), 'Vercel-config ontbreekt.');
 if (existsSync(resolve(root, 'vercel.json'))) {
   const vercelConfig = JSON.parse(lees('vercel.json'));
@@ -310,14 +362,23 @@ for (const screenshot of manifestScreenshots) {
 
 const privacy = lees('PRIVACY_POLICY_TEMPLATE.md');
 const privacyHtml = lees('privacy.html');
+const verwijderHtml = lees('account-verwijderen.html');
 const privacyPlaceholders = /\[(BEDRIJFSNAAM|PRIVACYCONTACT|PRIVACY_URL|VESTIGINGSPLAATS|DATUM)\]/;
 const privacyKlaar = !privacyPlaceholders.test(privacy) &&
   !privacyPlaceholders.test(privacyHtml) &&
-  !privacyHtml.includes('data-privacy-status="draft"');
+  !privacyPlaceholders.test(verwijderHtml) &&
+  !privacyHtml.includes('data-privacy-status="draft"') &&
+  !verwijderHtml.includes('data-deletion-status="draft"');
 verwacht(serviceWorker.includes("'privacy.html'"), 'Offline cache mist privacy.html.');
+verwacht(serviceWorker.includes("'account-verwijderen.html'"), 'Offline cache mist de openbare accountverwijderpagina.');
 verwacht(packageJson.scripts?.build && lees('scripts/build-web.mjs').includes("'privacy.html'"), 'Webbuild neemt privacy.html niet mee.');
+verwacht(lees('scripts/build-web.mjs').includes("'account-verwijderen.html'"), 'Webbuild neemt de openbare accountverwijderpagina niet mee.');
+verwacht(verwijderHtml.includes('Ja, verwijder definitief'), 'Openbare verwijderinstructie komt niet overeen met de echte bevestigingsknop.');
+verwacht(!verwijderHtml.includes('Account beheren'), 'Openbare verwijderinstructie noemt een niet-bestaande tussenstap.');
 verwacht(existsSync(resolve(root, 'ios/App/App/public/privacy.html')), 'iOS bevat geen privacyverklaring.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public/privacy.html')), 'Android bevat geen privacyverklaring.');
+verwacht(existsSync(resolve(root, 'ios/App/App/public/account-verwijderen.html')), 'iOS mist de accountverwijderpagina.');
+verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public/account-verwijderen.html')), 'Android mist de accountverwijderpagina.');
 const privacyBericht = 'Privacybeleid bevat nog publicatie-placeholders.';
 if (production) verwacht(privacyKlaar, privacyBericht);
 else waarschuw(privacyKlaar, privacyBericht);

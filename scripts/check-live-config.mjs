@@ -41,18 +41,28 @@ const supabaseAnon = waarde('SUPABASE_ANON');
 const apiHeaders = { apikey: supabaseAnon };
 
 try {
-  const [app, login, privacy, serviceWorker] = await Promise.all([
+  const [app, login, privacy, verwijderen, serviceWorker] = await Promise.all([
     tekst(`${productieUrl}/index.html`),
     tekst(`${productieUrl}/login.html`),
     tekst(`${productieUrl}/privacy.html`),
+    tekst(`${productieUrl}/account-verwijderen.html`),
     tekst(`${productieUrl}/service-worker.js`),
   ]);
 
   verwacht(app.includes('href="privacy.html"'), 'Productie-app mist de privacylink.');
   verwacht(login.includes('laadSocialProviders'), 'Productielogin controleert providerstatus niet.');
   verwacht(serviceWorker.includes("'privacy.html'"), 'Productie-service-worker cachet privacy.html niet.');
+  verwacht(serviceWorker.includes("'account-verwijderen.html'"), 'Productie-service-worker cachet de accountverwijderpagina niet.');
+  verwacht(serviceWorker.includes("const CACHE_NAAM = 'snellees-v39'"), 'Productie gebruikt niet de actuele v39-offlinecache.');
   verwacht(!/\[(BEDRIJFSNAAM|PRIVACYCONTACT|VESTIGINGSPLAATS|PRIVACY_URL|DATUM)\]/.test(privacy), 'Live privacyverklaring bevat placeholders.');
   verwacht(!privacy.includes('data-privacy-status="draft"'), 'Live privacyverklaring staat nog als concept gemarkeerd.');
+  verwacht(!/\[(PRIVACYCONTACT)\]/.test(verwijderen), 'Live accountverwijderpagina bevat placeholders.');
+  verwacht(!verwijderen.includes('data-deletion-status="draft"'), 'Live accountverwijderpagina staat nog als concept gemarkeerd.');
+
+  const beveiligingsResponse = await haal(`${productieUrl}/index.html`, { method:'HEAD' });
+  verwacht(beveiligingsResponse.headers.get('x-frame-options') === 'DENY', 'Productie mist X-Frame-Options DENY.');
+  verwacht(beveiligingsResponse.headers.get('x-content-type-options') === 'nosniff', 'Productie mist X-Content-Type-Options nosniff.');
+  verwacht((beveiligingsResponse.headers.get('content-security-policy') || '').includes("frame-ancestors 'none'"), 'Productie blokkeert framing niet via CSP.');
 
   const instellingenResponse = await haal(`${supabaseUrl}/auth/v1/settings`, { headers: apiHeaders });
   verwacht(instellingenResponse.ok, `Supabase auth-instellingen antwoorden met HTTP ${instellingenResponse.status}.`);
@@ -90,6 +100,22 @@ try {
     },
   });
   verwacht(verwijderResponse.ok, `Supabase-functie delete-account is niet bereikbaar (HTTP ${verwijderResponse.status}).`);
+
+  const vreemdeHerkomstResponse = await haal(`${supabaseUrl}/functions/v1/delete-account`, {
+    method: 'OPTIONS',
+    headers: {
+      Origin: 'https://niet-vertrouwd.example',
+      'Access-Control-Request-Method': 'POST',
+    },
+  });
+  verwacht(vreemdeHerkomstResponse.status === 403, `Delete Function weigert een onbekende browserherkomst niet (HTTP ${vreemdeHerkomstResponse.status}).`);
+
+  const zonderTokenResponse = await haal(`${supabaseUrl}/functions/v1/delete-account`, {
+    method: 'POST',
+    headers: { Origin: productieUrl, 'Content-Type':'application/json' },
+    body: '{}',
+  });
+  verwacht(zonderTokenResponse.status === 401, `Delete Function weigert een verzoek zonder accounttoken niet correct (HTTP ${zonderTokenResponse.status}).`);
 } catch (error) {
   fouten.push(`Live controle kon niet worden afgerond: ${error.message}`);
 }
