@@ -17,6 +17,8 @@ const corsHeadersVoor = (req: Request) => {
   const origin = req.headers.get('Origin');
   return {
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Max-Age': '86400',
     ...(origin && toegestaneOrigins.has(origin)
       ? { 'Access-Control-Allow-Origin': origin, 'Vary': 'Origin' }
       : {}),
@@ -26,7 +28,12 @@ const corsHeadersVoor = (req: Request) => {
 const antwoord = (req: Request, body: Record<string, unknown>, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { ...corsHeadersVoor(req), 'Content-Type': 'application/json' },
+    headers: {
+      ...corsHeadersVoor(req),
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store',
+      'X-Content-Type-Options': 'nosniff',
+    },
   });
 
 Deno.serve(async req => {
@@ -35,7 +42,13 @@ Deno.serve(async req => {
     if (!origin || !toegestaneOrigins.has(origin)) {
       return new Response('Herkomst niet toegestaan', { status: 403 });
     }
-    return new Response('ok', { headers: corsHeadersVoor(req) });
+    return new Response('ok', {
+      headers: {
+        ...corsHeadersVoor(req),
+        'Cache-Control': 'no-store',
+        'X-Content-Type-Options': 'nosniff',
+      },
+    });
   }
   if (req.method !== 'POST') return antwoord(req, { error: 'Methode niet toegestaan' }, 405);
 

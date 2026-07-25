@@ -53,7 +53,7 @@ try {
   verwacht(login.includes('laadSocialProviders'), 'Productielogin controleert providerstatus niet.');
   verwacht(serviceWorker.includes("'privacy.html'"), 'Productie-service-worker cachet privacy.html niet.');
   verwacht(serviceWorker.includes("'account-verwijderen.html'"), 'Productie-service-worker cachet de accountverwijderpagina niet.');
-  verwacht(serviceWorker.includes("const CACHE_NAAM = 'snellees-v39'"), 'Productie gebruikt niet de actuele v39-offlinecache.');
+  verwacht(serviceWorker.includes("const CACHE_NAAM = 'snellees-v40'"), 'Productie gebruikt niet de actuele v40-offlinecache.');
   verwacht(!/\[(BEDRIJFSNAAM|PRIVACYCONTACT|VESTIGINGSPLAATS|PRIVACY_URL|DATUM)\]/.test(privacy), 'Live privacyverklaring bevat placeholders.');
   verwacht(!privacy.includes('data-privacy-status="draft"'), 'Live privacyverklaring staat nog als concept gemarkeerd.');
   verwacht(!/\[(PRIVACYCONTACT)\]/.test(verwijderen), 'Live accountverwijderpagina bevat placeholders.');
@@ -100,6 +100,9 @@ try {
     },
   });
   verwacht(verwijderResponse.ok, `Supabase-functie delete-account is niet bereikbaar (HTTP ${verwijderResponse.status}).`);
+  verwacht(verwijderResponse.headers.get('access-control-allow-origin') === productieUrl, 'Delete Function bevestigt de productieherkomst niet exact.');
+  verwacht((verwijderResponse.headers.get('access-control-allow-methods') || '').includes('POST'), 'Delete Function staat POST niet toe in de CORS-preflight.');
+  verwacht(verwijderResponse.headers.get('x-content-type-options') === 'nosniff', 'Delete Function mist nosniff op de preflight.');
 
   const vreemdeHerkomstResponse = await haal(`${supabaseUrl}/functions/v1/delete-account`, {
     method: 'OPTIONS',
@@ -116,6 +119,7 @@ try {
     body: '{}',
   });
   verwacht(zonderTokenResponse.status === 401, `Delete Function weigert een verzoek zonder accounttoken niet correct (HTTP ${zonderTokenResponse.status}).`);
+  verwacht(zonderTokenResponse.headers.get('cache-control') === 'no-store', 'Delete Function kan foutantwoorden nog laten cachen.');
 } catch (error) {
   fouten.push(`Live controle kon niet worden afgerond: ${error.message}`);
 }

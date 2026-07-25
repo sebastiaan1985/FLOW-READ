@@ -117,7 +117,7 @@ const ontbrekendeHandlers = [...new Set(handlerBases.filter(naam =>
   !globaleDefinities.has(naam) && !browserGlobals.has(naam)
 ))];
 verwacht(ontbrekendeHandlers.length === 0, `Klikactie verwijst naar ontbrekende code: ${ontbrekendeHandlers.join(', ')}.`);
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v39'"), 'Service worker gebruikt niet de actuele v39-cache.');
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v40'"), 'Service worker gebruikt niet de actuele v40-cache.');
 verwacht(!appHtml.includes('`<span class="success">✓ "${naam}"'), 'Opslagmelding verwerkt een zelfgekozen tekstnaam nog als HTML.');
 verwacht(appHtml.includes("subtitel.textContent = String(naam ?? '')"), 'Achievementmeldingen verwerken namen niet veilig als tekst.');
 verwacht((appHtml.match(/<button type="button" class="oog-niveau-kaart/g) || []).length === 3, 'Oogtrainingsniveaus zijn niet alle drie toetsenbordvriendelijke knoppen.');
@@ -177,8 +177,11 @@ verwacht(appHtml.includes("voltooiDaguitdaging('skim', { variant:'scan' })"), 'D
 verwacht(appHtml.includes("document.getElementById('skim-timer-btn').textContent='⏱ Nogmaals 30s'"), 'De skimtimer blijft na afloop ten onrechte op “Bezig” staan.');
 verwacht(appHtml.includes("const kandidaten = [...new Set((tekst.match(/[A-Za-zÀ-ÿ]{6,}/g) || [])"), 'Scantraining kiest het zoekwoord niet uit de zichtbare tekst.');
 verwacht(!appHtml.includes("document.getElementById('scan-zoek-input').value = wrd"), 'Scantraining vult het gezochte antwoord nog zelf in.');
-verwacht(appHtml.includes("if (missie.variant && resultaat?.variant !== missie.variant) return false;"), 'Leerweg controleert niet of de bedoelde oefenvariant is afgerond.');
-verwacht(appHtml.includes("if (missie.minLevel && (resultaat?.level || 0) < missie.minLevel) return false;"), 'Leerweg controleert een vereist minimumlevel niet.');
+verwacht(appHtml.includes("const vereisteVariant = missie.variant || missieDag?.variant || null;"), 'Bestaande actieve missies krijgen het nieuwe variantcontract niet.');
+verwacht(appHtml.includes("if (vereisteVariant && resultaat?.variant !== vereisteVariant) return false;"), 'Leerweg controleert niet of de bedoelde oefenvariant is afgerond.');
+verwacht(appHtml.includes("const minimumLevel = missie.minLevel || missieDag?.minLevel || null;"), 'Bestaande actieve missies krijgen het nieuwe minimumlevel niet.');
+verwacht(appHtml.includes("if (minimumLevel && (resultaat?.level || 0) < minimumLevel) return false;"), 'Leerweg controleert een vereist minimumlevel niet.');
+verwacht(appHtml.includes('scanNieuwe(false);'), 'Het verborgen scanveld kan nog focus stelen wanneer Skimmen opent.');
 verwacht(appHtml.includes('function begintestPassagesBeschikbaar()'), 'Begintest gebruikt geen ruime tekstvoorraad.');
 verwacht(appHtml.includes("localStorage.getItem('bt_passage_history')"), 'Begintest roteert teksten niet op gebruiksgeschiedenis.');
 verwacht(appHtml.includes('function begintestEigenTekst()'), 'Begintest linkt niet naar een eigen oefentekst.');
@@ -305,6 +308,9 @@ verwacht(deleteFunction.includes('auth.getUser()'), 'Delete Function verifieert 
 verwacht(deleteFunction.includes('auth.admin.deleteUser(user.id)'), 'Delete Function verwijdert geen Auth-account.');
 verwacht(!deleteFunction.includes("'Access-Control-Allow-Origin': '*'"), 'Delete Function staat accountverwijdering vanaf iedere browserherkomst toe.');
 verwacht(deleteFunction.includes('DELETE_ACCOUNT_ALLOWED_ORIGINS'), 'Delete Function mist een instelbare herkomstlijst.');
+verwacht(deleteFunction.includes("'Access-Control-Allow-Methods': 'POST, OPTIONS'"), 'Delete Function laat POST niet expliciet toe in de CORS-preflight.');
+verwacht(deleteFunction.includes("'Cache-Control': 'no-store'"), 'Delete Function voorkomt het cachen van verwijderantwoorden niet.');
+verwacht(deleteFunction.includes("'X-Content-Type-Options': 'nosniff'"), 'Delete Function mist nosniff.');
 const loginAuthHtml = lees('login.html');
 const resetHtml = lees('reset-wachtwoord.html');
 verwacht(loginAuthHtml.includes('id="reg-pw" placeholder="Minimaal 8 tekens" minlength="8"'), 'Registratie vraagt niet minimaal 8 wachtwoordtekens.');

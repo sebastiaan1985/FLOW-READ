@@ -27,7 +27,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, de gete
 | Webbeveiliging | CSP, frameblokkade, `nosniff`, referrer- en permissionsbeleid aanwezig |
 | Datatoegang | RLS-migratie beperkt `user_data` tot het eigen account |
 | Android-basis | Back-up uitgeschakeld en onbeveiligd HTTP-verkeer geblokkeerd |
-| Offline/PWA | Versiecache v39, privacy- en verwijderpagina in app-shell |
+| Offline/PWA | Versiecache v40, privacy- en verwijderpagina in app-shell |
 
 ## Opgeloste releaseproblemen
 
@@ -101,4 +101,3 @@ De nieuwe lessen volgens **Kennis → Actie → Terugblik** zijn bewust nog niet
 1. **Kennis:** één korte, feitelijk voorzichtige uitleg met concreet leerdoel.
 2. **Actie:** het bijbehorende spel met meetbare afrondingscriteria.
 3. **Terugblik:** één inhoudsvraag, zelfinschatting en persoonlijk vervolgadoel.
-

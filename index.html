@@ -7694,8 +7694,13 @@ function leerWegAutoVoltooi(scherm, resultaat = null) {
   const volgende = leerWegVolgendeDag();
   const missie = lwActieveMissie();
   if (!volgende || !missie || missie.w !== volgende.w || missie.d !== volgende.d || missie.screen !== scherm) return false;
-  if (missie.variant && resultaat?.variant !== missie.variant) return false;
-  if (missie.minLevel && (resultaat?.level || 0) < missie.minLevel) return false;
+  // Bestaande actieve missies van vóór de variant-update bevatten deze
+  // velden nog niet. Gebruik daarom altijd ook het actuele dagcontract.
+  const missieDag = lwDag(missie.w, missie.d);
+  const vereisteVariant = missie.variant || missieDag?.variant || null;
+  const minimumLevel = missie.minLevel || missieDag?.minLevel || null;
+  if (vereisteVariant && resultaat?.variant !== vereisteVariant) return false;
+  if (minimumLevel && (resultaat?.level || 0) < minimumLevel) return false;
   // Debounce: één voltooiing = één afgevinkte dag, ook als meerdere
   // hooks (sessie-opslag + daguitdaging) vlak na elkaar vuren
   const nu = Date.now();
@@ -10505,14 +10510,16 @@ function skimDataKies() {
 
 function skimNieuweAlles() {
   skimNieuwe();
-  scanNieuwe();
+  scanNieuwe(false);
   previewNieuwe();
 }
 
 function skimInit() {
-  skimNieuweAlles();
   const missieVariant = lwActieveVariant('skim');
-  skimTab(['skim','scan','preview'].includes(missieVariant) ? missieVariant : 'skim');
+  const startTab = ['skim','scan','preview'].includes(missieVariant) ? missieVariant : 'skim';
+  skimTab(startTab);
+  skimNieuweAlles();
+  if (startTab === 'scan') document.getElementById('scan-zoek-input')?.focus();
 }
 
 function skimTab(t) {
@@ -10587,7 +10594,7 @@ function skimBegripAfronden() {
   _geluid.goed();
 }
 
-function scanNieuwe() {
+function scanNieuwe(focusInvoer = true) {
   const d = skimDataKies();
   const html = `<div class="skim-titel">${htmlEscape(d.titel)}</div>` +
     d.alineas.map(a=>`<p>${htmlEscape(a)}</p>`).join('');
@@ -10596,7 +10603,7 @@ function scanNieuwe() {
   document.getElementById('scan-zoek-doel').textContent='';
   document.getElementById('scan-resultaat').textContent='';
   scanAutoZoekWrd='';
-  scanAutoZoek();
+  scanAutoZoek(focusInvoer);
 }
 
 function scanZoek() {
@@ -10618,7 +10625,7 @@ function scanZoek() {
   }
 }
 
-function scanAutoZoek() {
+function scanAutoZoek(focusInvoer = true) {
   const tekst = document.getElementById('scan-tekst-box')?.textContent || '';
   const kandidaten = [...new Set((tekst.match(/[A-Za-zÀ-ÿ]{6,}/g) || [])
     .filter(w => !SCAN_STOPWOORDEN.has(w.toLowerCase())))];
@@ -10633,7 +10640,7 @@ function scanAutoZoek() {
   const invoer = document.getElementById('scan-zoek-input');
   invoer.value = '';
   document.getElementById('scan-resultaat').textContent = '';
-  invoer.focus();
+  if (focusInvoer) invoer.focus();
 }
 
 function previewNieuwe() {
