@@ -5187,7 +5187,73 @@ function sluitSidebar() {
   document.getElementById('menu-toggle').classList.remove('open');
 }
 
+function actiefSchermId() {
+  return document.querySelector('.screen.active')?.id.replace(/^screen-/, '') || null;
+}
+
+/**
+ * Een oefening mag nooit onzichtbaar doorgaan nadat de speler navigeert.
+ * Stop daarom timers, animaties, spraak en nog niet afgeronde metingen vóór
+ * het volgende scherm actief wordt. Een afgeronde score blijft wel bewaard.
+ */
+function stopSchermBijNavigatie(van, naar) {
+  if (!van || van === naar) return;
+
+  try {
+    if (van === 'begintest') {
+      clearInterval(btTimerInterval);
+      btTimerInterval = null;
+      btStartTijd = null;
+    } else if (van === 'rsvp') {
+      rsvpStop();
+    } else if (van === 'chunk') {
+      chunkStop();
+    } else if (van === 'oog') {
+      oogStop();
+    } else if (van === 'perifeer') {
+      periStop();
+      periSpelStop();
+    } else if (van === 'papier') {
+      papierStop();
+    } else if (van === 'dyslexie') {
+      gameStop();
+      window.speechSynthesis?.cancel();
+    } else if (van === 'subvocal') {
+      svMetroStop();
+      svTelStop(false);
+      svHumStop(true);
+    } else if (van === 'regressie') {
+      regStop();
+    } else if (van === 'fixatie') {
+      fixStop();
+    } else if (van === 'skim') {
+      skimStop();
+    } else if (van === 'oogrust') {
+      orStop();
+    } else if (van === 'leestest') {
+      leestestActief = false;
+      leestestStart = 0;
+    } else if (van === 'langetekst') {
+      _lttActief = false;
+      _lttStart = 0;
+    } else if (van === 'eigen-lees') {
+      elAnnuleer();
+    }
+  } catch (fout) {
+    console.warn(`Oefening op scherm "${van}" kon niet volledig worden gestopt.`, fout);
+  }
+
+  document.getElementById('inhoud-quiz')?.remove();
+  if (typeof Ronde !== 'undefined') {
+    Ronde.annuleer();
+    Ronde.sluit();
+  }
+  focusModusUit();
+}
+
 function sidebarNav(id) {
+  stopSchermBijNavigatie(actiefSchermId(), id);
+
   // Update sidebar active states
   document.querySelectorAll('.sidebar nav button').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
   const activeBtn = document.querySelector(`.sidebar nav button[data-screen="${id}"]`);
@@ -5225,6 +5291,8 @@ function sidebarNav(id) {
 
 // ─── NAVIGATIE (backward compat) ─────────────────────────────────────────
 function toon(id, btn) {
+  stopSchermBijNavigatie(actiefSchermId(), id);
+
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
@@ -5641,7 +5709,7 @@ function checkBegintestEersteKeer() {
 }
 
 // ─── RSVP ─────────────────────────────────────────────────────────────────
-let rsvpTimer = null, rsvpIdx = 0, rsvpWoorden = [], rsvpStart_t = null, rsvpElapsed = 0;
+let rsvpTimer = null, rsvpDisplayTimer = null, rsvpIdx = 0, rsvpWoorden = [], rsvpStart_t = null, rsvpElapsed = 0;
 
 function vulRsvpDropdown() {
   const sel = document.getElementById('rsvp-src');
@@ -5690,7 +5758,12 @@ function rsvpTick() {
   const slice = rsvpWoorden.slice(rsvpIdx, rsvpIdx + chunk).join(' ');
   const el = document.getElementById('rsvp-word');
   el.style.opacity = 0;
-  setTimeout(() => { el.innerHTML = dyxWoordHtml(slice); el.style.opacity = 1; }, 30);
+  clearTimeout(rsvpDisplayTimer);
+  rsvpDisplayTimer = setTimeout(() => {
+    el.innerHTML = dyxWoordHtml(slice);
+    el.style.opacity = 1;
+    rsvpDisplayTimer = null;
+  }, 30);
   rsvpIdx += chunk;
   const pct = Math.min(100, (rsvpIdx / rsvpWoorden.length) * 100);
   document.getElementById('rsvp-bar').style.width = pct + '%';
@@ -5704,6 +5777,7 @@ function rsvpTick() {
 function rsvpPause() { clearTimeout(rsvpTimer); rsvpTimer = null; if(rsvpStart_t) rsvpElapsed = Date.now() - rsvpStart_t; rsvpStart_t = null; }
 function rsvpStop() {
   clearTimeout(rsvpTimer); rsvpTimer = null;
+  clearTimeout(rsvpDisplayTimer); rsvpDisplayTimer = null;
   rsvpIdx = 0; rsvpStart_t = null; rsvpElapsed = 0;
   document.getElementById('rsvp-word').textContent = 'Gestopt';
   document.getElementById('rsvp-bar').style.width = '0%';
@@ -9521,7 +9595,7 @@ function periSpelVolgende() {
     linksEl.style.opacity = '0';
     rechtsEl.style.opacity = '0';
     // Stel vraag
-    setTimeout(() => periSpelStelVraag(), 200);
+    periSpelTimer = setTimeout(() => periSpelStelVraag(), 200);
   }, lv.interval * 1000);
 }
 
@@ -10550,6 +10624,16 @@ function skimNieuwe() {
   document.getElementById('skim-timer-display').style.display='none';
 }
 
+function skimStop() {
+  clearInterval(skimTimerRef);
+  skimTimerRef = null;
+  skimTimerActief = false;
+  const knop = document.getElementById('skim-timer-btn');
+  const display = document.getElementById('skim-timer-display');
+  if (knop) knop.textContent = '⏱ 30s timer';
+  if (display) display.style.display = 'none';
+}
+
 function skimTimerStart() {
   if (skimTimerActief) return;
   skimTimerActief=true; skimTimerSec=30;
@@ -10681,6 +10765,15 @@ let orActieveTab = 'palming';
 let orTimerRef = null;
 
 function orInit() { orTab('palming'); }
+
+function orStop() {
+  clearInterval(orTimerRef);
+  orTimerRef = null;
+  ['or-palming-btn','or-focus-btn','or-acht-btn','or-2020-btn'].forEach(id => {
+    const knop = document.getElementById(id);
+    if (knop) knop.disabled = false;
+  });
+}
 
 function orTab(t) {
   orActieveTab = t;
@@ -12512,6 +12605,17 @@ function elBegin() {
   document.getElementById('el-view-lezen').style.display = '';
   _elStart  = Date.now();
   _elActief = true;
+}
+
+function elAnnuleer() {
+  _elActief = false;
+  _elStart = 0;
+  _elAntwoorden = [];
+  ['el-view-intro','el-view-lezen','el-view-vragen','el-view-resultaat'].forEach((id, index) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = index === 0 ? '' : 'none';
+  });
+  meetWaarschuwingWis('el-meetwaarschuwing');
 }
 
 function elKlaar() {

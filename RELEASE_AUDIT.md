@@ -27,7 +27,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, de gete
 | Webbeveiliging | CSP, frameblokkade, `nosniff`, referrer- en permissionsbeleid aanwezig |
 | Datatoegang | RLS-migratie beperkt `user_data` tot het eigen account |
 | Android-basis | Back-up uitgeschakeld en onbeveiligd HTTP-verkeer geblokkeerd |
-| Offline/PWA | Versiecache v40, privacy- en verwijderpagina in app-shell |
+| Offline/PWA | Versiecache v42, privacy- en verwijderpagina in app-shell |
 
 ## Opgeloste releaseproblemen
 
@@ -35,6 +35,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, de gete
 - De leerweg keek alleen naar het schermtype. Daardoor kon een verkeerde tab een missie afronden. Missies controleren nu ook de bedoelde variant en, bij perifeer lezen, het minimumlevel.
 - Humming, tel-methode, previewing en skimmen hadden geen geldige eigen afronding.
 - De scantrainer koos soms een woord dat niet in de tekst stond en vulde het antwoord zelf in.
+- Timers, animaties, spraak en open leesrondes konden na navigeren onzichtbaar doorlopen; ieder oefenscherm wordt nu centraal en zonder beloning gestopt.
 - Alle perifere levels deelden eerder een onduidelijke ontgrendel-/voltooidstatus.
 - Oogtrainingskaarten waren geen toegankelijke knoppen en noemden onjuiste sessieduren.
 - Lange teksten toonde bij promotie meerdere modale vensters boven elkaar.

@@ -117,7 +117,7 @@ const ontbrekendeHandlers = [...new Set(handlerBases.filter(naam =>
   !globaleDefinities.has(naam) && !browserGlobals.has(naam)
 ))];
 verwacht(ontbrekendeHandlers.length === 0, `Klikactie verwijst naar ontbrekende code: ${ontbrekendeHandlers.join(', ')}.`);
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v40'"), 'Service worker gebruikt niet de actuele v40-cache.');
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v42'"), 'Service worker gebruikt niet de actuele v42-cache.');
 verwacht(!appHtml.includes('`<span class="success">✓ "${naam}"'), 'Opslagmelding verwerkt een zelfgekozen tekstnaam nog als HTML.');
 verwacht(appHtml.includes("subtitel.textContent = String(naam ?? '')"), 'Achievementmeldingen verwerken namen niet veilig als tekst.');
 verwacht((appHtml.match(/<button type="button" class="oog-niveau-kaart/g) || []).length === 3, 'Oogtrainingsniveaus zijn niet alle drie toetsenbordvriendelijke knoppen.');
@@ -182,6 +182,17 @@ verwacht(appHtml.includes("if (vereisteVariant && resultaat?.variant !== vereist
 verwacht(appHtml.includes("const minimumLevel = missie.minLevel || missieDag?.minLevel || null;"), 'Bestaande actieve missies krijgen het nieuwe minimumlevel niet.');
 verwacht(appHtml.includes("if (minimumLevel && (resultaat?.level || 0) < minimumLevel) return false;"), 'Leerweg controleert een vereist minimumlevel niet.');
 verwacht(appHtml.includes('scanNieuwe(false);'), 'Het verborgen scanveld kan nog focus stelen wanneer Skimmen opent.');
+verwacht(appHtml.includes('function stopSchermBijNavigatie(van, naar)'), 'Navigatie mist centrale opruiming van lopende oefeningen.');
+verwacht((appHtml.match(/stopSchermBijNavigatie\(actiefSchermId\(\), id\);/g) || []).length === 2, 'Niet alle navigatieroutes stoppen het vorige oefenscherm.');
+verwacht(appHtml.includes('clearTimeout(rsvpDisplayTimer); rsvpDisplayTimer = null;'), 'RSVP kan na stoppen nog een vertraagd woord tonen.');
+verwacht(appHtml.includes('periSpelTimer = setTimeout(() => periSpelStelVraag(), 200);'), 'Perifeer spel kan na navigeren nog een verborgen vraag openen.');
+for (const stopActie of [
+  'rsvpStop();', 'chunkStop();', 'oogStop();', 'periSpelStop();', 'papierStop();',
+  'gameStop();', 'svTelStop(false);', 'regStop();', 'fixStop();', 'skimStop();',
+  'orStop();', 'elAnnuleer();', 'Ronde.annuleer();', "document.getElementById('inhoud-quiz')?.remove();",
+]) {
+  verwacht(appHtml.includes(stopActie), `Navigatie-opruiming mist ${stopActie}`);
+}
 verwacht(appHtml.includes('function begintestPassagesBeschikbaar()'), 'Begintest gebruikt geen ruime tekstvoorraad.');
 verwacht(appHtml.includes("localStorage.getItem('bt_passage_history')"), 'Begintest roteert teksten niet op gebruiksgeschiedenis.');
 verwacht(appHtml.includes('function begintestEigenTekst()'), 'Begintest linkt niet naar een eigen oefentekst.');
