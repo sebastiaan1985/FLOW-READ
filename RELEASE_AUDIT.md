@@ -4,7 +4,7 @@ Statusdatum: 30 juli 2026
 
 ## Conclusie
 
-De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29 leerwegmissies openen en voltooien via hun bedoelde contract en de bekende blokkades in week 3 zijn in een echte browser hersteld. De Supabase-basismigratie, de toegestane origins en de actuele `delete-account`-functie zijn op 30 juli 2026 live uitgerold. De definitieve privacygegevens zijn ingevuld en de registratie beschermt kinderaccounts met een 16+-/ouderbevestiging. De webrelease kan worden gepubliceerd zodra de nieuwe bewaartermijnmigratie live staat; daarna moeten de Git-/Verceldeployment en definitieve live controles slagen. Native publicatie blijft daarnaast afhankelijk van een volledige Xcode-/Java-toolchain.
+De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29 leerwegmissies openen en voltooien via hun bedoelde contract en de bekende blokkades in week 3 zijn in een echte browser hersteld. De Supabase-basismigratie, bewaartermijnmigratie, toegestane origins en de actuele `delete-account`-functie zijn op 30 juli 2026 live uitgerold. De definitieve privacygegevens zijn ingevuld en de registratie beschermt kinderaccounts met een 16+-/ouderbevestiging. De webrelease kan worden gepubliceerd zodra de Git-/Verceldeployment en definitieve live controles slagen. Native publicatie blijft daarnaast afhankelijk van een volledige Xcode-/Java-toolchain.
 
 “Geen bugs” en “volledig veilig” zijn geen verantwoord absolute garanties. De huidige controles verlagen het risico, maar vervangen geen juridisch advies, store-review of onafhankelijke penetratietest.
 
@@ -36,7 +36,8 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Privacyverklaring | Elev8 Solutions, Almelo, contactadres, termijnen, regio’s, leveranciers, rechten en kinderen definitief ingevuld; geen placeholders of conceptstatus |
 | Kinderaccounts | Gastgebruik blijft open; een online account voor iemand onder 16 wordt door een ouder/voogd aangemaakt en beheerd; bevestiging wordt in Auth-metadata opgeslagen |
 | Aanmeldmethoden | E-mail staat live aan; Google- en Apple-knoppen zijn voorbereid maar worden automatisch verborgen zolang de provider in Supabase uitstaat |
-| Bewaartermijn | Nieuwe dagelijkse Supabase-cronmigratie verwijdert accounts na 24 maanden zonder login of cloudsynchronisatie; live-uitrol nog te bevestigen |
+| Bewaartermijn | Dagelijkse Supabase-cronmigratie verwijdert accounts na 24 maanden zonder login of cloudsynchronisatie; op 30 juli 2026 live uitgerold |
+| Externe donatie | Alleen een link naar de officiële pagina van Stichting Lezen & Schrijven; geen betaalverwerking of klikregistratie in Snellezer |
 | Webbeveiliging | CSP, frameblokkade, `nosniff`, referrer- en permissionsbeleid aanwezig |
 | Datatoegang | RLS-migratie beperkt `user_data` tot het eigen account |
 | Cloudconflicten | Gastvoortgang wordt samengevoegd; actieve missie, WPM-doel en XP-begrenzing synchroniseren; accountdata wordt strikt gescheiden |
@@ -72,15 +73,17 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 - De privacy- en accountverwijderpagina bevatten de definitieve aanbieder, vestigingsplaats, contactgegevens, bewaartermijnen, verwerkingsregio’s en kinderaccountregel.
 - Een dagelijkse, idempotent benoemde Supabase-crontaak voert de afgesproken termijn van 24 maanden inactiviteit uit op basis van de laatste login of cloudsynchronisatie.
 - De complete 29-missiematrix is nu een vaste regressiepoort. Een wijziging aan week 3 opdracht 3, perifeer level 4, een variant of een missiespecifieke tempo-instelling laat de releasecheck voortaan falen.
+- De externe doneerlink verwerkt geen betaling in Snellezer, registreert geen klik en is inclusief toetsenbordfocus en privacyuitleg gecontroleerd.
+- URL-import vanuit ieder afzonderlijk trainingsscherm gebruikt nu dezelfde blokkade voor onbeveiligde, lokale en private adressen.
+- Skimmen en previewing kennen pas na de echte begripscheck of afrondknop een missie- of dagbeloning toe.
 
 ## Blokkerend vóór publicatie
 
-1. **Bewaartermijnmigratie live zetten.** `20260730_inactive_account_retention.sql` moet nog naar het gekoppelde Supabase-project worden gepusht en de actieve cronjob moet worden bevestigd.
-2. **Nieuwe versie deployen.** De live site loopt achter: de openbare verwijderroute geeft 404, de live privacyverklaring is een concept en de live service worker gebruikt een oudere cache.
-3. **Privacy-inbox activeren.** `info@elev8solutions.nl` is als openbaar rechten- en verwijdercontact gekozen en moet vóór actieve gebruikers bereikbaar zijn.
-4. **Definitieve live controle.** Laat na de nieuwe frontenddeployment `npm run release:check:live` slagen en voer accountverwijdering één keer met een speciaal testaccount uit.
-5. **Native builds maken.** Deze Mac mist volledige Xcode en een Java-runtime. Daardoor zijn iOS- en Androidcompilatie nog niet bewezen.
-6. **Storeformulieren invullen.** Google Play verwacht bij accountcreatie zowel een in-app verwijderpad als een werkende webresource. Apple verwacht een vindbare in-app accountverwijdering; als Sign in with Apple actief wordt, moeten de Apple-tokens ook worden ingetrokken.
+1. **Nieuwe versie deployen.** De live site loopt achter: de openbare verwijderroute geeft 404, de live privacyverklaring is een concept en de live service worker gebruikt een oudere cache.
+2. **Privacy-inbox activeren.** `info@elev8solutions.nl` is als openbaar rechten- en verwijdercontact gekozen en moet vóór actieve gebruikers bereikbaar zijn.
+3. **Definitieve live controle.** Laat na de nieuwe frontenddeployment `npm run release:check:live` slagen en voer accountverwijdering één keer met een speciaal testaccount uit.
+4. **Native builds maken.** Deze Mac mist volledige Xcode en een Java-runtime. Daardoor zijn iOS- en Androidcompilatie nog niet bewezen.
+5. **Storeformulieren invullen.** Google Play verwacht bij accountcreatie zowel een in-app verwijderpad als een werkende webresource. Apple verwacht een vindbare in-app accountverwijdering; als Sign in with Apple actief wordt, moeten de Apple-tokens ook worden ingetrokken.
 
 Officiële storebronnen:
 
@@ -92,7 +95,7 @@ Officiële storebronnen:
 
 - De grote HTML-app gebruikt nog inline JavaScript, inline stijlen en inline klikhandlers. Daardoor heeft de CSP nog `'unsafe-inline'` nodig. Splits JavaScript en CSS op in modules en verwijder inline handlers om de CSP wezenlijk strenger te maken.
 - Artikelimport gebruikt externe CORS-proxy’s. Dat is zichtbaar gemaakt aan gebruikers, maar een eigen streng begrensde serverfunctie is veiliger en privacyvriendelijker.
-- De Supabase-basismigratie en functie zijn live uitgerold. De bewaartermijnmigratie wacht nog op live-uitrol. Een volledige accountverwijdering met een speciaal testaccount moet na de frontenddeployment nog worden uitgevoerd; gebruik hiervoor geen echt gebruikersaccount.
+- De Supabase-migraties en functie zijn live uitgerold. Een volledige accountverwijdering met een speciaal testaccount moet na de frontenddeployment nog worden uitgevoerd; gebruik hiervoor geen echt gebruikersaccount.
 - Er is geen onafhankelijke pentest uitgevoerd. Gebruik voor een latere formele controle minimaal [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/) als verificatiebasis.
 - Als Apple-login wordt ingeschakeld, is alleen het verwijderen van het Supabase-account niet genoeg; de Apple-tokenrevocatie moet aantoonbaar worden afgehandeld.
 
@@ -121,6 +124,7 @@ Officiële storebronnen:
 - Account- en trainingsgegevens: verwijderen op verzoek of na 24 maanden inactiviteit. Support: 12 maanden. Technische logs en back-ups: maximaal 30 dagen, behoudens concrete incidenten of wettelijke noodzaak.
 - Accountdatabase: Supabase West-Europa (Ierland). Webverkeer: wereldwijd Vercel-netwerk met toepasselijke doorgiftewaarborgen.
 - De bestaande externe artikelophaaldiensten blijven zichtbaar als optionele, gewaarschuwde functie; vertrouwelijke links worden afgeraden.
+- De doneerknop opent alleen de officiële externe pagina van Stichting Lezen & Schrijven. Snellezer verwerkt geen betaalgegevens en registreert geen klik.
 
 ## KAT-fase — nog niet uitgevoerd
 

@@ -289,7 +289,9 @@ verwacht(!appHtml.includes('if (wpm > stats.bestWpm) stats.bestWpm = wpm;'), 'Ee
 verwacht(appHtml.includes('function veiligeArtikelUrl(ruweUrl)'), 'Artikelimport valideert externe URL’s niet centraal.');
 verwacht(appHtml.includes("url.protocol !== 'https:'"), 'Artikelimport staat nog onbeveiligde URL’s toe.');
 verwacht(appHtml.includes('Lokale of privé-adressen zijn niet toegestaan.'), 'Artikelimport blokkeert lokale en privé-adressen niet.');
+verwacht(/async function tekstbronVanUrl\(screen\)[\s\S]*?veiligeArtikelUrl\(invoer\.trim\(\)\)/.test(appHtml), 'URL-import vanuit trainingsschermen omzeilt de centrale URL-validatie.');
 verwacht((appHtml.match(/via een externe ophaaldienst verwerkt/g) || []).length >= 2, 'Gebruikers krijgen geen duidelijke privacywaarschuwing bij URL-import.');
+verwacht(!appHtml.includes("voltooiDaguitdaging('skim');"), 'Skim- of previewtraining kent nog vóór de echte afronding een beloning toe.');
 verwacht((appHtml.match(/valideerVrijeLeesmeting\(/g) || []).length >= 5, 'Niet alle vrije leesmetingen gebruiken de centrale validatie.');
 verwacht(appHtml.includes('Beantwoord alle ${vragen.length} vragen.'), 'Begintest kan worden afgerond zonder alle begripsvragen.');
 verwacht(appHtml.includes('let btResultaatVerwerkt = false'), 'Begintest mist bescherming tegen dubbel verwerken.');
@@ -306,7 +308,10 @@ for (const claim of ['2× sneller', 'zonder begripsverlies', '5–7 woorden', '3
 }
 verwacht(existsSync(resolve(root, 'assets/avatars/adults-grid.jpg')), 'Volwassen avatarset ontbreekt.');
 verwacht(existsSync(resolve(root, 'assets/avatars/kids-grid.jpg')), 'Kinderavatarset ontbreekt.');
-verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black"'), 'iOS PWA gebruikt geen niet-overlappende zwarte statusbalk.');
+// De statusbalk is translucent mét een gegarandeerde safe-area-bodem: iOS
+// rapporteerde in standalone soms inset 0 waardoor de klok over de header viel.
+verwacht(appHtml.includes('apple-mobile-web-app-status-bar-style" content="black-translucent"'), 'iOS PWA gebruikt geen translucente statusbalk met safe-area.');
+verwacht(appHtml.includes('--safe-top:    max(env(safe-area-inset-top, 0px), 50px)'), 'Safe-area-bodem voor de iOS-statusbalk ontbreekt.');
 verwacht(appHtml.includes('ios-standalone'), 'iOS standalone-layoutdetectie ontbreekt.');
 verwacht(appHtml.includes('href="privacy.html"'), 'Appmenu linkt niet naar de privacyverklaring.');
 verwacht(appHtml.includes("const LW_ACTIEF_KEY = 'snellees_actieve_missie'"), 'Leerweg mist een persistente actieve missie.');
@@ -531,6 +536,11 @@ verwacht(privacyHtml.includes('24 maanden niet is gebruikt'), 'Privacyverklaring
 verwacht(privacyHtml.includes('maximaal 12 maanden'), 'Privacyverklaring mist de bewaartermijn voor supportverzoeken.');
 verwacht(privacyHtml.includes('maximaal 30 dagen'), 'Privacyverklaring mist de termijn voor logs en back-ups.');
 verwacht(privacyHtml.includes('ouder of voogd het online account aanmaken en beheren'), 'Privacyverklaring mist de kinderaccountregel.');
+verwacht(privacyHtml.includes('Stichting Lezen &amp; Schrijven') && privacyHtml.includes('geen betaalgegevens'), 'Privacyverklaring mist de externe doneerpagina en betaalgegevensafbakening.');
+verwacht(appHtml.includes("const DONATIE_URL = 'https://doneren.lezenenschrijven.nl/'"), 'Doneerknop verwijst niet naar de officiële doneerpagina.');
+verwacht(appHtml.includes('rel="noopener noreferrer"'), 'Externe doneerlink mist vensterisolatie.');
+verwacht(appHtml.includes('function _donatieToets(e)') && appHtml.includes("overlay.querySelector('.donatie-sluit')?.focus()"), 'Doneerdialoog beheert toetsenbordfocus niet.');
+verwacht(!appHtml.includes('donatie_geklikt'), 'Doneerknop registreert nog onnodig een lokale kliktimestamp.');
 verwacht(serviceWorker.includes("'privacy.html'"), 'Offline cache mist privacy.html.');
 verwacht(serviceWorker.includes("'account-verwijderen.html'"), 'Offline cache mist de openbare accountverwijderpagina.');
 verwacht(packageJson.scripts?.build && lees('scripts/build-web.mjs').includes("'privacy.html'"), 'Webbuild neemt privacy.html niet mee.');

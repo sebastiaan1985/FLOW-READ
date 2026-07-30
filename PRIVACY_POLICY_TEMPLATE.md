@@ -23,6 +23,8 @@ We slaan geen inhoud van geplakte leesteksten op als productevent.
 
 Als je de functie **Artikel ophalen via URL** gebruikt, wordt de opgegeven URL via een externe ophaaldienst verwerkt. Snellezer probeert hiervoor corsproxy.io, api.allorigins.win en api.codetabs.com. De gekozen dienst kan de URL, de opgevraagde webpagina, je IP-adres en technische verbindingsgegevens verwerken. Gebruik deze functie niet voor vertrouwelijke of afgeschermde links; je kunt de tekst altijd rechtstreeks in de app plakken.
 
+Als je kiest voor **Steun & doneer**, opent Snellezer de officiële externe doneerpagina van Stichting Lezen & Schrijven. Die stichting verwerkt de eventuele gift en kan daarbij betaal- en verbindingsgegevens verwerken volgens haar eigen privacybeleid. Snellezer ontvangt of bewaart geen betaalgegevens en registreert niet of je op de doneerlink klikt.
+
 Als je inlogt met Google of Apple, ontvangen we van die aanbieder de accountgegevens die nodig zijn om je aanmelding uit te voeren, volgens de instellingen en toestemming die daar worden getoond.
 
 ## Waarom we dit doen
@@ -44,7 +46,8 @@ We gebruiken:
 - Supabase voor accountauthenticatie, databaseopslag en accountsynchronisatie;
 - Vercel voor het aanbieden van de webapp;
 - Google en/of Apple wanneer je een van die aanmeldmethoden kiest;
-- corsproxy.io, api.allorigins.win of api.codetabs.com wanneer je zelf een artikel via een URL laat ophalen.
+- corsproxy.io, api.allorigins.win of api.codetabs.com wanneer je zelf een artikel via een URL laat ophalen;
+- Stichting Lezen & Schrijven wanneer je zelf de externe doneerpagina opent.
 
 De accountdatabase van Snellezer staat bij Supabase in de regio West-Europa (Ierland). Vercel levert de webapp via een wereldwijd netwerk. Daardoor kunnen technische verbindingsgegevens, zoals het IP-adres, ook buiten de Europese Economische Ruimte worden verwerkt. Google, Apple en de externe artikelophaaldiensten kunnen eveneens buiten de EER verwerken wanneer je zelf zo'n dienst gebruikt. Waar gegevens buiten de EER worden verwerkt, gebruiken de betrokken leveranciers een adequaatheidsbesluit, het EU-VS Data Privacy Framework en/of door de Europese Commissie goedgekeurde standaardcontractbepalingen als doorgiftewaarborg.
 
