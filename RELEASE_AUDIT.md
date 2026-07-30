@@ -17,6 +17,8 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Productie-afhankelijkheden | `npm audit --omit=dev`: 0 bekende kwetsbaarheden |
 | Trainingsroutes | Alle 17 kaarten openen het bedoelde scherm |
 | Volledige leerweg | Alle 29 missies openen, respecteren variant/kwaliteit en ontgrendelen de volgende stap |
+| Vaste curriculumregressie | Exacte matrix van 29 missies, 8/7/7/7-verdeling, tempo-instellingen, varianten en minimumlevels draait bij iedere releasecheck |
+| Voltooiingspoort in browser | 29/29 missies schrijven voortgang; verkeerde varianten en perifeer onder level 4 worden aantoonbaar geweigerd |
 | Perifeer lezen | Alle 8 levels volledig gespeeld |
 | Dyslexie Leeslab | Alle 7 lessen volledig gespeeld |
 | Oogtraining | Alle 3 timerlevels volledig gespeeld |
@@ -61,6 +63,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 - De belangrijkste klikbare kaarten, profieltegels en RSVP-/chunkleesvlakken waren alleen als gewone tekstblokken herkenbaar. Ze hebben nu een toegankelijke knoprol, zichtbare toetsenbordfocus en Enter-/spatiebediening.
 - Alle statische en dynamisch opgebouwde invoervelden hebben een toegankelijke naam; dit wordt voor de kernvelden voortaan door de release-preflight bewaakt.
 - De account- en wachtwoordvelden staan nu in echte formulieren, waardoor Enter, wachtwoordmanagers en browser-autofill voorspelbaar werken; foutmeldingen worden als live status aangekondigd.
+- De complete 29-missiematrix is nu een vaste regressiepoort. Een wijziging aan week 3 opdracht 3, perifeer level 4, een variant of een missiespecifieke tempo-instelling laat de releasecheck voortaan falen.
 
 ## Blokkerend vóór publicatie
 
@@ -89,7 +92,7 @@ Officiële storebronnen:
 ### Prioriteit 1
 
 - Splits de monolithische `index.html` op in schermmodules, gedeelde UI-componenten en afzonderlijke CSS.
-- Voeg de nu handmatig doorlopen browsermatrix voor alle 29 leerwegmissies als vaste CI-test toe, inclusief exacte missievariant, kwaliteitspoort en ontgrendeling van de volgende dag.
+- Zet de bestaande 29-missiecontractcheck later ook als volledige browser-E2E in CI, zodat naast de contracten ook ieder zichtbaar spelpad automatisch wordt doorlopen.
 - Vervang externe artikelproxy’s door één eigen serverendpoint met DNS-/IP-controle, limieten, time-outs en inhoudslimieten.
 
 ### Prioriteit 2

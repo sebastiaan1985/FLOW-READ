@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-web.mjs",
-    "release:check": "node scripts/build-web.mjs && node scripts/release-check.mjs && node scripts/check-sync.mjs",
-    "release:check:production": "node scripts/build-web.mjs && node scripts/release-check.mjs --production && node scripts/check-sync.mjs",
+    "release:check": "node scripts/build-web.mjs && node scripts/release-check.mjs && node scripts/check-curriculum.mjs && node scripts/check-sync.mjs",
+    "release:check:production": "node scripts/build-web.mjs && node scripts/release-check.mjs --production && node scripts/check-curriculum.mjs && node scripts/check-sync.mjs",
     "release:check:live": "node scripts/check-live-config.mjs",
     "native:add:ios": "npm run build && npx cap add ios",
     "native:add:android": "npm run build && npx cap add android",

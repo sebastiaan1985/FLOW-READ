@@ -442,7 +442,10 @@ verwacht(packageJson.scripts?.build === 'node scripts/build-web.mjs', 'Buildscri
 verwacht(packageJson.scripts?.['release:check:live'] === 'node scripts/check-live-config.mjs', 'Live releasecheck ontbreekt.');
 verwacht(packageJson.scripts?.['release:check']?.includes('node scripts/check-sync.mjs'), 'Lokale releasecheck voert de cloudsync-regressies niet uit.');
 verwacht(packageJson.scripts?.['release:check:production']?.includes('node scripts/check-sync.mjs'), 'Productiereleasecheck voert de cloudsync-regressies niet uit.');
+verwacht(packageJson.scripts?.['release:check']?.includes('node scripts/check-curriculum.mjs'), 'Lokale releasecheck voert de 29-missiecontracten niet uit.');
+verwacht(packageJson.scripts?.['release:check:production']?.includes('node scripts/check-curriculum.mjs'), 'Productiereleasecheck voert de 29-missiecontracten niet uit.');
 verwacht(existsSync(resolve(root, 'scripts/check-sync.mjs')), 'Cloudsync-regressiescript ontbreekt.');
+verwacht(existsSync(resolve(root, 'scripts/check-curriculum.mjs')), 'Curriculumregressiescript ontbreekt.');
 verwacht(existsSync(resolve(root, 'scripts/check-live-config.mjs')), 'Script voor live releasecontrole ontbreekt.');
 const liveCheck = lees('scripts/check-live-config.mjs');
 verwacht(liveCheck.includes('/account-verwijderen.html'), 'Live releasecontrole test de openbare accountverwijderpagina niet.');
