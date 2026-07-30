@@ -117,6 +117,31 @@ body {
 
 /* Form */
 .form-group { margin-bottom: 16px; }
+.account-guard {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 4px 0 16px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.account-guard input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--accent);
+}
+.account-guard label {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: 400;
+  line-height: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+}
 label {
   display: block;
   font-size: 12px;
@@ -309,11 +334,19 @@ input::placeholder { color: var(--muted); }
       <label for="reg-pw2">Wachtwoord herhalen</label>
       <input type="password" id="reg-pw2" placeholder="••••••••" autocomplete="new-password">
     </div>
+    <div class="account-guard">
+      <input type="checkbox" id="reg-account-bevoegd" required>
+      <label for="reg-account-bevoegd">Ik ben 16 jaar of ouder, of ik maak en beheer dit account als ouder of voogd voor een kind. Ik heb de <a href="privacy.html">privacyverklaring</a> gelezen.</label>
+    </div>
     <button class="btn" id="reg-btn" type="submit">Account aanmaken</button>
   </form>
 
   <div class="divider" id="social-divider" hidden>of sneller verder</div>
   <div class="social-auth" id="social-auth" aria-label="Aanmelden met een accountprovider" hidden>
+    <div class="account-guard">
+      <input type="checkbox" id="oauth-account-bevoegd">
+      <label for="oauth-account-bevoegd">Ik ben 16 jaar of ouder, of ik gebruik dit account als ouder of voogd voor een kind.</label>
+    </div>
     <button class="social-auth-btn" id="oauth-google" type="button" onclick="socialLogin('google')" hidden>
       <span class="provider-mark provider-google" aria-hidden="true">G</span><span>Doorgaan met Google</span>
     </button>
@@ -412,8 +445,14 @@ function setSocialLaden(provider, laden) {
 }
 
 async function socialLogin(provider) {
+  if (!document.getElementById('oauth-account-bevoegd').checked) {
+    toonMsg('Bevestig eerst dat je 16 jaar of ouder bent, of als ouder of voogd handelt.');
+    document.getElementById('oauth-account-bevoegd').focus();
+    return;
+  }
   sessionStorage.removeItem('gast_modus');
   sessionStorage.setItem('snellees_account_nieuw', '1');
+  sessionStorage.setItem('snellees_account_bevoegd', '1');
   setSocialLaden(provider, true);
   toonMsg('');
 
@@ -453,21 +492,37 @@ async function registreer() {
   const email = document.getElementById('reg-email').value.trim();
   const pw    = document.getElementById('reg-pw').value;
   const pw2   = document.getElementById('reg-pw2').value;
+  const bevoegd = document.getElementById('reg-account-bevoegd').checked;
 
   if (!email || !pw) { toonMsg('Vul alle velden in.'); return; }
   if (pw !== pw2)    { toonMsg('Wachtwoorden komen niet overeen.'); return; }
   if (pw.length < 8) { toonMsg('Wachtwoord moet minimaal 8 tekens zijn.'); return; }
+  if (!bevoegd) {
+    toonMsg('Bevestig eerst dat je 16 jaar of ouder bent, of als ouder of voogd handelt.');
+    document.getElementById('reg-account-bevoegd').focus();
+    return;
+  }
 
   setLaden('reg-btn', true);
   toonMsg('');
 
-  const { error } = await sb.auth.signUp({ email, password: pw });
+  const { error } = await sb.auth.signUp({
+    email,
+    password: pw,
+    options: {
+      data: {
+        account_bevoegd_bevestigd: true,
+        account_bevoegd_versie: '2026-07-30'
+      }
+    }
+  });
 
   if (error) {
     toonMsg(vertaalFout(error.message));
     setLaden('reg-btn', false);
   } else {
     sessionStorage.setItem('snellees_account_nieuw', '1');
+    sessionStorage.setItem('snellees_account_bevoegd', '1');
     toonMsg('Account aangemaakt! Je bent nu ingelogd.', 'success');
     setTimeout(() => window.location.href = 'index.html', 800);
   }

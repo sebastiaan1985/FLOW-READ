@@ -171,7 +171,7 @@ const ontbrekendeHandlers = [...new Set(handlerBases.filter(naam =>
   !globaleDefinities.has(naam) && !browserGlobals.has(naam)
 ))];
 verwacht(ontbrekendeHandlers.length === 0, `Klikactie verwijst naar ontbrekende code: ${ontbrekendeHandlers.join(', ')}.`);
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v49'"), 'Service worker gebruikt niet de actuele v49-cache.');
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v50'"), 'Service worker gebruikt niet de actuele v50-cache.');
 for (const patroon of [
   'id="vandaag-uitd-card" role="button" tabindex="0"',
   'id="rsvp-display" role="button" tabindex="0" aria-label="RSVP starten of pauzeren"',
@@ -357,11 +357,16 @@ for (const provider of ['google', 'apple']) {
 verwacht(loginHtml.includes('signInWithOAuth'), 'Login mist de OAuth-aanroep.');
 verwacht(loginHtml.includes('/auth/v1/settings'), 'Login controleert niet welke OAuth-providers werkelijk aanstaan.');
 verwacht(loginHtml.includes('external[provider] === true'), 'Login toont uitgeschakelde OAuth-providers mogelijk toch.');
+verwacht(loginHtml.includes('id="reg-account-bevoegd"'), 'Registratie mist de 16+-/ouderbevestiging.');
+verwacht(loginHtml.includes('id="oauth-account-bevoegd"'), 'OAuth mist de 16+-/ouderbevestiging.');
+verwacht(loginHtml.includes('account_bevoegd_bevestigd: true'), 'Registratie bewaart de 16+-/ouderbevestiging niet.');
 verwacht(loginHtml.includes('<form id="panel-login"') && loginHtml.includes('<form id="panel-registreer"'), 'Loginvelden staan niet in echte formulieren.');
 verwacht(loginHtml.includes('role="tablist"') && loginHtml.includes('aria-selected="true"'), 'Logintabs melden hun rol of selectie niet toegankelijk.');
 verwacht(loginHtml.includes('id="msg" class="msg" role="status" aria-live="polite"'), 'Loginfeedback wordt niet toegankelijk aangekondigd.');
 
 const sync = lees('supabase-sync.js');
+verwacht(sync.includes("sessionStorage.getItem('snellees_account_bevoegd') === '1'"), 'OAuth-bevestiging wordt na de terugkeer niet verwerkt.');
+verwacht(sync.includes('account_bevoegd_bevestigd: true'), 'OAuth-bevestiging wordt niet in het account vastgelegd.');
 for (const sleutel of [
   'snellees_startweek',
   'snellees_events',
@@ -417,8 +422,11 @@ verwacht(betaMetrics.includes("extra -> 'snellees_events'"), 'Beta-metrics leest
 verwacht(betaMetrics.includes('count(distinct account_id)'), 'Beta-metrics mist unieke accounttellingen.');
 
 const deleteFunction = lees('supabase/functions/delete-account/index.ts');
+const retentionMigration = lees('supabase/migrations/20260730_inactive_account_retention.sql');
 verwacht(deleteFunction.includes('auth.getUser()'), 'Delete Function verifieert de gebruiker niet.');
 verwacht(deleteFunction.includes('auth.admin.deleteUser(user.id)'), 'Delete Function verwijdert geen Auth-account.');
+verwacht(retentionMigration.includes("'snellezer-delete-inactive-accounts'"), 'Automatische opschoning van inactieve accounts ontbreekt.');
+verwacht(retentionMigration.includes("interval '24 months'"), 'Automatische opschoning gebruikt niet de afgesproken 24 maanden.');
 verwacht(deleteFunction.includes('@supabase/supabase-js@2.111.0'), 'Delete Function gebruikt geen exact gepinde Supabase-client.');
 verwacht(!deleteFunction.includes("'Access-Control-Allow-Origin': '*'"), 'Delete Function staat accountverwijdering vanaf iedere browserherkomst toe.');
 verwacht(deleteFunction.includes('DELETE_ACCOUNT_ALLOWED_ORIGINS'), 'Delete Function mist een instelbare herkomstlijst.');
@@ -517,6 +525,12 @@ const privacyKlaar = !privacyPlaceholders.test(privacy) &&
   !privacyPlaceholders.test(verwijderHtml) &&
   !privacyHtml.includes('data-privacy-status="draft"') &&
   !verwijderHtml.includes('data-deletion-status="draft"');
+verwacht(privacyHtml.includes('Elev8 Solutions') && privacyHtml.includes('Almelo'), 'Privacyverklaring mist de definitieve aanbieder.');
+verwacht(privacyHtml.includes('info@elev8solutions.nl'), 'Privacyverklaring mist het definitieve contactadres.');
+verwacht(privacyHtml.includes('24 maanden niet is gebruikt'), 'Privacyverklaring mist de bewaartermijn voor inactieve accounts.');
+verwacht(privacyHtml.includes('maximaal 12 maanden'), 'Privacyverklaring mist de bewaartermijn voor supportverzoeken.');
+verwacht(privacyHtml.includes('maximaal 30 dagen'), 'Privacyverklaring mist de termijn voor logs en back-ups.');
+verwacht(privacyHtml.includes('ouder of voogd het online account aanmaken en beheren'), 'Privacyverklaring mist de kinderaccountregel.');
 verwacht(serviceWorker.includes("'privacy.html'"), 'Offline cache mist privacy.html.');
 verwacht(serviceWorker.includes("'account-verwijderen.html'"), 'Offline cache mist de openbare accountverwijderpagina.');
 verwacht(packageJson.scripts?.build && lees('scripts/build-web.mjs').includes("'privacy.html'"), 'Webbuild neemt privacy.html niet mee.');

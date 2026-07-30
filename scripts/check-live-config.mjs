@@ -53,9 +53,13 @@ try {
   verwacht(login.includes('laadSocialProviders'), 'Productielogin controleert providerstatus niet.');
   verwacht(serviceWorker.includes("'privacy.html'"), 'Productie-service-worker cachet privacy.html niet.');
   verwacht(serviceWorker.includes("'account-verwijderen.html'"), 'Productie-service-worker cachet de accountverwijderpagina niet.');
-  verwacht(serviceWorker.includes("const CACHE_NAAM = 'snellees-v49'"), 'Productie gebruikt niet de actuele v49-offlinecache.');
+  verwacht(serviceWorker.includes("const CACHE_NAAM = 'snellees-v50'"), 'Productie gebruikt niet de actuele v50-offlinecache.');
   verwacht(!/\[(BEDRIJFSNAAM|PRIVACYCONTACT|VESTIGINGSPLAATS|PRIVACY_URL|DATUM)\]/.test(privacy), 'Live privacyverklaring bevat placeholders.');
   verwacht(!privacy.includes('data-privacy-status="draft"'), 'Live privacyverklaring staat nog als concept gemarkeerd.');
+  verwacht(privacy.includes('Elev8 Solutions') && privacy.includes('Almelo'), 'Live privacyverklaring mist de definitieve aanbieder.');
+  verwacht(privacy.includes('info@elev8solutions.nl'), 'Live privacyverklaring mist het privacycontact.');
+  verwacht(privacy.includes('24 maanden niet is gebruikt'), 'Live privacyverklaring mist de termijn voor inactieve accounts.');
+  verwacht(privacy.includes('ouder of voogd het online account aanmaken en beheren'), 'Live privacyverklaring mist de kinderaccountregel.');
   verwacht(!/\[(PRIVACYCONTACT)\]/.test(verwijderen), 'Live accountverwijderpagina bevat placeholders.');
   verwacht(!verwijderen.includes('data-deletion-status="draft"'), 'Live accountverwijderpagina staat nog als concept gemarkeerd.');
 
@@ -70,7 +74,7 @@ try {
     const instellingen = await instellingenResponse.json();
     const external = instellingen.external || {};
     verwacht(external.email === true, 'E-mailaanmelding staat niet aan in Supabase.');
-    verwacht(external.google === true || external.apple === true, 'Google en Apple staan allebei uit in Supabase.');
+    waarschuw(external.google === true || external.apple === true, 'Google en Apple staan allebei uit; e-mailaanmelding blijft beschikbaar.');
     waarschuw(external.google === true, 'Google-aanmelding staat nog uit.');
     waarschuw(external.apple === true, 'Apple-aanmelding staat nog uit.');
   }

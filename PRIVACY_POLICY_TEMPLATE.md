@@ -1,12 +1,10 @@
 # Privacyverklaring Snellezer
 
-Status: invultemplate. Vervang alle blokhaken en publiceer dit document op een vaste HTTPS-URL voordat Snellezer publiek beschikbaar komt. Laat de definitieve tekst zo nodig juridisch controleren, in het bijzonder wanneer de app op kinderen is gericht.
-
-Laatst bijgewerkt: 25 juli 2026
+Laatst bijgewerkt: 30 juli 2026
 
 ## Wie wij zijn
 
-Snellezer wordt aangeboden door [BEDRIJFSNAAM], gevestigd te [VESTIGINGSPLAATS]. Voor privacyvragen kun je contact opnemen via [PRIVACYCONTACT].
+Snellezer wordt aangeboden door Elev8 Solutions, gevestigd te Almelo. Elev8 Solutions is verantwoordelijk voor de verwerking van persoonsgegevens in Snellezer. Voor privacyvragen kun je contact opnemen via info@elev8solutions.nl.
 
 ## Welke gegevens we verwerken
 
@@ -18,7 +16,8 @@ Wanneer je een account maakt, slaan we de volgende gegevens op in Supabase:
 - zelfgekozen profielnaam en avatar;
 - beginscore, trainingssessies, voortgang, streak en achievements;
 - eigen teksten die je ervoor kiest op te slaan in de app;
-- beperkte productevents, zoals een afgeronde begintest of startweek-sessie.
+- beperkte productevents, zoals een afgeronde begintest of startweek-sessie;
+- de bevestiging dat de registrerende persoon 16 jaar of ouder is, of als ouder of voogd het account voor een kind aanmaakt en beheert.
 
 We slaan geen inhoud van geplakte leesteksten op als productevent.
 
@@ -34,7 +33,9 @@ De verwerking die nodig is voor je account en trainingen vindt plaats om de gevr
 
 ## Bewaartermijn
 
-Gastgegevens blijven op je apparaat totdat je browser- of appgegevens verwijdert. Account- en trainingsgegevens blijven bewaard zolang je account bestaat, tenzij een kortere of wettelijk noodzakelijke langere termijn geldt. Na verwijdering kunnen gegevens nog beperkt aanwezig zijn in beveiligde back-ups totdat die volgens het vaste back-upschema worden overschreven. Vul vóór publicatie de concrete bewaartermijnen voor inactieve accounts, beveiligingslogs, supportverzoeken en back-ups in.
+Gastgegevens blijven op je apparaat totdat je browser- of appgegevens verwijdert. Account- en trainingsgegevens bewaren we zolang het account actief is. Je kunt deze gegevens eerder verwijderen via de app. Een account dat 24 maanden niet is gebruikt, en de gekoppelde trainingsgegevens, wordt verwijderd. Supportverzoeken bewaren we maximaal 12 maanden na de laatste afhandeling. Technische en beveiligingslogs bewaren we maximaal 30 dagen, behalve wanneer een concreet beveiligingsincident of een wettelijke verplichting langer bewaren noodzakelijk maakt.
+
+Na verwijdering kunnen gegevens nog maximaal 30 dagen in beveiligde back-ups aanwezig zijn. Daarna worden ze door het normale back-upschema overschreven. Een wettelijke bewaarplicht of een lopend geschil kan in een uitzonderlijk geval een langere termijn vereisen.
 
 ## Delen en beveiliging
 
@@ -45,15 +46,17 @@ We gebruiken:
 - Google en/of Apple wanneer je een van die aanmeldmethoden kiest;
 - corsproxy.io, api.allorigins.win of api.codetabs.com wanneer je zelf een artikel via een URL laat ophalen.
 
-Gegevens worden tijdens transport versleuteld. Toegang tot accountgegevens is technisch beperkt en wordt alleen gebruikt voor het leveren, beheren en beveiligen van de app. De definitieve versie moet vermelden in welke landen/regio's gegevens worden verwerkt en welke waarborgen gelden bij doorgifte buiten de Europese Economische Ruimte.
+De accountdatabase van Snellezer staat bij Supabase in de regio West-Europa (Ierland). Vercel levert de webapp via een wereldwijd netwerk. Daardoor kunnen technische verbindingsgegevens, zoals het IP-adres, ook buiten de Europese Economische Ruimte worden verwerkt. Google, Apple en de externe artikelophaaldiensten kunnen eveneens buiten de EER verwerken wanneer je zelf zo'n dienst gebruikt. Waar gegevens buiten de EER worden verwerkt, gebruiken de betrokken leveranciers een adequaatheidsbesluit, het EU-VS Data Privacy Framework en/of door de Europese Commissie goedgekeurde standaardcontractbepalingen als doorgiftewaarborg.
+
+Gegevens worden tijdens transport versleuteld. Toegang tot accountgegevens is technisch beperkt en wordt alleen gebruikt voor het leveren, beheren en beveiligen van de app.
 
 ## Kinderen
 
-Vul vóór publicatie in of Snellezer bedoeld is voor kinderen jonger dan 16 jaar, welke gegevens dan worden verwerkt en hoe ouderlijke toestemming of een andere geldige grondslag wordt geregeld. Een lokaal kinderprofiel is niet automatisch hetzelfde als een online kinderaccount.
+Snellezer kan ook door kinderen worden gebruikt. Een kind kan de gastmodus gebruiken zonder online account; de voortgang blijft dan in beginsel op het apparaat. Voor een gebruiker jonger dan 16 jaar moet een ouder of voogd het online account aanmaken en beheren. Tijdens de registratie wordt bevestigd dat de registrerende persoon 16 jaar of ouder is, of als ouder of voogd handelt. We vragen geen geboortedatum. Voor een kinderaccount verwerken we dezelfde beperkte account- en trainingsgegevens als hierboven beschreven. De ouder of voogd kan de privacyrechten voor het kind uitoefenen en het account verwijderen.
 
 ## Jouw rechten
 
-Je kunt verzoeken om inzage, correctie, export, beperking, bezwaar of verwijdering van je persoonsgegevens via [PRIVACYCONTACT]. Je kunt je account en gekoppelde trainingsgegevens ook rechtstreeks in de app verwijderen. Je hebt daarnaast het recht om een klacht in te dienen bij de Autoriteit Persoonsgegevens.
+Je kunt verzoeken om inzage, correctie, export, beperking, bezwaar of verwijdering van je persoonsgegevens via info@elev8solutions.nl. Je kunt je account en gekoppelde trainingsgegevens ook rechtstreeks in de app verwijderen. De stappen en een alternatief voor wanneer je niet kunt inloggen staan op https://snel-lees-app.vercel.app/account-verwijderen.html. Je hebt daarnaast het recht om een klacht in te dienen bij de Autoriteit Persoonsgegevens.
 
 ## Wijzigingen
 

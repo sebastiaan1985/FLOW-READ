@@ -237,6 +237,21 @@ async function _checkAuth() {
       return;
     }
     _huidigeGebruiker = session.user;
+    const bevoegdBevestigd = sessionStorage.getItem('snellees_account_bevoegd') === '1';
+    if (bevoegdBevestigd) {
+      const { data: bevestigingData, error: bevestigingError } = await _sb.auth.updateUser({
+        data: {
+          account_bevoegd_bevestigd: true,
+          account_bevoegd_versie: '2026-07-30',
+        },
+      });
+      if (bevestigingError) {
+        console.warn('[Auth] Registratiebevestiging kon niet worden opgeslagen.', bevestigingError);
+      } else {
+        _huidigeGebruiker = bevestigingData.user || _huidigeGebruiker;
+        sessionStorage.removeItem('snellees_account_bevoegd');
+      }
+    }
     const syncNodig = await _laadVanCloud();
     _toonGebruikerHeader();
 
