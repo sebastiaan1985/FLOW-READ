@@ -171,7 +171,7 @@ const ontbrekendeHandlers = [...new Set(handlerBases.filter(naam =>
   !globaleDefinities.has(naam) && !browserGlobals.has(naam)
 ))];
 verwacht(ontbrekendeHandlers.length === 0, `Klikactie verwijst naar ontbrekende code: ${ontbrekendeHandlers.join(', ')}.`);
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v44'"), 'Service worker gebruikt niet de actuele v44-cache.');
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v45'"), 'Service worker gebruikt niet de actuele v45-cache.');
 verwacht(!appHtml.includes('`<span class="success">✓ "${naam}"'), 'Opslagmelding verwerkt een zelfgekozen tekstnaam nog als HTML.');
 verwacht(appHtml.includes("subtitel.textContent = String(naam ?? '')"), 'Achievementmeldingen verwerken namen niet veilig als tekst.');
 verwacht((appHtml.match(/<button type="button" class="oog-niveau-kaart/g) || []).length === 3, 'Oogtrainingsniveaus zijn niet alle drie toetsenbordvriendelijke knoppen.');
@@ -344,6 +344,13 @@ for (const sleutel of [
   'snellees_startweek',
   'snellees_events',
   'snellees_streak',
+  'bt_passage_history',
+  'snellees_actieve_missie',
+  'snellees_onboarding_done',
+  'snellees_profiel_modus',
+  'snellees_waarde_moment',
+  'snellees_xp_dag',
+  'wpm_doel',
   'oog_hoogste_vrij',
   'oog_hoogste_voltooid',
   'peri_hoogste_level',
@@ -364,6 +371,7 @@ verwacht(sync.includes("document.addEventListener('visibilitychange'"), 'Mobiele
 verwacht(sync.includes("window.addEventListener('pagehide', _syncBijAchtergrond)"), 'Cloudsync mist de pagehide-reservecontrole.');
 verwacht(!sync.includes("window.addEventListener('beforeunload'"), 'Cloudsync leunt nog op een onbetrouwbare async beforeunload-handler.');
 verwacht(sync.includes("const SYNC_OWNER_KEY = 'snellees_sync_owner'"), 'Cloudsync houdt niet bij bij welk account lokale data hoort.');
+verwacht(sync.includes("const LOCAL_ACCOUNT_KEYS = [...SYNC_KEYS, 'av_profiel']"), 'Cloudsync ruimt de oude lokale profielsleutel bij accountwissel niet op.');
 verwacht(sync.includes('const andereEigenaar = !!eigenaar && eigenaar !== _huidigeGebruiker.id;'), 'Cloudsync scheidt lokale data van verschillende accounts niet.');
 verwacht(sync.includes('const gastVoortgang = !eigenaar && _syncSnapshotHeeftVoortgang(lokaleSnapshot);'), 'Cloudsync herkent bestaande gastvoortgang niet.');
 verwacht(sync.includes('function _syncVoegWaardenSamen('), 'Cloudsync mist conflictveilige samenvoeging van lokale en cloudvoortgang.');
@@ -407,6 +415,9 @@ verwacht(resetHtml.includes('pw.length < 8'), 'Wachtwoordherstel controleert de 
 const packageJson = JSON.parse(lees('package.json'));
 verwacht(packageJson.scripts?.build === 'node scripts/build-web.mjs', 'Buildscript voor native packaging ontbreekt.');
 verwacht(packageJson.scripts?.['release:check:live'] === 'node scripts/check-live-config.mjs', 'Live releasecheck ontbreekt.');
+verwacht(packageJson.scripts?.['release:check']?.includes('node scripts/check-sync.mjs'), 'Lokale releasecheck voert de cloudsync-regressies niet uit.');
+verwacht(packageJson.scripts?.['release:check:production']?.includes('node scripts/check-sync.mjs'), 'Productiereleasecheck voert de cloudsync-regressies niet uit.');
+verwacht(existsSync(resolve(root, 'scripts/check-sync.mjs')), 'Cloudsync-regressiescript ontbreekt.');
 verwacht(existsSync(resolve(root, 'scripts/check-live-config.mjs')), 'Script voor live releasecontrole ontbreekt.');
 const liveCheck = lees('scripts/check-live-config.mjs');
 verwacht(liveCheck.includes('/account-verwijderen.html'), 'Live releasecontrole test de openbare accountverwijderpagina niet.');

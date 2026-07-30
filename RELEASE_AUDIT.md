@@ -13,7 +13,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Onderdeel | Resultaat |
 |---|---|
 | Webbuild en release-preflight | Geslaagd |
-| Vercel-previewdeployment | Geslaagd: build, kernroutes en beveiligingsheaders live op een beschermde preview |
+| Vercel-previewdeployment | Infrastructuur bewezen op beschermde preview v44; actuele v45-build lokaal groen en wacht op nieuwe preview |
 | Productie-afhankelijkheden | `npm audit --omit=dev`: 0 bekende kwetsbaarheden |
 | Trainingsroutes | Alle 17 kaarten openen het bedoelde scherm |
 | Volledige leerweg | Alle 29 missies openen, respecteren variant/kwaliteit en ontgrendelen de volgende stap |
@@ -32,9 +32,9 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Accountverwijdering | In-app flow, dubbele bevestiging en openbare instructie aanwezig |
 | Webbeveiliging | CSP, frameblokkade, `nosniff`, referrer- en permissionsbeleid aanwezig |
 | Datatoegang | RLS-migratie beperkt `user_data` tot het eigen account |
-| Cloudconflicten | Gastvoortgang wordt samengevoegd; lokale data van verschillende accounts wordt strikt gescheiden |
+| Cloudconflicten | Gastvoortgang wordt samengevoegd; actieve missie, WPM-doel en XP-begrenzing synchroniseren; accountdata wordt strikt gescheiden |
 | Android-basis | Back-up uitgeschakeld en onbeveiligd HTTP-verkeer geblokkeerd |
-| Offline/PWA | Versiecache v44, privacy- en verwijderpagina in app-shell |
+| Offline/PWA | Versiecache v45, privacy- en verwijderpagina in app-shell |
 
 ## Opgeloste releaseproblemen
 

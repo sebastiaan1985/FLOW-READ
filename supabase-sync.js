@@ -45,6 +45,13 @@ const SYNC_KEYS = [
   'snellees_streak',        // Globale trainingsstreak voor de Home-weergave
   'snellees_laatste_resultaat', // Laatste meetbare winst op Home
   'snellees_events',        // Privacybewuste beta-events, maximaal 250 per gebruiker
+  'bt_passage_history',     // Rotatiegeschiedenis van begintestteksten
+  'snellees_actieve_missie',// Hervatbare actuele leerwegmissie
+  'snellees_onboarding_done',// Onboardingstatus voor een consistente start op elk apparaat
+  'snellees_profiel_modus', // Gekozen volwassen-/kindprofielmodus
+  'snellees_waarde_moment', // Eenmalige waardemomentstatus
+  'snellees_xp_dag',        // Dagelijkse XP-begrenzing tegen onbeperkt herhalen
+  'wpm_doel',               // Persoonlijk snelheidsdoel
   'oog_hoogste_vrij',       // Hoogste vrijgespeelde oogtraining
   'oog_hoogste_voltooid',   // Hoogste voltooide oogtraining
   'peri_hoogste_level',     // Hoogste vrijgespeelde perifere level
@@ -60,6 +67,8 @@ const SYNC_KEYS = [
 const EXTRA_KEYS = [
   'coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan', 'teksten_gelezen',
   'snellees_eerste_missie', 'snellees_startweek', 'snellees_streak', 'snellees_laatste_resultaat', 'snellees_events',
+  'bt_passage_history', 'snellees_actieve_missie', 'snellees_onboarding_done', 'snellees_profiel_modus',
+  'snellees_waarde_moment', 'snellees_xp_dag', 'wpm_doel',
   'oog_hoogste_vrij', 'oog_hoogste_voltooid', 'peri_hoogste_level', 'peri_hoogste_voltooid',
   'snellees_top_technieken',
   'dyslexie_leerweg', 'dyslexie_highscores', 'dyslexie_badges', 'dyslexie_stats',
@@ -79,7 +88,12 @@ const SYNC_SCALAR_KEYS = new Set([
   'bt_laatste_passage',
   'tekst_actief',
   'av_actief',
+  'snellees_onboarding_done',
+  'snellees_profiel_modus',
+  'snellees_waarde_moment',
+  'wpm_doel',
 ]);
+const LOCAL_ACCOUNT_KEYS = [...SYNC_KEYS, 'av_profiel'];
 
 function _syncSchrijfZonderTrigger(key, value) {
   if (value === undefined || value === null) _storageRemoveOrig(key);
@@ -89,7 +103,7 @@ function _syncSchrijfZonderTrigger(key, value) {
 function _syncWisLokaleAccountdata() {
   clearTimeout(_syncTimer);
   _syncTimer = null;
-  for (const key of SYNC_KEYS) _storageRemoveOrig(key);
+  for (const key of LOCAL_ACCOUNT_KEYS) _storageRemoveOrig(key);
   _storageRemoveOrig(SYNC_OWNER_KEY);
   _storageRemoveOrig(SYNC_DIRTY_KEY);
   _storageRemoveOrig(SYNC_LAST_KEY);
@@ -190,6 +204,7 @@ function _syncSnapshotHeeftVoortgang(snapshot) {
     'coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan',
     'teksten_gelezen', 'snellees_eerste_missie', 'snellees_startweek',
     'snellees_streak', 'snellees_laatste_resultaat', 'snellees_events',
+    'snellees_actieve_missie', 'snellees_profiel_modus', 'snellees_xp_dag', 'wpm_doel',
     'dyslexie_leerweg', 'dyslexie_highscores', 'dyslexie_badges', 'dyslexie_stats',
   ]) {
     const waarde = json(key);
@@ -298,7 +313,7 @@ async function _laadVanCloud() {
     if (data.extra && typeof data.extra === 'object') {
       for (const key of EXTRA_KEYS) {
         if (data.extra[key] !== undefined && data.extra[key] !== null) {
-          cloud[key] = JSON.stringify(data.extra[key]);
+          cloud[key] = _syncStringify(key, data.extra[key]);
         }
       }
       if (typeof data.extra.tekst_actief_raw === 'string') {
@@ -366,7 +381,10 @@ async function _syncNuNaarCloud() {
 
   // ── Extra (jsonb): alle nieuwe keys in één kolom ──
   const extra = { tekst_actief_raw: localStorage.getItem('tekst_actief') || '0' };
-  for (const key of EXTRA_KEYS) extra[key] = lsJson(key, null);
+  for (const key of EXTRA_KEYS) {
+    const raw = localStorage.getItem(key);
+    extra[key] = SYNC_SCALAR_KEYS.has(key) ? raw : lsJson(key, null);
+  }
   payload.extra = extra;
 
   let { error } = await _sb.from('user_data').upsert(payload, { onConflict: 'id' });
