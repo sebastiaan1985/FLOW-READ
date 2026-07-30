@@ -32,7 +32,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Webbeveiliging | CSP, frameblokkade, `nosniff`, referrer- en permissionsbeleid aanwezig |
 | Datatoegang | RLS-migratie beperkt `user_data` tot het eigen account |
 | Android-basis | Back-up uitgeschakeld en onbeveiligd HTTP-verkeer geblokkeerd |
-| Offline/PWA | Versiecache v42, privacy- en verwijderpagina in app-shell |
+| Offline/PWA | Versiecache v43, privacy- en verwijderpagina in app-shell |
 
 ## Opgeloste releaseproblemen
 

@@ -101,6 +101,60 @@ const leerwegDoelen = [...appHtml.matchAll(/\bscreen\s*:\s*'([^']+)'/g)].map(mat
 for (const doel of [...new Set([...vasteNavigatiedoelen, ...sidebarDoelen, ...leerwegDoelen])]) {
   verwacht(schermen.has(doel), `Navigatie verwijst naar ontbrekend scherm: ${doel}.`);
 }
+const curriculumMatch = appHtml.match(/const LEERWEG_WEKEN = (\[[\s\S]*?\n\]);/);
+verwacht(!!curriculumMatch, 'Het 4-weken-curriculum kan niet betrouwbaar worden uitgelezen.');
+let curriculum = [];
+if (curriculumMatch) {
+  try {
+    curriculum = new Function(`return (${curriculumMatch[1]});`)();
+  } catch (error) {
+    errors.push(`Het 4-weken-curriculum is geen geldige statische datastructuur: ${error.message}`);
+  }
+}
+const curriculumMissies = curriculum.flatMap((week, w) =>
+  (week.dagen || []).map((dag, d) => ({ ...dag, w, d, sleutel:`w${w}d${d}` }))
+);
+verwacht(curriculum.length === 4, `Leerweg bevat ${curriculum.length} weken; verwacht 4.`);
+verwacht(curriculumMissies.length === 29, `Leerweg bevat ${curriculumMissies.length} missies; verwacht 29.`);
+for (const [w, week] of curriculum.entries()) {
+  verwacht(typeof week.naam === 'string' && week.naam.trim(), `Leerwegweek ${w + 1} mist een naam.`);
+  verwacht(typeof week.doel === 'string' && week.doel.trim(), `Leerwegweek ${w + 1} mist een leerdoel.`);
+  verwacht(typeof week.uitleg === 'string' && week.uitleg.trim(), `Leerwegweek ${w + 1} mist een feitelijk voorzichtige uitleg.`);
+}
+for (const missie of curriculumMissies) {
+  verwacht(typeof missie.naam === 'string' && missie.naam.trim(), `${missie.sleutel} mist een naam.`);
+  verwacht(/^\d+ min$/.test(missie.duur || ''), `${missie.sleutel} heeft geen duidelijke duur in minuten.`);
+  const dynamisch = missie.w === 0 && (missie.d === 1 || missie.d === 2);
+  verwacht(missie.screen !== null || dynamisch, `${missie.sleutel} mist een vast spelscherm.`);
+  if (missie.screen) verwacht(schermen.has(missie.screen), `${missie.sleutel} verwijst naar ontbrekend scherm ${missie.screen}.`);
+}
+const dynamischeMissies = curriculumMissies.filter(missie => missie.screen === null).map(missie => missie.sleutel);
+verwacht(
+  dynamischeMissies.join(',') === 'w0d1,w0d2',
+  `Onverwachte dynamische leerwegmissies: ${dynamischeMissies.join(', ') || 'geen'}.`
+);
+const voltooiContracten = {
+  begintest: "voltooiDaguitdaging('begintest')",
+  oog: "voltooiDaguitdaging('oog')",
+  fixatie: "voltooiDaguitdaging('fixatie')",
+  regressie: "Ronde.start('regressie'",
+  langetekst: "Ronde.direct('langetekst'",
+  leestest: "Ronde.direct('leestest'",
+  rsvp: "Ronde.start('rsvp'",
+  chunk: "Ronde.start('chunk'",
+  subvocal: "voltooiDaguitdaging('subvocal'",
+  papier: "voltooiDaguitdaging('papier'",
+  perifeer: "voltooiDaguitdaging('perifeer'",
+  skim: "voltooiDaguitdaging('skim'",
+  technieken: "voltooiDaguitdaging('technieken'",
+  oogrust: "voltooiDaguitdaging('oogrust'",
+};
+for (const scherm of new Set(curriculumMissies.map(missie => missie.screen).filter(Boolean))) {
+  verwacht(!!voltooiContracten[scherm], `Leerwegscherm ${scherm} mist een vastgelegd voltooiingscontract in de releasecontrole.`);
+  if (voltooiContracten[scherm]) {
+    verwacht(appHtml.includes(voltooiContracten[scherm]), `Leerwegscherm ${scherm} kan zijn missie niet aantoonbaar voltooien.`);
+  }
+}
 const onclickHandlers = [...appHtml.matchAll(/\bonclick="([^"]+)"/g)].map(match => match[1]);
 const handlerBases = onclickHandlers.flatMap(handler =>
   [...handler.matchAll(/(?:^|[;?:]\s*|\s)([A-Za-z_$][\w$]*)\s*(?:\.|\()/g)].map(match => match[1])
@@ -367,11 +421,27 @@ verwacht(existsSync(resolve(root, 'ios/App/App/public/index.html')), 'iOS bevat 
 verwacht(existsSync(resolve(root, 'ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png')), 'iOS appicoon ontbreekt.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/assets/public/index.html')), 'Android bevat geen gesynchroniseerde webbuild.');
 verwacht(existsSync(resolve(root, 'android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png')), 'Android appicoon ontbreekt.');
-for (const nativeIndex of ['ios/App/App/public/index.html', 'android/app/src/main/assets/public/index.html']) {
-  verwacht(lees(nativeIndex) === appHtml, `${nativeIndex} loopt achter op de actuele webapp.`);
-}
-for (const nativeSync of ['ios/App/App/public/supabase-sync.js', 'android/app/src/main/assets/public/supabase-sync.js']) {
-  verwacht(lees(nativeSync) === sync, `${nativeSync} loopt achter op de actuele cloudsync.`);
+const nativeWebBestanden = [
+  'index.html',
+  'login.html',
+  'privacy.html',
+  'account-verwijderen.html',
+  'reset-wachtwoord.html',
+  'manifest.json',
+  'service-worker.js',
+  'supabase-sync.js',
+  'teksten.js',
+  'coach.js',
+  'ronde.js',
+];
+for (const nativeRoot of ['ios/App/App/public', 'android/app/src/main/assets/public']) {
+  for (const bestand of nativeWebBestanden) {
+    const nativePad = `${nativeRoot}/${bestand}`;
+    verwacht(existsSync(resolve(root, nativePad)), `${nativeRoot} mist ${bestand}.`);
+    if (existsSync(resolve(root, nativePad))) {
+      verwacht(lees(nativePad) === lees(bestand), `${nativePad} loopt achter op de actuele webbuild.`);
+    }
+  }
 }
 const androidManifest = lees('android/app/src/main/AndroidManifest.xml');
 verwacht(androidManifest.includes('android:allowBackup="false"'), 'Android kan lokale account- en trainingsdata nog automatisch back-uppen.');
