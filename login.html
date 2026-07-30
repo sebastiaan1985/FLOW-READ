@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data: blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co wss://*.supabase.co">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Inloggen — Snellezer</title>
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link href="vendor/fonts.css" rel="stylesheet">
 <script src="vendor/supabase.min.js"></script>
 <style>
@@ -271,45 +272,45 @@ input::placeholder { color: var(--muted); }
   <div class="logo">Snellezer</div>
   <div class="tagline">Log in om je voortgang op te slaan op alle apparaten</div>
 
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('login')">Inloggen</button>
-    <button class="tab" onclick="switchTab('registreer')">Registreren</button>
+  <div class="tabs" role="tablist" aria-label="Accountactie">
+    <button class="tab active" id="tab-login" type="button" role="tab" aria-selected="true" aria-controls="panel-login" onclick="switchTab('login')">Inloggen</button>
+    <button class="tab" id="tab-registreer" type="button" role="tab" aria-selected="false" aria-controls="panel-registreer" onclick="switchTab('registreer')">Registreren</button>
   </div>
 
-  <div id="msg" class="msg"></div>
+  <div id="msg" class="msg" role="status" aria-live="polite"></div>
 
   <!-- LOGIN -->
-  <div id="panel-login" class="form-panel active">
+  <form id="panel-login" class="form-panel active" role="tabpanel" aria-labelledby="tab-login" onsubmit="event.preventDefault();login()" novalidate>
     <div class="form-group">
-      <label>E-mailadres</label>
+      <label for="login-email">E-mailadres</label>
       <input type="email" id="login-email" placeholder="jouw@email.nl" autocomplete="email">
     </div>
     <div class="form-group">
-      <label>Wachtwoord</label>
+      <label for="login-pw">Wachtwoord</label>
       <input type="password" id="login-pw" placeholder="••••••••" autocomplete="current-password">
     </div>
     <div class="wachtwoord-vergeten">
       <a href="#" onclick="resetWachtwoord(); return false;">Wachtwoord vergeten?</a>
     </div>
-    <button class="btn" id="login-btn" onclick="login()">Inloggen</button>
-  </div>
+    <button class="btn" id="login-btn" type="submit">Inloggen</button>
+  </form>
 
   <!-- REGISTREER -->
-  <div id="panel-registreer" class="form-panel">
+  <form id="panel-registreer" class="form-panel" role="tabpanel" aria-labelledby="tab-registreer" onsubmit="event.preventDefault();registreer()" novalidate>
     <div class="form-group">
-      <label>E-mailadres</label>
+      <label for="reg-email">E-mailadres</label>
       <input type="email" id="reg-email" placeholder="jouw@email.nl" autocomplete="email">
     </div>
     <div class="form-group">
-      <label>Wachtwoord</label>
+      <label for="reg-pw">Wachtwoord</label>
       <input type="password" id="reg-pw" placeholder="Minimaal 8 tekens" minlength="8" autocomplete="new-password">
     </div>
     <div class="form-group">
-      <label>Wachtwoord herhalen</label>
+      <label for="reg-pw2">Wachtwoord herhalen</label>
       <input type="password" id="reg-pw2" placeholder="••••••••" autocomplete="new-password">
     </div>
-    <button class="btn" id="reg-btn" onclick="registreer()">Account aanmaken</button>
-  </div>
+    <button class="btn" id="reg-btn" type="submit">Account aanmaken</button>
+  </form>
 
   <div class="divider" id="social-divider" hidden>of sneller verder</div>
   <div class="social-auth" id="social-auth" aria-label="Aanmelden met een accountprovider" hidden>
@@ -370,7 +371,9 @@ laadSocialProviders();
 // ── UI HELPERS ───────────────────────────────────────────────
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach((t, i) => {
-    t.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'registreer' && i === 1));
+    const actief = (tab === 'login' && i === 0) || (tab === 'registreer' && i === 1);
+    t.classList.toggle('active', actief);
+    t.setAttribute('aria-selected', actief ? 'true' : 'false');
   });
   document.getElementById('panel-login').classList.toggle('active', tab === 'login');
   document.getElementById('panel-registreer').classList.toggle('active', tab === 'registreer');
@@ -424,14 +427,6 @@ async function socialLogin(provider) {
     toonMsg(vertaalFout(error.message));
   }
 }
-
-// ── ENTER KEY SUPPORT ────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return;
-  const loginActief = document.getElementById('panel-login').classList.contains('active');
-  if (loginActief) login();
-  else registreer();
-});
 
 // ── LOGIN ────────────────────────────────────────────────────
 async function login() {

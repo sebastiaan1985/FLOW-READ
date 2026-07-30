@@ -883,6 +883,11 @@ textarea:focus { border-color: rgba(32,201,195,.5); }
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   cursor: pointer; position: relative; padding: 8px;
 }
+.av-profiel-kaart-open {
+  position: absolute; inset: 0; z-index: 1; cursor: pointer;
+  border: 0; border-radius: inherit; background: transparent;
+}
+.av-profiel-kaart-open:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .av-profiel-kaart-avatar {
   width: 96px; height: 96px; border-radius: 18px;
   background: linear-gradient(135deg,#fff8e7,#ffeec8);
@@ -901,7 +906,8 @@ textarea:focus { border-color: rgba(32,201,195,.5); }
   display: none; align-items: center; justify-content: center;
   transition: all .15s; z-index: 2;
 }
-.av-profiel-kaart:hover .av-profiel-kaart-del { display: flex; }
+.av-profiel-kaart:hover .av-profiel-kaart-del,
+.av-profiel-kaart:focus-within .av-profiel-kaart-del { display: flex; }
 .av-profiel-kaart-del:hover { background: #d02020; transform: scale(1.1); }
 .av-nieuw-kaart {
   display: flex; flex-direction: column; align-items: center; gap: 10px;
@@ -2891,7 +2897,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <button class="dyx-btn" id="header-dyx-btn" onclick="dyxOpenPanel()" title="Dyslexie instellingen" aria-label="Dyslexie instellingen">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>
     <span class="dyx-lbl">Dyslexie</span></button>
-  <div class="speler-indicator" id="speler-indicator" onclick="toonAvontuurDirect()" title="Klik om je scores te bekijken" style="display:none">
+  <div class="speler-indicator" id="speler-indicator" role="button" tabindex="0" aria-label="Bekijk je profiel en scores" onclick="toonAvontuurDirect()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toonAvontuurDirect()}" title="Klik om je scores te bekijken" style="display:none">
     <span class="speler-avatar" id="speler-avatar"></span>
     <span class="speler-naam" id="speler-naam"></span>
     <span class="speler-streak" id="speler-streak" style="display:none">🔥<span id="speler-streak-num">0</span></span>
@@ -2900,7 +2906,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <span class="speler-xp-label" id="speler-xp-lbl">Lv 1</span>
     </div>
   </div>
-  <button id="no-profiel-btn" onclick="sidebarNav('avontuur')" style="display:none;padding:7px 14px;border:1px solid rgba(224,112,0,.4);border-radius:8px;background:transparent;color:#e07000;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">👤 Maak profiel</button>
+  <button id="no-profiel-btn" aria-label="Maak profiel" onclick="sidebarNav('avontuur')" style="display:none;padding:7px 14px;border:1px solid rgba(224,112,0,.4);border-radius:8px;background:transparent;color:#e07000;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">👤 Maak profiel</button>
 </header>
 
 <!-- Focus-modus verlaten -->
@@ -2909,11 +2915,11 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <!-- Fout toast (error boundary UI) -->
 <div id="fout-toast" aria-hidden="true">
   <span id="fout-toast-msg">Er is iets misgegaan.</span>
-  <span class="fout-sluit" onclick="sluitFoutToast()">✕</span>
+  <span class="fout-sluit" role="button" tabindex="0" aria-label="Foutmelding sluiten" onclick="sluitFoutToast()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();sluitFoutToast()}">✕</span>
 </div>
 
 <!-- Sidebar Navigation -->
-<div class="sidebar-backdrop" id="sidebar-backdrop" onclick="sluitSidebar()"></div>
+<div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true" onclick="sluitSidebar()"></div>
 <div class="sidebar" id="sidebar" role="navigation" aria-label="Hoofdmenu" aria-hidden="true" inert hidden>
   <div class="sidebar-header">
     <span class="sidebar-logo">Snellezer</span>
@@ -2993,7 +2999,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 <!-- Kleur-overlay -->
 <div id="dyx-overlay"></div>
 <!-- Backdrop -->
-<div id="dyx-backdrop" onclick="dyxSluitPanel()"></div>
+<div id="dyx-backdrop" aria-hidden="true" onclick="dyxSluitPanel()"></div>
 
 <!-- Dyslexie Instellingen Panel -->
 <div id="dyx-panel" aria-hidden="true" inert hidden>
@@ -3007,25 +3013,25 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <div class="dyx-toggle-row">
       <div><div class="dyx-toggle-lbl">Dyslexie modus</div>
         <div class="dyx-toggle-sub">Past alle instellingen toe</div></div>
-      <label class="dyx-switch"><input type="checkbox" id="dyx-aan" onchange="dyxPas()">
+      <label class="dyx-switch"><input type="checkbox" id="dyx-aan" aria-label="Dyslexie modus" onchange="dyxPas()">
         <div class="dyx-switch-track"></div></label>
     </div>
     <div class="dyx-toggle-row">
       <div><div class="dyx-toggle-lbl">Lettergreep kleuren</div>
         <div class="dyx-toggle-sub">ap-pel in afwisselende kleur</div></div>
-      <label class="dyx-switch"><input type="checkbox" id="dyx-sylkleuren" onchange="dyxPas()">
+      <label class="dyx-switch"><input type="checkbox" id="dyx-sylkleuren" aria-label="Lettergreepkleuren" onchange="dyxPas()">
         <div class="dyx-switch-track"></div></label>
     </div>
     <div class="dyx-toggle-row">
       <div><div class="dyx-toggle-lbl">Bionic lezen</div>
         <div class="dyx-toggle-sub">Eerste helft woord vetgedrukt</div></div>
-      <label class="dyx-switch"><input type="checkbox" id="dyx-bionic" onchange="dyxPas()">
+      <label class="dyx-switch"><input type="checkbox" id="dyx-bionic" aria-label="Bionic lezen" onchange="dyxPas()">
         <div class="dyx-switch-track"></div></label>
     </div>
     <div class="dyx-toggle-row">
       <div><div class="dyx-toggle-lbl">Regelmarkering</div>
         <div class="dyx-toggle-sub">Huidige leesregel oplichten</div></div>
-      <label class="dyx-switch"><input type="checkbox" id="dyx-regelmark" onchange="dyxPas()">
+      <label class="dyx-switch"><input type="checkbox" id="dyx-regelmark" aria-label="Regelmarkering" onchange="dyxPas()">
         <div class="dyx-switch-track"></div></label>
     </div>
   </div>
@@ -3049,19 +3055,19 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <div class="dyx-section-label">Tekstgrootte &amp; Spatiëring</div>
     <div class="dyx-slider-row">
       <div class="dyx-slider-top"><span class="dyx-slider-name">Lettergrootte</span><span class="dyx-slider-val" id="dyx-v-size">100%</span></div>
-      <input class="dyx-slider" type="range" id="dyx-size" min="90" max="160" value="100" step="5" oninput="dyxPas()">
+      <input class="dyx-slider" type="range" id="dyx-size" aria-label="Lettergrootte" min="90" max="160" value="100" step="5" oninput="dyxPas()">
     </div>
     <div class="dyx-slider-row">
       <div class="dyx-slider-top"><span class="dyx-slider-name">Letterafstand</span><span class="dyx-slider-val" id="dyx-v-ls">0</span></div>
-      <input class="dyx-slider" type="range" id="dyx-ls" min="0" max="12" value="0" step="1" oninput="dyxPas()">
+      <input class="dyx-slider" type="range" id="dyx-ls" aria-label="Letterafstand" min="0" max="12" value="0" step="1" oninput="dyxPas()">
     </div>
     <div class="dyx-slider-row">
       <div class="dyx-slider-top"><span class="dyx-slider-name">Woordafstand</span><span class="dyx-slider-val" id="dyx-v-ws">0</span></div>
-      <input class="dyx-slider" type="range" id="dyx-ws" min="0" max="20" value="0" step="1" oninput="dyxPas()">
+      <input class="dyx-slider" type="range" id="dyx-ws" aria-label="Woordafstand" min="0" max="20" value="0" step="1" oninput="dyxPas()">
     </div>
     <div class="dyx-slider-row">
       <div class="dyx-slider-top"><span class="dyx-slider-name">Regelafstand</span><span class="dyx-slider-val" id="dyx-v-lh">1.5×</span></div>
-      <input class="dyx-slider" type="range" id="dyx-lh" min="15" max="30" value="15" step="1" oninput="dyxPas()">
+      <input class="dyx-slider" type="range" id="dyx-lh" aria-label="Regelafstand" min="15" max="30" value="15" step="1" oninput="dyxPas()">
     </div>
   </div>
 
@@ -3078,7 +3084,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     </div>
     <div class="dyx-slider-row" style="margin-top:12px">
       <div class="dyx-slider-top"><span class="dyx-slider-name">Sterkte overlay</span><span class="dyx-slider-val" id="dyx-v-opa">15%</span></div>
-      <input class="dyx-slider" type="range" id="dyx-opa" min="5" max="40" value="15" step="1" oninput="dyxPas()">
+      <input class="dyx-slider" type="range" id="dyx-opa" aria-label="Sterkte kleuroverlay" min="5" max="40" value="15" step="1" oninput="dyxPas()">
     </div>
   </div>
 
@@ -3137,7 +3143,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div style="font-size:2.5rem;margin-bottom:12px">👋</div>
       <div class="ob-stap-titel">Welkom bij Snellezer!</div>
       <div class="ob-stap-sub">Leer sneller lezen in 4 weken. Hoe mogen we je noemen?</div>
-      <input class="ob-naam-input" id="ob-naam" type="text" placeholder="Jouw naam…" maxlength="20" onkeydown="if(event.key==='Enter')obVolgende()">
+      <input class="ob-naam-input" id="ob-naam" type="text" aria-label="Jouw naam" placeholder="Jouw naam…" maxlength="20" onkeydown="if(event.key==='Enter')obVolgende()">
       <div class="ob-stap-sub" style="margin-bottom:10px">Kies een profielafbeelding:</div>
       <div class="avatar-type-toggle" id="ob-avatar-type"></div>
       <div class="ob-avatar-grid" id="ob-avatar-grid"></div>
@@ -3263,7 +3269,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       </div>
     </div>
     <!-- Dagelijkse uitdaging -->
-    <div class="vandaag-uitdaging" id="vandaag-uitd-card" onclick="vandaagUitdagingOpen()">
+    <div class="vandaag-uitdaging" id="vandaag-uitd-card" role="button" tabindex="0" onclick="vandaagUitdagingOpen()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();vandaagUitdagingOpen()}">
       <div class="vandaag-uitd-icon" id="vandaag-uitd-icon">⚡</div>
       <div class="vandaag-uitd-info">
         <div class="vandaag-uitd-label">Uitdaging van de dag</div>
@@ -3280,7 +3286,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div class="startweek-punten" id="startweek-punten" aria-label="Voortgang startweek"></div>
       <div class="startweek-tekst" id="startweek-tekst"></div>
     </div>
-    <div class="momentum-card" id="momentum-card" onclick="startMomentumActie()">
+    <div class="momentum-card" id="momentum-card" role="button" tabindex="0" onclick="startMomentumActie()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();startMomentumActie()}">
       <div class="momentum-kop">
         <div class="momentum-label">Laatste winst</div>
         <div class="momentum-tijd" id="momentum-tijd"></div>
@@ -3312,9 +3318,9 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- Eerste stappen checklist (verdwijnt zodra alles klaar is) -->
   <div class="eerste-stappen" id="eerste-stappen" style="display:none">
     <div class="es-kop">🚀 Eerste stappen <button class="es-sluit" onclick="eersteStappenVerberg()" aria-label="Verbergen">✕</button></div>
-    <div class="es-item" id="es-begintest" onclick="sidebarNav('begintest')"><span class="es-check">○</span> Doe de begintest (2 min)</div>
-    <div class="es-item" id="es-oefening" onclick="sidebarNav('rsvp')"><span class="es-check">○</span> Voltooi je eerste oefening</div>
-    <div class="es-item" id="es-installeer" onclick="_installatie.start()"><span class="es-check">○</span> Zet de app op je beginscherm</div>
+    <div class="es-item" id="es-begintest" role="button" tabindex="0" onclick="sidebarNav('begintest')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();sidebarNav('begintest')}"><span class="es-check">○</span> Doe de begintest (2 min)</div>
+    <div class="es-item" id="es-oefening" role="button" tabindex="0" onclick="sidebarNav('rsvp')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();sidebarNav('rsvp')}"><span class="es-check">○</span> Voltooi je eerste oefening</div>
+    <div class="es-item" id="es-installeer" role="button" tabindex="0" onclick="_installatie.start()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();_installatie.start()}"><span class="es-check">○</span> Zet de app op je beginscherm</div>
   </div>
 
   <!-- Installatie-banner (alleen zichtbaar in browser, niet in geïnstalleerde app) -->
@@ -3549,7 +3555,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="page-sub">Woorden verschijnen op een vast punt. Experimenteer met tempo en controleer na afloop altijd je begrip.</div>
   <div id="tekstbron-rsvp"></div>
 
-  <div id="rsvp-display">
+  <div id="rsvp-display" role="button" tabindex="0" aria-label="RSVP starten of pauzeren" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
     <div id="rsvp-orp"></div>
     <span id="rsvp-word">Druk Start</span>
   </div>
@@ -3564,14 +3570,14 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <div class="control-group">
       <label>Snelheid</label>
       <div class="control-value"><span id="wpm-val">300</span> WPM</div>
-      <input type="range" id="wpm-slider" min="100" max="1000" value="300" step="25"
+      <input type="range" id="wpm-slider" aria-label="Snelheid in woorden per minuut" min="100" max="1000" value="300" step="25"
         oninput="document.getElementById('wpm-val').textContent=this.value">
     </div>
     <div class="control-group">
       <label>Woorden per flash</label>
-      <input type="number" id="rsvp-chunk" value="1" min="1" max="5">
+      <input type="number" id="rsvp-chunk" aria-label="Woorden per flash" value="1" min="1" max="5">
     </div>
-    <select id="rsvp-src" onchange="laadRsvpTekst()" style="display:none"></select>
+    <select id="rsvp-src" aria-label="Tekst voor RSVP" onchange="laadRsvpTekst()" style="display:none"></select>
   </div>
 
   <div class="btn-row">
@@ -3587,19 +3593,19 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="page-sub">Oefen met betekenisvolle woordgroepen en bouw tempo alleen op zolang het begrip behouden blijft.</div>
   <div id="tekstbron-chunk"></div>
 
-  <div id="chunk-display"><span id="chunk-tekst">Druk Start</span></div>
+  <div id="chunk-display" role="button" tabindex="0" aria-label="Chunktraining starten of stoppen" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"><span id="chunk-tekst">Druk Start</span></div>
 
   <div class="controls-panel">
     <div class="control-group">
       <label>Chunkgrootte</label>
       <div class="control-value"><span id="cs-val">3</span> woorden</div>
-      <input type="range" id="chunk-size" min="2" max="7" value="3"
+      <input type="range" id="chunk-size" aria-label="Chunkgrootte" min="2" max="7" value="3"
         oninput="document.getElementById('cs-val').textContent=this.value">
     </div>
     <div class="control-group">
       <label>Snelheid</label>
       <div class="control-value"><span id="cw-val">200</span> WPM</div>
-      <input type="range" id="chunk-wpm" min="60" max="500" value="200" step="20"
+      <input type="range" id="chunk-wpm" aria-label="Chunksnelheid in woorden per minuut" min="60" max="500" value="200" step="20"
         oninput="document.getElementById('cw-val').textContent=this.value">
     </div>
   </div>
@@ -3685,7 +3691,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="controls-panel">
     <div class="control-group">
       <label>Patroon</label>
-      <select id="eye-mode">
+      <select id="eye-mode" aria-label="Oogbewegingspatroon">
         <option value="lr">Links–Rechts</option>
         <option value="zigzag">Zigzag</option>
         <option value="expand">Uitdijend</option>
@@ -3694,7 +3700,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     </div>
     <div class="control-group">
       <label>Snelheid</label>
-      <input type="range" id="eye-speed" min="1" max="10" value="3">
+      <input type="range" id="eye-speed" aria-label="Snelheid oogbeweging" min="1" max="10" value="3">
     </div>
     <div class="control-group" style="justify-content:flex-end;flex:1;flex-direction:row;align-self:flex-end">
       <button class="btn btn-primary" onclick="oogStartMetTimer()">▶ Start</button>
@@ -3779,13 +3785,13 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div class="control-group">
         <label>Breedte</label>
         <div class="control-value"><span id="pw-val">60</span>%</div>
-        <input type="range" id="peri-width" min="20" max="95" value="60"
+        <input type="range" id="peri-width" aria-label="Breedte perifere oefening" min="20" max="95" value="60"
           oninput="document.getElementById('pw-val').textContent=this.value">
       </div>
       <div class="control-group">
         <label>Interval</label>
         <div class="control-value"><span id="pi-val">1.5</span>s</div>
-        <input type="range" id="peri-interval" min="5" max="30" value="15" step="1"
+        <input type="range" id="peri-interval" aria-label="Interval perifere oefening" min="5" max="30" value="15" step="1"
           oninput="document.getElementById('pi-val').textContent=(this.value/10).toFixed(1)+'s'">
       </div>
       <div class="control-group" style="flex-direction:row;align-self:flex-end;flex:1;justify-content:flex-end">
@@ -3890,8 +3896,8 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
     <span style="font-size:.8rem;color:var(--muted)">Eigen tekst:</span>
     <button class="btn btn-ghost" style="font-size:.8rem;padding:6px 12px" onclick="document.getElementById('papier-file').click()">📁 .txt laden</button>
-    <input type="file" id="papier-file" accept=".txt" style="display:none" onchange="papierLaadBestand(this)">
-    <input class="text-input" id="papier-url-input" placeholder="https://... artikel URL" style="flex:1;min-width:180px;margin-bottom:0;font-size:.8rem;padding:8px 12px">
+    <input type="file" id="papier-file" aria-label="Tekstbestand voor papierlezen" accept=".txt" style="display:none" onchange="papierLaadBestand(this)">
+    <input class="text-input" id="papier-url-input" aria-label="URL van artikel voor papierlezen" placeholder="https://... artikel URL" style="flex:1;min-width:180px;margin-bottom:0;font-size:.8rem;padding:8px 12px">
     <button class="btn btn-ghost" id="papier-url-btn" onclick="papierLaadUrl()" style="font-size:.8rem;padding:6px 12px">🌐 Ophalen</button>
     <span id="papier-url-status" style="font-size:.75rem;color:var(--muted)"></span>
     <span style="flex-basis:100%;font-size:.68rem;color:var(--muted)">Bij URL-ophalen wordt de link via een externe ophaaldienst verwerkt. Plak de tekst handmatig als je dat niet wilt.</span>
@@ -3900,7 +3906,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="controls-panel">
     <div class="control-group">
       <label>Snelheid</label>
-      <input type="range" id="guide-speed" min="3" max="30" value="12">
+      <input type="range" id="guide-speed" aria-label="Snelheid van de leesgids" min="3" max="30" value="12">
       <span style="font-size:.75rem;color:var(--muted)" id="guide-speed-lbl">Normaal</span>
     </div>
     <div class="control-group" style="flex-direction:row;align-self:flex-end;flex:1;justify-content:flex-end">
@@ -3934,17 +3940,17 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <!-- Plak/laad tekst -->
   <div class="flex" style="margin-bottom:10px;gap:10px">
-    <input class="text-input" id="tekst-naam" placeholder="Naam (optioneel)" style="flex:1;margin-bottom:0">
+    <input class="text-input" id="tekst-naam" aria-label="Naam van de tekst" placeholder="Naam (optioneel)" style="flex:1;margin-bottom:0">
     <button class="btn btn-ghost" onclick="document.getElementById('file-input').click()">📁 Uploaden</button>
-    <input type="file" id="file-input" accept=".txt,.md,text/plain,text/markdown" style="display:none" onchange="laadBestand(this)">
+    <input type="file" id="file-input" aria-label="Tekstbestand uploaden" accept=".txt,.md,text/plain,text/markdown" style="display:none" onchange="laadBestand(this)">
   </div>
   <div class="flex" style="margin-bottom:10px;gap:10px">
-    <input class="text-input" id="url-input" placeholder="https://... (link naar een artikel)" style="flex:1;margin-bottom:0">
+    <input class="text-input" id="url-input" aria-label="URL van artikel" placeholder="https://... (link naar een artikel)" style="flex:1;margin-bottom:0">
     <button class="btn btn-ghost" id="url-ophalen-btn" onclick="laadVanUrl()">🌐 Ophalen</button>
   </div>
   <div id="url-status" style="font-size:13px;color:var(--muted);margin-bottom:10px"></div>
   <p style="font-size:.7rem;color:var(--muted);margin:-4px 0 10px">Bij URL-ophalen wordt de link via een externe ophaaldienst verwerkt. Plak de tekst hieronder als je dat niet wilt.</p>
-  <textarea id="custom-text" placeholder="Plak hier je tekst…"></textarea>
+  <textarea id="custom-text" aria-label="Eigen tekst" placeholder="Plak hier je tekst…"></textarea>
   <div class="flex mt" style="justify-content:space-between;align-items:center">
     <span id="woord-tel" style="font-size:13px;color:var(--muted)"></span>
     <button class="btn btn-ghost" style="font-size:12px;padding:8px 14px" onclick="slaaTekstOp()">💾 Bewaren</button>
@@ -3983,29 +3989,29 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 
   <div class="card" style="margin-bottom:10px">
     <div style="font-size:.7rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Vraag 1</div>
-    <input class="text-input" type="text" id="v1" placeholder="Vraagstelling">
-    <input class="text-input" type="text" id="a1" placeholder="✅ Correct antwoord">
+    <input class="text-input" type="text" id="v1" aria-label="Vraag 1" placeholder="Vraagstelling">
+    <input class="text-input" type="text" id="a1" aria-label="Correct antwoord op vraag 1" placeholder="✅ Correct antwoord">
     <div class="input-row">
-      <input class="text-input" type="text" id="w1a" placeholder="❌ Fout antwoord 1" style="margin-bottom:0">
-      <input class="text-input" type="text" id="w1b" placeholder="❌ Fout antwoord 2" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w1a" aria-label="Eerste fout antwoord op vraag 1" placeholder="❌ Fout antwoord 1" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w1b" aria-label="Tweede fout antwoord op vraag 1" placeholder="❌ Fout antwoord 2" style="margin-bottom:0">
     </div>
   </div>
   <div class="card" style="margin-bottom:10px">
     <div style="font-size:.7rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Vraag 2</div>
-    <input class="text-input" type="text" id="v2" placeholder="Vraagstelling">
-    <input class="text-input" type="text" id="a2" placeholder="✅ Correct antwoord">
+    <input class="text-input" type="text" id="v2" aria-label="Vraag 2" placeholder="Vraagstelling">
+    <input class="text-input" type="text" id="a2" aria-label="Correct antwoord op vraag 2" placeholder="✅ Correct antwoord">
     <div class="input-row">
-      <input class="text-input" type="text" id="w2a" placeholder="❌ Fout antwoord 1" style="margin-bottom:0">
-      <input class="text-input" type="text" id="w2b" placeholder="❌ Fout antwoord 2" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w2a" aria-label="Eerste fout antwoord op vraag 2" placeholder="❌ Fout antwoord 1" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w2b" aria-label="Tweede fout antwoord op vraag 2" placeholder="❌ Fout antwoord 2" style="margin-bottom:0">
     </div>
   </div>
   <div class="card">
     <div style="font-size:.7rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Vraag 3</div>
-    <input class="text-input" type="text" id="v3" placeholder="Vraagstelling">
-    <input class="text-input" type="text" id="a3" placeholder="✅ Correct antwoord">
+    <input class="text-input" type="text" id="v3" aria-label="Vraag 3" placeholder="Vraagstelling">
+    <input class="text-input" type="text" id="a3" aria-label="Correct antwoord op vraag 3" placeholder="✅ Correct antwoord">
     <div class="input-row">
-      <input class="text-input" type="text" id="w3a" placeholder="❌ Fout antwoord 1" style="margin-bottom:0">
-      <input class="text-input" type="text" id="w3b" placeholder="❌ Fout antwoord 2" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w3a" aria-label="Eerste fout antwoord op vraag 3" placeholder="❌ Fout antwoord 1" style="margin-bottom:0">
+      <input class="text-input" type="text" id="w3b" aria-label="Tweede fout antwoord op vraag 3" placeholder="❌ Fout antwoord 2" style="margin-bottom:0">
     </div>
   </div>
 </div>
@@ -4319,7 +4325,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="doel-wrap" id="doel-wrap">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
       <span style="font-size:.9rem">Doelsnelheid:</span>
-      <input type="number" id="doel-input" class="doel-input" min="100" max="900" step="25" placeholder="bv. 300" onchange="slaDoelOp()"/>
+      <input type="number" id="doel-input" class="doel-input" aria-label="Doelsnelheid in woorden per minuut" min="100" max="900" step="25" placeholder="bv. 300" onchange="slaDoelOp()"/>
       <span style="font-size:.85rem;color:var(--muted)">WPM</span>
       <button class="btn btn-primary" style="font-size:.8rem" onclick="slaDoelOp()">Opslaan</button>
     </div>
@@ -4432,7 +4438,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div class="btn-row" style="justify-content:center;margin-top:8px;gap:8px;flex-wrap:wrap">
     <button class="btn btn-primary" id="game-start-btn" onclick="dyxStartVrijeRonde()">Start vrije ronde</button>
     <button class="btn btn-ghost" onclick="gameStop()">⏹ Stop</button>
-    <select id="game-niveau-select" style="font-family:'Comic Neue',cursive;font-size:14px">
+    <select id="game-niveau-select" aria-label="Niveau voor vrij oefenen" style="font-family:'Comic Neue',cursive;font-size:14px">
       <option value="0">⭐ Beginner (3 letters)</option>
       <option value="1">⭐⭐ Makkelijk (4-5 letters)</option>
       <option value="2">⭐⭐⭐ Normaal (6-7 letters)</option>
@@ -4481,10 +4487,10 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <div class="page-sub">Kies een profielafbeelding en vul je naam in.</div>
     <div class="avatar-type-toggle" id="av-avatar-type"></div>
     <div class="avatar-grid" id="avatar-grid"></div>
-    <input class="av-naam-input" id="av-naam-input" type="text" placeholder="Jouw naam…" value="" maxlength="20">
+    <input class="av-naam-input" id="av-naam-input" type="text" aria-label="Naam van het profiel" placeholder="Jouw naam…" value="" maxlength="20">
     <div style="display:flex;gap:10px;margin:12px 0 8px;align-items:center">
       <label style="font-size:.85rem;color:var(--muted);white-space:nowrap">Leeftijd</label>
-      <input class="av-naam-input" id="av-leeftijd-input" type="number" min="4" max="99" placeholder="—" style="margin:0;width:90px;text-align:center" oninput="avPasAvatarLeeftijd(this.value)">
+      <input class="av-naam-input" id="av-leeftijd-input" type="number" aria-label="Leeftijd" min="4" max="99" placeholder="—" style="margin:0;width:90px;text-align:center" oninput="avPasAvatarLeeftijd(this.value)">
       <span style="font-size:.8rem;color:var(--muted)">jaar · onder de 12 gaat kids-modus automatisch aan</span>
     </div>
     <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:1rem;margin-top:10px" onclick="maakProfiel()">Start →</button>
@@ -4737,7 +4743,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <div id="skim-view-scan" style="display:none">
     <div style="font-size:.85rem;color:var(--muted);margin-bottom:10px">Zoek zo snel mogelijk naar het gevraagde woord. Typ het woord pas in wanneer je het in de tekst hebt gevonden.</div>
     <div style="margin-bottom:10px">
-      <input id="scan-zoek-input" class="scan-input" placeholder="Voer een zoekwoord in..." oninput="scanZoek()" />
+      <input id="scan-zoek-input" class="scan-input" aria-label="Zoekwoord om in de tekst te scannen" placeholder="Voer een zoekwoord in..." oninput="scanZoek()" />
     </div>
     <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="scanNieuwe()">↺ Nieuwe tekst</button>
@@ -5152,9 +5158,9 @@ function tekstbronRender(screen) {
       </div>
       <button class="btn btn-ghost" onclick="document.getElementById('tekstbron-file-${screen}').click()">📁 Laden</button>
       <button class="btn btn-ghost" onclick="tekstbronPlakToggle('${screen}')">✍️ Plakken</button>
-      <input class="tekstbron-upload" type="file" id="tekstbron-file-${screen}" accept=".txt,.md,text/plain,text/markdown" onchange="tekstbronBestand('${screen}', this)">
+      <input class="tekstbron-upload" type="file" id="tekstbron-file-${screen}" aria-label="Tekstbestand laden voor ${screen}" accept=".txt,.md,text/plain,text/markdown" onchange="tekstbronBestand('${screen}', this)">
       <div class="tekstbron-paste" id="tekstbron-paste-${screen}">
-        <textarea class="text-input" id="tekstbron-area-${screen}" placeholder="Plak hier je eigen oefentekst..."></textarea>
+        <textarea class="text-input" id="tekstbron-area-${screen}" aria-label="Eigen oefentekst voor ${screen}" placeholder="Plak hier je eigen oefentekst..."></textarea>
         <button class="btn btn-primary" onclick="tekstbronPlakOpslaan('${screen}')">Gebruik tekst</button>
       </div>
       <div class="tekstbron-status" id="tekstbron-status-${screen}"></div>
@@ -6962,7 +6968,8 @@ function avKiesScherm() {
   grid.innerHTML = profielen.map((p, i) => {
     const niveauNamen = ['Begin','Woorden','Zinnen','Snelheid','Kampioen'];
     const info = `Level ${p.level} · ${p.totaleSterren || 0} ⭐`;
-    return `<div class="av-profiel-kaart" onclick="avInloggen(${i})">
+    return `<div class="av-profiel-kaart">
+      <button type="button" class="av-profiel-kaart-open" onclick="avInloggen(${i})" aria-label="Open profiel ${htmlEscape(p.naam)}"></button>
       <div class="av-profiel-kaart-avatar">${avatarMarkup(p.avatar)}</div>
       <div class="av-profiel-kaart-naam">${htmlEscape(p.naam)}</div>
       <div class="av-profiel-kaart-info">${info}</div>
@@ -6971,7 +6978,7 @@ function avKiesScherm() {
   }).join('');
 
   if (profielen.length < 4) {
-    grid.innerHTML += `<div class="av-nieuw-kaart" onclick="avNieuwProfiel()">
+    grid.innerHTML += `<div class="av-nieuw-kaart" role="button" tabindex="0" onclick="avNieuwProfiel()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();avNieuwProfiel()}">
       <div class="av-nieuw-avatar">＋</div>
       <div class="av-nieuw-naam">Nieuw profiel</div>
     </div>`;

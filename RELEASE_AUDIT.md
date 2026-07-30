@@ -13,7 +13,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Onderdeel | Resultaat |
 |---|---|
 | Webbuild en release-preflight | Geslaagd |
-| Vercel-previewdeployment | Infrastructuur bewezen op beschermde preview v44; actuele v45-build lokaal groen en wacht op nieuwe preview |
+| Vercel-previewdeployment | Infrastructuur bewezen op beschermde preview v44; actuele v49-build lokaal groen en wacht op nieuwe preview |
 | Productie-afhankelijkheden | `npm audit --omit=dev`: 0 bekende kwetsbaarheden |
 | Trainingsroutes | Alle 17 kaarten openen het bedoelde scherm |
 | Volledige leerweg | Alle 29 missies openen, respecteren variant/kwaliteit en ontgrendelen de volgende stap |
@@ -33,8 +33,11 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Webbeveiliging | CSP, frameblokkade, `nosniff`, referrer- en permissionsbeleid aanwezig |
 | Datatoegang | RLS-migratie beperkt `user_data` tot het eigen account |
 | Cloudconflicten | Gastvoortgang wordt samengevoegd; actieve missie, WPM-doel en XP-begrenzing synchroniseren; accountdata wordt strikt gescheiden |
+| Toegankelijkheid | 375 geladen bedieningselementen gecontroleerd, inclusief een aangemaakt profiel: geen naamloze, geneste of bekende niet-semantische bediening; hoofdkaarten en leesvlakken zijn met Enter/spatie bedienbaar |
+| Mobiele layout | Alle 24 schermen gecontroleerd op 390 × 844 px; geen horizontale pagina-overflow |
+| Accountschermen | Inloggen, registreren en wachtwoordherstel gebruiken echte formulieren, gekoppelde labels, live feedback en mobiele scroll |
 | Android-basis | Back-up uitgeschakeld en onbeveiligd HTTP-verkeer geblokkeerd |
-| Offline/PWA | Versiecache v45, privacy- en verwijderpagina in app-shell |
+| Offline/PWA | Versiecache v49, privacy- en verwijderpagina in app-shell |
 
 ## Opgeloste releaseproblemen
 
@@ -55,6 +58,9 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 - Artikelimport weigert onbeveiligde, lokale en private URL’s en waarschuwt voor externe ophaaldiensten.
 - De delete-accountfunctie accepteert niet langer iedere browserherkomst, controleert ook gewone POST-verzoeken en gebruikt een exact gepinde Supabase-client.
 - Android maakt geen automatische back-up van lokale account- en trainingsdata.
+- De belangrijkste klikbare kaarten, profieltegels en RSVP-/chunkleesvlakken waren alleen als gewone tekstblokken herkenbaar. Ze hebben nu een toegankelijke knoprol, zichtbare toetsenbordfocus en Enter-/spatiebediening.
+- Alle statische en dynamisch opgebouwde invoervelden hebben een toegankelijke naam; dit wordt voor de kernvelden voortaan door de release-preflight bewaakt.
+- De account- en wachtwoordvelden staan nu in echte formulieren, waardoor Enter, wachtwoordmanagers en browser-autofill voorspelbaar werken; foutmeldingen worden als live status aangekondigd.
 
 ## Blokkerend vóór publicatie
 

@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data: blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co wss://*.supabase.co">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Wachtwoord resetten — Snellezer</title>
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link href="vendor/fonts.css" rel="stylesheet">
 <script src="vendor/supabase.min.js"></script>
 <style>
@@ -34,7 +35,8 @@ body {
   justify-content: center;
   min-height: 100vh;
   padding: 20px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .video-overlay {
@@ -171,18 +173,21 @@ input::placeholder { color: var(--muted); }
   <div class="logo">Snellezer</div>
   <div class="tagline">Kies een nieuw wachtwoord</div>
 
-  <div id="msg" class="msg"></div>
+  <div id="msg" class="msg" role="status" aria-live="polite"></div>
 
-  <div class="form-group">
-    <label>Nieuw wachtwoord</label>
-    <input type="password" id="new-pw" placeholder="Minimaal 8 tekens" minlength="8" autocomplete="new-password">
-  </div>
-  <div class="form-group">
-    <label>Wachtwoord herhalen</label>
-    <input type="password" id="new-pw2" placeholder="Herhaal je wachtwoord" autocomplete="new-password">
-  </div>
+  <form id="reset-form" onsubmit="event.preventDefault();resetWachtwoord()" novalidate>
+    <input type="email" name="username" autocomplete="username" style="display:none">
+    <div class="form-group">
+      <label for="new-pw">Nieuw wachtwoord</label>
+      <input type="password" id="new-pw" placeholder="Minimaal 8 tekens" minlength="8" autocomplete="new-password">
+    </div>
+    <div class="form-group">
+      <label for="new-pw2">Wachtwoord herhalen</label>
+      <input type="password" id="new-pw2" placeholder="Herhaal je wachtwoord" autocomplete="new-password">
+    </div>
 
-  <button class="btn" id="reset-btn" onclick="resetWachtwoord()">Wachtwoord opslaan</button>
+    <button class="btn" id="reset-btn" type="submit">Wachtwoord opslaan</button>
+  </form>
 
   <a href="login.html" class="back-link">Terug naar inloggen</a>
 </div>
@@ -198,10 +203,6 @@ function toonMsg(tekst, type = 'error') {
   el.textContent = tekst;
   el.className = 'msg' + (tekst ? ' ' + type : '');
 }
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter') resetWachtwoord();
-});
 
 async function resetWachtwoord() {
   const pw  = document.getElementById('new-pw').value;

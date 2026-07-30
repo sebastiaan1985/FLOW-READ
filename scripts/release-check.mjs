@@ -171,7 +171,26 @@ const ontbrekendeHandlers = [...new Set(handlerBases.filter(naam =>
   !globaleDefinities.has(naam) && !browserGlobals.has(naam)
 ))];
 verwacht(ontbrekendeHandlers.length === 0, `Klikactie verwijst naar ontbrekende code: ${ontbrekendeHandlers.join(', ')}.`);
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v45'"), 'Service worker gebruikt niet de actuele v45-cache.');
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v49'"), 'Service worker gebruikt niet de actuele v49-cache.');
+for (const patroon of [
+  'id="vandaag-uitd-card" role="button" tabindex="0"',
+  'id="rsvp-display" role="button" tabindex="0" aria-label="RSVP starten of pauzeren"',
+  'id="chunk-display" role="button" tabindex="0" aria-label="Chunktraining starten of stoppen"',
+  'id="speler-indicator" role="button" tabindex="0"',
+  'class="av-profiel-kaart-open" onclick="avInloggen(${i})" aria-label="Open profiel ${htmlEscape(p.naam)}"',
+]) {
+  verwacht(appHtml.includes(patroon), `Toetsenbordbediening ontbreekt voor ${patroon}.`);
+}
+verwacht(!appHtml.includes('class="av-profiel-kaart" role="button"'), 'Profielkiezer bevat nog geneste interactieve knoppen.');
+for (const id of [
+  'dyx-size', 'wpm-slider', 'rsvp-chunk', 'chunk-size', 'chunk-wpm', 'eye-mode',
+  'eye-speed', 'peri-width', 'peri-interval', 'guide-speed', 'custom-text',
+  'doel-input', 'game-niveau-select', 'av-naam-input', 'av-leeftijd-input',
+  'scan-zoek-input',
+]) {
+  const invoer = appMarkup.match(new RegExp(`<(?:input|select|textarea)\\b[^>]*\\bid="${id}"[^>]*>`, 'i'))?.[0] || '';
+  verwacht(/\baria-(?:label|labelledby)="[^"]+"/i.test(invoer), `Invoerveld ${id} mist een toegankelijke naam.`);
+}
 verwacht(!appHtml.includes('`<span class="success">✓ "${naam}"'), 'Opslagmelding verwerkt een zelfgekozen tekstnaam nog als HTML.');
 verwacht(appHtml.includes("subtitel.textContent = String(naam ?? '')"), 'Achievementmeldingen verwerken namen niet veilig als tekst.');
 verwacht((appHtml.match(/<button type="button" class="oog-niveau-kaart/g) || []).length === 3, 'Oogtrainingsniveaus zijn niet alle drie toetsenbordvriendelijke knoppen.');
@@ -338,6 +357,9 @@ for (const provider of ['google', 'apple']) {
 verwacht(loginHtml.includes('signInWithOAuth'), 'Login mist de OAuth-aanroep.');
 verwacht(loginHtml.includes('/auth/v1/settings'), 'Login controleert niet welke OAuth-providers werkelijk aanstaan.');
 verwacht(loginHtml.includes('external[provider] === true'), 'Login toont uitgeschakelde OAuth-providers mogelijk toch.');
+verwacht(loginHtml.includes('<form id="panel-login"') && loginHtml.includes('<form id="panel-registreer"'), 'Loginvelden staan niet in echte formulieren.');
+verwacht(loginHtml.includes('role="tablist"') && loginHtml.includes('aria-selected="true"'), 'Logintabs melden hun rol of selectie niet toegankelijk.');
+verwacht(loginHtml.includes('id="msg" class="msg" role="status" aria-live="polite"'), 'Loginfeedback wordt niet toegankelijk aangekondigd.');
 
 const sync = lees('supabase-sync.js');
 for (const sleutel of [
@@ -411,6 +433,9 @@ verwacht(loginAuthHtml.includes('id="reg-pw" placeholder="Minimaal 8 tekens" min
 verwacht(loginAuthHtml.includes('pw.length < 8'), 'Registratie controleert de minimale wachtwoordlengte niet.');
 verwacht(resetHtml.includes('id="new-pw" placeholder="Minimaal 8 tekens" minlength="8"'), 'Wachtwoordherstel vraagt niet minimaal 8 tekens.');
 verwacht(resetHtml.includes('pw.length < 8'), 'Wachtwoordherstel controleert de minimale wachtwoordlengte niet.');
+verwacht(resetHtml.includes('<form id="reset-form"') && resetHtml.includes('type="submit"'), 'Wachtwoordherstel gebruikt geen echt formulier.');
+verwacht(resetHtml.includes('autocomplete="username"'), 'Wachtwoordherstel mist het gebruikersnaamveld voor wachtwoordmanagers.');
+verwacht(resetHtml.includes('overflow-y: auto'), 'Wachtwoordherstel kan op een laag mobiel scherm niet scrollen.');
 
 const packageJson = JSON.parse(lees('package.json'));
 verwacht(packageJson.scripts?.build === 'node scripts/build-web.mjs', 'Buildscript voor native packaging ontbreekt.');
