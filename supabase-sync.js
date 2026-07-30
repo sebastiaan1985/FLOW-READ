@@ -67,6 +67,137 @@ const EXTRA_KEYS = [
 
 let _huidigeGebruiker = null;
 let _syncTimer = null;
+const SYNC_OWNER_KEY = 'snellees_sync_owner';
+const SYNC_DIRTY_KEY = 'snellees_sync_lokaal_gewijzigd';
+const SYNC_LAST_KEY = 'snellees_sync_laatst';
+const _storageSetOrig = localStorage.setItem.bind(localStorage);
+const _storageRemoveOrig = localStorage.removeItem.bind(localStorage);
+const _storageGetOrig = localStorage.getItem.bind(localStorage);
+
+const SYNC_SCALAR_KEYS = new Set([
+  'kids_modus',
+  'bt_laatste_passage',
+  'tekst_actief',
+  'av_actief',
+]);
+
+function _syncSchrijfZonderTrigger(key, value) {
+  if (value === undefined || value === null) _storageRemoveOrig(key);
+  else _storageSetOrig(key, String(value));
+}
+
+function _syncWisLokaleAccountdata() {
+  clearTimeout(_syncTimer);
+  _syncTimer = null;
+  for (const key of SYNC_KEYS) _storageRemoveOrig(key);
+  _storageRemoveOrig(SYNC_OWNER_KEY);
+  _storageRemoveOrig(SYNC_DIRTY_KEY);
+  _storageRemoveOrig(SYNC_LAST_KEY);
+}
+
+function _syncLokaleSnapshot() {
+  return Object.fromEntries(
+    SYNC_KEYS
+      .map(key => [key, _storageGetOrig(key)])
+      .filter(([, value]) => value !== null),
+  );
+}
+
+function _syncParse(key, raw) {
+  if (raw === null || raw === undefined) return null;
+  if (SYNC_SCALAR_KEYS.has(key)) return String(raw);
+  try { return JSON.parse(raw); } catch (e) { return null; }
+}
+
+function _syncStringify(key, value) {
+  if (value === undefined || value === null) return null;
+  if (SYNC_SCALAR_KEYS.has(key)) return String(value);
+  return JSON.stringify(value);
+}
+
+function _syncItemId(item) {
+  if (item === null || typeof item !== 'object') return `waarde:${JSON.stringify(item)}`;
+  if (item.uid != null) return `uid:${item.uid}`;
+  if (item.id != null) return `id:${item.id}`;
+  if (item.naam && item.avatar) return `profiel:${item.naam}:${item.avatar}`;
+  if (item.datum && item.type) return `sessie:${item.datum}:${item.type}:${item.wpm ?? ''}:${item.begrip ?? ''}`;
+  if (item.ts && item.event) return `event:${item.ts}:${item.event}`;
+  return `json:${JSON.stringify(item)}`;
+}
+
+function _syncVoegWaardenSamen(cloud, lokaal, veld = '') {
+  if (lokaal === undefined || lokaal === null) return cloud;
+  if (cloud === undefined || cloud === null) return lokaal;
+  if (Array.isArray(cloud) && Array.isArray(lokaal)) {
+    const resultaat = [...cloud];
+    const posities = new Map(resultaat.map((item, index) => [_syncItemId(item), index]));
+    for (const item of lokaal) {
+      const id = _syncItemId(item);
+      if (!posities.has(id)) {
+        posities.set(id, resultaat.length);
+        resultaat.push(item);
+      } else {
+        const index = posities.get(id);
+        resultaat[index] = _syncVoegWaardenSamen(resultaat[index], item);
+      }
+    }
+    return resultaat;
+  }
+  if (
+    typeof cloud === 'object' && !Array.isArray(cloud) &&
+    typeof lokaal === 'object' && !Array.isArray(lokaal)
+  ) {
+    const resultaat = { ...cloud };
+    for (const [key, value] of Object.entries(lokaal)) {
+      resultaat[key] = _syncVoegWaardenSamen(cloud[key], value, key);
+    }
+    return resultaat;
+  }
+  if (typeof cloud === 'number' && typeof lokaal === 'number' &&
+      /^(best|beste|xp|keren|niveau|score|streak|totaal|hoogste)/i.test(veld)) {
+    return Math.max(cloud, lokaal);
+  }
+  if (typeof cloud === 'boolean' && typeof lokaal === 'boolean' && /^(beheerst|voltooid|klaar)/i.test(veld)) {
+    return cloud || lokaal;
+  }
+  return lokaal;
+}
+
+function _syncVoegRuwSamen(key, cloudRaw, lokaalRaw) {
+  const cloud = _syncParse(key, cloudRaw);
+  const lokaal = _syncParse(key, lokaalRaw);
+  return _syncStringify(key, _syncVoegWaardenSamen(cloud, lokaal));
+}
+
+function _syncHeeftInhoud(waarde) {
+  if (waarde === null || waarde === undefined || waarde === false) return false;
+  if (typeof waarde === 'number') return waarde !== 0;
+  if (typeof waarde === 'string') return waarde.trim() !== '' && waarde !== '0' && waarde !== '-1';
+  if (Array.isArray(waarde)) return waarde.some(_syncHeeftInhoud);
+  if (typeof waarde === 'object') return Object.values(waarde).some(_syncHeeftInhoud);
+  return true;
+}
+
+function _syncSnapshotHeeftVoortgang(snapshot) {
+  const json = key => _syncParse(key, snapshot[key]);
+  const statsData = json('snellees_stats');
+  const niveauData = json('snellees_niveau');
+  if (statsData?.sessies?.length || Number(statsData?.totaalWoorden) > 0) return true;
+  if (niveauData?.sessies?.length || Number(niveauData?.niveau) > 1) return true;
+  for (const key of [
+    'tekst_bibliotheek', 'begintest_baseline', 'av_profielen', 'daily_challenge',
+    'snellees_gebruiker', 'snellees_achievements', 'snellees_traindagen',
+    'coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan',
+    'teksten_gelezen', 'snellees_eerste_missie', 'snellees_startweek',
+    'snellees_streak', 'snellees_laatste_resultaat', 'snellees_events',
+    'dyslexie_leerweg', 'dyslexie_highscores', 'dyslexie_badges', 'dyslexie_stats',
+  ]) {
+    const waarde = json(key);
+    if (_syncHeeftInhoud(waarde)) return true;
+  }
+  return Number(snapshot.oog_hoogste_voltooid) >= 0 ||
+    Number(snapshot.peri_hoogste_voltooid) >= 0;
+}
 
 // ── VALUE-FIRST START ───────────────────────────────────────────────────────
 // De training blijft meteen zichtbaar. Auth en cloud-sync verrijken daarna de
@@ -91,10 +222,11 @@ async function _checkAuth() {
       return;
     }
     _huidigeGebruiker = session.user;
-    await _laadVanCloud();
+    const syncNodig = await _laadVanCloud();
     _toonGebruikerHeader();
 
-    if (sessionStorage.getItem('snellees_account_nieuw') === '1') {
+    const nieuwAccount = sessionStorage.getItem('snellees_account_nieuw') === '1';
+    if (nieuwAccount) {
       sessionStorage.removeItem('snellees_account_nieuw');
       if (typeof gtmTrack === 'function') gtmTrack('account_aangemaakt');
     }
@@ -103,7 +235,7 @@ async function _checkAuth() {
 
     // Een gast die net een account heeft gemaakt, neemt zijn startweek en
     // beta-events direct mee naar de cloud na het inladen van bestaande data.
-    _syncNaarCloud();
+    if (syncNodig || nieuwAccount) _syncNaarCloud();
 
     _toonApp();
   } catch (e) {
@@ -121,53 +253,79 @@ function _pasIosStandaloneLayoutToe() {
 
 // ── DATA LADEN VAN SUPABASE ────────────────────────────────────────────────────
 async function _laadVanCloud() {
-  if (!_huidigeGebruiker) return;
+  if (!_huidigeGebruiker) return false;
+
+  const eigenaar = _storageGetOrig(SYNC_OWNER_KEY);
+  const andereEigenaar = !!eigenaar && eigenaar !== _huidigeGebruiker.id;
+  if (andereEigenaar) _syncWisLokaleAccountdata();
+  const lokaleSnapshot = andereEigenaar ? {} : _syncLokaleSnapshot();
+  const gastVoortgang = !eigenaar && _syncSnapshotHeeftVoortgang(lokaleSnapshot);
+  const lokaalGewijzigd = eigenaar === _huidigeGebruiker.id &&
+    _storageGetOrig(SYNC_DIRTY_KEY) === '1';
+  const samenvoegen = gastVoortgang || lokaalGewijzigd;
 
   const { data, error } = await _sb
     .from('user_data')
     .select('*')
     .eq('id', _huidigeGebruiker.id)
-    .single();
+    .maybeSingle();
 
-  if (error || !data) return; // Geen data gevonden (nieuwe gebruiker): localStorage blijft leeg
+  if (error) throw error;
 
-  // Zet cloud-data in localStorage zodat de app er normaal bij kan
-  if (data.stats)               localStorage.setItem('snellees_stats',       JSON.stringify(data.stats));
-  if (data.bibliotheek)         localStorage.setItem('tekst_bibliotheek',    JSON.stringify(data.bibliotheek));
-  if (data.begintest_baseline)  localStorage.setItem('begintest_baseline',   JSON.stringify(data.begintest_baseline));
-  if (data.av_profielen)        localStorage.setItem('av_profielen',         JSON.stringify(data.av_profielen));
-  if (data.dyx_settings)        localStorage.setItem('dyx_settings',         JSON.stringify(data.dyx_settings));
+  const cloud = {};
+  if (data) {
+    const jsonVelden = {
+      snellees_stats: data.stats,
+      tekst_bibliotheek: data.bibliotheek,
+      begintest_baseline: data.begintest_baseline,
+      av_profielen: data.av_profielen,
+      dyx_settings: data.dyx_settings,
+      snellees_gebruiker: data.snellees_gebruiker,
+      snellees_niveau: data.snellees_niveau,
+      snellees_achievements: data.snellees_achievements,
+      snellees_traindagen: data.snellees_traindagen,
+      daily_challenge: data.daily_challenge,
+    };
+    for (const [key, value] of Object.entries(jsonVelden)) {
+      if (value !== undefined && value !== null) cloud[key] = JSON.stringify(value);
+    }
 
-  if (data.kids_modus   !== null) localStorage.setItem('kids_modus',         data.kids_modus ? '1' : '0');
-  if (data.bt_laatste_passage !== null) localStorage.setItem('bt_laatste_passage', String(data.bt_laatste_passage));
-  if (data.tekst_actief !== null) localStorage.setItem('tekst_actief',       String(data.tekst_actief));
+    if (data.kids_modus !== undefined && data.kids_modus !== null) cloud.kids_modus = data.kids_modus ? '1' : '0';
+    if (data.bt_laatste_passage !== undefined && data.bt_laatste_passage !== null) cloud.bt_laatste_passage = String(data.bt_laatste_passage);
+    if (data.tekst_actief !== undefined && data.tekst_actief !== null) cloud.tekst_actief = String(data.tekst_actief);
+    if (data.av_actief !== undefined && data.av_actief !== null) cloud.av_actief = String(data.av_actief);
 
-  // av_actief: herstel vanuit cloud als beschikbaar
-  if (data.av_actief !== undefined && data.av_actief !== null) {
-    localStorage.setItem('av_actief', String(data.av_actief));
-  } else if (localStorage.getItem('av_actief') === null && data.av_profielen) {
-    localStorage.setItem('av_actief', '-1');
-  }
-
-  // ── Fase 1–4 velden ────────────────────────────────────────
-  if (data.snellees_gebruiker)    localStorage.setItem('snellees_gebruiker',    JSON.stringify(data.snellees_gebruiker));
-  if (data.snellees_niveau)       localStorage.setItem('snellees_niveau',       JSON.stringify(data.snellees_niveau));
-  if (data.snellees_achievements) localStorage.setItem('snellees_achievements', JSON.stringify(data.snellees_achievements));
-  if (data.snellees_traindagen)   localStorage.setItem('snellees_traindagen',   JSON.stringify(data.snellees_traindagen));
-  if (data.daily_challenge)       localStorage.setItem('daily_challenge',       JSON.stringify(data.daily_challenge));
-
-  // ── Extra (jsonb): nieuwe keys zonder schema-wijzigingen ──
-  if (data.extra && typeof data.extra === 'object') {
-    for (const key of EXTRA_KEYS) {
-      if (data.extra[key] !== undefined && data.extra[key] !== null) {
-        localStorage.setItem(key, JSON.stringify(data.extra[key]));
+    if (data.extra && typeof data.extra === 'object') {
+      for (const key of EXTRA_KEYS) {
+        if (data.extra[key] !== undefined && data.extra[key] !== null) {
+          cloud[key] = JSON.stringify(data.extra[key]);
+        }
+      }
+      if (typeof data.extra.tekst_actief_raw === 'string') {
+        cloud.tekst_actief = data.extra.tekst_actief_raw;
       }
     }
-    // tekst_actief als string (kan 'b:<id>' zijn — de int-kolom kan dat niet aan)
-    if (typeof data.extra.tekst_actief_raw === 'string') {
-      localStorage.setItem('tekst_actief', data.extra.tekst_actief_raw);
+  }
+
+  for (const key of SYNC_KEYS) {
+    const cloudRaw = Object.hasOwn(cloud, key) ? cloud[key] : null;
+    const lokaalRaw = lokaleSnapshot[key] ?? null;
+    if (samenvoegen && lokaalRaw !== null) {
+      _syncSchrijfZonderTrigger(key, cloudRaw === null ? lokaalRaw : _syncVoegRuwSamen(key, cloudRaw, lokaalRaw));
+    } else if (cloudRaw !== null) {
+      _syncSchrijfZonderTrigger(key, cloudRaw);
+    } else {
+      _syncSchrijfZonderTrigger(key, null);
     }
   }
+
+  if (_storageGetOrig('av_actief') === null && _storageGetOrig('av_profielen')) {
+    _syncSchrijfZonderTrigger('av_actief', '-1');
+  }
+  _storageSetOrig(SYNC_OWNER_KEY, _huidigeGebruiker.id);
+  _storageSetOrig(SYNC_DIRTY_KEY, samenvoegen ? '1' : '0');
+  if (data?.updated_at) _storageSetOrig(SYNC_LAST_KEY, data.updated_at);
+  return samenvoegen || (!data && _syncSnapshotHeeftVoortgang(lokaleSnapshot));
 }
 
 // ── DATA OPSLAAN NAAR SUPABASE ────────────────────────────────────────────────
@@ -211,7 +369,7 @@ async function _syncNuNaarCloud() {
   for (const key of EXTRA_KEYS) extra[key] = lsJson(key, null);
   payload.extra = extra;
 
-  const { error } = await _sb.from('user_data').upsert(payload, { onConflict: 'id' });
+  let { error } = await _sb.from('user_data').upsert(payload, { onConflict: 'id' });
   if (error && /extra/.test(error.message || '')) {
     // Kolom `extra` bestaat nog niet — sync de rest zodat er niets verloren gaat.
     if (!_extraKolomWaarschuwing) {
@@ -220,15 +378,27 @@ async function _syncNuNaarCloud() {
       _extraKolomWaarschuwing = true;
     }
     delete payload.extra;
-    await _sb.from('user_data').upsert(payload, { onConflict: 'id' });
+    ({ error } = await _sb.from('user_data').upsert(payload, { onConflict: 'id' }));
   }
+  if (error) {
+    console.error('[Sync] Opslaan in de cloud mislukt:', error.message || error);
+    return false;
+  }
+  _storageSetOrig(SYNC_OWNER_KEY, _huidigeGebruiker.id);
+  _storageSetOrig(SYNC_DIRTY_KEY, '0');
+  _storageSetOrig(SYNC_LAST_KEY, payload.updated_at);
+  return true;
 }
 let _extraKolomWaarschuwing = false;
 
 // ── UITLOGGEN ────────────────────────────────────────────────────────────────
 async function uitloggen() {
   await _syncNuNaarCloud(); // Sla laatste staat op vóór uitloggen
-  await _sb.auth.signOut();
+  try { await _sb.auth.signOut(); }
+  finally {
+    _huidigeGebruiker = null;
+    _syncWisLokaleAccountdata();
+  }
   window.location.href = 'login.html';
 }
 
@@ -247,7 +417,7 @@ function openAccountBeheer() {
       </div>
       <div class="account-beheer-blok">
         <b>Uitloggen</b>
-        <p>Je lokale voortgang blijft op dit apparaat beschikbaar.</p>
+        <p>Je voortgang blijft veilig in je account en wordt bij uitloggen van dit apparaat verwijderd.</p>
         <div class="account-beheer-acties"><button class="btn btn-ghost" type="button" data-account-uitloggen>Uitloggen</button></div>
       </div>
       <div class="account-beheer-blok">
@@ -354,17 +524,20 @@ function _toonGebruikerHeader() {
 // Onderschep localStorage.setItem zodat elke schrijfactie een sync triggert
 // De app-code hoeft niets te veranderen — dit werkt automatisch
 (function() {
-  const origSet    = localStorage.setItem.bind(localStorage);
-  const origRemove = localStorage.removeItem.bind(localStorage);
-
   localStorage.setItem = function(key, value) {
-    origSet(key, value);
-    if (SYNC_KEYS.includes(key)) _syncNaarCloud();
+    _storageSetOrig(key, value);
+    if (SYNC_KEYS.includes(key)) {
+      _storageSetOrig(SYNC_DIRTY_KEY, '1');
+      _syncNaarCloud();
+    }
   };
 
   localStorage.removeItem = function(key) {
-    origRemove(key);
-    if (SYNC_KEYS.includes(key)) _syncNaarCloud();
+    _storageRemoveOrig(key);
+    if (SYNC_KEYS.includes(key)) {
+      _storageSetOrig(SYNC_DIRTY_KEY, '1');
+      _syncNaarCloud();
+    }
   };
 })();
 
@@ -395,6 +568,7 @@ window.addEventListener('pagehide', _syncBijAchtergrond);
 _sb.auth.onAuthStateChange((event, session) => {
   if (event === 'SIGNED_OUT') {
     _huidigeGebruiker = null;
+    _syncWisLokaleAccountdata();
     sessionStorage.setItem('gast_modus', '1');
     if (!window.location.pathname.includes('login')) _toonApp();
   } else if (session) {

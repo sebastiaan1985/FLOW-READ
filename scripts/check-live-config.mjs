@@ -53,7 +53,7 @@ try {
   verwacht(login.includes('laadSocialProviders'), 'Productielogin controleert providerstatus niet.');
   verwacht(serviceWorker.includes("'privacy.html'"), 'Productie-service-worker cachet privacy.html niet.');
   verwacht(serviceWorker.includes("'account-verwijderen.html'"), 'Productie-service-worker cachet de accountverwijderpagina niet.');
-  verwacht(serviceWorker.includes("const CACHE_NAAM = 'snellees-v43'"), 'Productie gebruikt niet de actuele v43-offlinecache.');
+  verwacht(serviceWorker.includes("const CACHE_NAAM = 'snellees-v44'"), 'Productie gebruikt niet de actuele v44-offlinecache.');
   verwacht(!/\[(BEDRIJFSNAAM|PRIVACYCONTACT|VESTIGINGSPLAATS|PRIVACY_URL|DATUM)\]/.test(privacy), 'Live privacyverklaring bevat placeholders.');
   verwacht(!privacy.includes('data-privacy-status="draft"'), 'Live privacyverklaring staat nog als concept gemarkeerd.');
   verwacht(!/\[(PRIVACYCONTACT)\]/.test(verwijderen), 'Live accountverwijderpagina bevat placeholders.');
@@ -112,6 +112,13 @@ try {
     },
   });
   verwacht(vreemdeHerkomstResponse.status === 403, `Delete Function weigert een onbekende browserherkomst niet (HTTP ${vreemdeHerkomstResponse.status}).`);
+
+  const vreemdePostResponse = await haal(`${supabaseUrl}/functions/v1/delete-account`, {
+    method: 'POST',
+    headers: { Origin: 'https://niet-vertrouwd.example', 'Content-Type':'application/json' },
+    body: '{}',
+  });
+  verwacht(vreemdePostResponse.status === 403, `Delete Function weigert een POST vanaf een onbekende browserherkomst niet (HTTP ${vreemdePostResponse.status}).`);
 
   const zonderTokenResponse = await haal(`${supabaseUrl}/functions/v1/delete-account`, {
     method: 'POST',

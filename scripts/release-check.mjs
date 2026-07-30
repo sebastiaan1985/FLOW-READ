@@ -171,7 +171,7 @@ const ontbrekendeHandlers = [...new Set(handlerBases.filter(naam =>
   !globaleDefinities.has(naam) && !browserGlobals.has(naam)
 ))];
 verwacht(ontbrekendeHandlers.length === 0, `Klikactie verwijst naar ontbrekende code: ${ontbrekendeHandlers.join(', ')}.`);
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v43'"), 'Service worker gebruikt niet de actuele v43-cache.');
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v44'"), 'Service worker gebruikt niet de actuele v44-cache.');
 verwacht(!appHtml.includes('`<span class="success">✓ "${naam}"'), 'Opslagmelding verwerkt een zelfgekozen tekstnaam nog als HTML.');
 verwacht(appHtml.includes("subtitel.textContent = String(naam ?? '')"), 'Achievementmeldingen verwerken namen niet veilig als tekst.');
 verwacht((appHtml.match(/<button type="button" class="oog-niveau-kaart/g) || []).length === 3, 'Oogtrainingsniveaus zijn niet alle drie toetsenbordvriendelijke knoppen.');
@@ -363,6 +363,14 @@ verwacht(!sync.includes("color: '#a090f7'"), 'Accountknop bevat nog een los oud 
 verwacht(sync.includes("document.addEventListener('visibilitychange'"), 'Mobiele cloudsync start niet wanneer de app naar de achtergrond gaat.');
 verwacht(sync.includes("window.addEventListener('pagehide', _syncBijAchtergrond)"), 'Cloudsync mist de pagehide-reservecontrole.');
 verwacht(!sync.includes("window.addEventListener('beforeunload'"), 'Cloudsync leunt nog op een onbetrouwbare async beforeunload-handler.');
+verwacht(sync.includes("const SYNC_OWNER_KEY = 'snellees_sync_owner'"), 'Cloudsync houdt niet bij bij welk account lokale data hoort.');
+verwacht(sync.includes('const andereEigenaar = !!eigenaar && eigenaar !== _huidigeGebruiker.id;'), 'Cloudsync scheidt lokale data van verschillende accounts niet.');
+verwacht(sync.includes('const gastVoortgang = !eigenaar && _syncSnapshotHeeftVoortgang(lokaleSnapshot);'), 'Cloudsync herkent bestaande gastvoortgang niet.');
+verwacht(sync.includes('function _syncVoegWaardenSamen('), 'Cloudsync mist conflictveilige samenvoeging van lokale en cloudvoortgang.');
+verwacht(sync.includes("const lokaalGewijzigd = eigenaar === _huidigeGebruiker.id &&"), 'Cloudsync beschermt niet-gesynchroniseerde lokale wijzigingen niet.');
+verwacht(sync.includes("console.error('[Sync] Opslaan in de cloud mislukt:'"), 'Cloudsync verbergt opslagfouten nog voor diagnose.');
+verwacht((sync.match(/_syncWisLokaleAccountdata\(\);/g) || []).length >= 3, 'Uitloggen of wisselen van account wist lokale accountdata niet consequent.');
+verwacht(sync.includes('Je voortgang blijft veilig in je account en wordt bij uitloggen van dit apparaat verwijderd.'), 'Uitlogcopy belooft ten onrechte dat accountdata lokaal achterblijft.');
 
 const coach = lees('coach.js');
 verwacht(coach.includes('const beoordeeld = laatste3.filter(s => s.begrip != null)'), 'Coach kan tempo nog verhogen zonder drie begripsscores.');
@@ -381,9 +389,12 @@ verwacht(betaMetrics.includes('count(distinct account_id)'), 'Beta-metrics mist 
 const deleteFunction = lees('supabase/functions/delete-account/index.ts');
 verwacht(deleteFunction.includes('auth.getUser()'), 'Delete Function verifieert de gebruiker niet.');
 verwacht(deleteFunction.includes('auth.admin.deleteUser(user.id)'), 'Delete Function verwijdert geen Auth-account.');
+verwacht(deleteFunction.includes('@supabase/supabase-js@2.111.0'), 'Delete Function gebruikt geen exact gepinde Supabase-client.');
 verwacht(!deleteFunction.includes("'Access-Control-Allow-Origin': '*'"), 'Delete Function staat accountverwijdering vanaf iedere browserherkomst toe.');
 verwacht(deleteFunction.includes('DELETE_ACCOUNT_ALLOWED_ORIGINS'), 'Delete Function mist een instelbare herkomstlijst.');
 verwacht(deleteFunction.includes("'Access-Control-Allow-Methods': 'POST, OPTIONS'"), 'Delete Function laat POST niet expliciet toe in de CORS-preflight.');
+verwacht(deleteFunction.includes("if (origin && !toegestaneOrigins.has(origin))"), 'Delete Function weigert een gewone POST vanaf een onbekende herkomst niet expliciet.');
+verwacht(deleteFunction.includes("'Content-Security-Policy': \"default-src 'none'; frame-ancestors 'none'\""), 'Delete Function mist een beperkende CSP op JSON-antwoorden.');
 verwacht(deleteFunction.includes("'Cache-Control': 'no-store'"), 'Delete Function voorkomt het cachen van verwijderantwoorden niet.');
 verwacht(deleteFunction.includes("'X-Content-Type-Options': 'nosniff'"), 'Delete Function mist nosniff.');
 const loginAuthHtml = lees('login.html');
@@ -400,6 +411,7 @@ verwacht(existsSync(resolve(root, 'scripts/check-live-config.mjs')), 'Script voo
 const liveCheck = lees('scripts/check-live-config.mjs');
 verwacht(liveCheck.includes('/account-verwijderen.html'), 'Live releasecontrole test de openbare accountverwijderpagina niet.');
 verwacht(liveCheck.includes('niet-vertrouwd.example'), 'Live releasecontrole test de herkomstbeperking van accountverwijdering niet.');
+verwacht(liveCheck.includes('vreemdePostResponse.status === 403'), 'Live releasecontrole test geen ongewenste POST-herkomst.');
 verwacht(liveCheck.includes("zonderTokenResponse.status === 401"), 'Live releasecontrole test accountverwijdering zonder token niet.');
 verwacht(existsSync(resolve(root, 'vercel.json')), 'Vercel-config ontbreekt.');
 if (existsSync(resolve(root, 'vercel.json'))) {

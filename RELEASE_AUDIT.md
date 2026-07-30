@@ -13,6 +13,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Onderdeel | Resultaat |
 |---|---|
 | Webbuild en release-preflight | Geslaagd |
+| Vercel-previewdeployment | Geslaagd: build, kernroutes en beveiligingsheaders live op een beschermde preview |
 | Productie-afhankelijkheden | `npm audit --omit=dev`: 0 bekende kwetsbaarheden |
 | Trainingsroutes | Alle 17 kaarten openen het bedoelde scherm |
 | Volledige leerweg | Alle 29 missies openen, respecteren variant/kwaliteit en ontgrendelen de volgende stap |
@@ -31,8 +32,9 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Accountverwijdering | In-app flow, dubbele bevestiging en openbare instructie aanwezig |
 | Webbeveiliging | CSP, frameblokkade, `nosniff`, referrer- en permissionsbeleid aanwezig |
 | Datatoegang | RLS-migratie beperkt `user_data` tot het eigen account |
+| Cloudconflicten | Gastvoortgang wordt samengevoegd; lokale data van verschillende accounts wordt strikt gescheiden |
 | Android-basis | Back-up uitgeschakeld en onbeveiligd HTTP-verkeer geblokkeerd |
-| Offline/PWA | Versiecache v43, privacy- en verwijderpagina in app-shell |
+| Offline/PWA | Versiecache v44, privacy- en verwijderpagina in app-shell |
 
 ## Opgeloste releaseproblemen
 
@@ -49,8 +51,9 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 - Lange teksten toonde bij promotie meerdere modale vensters boven elkaar.
 - Dubbele globale functies voor de tekstbibliotheek zijn verwijderd.
 - Profiel- en accountnamen worden veilig als tekst ingevoegd in plaats van als HTML.
+- Gastvoortgang en bestaande cloudvoortgang worden zonder stil overschrijven samengevoegd. Bij accountwissel en uitloggen wordt lokale accountdata gewist, zodat een volgende gebruiker die niet kan zien.
 - Artikelimport weigert onbeveiligde, lokale en private URL’s en waarschuwt voor externe ophaaldiensten.
-- De delete-accountfunctie accepteert niet langer iedere browserherkomst.
+- De delete-accountfunctie accepteert niet langer iedere browserherkomst, controleert ook gewone POST-verzoeken en gebruikt een exact gepinde Supabase-client.
 - Android maakt geen automatische back-up van lokale account- en trainingsdata.
 
 ## Blokkerend vóór publicatie
@@ -81,7 +84,6 @@ Officiële storebronnen:
 
 - Splits de monolithische `index.html` op in schermmodules, gedeelde UI-componenten en afzonderlijke CSS.
 - Voeg de nu handmatig doorlopen browsermatrix voor alle 29 leerwegmissies als vaste CI-test toe, inclusief exacte missievariant, kwaliteitspoort en ontgrendeling van de volgende dag.
-- Voeg conflictresolutie toe aan cloudsynchronisatie, zodat recente lokale gastvoortgang niet ongemerkt door oudere clouddata kan worden overschreven.
 - Vervang externe artikelproxy’s door één eigen serverendpoint met DNS-/IP-controle, limieten, time-outs en inhoudslimieten.
 
 ### Prioriteit 2

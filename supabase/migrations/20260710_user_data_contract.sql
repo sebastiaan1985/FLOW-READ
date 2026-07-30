@@ -37,16 +37,17 @@ alter table public.user_data add column if not exists snellees_traindagen jsonb;
 alter table public.user_data add column if not exists daily_challenge jsonb;
 alter table public.user_data add column if not exists extra jsonb default '{}'::jsonb;
 alter table public.user_data add column if not exists updated_at timestamptz default now();
+alter table public.user_data alter column extra set default '{}'::jsonb;
+alter table public.user_data alter column updated_at set default now();
 
 alter table public.user_data enable row level security;
 
-do $$
-begin
-  if not exists (
-    select 1 from pg_policies
-    where schemaname = 'public' and tablename = 'user_data' and policyname = 'users_manage_own_data'
-  ) then
-    create policy users_manage_own_data on public.user_data
-      for all using (auth.uid() = id) with check (auth.uid() = id);
-  end if;
-end $$;
+revoke all on table public.user_data from anon;
+grant select, insert, update, delete on table public.user_data to authenticated;
+
+drop policy if exists users_manage_own_data on public.user_data;
+create policy users_manage_own_data on public.user_data
+  for all
+  to authenticated
+  using ((select auth.uid()) = id)
+  with check ((select auth.uid()) = id);
