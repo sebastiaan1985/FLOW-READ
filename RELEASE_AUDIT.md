@@ -4,7 +4,7 @@ Statusdatum: 30 juli 2026
 
 ## Conclusie
 
-De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29 leerwegmissies openen en voltooien via hun bedoelde contract en de bekende blokkades in week 3 zijn in een echte browser hersteld. De app is nog **niet publiceerbaar**. Publicatie blijft bewust geblokkeerd totdat de privacygegevens zijn ingevuld, de live backendcontroles slagen, de nieuwe build is gedeployed en de native projecten op een volledige toolchain zijn gebouwd.
+De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29 leerwegmissies openen en voltooien via hun bedoelde contract en de bekende blokkades in week 3 zijn in een echte browser hersteld. De Supabase-migratie, de toegestane origins en de actuele `delete-account`-functie zijn op 30 juli 2026 live uitgerold. De app is nog **niet publiceerbaar**. Publicatie blijft bewust geblokkeerd totdat de privacygegevens zijn ingevuld, de nieuwe build is gedeployed en de definitieve live controles slagen. Native publicatie blijft daarnaast afhankelijk van een volledige Xcode-/Java-toolchain.
 
 “Geen bugs” en “volledig veilig” zijn geen verantwoord absolute garanties. De huidige controles verlagen het risico, maar vervangen geen juridisch advies, store-review of onafhankelijke penetratietest.
 
@@ -32,6 +32,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 | Missie-instellingen | RSVP-tempo, chunkgrootte, fixatiebreedte en metronoomtempo worden vanuit de leerweg ingesteld |
 | Scanopdracht | Zoekwoord komt gegarandeerd uit de getoonde tekst; fout en goed antwoord getest |
 | Accountverwijdering | In-app flow, dubbele bevestiging en openbare instructie aanwezig |
+| Supabase-livebackend | Migratie `20260710_user_data_contract.sql`, exacte origins-secret en `delete-account`-functie succesvol uitgerold op project `hmxrwvxfmhsfgfubcpwb` |
 | Webbeveiliging | CSP, frameblokkade, `nosniff`, referrer- en permissionsbeleid aanwezig |
 | Datatoegang | RLS-migratie beperkt `user_data` tot het eigen account |
 | Cloudconflicten | Gastvoortgang wordt samengevoegd; actieve missie, WPM-doel en XP-begrenzing synchroniseren; accountdata wordt strikt gescheiden |
@@ -69,7 +70,7 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29
 
 1. **Privacygegevens invullen.** `[BEDRIJFSNAAM]`, `[VESTIGINGSPLAATS]` en `[PRIVACYCONTACT]` staan nog in de verklaring en verwijderpagina. Bewaartermijnen, kinderen en verwerkingsregio’s zijn nog niet definitief.
 2. **Nieuwe versie deployen.** De live site loopt achter: de openbare verwijderroute geeft 404, de live privacyverklaring is een concept en de live service worker gebruikt een oudere cache.
-3. **Backend live bewijzen.** Pas de Supabase-migratie toe, deploy de actuele `delete-account`-functie en laat `npm run release:check:live` volledig slagen.
+3. **Definitieve live controle.** Laat na de nieuwe frontenddeployment `npm run release:check:live` slagen en voer accountverwijdering één keer met een speciaal testaccount uit.
 4. **Native builds maken.** Deze Mac mist volledige Xcode en een Java-runtime. Daardoor zijn iOS- en Androidcompilatie nog niet bewezen.
 5. **Storeformulieren invullen.** Google Play verwacht bij accountcreatie zowel een in-app verwijderpad als een werkende webresource. Apple verwacht een vindbare in-app accountverwijdering; als Sign in with Apple actief wordt, moeten de Apple-tokens ook worden ingetrokken.
 
@@ -83,7 +84,7 @@ Officiële storebronnen:
 
 - De grote HTML-app gebruikt nog inline JavaScript, inline stijlen en inline klikhandlers. Daardoor heeft de CSP nog `'unsafe-inline'` nodig. Splits JavaScript en CSS op in modules en verwijder inline handlers om de CSP wezenlijk strenger te maken.
 - Artikelimport gebruikt externe CORS-proxy’s. Dat is zichtbaar gemaakt aan gebruikers, maar een eigen streng begrensde serverfunctie is veiliger en privacyvriendelijker.
-- De live Supabase-configuratie kon vanuit deze beperkte ontwikkelomgeving niet end-to-end worden benaderd. RLS, CORS en accountverwijdering moeten na deployment nog live slagen.
+- De Supabase-migratie en functie zijn live uitgerold. Een volledige accountverwijdering met een speciaal testaccount moet na de frontenddeployment nog worden uitgevoerd; gebruik hiervoor geen echt gebruikersaccount.
 - Er is geen onafhankelijke pentest uitgevoerd. Gebruik voor een latere formele controle minimaal [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/) als verificatiebasis.
 - Als Apple-login wordt ingeschakeld, is alleen het verwijderen van het Supabase-account niet genoeg; de Apple-tokenrevocatie moet aantoonbaar worden afgehandeld.
 
