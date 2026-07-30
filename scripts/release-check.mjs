@@ -117,7 +117,7 @@ const ontbrekendeHandlers = [...new Set(handlerBases.filter(naam =>
   !globaleDefinities.has(naam) && !browserGlobals.has(naam)
 ))];
 verwacht(ontbrekendeHandlers.length === 0, `Klikactie verwijst naar ontbrekende code: ${ontbrekendeHandlers.join(', ')}.`);
-verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v42'"), 'Service worker gebruikt niet de actuele v42-cache.');
+verwacht(lees('service-worker.js').includes("const CACHE_NAAM = 'snellees-v43'"), 'Service worker gebruikt niet de actuele v43-cache.');
 verwacht(!appHtml.includes('`<span class="success">✓ "${naam}"'), 'Opslagmelding verwerkt een zelfgekozen tekstnaam nog als HTML.');
 verwacht(appHtml.includes("subtitel.textContent = String(naam ?? '')"), 'Achievementmeldingen verwerken namen niet veilig als tekst.');
 verwacht((appHtml.match(/<button type="button" class="oog-niveau-kaart/g) || []).length === 3, 'Oogtrainingsniveaus zijn niet alle drie toetsenbordvriendelijke knoppen.');
@@ -169,6 +169,15 @@ verwacht(appHtml.includes("voltooiDaguitdaging('papier', { variant:papierTechMod
 verwacht((appHtml.match(/i >= regels\.length\) \{ papierEinde\(\); return; \}/g) || []).length === 3, 'Niet alle drie papierleestechnieken ronden de missie af.');
 verwacht(appHtml.includes('id="papier-resultaat" class="card" role="status" aria-live="polite"'), 'Papiertraining geeft na afronding geen toegankelijke bevestiging.');
 verwacht(appHtml.includes("screen: 'papier', variant: 's'"), 'Week 3, opdracht 3 opent niet expliciet het S-patroon.');
+verwacht(appHtml.includes("guide.style.width = '42%'") && appHtml.includes("guide.style.left = (i % 2 === 0) ? '0' : '58%'"), 'De S-gids heeft geen zichtbare breedte of wisselt niet van kant.');
+verwacht(appHtml.includes('papierVolgRegel(regels[i], i, regels.length);'), 'Papiertraining houdt de actieve regel niet zichtbaar en toont geen voortgang.');
+verwacht(appHtml.includes('id="papier-voortgang" role="status" aria-live="polite"'), 'Papiertraining mist een toegankelijke voortgangsstatus.');
+verwacht(appHtml.includes("naam: 'Perifeer — bouw op tot niveau 4'"), 'De perifere leerwegmissie legt het haalbare leveldoel niet duidelijk uit.');
+verwacht(appHtml.includes('function periMissieGaVerder()'), 'Perifere leerwegmissie mist een begeleide route naar het volgende vrije level.');
+verwacht(appHtml.includes('id="peri-spel-next-btn"'), 'Perifeer spel mist een directe knop naar het volgende level.');
+verwacht(appHtml.includes("screen: 'technieken'"), 'Week 4 mist een eigen scherm voor de persoonlijke top-3 technieken.');
+verwacht(appHtml.includes("voltooiDaguitdaging('technieken'"), 'De persoonlijke top-3 kan de bijbehorende leerwegmissie niet afronden.');
+verwacht(appHtml.includes('function leerWegOpenMissie(missie)'), 'Leerweg past missiespecifieke trainingsinstellingen niet centraal toe.');
 verwacht(appHtml.includes("voltooiDaguitdaging('subvocal', { variant:'hum' })"), 'De hummingmissie kan niet via de bedoelde oefening afronden.');
 verwacht(appHtml.includes("voltooiDaguitdaging('subvocal', { variant:'tel' })"), 'De telmissie kan niet via de bedoelde oefening afronden.');
 verwacht(appHtml.includes("voltooiDaguitdaging('skim', { variant:'preview' })"), 'De previewmissie kan niet via de bedoelde oefening afronden.');
@@ -285,6 +294,7 @@ for (const sleutel of [
   'oog_hoogste_voltooid',
   'peri_hoogste_level',
   'peri_hoogste_voltooid',
+  'snellees_top_technieken',
   'dyslexie_leerweg',
   'dyslexie_highscores',
   'dyslexie_badges',

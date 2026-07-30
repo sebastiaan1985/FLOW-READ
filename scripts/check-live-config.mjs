@@ -53,7 +53,7 @@ try {
   verwacht(login.includes('laadSocialProviders'), 'Productielogin controleert providerstatus niet.');
   verwacht(serviceWorker.includes("'privacy.html'"), 'Productie-service-worker cachet privacy.html niet.');
   verwacht(serviceWorker.includes("'account-verwijderen.html'"), 'Productie-service-worker cachet de accountverwijderpagina niet.');
-  verwacht(serviceWorker.includes("const CACHE_NAAM = 'snellees-v42'"), 'Productie gebruikt niet de actuele v42-offlinecache.');
+  verwacht(serviceWorker.includes("const CACHE_NAAM = 'snellees-v43'"), 'Productie gebruikt niet de actuele v43-offlinecache.');
   verwacht(!/\[(BEDRIJFSNAAM|PRIVACYCONTACT|VESTIGINGSPLAATS|PRIVACY_URL|DATUM)\]/.test(privacy), 'Live privacyverklaring bevat placeholders.');
   verwacht(!privacy.includes('data-privacy-status="draft"'), 'Live privacyverklaring staat nog als concept gemarkeerd.');
   verwacht(!/\[(PRIVACYCONTACT)\]/.test(verwijderen), 'Live accountverwijderpagina bevat placeholders.');

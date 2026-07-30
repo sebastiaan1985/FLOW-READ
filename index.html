@@ -340,6 +340,9 @@ select option { background: #102a2f; }
 }
 .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(32,201,195,.32); }
 .btn-primary:active { transform: translateY(0); }
+.btn:disabled, .btn:disabled:hover {
+  opacity:.45; cursor:not-allowed; transform:none; box-shadow:none;
+}
 .btn-ghost {
   background: rgba(255,255,255,.06); color: var(--muted);
   border: 1px solid var(--border);
@@ -684,18 +687,38 @@ textarea:focus { border-color: rgba(32,201,195,.5); }
   padding: 28px 32px; border-radius: var(--radius);
   font-size: 16px; line-height: 2.4; font-family: 'Georgia', serif;
   position: relative; margin-top: 16px;
+  max-height: min(60vh, 560px); overflow-y: auto; scroll-behavior: smooth;
   box-shadow: var(--shadow);
 }
 #paper-text .line { display: block; }
 #paper-guide {
-  position: absolute; left: 0; right: 0; height: 2px;
+  position: absolute; left: 0; right: auto; width: 100%; height: 3px;
   background: rgba(32,201,195,.5); pointer-events: none;
-  transition: top .25s ease; box-shadow: 0 0 10px rgba(32,201,195,.4);
+  transition: top .25s ease, left .25s ease, width .25s ease;
+  box-shadow: 0 0 10px rgba(32,201,195,.4);
 }
 #paper-text .chunk-marker {
   background: rgba(32,201,195,.1); border-radius: 4px;
   padding: 1px 3px;
 }
+.papier-voortgang {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  margin-top:10px; color:var(--muted); font-size:.78rem;
+}
+.techniek-keuze-grid {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:16px 0;
+}
+.techniek-keuze {
+  appearance:none; width:100%; padding:15px; border:2px solid var(--border2);
+  border-radius:12px; background:var(--card); color:var(--text); cursor:pointer;
+  text-align:left; font:inherit; transition:border-color .15s, background .15s, transform .15s;
+}
+.techniek-keuze:hover { transform:translateY(-1px); border-color:var(--accent); }
+.techniek-keuze:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+.techniek-keuze.geselecteerd { border-color:var(--accent2); background:rgba(183,223,72,.1); }
+.techniek-keuze b { display:block; margin-bottom:3px; }
+.techniek-keuze span { color:var(--muted); font-size:.78rem; line-height:1.45; }
+@media(max-width:560px){ .techniek-keuze-grid { grid-template-columns:1fr; } }
 
 /* ── DIVIDER ──────────────────────────────────────────────── */
 .divider { height: 1px; background: var(--border); margin: 24px 0; }
@@ -3710,6 +3733,13 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
     <button id="peri-tab-spel" class="btn btn-ghost" style="font-size:.8rem" onclick="periSwitchTab('spel')">🏆 Spel met levels</button>
   </div>
 
+  <div id="peri-missie-hint" class="card" role="status" aria-live="polite"
+    style="display:none;margin-bottom:14px;border-color:rgba(183,223,72,.4)">
+    <b id="peri-missie-hint-titel">Leerwegmissie</b>
+    <div id="peri-missie-hint-tekst" style="font-size:.84rem;color:var(--muted);margin:5px 0 10px"></div>
+    <button class="btn btn-primary" id="peri-missie-hint-btn" type="button" onclick="periMissieGaVerder()">Start aanbevolen level</button>
+  </div>
+
   <!-- VRIJ OEFENEN -->
   <div id="peri-view-vrij">
 
@@ -3806,6 +3836,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <div style="font-size:.85rem;color:var(--muted);margin-bottom:16px" id="peri-spel-res-sub"></div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
         <button class="btn btn-primary" onclick="periSpelHerstart()">🔄 Opnieuw</button>
+        <button class="btn btn-primary" id="peri-spel-next-btn" style="display:none" onclick="periSpelGaNaarVolgend()">▶ Volgend level</button>
         <button class="btn btn-ghost" onclick="periSwitchTab('spel')">📋 Levels</button>
         <button class="btn btn-ghost" id="peri-spel-leerweg-btn" style="display:none" onclick="sidebarNav('leerweg')">→ Naar de leerweg</button>
       </div>
@@ -3873,11 +3904,16 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
       <span style="font-size:.75rem;color:var(--muted)" id="guide-speed-lbl">Normaal</span>
     </div>
     <div class="control-group" style="flex-direction:row;align-self:flex-end;flex:1;justify-content:flex-end">
-      <button class="btn btn-primary" onclick="papierStart()">▶ Start gids</button>
-      <button class="btn btn-ghost" onclick="papierStop()">⏹ Stop</button>
+      <button class="btn btn-primary" id="papier-start-btn" onclick="papierStart()">▶ Start gids</button>
+      <button class="btn btn-ghost" onclick="papierStop(true)">⏹ Stop</button>
     </div>
   </div>
 
+  <div class="progress-wrap" aria-hidden="true"><div class="progress-fill" id="papier-progress-fill"></div></div>
+  <div class="papier-voortgang" id="papier-voortgang" role="status" aria-live="polite">
+    <span id="papier-voortgang-tekst">Kies een techniek en start de gids.</span>
+    <b id="papier-voortgang-teller">0 / 0</b>
+  </div>
   <div id="paper-text"><div id="paper-guide" style="top:0"></div><div id="paper-guide-diag" style="display:none;position:absolute;top:0;left:50%;width:3px;height:20px;background:rgba(52,211,153,.7);border-radius:2px;transform:translateX(-50%);transition:top .3s linear"></div></div>
   <div id="papier-resultaat" class="card" role="status" aria-live="polite" style="display:none;margin-top:14px;border-color:rgba(52,211,153,.35)">
     <b>✅ Gidssessie afgerond</b>
@@ -4732,11 +4768,39 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
+     🧭  PERSOONLIJKE TOP-3 TECHNIEKEN
+══════════════════════════════════════════════════════════ -->
+<div id="screen-technieken" class="screen">
+  <div class="page-title">🧭 Jouw persoonlijke top 3</div>
+  <div class="page-sub">Kies de drie leesstrategieën die jou het meest helpen. Je kunt deze keuze later altijd aanpassen.</div>
+
+  <div class="card" style="border-left:3px solid var(--accent2)">
+    <b>Kies precies drie technieken</b>
+    <div style="font-size:.84rem;color:var(--muted);margin-top:5px">
+      Denk aan het soort tekst, je leesdoel en je begrip. De beste techniek is niet altijd de snelste.
+    </div>
+  </div>
+  <div class="techniek-keuze-grid" id="techniek-keuze-grid"></div>
+  <div id="techniek-keuze-status" role="status" aria-live="polite"
+    style="font-size:.86rem;color:var(--muted);margin-bottom:12px">0 van 3 gekozen</div>
+  <button class="btn btn-primary" id="techniek-keuze-klaar" type="button" onclick="techniekenAfronden()" disabled>
+    ✓ Bewaar mijn top 3
+  </button>
+  <div id="techniek-keuze-resultaat" class="card" role="status" aria-live="polite"
+    style="display:none;margin-top:14px;border-color:rgba(52,211,153,.35)">
+    <b>✅ Jouw persoonlijke top 3 is bewaard.</b>
+    <div id="techniek-keuze-samenvatting" style="font-size:.84rem;color:var(--muted);margin-top:5px"></div>
+    <button class="btn btn-primary" id="techniek-leerweg-btn" type="button"
+      style="display:none;margin-top:12px" onclick="sidebarNav('leerweg')">→ Naar de leerweg</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
      😌  OOGONTSPANNING
 ══════════════════════════════════════════════════════════ -->
 <div id="screen-oogrust" class="screen">
   <div class="page-title">😌 Oogontspanning</div>
-  <div class="page-sub">Ontspannen ogen lezen sneller en worden minder snel moe. Doe dit voor en na een leessessie.</div>
+  <div class="page-sub">Neem een korte schermpauze en hervat alleen wanneer kijken en lezen comfortabel voelt.</div>
 
   <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
     <button id="or-tab-palming" class="btn btn-primary" style="font-size:.82rem" onclick="orTab('palming')">🖐 Palming</button>
@@ -4748,7 +4812,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- PALMING -->
   <div id="or-view-palming">
     <div class="card" style="margin-bottom:12px">
-      <p style="font-size:.88rem;color:var(--muted);margin:0 0 8px">Wrijf je handen warm, sluit je ogen en bedek ze met je handpalmen (geen druk). Adem diep in en geniet van de duisternis. Dit ontspant oogspieren volledig.</p>
+      <p style="font-size:.88rem;color:var(--muted);margin:0 0 8px">Wrijf je handen warm, sluit je ogen en bedek ze losjes met je handpalmen. Oefen geen druk uit en gebruik dit moment alleen als korte rustpauze.</p>
     </div>
     <div class="or-stap">
       <div class="or-cirkel" id="or-palming-cirkel">🖐</div>
@@ -4761,7 +4825,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- VER-DICHTBIJ -->
   <div id="or-view-focus" style="display:none">
     <div class="card" style="margin-bottom:12px">
-      <p style="font-size:.88rem;color:var(--muted);margin:0">Focus afwisselend op je vinger (dichtbij) en een punt zo ver mogelijk weg. Dit traint de aanpassingsspier van je lens en vermindert vermoeide ogen.</p>
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Kijk afwisselend naar je vinger dichtbij en een punt verder weg. Stop direct als dit onprettig, duizelig of pijnlijk voelt.</p>
     </div>
     <div class="or-stap">
       <div class="or-cirkel" id="or-focus-cirkel" style="font-size:2rem">🔭</div>
@@ -4776,7 +4840,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- FIGUUR-8 -->
   <div id="or-view-acht" style="display:none">
     <div class="card" style="margin-bottom:12px">
-      <p style="font-size:.88rem;color:var(--muted);margin:0">Teken een liggende 8 (∞) met je ogen op een denkbeeldig scherm voor je. Langzaam en vloeiend, 5× links en 5× rechts. Traint coördinatie van oogspieren.</p>
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Volg een liggende 8 (∞) rustig met je blik. Beweeg binnen een comfortabele uitslag en houd je hoofd stil.</p>
     </div>
     <div class="or-stap">
       <svg width="200" height="100" style="margin:16px auto;display:block">
@@ -4792,7 +4856,7 @@ body.kids #screen-home .ai-coach-icoon { background: rgba(76,201,240,.15); }
   <!-- 20-20-20 -->
   <div id="or-view-2020" style="display:none">
     <div class="card" style="margin-bottom:12px">
-      <p style="font-size:.88rem;color:var(--muted);margin:0">Elke 20 minuten lezen: kijk 20 seconden naar iets dat minstens 6 meter weg is. Vermindert digitale vermoeide ogen drastisch. Stel dit in als herinnering!</p>
+      <p style="font-size:.88rem;color:var(--muted);margin:0">Gebruik deze 20-secondenstap als eenvoudige herinnering om regelmatig van het scherm weg te kijken. Kies een comfortabel punt in de verte.</p>
     </div>
     <div class="or-stap">
       <div class="or-cirkel" id="or-2020-cirkel">👀</div>
@@ -5280,6 +5344,7 @@ function sidebarNav(id) {
   if (id === 'regressie') regInit();
   if (id === 'fixatie') fixInit();
   if (id === 'skim') skimInit();
+  if (id === 'technieken') techniekenInit();
   if (id === 'oogrust') orInit();
   if (id === 'home') setTimeout(updateVandaagPanel, 50);
   if (TRAINING_TEKST_SCHERMEN.includes(id)) tekstbronRender(id);
@@ -6070,6 +6135,26 @@ function periNieuweSessie() {
 let papierTimer = null;
 let papierTechModus = 'lijn';
 let papierEigenTekst = null; // override van globale tekst
+let papierActief = false;
+
+function papierVoortgangUpdate(huidig, totaal, tekst) {
+  const veiligTotaal = Math.max(0, Number(totaal) || 0);
+  const veiligHuidig = Math.max(0, Math.min(veiligTotaal, Number(huidig) || 0));
+  const teller = document.getElementById('papier-voortgang-teller');
+  const label = document.getElementById('papier-voortgang-tekst');
+  const balk = document.getElementById('papier-progress-fill');
+  if (teller) teller.textContent = `${veiligHuidig} / ${veiligTotaal}`;
+  if (label && tekst) label.textContent = tekst;
+  if (balk) balk.style.width = veiligTotaal ? `${Math.round(veiligHuidig / veiligTotaal * 100)}%` : '0%';
+}
+
+function papierVolgRegel(regel, index, totaal) {
+  papierVoortgangUpdate(index + 1, totaal, `Gids loopt · regel ${index + 1} van ${totaal}`);
+  const tekstvak = document.getElementById('paper-text');
+  if (!tekstvak || !regel) return;
+  const doel = Math.max(0, regel.offsetTop - (tekstvak.clientHeight / 2) + (regel.offsetHeight / 2));
+  tekstvak.scrollTo({ top:doel, behavior:'smooth' });
+}
 
 function papierInit() {
   const missieVariant = lwActieveVariant('papier');
@@ -6192,14 +6277,19 @@ function bouwPapierTekst() {
     });
   }
   pt.innerHTML = html;
+  pt.scrollTop = 0;
+  papierVoortgangUpdate(0, pt.querySelectorAll('.line').length, 'Klaar om te starten.');
 }
 
 function papierStart() {
-  papierStop();
+  papierStop(false);
+  papierActief = true;
   const resultaat = document.getElementById('papier-resultaat');
   if (resultaat) resultaat.style.display = 'none';
   const leerwegBtn = document.getElementById('papier-leerweg-btn');
   if (leerwegBtn) leerwegBtn.style.display = 'none';
+  const startBtn = document.getElementById('papier-start-btn');
+  if (startBtn) { startBtn.disabled = true; startBtn.textContent = 'Gids loopt…'; }
   const ms = +document.getElementById('guide-speed').value * 100;
 
   if (papierTechModus === 'diag') {
@@ -6214,6 +6304,7 @@ function papierStart() {
         if (i >= regels.length) { papierEinde(); return; }
         const top = regels[i].offsetTop + regels[i].offsetHeight / 2;
         diagGuide.style.top = top + 'px';
+        papierVolgRegel(regels[i], i, regels.length);
         i++;
         papierTimer = setTimeout(stapDiag, ms);
       }
@@ -6224,14 +6315,16 @@ function papierStart() {
     const regels = document.querySelectorAll('#paper-text .line');
     if (!regels.length) return;
     const guide = document.getElementById('paper-guide');
+    guide.style.width = '42%';
+    guide.style.right = 'auto';
     let i = 0;
     function stapS() {
       if (i >= regels.length) { papierEinde(); return; }
       const top = regels[i].offsetTop + regels[i].offsetHeight / 2;
       guide.style.top = top + 'px';
-      // Wisselt richting visueel via breedte
-      guide.style.left = (i % 2 === 0) ? '0' : 'auto';
-      guide.style.right = (i % 2 === 0) ? 'auto' : '0';
+      // Zichtbare S-beweging: de gids behoudt breedte en wisselt van kant.
+      guide.style.left = (i % 2 === 0) ? '0' : '58%';
+      papierVolgRegel(regels[i], i, regels.length);
       i++;
       papierTimer = setTimeout(stapS, ms * 1.4);
     }
@@ -6241,12 +6334,13 @@ function papierStart() {
     const regels = document.querySelectorAll('#paper-text .line');
     if (!regels.length) return;
     const guide = document.getElementById('paper-guide');
-    guide.style.left = '0'; guide.style.right = 'auto';
+    guide.style.left = '0'; guide.style.right = 'auto'; guide.style.width = '100%';
     let i = 0;
     function stap() {
       if (i >= regels.length) { papierEinde(); return; }
       const top = regels[i].offsetTop + regels[i].offsetHeight / 2;
       guide.style.top = top + 'px';
+      papierVolgRegel(regels[i], i, regels.length);
       i++;
       papierTimer = setTimeout(stap, ms);
     }
@@ -6255,7 +6349,9 @@ function papierStart() {
 }
 
 function papierEinde() {
-  papierStop();
+  const totaal = document.querySelectorAll('#paper-text .line').length;
+  papierStop(false);
+  papierVoortgangUpdate(totaal, totaal, '✅ Gidssessie volledig afgerond');
   const kaartMissieVoltooid = typeof voltooiDaguitdaging === 'function'
     ? voltooiDaguitdaging('papier', { variant:papierTechModus })
     : false;
@@ -6269,11 +6365,20 @@ function papierEinde() {
   if (typeof _geluid !== 'undefined') _geluid.goed();
 }
 
-function papierStop() {
+function papierStop(doorGebruiker = false) {
   clearTimeout(papierTimer);
   papierTimer = null;
+  const wasActief = papierActief;
+  papierActief = false;
+  const startBtn = document.getElementById('papier-start-btn');
+  if (startBtn) { startBtn.disabled = false; startBtn.textContent = '▶ Start gids'; }
   const diagGuide = document.getElementById('paper-guide-diag');
   if (diagGuide) diagGuide.style.display = 'none';
+  if (doorGebruiker && wasActief) {
+    const totaal = document.querySelectorAll('#paper-text .line').length;
+    const huidig = parseInt(document.getElementById('papier-voortgang-teller')?.textContent || '0', 10) || 0;
+    papierVoortgangUpdate(huidig, totaal, 'Gestopt · start opnieuw om de missie af te ronden');
+  }
 }
 
 // ─── TEKST LADEN ─────────────────────────────────────────────────────────
@@ -7713,7 +7818,19 @@ function leerWegVolgendeDag() {
 
 const LW_ACTIEF_KEY = 'snellees_actieve_missie';
 function lwActieveMissie() {
-  try { return JSON.parse(localStorage.getItem(LW_ACTIEF_KEY) || 'null'); }
+  try {
+    const missie = JSON.parse(localStorage.getItem(LW_ACTIEF_KEY) || 'null');
+    if (!missie) return null;
+    // Herstel missies die onder een oudere appversie met een generieke route
+    // of zonder variant/minimumlevel zijn opgeslagen.
+    const dag = lwDag(missie.w, missie.d);
+    let gewijzigd = false;
+    if (dag?.screen && missie.screen !== dag.screen) { missie.screen = dag.screen; gewijzigd = true; }
+    if ((missie.variant || null) !== (dag?.variant || null)) { missie.variant = dag?.variant || null; gewijzigd = true; }
+    if ((missie.minLevel || null) !== (dag?.minLevel || null)) { missie.minLevel = dag?.minLevel || null; gewijzigd = true; }
+    if (gewijzigd) localStorage.setItem(LW_ACTIEF_KEY, JSON.stringify(missie));
+    return missie;
+  }
   catch (e) { return null; }
 }
 function lwActieveVariant(scherm) {
@@ -7752,7 +7869,7 @@ function leerWegMissieVerder() {
     return;
   }
   const missie = lwActieveMissie();
-  if (missie?.screen) sidebarNav(missie.screen);
+  if (missie?.screen) leerWegOpenMissie(missie);
   else sidebarNav('leerweg');
 }
 function leerWegHeroActie() {
@@ -7761,6 +7878,53 @@ function leerWegHeroActie() {
   const volgende = leerWegVolgendeDag();
   if (volgende) leerWegStartDag(volgende.w, volgende.d);
   else sidebarNav('leerweg');
+}
+
+function leerWegMissieTempo(dag) {
+  const baseline = laadGeldigeBegintestBaseline();
+  const basis = Number(dag?.wpm || baseline?.wpm || 220);
+  if (dag?.wpmOffset) return basis + Number(dag.wpmOffset);
+  if (dag?.wpmMultiplier) return Math.round(basis * Number(dag.wpmMultiplier));
+  return dag?.wpm ? basis : null;
+}
+
+function leerWegOpenMissie(missie) {
+  if (!missie?.screen) return;
+  const dag = lwDag(missie.w, missie.d);
+  sidebarNav(missie.screen);
+
+  const doelTempo = leerWegMissieTempo(dag);
+  if (missie.screen === 'rsvp' && doelTempo) {
+    const slider = document.getElementById('wpm-slider');
+    if (slider) {
+      const stap = Number(slider.step) || 25;
+      const afgerond = Math.round(doelTempo / stap) * stap;
+      slider.value = Math.min(Number(slider.max), Math.max(Number(slider.min), afgerond));
+      slider.dispatchEvent(new Event('input'));
+    }
+  } else if (missie.screen === 'chunk') {
+    const tempo = document.getElementById('chunk-wpm');
+    if (tempo && doelTempo) {
+      const stap = Number(tempo.step) || 20;
+      tempo.value = Math.min(Number(tempo.max), Math.max(Number(tempo.min), Math.round(doelTempo / stap) * stap));
+      tempo.dispatchEvent(new Event('input'));
+    }
+    const grootte = document.getElementById('chunk-size');
+    if (grootte && dag?.chunkGrootte) {
+      grootte.value = dag.chunkGrootte;
+      grootte.dispatchEvent(new Event('input'));
+    }
+  } else if (missie.screen === 'fixatie' && dag?.fixatieBreedte) {
+    fixBreedte = Math.max(1, Math.min(7, Number(dag.fixatieBreedte)));
+    document.getElementById('fix-breedte-val').textContent = fixBreedte;
+    fixNieuwe();
+  } else if (missie.screen === 'subvocal' && dag?.bpm) {
+    svMetroBpmVal = Math.max(100, Math.min(600, Number(dag.bpm)));
+    document.getElementById('sv-metro-bpm').textContent = svMetroBpmVal;
+  } else if (missie.screen === 'perifeer') {
+    periSwitchTab('spel');
+    periMissieUpdate();
+  }
 }
 
 let _lwAutoLaatst = 0;
@@ -9510,12 +9674,49 @@ function periSpelHoogsteVoltooid() {
   return Math.min(PERI_LEVELS.length - 1, Math.max(-1, Number.isFinite(waarde) ? waarde : -1));
 }
 
+function periMissieDoel() {
+  const missie = lwActieveMissie();
+  if (!missie || missie.screen !== 'perifeer' || missie.variant !== 'levels' || lwIsDone(missie.w, missie.d)) return null;
+  return Math.max(1, Math.min(PERI_LEVELS.length, missie.minLevel || lwDag(missie.w, missie.d)?.minLevel || 1));
+}
+
+function periMissieAanbevolenLevel() {
+  const doel = periMissieDoel();
+  if (!doel) return null;
+  const eerstNietVoltooid = periSpelHoogsteVoltooid() + 1;
+  return Math.min(doel - 1, periSpelHoogsteVrij(), Math.max(0, eerstNietVoltooid));
+}
+
+function periMissieUpdate() {
+  const hint = document.getElementById('peri-missie-hint');
+  if (!hint) return;
+  const doel = periMissieDoel();
+  if (!doel) { hint.style.display = 'none'; return; }
+  const voltooid = periSpelHoogsteVoltooid() + 1;
+  const aanbevolen = periMissieAanbevolenLevel();
+  document.getElementById('peri-missie-hint-titel').textContent = `Leerwegmissie · bereik level ${doel}`;
+  document.getElementById('peri-missie-hint-tekst').textContent = voltooid >= doel
+    ? `Level ${doel} is al gehaald. Speel het nog één keer om deze actieve missie af te ronden.`
+    : `Je hebt ${Math.min(voltooid, doel)} van de ${doel} benodigde levels gehaald. Rond de levels op volgorde af; elk gehaald level ontgrendelt direct het volgende.`;
+  const knop = document.getElementById('peri-missie-hint-btn');
+  if (knop && aanbevolen !== null) knop.textContent = `▶ Start level ${aanbevolen + 1}`;
+  hint.style.display = '';
+}
+
+function periMissieGaVerder() {
+  const aanbevolen = periMissieAanbevolenLevel();
+  if (aanbevolen === null) return;
+  periSpelStart(aanbevolen);
+  document.getElementById('peri-spel-actief')?.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
 function periSwitchTab(tab) {
   document.getElementById('peri-tab-vrij').className = tab === 'vrij' ? 'btn btn-primary' : 'btn btn-ghost';
   document.getElementById('peri-tab-spel').className = tab === 'spel' ? 'btn btn-primary' : 'btn btn-ghost';
   document.getElementById('peri-view-vrij').style.display = tab === 'vrij' ? '' : 'none';
   document.getElementById('peri-view-spel').style.display = tab === 'spel' ? '' : 'none';
   if (tab === 'spel') periToonLevels();
+  periMissieUpdate();
 }
 
 function periToonLevels() {
@@ -9539,6 +9740,7 @@ function periToonLevels() {
       <div style="font-size:.7rem;color:var(--muted);margin-top:2px">${lv.omschrijving}</div>
     </button>`;
   }).join('');
+  periMissieUpdate();
 }
 
 function periSpelStart(levelIdx) {
@@ -9653,11 +9855,22 @@ function periSpelEinde() {
   document.getElementById('peri-spel-resultaat').style.display = '';
   document.getElementById('peri-res-sterren').textContent = '⭐'.repeat(sterren) + '☆'.repeat(5 - sterren);
   document.getElementById('peri-res-score').textContent = `${periSpelScore} van ${periSpelTotaal} goed`;
-  document.getElementById('peri-spel-res-sub').textContent = geslaagd
-    ? (periSpelLevel < PERI_LEVELS.length - 1 ? `✅ Level voltooid! Level ${periSpelLevel + 2} ontgrendeld 🎉` : '🏆 Je hebt alle levels gehaald! Meesterlezer!')
-    : `Probeer opnieuw — je hebt ${Math.round(pct * 100)}% goed. (70% nodig om door te gaan)`;
+  const missieDoel = periMissieDoel();
+  const onderMissieDoel = geslaagd && missieDoel && periSpelLevel + 1 < missieDoel;
+  document.getElementById('peri-spel-res-sub').textContent = onderMissieDoel
+    ? `✅ Level ${periSpelLevel + 1} voltooid. Ga door naar level ${periSpelLevel + 2} om je leerwegmissie te halen.`
+    : geslaagd
+      ? (periSpelLevel < PERI_LEVELS.length - 1 ? `✅ Level voltooid! Level ${periSpelLevel + 2} ontgrendeld 🎉` : '🏆 Je hebt alle levels gehaald! Meesterlezer!')
+      : `Probeer opnieuw — je hebt ${Math.round(pct * 100)}% goed. (70% nodig om door te gaan)`;
+  const nextBtn = document.getElementById('peri-spel-next-btn');
+  if (nextBtn) {
+    const heeftVolgend = geslaagd && periSpelLevel < PERI_LEVELS.length - 1 && !kaartMissieVoltooid;
+    nextBtn.style.display = heeftVolgend ? '' : 'none';
+    if (heeftVolgend) nextBtn.textContent = `▶ Naar level ${periSpelLevel + 2}`;
+  }
   const leerwegBtn = document.getElementById('peri-spel-leerweg-btn');
   if (leerwegBtn) leerwegBtn.style.display = kaartMissieVoltooid ? '' : 'none';
+  periMissieUpdate();
 }
 
 function periSpelStop() {
@@ -9672,6 +9885,11 @@ function periSpelHerstart() {
   const leerwegBtn = document.getElementById('peri-spel-leerweg-btn');
   if (leerwegBtn) leerwegBtn.style.display = 'none';
   periSpelStart(periSpelLevel);
+}
+
+function periSpelGaNaarVolgend() {
+  const volgend = Math.min(periSpelLevel + 1, PERI_LEVELS.length - 1);
+  periSpelStart(volgend);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -9704,11 +9922,11 @@ const LEERWEG_WEKEN = [
     doel: 'Oefen een gelijkmatig leestempo en verminder onnodig terugzoeken',
     uitleg: 'Teruglezen kan nuttig zijn voor begrip. In deze week oefen je het verschil tussen bewust herlezen en onnodig zoeken.',
     dagen: [
-      { naam: 'Fixatie-training (2 woorden per fixatie)', duur: '10 min', screen: 'fixatie' },
+      { naam: 'Fixatie-training (2 woorden per fixatie)', duur: '10 min', screen: 'fixatie', fixatieBreedte: 2 },
       { naam: 'Vooruit lezen — vast tempo met begrip', duur: '10 min', screen: 'regressie' },
-      { naam: 'RSVP op jouw WPM + 50', duur: '10 min', screen: 'rsvp' },
-      { naam: 'Chunk lezen — groepen van 3 woorden', duur: '10 min', screen: 'chunk' },
-      { naam: 'Woordgroepen + vooruit-lezen-combinatie', duur: '15 min', screen: 'fixatie' },
+      { naam: 'RSVP op jouw WPM + 50', duur: '10 min', screen: 'rsvp', wpmOffset: 50 },
+      { naam: 'Chunk lezen — groepen van 3 woorden', duur: '10 min', screen: 'chunk', chunkGrootte: 3 },
+      { naam: 'Woordgroepen + vooruit-lezen-combinatie', duur: '15 min', screen: 'fixatie', fixatieBreedte: 3 },
       { naam: 'Leestest: bewust geen oog terug', duur: '15 min', screen: 'leestest' },
       { naam: 'Weektest: vergelijk met week 1', duur: '10 min', screen: 'leestest' },
     ]
@@ -9719,11 +9937,11 @@ const LEERWEG_WEKEN = [
     uitleg: 'De innerlijke stem kan begrip ondersteunen. Oefen flexibel met ritme en woordgroepen en behoud wat voor jouw tekstdoel werkt.',
     dagen: [
       { naam: 'Innerlijke stem + eerste ritmevergelijking', duur: '10 min', screen: 'subvocal', variant: 'tel' },
-      { naam: 'Metronoom lezen op 280 WPM', duur: '10 min', screen: 'subvocal', variant: 'metro' },
+      { naam: 'Metronoom lezen op 280 WPM', duur: '10 min', screen: 'subvocal', variant: 'metro', bpm: 280 },
       { naam: 'S-beweging papier lezen', duur: '10 min', screen: 'papier', variant: 's' },
-      { naam: 'RSVP fors boven jouw comfortzone', duur: '10 min', screen: 'rsvp' },
-      { naam: 'Perifeer niveau 4–6', duur: '10 min', screen: 'perifeer', variant: 'levels', minLevel: 4 },
-      { naam: 'Hum-contrast + begrip vergelijken', duur: '15 min', screen: 'subvocal', variant: 'hum' },
+      { naam: 'RSVP boven jouw starttempo', duur: '10 min', screen: 'rsvp', wpmMultiplier: 1.25 },
+      { naam: 'Perifeer — bouw op tot niveau 4', duur: '10 min', screen: 'perifeer', variant: 'levels', minLevel: 4 },
+      { naam: 'Humming — ervaar één minuut contrast', duur: '5 min', screen: 'subvocal', variant: 'hum' },
       { naam: 'Weektest', duur: '10 min', screen: 'leestest' },
     ]
   },
@@ -9736,8 +9954,8 @@ const LEERWEG_WEKEN = [
       { naam: 'Skimmen — snel hoofdidee begrijpen', duur: '10 min', screen: 'skim', variant: 'skim' },
       { naam: 'Scannen — doelgericht zoeken in tekst', duur: '10 min', screen: 'skim', variant: 'scan' },
       { naam: 'Lange leestekst + alle begripsvragen', duur: '20 min', screen: 'leestest' },
-      { naam: 'Maak jouw persoonlijke top-3 technieken', duur: '15 min', screen: null },
-      { naam: 'Oogontspanning — volledig herstelroutine', duur: '10 min', screen: 'oogrust' },
+      { naam: 'Maak jouw persoonlijke top-3 technieken', duur: '5 min', screen: 'technieken' },
+      { naam: 'Palming — 30 seconden oogpauze', duur: '2 min', screen: 'oogrust' },
       { naam: '🏆 EINDTEST: vergelijk begin vs. nu!', duur: '15 min', screen: 'leestest' },
     ]
   }
@@ -9900,8 +10118,7 @@ function leerWegStartDag(w, d) {
   localStorage.setItem(LW_ACTIEF_KEY, JSON.stringify(missie));
   lwMissieHudUpdate();
   leerWegHeroUpdate();
-  if (dag.wpm && typeof _startMissieType === 'function') _startMissieType(screen, dag.wpm);
-  else sidebarNav(screen);
+  leerWegOpenMissie(missie);
 }
 
 function leerWegReset() {
@@ -10759,6 +10976,82 @@ function previewAfronden() {
 }
 
 // ═══════════════════════════════════════════════════════════
+// 🧭  PERSOONLIJKE TOP-3 TECHNIEKEN
+// ═══════════════════════════════════════════════════════════
+const LW_TECHNIEKEN = [
+  { id:'rsvp', icon:'⚡', naam:'RSVP', uitleg:'Een vast kijkpunt en ingesteld tempo voor korte oefenteksten.' },
+  { id:'chunk', icon:'📖', naam:'Woordgroepen', uitleg:'Woorden in betekenisvolle groepen lezen en begrip blijven controleren.' },
+  { id:'vooruit', icon:'⏩', naam:'Vooruit lezen', uitleg:'Een gelijkmatig ritme vasthouden en alleen bewust herlezen.' },
+  { id:'preview', icon:'👁', naam:'Previewing', uitleg:'Eerst titel, structuur en eerste zinnen bekijken.' },
+  { id:'skim', icon:'🔍', naam:'Skimmen', uitleg:'Snel het hoofdidee en de opbouw van een tekst vinden.' },
+  { id:'scan', icon:'🎯', naam:'Scannen', uitleg:'Gericht zoeken naar een naam, begrip, datum of ander gegeven.' },
+];
+let lwTechniekKeuzes = [];
+
+function techniekenLaadKeuzes() {
+  try {
+    const opgeslagen = JSON.parse(localStorage.getItem('snellees_top_technieken') || '[]');
+    return opgeslagen.filter(id => LW_TECHNIEKEN.some(techniek => techniek.id === id)).slice(0, 3);
+  } catch (e) { return []; }
+}
+
+function techniekenInit() {
+  lwTechniekKeuzes = techniekenLaadKeuzes();
+  const resultaat = document.getElementById('techniek-keuze-resultaat');
+  if (resultaat) resultaat.style.display = 'none';
+  techniekenRender();
+}
+
+function techniekenRender() {
+  const grid = document.getElementById('techniek-keuze-grid');
+  if (!grid) return;
+  grid.innerHTML = LW_TECHNIEKEN.map(techniek => {
+    const gekozen = lwTechniekKeuzes.includes(techniek.id);
+    return `<button class="techniek-keuze ${gekozen ? 'geselecteerd' : ''}" type="button"
+      aria-pressed="${gekozen}" onclick="techniekToggle('${techniek.id}')">
+      <b>${techniek.icon} ${htmlEscape(techniek.naam)}${gekozen ? ' · gekozen' : ''}</b>
+      <span>${htmlEscape(techniek.uitleg)}</span>
+    </button>`;
+  }).join('');
+  const status = document.getElementById('techniek-keuze-status');
+  if (status) status.textContent = `${lwTechniekKeuzes.length} van 3 gekozen`;
+  const klaar = document.getElementById('techniek-keuze-klaar');
+  if (klaar) klaar.disabled = lwTechniekKeuzes.length !== 3;
+}
+
+function techniekToggle(id) {
+  if (!LW_TECHNIEKEN.some(techniek => techniek.id === id)) return;
+  if (lwTechniekKeuzes.includes(id)) {
+    lwTechniekKeuzes = lwTechniekKeuzes.filter(keuze => keuze !== id);
+  } else if (lwTechniekKeuzes.length < 3) {
+    lwTechniekKeuzes.push(id);
+  } else {
+    toonFout('Kies precies drie technieken. Verwijder eerst één keuze.');
+  }
+  techniekenRender();
+}
+
+function techniekenAfronden() {
+  if (lwTechniekKeuzes.length !== 3) {
+    toonFout('Kies eerst precies drie technieken.');
+    return;
+  }
+  localStorage.setItem('snellees_top_technieken', JSON.stringify(lwTechniekKeuzes));
+  const namen = lwTechniekKeuzes.map(id => LW_TECHNIEKEN.find(techniek => techniek.id === id)?.naam).filter(Boolean);
+  const kaartMissieVoltooid = voltooiDaguitdaging('technieken', { keuzes:[...lwTechniekKeuzes] });
+  const resultaat = document.getElementById('techniek-keuze-resultaat');
+  const samenvatting = document.getElementById('techniek-keuze-samenvatting');
+  const leerwegBtn = document.getElementById('techniek-leerweg-btn');
+  if (samenvatting) samenvatting.textContent = namen.join(' · ');
+  if (leerwegBtn) leerwegBtn.style.display = kaartMissieVoltooid ? '' : 'none';
+  if (resultaat) {
+    resultaat.style.display = '';
+    resultaat.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+  _geluid.goed();
+}
+
+// ═══════════════════════════════════════════════════════════
 // 😌  OOGONTSPANNING
 // ═══════════════════════════════════════════════════════════
 let orActieveTab = 'palming';
@@ -11065,8 +11358,11 @@ function leestestVerzend() {
 const _isNativeShell = !!window.Capacitor?.isNativePlatform?.();
 if ('serviceWorker' in navigator && !_isNativeShell) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(reg => console.log('[PWA] Service worker geregistreerd:', reg.scope))
+    navigator.serviceWorker.register('service-worker.js', { updateViaCache:'none' })
+      .then(reg => {
+        console.log('[PWA] Service worker geregistreerd:', reg.scope);
+        reg.update().catch(() => {});
+      })
       .catch(err => console.warn('[PWA] Service worker registratie mislukt:', err));
   });
 }

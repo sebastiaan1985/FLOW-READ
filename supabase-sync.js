@@ -49,6 +49,7 @@ const SYNC_KEYS = [
   'oog_hoogste_voltooid',   // Hoogste voltooide oogtraining
   'peri_hoogste_level',     // Hoogste vrijgespeelde perifere level
   'peri_hoogste_voltooid',  // Hoogste voltooide perifere level
+  'snellees_top_technieken',// Persoonlijke top-3 uit week 4 van de leerweg
   'dyslexie_leerweg',       // Beheersing en herhaalset per dyslexieles
   'dyslexie_highscores',
   'dyslexie_badges',
@@ -60,6 +61,7 @@ const EXTRA_KEYS = [
   'coach_state', 'snellees_begrip_scores', 'gamificatie', 'leerweg_gedaan', 'teksten_gelezen',
   'snellees_eerste_missie', 'snellees_startweek', 'snellees_streak', 'snellees_laatste_resultaat', 'snellees_events',
   'oog_hoogste_vrij', 'oog_hoogste_voltooid', 'peri_hoogste_level', 'peri_hoogste_voltooid',
+  'snellees_top_technieken',
   'dyslexie_leerweg', 'dyslexie_highscores', 'dyslexie_badges', 'dyslexie_stats',
 ];
 

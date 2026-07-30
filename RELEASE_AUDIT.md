@@ -1,10 +1,10 @@
 # Snellezer — release-audit
 
-Statusdatum: 25 juli 2026
+Statusdatum: 30 juli 2026
 
 ## Conclusie
 
-De lokale versie is een bruikbare release candidate: de webbuild slaagt, de geteste spellen en niveaus zijn doorspeelbaar en de bekende blokkade in week 3 is opgelost. De app is nog **niet publiceerbaar**. Publicatie blijft bewust geblokkeerd totdat de privacygegevens zijn ingevuld, de live backendcontroles slagen, de nieuwe build is gedeployed en de native projecten op een volledige toolchain zijn gebouwd.
+De lokale versie is een bruikbare release candidate: de webbuild slaagt, alle 29 leerwegmissies openen en voltooien via hun bedoelde contract en de bekende blokkades in week 3 zijn in een echte browser hersteld. De app is nog **niet publiceerbaar**. Publicatie blijft bewust geblokkeerd totdat de privacygegevens zijn ingevuld, de live backendcontroles slagen, de nieuwe build is gedeployed en de native projecten op een volledige toolchain zijn gebouwd.
 
 “Geen bugs” en “volledig veilig” zijn geen verantwoord absolute garanties. De huidige controles verlagen het risico, maar vervangen geen juridisch advies, store-review of onafhankelijke penetratietest.
 
@@ -15,13 +15,18 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, de gete
 | Webbuild en release-preflight | Geslaagd |
 | Productie-afhankelijkheden | `npm audit --omit=dev`: 0 bekende kwetsbaarheden |
 | Trainingsroutes | Alle 17 kaarten openen het bedoelde scherm |
+| Volledige leerweg | Alle 29 missies openen, respecteren variant/kwaliteit en ontgrendelen de volgende stap |
 | Perifeer lezen | Alle 8 levels volledig gespeeld |
 | Dyslexie Leeslab | Alle 7 lessen volledig gespeeld |
 | Oogtraining | Alle 3 timerlevels volledig gespeeld |
 | Lange teksten | Starter, Gevorderd en Expert volledig gespeeld |
-| Week 3, opdracht 3 | Gerepareerd: de natuurlijke afloop van het S-patroon vinkt de missie af |
+| Week 3, opdracht 3 | Gerepareerd: zichtbare S-gids, regelvoortgang, meescroll en natuurlijke voltooiing tot 40/40 |
 | Week 3-varianten | Tel-methode, metronoom, S-patroon, perifeer level 4+ en humming zijn afzonderlijk gekoppeld |
+| Perifere leerwegmissie | Begeleide opbouw van level 1 naar doellevel 4 met directe “volgend level”-actie |
 | Week 4-varianten | Previewing, skimmen en scannen hebben ieder een eigen geldige afronding |
+| Week 4 persoonlijke top 3 | Eigen keuzescherm, precies drie toegankelijke keuzes, opslag en missieafronding |
+| Oude actieve missies | Verouderde scherm-, variant- en levelcontracten worden bij hervatten gemigreerd |
+| Missie-instellingen | RSVP-tempo, chunkgrootte, fixatiebreedte en metronoomtempo worden vanuit de leerweg ingesteld |
 | Scanopdracht | Zoekwoord komt gegarandeerd uit de getoonde tekst; fout en goed antwoord getest |
 | Accountverwijdering | In-app flow, dubbele bevestiging en openbare instructie aanwezig |
 | Webbeveiliging | CSP, frameblokkade, `nosniff`, referrer- en permissionsbeleid aanwezig |
@@ -31,8 +36,11 @@ De lokale versie is een bruikbare release candidate: de webbuild slaagt, de gete
 
 ## Opgeloste releaseproblemen
 
-- Week 3 kon na de papieranimatie niet verder, omdat de oefening alleen stopte en nooit een voltooi-event gaf.
+- De S-gids had tijdens week 3 feitelijk breedte nul en liep daarna buiten beeld. De gids blijft nu zichtbaar, de tekst scrolt mee en 40/40 rondt de missie af.
 - De leerweg keek alleen naar het schermtype. Daardoor kon een verkeerde tab een missie afronden. Missies controleren nu ook de bedoelde variant en, bij perifeer lezen, het minimumlevel.
+- De perifere missie noemde level 4–6 zonder uit te leggen dat levels 1–3 eerst moesten worden vrijgespeeld. De missie begeleidt nu iedere stap tot level 4.
+- Week 4 had voor “persoonlijke top-3 technieken” geen eigen opdracht en opende een willekeurige coachtraining. Er is nu een volwaardige keuze- en voltooiingsflow.
+- Leerwegmissies openden eerder soms met laatst gebruikte instellingen in plaats van het beloofde tempo of de beloofde groepsgrootte.
 - Humming, tel-methode, previewing en skimmen hadden geen geldige eigen afronding.
 - De scantrainer koos soms een woord dat niet in de tekst stond en vulde het antwoord zelf in.
 - Timers, animaties, spraak en open leesrondes konden na navigeren onzichtbaar doorlopen; ieder oefenscherm wordt nu centraal en zonder beloning gestopt.
@@ -72,7 +80,7 @@ Officiële storebronnen:
 ### Prioriteit 1
 
 - Splits de monolithische `index.html` op in schermmodules, gedeelde UI-componenten en afzonderlijke CSS.
-- Voeg geautomatiseerde tests toe voor alle 28 leerwegdagen, inclusief de exacte missievariant, kwaliteitspoort en ontgrendeling van de volgende dag.
+- Voeg de nu handmatig doorlopen browsermatrix voor alle 29 leerwegmissies als vaste CI-test toe, inclusief exacte missievariant, kwaliteitspoort en ontgrendeling van de volgende dag.
 - Voeg conflictresolutie toe aan cloudsynchronisatie, zodat recente lokale gastvoortgang niet ongemerkt door oudere clouddata kan worden overschreven.
 - Vervang externe artikelproxy’s door één eigen serverendpoint met DNS-/IP-controle, limieten, time-outs en inhoudslimieten.
 
