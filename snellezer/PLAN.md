@@ -266,3 +266,40 @@ Eén kanttekening bij de haalbaarheid: `TrainingScreen.tsx` is 25 KB in één co
 1. **Toon van de lessen** — bij de rust van de app past uitleg zonder uitroeptekens en zonder beloftes als "lees 3× sneller". Akkoord dat we eerlijk blijven ("de meeste mensen winnen 30–50% met behoud van begrip") in plaats van de gebruikelijke snellees-marketing?
 2. **Doelgroep van de lessen** — volwassenen, of ook een kindversie van de 28 dagen? De kindmodus bestaat, maar heeft nu 4 teksten.
 3. **Apple Developer-account** — heb je die al, of houden we het voorlopig op Expo Go en de webapp op je beginscherm?
+
+---
+
+## 14. Migratie uit de oude versie — stand van zaken
+
+Uitgevoerd op 20 september 2026, na de beslissing om eerst de inhoud en oefeningen over te zetten.
+
+### Overgezet
+
+| Uit de oude versie | Nu in de app |
+|---|---|
+| Perifeer zien met breedte 20–95% | Echt perifeer: fixatiepunt in het midden, woorden absoluut gepositioneerd, breedte instelbaar, flitstijd 120–1200 ms, breedte groeit mee bij een goede score |
+| Chunkgrootte 2–7 woorden | Instelbaar per oefening (2–7 voor chunks/fixatie/vooruit, 1–5 voor woord-voor-woord) |
+| Positie/totaal bij RSVP | "woord 12 van 165" onder elke tempo-oefening |
+| Woordflitsniveaus (3 / 4–5 / 6–7 / lange woorden) | Niveaukeuze met bijbehorende flitstijd (2000 / 1600 / 1200 / 900 ms) |
+| Oogtraining: 4 patronen + snelheid 1–10 | Links–rechts, zigzag, uitdijend en sprint, met snelheid 1–10 en duur 1 / 3 / 6 minuten |
+| Leesgids met instelbaar tempo | Gids loopt automatisch mee (0,3–3,0 seconden per regel) of je gaat zelf verder |
+| 18 snelleestips | Op Vandaag als tip van de dag, na afloop van een oefening, en tussen de oefeningen van je dagtraining door — met een knop om hem meteen toe te passen |
+| Daguitdaging (7 uitdagingen) | Terug op Vandaag, afgevinkt op basis van je eigen sessies |
+
+### Bewust niet overgezet
+
+- **S-patroon en diagonaal scannen als gidsmodus.** Die stonden wel in het oude keuzemenu, maar waren nooit aangesloten: alleen de snelheid werd uitgelezen. Niet nagebouwd als functie; beide staan wel als tip in de app.
+- **Confetti en emoji-feedback.** Botst met de rust van het nieuwe ontwerp.
+- **Kinderavontuur** (werelden, verhalen, sterren). Geparkeerd tot de kindversie aan de beurt is.
+- **Meerdere profielen met login.** De app is nu voor één lezer; dit heeft alleen zin als hij gedeeld wordt.
+- **ORP-markering bij RSVP.** Het oude streepje boven het woord zit er al in, als de twee fixatiestreepjes boven en onder.
+
+### Nog te doen uit de oude versie
+
+1. Eigen tekst via een geplakte URL laden (nu kan alleen een .txt-bestand).
+2. Eigen begripsvragen toevoegen bij een eigen tekst.
+3. De woordenlijst uitbreiden — 27 woorden is te weinig om vier niveaus mee te vullen.
+
+### Opgeloste fout
+
+"Woordgroepen" gaf het juiste antwoord weg via het formaat: het goede antwoord stond als `appel letter samen` en de afleiders als `appel · letter`. Alle opties hebben nu hetzelfde formaat.

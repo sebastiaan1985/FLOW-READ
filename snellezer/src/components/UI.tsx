@@ -15,3 +15,44 @@ export function Pill({label,icon,color=colors.accent,background=ui.forestSoft}:{
 export function BackHeader({title,onBack,right}:{title:string;onBack:()=>void;right?:ReactNode}){return <View style={[s.row,{marginBottom:24}]}><IconButton name="back" onPress={onBack} label="Terug"/><T variant="heading" style={{flex:1,marginLeft:10,fontSize:22}}>{title}</T>{right}</View>;}
 export function Row({children,style}:{children:ReactNode;style?:StyleProp<ViewStyle>}){return <View style={[s.row,style]}>{children}</View>;}
 const s=StyleSheet.create({button:{minHeight:metrics.buttonHeight,borderRadius:radius.pill,paddingHorizontal:24,paddingVertical:14,flexDirection:'row',gap:12,alignItems:'center',justifyContent:'center'},iconButton:{width:44,height:44,borderRadius:22,backgroundColor:colors.surface,alignItems:'center',justifyContent:'center'},card:{backgroundColor:colors.bg,borderWidth:1,borderColor:ui.line,borderRadius:radius.hero,padding:metrics.cardPadding},row:{flexDirection:'row',alignItems:'center',gap:10},track:{height:6,backgroundColor:ui.track,borderRadius:99,overflow:'hidden'},screen:{width:'100%',maxWidth:metrics.maxWidth,alignSelf:'center',padding:metrics.padding,paddingBottom:40,gap:24},pill:{alignSelf:'flex-start',flexDirection:'row',alignItems:'center',gap:6,borderRadius:99,paddingHorizontal:11,paddingVertical:6}});
+
+/** Instelbare waarde met − en +, in de stijl van de tempokiezer. */
+export function Stepper({label,value,unit,min,max,step,onChange,format,icon}:{label:string;value:number;unit:string;min:number;max:number;step:number;onChange:(v:number)=>void;format?:(v:number)=>string;icon?:string}){
+  const shown=format?format(value):String(value);
+  return (
+    <View style={{gap:12}}>
+      <View style={{flexDirection:'row',alignItems:'center',gap:10}}>
+        <T variant="label" style={{flex:1}}>{label}</T>
+        {icon&&<Icon name={icon} size={19} color={colors.accent}/>}
+      </View>
+      <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:28}}>
+        <IconButton name="minus" label={`${label} verlagen`} onPress={()=>onChange(Math.max(min,value-step))}/>
+        <View style={{alignItems:'center',minWidth:110}}>
+          <T variant="stat">{shown}</T>
+          <T variant="caption">{unit}</T>
+        </View>
+        <IconButton name="plus" label={`${label} verhogen`} onPress={()=>onChange(Math.min(max,value+step))}/>
+      </View>
+    </View>
+  );
+}
+
+/** Keuze uit een paar opties, als rij pillen. */
+export function Choice<V extends string>({label,value,options,onChange}:{label:string;value:V;options:{value:V;label:string}[];onChange:(v:V)=>void}){
+  return (
+    <View style={{gap:12}}>
+      <T variant="label">{label}</T>
+      <View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>
+        {options.map(o=>{
+          const active=o.value===value;
+          return (
+            <Pressable key={o.value} accessibilityRole="button" accessibilityState={{selected:active}} accessibilityLabel={o.label} onPress={()=>onChange(o.value)}
+              style={({pressed})=>[{paddingHorizontal:16,paddingVertical:10,borderRadius:radius.pill,minHeight:44,justifyContent:'center',backgroundColor:active?colors.accent:colors.surface,opacity:pressed?.8:1}]}>
+              <T variant="caption" color={active?colors.onAccent:ui.muted} style={{fontFamily:fonts.strong,fontSize:13}}>{o.label}</T>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
