@@ -1,0 +1,270 @@
+[
+  {
+    "word": "kat",
+    "distractors": [
+      "kan",
+      "nat",
+      "rat",
+      "mat",
+      "bat"
+    ],
+    "level": 1
+  },
+  {
+    "word": "hond",
+    "distractors": [
+      "bond",
+      "fond",
+      "mond",
+      "pond"
+    ],
+    "level": 1
+  },
+  {
+    "word": "vis",
+    "distractors": [
+      "bis",
+      "mis",
+      "ris",
+      "wis"
+    ],
+    "level": 1
+  },
+  {
+    "word": "boom",
+    "distractors": [
+      "room",
+      "toom",
+      "zoom",
+      "doom"
+    ],
+    "level": 1
+  },
+  {
+    "word": "zon",
+    "distractors": [
+      "ton",
+      "bon",
+      "con",
+      "jon"
+    ],
+    "level": 1
+  },
+  {
+    "word": "bal",
+    "distractors": [
+      "dal",
+      "gal",
+      "hal",
+      "wal"
+    ],
+    "level": 1
+  },
+  {
+    "word": "deur",
+    "distractors": [
+      "geur",
+      "leur",
+      "neur",
+      "veur"
+    ],
+    "level": 1
+  },
+  {
+    "word": "neus",
+    "distractors": [
+      "deus",
+      "geus",
+      "leus",
+      "reus"
+    ],
+    "level": 1
+  },
+  {
+    "word": "appel",
+    "distractors": [
+      "eppel",
+      "oppel",
+      "appol",
+      "appil"
+    ],
+    "level": 1
+  },
+  {
+    "word": "boek",
+    "distractors": [
+      "doek",
+      "hoek",
+      "koek",
+      "roek"
+    ],
+    "level": 1
+  },
+  {
+    "word": "fiets",
+    "distractors": [
+      "biets",
+      "diets",
+      "giets",
+      "niets"
+    ],
+    "level": 1
+  },
+  {
+    "word": "brood",
+    "distractors": [
+      "grood",
+      "trood",
+      "vrood"
+    ],
+    "level": 1
+  },
+  {
+    "word": "water",
+    "distractors": [
+      "bater",
+      "gater",
+      "later",
+      "mater"
+    ],
+    "level": 1
+  },
+  {
+    "word": "tafel",
+    "distractors": [
+      "dafel",
+      "nafel",
+      "rafel",
+      "wafel"
+    ],
+    "level": 1
+  },
+  {
+    "word": "stoel",
+    "distractors": [
+      "sboel",
+      "sdoel",
+      "sgoel",
+      "snoel"
+    ],
+    "level": 1
+  },
+  {
+    "word": "bloem",
+    "distractors": [
+      "groem",
+      "snoem",
+      "vloem",
+      "wloem"
+    ],
+    "level": 1
+  },
+  {
+    "word": "school",
+    "distractors": [
+      "scpool",
+      "scqool",
+      "scjool",
+      "sckool"
+    ],
+    "level": 1
+  },
+  {
+    "word": "klasse",
+    "distractors": [
+      "klesse",
+      "klisse",
+      "klosse",
+      "klusse"
+    ],
+    "level": 1
+  },
+  {
+    "word": "leraar",
+    "distractors": [
+      "lerear",
+      "leriar",
+      "leroar",
+      "leruar"
+    ],
+    "level": 1
+  },
+  {
+    "word": "lezen",
+    "distractors": [
+      "lezon",
+      "lezun",
+      "lezin"
+    ],
+    "level": 1
+  },
+  {
+    "word": "schrijven",
+    "distractors": [
+      "scrijven",
+      "schijven",
+      "schrijfen",
+      "schrijwen"
+    ],
+    "level": 1
+  },
+  {
+    "word": "letter",
+    "distractors": [
+      "lotter",
+      "lutter",
+      "litter",
+      "latter"
+    ],
+    "level": 1
+  },
+  {
+    "word": "woorden",
+    "distractors": [
+      "woerden",
+      "wierden",
+      "waardon",
+      "woerdon"
+    ],
+    "level": 1
+  },
+  {
+    "word": "bibliotheek",
+    "distractors": [
+      "bimliotheek",
+      "biblioteek",
+      "bibliotheok",
+      "bibleotheek"
+    ],
+    "level": 1
+  },
+  {
+    "word": "vliegtuig",
+    "distractors": [
+      "vliegtiug",
+      "vliegtyig",
+      "vliegutig"
+    ],
+    "level": 1
+  },
+  {
+    "word": "avontuur",
+    "distractors": [
+      "aventuur",
+      "avontuer",
+      "avuntuur",
+      "avontuir"
+    ],
+    "level": 1
+  },
+  {
+    "word": "vriendschap",
+    "distractors": [
+      "vrienschap",
+      "vrindschap",
+      "vriendscap",
+      "vriensdchap"
+    ],
+    "level": 1
+  }
+]

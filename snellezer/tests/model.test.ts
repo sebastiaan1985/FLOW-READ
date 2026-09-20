@@ -1,0 +1,13 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {appendSession,dateKey,deriveStats,hydrate,initialState} from '../src/state/model.ts';
+import type {SessionResult} from '../src/types.ts';
+const sample:SessionResult={id:'one',exerciseId:'reading',skill:'begrip',wpm:210,comprehension:100,words:150,durationSeconds:43,date:'2026-09-20T10:00:00',xp:30};
+test('start without fabricated results',()=>{const s=deriveStats(initialState);assert.equal(s.averageWpm,0);assert.equal(s.comprehension,null);assert.equal(s.streak,0);assert.equal(s.totalXP,0);});
+test('completion is idempotent and comprehension guardrail is applied once',()=>{const one=appendSession(initialState,{...sample,comprehension:50});assert.equal(one.targetWpm,180);const two=appendSession(one,{...sample,comprehension:50});assert.equal(two.sessions.length,1);assert.equal(two.targetWpm,180);});
+test('streak spans yesterday but expires after a missed day',()=>{const s=appendSession(initialState,sample);assert.equal(deriveStats(s,new Date('2026-09-21T14:00:00')).streak,1);assert.equal(deriveStats(s,new Date('2026-09-22T14:00:00')).streak,0);});
+test('multiple sessions on same day count as one practice day',()=>{let s=appendSession(initialState,sample);s=appendSession(s,{...sample,id:'two'});assert.equal(deriveStats(s).completedDays,1);assert.equal(deriveStats(s).totalXP,60);});
+test('measured speed is separate from paced training speed',()=>{let s=appendSession(initialState,sample);s=appendSession(s,{...sample,id:'two',exerciseId:'rsvp',wpm:800});assert.equal(deriveStats(s).averageWpm,210);assert.equal(deriveStats(s).hasMeasured,true);});
+test('rest sessions do not invent comprehension or reading speed',()=>{const s=appendSession(initialState,{...sample,exerciseId:'relax',skill:'focus',comprehension:null,wpm:0,words:0});assert.equal(deriveStats(s).averageWpm,0);assert.equal(deriveStats(s).comprehension,null);});
+test('round trip preserves data and malformed results are removed',()=>{const s=appendSession(initialState,sample);assert.deepEqual(hydrate(JSON.stringify(s)),s);assert.equal(hydrate(JSON.stringify({sessions:[{id:'broken'}]})).sessions.length,0);assert.throws(()=>hydrate('{bad'));});
+test('date keys use calendar dates',()=>assert.equal(dateKey(new Date(2026,8,20,0,1)),'2026-09-20'));

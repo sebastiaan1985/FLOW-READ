@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Snellezer",
+    "slug": "snellezer",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FCFCF9"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "nl.slimwerken.snellezer",
+      "infoPlist": {
+        "CFBundleDevelopmentRegion": "nl",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "nl.slimwerken.snellezer",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B6E63"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "Snellezer",
+      "shortName": "Snellezer",
+      "themeColor": "#0B6E63",
+      "backgroundColor": "#FCFCF9",
+      "lang": "nl"
+    },
+    "plugins": [
+      "expo-font",
+      "expo-document-picker"
+    ]
+  }
+}

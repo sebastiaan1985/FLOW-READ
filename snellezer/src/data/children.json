@@ -1,0 +1,134 @@
+[
+  {
+    "id": "child-0",
+    "title": "Mia en Poes",
+    "text": "Mia heeft een kat. De kat heet Poes. Poes is oranje. Mia speelt elke dag met Poes. Ze zijn beste vrienden.",
+    "child": true,
+    "questions": [
+      {
+        "question": "Wat is de naam van de kat?",
+        "options": [
+          "Poes",
+          "Mia",
+          "Fleur",
+          "Miep"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Welke kleur heeft Poes?",
+        "options": [
+          "geel",
+          "oranje",
+          "wit",
+          "zwart"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": "child-1",
+    "title": "Sem gaat winkelen",
+    "text": "Sem gaat naar de winkel. Hij koopt een appel en een banaan. Thuis eet hij eerst de appel op. Die is lekker en zoet!",
+    "child": true,
+    "questions": [
+      {
+        "question": "Waar gaat Sem naartoe?",
+        "options": [
+          "de winkel",
+          "school",
+          "het park",
+          "de bibliotheek"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Wat eet Sem als eerste op?",
+        "options": [
+          "de banaan",
+          "de appel",
+          "een koek",
+          "een brood"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": "child-2",
+    "title": "Lisa in de regen",
+    "text": "Het regent buiten. Lisa pakt haar gele paraplu. Ze loopt naar school. Haar laarzen plonzen door de plassen. Dat vindt ze eigenlijk wel leuk!",
+    "child": true,
+    "questions": [
+      {
+        "question": "Wat is het weer?",
+        "options": [
+          "Het regent",
+          "Het is zonnig",
+          "Het sneeuwt",
+          "Het stormt"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Welke kleur heeft de paraplu?",
+        "options": [
+          "rood",
+          "geel",
+          "blauw",
+          "groen"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Waar gaat Lisa naartoe?",
+        "options": [
+          "de winkel",
+          "huis",
+          "school",
+          "het park"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": "child-3",
+    "title": "Tom en de draken",
+    "text": "Tom vindt een boek in de bibliotheek over draken en ridders. Hij leest het in één dag uit. Zijn moeder zegt dat hij een echte boekenslinder is. Tom lacht trots.",
+    "child": true,
+    "questions": [
+      {
+        "question": "Waar vindt Tom het boek?",
+        "options": [
+          "de bibliotheek",
+          "de winkel",
+          "thuis",
+          "school"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Waar gaat het boek over?",
+        "options": [
+          "vissen en boten",
+          "draken en ridders",
+          "katten en honden",
+          "auto's en treinen"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Hoe lang doet Tom over het boek?",
+        "options": [
+          "een week",
+          "twee uur",
+          "één dag",
+          "een maand"
+        ],
+        "answer": 2
+      }
+    ]
+  }
+]

@@ -1,0 +1,66 @@
+- generic [ref=f2e10]:
+  - generic [ref=f2e12]:
+    - button "Snellezer, naar vandaag" [ref=f2e13] [cursor=pointer]:
+      - generic [ref=f2e18]: snellezer.
+    - tablist [ref=f2e62]:
+      - tab "Vandaag" [ref=f2e63] [cursor=pointer]
+      - tab "Leerweg" [ref=f2e72] [cursor=pointer]
+      - tab "Trainen" [ref=f2e79] [cursor=pointer]
+      - tab "Voortgang" [ref=f2e86] [cursor=pointer]
+    - generic [ref=f2e19]:
+      - button "Leesinstellingen" [ref=f2e20] [cursor=pointer]
+      - button "Mijn leesplek" [ref=f2e22] [cursor=pointer]
+  - generic [ref=f2e93]:
+    - generic [ref=f2e94]:
+      - generic [ref=f2e95]:
+        - generic [ref=f2e96]: zondag 20 september
+        - generic [ref=f2e97]: Goedenavond.
+      - generic [ref=f2e98]: 0 dagen
+    - generic [ref=f2e103]:
+      - generic [ref=f2e104]: EEN KLEIN MOMENT VOOR JEZELF
+      - generic [ref=f2e106]: Meer uit je woorden. Meer uit je dag.
+      - generic [ref=f2e107]: Een beetje aandacht. Een paar minuten. Ontdek hoeveel fijner lezen kan zijn.
+    - generic [ref=f2e129]:
+      - generic [ref=f2e130]:
+        - generic [ref=f2e131]:
+          - generic [ref=f2e132]: JOUW DAGELIJKSE MOMENT
+          - generic [ref=f2e134]: 0 / 3
+        - generic [ref=f2e136]: Kleine stappen, groot leesplezier.
+        - generic [ref=f2e137]: Begin rustig. Drie oefeningen helpen je jouw leesritme te ontdekken.
+        - generic [ref=f2e138]:
+          - generic [ref=f2e142]: Ongeveer 8 min
+          - generic [ref=f2e144]: 3 oefeningen
+        - button "Start mijn dagtraining" [ref=f2e145] [cursor=pointer]
+        - generic [ref=f2e149]: Jouw tempo is het goede tempo.
+      - generic [ref=f2e154]:
+        - generic [ref=f2e155]:
+          - generic [ref=f2e156]: Jouw leesritme
+          - button "Bekijk alles →" [ref=f2e157] [cursor=pointer]
+        - generic [ref=f2e159]:
+          - generic [ref=f2e160]:
+            - generic [ref=f2e163]: —
+            - generic [ref=f2e164]: oefentempo
+          - generic [ref=f2e165]:
+            - generic [ref=f2e168]: —
+            - generic [ref=f2e169]: begrip
+          - generic [ref=f2e170]:
+            - generic [ref=f2e174]: "0"
+            - generic [ref=f2e175]: lees-XP
+        - generic [ref=f2e176]:
+          - generic [ref=f2e177]: Een fijne gedachte
+          - generic [ref=f2e183]: Je hoeft niet elk boek sneller te lezen. Soms is aandacht precies wat een verhaal nodig heeft.
+    - generic [ref=f2e184]: Verder op jouw manier
+    - generic [ref=f2e186]:
+      - button "Bekijk je leerweg" [ref=f2e187] [cursor=pointer]:
+        - generic [ref=f2e196]:
+          - generic [ref=f2e197]: STAP VOOR STAP
+          - generic [ref=f2e198]: Jouw leerweg
+          - generic [ref=f2e199]: Vier weken. Een gewoonte voor jezelf.
+          - progressbar [ref=f2e200]
+          - generic [ref=f2e201]: 0 van 28 leesdagen
+      - button "Lezen met je eigen tekst" [ref=f2e204] [cursor=pointer]:
+        - generic [ref=f2e213]:
+          - generic [ref=f2e214]: MAAK HET PERSOONLIJK
+          - generic [ref=f2e215]: Jouw tekst, jouw tempo
+          - generic [ref=f2e216]: Een artikel, een hoofdstuk of iets wat je zelf hebt geschreven.
+    - button "Benieuwd naar je vertrekpunt? Doe de begintest." [ref=f2e219] [cursor=pointer]
