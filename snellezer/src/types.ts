@@ -7,7 +7,7 @@ export type Exercise = { id: string; title: string; subtitle: string; descriptio
 export type Profile = { name: string; ageGroup: 'child' | 'teen' | 'adult'; goal: 'study' | 'work' | 'pleasure'; onboardingComplete: boolean };
 export type ReadingSettings = { enabled: boolean; font: 'standard' | 'dyslexic' | 'comic'; fontSize: number; letterSpacing: number; wordSpacing: number; lineHeight: number; overlay: 'none' | 'cream' | 'blue' | 'green' | 'pink' | 'lilac'; overlayOpacity: number; background: 'white' | 'cream' | 'dark' | 'gray'; bionic: boolean; syllables: boolean; lineGuide: boolean };
 export type SessionResult = { id: string; exerciseId: string; skill: SkillId; wpm: number; comprehension: number | null; words: number; durationSeconds: number; date: string; xp: number; dailyId?: string };
-export type SavedText = { id: string; title: string; text: string; createdAt: string };
+export type SavedText = { id: string; title: string; text: string; createdAt: string; questions?: Question[] };
 export type AppState = { profile: Profile; settings: ReadingSettings; sessions: SessionResult[]; texts: SavedText[]; targetWpm: number; kidsMode: boolean; baseline: { wpm: number; comprehension: number } | null; };
 export type TrainingRequest = { exerciseId: string; daily?: boolean; baseline?: boolean; text?: SavedText };
 export type AppActions = { onStart: (request: TrainingRequest) => void; onTab: (tab: TabId) => void; onLibrary: () => void; onSettings: () => void; onProfile: () => void; };

@@ -10,7 +10,8 @@ import {AppProvider,useApp} from './src/state/AppProvider';
 import {T,Icon,IconButton,Row} from './src/components/UI';
 import {TodayScreen} from './src/screens/TodayScreen';
 import {OnboardingScreen} from './src/screens/OnboardingScreen';
-import {LearningPathScreen,TrainScreen,ProgressScreen,LibraryScreen,SettingsScreen,ProfileScreen} from './src/screens/LibraryScreens';
+import {LearningPathScreen,TrainScreen,ProgressScreen,SettingsScreen,ProfileScreen} from './src/screens/LibraryScreens';
+import {LibraryEditor} from './src/screens/LibraryEditor';
 import {TrainingScreen} from './src/screens/TrainingScreen';
 import {colors,fonts,ui} from './src/design';
 import type {AppActions,TabId,TrainingRequest} from './src/types';
@@ -24,7 +25,7 @@ function AppShell(){const {state,ready,storageError}=useApp();const [tab,setTab]
  if(training)return <SafeAreaView edges={['top','bottom']} style={{flex:1,backgroundColor:colors.bg}}><StatusBar style="dark"/><TrainingScreen key={JSON.stringify(training)} request={training} onClose={()=>{setTraining(null);setTab('today');}} onProfile={()=>{setTraining(null);setOverlay('profile');}}/></SafeAreaView>;
  return <SafeAreaView edges={['top']} style={{flex:1,backgroundColor:ui.page}}><StatusBar style="dark"/><View style={s.header}><View style={s.headerInner}><Pressable onPress={()=>actions.onTab('today')} accessibilityLabel="Snellezer, naar vandaag" accessibilityRole="button" style={{flexDirection:'row',alignItems:'center',gap:10,minHeight:44}}><View style={s.logo}><View style={[s.logoLine,{opacity:.45}]}/><View style={[s.logoLine,{backgroundColor:colors.sun,width:20}]}/><View style={[s.logoLine,{opacity:.45,width:12}]}/></View><T variant="heading" style={{fontSize:24,letterSpacing:-.6}}>snellezer<T color={colors.accent} style={{fontSize:24}}>.</T></T></Pressable>{wide&&state.profile.onboardingComplete&&nav(true)}<Row><IconButton name="settings" label="Leesinstellingen" onPress={actions.onSettings} style={{backgroundColor:'transparent'}}/><IconButton name="user" label="Mijn leesplek" onPress={actions.onProfile} style={{backgroundColor:ui.forestSoft}}/></Row></View></View>
  {!!storageError&&<View style={{padding:12,backgroundColor:colors.tintSun}}><T variant="caption" accessibilityRole="alert">{storageError}</T></View>}
- {!state.profile.onboardingComplete&&!overlay?<OnboardingScreen onComplete={()=>setTraining({exerciseId:'baseline',baseline:true})} onExplore={()=>setTab('today')}/>:overlay==='library'?<LibraryScreen actions={actions} onBack={()=>setOverlay(null)}/>:overlay==='settings'?<SettingsScreen actions={actions} onBack={()=>setOverlay(null)}/>:overlay==='profile'?<ProfileScreen actions={actions} onBack={()=>setOverlay(null)}/>:tab==='today'?<TodayScreen actions={actions}/>:tab==='path'?<LearningPathScreen actions={actions}/>:tab==='train'?<TrainScreen actions={actions}/>:<ProgressScreen actions={actions}/>}
+ {!state.profile.onboardingComplete&&!overlay?<OnboardingScreen onComplete={()=>setTraining({exerciseId:'baseline',baseline:true})} onExplore={()=>setTab('today')}/>:overlay==='library'?<LibraryEditor actions={actions} onBack={()=>setOverlay(null)}/>:overlay==='settings'?<SettingsScreen actions={actions} onBack={()=>setOverlay(null)}/>:overlay==='profile'?<ProfileScreen actions={actions} onBack={()=>setOverlay(null)}/>:tab==='today'?<TodayScreen actions={actions}/>:tab==='path'?<LearningPathScreen actions={actions}/>:tab==='train'?<TrainScreen actions={actions}/>:<ProgressScreen actions={actions}/>}
  {!wide&&state.profile.onboardingComplete&&<View style={{paddingBottom:Math.max(insets.bottom,8),backgroundColor:colors.bg,borderTopWidth:1,borderTopColor:ui.line}}>{nav(false)}</View>}
  </SafeAreaView>;
 }

@@ -18,7 +18,7 @@ function useStore(){
  setTargetWpm:(targetWpm:number)=>setState(s=>({...s,targetWpm:Math.max(60,Math.min(800,targetWpm))})),
  setBaseline:(baseline:{wpm:number;comprehension:number})=>setState(s=>({...s,baseline,targetWpm:Math.max(s.kidsMode?60:80,Math.min(600,Math.round(baseline.wpm*(baseline.comprehension<70?.9:1))))})),
  addSession:(result:SessionResult)=>setState(s=>appendSession(s,result)),
- saveText:({title,text}:{title:string;text:string})=>{const entry:SavedText={id:createId(),title:title.trim()||'Mijn tekst',text:text.trim(),createdAt:new Date().toISOString()};setState(s=>({...s,texts:[...s.texts,entry]}));return entry;},
+ saveText:({title,text,questions}:{title:string;text:string;questions?:SavedText['questions']})=>{const entry:SavedText={id:createId(),title:title.trim()||'Mijn tekst',text:text.trim(),createdAt:new Date().toISOString(),...(questions&&questions.length?{questions}:{})};setState(s=>({...s,texts:[...s.texts,entry]}));return entry;},
  deleteText:(id:string)=>setState(s=>({...s,texts:s.texts.filter(t=>t.id!==id)})),
  resetProgress:()=>setState(s=>({...s,sessions:[],baseline:null,targetWpm:s.kidsMode?130:200})),
  };
