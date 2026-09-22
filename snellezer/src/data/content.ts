@@ -2,8 +2,15 @@ import type { Exercise, Passage, SkillId } from '../types';
 import passages from './passages.json';
 import children from './children.json';
 import words from './words.json';
-export const PASSAGES: Passage[] = passages;
-export const CHILD_PASSAGES: Passage[] = children;
+import library from './library.json';
+const LIBRARY = library as Passage[];
+/** Korte oefenteksten voor tieners en volwassenen: de eigen teksten plus de bibliotheek van de vorige versie. */
+export const PASSAGES: Passage[] = [...(passages as Passage[]), ...LIBRARY.filter(p=>p.collection==='kort'&&(p.audience==='volwassen'||p.audience==='teens'))];
+/** Lange teksten (4 vragen) voor de oefening Lange teksten. */
+export const LONG_PASSAGES: Passage[] = LIBRARY.filter(p=>p.collection==='lang');
+/** Vaste meetteksten van vergelijkbare lengte voor begintest en hermetingen. */
+export const TEST_PASSAGES: Passage[] = LIBRARY.filter(p=>p.collection==='leestest');
+export const CHILD_PASSAGES: Passage[] = [...(children as Passage[]), ...LIBRARY.filter(p=>p.audience==='kids6-9'||p.audience==='kids9-12')];
 export const WORD_GAME_ITEMS = words;
 export const SKILLS: {id:SkillId;title:string;subtitle:string;illustration:string;tint:string}[] = [
  {id:'snelheid',title:'Snelheid',subtitle:'Vind jouw leestempo',illustration:'snelheid',tint:'#FFF4DF'},
@@ -16,9 +23,10 @@ export const EXERCISES: Exercise[] = [
  {id:'chunks',title:'Lezen in chunks',subtitle:'Geef woorden de ruimte',description:'Lees meerdere woorden tegelijk. Je stelt zelf in hoeveel. Houd je blik rond het midden — begrip is belangrijker dan een hoog tempo.',skill:'snelheid',mode:'chunks',minutes:3,icon:'text'},
  {id:'forward',title:'Vooruit lezen',subtitle:'Blijf rustig in beweging',description:'Lees mee met de gemarkeerde woordgroep. Eerdere groepen verdwijnen. Pas je tempo aan als je de draad kwijtraakt.',skill:'snelheid',mode:'forward',minutes:2,icon:'arrow'},
  {id:'fixation',title:'Fixatie-training',subtitle:'Een rustig anker voor je blik',description:'Richt je blik op het midden. Er verschijnt steeds een korte woordgroep rond je fixatiepunt.',skill:'snelheid',mode:'fixation',minutes:2,icon:'target'},
- {id:'reading',title:'Leestest',subtitle:'Jouw tempo, jouw begrip',description:'Lees de tekst op je eigen tempo. Tik op klaar wanneer je alles hebt gelezen. Daarna beantwoord je vier vragen.',skill:'begrip',mode:'reading',minutes:3,icon:'book'},
- {id:'long',title:'Lange teksten',subtitle:'Aandacht van begin tot eind',description:'Neem de tijd voor een langer verhaal. Lees op je eigen tempo en beantwoord daarna vragen over beide delen.',skill:'begrip',mode:'reading',minutes:5,icon:'text'},
+ {id:'reading',title:'Leestest',subtitle:'Jouw tempo, jouw begrip',description:'Lees de tekst op je eigen tempo. Tik op klaar wanneer je alles hebt gelezen. Daarna beantwoord je een paar vragen.',skill:'begrip',mode:'reading',minutes:3,icon:'book'},
+ {id:'long',title:'Lange teksten',subtitle:'Aandacht van begin tot eind',description:'Neem de tijd voor een langer verhaal. Lees op je eigen tempo en beantwoord daarna vier vragen.',skill:'begrip',mode:'reading',minutes:5,icon:'text'},
  {id:'scan',title:'Skim & scan',subtitle:'Vind wat ertoe doet',description:'Zoek het aangegeven woord in de tekst en tik erop. Je oefent gericht zoeken, niet het begrijpen van de hele tekst.',skill:'begrip',mode:'scan',minutes:2,icon:'search'},
+ {id:'retest',title:'Hermeting',subtitle:'Hoe ver ben je nu?',description:'Lees een nieuwe meettekst op een tempo waarop je de inhoud goed meeneemt. Daarna volgen drie vragen. We vergelijken met je begintest.',skill:'begrip',mode:'reading',minutes:3,icon:'chart'},
  {id:'baseline',title:'Begintest',subtitle:'Ontdek jouw vertrekpunt',description:'Lees op je normale tempo. Er is geen goed of fout tempo. Met een paar vragen bepalen we een passend begin.',skill:'begrip',mode:'reading',minutes:3,icon:'flag'},
  {id:'peripheral',title:'Perifeer zien',subtitle:'Kijk verder dan het midden',description:'Houd je blik op het stipje in het midden. Links en rechts flitst kort een woord. Hoe beter je ze ziet, hoe verder ze uit elkaar komen te staan.',skill:'blikveld',mode:'peripheral',minutes:2,icon:'eye'},
  {id:'eye',title:'Oogbeweging',subtitle:'Volg een rustig ritme',description:'Volg het puntje met je ogen terwijl je hoofd stil blijft. Kies een patroon en een tempo, en stop zodra het onprettig voelt.',skill:'blikveld',mode:'eye',minutes:1,icon:'eye'},
