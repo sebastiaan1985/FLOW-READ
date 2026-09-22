@@ -7,6 +7,7 @@ import {Illustration} from '../components/Illustration';
 import {colors, fonts, ui} from '../design';
 import {useApp} from '../state/AppProvider';
 import type {AppActions, Question} from '../types';
+import {articleUrlProblem} from '../state/url';
 
 const MODES = [
   {id:'chunks',title:'Woordgroepen',description:'Meerdere woorden in één blik',icon:'text'},
@@ -80,13 +81,14 @@ export function LibraryEditor({actions,onBack=()=>actions.onTab('today')}:{actio
   const importUrl = async() => {
     if(importing.current)return;
     setError('');setNotice('');
-    let address:URL;
-    try {address=new URL(url.trim());if(!['http:','https:'].includes(address.protocol)||address.username||address.password)throw new Error();}
-    catch{setError('Vul een volledige link in die begint met https:// of http://.');return;}
+    const problem=articleUrlProblem(url);
+    if(problem){setError(problem);return;}
+    const address=new URL(url.trim());
     importing.current=true;setBusy('url');
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
     try {
-      const response=await fetch(address.href,{signal:controller.signal,credentials:'omit'});
+      const response=await fetch(address.href,{signal:controller.signal,credentials:'omit',redirect:'follow'});
+      if(response.url&&articleUrlProblem(response.url)){setError('Deze link stuurt door naar een adres dat niet wordt opgehaald.');return;}
       if(!response.ok)throw new Error('fetch');
       const type=response.headers.get('content-type')||'';
       if(!/text\/(html|plain)|application\/xhtml\+xml/i.test(type)){setError('Deze link levert geen leesbare webpagina of tekst op. Kopieer de tekst en plak hem hieronder.');return;}

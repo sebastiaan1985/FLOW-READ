@@ -70,3 +70,8 @@ test('lesson feedback compares with the baseline and never praises low comprehen
   assert.match(lessonFeedback(lessonForDay(3),{wpm:300,comprehension:33}),/lager tempo/);
   assert.match(lessonFeedback(lessonForDay(10),{wpm:0,comprehension:null,score:7}),/7 van de 10/);
 });
+import {articleUrlProblem} from '../src/state/url.ts';
+test('article import only fetches public https pages',()=>{
+  assert.equal(articleUrlProblem('https://nos.nl/artikel/123'),null);
+  for(const bad of ['http://nos.nl','https://localhost/x','https://192.168.1.10/','https://10.0.0.1','https://[::1]/','https://user:pw@site.nl','https://intranet/','ftp://site.nl','geen link','https://172.20.1.1'])assert.ok(articleUrlProblem(bad),bad);
+});

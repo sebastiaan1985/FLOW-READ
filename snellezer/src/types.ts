@@ -11,4 +11,4 @@ export type SessionResult = { id: string; exerciseId: string; skill: SkillId; wp
 export type SavedText = { id: string; title: string; text: string; createdAt: string; questions?: Question[] };
 export type AppState = { profile: Profile; settings: ReadingSettings; sessions: SessionResult[]; texts: SavedText[]; targetWpm: number; kidsMode: boolean; baseline: { wpm: number; comprehension: number } | null; tempoStreak: number; reminder: { enabled: boolean; hour: number; minute: number }; };
 export type TrainingRequest = { exerciseId: string; daily?: boolean; baseline?: boolean; text?: SavedText };
-export type AppActions = { onStart: (request: TrainingRequest) => void; onTab: (tab: TabId) => void; onLibrary: () => void; onSettings: () => void; onProfile: () => void; };
+export type AppActions = { onStart: (request: TrainingRequest) => void; onTab: (tab: TabId) => void; onLibrary: () => void; onSettings: () => void; onProfile: () => void; onPrivacy: () => void; };
