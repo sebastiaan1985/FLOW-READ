@@ -303,3 +303,21 @@ Uitgevoerd op 20 september 2026, na de beslissing om eerst de inhoud en oefening
 ### Opgeloste fout
 
 "Woordgroepen" gaf het juiste antwoord weg via het formaat: het goede antwoord stond als `appel letter samen` en de afleiders als `appel · letter`. Alle opties hebben nu hetzelfde formaat.
+
+---
+
+## 15. Stand na de MVP-sprint (22 september 2026)
+
+Stap 1 t/m 10 uit §12 zijn uitgevoerd:
+
+- **Lessen.** `lessons.ts` bevat de 28 lessen. Elke les stelt de oefening in.
+- **Lesmomenten.** De les verschijnt op Vandaag, vóór de oefening, tijdens de oefening (als hint) en na afloop (als terugkoppeling).
+- **Leerweg.** De Leerweg volgt dag 1–28 echt.
+- **Meten.** Effectief leestempo en hermetingen op dag 7, 14, 21 en 28.
+- **Inhoud.** 137 teksten uit `main` zijn overgezet.
+- **Adaptief tempo.** Het tempo past zich in beide richtingen aan.
+- **Plezier en gewoonte.** Techniekbadges, een rustdag in de reeks en een dagelijkse herinnering.
+
+Wat er bij de release nog moet gebeuren, staat in `RELEASE.md`.
+
+Nog open uit §12: stap 11. `TrainingScreen.tsx` is nog één groot component, al zit de meeste nieuwe logica nu los en getest in `src/state/rules.ts`.
