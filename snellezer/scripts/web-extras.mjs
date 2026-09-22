@@ -22,6 +22,8 @@ fs.writeFileSync(path.join(pub, 'manifest.webmanifest'), JSON.stringify({
   name: app.web.name, short_name: app.web.shortName, description: 'Leer in 28 dagen sneller lezen, met behoud van begrip.',
   lang: 'nl', start_url: '/', scope: '/', display: 'standalone', orientation: 'any',
   background_color: BG, theme_color: ACCENT,
+  share_target: {action: '/', method: 'GET', enctype: 'application/x-www-form-urlencoded', params: {title: 'share-title', text: 'share-text', url: 'share-url'}},
+  shortcuts: [{name: 'Les van vandaag', short_name: 'Les', url: '/?actie=les', icons: [{src: '/icons/icon-192.png', sizes: '192x192'}]}],
   icons: [
     {src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png'},
     {src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png'},

@@ -13,6 +13,10 @@ export const PRIVACY_SECTIONS: {title: string; body: string[]}[] = [
     'Als je een link invult om een artikel te importeren, haalt je apparaat die pagina rechtstreeks op bij de website zelf. Die website ziet dan, zoals bij elk bezoek, je IP-adres en technische verbindingsgegevens. Snellezer stuurt de link niet naar ons of naar een tussendienst.',
     'Alleen beveiligde links (https) naar openbare websites worden opgehaald. Gebruik deze functie niet voor vertrouwelijke links; je kunt tekst ook altijd zelf plakken.',
   ]},
+  {title: 'Delen en doneren', body: [
+    'Als je je groei deelt, opent het deelmenu van je apparaat met een tekst die je zelf verstuurt. Snellezer deelt niets automatisch.',
+    'De doneerknop opent de eigen pagina van Stichting Lezen & Schrijven. Die stichting verwerkt een eventuele gift volgens haar eigen privacybeleid. Snellezer verwerkt geen betaalgegevens en houdt niet bij of je op de knop tikt.',
+  ]},
   {title: 'De webversie', body: [
     'Wanneer je de webversie opent, verwerkt onze hostingpartij (Vercel) technische gegevens zoals je IP-adres om de pagina te kunnen leveren en te beveiligen. Dat gebeurt volgens het privacybeleid van die partij. Wij gebruiken die gegevens niet om je te volgen.',
   ]},

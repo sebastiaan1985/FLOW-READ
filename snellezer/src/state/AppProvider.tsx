@@ -4,6 +4,7 @@ import type {AppState,Exercise,Profile,ReadingSettings,SavedText,SessionResult} 
 import {getExercise} from '../data/content';
 import {initialState,deriveStats,appendSession,hydrate,dateKey} from './model';
 import {pathProgress,lessonPlanIds,effectiveWpm} from './rules';
+import {finishLab} from './leeslab';
 import {lessonForDay,type Lesson} from '../data/lessons';
 export {dateKey,shiftDay} from './model';
 const STORAGE='snellezer.v1';
@@ -12,7 +13,7 @@ function useStore(){
  const [state,setState]=useState<AppState>(initialState);const [ready,setReady]=useState(false);const [storageError,setStorageError]=useState('');const queue=useRef(Promise.resolve());
  useEffect(()=>{AsyncStorage.getItem(STORAGE).then(raw=>{try{setState(hydrate(raw));}catch{setStorageError('Opgeslagen gegevens konden niet worden gelezen. Je kunt opnieuw beginnen.');}}).catch(()=>setStorageError('Lokale opslag is niet beschikbaar. Je voortgang blijft alleen tijdens deze sessie bewaard.')).finally(()=>setReady(true));},[]);
  useEffect(()=>{if(!ready)return;queue.current=queue.current.then(()=>AsyncStorage.setItem(STORAGE,JSON.stringify(state))).catch(()=>setStorageError('Opslaan is niet gelukt. Houd de app open en controleer je vrije opslagruimte.'));},[state,ready]);
- const stats=useMemo(()=>deriveStats(state),[state]);
+ const stats=useMemo(()=>deriveStats(state),[state]);const stateRef=useRef(state);stateRef.current=state;
  return {state,ready,storageError,stats,
  updateProfile:(partial:Partial<Profile>)=>setState(s=>({...s,profile:{...s.profile,...partial}})),
  updateSettings:(partial:Partial<ReadingSettings>)=>setState(s=>({...s,settings:{...s.settings,...partial}})),
@@ -23,6 +24,10 @@ function useStore(){
  saveText:({title,text,questions}:{title:string;text:string;questions?:SavedText['questions']})=>{const entry:SavedText={id:createId(),title:title.trim()||'Mijn tekst',text:text.trim(),createdAt:new Date().toISOString(),...(questions&&questions.length?{questions}:{})};setState(s=>({...s,texts:[...s.texts,entry]}));return entry;},
  deleteText:(id:string)=>setState(s=>({...s,texts:s.texts.filter(t=>t.id!==id)})),
  setReminder:(reminder:AppState['reminder'])=>setState(s=>({...s,reminder})),
+ setTopTechniques:(topTechniques:string[])=>setState(s=>({...s,topTechniques:topTechniques.slice(0,3)})),
+ dismissInstallHint:()=>setState(s=>({...s,installHintDismissed:true})),
+ /** Rondt een Leeslab-les af: voortgang, herhaalset en één keer XP bij de eerste beheersing. */
+ finishLabLesson:(lessonId:string,results:{key:string;correct:boolean}[],durationSeconds:number)=>{const outcome=finishLab(stateRef.current.leeslab,lessonId,results);const session:SessionResult={id:createId(),exerciseId:'leeslab',skill:'focus',wpm:0,comprehension:null,words:results.length,durationSeconds,date:new Date().toISOString(),xp:outcome.firstMastery?30:5};setState(s=>appendSession({...s,leeslab:finishLab(s.leeslab,lessonId,results).progress},session));return outcome;},
  resetProgress:()=>setState(s=>({...s,sessions:[],baseline:null,tempoStreak:0,targetWpm:s.kidsMode?130:200})),
  };
 }

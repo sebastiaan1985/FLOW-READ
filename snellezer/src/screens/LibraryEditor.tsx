@@ -34,17 +34,21 @@ function extractArticle(html:string) {
   return {title,text};
 }
 
-export function LibraryEditor({actions,onBack=()=>actions.onTab('today')}:{actions:AppActions;onBack?:()=>void}) {
+export function LibraryEditor({actions,initial,onBack=()=>actions.onTab('today')}:{actions:AppActions;initial?:{title:string;text:string;url:string};onBack?:()=>void}) {
   const {state,saveText,deleteText} = useApp();
   const wide = useWindowDimensions().width>=760;
-  const [title,setTitle] = useState('');
-  const [text,setText] = useState('');
-  const [url,setUrl] = useState('');
+  // Een gedeeld artikel: genoeg tekst wordt meteen ingevuld, anders staat de link klaar om op te halen.
+  const sharedText = initial ? initial.text.replace(initial.url, '').trim() : '';
+  const sharedIsArticle = sharedText.split(/\s+/).filter(Boolean).length >= 20;
+  const sharedUrl = initial ? (initial.url || initial.text.match(/https:\/\/\S+/)?.[0] || '') : '';
+  const [title,setTitle] = useState(initial?.title ?? '');
+  const [text,setText] = useState(sharedIsArticle ? sharedText : '');
+  const [url,setUrl] = useState(sharedUrl);
   const [questions,setQuestions] = useState<Question[]>([]);
   const [mode,setMode] = useState<string>('chunks');
-  const [source,setSource] = useState<'paste'|'url'>('paste');
+  const [source,setSource] = useState<'paste'|'url'>(initial && !sharedIsArticle && sharedUrl ? 'url' : 'paste');
   const [error,setError] = useState('');
-  const [notice,setNotice] = useState('');
+  const [notice,setNotice] = useState(initial ? (sharedIsArticle ? 'Gedeelde tekst staat klaar. Controleer hem en kies je leesvorm.' : sharedUrl ? 'De gedeelde link staat klaar. Haal het artikel op, of plak de tekst zelf.' : '') : '');
   const [busy,setBusy] = useState<'file'|'url'|null>(null);
   const [confirm,setConfirm] = useState<string|null>(null);
   const importing = useRef(false);

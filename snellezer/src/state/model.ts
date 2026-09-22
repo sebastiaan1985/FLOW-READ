@@ -3,7 +3,7 @@ import { adjustTempo, effectiveWpm, MEASURED_EXERCISES } from './rules.ts';
 export const initialState:AppState = {
  profile:{name:'',ageGroup:'adult',goal:'pleasure',onboardingComplete:false},
  settings:{enabled:false,font:'standard',fontSize:20,letterSpacing:0,wordSpacing:0,lineHeight:1.7,overlay:'none',overlayOpacity:20,background:'white',bionic:false,syllables:false,lineGuide:false},
- sessions:[],texts:[],targetWpm:200,kidsMode:false,baseline:null,tempoStreak:0,reminder:{enabled:false,hour:19,minute:0},
+ sessions:[],texts:[],targetWpm:200,kidsMode:false,baseline:null,tempoStreak:0,reminder:{enabled:false,hour:19,minute:0},leeslab:{lessons:{},review:[]},topTechniques:[],installHintDismissed:false,
 };
 export const dateKey=(date:Date|string=new Date())=>{const d=typeof date==='string'?new Date(date):date;return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
 export function shiftDay(offset:number,now=new Date()){const d=new Date(now);d.setDate(d.getDate()+offset);return dateKey(d);}
@@ -44,5 +44,8 @@ export function hydrate(raw:string|null):AppState {
  const sessions=Array.isArray(x.sessions)?x.sessions.filter((s:any)=>s&&typeof s.id==='string'&&typeof s.exerciseId==='string'&&Number.isFinite(s.wpm)&&Number.isFinite(s.words)&&Number.isFinite(s.xp)&&Number.isFinite(s.durationSeconds)&&!isNaN(Date.parse(s.date))&&(s.comprehension===null||Number.isFinite(s.comprehension))&&(s.lessonDay===undefined||Number.isInteger(s.lessonDay))):[];
  const texts=Array.isArray(x.texts)?x.texts.filter((t:any)=>t&&typeof t.id==='string'&&typeof t.title==='string'&&typeof t.text==='string').map((t:any)=>{const questions=Array.isArray(t.questions)?t.questions.filter(validQuestion):[];const {questions:_,...rest}=t;return questions.length?{...rest,questions}:rest;}):[];
  const reminder=x.reminder&&typeof x.reminder==='object'&&Number.isInteger(x.reminder.hour)&&x.reminder.hour>=0&&x.reminder.hour<24&&Number.isInteger(x.reminder.minute)&&x.reminder.minute>=0&&x.reminder.minute<60?{enabled:!!x.reminder.enabled,hour:x.reminder.hour,minute:x.reminder.minute}:initialState.reminder;
- return {...initialState,profile:{...initialState.profile,...x.profile},settings:{...initialState.settings,...x.settings},sessions,texts,targetWpm:Number.isFinite(x.targetWpm)?Math.max(60,Math.min(800,x.targetWpm)):200,kidsMode:!!x.kidsMode,baseline:x.baseline&&Number.isFinite(x.baseline.wpm)&&Number.isFinite(x.baseline.comprehension)?x.baseline:null,tempoStreak:Number.isInteger(x.tempoStreak)&&x.tempoStreak>=0?Math.min(x.tempoStreak,1):0,reminder};
+ const lab=x.leeslab&&typeof x.leeslab==='object'?x.leeslab:{};const lessons:AppState['leeslab']['lessons']={};if(lab.lessons&&typeof lab.lessons==='object')for(const [k,v] of Object.entries(lab.lessons as Record<string,any>))if(v&&Number.isFinite(v.best))lessons[k]={best:Math.max(0,Math.min(100,v.best)),mastered:!!v.mastered};
+ const leeslab={lessons,review:Array.isArray(lab.review)?lab.review.filter((k:any)=>typeof k==='string').slice(0,40):[]};
+ const topTechniques=Array.isArray(x.topTechniques)?x.topTechniques.filter((k:any)=>typeof k==='string').slice(0,3):[];
+ return {...initialState,leeslab,topTechniques,installHintDismissed:!!x.installHintDismissed,profile:{...initialState.profile,...x.profile},settings:{...initialState.settings,...x.settings},sessions,texts,targetWpm:Number.isFinite(x.targetWpm)?Math.max(60,Math.min(800,x.targetWpm)):200,kidsMode:!!x.kidsMode,baseline:x.baseline&&Number.isFinite(x.baseline.wpm)&&Number.isFinite(x.baseline.comprehension)?x.baseline:null,tempoStreak:Number.isInteger(x.tempoStreak)&&x.tempoStreak>=0?Math.min(x.tempoStreak,1):0,reminder};
 }

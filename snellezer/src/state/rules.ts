@@ -112,6 +112,7 @@ export function lessonFeedback(lesson: Lesson, r: {wpm: number; comprehension: n
     case 'begrip':
       return r.comprehension === null
         ? `Je oefende op ${r.wpm} woorden per minuut met de techniek van vandaag.`
+        : !r.wpm ? `Je hield ${r.comprehension}% begrip vast, met de techniek van vandaag.`
         : `Op ${r.wpm} woorden per minuut hield je ${r.comprehension}% begrip vast, met de techniek van vandaag. Zo wordt het een gewoonte.`;
     case 'wpm':
       return r.wpm ? `Je las met ${r.wpm} woorden per minuut. Merk je verschil met gisteren?` : 'Je hebt de techniek van vandaag toegepast.';
@@ -120,4 +121,16 @@ export function lessonFeedback(lesson: Lesson, r: {wpm: number; comprehension: n
     default:
       return 'Rust hoort bij de training. Ontspannen ogen maken grotere sprongen.';
   }
+}
+
+export const LONG_LEVELS = ['Starter', 'Gevorderd', 'Expert'];
+/** Lange teksten groeien mee: minstens 80% begrip is een niveau omhoog, onder 67% een niveau terug. */
+export function longLevel(sessions: readonly SessionResult[], levelOf: (passageId: string) => number | undefined): number {
+  let level = 1;
+  for (const s of sessions) {
+    if (s.exerciseId !== 'long' || s.comprehension === null || !s.passageId || levelOf(s.passageId) !== level) continue;
+    if (s.comprehension >= 80) level = Math.min(3, level + 1);
+    else if (s.comprehension < COMPREHENSION_GATE) level = Math.max(1, level - 1);
+  }
+  return level;
 }
