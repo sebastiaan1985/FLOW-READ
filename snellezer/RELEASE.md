@@ -17,11 +17,15 @@ Stand: 22 september 2026, branch `design-snellezer`.
 | Eigen tekst | Plakken, .txt-bestand of een link (alleen openbare https-pagina's), met eigen begripsvragen. Op Android kun je een artikel via Delen rechtstreeks naar de geïnstalleerde webapp sturen |
 | Toegankelijkheid | Dyslexie Leeslab, reduce-motion en labels op alle bediening |
 | Privacy | Geen account en geen tracking; alles blijft op het apparaat. Privacyverklaring in de app en op `/privacy.html` |
-| Kwaliteit | Typecheck schoon, 25 unit tests, CI op elke wijziging, en in de browser doorlopen: onboarding, begintest, een volledige lesdag, dag 3–26 en de kindermodus |
+| Kwaliteit | Typecheck schoon, 24 unit tests, CI op elke wijziging, en in de browser doorlopen: onboarding, begintest, een volledige lesdag, dag 3–26 en de kindermodus |
 
 ## Web — publiceren
 
-1. Maak in Vercel een project op deze repository en zet **Root Directory** op `snellezer`. Het bestaande project op `main` blijft dan ongemoeid.
+**Nu:** het bestaande Vercel-project `snel-lees-app` bouwt van deze branch automatisch een preview. De `vercel.json` in de hoofdmap zorgt dat die preview de nieuwe app is. De vaste link is `snel-lees-app-git-design-snellezer-sebastiaan1985s-projects.vercel.app`; daarvoor moet je bij Vercel ingelogd zijn. Productie op `main` verandert niet.
+
+**Voor een eigen, openbaar adres:**
+
+1. Maak in Vercel een project op deze repository en zet **Root Directory** op `snellezer`.
 2. De rest leest Vercel uit `snellezer/vercel.json`: `npm ci`, `npm run build:web` en uitvoer in `dist`, met CSP- en beveiligingsheaders.
 3. Controleer na de eerste deploy:
    - `/` opent;
