@@ -65,8 +65,7 @@ Voor alleen zelf testen op je iPhone is er Expo Go: `npx expo start` en de QR-co
 - **Google Play, gegevensveiligheid:** er worden geen gegevens verzameld of gedeeld. Er is geen account, dus een verwijderpagina voor accounts is niet nodig.
 - **Privacy-URL:** `https://<jouw-domein>/privacy.html`.
 - **Leeftijd:** 4+ / PEGI 3. Er zijn geen aankopen en geen advertenties.
-- **Beschrijving (voorstel):** "Leer in 28 dagen sneller lezen, zonder dat je begrip eronder lijdt. Elke dag één techniek: wat het is, waarom het werkt, en meteen toepassen. Met een eerlijke meting van je effectieve leestempo, een Dyslexie Leeslab en je eigen teksten. Zonder account; alles blijft op je apparaat."
-- **Screenshots:** 6,7" iPhone (1290 × 2796) en een Android-telefoon. Laat Vandaag, een les, Perifeer zien, Voortgang en het Leeslab zien.
+- **Teksten, screenshots en feature graphic:** staan klaar in `store/` (zie `store/STORE.md`): naam, subtitel, trefwoorden, korte en lange beschrijving, 7 screenshots voor iPhone 6,7" (1290 × 2796) en Android (1080 × 1920), met en zonder kop, en de Google Play feature graphic (1024 × 500).
 
 ## Wat bewust (nog) niet in de MVP zit
 
