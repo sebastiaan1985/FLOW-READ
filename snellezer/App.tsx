@@ -18,6 +18,7 @@ import {LibraryEditor} from './src/screens/LibraryEditor';
 import {TrainingScreen} from './src/screens/TrainingScreen';
 import {LeeslabScreen} from './src/screens/LeeslabScreen';
 import {BookScreen} from './src/screens/BookScreen';
+import {IntroAnimation} from './src/components/IntroAnimation';
 import {colors,fonts,ui} from './src/design';
 import type {AppActions,TabId,TrainingRequest} from './src/types';
 const tabs:{id:TabId;label:string;icon:string}[]=[{id:'today',label:'Vandaag',icon:'sun'},{id:'path',label:'Leerweg',icon:'path'},{id:'train',label:'Trainen',icon:'train'},{id:'progress',label:'Voortgang',icon:'chart'}];
@@ -36,5 +37,5 @@ function AppShell(){const {state,ready,storageError}=useApp();const [tab,setTab]
  {!wide&&state.profile.onboardingComplete&&<View style={{paddingBottom:Math.max(insets.bottom,8),backgroundColor:colors.bg,borderTopWidth:1,borderTopColor:ui.line}}>{nav(false)}</View>}
  </SafeAreaView>;
 }
-export default function App(){const [loaded,error]=useFonts({Outfit_600SemiBold,Figtree_400Regular,Figtree_600SemiBold,ComicNeue_400Regular,OpenDyslexic:require('./assets/OpenDyslexic-Regular.otf')});return <SafeAreaProvider>{loaded||error?<AppProvider><AppShell/></AppProvider>:<View style={s.loading}><ActivityIndicator color={colors.accent}/></View>}</SafeAreaProvider>;}
+export default function App(){const [loaded,error]=useFonts({Outfit_600SemiBold,Figtree_400Regular,Figtree_600SemiBold,ComicNeue_400Regular,OpenDyslexic:require('./assets/OpenDyslexic-Regular.otf')});return <SafeAreaProvider><View style={{flex:1}}>{loaded||error?<AppProvider><AppShell/></AppProvider>:<View style={s.loading}/>}<IntroAnimation ready={!!(loaded||error)}/></View></SafeAreaProvider>;}
 const s=StyleSheet.create({loading:{flex:1,alignItems:'center',justifyContent:'center',gap:18,backgroundColor:ui.page},header:{borderBottomWidth:1,borderBottomColor:ui.line,backgroundColor:colors.bg},headerInner:{width:'100%',maxWidth:1128,alignSelf:'center',minHeight:80,paddingHorizontal:24,flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:12},logo:{width:34,height:34,borderRadius:11,backgroundColor:colors.accent,justifyContent:'center',alignItems:'center',gap:4},logoLine:{height:3,width:19,borderRadius:2,backgroundColor:colors.bg},desktopTabs:{flexDirection:'row',alignItems:'center',gap:8},desktopTab:{flexDirection:'row',gap:8,alignItems:'center',paddingHorizontal:17,paddingVertical:11,borderRadius:24,minHeight:44},tabs:{flexDirection:'row',paddingTop:8,paddingHorizontal:12},tab:{flex:1,minHeight:61,alignItems:'center',justifyContent:'center',gap:5},activeIcon:{backgroundColor:ui.forestSoft,borderRadius:20,paddingHorizontal:16,paddingVertical:4,marginVertical:-4}});
