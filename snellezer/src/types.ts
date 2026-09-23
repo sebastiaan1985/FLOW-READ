@@ -13,4 +13,4 @@ export type AppState = { profile: Profile; settings: ReadingSettings; sessions: 
 /** Een stuk uit een boek: vanaf welke alinea, en het cumulatieve aantal woorden per alinea. */
 export type BookPortion = { id: string; from: number; ends: number[]; startWords: number };
 export type TrainingRequest = { exerciseId: string; daily?: boolean; baseline?: boolean; text?: SavedText; book?: BookPortion };
-export type AppActions = { onStart: (request: TrainingRequest) => void; onTab: (tab: TabId) => void; onLibrary: () => void; onSettings: () => void; onProfile: () => void; onPrivacy: () => void; onLab: (lessonId: string) => void; onBook: (bookId: string) => void; };
+export type AppActions = { onStart: (request: TrainingRequest) => void; onTab: (tab: TabId) => void; onLibrary: () => void; onSettings: () => void; onProfile: () => void; onPrivacy: () => void; onLab: (lessonId: string) => void; onBook: (bookId: string, mode?: string) => void; };

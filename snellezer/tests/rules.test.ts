@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {adjustTempo,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
+import {adjustTempo,baselineAccepted,BOOK_DAILY_MODES,bookModeFor,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
 import {LESSONS,lessonForDay,RETEST_DAYS} from '../src/data/lessons.ts';
 import type {Passage,SessionResult} from '../src/types.ts';
 const s=(over:Partial<SessionResult>):SessionResult=>({id:Math.random().toString(36),exerciseId:'reading',skill:'begrip',wpm:200,comprehension:100,words:150,durationSeconds:45,date:'2026-09-20T10:00:00',xp:30,...over});
@@ -124,4 +124,17 @@ test('measurement texts are comparable, so a retest measures the reader and not 
   for(const [p,x] of tests.map((p,i)=>[p,all[i]] as const)){assert.equal(p.questions.length,5,p.id);assert.ok(x.words>=400&&x.words<=500,`${p.id}: ${x.words} woorden`);}
   assert.ok(spread('words')<1.15,'lengte');assert.ok(spread('perSentence')<1.25,'zinslengte');assert.ok(spread('long')<1.7,'lange woorden');
   const answers=tests.flatMap(p=>p.questions.map(q=>q.answer));assert.ok(new Set(answers).size>=4,'het juiste antwoord staat niet steeds op dezelfde plek');
+});
+test('a baseline with too little comprehension gets one calmer retry',()=>{
+  assert.equal(baselineAccepted(80,1),true);
+  assert.equal(baselineAccepted(40,1),false);
+  assert.equal(baselineAccepted(40,2),true);
+});
+test('the daily book step uses today’s technique, but never word-by-word for a whole book',()=>{
+  assert.equal(bookModeFor(lessonForDay(8)),'chunks');
+  assert.equal(bookModeFor(lessonForDay(5)),'paper');
+  assert.equal(bookModeFor(lessonForDay(2)),'reading');   // rsvp + inner voice → own tempo
+  assert.equal(bookModeFor(lessonForDay(15)),'reading');  // tempo push is rsvp
+  for(const l of LESSONS)assert.ok(BOOK_DAILY_MODES.includes(bookModeFor(l)),`dag ${l.day}`);
+  assert.equal(bookModeFor(null),'chunks');
 });

@@ -4,6 +4,10 @@ import {dateKey} from './model.ts';
 
 /** Onder dit begrip telt een ronde als oefening, niet als prestatie. */
 export const COMPREHENSION_GATE = 67;
+/** Onder dit begrip is een begintest geen eerlijk vertrekpunt: wie te snel leest, lijkt op dag 28 vanzelf niet vooruit te gaan. */
+export const BASELINE_MIN = 60;
+/** Een begintest telt als vertrekpunt bij voldoende begrip, of bij de tweede poging (we vragen het maar één keer). */
+export function baselineAccepted(comprehension: number, attempt: number) { return comprehension >= BASELINE_MIN || attempt >= 2; }
 /** Oefeningen waarvan de snelheid echt gemeten is (je eigen tempo, geen ingesteld tempo). */
 export const MEASURED_EXERCISES = ['baseline', 'retest', 'reading', 'long'];
 
@@ -136,4 +140,14 @@ export function longLevel(sessions: readonly SessionResult[], levelOf: (passageI
     else if (s.comprehension < COMPREHENSION_GATE) level = Math.max(1, level - 1);
   }
   return level;
+}
+
+/** Leesvormen waarin je een boek kunt lezen. Woord voor woord zit er bewust niet bij: bij lange tekst zakt het begrip, omdat je niet terug kunt kijken. */
+export const BOOK_DAILY_MODES = ['chunks', 'forward', 'fixation', 'reading', 'paper'];
+/** De leesvorm waarin je de techniek van vandaag toepast op je eigen boek. */
+export function bookModeFor(lesson: {exerciseId: string; support: string} | null): string {
+  if (!lesson) return 'chunks';
+  const pick = [lesson.exerciseId, lesson.support].find(id => BOOK_DAILY_MODES.includes(id));
+  if (pick) return pick;
+  return lesson.exerciseId === 'rsvp' || lesson.support === 'innerstem' ? 'reading' : 'chunks';
 }

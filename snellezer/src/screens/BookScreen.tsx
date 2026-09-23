@@ -16,11 +16,11 @@ function timeLeft(words: number, wpm: number) {
 }
 
 /** Een boek of PDF lezen in porties, met een bladwijzer die na elke sessie opschuift. */
-export function BookScreen({bookId, actions, onBack}: {bookId: string; actions: AppActions; onBack: () => void}) {
+export function BookScreen({bookId, initialMode, actions, onBack}: {bookId: string; initialMode?: string; actions: AppActions; onBack: () => void}) {
   const {state, setBookPosition, deleteBook} = useApp();
   const meta = state.books.find(b => b.id === bookId);
   const [content, setContent] = useState<BookContent | null | undefined>(undefined);
-  const [mode, setMode] = useState<string>('chunks');
+  const [mode, setMode] = useState<string>(initialMode ?? 'chunks');
   const [minutes, setMinutes] = useState(10);
   const [confirm, setConfirm] = useState(false);
   const [showChapters, setShowChapters] = useState(false);
