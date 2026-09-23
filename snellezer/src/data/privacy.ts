@@ -7,6 +7,7 @@ export const PRIVACY_SECTIONS: {title: string; body: string[]}[] = [
   ]},
   {title: 'Wat er op je apparaat blijft', body: [
     'Snellezer werkt zonder account. Je naam, leeftijdsgroep, leesdoel, leesinstellingen, oefenresultaten en eigen teksten worden alleen lokaal op je apparaat bewaard: in de app-opslag op je telefoon of tablet, of in de browseropslag als je de webversie gebruikt.',
+    'Ook e-books en PDF’s die je importeert, worden alleen op je apparaat bewaard en verwerkt. Ze worden nergens naartoe gestuurd.',
     'Wij ontvangen deze gegevens niet. Er is geen synchronisatie, geen advertentietracking en geen analysesoftware in de app.',
   ]},
   {title: 'Een artikel ophalen via een link', body: [

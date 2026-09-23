@@ -14,10 +14,11 @@ Stand: 22 september 2026, branch `design-snellezer`.
 | Eerlijk meten | Te snelle metingen worden geweigerd. Volledige XP, lessen en records pas vanaf 67% begrip. Herlezen op dezelfde dag levert minder op. Het doeltempo gaat omlaag onder 70% begrip en omhoog na twee keer minstens 80% |
 | Voortgang | Effectief leestempo (tempo × begrip) met je nulmeting als stippellijn, en meetmomenten |
 | Gewoonte | Reeks met één rustdag per week, daguitdaging, tip van de dag, 12 mijlpalen, een persoonlijke top 3 van technieken (vanaf week 4), deel je groei, een installatiehint voor het beginscherm en een dagelijkse herinnering (alleen in de app) |
+| Boeken en PDF's | Importeer een e-book (EPUB) of PDF. De tekst wordt op het apparaat uitgelezen, met hoofdstukken (uit de EPUB, de PDF-inhoudsopgave of koppen in grote letters). Je leest in porties van 5 tot 20 minuten in elke leesvorm, en een bladwijzer houdt bij waar je bent. E-books met DRM en gescande PDF's (alleen afbeeldingen) worden geweigerd met uitleg. PDF werkt in de webversie; in de iPhone- en Android-app werkt nu alleen EPUB |
 | Eigen tekst | Plakken, .txt-bestand of een link (alleen openbare https-pagina's), met eigen begripsvragen. Op Android kun je een artikel via Delen rechtstreeks naar de geïnstalleerde webapp sturen |
 | Toegankelijkheid | Dyslexie Leeslab, reduce-motion en labels op alle bediening |
 | Privacy | Geen account en geen tracking; alles blijft op het apparaat. Privacyverklaring in de app en op `/privacy.html` |
-| Kwaliteit | Typecheck schoon, 26 unit tests, CI op elke wijziging, en in de browser doorlopen: onboarding, begintest, een volledige lesdag, dag 3–26 en de kindermodus |
+| Kwaliteit | Typecheck schoon, 32 unit tests, CI op elke wijziging, en in de browser doorlopen: onboarding, begintest, een volledige lesdag, dag 3–26 en de kindermodus |
 
 ## Web — publiceren
 
