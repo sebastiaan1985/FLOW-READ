@@ -11,6 +11,7 @@ import {articleUrlProblem} from '../state/url';
 import {BookError, buildBook, bookProgress, MAX_BOOK_BYTES, parseEpub} from '../state/books';
 import {saveBookContent} from '../state/bookStore';
 import {parsePdf} from '../state/pdfWeb';
+import {MAX_NATIVE_PDF_BYTES,useNativePdf} from '../state/pdfNative';
 import {createId} from '../state/AppProvider';
 
 export const READING_MODES = [
@@ -40,6 +41,7 @@ function extractArticle(html:string) {
 
 export function LibraryEditor({actions,initial,onBack=()=>actions.onTab('today')}:{actions:AppActions;initial?:{title:string;text:string;url:string};onBack?:()=>void}) {
   const {state,saveText,deleteText,addBook} = useApp();
+  const nativePdf = useNativePdf();
   const [bookStatus,setBookStatus] = useState('');
   const wide = useWindowDimensions().width>=760;
   // Een gedeeld artikel: genoeg tekst wordt meteen ingevuld, anders staat de link klaar om op te halen.
@@ -94,10 +96,17 @@ export function LibraryEditor({actions,initial,onBack=()=>actions.onTab('today')
     if((asset.size||0)>MAX_BOOK_BYTES){setError('Kies een bestand kleiner dan 60 MB.');return;}
     try {
       setBookStatus(kind==='pdf'?'PDF openen…':'E-book openen…');
-      const bytes=Platform.OS==='web'&&asset.file?new Uint8Array(await asset.file.arrayBuffer()):await new File(asset.uri).bytes();
-      // Even ademruimte geven, zodat de melding in beeld komt voor het zware werk begint.
-      await new Promise(r=>setTimeout(r,30));
-      const parsed=kind==='epub'?parseEpub(bytes):await parsePdf(bytes,asset.name,(page,pages)=>setBookStatus(`Pagina ${page} van ${pages} lezen…`));
+      const progress=(page:number,pages:number)=>setBookStatus(`Pagina ${page} van ${pages} lezen…`);
+      let parsed;
+      if(kind==='pdf'&&Platform.OS!=='web'){
+        if((asset.size||0)>MAX_NATIVE_PDF_BYTES){setBookStatus('');setError('In de app lezen we PDF’s tot 30 MB. Grotere bestanden kun je in de webversie openen.');return;}
+        parsed=await nativePdf.parse(await new File(asset.uri).base64(),asset.name,progress);
+      }else{
+        const bytes=Platform.OS==='web'&&asset.file?new Uint8Array(await asset.file.arrayBuffer()):await new File(asset.uri).bytes();
+        // Even ademruimte geven, zodat de melding in beeld komt voor het zware werk begint.
+        await new Promise(r=>setTimeout(r,30));
+        parsed=kind==='epub'?parseEpub(bytes):await parsePdf(bytes,asset.name,progress);
+      }
       const {meta,content}=buildBook(parsed,kind,createId());
       setBookStatus('Bewaren…');
       await saveBookContent(meta.id,content);
@@ -135,7 +144,7 @@ export function LibraryEditor({actions,initial,onBack=()=>actions.onTab('today')
     finally{clearTimeout(timeout);importing.current=false;setBusy(null);}
   };
 
-  return <Screen style={{maxWidth:900}}>
+  return <Screen style={{maxWidth:900}}>{nativePdf.element}
     <BackHeader title="Jouw bibliotheek" onBack={onBack}/>
     <Row style={{gap:20}}><Illustration name="eigen-tekst" size={wide?112:85}/><View style={{flex:1,gap:8}}><T variant="title" style={{fontSize:wide?38:29}}>Jouw tekst. Meer eruit halen.</T><T color={ui.muted}>Train met een artikel, studietekst of je eigen verhaal. Ook e-books en PDF's. Alles wat je bewaart blijft op dit apparaat.</T></View></Row>
     <Card style={{gap:16}}><SectionHeading title="Kies je leesvorm"/><View style={styles.modeGrid}>{READING_MODES.map(option=><Pressable key={option.id} accessibilityRole="button" accessibilityLabel={option.title} accessibilityState={{selected:mode===option.id}} onPress={()=>setMode(option.id)} style={[styles.mode,{width:wide?'31.8%':'48%',borderColor:mode===option.id?colors.accent:ui.line,backgroundColor:mode===option.id?ui.forestSoft:colors.bg}]}><Row style={{justifyContent:'space-between'}}><Icon name={option.icon} color={colors.accent} size={20}/>{mode===option.id&&<Icon name="checkcircle" color={colors.accent} size={17}/>}</Row><T variant="label">{option.title}</T><T variant="caption" style={{fontSize:12}}>{option.description}</T></Pressable>)}</View><T variant="caption">Deze leesvorm gebruik je voor je nieuwe én bewaarde teksten. Je tempo stel je in voor je begint.</T></Card>

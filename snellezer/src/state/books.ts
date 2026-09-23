@@ -18,7 +18,7 @@ export type BookMeta = {
 };
 export type ParsedBook = {title: string; author: string; chapters: {title: string; paragraphs: string[]}[]};
 
-export class BookError extends Error {}
+export class BookError extends Error { name = 'BookError'; }
 
 export const MAX_BOOK_BYTES = 60 * 1024 * 1024;
 const countWords = (s: string) => s.split(/\s+/).filter(Boolean).length;
