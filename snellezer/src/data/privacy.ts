@@ -1,5 +1,5 @@
 /** Eén bron voor de privacyverklaring: in de app en als openbare pagina (scripts/web-extras.mjs). */
-export const PRIVACY_UPDATED = '22 september 2026';
+export const PRIVACY_UPDATED = '23 september 2026';
 export const PRIVACY_CONTACT = 'info@elev8solutions.nl';
 export const PRIVACY_SECTIONS: {title: string; body: string[]}[] = [
   {title: 'Wie wij zijn', body: [
@@ -8,6 +8,7 @@ export const PRIVACY_SECTIONS: {title: string; body: string[]}[] = [
   {title: 'Wat er op je apparaat blijft', body: [
     'Snellezer werkt zonder account. Je naam, leeftijdsgroep, leesdoel, leesinstellingen, oefenresultaten en eigen teksten worden alleen lokaal op je apparaat bewaard: in de app-opslag op je telefoon of tablet, of in de browseropslag als je de webversie gebruikt.',
     'Ook e-books en PDF’s die je importeert, worden alleen op je apparaat bewaard en verwerkt. Ze worden nergens naartoe gestuurd.',
+    'Kies je een eigen foto voor Jouw leesplek, dan maakt de app er een klein, vierkant plaatje van en bewaart alleen dat op je apparaat. De foto wordt nergens naartoe gestuurd. De app vraagt alleen toegang tot je foto’s op het moment dat je zelf een foto kiest, en nooit tot je camera. Met Verwijder foto is hij weg.',
     'Wij ontvangen deze gegevens niet. Er is geen synchronisatie, geen advertentietracking en geen analysesoftware in de app.',
   ]},
   {title: 'Een artikel ophalen via een link', body: [

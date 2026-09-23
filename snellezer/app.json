@@ -66,6 +66,14 @@
         {
           "color": "#0B6E63"
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Snellezer gebruikt je foto alleen als profielfoto op dit apparaat. De foto wordt nergens naartoe gestuurd.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
       ]
     ],
     "description": "Leer in 28 dagen sneller lezen, met behoud van begrip. Zonder account; alles blijft op je apparaat.",

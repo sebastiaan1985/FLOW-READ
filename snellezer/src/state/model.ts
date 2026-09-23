@@ -1,5 +1,7 @@
 import type { AppState, Question, SessionResult } from '../types';
 import { adjustTempo, effectiveWpm, MEASURED_EXERCISES } from './rules.ts';
+/** Een profielfoto is een klein data-adres van een afbeelding; alles wat daar niet op lijkt, of te groot is, laten we weg. */
+export function validPhoto(value:unknown):value is string{return typeof value==='string'&&value.startsWith('data:image/')&&value.length<200_000;}
 export const initialState:AppState = {
  profile:{name:'',ageGroup:'adult',goal:'pleasure',onboardingComplete:false},
  settings:{enabled:false,font:'standard',fontSize:20,letterSpacing:0,wordSpacing:0,lineHeight:1.7,overlay:'none',overlayOpacity:20,background:'white',bionic:false,syllables:false,lineGuide:false},
@@ -48,5 +50,5 @@ export function hydrate(raw:string|null):AppState {
  const leeslab={lessons,review:Array.isArray(lab.review)?lab.review.filter((k:any)=>typeof k==='string').slice(0,40):[]};
  const topTechniques=Array.isArray(x.topTechniques)?x.topTechniques.filter((k:any)=>typeof k==='string').slice(0,3):[];
  const books=Array.isArray(x.books)?x.books.filter((b:any)=>b&&typeof b.id==='string'&&typeof b.title==='string'&&(b.format==='epub'||b.format==='pdf')&&Number.isInteger(b.paragraphs)&&Number.isInteger(b.position)&&Number.isFinite(b.words)&&Array.isArray(b.chapters)).map((b:any)=>({...b,author:typeof b.author==='string'?b.author:'',readWords:Number.isFinite(b.readWords)?b.readWords:0,chapters:b.chapters.filter((c:any)=>c&&typeof c.title==='string'&&Number.isInteger(c.para))})):[];
- return {...initialState,books,leeslab,topTechniques,installHintDismissed:!!x.installHintDismissed,profile:{...initialState.profile,...x.profile},settings:{...initialState.settings,...x.settings},sessions,texts,targetWpm:Number.isFinite(x.targetWpm)?Math.max(60,Math.min(800,x.targetWpm)):200,kidsMode:!!x.kidsMode,baseline:x.baseline&&Number.isFinite(x.baseline.wpm)&&Number.isFinite(x.baseline.comprehension)?x.baseline:null,tempoStreak:Number.isInteger(x.tempoStreak)&&x.tempoStreak>=0?Math.min(x.tempoStreak,1):0,reminder};
+ return {...initialState,books,leeslab,topTechniques,installHintDismissed:!!x.installHintDismissed,profile:(({photo,...rest})=>({...initialState.profile,...rest,...(validPhoto(photo)?{photo}:{})}))(x.profile&&typeof x.profile==='object'?x.profile:{}),settings:{...initialState.settings,...x.settings},sessions,texts,targetWpm:Number.isFinite(x.targetWpm)?Math.max(60,Math.min(800,x.targetWpm)):200,kidsMode:!!x.kidsMode,baseline:x.baseline&&Number.isFinite(x.baseline.wpm)&&Number.isFinite(x.baseline.comprehension)?x.baseline:null,tempoStreak:Number.isInteger(x.tempoStreak)&&x.tempoStreak>=0?Math.min(x.tempoStreak,1):0,reminder};
 }

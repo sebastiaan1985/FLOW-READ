@@ -12,3 +12,10 @@ test('measured speed is separate from paced training speed',()=>{let s=appendSes
 test('rest sessions do not invent comprehension or reading speed',()=>{const s=appendSession(initialState,{...sample,exerciseId:'relax',skill:'focus',comprehension:null,wpm:0,words:0});assert.equal(deriveStats(s).averageWpm,0);assert.equal(deriveStats(s).comprehension,null);});
 test('round trip preserves data and malformed results are removed',()=>{const s=appendSession(initialState,sample);assert.deepEqual(hydrate(JSON.stringify(s)),s);assert.equal(hydrate(JSON.stringify({sessions:[{id:'broken'}]})).sessions.length,0);assert.throws(()=>hydrate('{bad'));});
 test('date keys use calendar dates',()=>assert.equal(dateKey(new Date(2026,8,20,0,1)),'2026-09-20'));
+test('a profile photo survives a reload, but a broken or huge one is dropped',()=>{
+  const photo='data:image/jpeg;base64,'+'A'.repeat(1000);
+  assert.equal(hydrate(JSON.stringify({profile:{name:'Sam',photo}})).profile.photo,photo);
+  assert.equal(hydrate(JSON.stringify({profile:{name:'Sam',photo:'javascript:alert(1)'}})).profile.photo,undefined);
+  assert.equal(hydrate(JSON.stringify({profile:{name:'Sam',photo:'data:image/jpeg;base64,'+'A'.repeat(300000)}})).profile.photo,undefined);
+  assert.equal(hydrate(JSON.stringify({profile:{name:'Sam',photo}})).profile.name,'Sam');
+});
