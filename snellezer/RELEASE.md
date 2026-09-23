@@ -8,7 +8,7 @@ Stand: 22 september 2026, branch `design-snellezer`.
 |---|---|
 | Dagelijkse lus | Elke dag één les (wat, waarom, hoe) die de oefening zelf instelt, een hint tijdens de oefening en terugkoppeling op je resultaat |
 | Curriculum | 28 lessen in 4 weken (`src/data/lessons.ts`), hermetingen op dag 7, 14, 21 en 28, eindmeting tegen dag 1. Na dag 28 herhaal je de lessen |
-| Oefeningen | 20 oefeningen, waaronder Innerlijke stem (een lichtere binnenstem op een metronoom of met nadruk op kernwoorden) en Skimmen & previewing. Chunks, fixatie, vooruit lezen en woord voor woord hebben elk een eigen weergave. Lange teksten groeien mee van Starter via Gevorderd naar Expert |
+| Oefeningen | 20 oefeningen, waaronder Innerlijke stem (een lichtere binnenstem op een metronoom of met nadruk op kernwoorden) en Skimmen & previewing. Chunks, fixatie, vooruit lezen en woord voor woord hebben elk een eigen weergave. Woordgroepen worden per zinsdeel geknipt (de oude man | liep langzaam | naar de haven), niet per vast aantal woorden. Bij lange teksten en boeken vraagt de app om de 75 seconden of je er nog bij was, en laat na afloop zien hoe vaak je afdwaalde. Oogbeweging, Leesritme en Oogontspanning staan apart onder Extra. Lange teksten groeien mee van Starter via Gevorderd naar Expert |
 | Dyslexie Leeslab | 7 lessen: horen en herkennen (met voorlezen), letters scherp zien, klankgroepen, woorden bouwen, zin en betekenis, lange woorden en vloeiend herkennen. Met 8 van de 10 goed opent de volgende les; fout gelezen woorden komen terug in een herhaalset. Daarnaast lettertype, afstand, kleurfilter en achtergrond |
 | Inhoud | 251 teksten: 151 korte teksten voor volwassenen en tieners, 30 lange teksten (10 per niveau), 10 meetteksten en 60 kinderteksten, allemaal met begripsvragen. De meetteksten voor begintest en hermetingen zijn gelijkwaardig: 400 tot 500 woorden, vergelijkbare zins- en woordlengte, 5 vragen en een onderwerp dat niet ook als oefentekst voorkomt. Een test bewaakt dat. Een tekst komt pas terug als je de rest hebt gelezen. Met Andere tekst wissel je tijdens een oefening van tekst; de ronde begint dan opnieuw en telt niet mee |
 | Onderbouwd | De lessen volgen het leesonderzoek: je binnenstem wordt lichter, niet stil; alleen onnodig terugspringen wordt afgeleerd; perifeer zien wordt eerlijk uitgelegd; in plaats van het S-patroon leer je drie versnellingen (tempo per doel) |
@@ -19,7 +19,7 @@ Stand: 22 september 2026, branch `design-snellezer`.
 | Eigen tekst | Plakken, .txt-bestand of een link (alleen openbare https-pagina's), met eigen begripsvragen. Op Android kun je een artikel via Delen rechtstreeks naar de geïnstalleerde webapp sturen |
 | Toegankelijkheid | Dyslexie Leeslab, reduce-motion en labels op alle bediening |
 | Privacy | Geen account en geen tracking; alles blijft op het apparaat. Privacyverklaring in de app en op `/privacy.html` |
-| Kwaliteit | Typecheck schoon, 35 unit tests, CI op elke wijziging, en in de browser doorlopen: onboarding, begintest, een volledige lesdag, dag 3–26 en de kindermodus |
+| Kwaliteit | Typecheck schoon, 36 unit tests, CI op elke wijziging, en in de browser doorlopen: onboarding, begintest, een volledige lesdag, dag 3–26 en de kindermodus |
 
 ## Web — publiceren
 
