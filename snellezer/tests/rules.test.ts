@@ -112,6 +112,16 @@ test('every text has a unique id and answerable questions',()=>{
   const all=[...read('passages.json'),...read('children.json'),...read('library.json'),...read('library-extra.json')];
   assert.equal(new Set(all.map(p=>p.id)).size,all.length);
   for(const p of all){assert.ok(p.questions.length>=2,p.id);for(const q of p.questions){assert.ok(q.answer>=0&&q.answer<q.options.length,p.id);assert.equal(new Set(q.options).size,q.options.length,p.id);}}
-  const shortAdult=all.filter(p=>!p.child&&!p.audience?.startsWith('kids')&&p.collection!=='lang'&&p.collection!=='leestest');
+  const shortAdult=all.filter(p=>!p.child&&!p.audience?.startsWith('kids')&&p.collection!=='lang'&&p.collection!=='meting');
   assert.ok(shortAdult.length>=120,`korte teksten: ${shortAdult.length}`);
+});
+test('measurement texts are comparable, so a retest measures the reader and not the text',()=>{
+  const read=(f:string)=>JSON.parse(readFileSync(new URL('../src/data/'+f,import.meta.url),'utf8')) as Passage[];
+  const tests=[...read('library.json'),...read('library-extra.json')].filter(p=>p.collection==='meting');
+  assert.ok(tests.length>=8,`meetteksten: ${tests.length}`);
+  const stat=(p:Passage)=>{const w=p.text.split(/\s+/).filter(Boolean);return {words:w.length,perSentence:w.length/p.text.split(/[.!?:]+\s/).length,long:w.filter(x=>x.replace(/[^\p{L}]/gu,'').length>6).length/w.length};};
+  const all=tests.map(stat);const spread=(k:'words'|'perSentence'|'long')=>Math.max(...all.map(x=>x[k]))/Math.min(...all.map(x=>x[k]));
+  for(const [p,x] of tests.map((p,i)=>[p,all[i]] as const)){assert.equal(p.questions.length,5,p.id);assert.ok(x.words>=400&&x.words<=500,`${p.id}: ${x.words} woorden`);}
+  assert.ok(spread('words')<1.15,'lengte');assert.ok(spread('perSentence')<1.25,'zinslengte');assert.ok(spread('long')<1.7,'lange woorden');
+  const answers=tests.flatMap(p=>p.questions.map(q=>q.answer));assert.ok(new Set(answers).size>=4,'het juiste antwoord staat niet steeds op dezelfde plek');
 });

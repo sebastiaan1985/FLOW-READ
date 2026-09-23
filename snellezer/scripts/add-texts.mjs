@@ -19,6 +19,7 @@ for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) 
     if (words < min) problems.push(`${where}: te kort (${words} woorden)`);
     if (/["“”]/.test(t.x)) problems.push(`${where}: gebruik geen aanhalingstekens`);
     if (!Array.isArray(t.q) || t.q.length < 2) problems.push(`${where}: minder dan 2 vragen`);
+    if (t.c === 'meting' && (words < 400 || words > 500 || t.q.length !== 5)) problems.push(`${where}: een meettekst heeft 400 tot 500 woorden en 5 vragen (nu ${words} woorden, ${t.q.length} vragen)`);
     for (const [v, opts, i] of t.q) {
       if (!(i >= 0 && i < opts.length)) problems.push(`${where}: ongeldig antwoord bij ${v}`);
       if (new Set(opts.map(o => o.toLowerCase())).size !== opts.length) problems.push(`${where}: dubbele opties bij ${v}`);

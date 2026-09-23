@@ -7,11 +7,11 @@ import libraryExtra from './library-extra.json';
 /** De bibliotheek van de vorige versie plus de nieuwe teksten uit scripts/extra (zie scripts/add-texts.mjs). */
 const LIBRARY = [...(library as Passage[]), ...(libraryExtra as Passage[])];
 /** Korte oefenteksten voor tieners en volwassenen: de eigen teksten plus de bibliotheek van de vorige versie. */
-export const PASSAGES: Passage[] = [...(passages as Passage[]), ...LIBRARY.filter(p=>p.collection==='kort'&&(p.audience==='volwassen'||p.audience==='teens'))];
+export const PASSAGES: Passage[] = [...(passages as Passage[]), ...LIBRARY.filter(p=>(p.collection==='kort'||p.collection==='leestest')&&(p.audience==='volwassen'||p.audience==='teens'))];
 /** Lange teksten (4 vragen) voor de oefening Lange teksten. */
 export const LONG_PASSAGES: Passage[] = LIBRARY.filter(p=>p.collection==='lang');
-/** Vaste meetteksten van vergelijkbare lengte voor begintest en hermetingen. */
-export const TEST_PASSAGES: Passage[] = LIBRARY.filter(p=>p.collection==='leestest');
+/** Meetteksten voor begintest en hermetingen: 400 tot 500 woorden, vergelijkbare zinslengte en woordlengte, 5 vragen. De oude, kortere meetteksten zijn nu oefenteksten. */
+export const TEST_PASSAGES: Passage[] = LIBRARY.filter(p=>p.collection==='meting');
 export const CHILD_PASSAGES: Passage[] = [...(children as Passage[]), ...LIBRARY.filter(p=>p.audience==='kids6-9'||p.audience==='kids9-12')];
 export const WORD_GAME_ITEMS = words;
 export const SKILLS: {id:SkillId;title:string;subtitle:string;illustration:string;tint:string}[] = [
@@ -28,9 +28,9 @@ export const EXERCISES: Exercise[] = [
  {id:'reading',title:'Leestest',subtitle:'Jouw tempo, jouw begrip',description:'Lees de tekst op je eigen tempo. Tik op klaar wanneer je alles hebt gelezen. Daarna beantwoord je een paar vragen.',skill:'begrip',mode:'reading',minutes:3,icon:'book'},
  {id:'long',title:'Lange teksten',subtitle:'Aandacht van begin tot eind',description:'Neem de tijd voor een langer verhaal. Lees op je eigen tempo en beantwoord daarna vier vragen.',skill:'begrip',mode:'reading',minutes:5,icon:'text'},
  {id:'skim',title:'Skimmen & previewing',subtitle:'Eerst het overzicht',description:'Bij skimmen zijn de kernzinnen gemarkeerd en heb je 30 seconden voor de hoofdgedachte. Bij previewing verken je eerst 30 seconden de opbouw en lees je daarna de hele tekst.',skill:'begrip',mode:'skim',minutes:2,icon:'eye'},
- {id:'innerstem',title:'Innerlijke stem',subtitle:'Ontdek je leesritme',description:'Veel lezers horen woorden in gedachten. Lees op een metronoom, terwijl je zacht telt, of terwijl je neuriet, en vergelijk wat er met je begrip gebeurt.',skill:'focus',mode:'innerstem',minutes:2,icon:'volume'},
+ {id:'innerstem',title:'Innerlijke stem',subtitle:'Ontdek je leesritme',description:'Bijna iedereen hoort woorden in gedachten, en dat helpt je begrijpen. Hier oefen je met een lichtere binnenstem: op een metronoom, of met de nadruk alleen op de kernwoorden.',skill:'focus',mode:'innerstem',minutes:2,icon:'volume'},
  {id:'scan',title:'Scannen',subtitle:'Vind wat ertoe doet',description:'Zoek het aangegeven woord in de tekst en tik erop. Je oefent gericht zoeken, niet het begrijpen van de hele tekst.',skill:'begrip',mode:'scan',minutes:2,icon:'search'},
- {id:'retest',title:'Hermeting',subtitle:'Hoe ver ben je nu?',description:'Lees een nieuwe meettekst op een tempo waarop je de inhoud goed meeneemt. Daarna volgen drie vragen. We vergelijken met je begintest.',skill:'begrip',mode:'reading',minutes:3,icon:'chart'},
+ {id:'retest',title:'Hermeting',subtitle:'Hoe ver ben je nu?',description:'Lees een nieuwe meettekst op een tempo waarop je de inhoud goed meeneemt. Daarna volgen vijf vragen. We vergelijken met je begintest.',skill:'begrip',mode:'reading',minutes:3,icon:'chart'},
  {id:'baseline',title:'Begintest',subtitle:'Ontdek jouw vertrekpunt',description:'Lees op je normale tempo. Er is geen goed of fout tempo. Met een paar vragen bepalen we een passend begin.',skill:'begrip',mode:'reading',minutes:3,icon:'flag'},
  {id:'peripheral',title:'Perifeer zien',subtitle:'Kijk verder dan het midden',description:'Houd je blik op het stipje in het midden. Links en rechts flitst kort een woord. Hoe beter je ze ziet, hoe verder ze uit elkaar komen te staan.',skill:'blikveld',mode:'peripheral',minutes:2,icon:'eye'},
  {id:'eye',title:'Oogbeweging',subtitle:'Volg een rustig ritme',description:'Volg het puntje met je ogen terwijl je hoofd stil blijft. Kies een patroon en een tempo, en stop zodra het onprettig voelt.',skill:'blikveld',mode:'eye',minutes:1,icon:'eye'},
