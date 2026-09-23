@@ -1,7 +1,7 @@
 import { colors, spacing, radius, typography } from './theme';
 export { colors, spacing, radius };
 export const fonts = { heading: 'Outfit_600SemiBold', body: 'Figtree_400Regular', strong: 'Figtree_600SemiBold', comic: 'ComicNeue_400Regular', dyslexic: 'OpenDyslexic' };
-export const ui = { page: '#FCFCF9', forest: '#143E35', forestSoft: '#E7F0EB', cream: '#F7F2E8', subtle: '#FAFAF7', white: colors.bg, line: '#E8ECE6', muted: '#67736D', dim: '#87928C', yellow: colors.sun, track: '#DBE7DF', error: '#963E32' };
+export const ui = { page: '#FCFCF9', forest: '#143E35', forestSoft: '#E7F0EB', cream: '#F7F2E8', subtle: '#FAFAF7', white: colors.bg, line: '#E8ECE6', muted: '#5E6A64', dim: '#68736D', yellow: colors.sun, track: '#DBE7DF', error: '#963E32' };
 export const metrics = { maxWidth: 1080, padding: 24, gap: 20, sectionGap: 32, headerHeight: 76, tabHeight: 78, buttonHeight: 56, borderWidth: 1, iconButton: 44, cardPadding: 24 };
 export const textStyles = {
  display: {...typography.display, fontSize: 46, lineHeight: 51, color: colors.ink},

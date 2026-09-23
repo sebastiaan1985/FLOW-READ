@@ -42,7 +42,8 @@ export function BookScreen({bookId, initialMode, actions, onBack}: {bookId: stri
     });
   };
 
-  return <Screen style={{maxWidth: 760}}>
+  const footer = content && !finished && portion ? <Button title={`Lees verder · ${minutes} min`} icon="play" onPress={start}/> : undefined;
+  return <Screen style={{maxWidth: 760}} footer={footer}>
     <BackHeader title="Jouw boek" onBack={onBack}/>
     <View style={{gap: 8}}>
       <Row><Pill label={meta.format === 'pdf' ? 'PDF' : 'E-BOOK'} icon="book"/>{finished && <Pill label="UITGELEZEN" icon="check"/>}</Row>
@@ -63,7 +64,6 @@ export function BookScreen({bookId, initialMode, actions, onBack}: {bookId: stri
       <Choice label="Leesvorm" value={mode} options={READING_MODES.map(m => ({value: m.id, label: m.title}))} onChange={setMode}/>
       <Choice label="Hoe lang wil je lezen?" value={String(minutes)} options={MINUTES.map(m => ({value: String(m), label: `${m} min`}))} onChange={v => setMinutes(Number(v))}/>
       {portion && <View style={s.preview}><T variant="caption">Je begint bij</T><T numberOfLines={3} style={{fontSize: 15, lineHeight: 23}}>{content.paragraphs[portion.from]}</T><T variant="caption">{portion.ends[portion.ends.length - 1].toLocaleString('nl-NL')} woorden in deze sessie</T></View>}
-      <Button title="Lees verder" icon="play" onPress={start}/>
       <T variant="caption">Je bladwijzer schuift op tot waar je bent gekomen, ook als je eerder stopt.</T>
     </Card>}
 
