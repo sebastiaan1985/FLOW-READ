@@ -102,3 +102,16 @@ test('long texts move up after 80% and down under 67% on the current level',()=>
   assert.equal(longLevel([l('L1',100),l('L2',50)],lv),1);
   assert.equal(longLevel([l('L1',100),l('L2',75),l('L2',100)],lv),3);
 });
+test('a skipped text is not offered again unless nothing else is left',()=>{
+  const pool:Passage[]=['a','b'].map(id=>({id,title:id,text:id,questions:[]}));
+  assert.equal(pickPassage(pool,[],0,['a']).id,'b');
+  assert.equal(pickPassage(pool,[],0,['a','b']).id,'a');
+});
+test('every text has a unique id and answerable questions',()=>{
+  const read=(f:string)=>JSON.parse(readFileSync(new URL('../src/data/'+f,import.meta.url),'utf8')) as Passage[];
+  const all=[...read('passages.json'),...read('children.json'),...read('library.json'),...read('library-extra.json')];
+  assert.equal(new Set(all.map(p=>p.id)).size,all.length);
+  for(const p of all){assert.ok(p.questions.length>=2,p.id);for(const q of p.questions){assert.ok(q.answer>=0&&q.answer<q.options.length,p.id);assert.equal(new Set(q.options).size,q.options.length,p.id);}}
+  const shortAdult=all.filter(p=>!p.child&&!p.audience?.startsWith('kids')&&p.collection!=='lang'&&p.collection!=='leestest');
+  assert.ok(shortAdult.length>=120,`korte teksten: ${shortAdult.length}`);
+});

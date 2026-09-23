@@ -3,7 +3,9 @@ import passages from './passages.json';
 import children from './children.json';
 import words from './words.json';
 import library from './library.json';
-const LIBRARY = library as Passage[];
+import libraryExtra from './library-extra.json';
+/** De bibliotheek van de vorige versie plus de nieuwe teksten uit scripts/extra (zie scripts/add-texts.mjs). */
+const LIBRARY = [...(library as Passage[]), ...(libraryExtra as Passage[])];
 /** Korte oefenteksten voor tieners en volwassenen: de eigen teksten plus de bibliotheek van de vorige versie. */
 export const PASSAGES: Passage[] = [...(passages as Passage[]), ...LIBRARY.filter(p=>p.collection==='kort'&&(p.audience==='volwassen'||p.audience==='teens'))];
 /** Lange teksten (4 vragen) voor de oefening Lange teksten. */

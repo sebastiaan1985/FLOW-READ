@@ -1,0 +1,3653 @@
+[
+ {
+  "id": "x-lot-en-de-verloren-sleutel",
+  "title": "Lot en de verloren sleutel",
+  "text": "Lot zoekt haar sleutel. Hij ligt niet op tafel. Hij ligt niet in haar jas. Dan hoort ze een tik tegen het raam. Het is de ekster uit de tuin. In zijn snavel glimt iets. Het is haar sleutel! Lot legt een stukje brood op de vensterbank. De ekster laat de sleutel vallen en pakt het brood. Nu kan Lot naar school.",
+  "questions": [
+   {
+    "question": "Wat zoekt Lot?",
+    "options": [
+     "Haar tas",
+     "Haar sleutel",
+     "Haar fiets"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wie had de sleutel?",
+    "options": [
+     "De kat",
+     "De ekster",
+     "Haar broer"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat geeft Lot aan de vogel?",
+    "options": [
+     "Een stukje brood",
+     "Een appel",
+     "Een worm"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 1,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-de-sneeuwman-die-wilde-reizen",
+  "title": "De sneeuwman die wilde reizen",
+  "text": "In de tuin staat een sneeuwman. Hij heeft een wortel als neus en een oude sjaal om. Elke dag kijkt hij naar de vogels. Die vliegen overal heen. Ik wil ook reizen, denkt de sneeuwman. Dan komt de lente. De zon wordt warm. De sneeuwman smelt tot een plasje water. Het water loopt naar de sloot, en de sloot stroomt naar de rivier. Zo gaat de sneeuwman toch op reis.",
+  "questions": [
+   {
+    "question": "Wat heeft de sneeuwman als neus?",
+    "options": [
+     "Een steen",
+     "Een wortel",
+     "Een knoop"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat wil de sneeuwman graag?",
+    "options": [
+     "Reizen",
+     "Slapen",
+     "Eten"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Hoe gaat de sneeuwman op reis?",
+    "options": [
+     "Met de trein",
+     "Als water naar de rivier",
+     "Op een vogel"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 1,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-waarom-een-giraf-een-lange-nek-heeft",
+  "title": "Waarom een giraf een lange nek heeft",
+  "text": "De giraf is het langste dier ter wereld. Zijn nek is wel twee meter lang. Met die lange nek kan hij bij de hoogste blaadjes van de bomen. Daar kunnen andere dieren niet bij. Zo heeft de giraf altijd genoeg te eten. Gek genoeg heeft een giraf net zoveel nekwervels als jij: zeven. Die van de giraf zijn alleen veel groter. Zijn tong is ook heel lang en een beetje blauw.",
+  "questions": [
+   {
+    "question": "Waarom heeft de giraf een lange nek?",
+    "options": [
+     "Om te zwemmen",
+     "Om bij hoge blaadjes te kunnen",
+     "Om te zingen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoeveel nekwervels heeft een giraf?",
+    "options": [
+     "Zeven",
+     "Twintig",
+     "Honderd"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Welke kleur heeft de tong van een giraf een beetje?",
+    "options": [
+     "Rood",
+     "Blauw",
+     "Geel"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 2,
+  "collection": "kort",
+  "topic": "dieren"
+ },
+ {
+  "id": "x-opa-s-moestuin",
+  "title": "Opa's moestuin",
+  "text": "Opa heeft een moestuin. Daar groeien wortels, bonen en aardbeien. Noor mag helpen. Ze geeft de planten water met een gieter. Ze trekt het onkruid eruit. Na een paar weken zijn de aardbeien rood. Noor plukt er een en stopt hem in haar mond. Hij is zoet en warm van de zon. Opa lacht. Zelf gekweekt smaakt het lekkerst, zegt hij.",
+  "questions": [
+   {
+    "question": "Wat groeit er in opa's moestuin?",
+    "options": [
+     "Bananen",
+     "Wortels, bonen en aardbeien",
+     "Appels en peren"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarmee geeft Noor water?",
+    "options": [
+     "Met een emmer",
+     "Met een gieter",
+     "Met een tuinslang"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoe smaakt de aardbei?",
+    "options": [
+     "Zuur en koud",
+     "Zoet en warm",
+     "Zout"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 1,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-de-uil-die-overdag-slaapt",
+  "title": "De uil die overdag slaapt",
+  "text": "Uilen slapen overdag en worden wakker als het donker wordt. Ze zien heel goed in het donker. Ze horen ook heel goed. Een uil kan een muis horen die onder de sneeuw loopt. Als een uil vliegt, hoor je bijna niets. Zijn veren zijn zacht aan de randen. Zo kan hij stil naar zijn prooi vliegen. Een uil kan zijn hoofd bijna helemaal rond draaien.",
+  "questions": [
+   {
+    "question": "Wanneer slapen uilen?",
+    "options": [
+     "Overdag",
+     "'s Nachts",
+     "Nooit"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom hoor je een uil bijna niet als hij vliegt?",
+    "options": [
+     "Omdat hij klein is",
+     "Omdat zijn veren zacht zijn aan de randen",
+     "Omdat hij langzaam vliegt"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat kan een uil met zijn hoofd?",
+    "options": [
+     "Het bijna helemaal rond draaien",
+     "Het intrekken",
+     "Het van kleur laten veranderen"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 1,
+  "collection": "kort",
+  "topic": "dieren"
+ },
+ {
+  "id": "x-mees-gaat-naar-de-tandarts",
+  "title": "Mees gaat naar de tandarts",
+  "text": "Mees moet naar de tandarts. Hij vindt het een beetje eng. De tandarts is aardig. Ze laat hem een spiegeltje zien en een kleine lamp. Mees mag in een stoel liggen die omhoog kan. Hij doet zijn mond wijd open. De tandarts telt zijn tanden. Alles is goed, zegt ze. Je poetst goed. Mees krijgt een sticker. Volgende keer vindt hij het niet meer eng.",
+  "questions": [
+   {
+    "question": "Waar gaat Mees naartoe?",
+    "options": [
+     "Naar school",
+     "Naar de tandarts",
+     "Naar de dokter"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat doet de tandarts?",
+    "options": [
+     "Ze telt zijn tanden",
+     "Ze trekt een tand",
+     "Ze geeft hem snoep"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat krijgt Mees aan het eind?",
+    "options": [
+     "Een ballon",
+     "Een sticker",
+     "Een tandenborstel"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 1,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-hoe-een-vlinder-ontstaat",
+  "title": "Hoe een vlinder ontstaat",
+  "text": "Een vlinder begint als een klein eitje op een blad. Uit het eitje kruipt een rups. De rups eet en eet, en wordt steeds groter. Daarna maakt hij een harde huls om zich heen. Dat heet een pop. In de pop gebeurt iets wonderlijks. De rups verandert helemaal. Na een tijdje gaat de pop open. Er kruipt een vlinder uit. Hij wacht even tot zijn vleugels droog zijn. Dan vliegt hij weg.",
+  "questions": [
+   {
+    "question": "Waar begint een vlinder als?",
+    "options": [
+     "Als een eitje",
+     "Als een zaadje",
+     "Als een bloem"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat doet een rups vooral?",
+    "options": [
+     "Slapen",
+     "Eten",
+     "Vliegen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom wacht de vlinder even?",
+    "options": [
+     "Tot zijn vleugels droog zijn",
+     "Tot het nacht is",
+     "Tot zijn moeder komt"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 2,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-het-verjaardagsfeest-van-jet",
+  "title": "Het verjaardagsfeest van Jet",
+  "text": "Jet wordt zeven jaar. Ze krijgt een taart met zeven kaarsjes. Al haar vriendjes komen. Ze spelen stoelendans en zakdragen. Dan blaast Jet de kaarsjes uit. Allemaal in één keer! Iedereen klapt. Jet mag een wens doen. Ze zegt niet wat het is, want dan komt hij niet uit. Na de taart gaan ze buiten spelen tot het donker wordt.",
+  "questions": [
+   {
+    "question": "Hoe oud wordt Jet?",
+    "options": [
+     "Vijf",
+     "Zeven",
+     "Negen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Welk spel spelen ze?",
+    "options": [
+     "Stoelendans",
+     "Schaken",
+     "Voetbal"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom zegt Jet haar wens niet?",
+    "options": [
+     "Omdat ze hem vergeten is",
+     "Omdat hij dan niet uitkomt",
+     "Omdat niemand luistert"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 1,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-de-egel-in-de-winter",
+  "title": "De egel in de winter",
+  "text": "In de herfst eet de egel heel veel. Hij zoekt kevers, wormen en slakken. Zo wordt hij dik en rond. Dan zoekt hij een warm plekje onder een hoop bladeren. Daar rolt hij zich op en gaat slapen. De hele winter slaapt hij. Dat heet een winterslaap. Zijn hart klopt dan heel langzaam. In de lente wordt hij wakker. Hij is dan mager en heeft veel honger.",
+  "questions": [
+   {
+    "question": "Waarom eet de egel veel in de herfst?",
+    "options": [
+     "Om dik te worden voor de winter",
+     "Omdat hij jarig is",
+     "Omdat het koud is"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waar slaapt de egel?",
+    "options": [
+     "In een boom",
+     "Onder een hoop bladeren",
+     "In het water"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoe is de egel als hij in de lente wakker wordt?",
+    "options": [
+     "Dik en moe",
+     "Mager en hongerig",
+     "Groot en sterk"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 2,
+  "collection": "kort",
+  "topic": "dieren"
+ },
+ {
+  "id": "x-samen-een-hut-bouwen",
+  "title": "Samen een hut bouwen",
+  "text": "Daan en Sara bouwen een hut in het bos. Ze zoeken lange takken en zetten die tegen een boom. Daarna leggen ze er bladeren overheen. Het dak is klaar. Binnen is het een beetje donker. Sara heeft een zaklamp mee. Ze eten een boterham in de hut. Dan begint het te regenen. Maar in de hut blijven ze droog. Wat een goede hut, zegt Daan.",
+  "questions": [
+   {
+    "question": "Waar bouwen Daan en Sara een hut?",
+    "options": [
+     "In de tuin",
+     "In het bos",
+     "Op zolder"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat heeft Sara mee?",
+    "options": [
+     "Een zaklamp",
+     "Een radio",
+     "Een hamer"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat gebeurt er als het gaat regenen?",
+    "options": [
+     "Ze worden nat",
+     "Ze blijven droog in de hut",
+     "Ze rennen naar huis"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 1,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-de-reis-van-een-druppel",
+  "title": "De reis van een druppel",
+  "text": "Een druppel valt uit een wolk op een berg. Hij rolt naar beneden en komt in een beekje. Het beekje stroomt naar een rivier. De rivier gaat naar de zee. Daar schijnt de zon op het water. De druppel wordt warm en stijgt op als damp. Hoog in de lucht wordt het koud. De damp wordt weer een druppel in een wolk. En dan valt hij opnieuw naar beneden. Zo gaat het altijd rond.",
+  "questions": [
+   {
+    "question": "Waar komt de druppel eerst terecht?",
+    "options": [
+     "In zee",
+     "Op een berg",
+     "In een glas"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat gebeurt er als de zon op de zee schijnt?",
+    "options": [
+     "De druppel bevriest",
+     "De druppel stijgt op als damp",
+     "De druppel wordt zout"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat betekent zo gaat het altijd rond?",
+    "options": [
+     "De druppel stopt nooit met reizen",
+     "De druppel draait rondjes in de zee",
+     "De aarde is rond"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 2,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-pip-de-pony",
+  "title": "Pip de pony",
+  "text": "Op de manege woont een kleine pony. Hij heet Pip. Pip is bruin met een witte vlek op zijn neus. Elke zaterdag komt Emma om op hem te rijden. Eerst borstelt ze zijn vacht. Dan krijgt Pip een wortel. Samen lopen ze rondjes in de bak. Soms wil Pip niet verder. Dan praat Emma zacht tegen hem. En dan loopt hij toch weer mee.",
+  "questions": [
+   {
+    "question": "Welke kleur heeft Pip?",
+    "options": [
+     "Zwart",
+     "Bruin met een witte vlek",
+     "Wit"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat doet Emma eerst?",
+    "options": [
+     "Ze borstelt zijn vacht",
+     "Ze gaat meteen rijden",
+     "Ze geeft hem water"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat doet Emma als Pip niet verder wil?",
+    "options": [
+     "Ze wordt boos",
+     "Ze praat zacht tegen hem",
+     "Ze gaat naar huis"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 1,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-de-maan-verandert-van-vorm",
+  "title": "De maan verandert van vorm",
+  "text": "Soms zie je een ronde maan. Soms zie je maar een klein stukje. Hoe kan dat? De maan geeft zelf geen licht. De zon schijnt op de maan. Wij zien het deel van de maan waar de zon op schijnt. De maan draait in een maand om de aarde heen. Daardoor zien wij steeds een ander stukje van de verlichte kant. Bij volle maan zien we de hele kant. Bij nieuwe maan zien we bijna niets.",
+  "questions": [
+   {
+    "question": "Geeft de maan zelf licht?",
+    "options": [
+     "Ja",
+     "Nee, de zon schijnt erop",
+     "Alleen 's winters"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoe lang doet de maan over een rondje om de aarde?",
+    "options": [
+     "Een dag",
+     "Een maand",
+     "Een jaar"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat zien we bij volle maan?",
+    "options": [
+     "De hele verlichte kant",
+     "Bijna niets",
+     "Een klein stukje"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids6-9",
+  "level": 2,
+  "collection": "kort",
+  "topic": "ruimte"
+ },
+ {
+  "id": "x-het-geheim-van-de-oude-vuurtorenwachter",
+  "title": "Het geheim van de oude vuurtorenwachter",
+  "text": "Op het eiland woonde vroeger een vuurtorenwachter die Kees heette. Elke avond klom hij de honderdtwintig treden op om de lamp aan te steken. Kinderen op het eiland zeiden dat hij een geheim had. Hij kwam namelijk elke ochtend beneden met zand aan zijn laarzen, terwijl de vuurtoren midden op een rots stond.\n\nOp een dag besloot Fenna hem te volgen. Vroeg in de ochtend zag ze Kees naar het strand lopen met een emmer. Hij bukte en raapte iets op. Toen ze dichterbij kwam, zag ze het: hij verzamelde plastic en touw dat was aangespoeld. Met al het plastic kunnen vogels verstrikt raken, zei hij. Dus ruim ik het elke dag op.\n\nVanaf die dag liep Fenna elke zaterdag mee. Al snel kwamen er meer kinderen. Het geheim van de vuurtorenwachter was helemaal geen geheim meer, maar een club van strandjutters.",
+  "questions": [
+   {
+    "question": "Waarom dachten de kinderen dat Kees een geheim had?",
+    "options": [
+     "Omdat hij nooit sliep",
+     "Omdat hij elke ochtend zand aan zijn laarzen had",
+     "Omdat hij een schat had",
+     "Omdat hij niet praatte"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat deed Kees op het strand?",
+    "options": [
+     "Schelpen zoeken",
+     "Plastic en touw opruimen",
+     "Vissen",
+     "Zandkastelen bouwen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat ontstond er aan het einde?",
+    "options": [
+     "Een club van strandjutters",
+     "Een nieuwe vuurtoren",
+     "Een ruzie",
+     "Een visserswinkel"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-waarom-zebra-s-strepen-hebben",
+  "title": "Waarom zebra's strepen hebben",
+  "text": "Geen enkele zebra heeft dezelfde strepen. Het patroon is net zo uniek als een vingerafdruk bij mensen. Maar waarom heeft een zebra eigenlijk strepen? Wetenschappers hebben daar lang over gedaan.\n\nEen oud idee was dat de strepen leeuwen in de war brengen. Als een kudde zebra's wegrent, lopen al die strepen door elkaar, en is het moeilijk om één zebra te volgen. Maar tegenwoordig denken veel onderzoekers dat er een andere reden belangrijker is: vliegen.\n\nIn Afrika leven bijtende vliegen die ziektes kunnen overbrengen. Onderzoekers deden een proef met paarden die jassen met zebrastrepen droegen. Er landden veel minder vliegen op de gestreepte jassen dan op effen jassen. De strepen lijken de ogen van de vliegen te verwarren, waardoor ze niet goed kunnen landen.\n\nMisschien helpen de strepen ook om koel te blijven in de hete zon. Het kan dus goed zijn dat strepen meerdere voordelen hebben tegelijk.",
+  "questions": [
+   {
+    "question": "Wat is bijzonder aan het patroon van elke zebra?",
+    "options": [
+     "Het is altijd hetzelfde",
+     "Het is uniek, zoals een vingerafdruk",
+     "Het verandert elke week",
+     "Het is alleen zwart"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat bleek uit de proef met de paarden?",
+    "options": [
+     "Er landden minder vliegen op gestreepte jassen",
+     "Paarden houden van strepen",
+     "De jassen waren te warm",
+     "Vliegen houden van strepen"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat is de conclusie van de tekst?",
+    "options": [
+     "Strepen hebben geen nut",
+     "Strepen hebben misschien meerdere voordelen tegelijk",
+     "Strepen zijn alleen mooi",
+     "Zebra's verven hun strepen"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "dieren"
+ },
+ {
+  "id": "x-de-klas-van-meester-bram",
+  "title": "De klas van meester Bram",
+  "text": "Meester Bram had een bijzonder idee. Elke vrijdag mocht een ander kind uit groep zeven een half uur les geven over iets waar het goed in was. Yara begon. Ze liet zien hoe je een vriendschapsarmband knoopt. Iedereen, zelfs de jongens die eerst zeiden dat het saai was, wilde er een maken.\n\nDe week erna was Tim aan de beurt. Tim zei in de klas bijna nooit iets. Hij kwam met een doos vol stenen. Het waren stenen die hij op vakantie had gevonden. Hij vertelde hoe je kunt zien welke steen van een vulkaan komt en welke uit een rivier. Iedereen luisterde. Er kwamen zoveel vragen dat de les uitliep.\n\nNa afloop zei meester Bram: jullie kunnen allemaal meer dan je denkt. Tim bloosde, maar hij glimlachte ook. De maandag daarna stak hij voor het eerst zijn vinger op bij rekenen.",
+  "questions": [
+   {
+    "question": "Wat mocht elk kind op vrijdag doen?",
+    "options": [
+     "Een half uur les geven",
+     "Vroeg naar huis",
+     "Een film kiezen",
+     "Buiten spelen"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarover gaf Tim les?",
+    "options": [
+     "Over armbanden",
+     "Over stenen",
+     "Over voetbal",
+     "Over dinosaurussen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat veranderde er bij Tim?",
+    "options": [
+     "Hij stak voor het eerst zijn vinger op bij rekenen",
+     "Hij ging naar een andere school",
+     "Hij werd boos",
+     "Hij stopte met stenen verzamelen"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-hoe-een-vulkaan-uitbarst",
+  "title": "Hoe een vulkaan uitbarst",
+  "text": "Diep onder de grond is het zo heet dat steen smelt. Die gesmolten steen heet magma. Magma is lichter dan het vaste gesteente eromheen, en daarom wil het omhoog. Op sommige plekken zit er een zwakke plek in de aardkorst. Daar verzamelt het magma zich in een grote ruimte, de magmakamer.\n\nIn het magma zitten gassen, net zoals er prik in een fles frisdrank zit. Zolang de druk hoog is, blijven die gassen opgelost. Maar als het magma steeds hoger komt, neemt de druk af en vormen de gassen bellen. De druk bouwt zich op, tot het magma naar buiten spuit. Dat is een uitbarsting.\n\nZodra het magma aan de oppervlakte komt, heet het lava. Lava kan wel duizend graden heet zijn. Sommige vulkanen stoten ook enorme wolken as uit, die kilometers hoog kunnen komen.\n\nWetenschappers houden actieve vulkanen goed in de gaten. Ze meten kleine aardbevingen en veranderingen in de grond. Zo kunnen ze mensen vaak op tijd waarschuwen.",
+  "questions": [
+   {
+    "question": "Hoe heet gesmolten steen onder de grond?",
+    "options": [
+     "Lava",
+     "Magma",
+     "As",
+     "Kolen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarmee vergelijkt de tekst de gassen in magma?",
+    "options": [
+     "Met prik in frisdrank",
+     "Met rook van een vuur",
+     "Met wind",
+     "Met stoom uit een pan"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Hoe kunnen wetenschappers mensen op tijd waarschuwen?",
+    "options": [
+     "Door kleine aardbevingen en veranderingen in de grond te meten",
+     "Door naar de lucht te kijken",
+     "Door de lava aan te raken",
+     "Door te raden"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-de-speurtocht-van-ravi",
+  "title": "De speurtocht van Ravi",
+  "text": "Ravi vond onder zijn kussen een briefje. Er stond: zoek waar het brood woont. Ravi dacht na en rende naar de keuken. In de broodtrommel lag een tweede briefje: kijk waar je voeten 's nachts slapen. Dat moest bij zijn schoenen zijn! Naast zijn sneakers in de gang lag weer een briefje: waar de bloemen water drinken.\n\nRavi liep de tuin in naar de regenton. Aan de rand hing een klein zakje aan een touwtje. Daarin zat het laatste briefje en een sleuteltje. Het briefje zei: open wat al lang op zolder staat.\n\nOp zolder stond een oude houten kist van zijn opa. Het sleuteltje paste precies. In de kist lag een verrekijker, een kompas en een kaart van het bos achter het huis. Op de kaart stond een kruisje. Onder de kaart had zijn moeder geschreven: gefeliciteerd, zaterdag gaan we samen op ontdekkingstocht.",
+  "questions": [
+   {
+    "question": "Waar lag het eerste briefje?",
+    "options": [
+     "Onder zijn kussen",
+     "In de broodtrommel",
+     "In de tuin",
+     "Op zolder"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat betekende waar je voeten 's nachts slapen?",
+    "options": [
+     "Zijn bed",
+     "Zijn schoenen",
+     "Zijn sokken",
+     "De badkamer"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat zat er in de kist?",
+    "options": [
+     "Snoep en speelgoed",
+     "Een verrekijker, een kompas en een kaart",
+     "Oude kleren",
+     "Een puppy"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-waarom-je-gaapt-als-je-moe-bent",
+  "title": "Waarom je gaapt als je moe bent",
+  "text": "Aan het einde van een lange dag gaap je vaak. Ook als je je verveelt, of 's ochtends vroeg. Waarom eigenlijk?\n\nWetenschappers weten het nog niet helemaal zeker. Een idee is dat gapen je hersenen helpt om af te koelen. Als je gaapt, open je je mond heel wijd en adem je veel lucht in. Je kaak rekt uit en er stroomt extra bloed naar je hoofd. Een warm brein werkt minder goed, en gapen zou het een beetje verfrissen. Daardoor ben je daarna weer even alert.\n\nEen ander bijzonder ding: gapen is besmettelijk. Als je iemand ziet gapen, moet je vaak zelf ook gapen. Dat gebeurt vooral bij mensen die je goed kent, zoals familie en vrienden. Honden gapen soms mee met hun baasje.\n\nBaby's gapen al in de buik van hun moeder. Maar besmettelijk gapen leren kinderen pas als ze een paar jaar oud zijn, ongeveer tegelijk met dat ze beter begrijpen hoe anderen zich voelen.",
+  "questions": [
+   {
+    "question": "Wat is een idee over waarom we gapen?",
+    "options": [
+     "Om de hersenen af te koelen",
+     "Om honger te krijgen",
+     "Om beter te zien",
+     "Om harder te praten"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Bij wie gaap je vaker mee?",
+    "options": [
+     "Bij mensen die je goed kent",
+     "Bij vreemden",
+     "Bij dieren in de dierentuin",
+     "Bij niemand"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wanneer leren kinderen besmettelijk gapen?",
+    "options": [
+     "Al in de buik",
+     "Als ze een paar jaar oud zijn",
+     "Pas als ze volwassen zijn",
+     "Nooit"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "lichaam"
+ },
+ {
+  "id": "x-het-zwerfkatje",
+  "title": "Het zwerfkatje",
+  "text": "Het regende al de hele dag toen Lina een zacht gemiauw hoorde. Onder de bank bij de bushalte zat een klein grijs katje. Het was drijfnat en rilde. Lina nam het voorzichtig op en stopte het onder haar jas.\n\nThuis maakte ze een doos met een oude handdoek erin. Haar vader belde de dierenarts. Die vertelde dat ze eerst moesten kijken of het katje een chip had. Misschien was het van iemand anders en werd het gemist.\n\nDe volgende dag bleek het katje geen chip te hebben. Niemand had het als vermist opgegeven. De dierenarts controleerde of het gezond was en gaf het een prik. Het katje was een meisje van ongeveer tien weken.\n\nLina's ouders keken elkaar aan. Als je belooft dat je elke dag helpt met eten geven en de kattenbak schoonmaken, zei haar moeder, dan mag ze blijven. Lina beloofde het meteen. Ze noemde het katje Druppel, omdat ze haar in de regen had gevonden.",
+  "questions": [
+   {
+    "question": "Waar vond Lina het katje?",
+    "options": [
+     "In de tuin",
+     "Onder de bank bij de bushalte",
+     "Op school",
+     "In een boom"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom keek de dierenarts of het katje een chip had?",
+    "options": [
+     "Om te kijken of het van iemand anders was",
+     "Om te zien hoe oud het was",
+     "Om het te wegen",
+     "Om het een naam te geven"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom heet het katje Druppel?",
+    "options": [
+     "Omdat ze graag drinkt",
+     "Omdat Lina haar in de regen vond",
+     "Omdat ze grijs is",
+     "Omdat ze klein is"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-hoe-ridders-leefden",
+  "title": "Hoe ridders leefden",
+  "text": "In de middeleeuwen werden jongens uit rijke families opgeleid tot ridder. Dat begon al als ze ongeveer zeven jaar waren. Ze gingen dan als page wonen op het kasteel van een andere ridder. Daar leerden ze goede manieren, paardrijden en de eerste dingen over vechten.\n\nRond hun veertiende werden ze schildknaap. Een schildknaap hielp een ridder met zijn wapenrusting en zijn paard, en ging mee naar toernooien en soms naar een oorlog. Zo leerden ze het vak in de praktijk.\n\nAls een schildknaap ongeveer twintig was en bewezen had dat hij dapper en trouw was, kon hij tot ridder worden geslagen. De heer tikte hem dan met een zwaard op zijn schouders.\n\nEen harnas was zwaar, soms wel twintig tot dertig kilo. Toch konden goed getrainde ridders erin rennen en op hun paard springen. Ridders moesten zich houden aan regels: ze moesten zwakkeren beschermen, eerlijk zijn en hun heer trouw blijven. In het echt hielden niet alle ridders zich daaraan.",
+  "questions": [
+   {
+    "question": "Hoe oud waren jongens ongeveer als ze page werden?",
+    "options": [
+     "Zeven jaar",
+     "Veertien jaar",
+     "Twintig jaar",
+     "Dertig jaar"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat deed een schildknaap?",
+    "options": [
+     "Hij kookte in het kasteel",
+     "Hij hielp een ridder met zijn wapenrusting en paard",
+     "Hij bouwde kastelen",
+     "Hij schreef boeken"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoe zwaar kon een harnas zijn?",
+    "options": [
+     "Twee kilo",
+     "Twintig tot dertig kilo",
+     "Honderd kilo",
+     "Een halve kilo"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "geschiedenis"
+ },
+ {
+  "id": "x-de-robot-van-sem",
+  "title": "De robot van Sem",
+  "text": "Voor de techniekwedstrijd op school wilde Sem een robot bouwen die zelf de weg vond. Zijn oom, die programmeur was, hielp hem met een bouwpakket. De robot had twee wieltjes, een batterij en een sensor aan de voorkant die kon voelen of er iets in de weg stond.\n\nSem schreef het programma op de laptop. Hij gebruikte blokjes die je aan elkaar klikt, zodat je niet alles hoeft te typen. Rijd vooruit, stond er. Als de sensor iets ziet, draai dan naar rechts.\n\nDe eerste keer reed de robot tegen de bank en bleef hij staan. De sensor stond te laag. Sem schoof hem een stukje omhoog. De tweede keer draaide de robot steeds rondjes. Hij had vergeten dat de robot na het draaien weer vooruit moest.\n\nNa vijf pogingen reed de robot netjes om alle stoelen in de kamer heen. Op de wedstrijd won Sem de tweede prijs. Het belangrijkste wat ik heb geleerd, vertelde hij de jury, is dat je van elke fout iets leert.",
+  "questions": [
+   {
+    "question": "Wat kon de sensor van de robot?",
+    "options": [
+     "Voelen of er iets in de weg stond",
+     "Praten",
+     "Licht geven",
+     "Foto's maken"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat ging er mis bij de tweede poging?",
+    "options": [
+     "De robot reed tegen de bank",
+     "De robot draaide steeds rondjes",
+     "De batterij was leeg",
+     "De wieltjes vielen eraf"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat zei Sem tegen de jury?",
+    "options": [
+     "Dat hij het niet meer wil doen",
+     "Dat je van elke fout iets leert",
+     "Dat zijn oom alles had gedaan",
+     "Dat de wedstrijd oneerlijk was"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "techniek"
+ },
+ {
+  "id": "x-leven-op-de-noordpool",
+  "title": "Leven op de Noordpool",
+  "text": "Op de Noordpool is geen land, alleen een dikke laag ijs die op de oceaan drijft. In de winter is het er maandenlang donker, en kan het wel veertig graden vriezen. In de zomer gaat de zon juist wekenlang niet onder.\n\nToch leven er dieren. De bekendste is de ijsbeer. Hij heeft een dikke laag vet en een warme vacht. Onder zijn witte vacht is zijn huid zwart, zodat hij de warmte van de zon goed opneemt. IJsberen jagen vooral op zeehonden, die door gaten in het ijs komen ademen.\n\nOok poolvossen leven er. In de winter hebben ze een witte vacht, in de zomer een bruingrijze. Zo vallen ze minder op.\n\nDoor de opwarming van de aarde wordt het ijs op de Noordpool elk jaar dunner, en smelt het in de zomer verder weg. Voor ijsberen is dat een probleem, omdat ze het ijs nodig hebben om op zeehonden te jagen. Wetenschappers houden daarom goed bij hoe het met het ijs gaat.",
+  "questions": [
+   {
+    "question": "Waarop ligt het ijs van de Noordpool?",
+    "options": [
+     "Op land",
+     "Op de oceaan",
+     "Op een berg",
+     "Op zand"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Welke kleur heeft de huid van een ijsbeer?",
+    "options": [
+     "Wit",
+     "Roze",
+     "Zwart",
+     "Bruin"
+    ],
+    "answer": 2
+   },
+   {
+    "question": "Waarom is het smelten van het ijs een probleem voor ijsberen?",
+    "options": [
+     "Omdat ze het ijs nodig hebben om op zeehonden te jagen",
+     "Omdat ze niet kunnen zwemmen",
+     "Omdat ze het koud krijgen",
+     "Omdat ze ijs eten"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-het-museum-van-de-toekomst",
+  "title": "Het museum van de toekomst",
+  "text": "Voor een schoolopdracht moest de klas van juf Anouk een museum bedenken dat in het jaar 2100 zou bestaan. Wat zou daar te zien zijn van nu?\n\nMila koos een smartphone. In de toekomst hebben mensen misschien een chip of een bril, schreef ze op het bordje. Deze platte doos gebruikten mensen vroeger om te bellen en filmpjes te kijken. Ze zaten er uren per dag naar te staren.\n\nOmar bracht een benzinepomp mee, in de vorm van een tekening. Vroeger reden auto's op benzine, schreef hij. Dat stonk en was slecht voor de lucht. Nu rijden alle auto's elektrisch.\n\nJesse koos iets onverwachts: een papieren bibliotheekboek. Misschien lezen mensen in 2100 nog steeds boeken, zei hij. Sommige dingen blijven gewoon goed.\n\nJuf Anouk vond het een mooie opdracht. Om te weten wat er gaat veranderen, zei ze, moet je eerst goed kijken naar hoe het nu is. Daarna hingen ze alle bordjes op in de gang, zodat de hele school het museum kon bezoeken.",
+  "questions": [
+   {
+    "question": "In welk jaar zou het museum bestaan?",
+    "options": [
+     "In 2050",
+     "In 2100",
+     "In 3000",
+     "In 1900"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat koos Omar?",
+    "options": [
+     "Een smartphone",
+     "Een benzinepomp",
+     "Een boek",
+     "Een fiets"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat vond Jesse?",
+    "options": [
+     "Dat boeken zullen verdwijnen",
+     "Dat sommige dingen gewoon goed blijven",
+     "Dat alles verandert",
+     "Dat musea saai zijn"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-walvissen-die-zingen",
+  "title": "Walvissen die zingen",
+  "text": "Bultruggen zijn enorme walvissen, wel vijftien meter lang. Ze zijn beroemd om hun liederen. De mannetjes zingen lange reeksen geluiden: gekreun, gepiep en gebrom. Zo'n lied kan wel twintig minuten duren, en ze zingen het soms uren achter elkaar.\n\nHet bijzondere is dat alle mannetjes in hetzelfde gebied ongeveer hetzelfde lied zingen. En dat lied verandert langzaam. Elk jaar komen er nieuwe stukjes bij en verdwijnen er oude. Soms neemt een groep walvissen zelfs een heel nieuw lied over van walvissen uit een ander deel van de oceaan.\n\nWaarom ze zingen, weten onderzoekers nog niet zeker. Waarschijnlijk heeft het te maken met het vinden van een partner. Geluid reist onder water veel verder dan in de lucht, dus walvissen kunnen elkaar over grote afstanden horen.\n\nLawaai van schepen maakt het voor walvissen moeilijker om elkaar te horen. Daarom wordt er onderzocht hoe schepen stiller kunnen varen, zodat de liederen in de oceaan te horen blijven.",
+  "questions": [
+   {
+    "question": "Wie zingen de liederen bij de bultruggen?",
+    "options": [
+     "De vrouwtjes",
+     "De mannetjes",
+     "De jongen",
+     "Alle dolfijnen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat gebeurt er met het lied in de loop van de tijd?",
+    "options": [
+     "Het blijft altijd hetzelfde",
+     "Het verandert langzaam",
+     "Het wordt steeds korter",
+     "Het verdwijnt na een week"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom is lawaai van schepen een probleem?",
+    "options": [
+     "Omdat walvissen elkaar dan moeilijker horen",
+     "Omdat walvissen er bang van worden en stoppen met eten",
+     "Omdat het water warm wordt",
+     "Omdat de schepen zinken"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "dieren"
+ },
+ {
+  "id": "x-de-eerste-dag-op-de-nieuwe-school",
+  "title": "De eerste dag op de nieuwe school",
+  "text": "Esra was net verhuisd en moest naar een nieuwe school. Ze kende er niemand. De hele weg ernaartoe voelde haar buik alsof er vlinders in rondvlogen.\n\nIn de klas wees de juf haar een plek aan naast een meisje met een groene bril. Ik ben Fleur, fluisterde het meisje. Wil je mijn gum lenen? Esra knikte, ook al had ze zelf een gum.\n\nIn de pauze stond Esra eerst alleen bij het hek. Toen kwam Fleur naar haar toe met een springtouw. We hebben nog iemand nodig om te draaien, zei ze. Even later draaide Esra het touw, en daarna mocht ze zelf springen. Ze haalde vijfentwintig keer zonder fouten. Een paar kinderen klapten.\n\nAan het eind van de dag vroeg haar moeder hoe het was gegaan. Esra dacht even na. Best spannend, zei ze. Maar morgen wil ik weer. Fleur neemt haar nieuwe springtouw mee.",
+  "questions": [
+   {
+    "question": "Hoe voelde Esra zich op weg naar school?",
+    "options": [
+     "Blij en rustig",
+     "Zenuwachtig, met vlinders in haar buik",
+     "Boos",
+     "Moe"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom vroeg Fleur of Esra mee wilde doen in de pauze?",
+    "options": [
+     "Ze hadden nog iemand nodig om te draaien",
+     "Omdat de juf het zei",
+     "Omdat het regende",
+     "Omdat Esra een bal had"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Hoe keek Esra aan het eind terug op de dag?",
+    "options": [
+     "Ze wilde nooit meer",
+     "Best spannend, maar morgen wil ze weer",
+     "Ze vond het saai",
+     "Ze wilde terug naar haar oude school"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "verhaal"
+ },
+ {
+  "id": "x-wat-er-in-een-druppel-slootwater-leeft",
+  "title": "Wat er in een druppel slootwater leeft",
+  "text": "Een druppel slootwater lijkt heel gewoon. Maar onder een microscoop zie je een drukke wereld. Er zwemmen piepkleine diertjes rond die je met het blote oog niet kunt zien.\n\nJe ziet bijvoorbeeld pantoffeldiertjes. Ze bestaan uit maar één cel en hebben de vorm van een pantoffel. Hun lichaam is bedekt met duizenden kleine haartjes die heen en weer slaan, waardoor ze vooruit bewegen. Ook zie je watervlooien. Die zijn net groot genoeg om als een stipje zichtbaar te zijn. Onder de microscoop zie je dat ze een doorzichtig lichaam hebben, zodat je zelfs hun hartje kunt zien kloppen.\n\nDaarnaast zijn er groene algen. Ze maken met zonlicht hun eigen voedsel, net als planten. Veel van de kleine diertjes eten die algen.\n\nDeze kleine wezens zijn belangrijk. Ze zijn voedsel voor visjes en larven, die weer worden gegeten door grotere vissen en vogels. Zonder de onzichtbare wereld in de sloot zou de hele voedselketen niet werken. Met een simpele microscoop kun je zelf op onderzoek uit.",
+  "questions": [
+   {
+    "question": "Hoe bewegen pantoffeldiertjes vooruit?",
+    "options": [
+     "Met vinnen",
+     "Met duizenden kleine haartjes",
+     "Met pootjes",
+     "Met de wind mee"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat kun je bij een watervlo zien door zijn doorzichtige lichaam?",
+    "options": [
+     "Zijn hartje dat klopt",
+     "Zijn botten",
+     "Zijn tanden",
+     "Niets"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom zijn deze kleine wezens belangrijk?",
+    "options": [
+     "Ze maken de sloot vies",
+     "Ze zijn voedsel voor visjes en larven",
+     "Ze maken geluid",
+     "Ze houden het water warm"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "kids9-12",
+  "level": 2,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-waarom-de-afsluitdijk-er-ligt",
+  "title": "Waarom de Afsluitdijk er ligt",
+  "text": "In 1916 overstroomde een groot deel van Noord-Holland. Zware stormen joegen het water van de Zuiderzee over de dijken, en duizenden mensen verloren hun huis. Na die ramp besloot de regering dat het anders moest. Ingenieur Cornelis Lely had al jaren een plan klaarliggen: de Zuiderzee afsluiten met een lange dam.\n\nIn 1927 begon de bouw. Arbeiders werkten met klei, zand en grote matten van wilgentakken. Er waren nog weinig machines, dus veel werk gebeurde met de hand. In 1932 werd het laatste gat gedicht. De dijk was ruim dertig kilometer lang.\n\nDoor de afsluiting veranderde de zoute zee langzaam in een zoetwatermeer: het IJsselmeer. Dat had grote gevolgen. De kustlijn werd veel korter, dus er waren minder dijken nodig om het land te beschermen. Ook ontstond er een enorme voorraad zoet water voor landbouw en drinkwater.\n\nNiet iedereen was blij. Vissers in dorpen als Volendam en Urk zagen hun vangst veranderen, omdat zeevis verdween. Toch geldt de Afsluitdijk nog altijd als een van de belangrijkste waterwerken van Nederland. Tegenwoordig wordt hij versterkt, zodat hij ook in de toekomst hogere golven kan tegenhouden.",
+  "questions": [
+   {
+    "question": "Welke gebeurtenis gaf de doorslag om de Zuiderzee af te sluiten?",
+    "options": [
+     "Een droge zomer",
+     "Een overstroming in 1916",
+     "Een oorlog met Engeland",
+     "Een tekort aan vis"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat ontstond er achter de dijk?",
+    "options": [
+     "Een zoutwaterbaai",
+     "Een nieuw eiland",
+     "Een zoetwatermeer",
+     "Een haven voor schepen"
+    ],
+    "answer": 2
+   },
+   {
+    "question": "Wie merkten vooral nadelen van de afsluiting?",
+    "options": [
+     "Boeren",
+     "Vissers",
+     "Toeristen",
+     "Ingenieurs"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "geschiedenis"
+ },
+ {
+  "id": "x-het-geheim-van-zuurdesem",
+  "title": "Het geheim van zuurdesem",
+  "text": "Brood bakken kan zonder een zakje gist uit de winkel. Al duizenden jaren gebruiken bakkers zuurdesem: een mengsel van meel en water waarin wilde gisten en melkzuurbacteriën leven. Die micro-organismen zitten van nature op het graan en in de lucht.\n\nWie een zuurdesem wil maken, mengt meel met water en laat het een paar dagen staan. Elke dag gooi je een deel weg en voeg je vers meel en water toe. Langzaam krijgen de goede bacteriën en gisten de overhand. Het mengsel gaat bubbelen en ruikt licht zuur, een beetje zoals yoghurt.\n\nDe gisten maken gas, waardoor het deeg rijst. De bacteriën maken zuren, die het brood zijn kenmerkende smaak geven. Omdat dit proces langzaam gaat, moet zuurdesemdeeg vaak uren rijzen, soms zelfs een hele nacht in de koelkast.\n\nDat geduld wordt beloond. Zuurdesembrood heeft een stevige korst, een smaakvolle kruim en blijft langer vers dan veel ander brood. Sommige mensen vinden het ook beter verteerbaar, omdat de lange rijstijd een deel van het meel al afbreekt. Een goed verzorgde desem kan jarenlang meegaan en wordt soms van generatie op generatie doorgegeven.",
+  "questions": [
+   {
+    "question": "Waar komen de gisten in zuurdesem vandaan?",
+    "options": [
+     "Uit een zakje uit de winkel",
+     "Van nature van het graan en uit de lucht",
+     "Uit melk",
+     "Uit suiker"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waardoor krijgt zuurdesembrood zijn zure smaak?",
+    "options": [
+     "Door azijn",
+     "Door de zuren die bacteriën maken",
+     "Door citroensap",
+     "Door lang bakken"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom moet zuurdesemdeeg vaak lang rijzen?",
+    "options": [
+     "Omdat het proces langzaam gaat",
+     "Omdat de oven klein is",
+     "Omdat er geen water in zit",
+     "Omdat het deeg te warm is"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "eten"
+ },
+ {
+  "id": "x-wolven-terug-in-nederland",
+  "title": "Wolven terug in Nederland",
+  "text": "Meer dan honderd jaar was de wolf verdwenen uit Nederland. Ze werden bejaagd omdat ze vee aanvielen, en er was steeds minder ruimte voor wilde dieren. Maar sinds een paar jaar zijn ze terug. Wolven uit Duitsland trokken over de grens en vestigden zich op de Veluwe en in andere natuurgebieden.\n\nDe terugkeer is geen toeval. In Europa zijn wolven beschermd, en in de natuurgebieden is volop voedsel, zoals herten en wilde zwijnen. Een wolf kan tientallen kilometers per dag afleggen, dus nieuwe gebieden zijn snel bereikt.\n\nVoor de natuur heeft de wolf voordelen. Hij jaagt vooral op zwakke en zieke dieren, en herten gaan zich anders gedragen als er wolven in de buurt zijn. Daardoor krijgen jonge bomen en planten meer kans om te groeien.\n\nVoor boeren met schapen is de komst lastiger. Een wolf maakt geen onderscheid tussen een ree en een schaap dat onbeschermd in de wei staat. Daarom worden er stevige hekken met stroomdraad geplaatst, en krijgen boeren een vergoeding als er toch dieren worden gedood. Samenleven met de wolf vraagt dus om aanpassing, van mensen en van het landschap.",
+  "questions": [
+   {
+    "question": "Waar kwamen de eerste wolven vandaan?",
+    "options": [
+     "Uit een dierentuin",
+     "Uit Duitsland",
+     "Uit Frankrijk",
+     "Uit Engeland"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Op welke dieren jaagt de wolf volgens de tekst vooral?",
+    "options": [
+     "Op gezonde, sterke dieren",
+     "Op vogels",
+     "Op zwakke en zieke dieren",
+     "Op vissen"
+    ],
+    "answer": 2
+   },
+   {
+    "question": "Hoe beschermen boeren hun schapen?",
+    "options": [
+     "Met hekken met stroomdraad",
+     "Met vogelverschrikkers",
+     "Door de schapen binnen te houden in de zomer",
+     "Met geluidsinstallaties"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-de-uitvinding-van-de-fiets",
+  "title": "De uitvinding van de fiets",
+  "text": "De eerste fiets had geen trappers. In 1817 bouwde de Duitser Karl Drais een loopfiets van hout: je zat erop en zette je af met je voeten. Het idee was eenvoudig, maar het werkte. Op een goede weg ging je sneller dan lopend.\n\nIn de decennia daarna probeerden uitvinders de loopfiets te verbeteren. Rond 1860 kwamen er trappers aan het voorwiel. Hoe groter het voorwiel, hoe verder je kwam met één omwenteling. Zo ontstond de hoge bi, met een reusachtig voorwiel en een klein achterwiel. Snel was hij wel, maar ook gevaarlijk: wie viel, viel van grote hoogte.\n\nDe echte doorbraak kwam rond 1885 met de veiligheidsfiets. Die had twee even grote wielen en een ketting die het achterwiel aandreef. Kort daarna kwamen luchtbanden, die de rit veel comfortabeler maakten.\n\nDaarmee lag de basis van de fiets zoals we hem nu kennen. In Nederland werd de fiets al snel populair, omdat het land vlak is en de afstanden kort zijn. Tegenwoordig zijn er in Nederland meer fietsen dan inwoners.",
+  "questions": [
+   {
+    "question": "Wat was bijzonder aan de eerste fiets van Karl Drais?",
+    "options": [
+     "Hij had een motor",
+     "Hij had geen trappers",
+     "Hij had drie wielen",
+     "Hij was van metaal"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat was het nadeel van de hoge bi?",
+    "options": [
+     "Hij was te langzaam",
+     "Hij was gevaarlijk door de hoogte",
+     "Hij was te duur",
+     "Hij had geen zadel"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat was nieuw aan de veiligheidsfiets?",
+    "options": [
+     "Twee even grote wielen en een ketting",
+     "Een groot voorwiel",
+     "Houten wielen",
+     "Een motor"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "techniek"
+ },
+ {
+  "id": "x-de-reis-van-een-kopje-koffie",
+  "title": "De reis van een kopje koffie",
+  "text": "Het kopje koffie dat je 's ochtends drinkt, heeft een lange reis achter de rug. Koffie groeit aan struiken in tropische landen, zoals Brazilië, Vietnam, Colombia en Ethiopië. De vruchten van de struik lijken op kleine rode kersen. In elke vrucht zitten meestal twee bonen.\n\nNa de oogst worden de bonen uit de vruchten gehaald en gedroogd. Op dat moment zijn ze nog groen en ruiken ze nauwelijks naar koffie. De bonen worden in zakken verpakt en per schip naar andere werelddelen gebracht. Rotterdam is een van de havens waar veel koffie binnenkomt.\n\nPas in het land waar de koffie wordt gedronken, worden de bonen meestal gebrand. Door de hitte veranderen ze van kleur en ontstaan honderden geurstoffen. Hoe langer het branden duurt, hoe donkerder en bitterder de koffie wordt.\n\nVoor de boeren is koffie vaak een onzeker bestaan. De prijs op de wereldmarkt schommelt sterk, en slecht weer kan een oogst verwoesten. Keurmerken proberen boeren een eerlijkere prijs te geven. Wie de volgende keer koffie drinkt, heeft dus een product in handen waar veel mensen aan hebben gewerkt.",
+  "questions": [
+   {
+    "question": "Hoe zien koffiebonen eruit direct na het drogen?",
+    "options": [
+     "Donkerbruin en geurig",
+     "Groen en bijna zonder geur",
+     "Rood en zacht",
+     "Zwart en glanzend"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waar worden de bonen meestal gebrand?",
+    "options": [
+     "Op de plantage",
+     "Aan boord van het schip",
+     "In het land waar de koffie wordt gedronken",
+     "In Ethiopië"
+    ],
+    "answer": 2
+   },
+   {
+    "question": "Waarom is koffie voor boeren vaak een onzeker bestaan?",
+    "options": [
+     "Omdat koffie snel bederft",
+     "Omdat de prijs sterk schommelt en het weer een oogst kan verwoesten",
+     "Omdat niemand koffie wil kopen",
+     "Omdat koffie maar eens in de tien jaar groeit"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "economie"
+ },
+ {
+  "id": "x-hoe-een-vliegtuig-blijft-vliegen",
+  "title": "Hoe een vliegtuig blijft vliegen",
+  "text": "Een groot passagiersvliegtuig weegt honderden tonnen. Toch blijft het in de lucht. Dat komt door de vorm van de vleugels en de snelheid waarmee het vliegtuig door de lucht beweegt.\n\nEen vleugel is zo gevormd en staat zo schuin dat de lucht eromheen naar beneden wordt afgebogen. Volgens een natuurwet van Newton hoort bij elke actie een even grote tegenkracht. Als de vleugel lucht naar beneden duwt, duwt de lucht de vleugel omhoog. Tegelijk stroomt de lucht over de bovenkant sneller dan onder de vleugel, waardoor de druk boven lager is. Samen zorgen die effecten voor lift: de kracht die het vliegtuig omhoog houdt.\n\nLift ontstaat alleen bij voldoende snelheid. Daarom moet een vliegtuig eerst hard over de startbaan rijden voordat het kan opstijgen. De motoren leveren de stuwkracht om vooruit te komen en de luchtweerstand te overwinnen.\n\nBij het landen doet de piloot het omgekeerde. Het vliegtuig gaat langzamer, en met kleppen aan de vleugels wordt de vorm aangepast, zodat er ook bij lage snelheid nog genoeg lift is. Zo kan het veilig en rustig aan de grond komen.",
+  "questions": [
+   {
+    "question": "Hoe heet de kracht die het vliegtuig omhoog houdt?",
+    "options": [
+     "Stuwkracht",
+     "Lift",
+     "Zwaartekracht",
+     "Weerstand"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom moet een vliegtuig hard over de startbaan rijden?",
+    "options": [
+     "Omdat lift alleen bij voldoende snelheid ontstaat",
+     "Om de motoren op te warmen",
+     "Om brandstof te besparen",
+     "Om de passagiers te laten wennen"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarvoor gebruikt de piloot kleppen bij het landen?",
+    "options": [
+     "Om sneller te gaan",
+     "Om genoeg lift te houden bij lage snelheid",
+     "Om de motoren uit te zetten",
+     "Om het geluid te dempen"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "techniek"
+ },
+ {
+  "id": "x-het-brein-van-een-puber",
+  "title": "Het brein van een puber",
+  "text": "Voel je je soms moe in de ochtend en klaarwakker om middernacht? Dat ligt niet alleen aan je telefoon. Tijdens de puberteit verschuift je biologische klok. Je lichaam maakt het slaaphormoon melatonine later op de avond aan, waardoor je later slaperig wordt.\n\nOok je hersenen veranderen flink. Het deel dat plannen en afwegen regelt, vlak achter je voorhoofd, is pas rond je vijfentwintigste helemaal volgroeid. Het deel dat met gevoelens en beloning te maken heeft, is in de puberteit juist heel actief. Daardoor voelen spanning en nieuwe ervaringen extra aantrekkelijk.\n\nDat klinkt misschien als een nadeel, maar het heeft ook een functie. Pubers zijn nieuwsgierig, durven dingen te proberen en leren snel van anderen. Die eigenschappen helpen om zelfstandig te worden.\n\nWat kun je ermee? Weten hoe je brein werkt, helpt om slimme keuzes te maken. Zet bijvoorbeeld je telefoon een uur voor het slapen weg, zodat je makkelijker in slaap valt. En neem bij een grote beslissing even tijd, of vraag iemand om mee te denken. Je brein is volop in ontwikkeling, en dat maakt deze periode juist bijzonder.",
+  "questions": [
+   {
+    "question": "Waarom worden pubers later slaperig?",
+    "options": [
+     "Omdat ze meer eten",
+     "Omdat melatonine later op de avond wordt aangemaakt",
+     "Omdat ze minder bewegen",
+     "Omdat hun hersenen stoppen met groeien"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wanneer is het deel voor plannen en afwegen volgroeid?",
+    "options": [
+     "Rond je twaalfde",
+     "Rond je vijftiende",
+     "Rond je vijfentwintigste",
+     "Nooit"
+    ],
+    "answer": 2
+   },
+   {
+    "question": "Welke tip geeft de tekst?",
+    "options": [
+     "Zet je telefoon een uur voor het slapen weg",
+     "Blijf zo lang mogelijk op",
+     "Neem grote beslissingen altijd snel",
+     "Sla het ontbijt over"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "psychologie"
+ },
+ {
+  "id": "x-e-sport-spelen-als-beroep",
+  "title": "E-sport: spelen als beroep",
+  "text": "Twintig jaar geleden speelde bijna niemand videospellen voor geld. Nu vullen e-sporttoernooien hele stadions, en kijken miljoenen mensen online mee. Professionele gamers trainen dagelijks, hebben een coach en spelen in teams, net als voetballers.\n\nVoor een topspeler is snel reageren niet genoeg. Teams bespreken tactieken, bekijken beelden van tegenstanders en oefenen vaste strategieën. Communicatie is cruciaal: in een fractie van een seconde moet iedereen weten wat er gebeurt.\n\nDat klinkt als een droombaan, maar het is zwaar werk. Veel profs trainen acht tot tien uur per dag. Lang achter een scherm zitten kan klachten geven aan polsen, rug en ogen. Daarom besteden goede teams ook aandacht aan sport, voeding en slaap. Een fit lichaam helpt om scherp te blijven.\n\nBovendien is de carrière vaak kort. Veel spelers zijn halverwege de twintig al over hun hoogtepunt heen, omdat de reactiesnelheid afneemt en jongere spelers doorstromen. Wie slim is, bouwt daarom ook iets anders op, zoals een opleiding of werk als coach, commentator of maker van online video's. Gamen als beroep kan, maar het vraagt meer dan alleen goed zijn in een spel.",
+  "questions": [
+   {
+    "question": "Hoeveel uur per dag trainen veel profs?",
+    "options": [
+     "Een tot twee uur",
+     "Acht tot tien uur",
+     "Twintig uur",
+     "Alleen in het weekend"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom besteden goede teams aandacht aan sport en slaap?",
+    "options": [
+     "Omdat een fit lichaam helpt om scherp te blijven",
+     "Omdat het verplicht is",
+     "Omdat ze anders geen prijzen krijgen",
+     "Omdat het goed staat op foto's"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom is de carrière van een e-sporter vaak kort?",
+    "options": [
+     "Omdat spellen verboden worden",
+     "Omdat de reactiesnelheid afneemt en jongere spelers doorstromen",
+     "Omdat de prijzen laag zijn",
+     "Omdat stadions sluiten"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "sport"
+ },
+ {
+  "id": "x-de-deltawerken",
+  "title": "De Deltawerken",
+  "text": "In de nacht van 31 januari op 1 februari 1953 brak in Zeeland, Zuid-Holland en West-Brabant een ramp los. Een zware noordwesterstorm viel samen met springtij, en het water steeg hoger dan ooit gemeten. Dijken braken op tientallen plaatsen door. Meer dan achttienhonderd mensen kwamen om, en grote delen van het land stonden maandenlang onder water.\n\nKort na de ramp besloot de regering tot een ambitieus plan: de Deltawerken. Het idee was om de zeearmen in het zuidwesten af te sluiten, zodat de kustlijn veel korter en veiliger werd. In de decennia daarna werden dammen, sluizen en stormvloedkeringen gebouwd.\n\nHet bekendste onderdeel is de Oosterscheldekering. Oorspronkelijk zou de Oosterschelde helemaal dicht gaan. Maar vissers en natuurbeschermers maakten bezwaar, omdat het unieke getijdengebied met zout water dan zou verdwijnen. Daarom kwam er een kering met enorme schuiven die alleen bij storm worden gesloten. Zo bleef de natuur behouden en werd het land toch beschermd.\n\nDe Deltawerken werden in 1997 afgerond met de Maeslantkering bij Rotterdam. Ingenieurs uit de hele wereld komen kijken hoe Nederland zich tegen het water beschermt.",
+  "questions": [
+   {
+    "question": "Welke twee omstandigheden vielen samen in 1953?",
+    "options": [
+     "Een droogte en een hittegolf",
+     "Een zware storm en springtij",
+     "Een aardbeving en regen",
+     "Sneeuw en ijsgang"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom werd de Oosterschelde niet helemaal afgesloten?",
+    "options": [
+     "Omdat het te duur was",
+     "Door bezwaar van vissers en natuurbeschermers",
+     "Omdat de grond te zacht was",
+     "Omdat de scheepvaart erdoor moest"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wanneer worden de schuiven van de Oosterscheldekering gesloten?",
+    "options": [
+     "Elke nacht",
+     "Alleen bij storm",
+     "In de zomer",
+     "Nooit"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "geschiedenis"
+ },
+ {
+  "id": "x-waarom-zeewater-zout-is",
+  "title": "Waarom zeewater zout is",
+  "text": "Regenwater is zoet, rivierwater is zoet, en toch is de zee zout. Hoe kan dat? Het antwoord ligt in een heel langzaam proces dat al miljoenen jaren doorgaat.\n\nAls regen op het land valt, lost het kleine hoeveelheden mineralen op uit gesteente en bodem. Rivieren voeren die opgeloste stoffen mee naar zee. In rivierwater zijn de hoeveelheden zo klein dat je ze niet proeft. Maar in zee gebeurt iets bijzonders: de zon laat het water verdampen, terwijl de zouten achterblijven. Het verdampte water valt weer als regen en begint opnieuw aan zijn reis.\n\nZo hopen de zouten zich in de loop van de tijd op. Ook vulkanen op de zeebodem voegen mineralen toe. Het bekendste zout in zeewater is keukenzout, maar er zitten nog veel meer stoffen in, zoals magnesium en kalium.\n\nNiet elke zee is even zout. In warme gebieden met veel verdamping, zoals de Rode Zee, is het water zouter. Waar veel rivieren uitmonden en het koud is, zoals in de Oostzee, is het water juist minder zout. De Dode Zee is zo zout dat je er vanzelf in blijft drijven.",
+  "questions": [
+   {
+    "question": "Wat blijft er achter als zeewater verdampt?",
+    "options": [
+     "Zand",
+     "Zouten",
+     "Vis",
+     "Niets"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom is de Oostzee minder zout?",
+    "options": [
+     "Door veel rivieren en kou",
+     "Door vulkanen",
+     "Door meer verdamping",
+     "Door de wind"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat is de hoofdgedachte?",
+    "options": [
+     "Zout wordt in zee gegooid",
+     "Zouten uit het land hopen zich in zee op door verdamping",
+     "Regenwater is zout",
+     "Alle zeeën zijn even zout"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-de-kracht-van-wandelen",
+  "title": "De kracht van wandelen",
+  "text": "Wandelen is misschien de meest onderschatte vorm van beweging. Je hebt geen dure spullen nodig, je kunt het bijna overal doen en het is geschikt voor bijna iedereen. Toch levert een dagelijkse wandeling veel op.\n\nWie regelmatig stevig wandelt, versterkt het hart en de longen. De bloeddruk kan dalen en het risico op diabetes neemt af. Ook de botten en spieren blijven sterker, wat vooral op latere leeftijd belangrijk is om vallen te voorkomen.\n\nMinstens zo interessant is het effect op het hoofd. Na een wandeling voelen veel mensen zich rustiger en helderder. Onderzoek laat zien dat wandelen kan helpen bij het bedenken van nieuwe ideeën. Sommige schrijvers en wetenschappers maakten er daarom een vaste gewoonte van om tijdens het wandelen na te denken.\n\nWandelen in de natuur heeft een extra voordeel. Het groen, de geluiden en de frisse lucht helpen om stress te verminderen. Maar ook een rondje door de wijk telt mee. Het belangrijkste is regelmaat. Een half uur per dag, of een paar korte wandelingen verspreid over de dag, is al genoeg om het verschil te merken.",
+  "questions": [
+   {
+    "question": "Wat heb je nodig om te wandelen?",
+    "options": [
+     "Dure schoenen",
+     "Bijna niets",
+     "Een sportschool",
+     "Een coach"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarmee kan wandelen volgens de tekst helpen?",
+    "options": [
+     "Met het bedenken van nieuwe ideeën",
+     "Met het leren van talen",
+     "Met sneller rekenen",
+     "Met beter zien"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat is volgens de tekst het belangrijkste?",
+    "options": [
+     "Zo ver mogelijk lopen",
+     "Regelmaat",
+     "Alleen in de natuur wandelen",
+     "Snel wandelen"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "gezondheid"
+ },
+ {
+  "id": "x-hoe-een-zonnepaneel-werkt",
+  "title": "Hoe een zonnepaneel werkt",
+  "text": "Op steeds meer daken liggen zonnepanelen. Ze zetten zonlicht direct om in elektriciteit, zonder bewegende delen en zonder geluid. Hoe werkt dat?\n\nEen zonnepaneel bestaat uit tientallen zonnecellen. Die cellen zijn meestal gemaakt van silicium, een stof die ook in zand zit. Het silicium is zo bewerkt dat er twee lagen ontstaan met een klein verschil in elektrische lading. Als licht op de cel valt, maakt het elektronen los. Door het verschil tussen de lagen gaan die elektronen in één richting stromen. Zo ontstaat een elektrische stroom.\n\nDie stroom is gelijkstroom, terwijl het stopcontact in huis wisselstroom levert. Daarom hangt er bij zonnepanelen een omvormer die de stroom geschikt maakt voor het huishouden en het net.\n\nZonnepanelen werken het best als ze naar het zuiden gericht zijn en schuin staan. Ook op bewolkte dagen leveren ze stroom, alleen minder. In de zomer produceren ze veel meer dan in de winter, omdat de dagen langer zijn en de zon hoger staat. Een nadeel is dat de meeste stroom overdag ontstaat, terwijl veel mensen juist 's avonds stroom gebruiken. Daarom wordt er gewerkt aan betere manieren om stroom op te slaan.",
+  "questions": [
+   {
+    "question": "Waarvan zijn zonnecellen meestal gemaakt?",
+    "options": [
+     "Koper",
+     "Silicium",
+     "Plastic",
+     "IJzer"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarvoor dient de omvormer?",
+    "options": [
+     "Om de panelen schoon te houden",
+     "Om gelijkstroom geschikt te maken voor het huishouden",
+     "Om de panelen te draaien",
+     "Om warmte te maken"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Welk nadeel noemt de tekst?",
+    "options": [
+     "Panelen maken veel lawaai",
+     "De meeste stroom ontstaat overdag, terwijl veel mensen 's avonds stroom gebruiken",
+     "Panelen werken niet in de zomer",
+     "Panelen gaan maar een jaar mee"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "techniek"
+ },
+ {
+  "id": "x-de-tulpenmanie",
+  "title": "De tulpenmanie",
+  "text": "In de zeventiende eeuw raakten veel Nederlanders in de ban van een bloem: de tulp. De bloem kwam oorspronkelijk uit Centraal-Azië en was via het Ottomaanse Rijk naar Europa gekomen. In de Republiek werd hij een statussymbool. Vooral tulpen met gevlamde, veelkleurige bloembladen waren gewild.\n\nDie bijzondere kleuren werden, zo weten we nu, veroorzaakt door een virus. Dat maakte de bollen zeldzaam en onvoorspelbaar. Juist daardoor stegen de prijzen. Rond 1636 werd er handel gedreven in bollen die nog in de grond zaten. Mensen kochten en verkochten contracten, vaak in herbergen, in de hoop ze later duurder door te verkopen.\n\nVoor de meest gewilde bollen werden bedragen genoemd waar je een huis voor kon kopen. Maar in februari 1637 sloeg het om. Op een veiling in Haarlem wilde plotseling niemand meer kopen. De prijzen stortten in, en veel handelaars bleven zitten met contracten die niets meer waard waren.\n\nHistorici discussiëren nog over hoe groot de schade echt was. Toch geldt de tulpenmanie als een van de eerste voorbeelden van een financiële zeepbel: een prijs die stijgt omdat iedereen verwacht dat hij blijft stijgen.",
+  "questions": [
+   {
+    "question": "Waardoor ontstonden de gevlamde kleuren van de tulpen?",
+    "options": [
+     "Door speciale verf",
+     "Door een virus",
+     "Door kunstmest",
+     "Door de Hollandse grond"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat gebeurde er in februari 1637?",
+    "options": [
+     "De prijzen stortten in",
+     "De tulp werd verboden",
+     "Er werd een nieuwe kleur ontdekt",
+     "De handel verhuisde naar Frankrijk"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waar geldt de tulpenmanie als voorbeeld van?",
+    "options": [
+     "Een goede investering",
+     "Een financiële zeepbel",
+     "Een landbouwrevolutie",
+     "Een oorlog"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "geschiedenis"
+ },
+ {
+  "id": "x-het-leven-van-een-eik",
+  "title": "Het leven van een eik",
+  "text": "Een eik kan honderden jaren oud worden. Hij begint als een eikel, een klein nootje dat in de herfst op de grond valt. Veel eikels worden opgegeten door eekhoorns, gaaien en wilde zwijnen. Maar een gaai verstopt ze ook om later op te eten, en vergeet er daar een aantal van. Zo helpt de vogel, zonder het te weten, nieuwe eiken te planten.\n\nIn de eerste jaren groeit een eik langzaam. Hij bouwt eerst een lange penwortel, die diep de grond in gaat. Daardoor kan de boom later droge periodes goed doorstaan.\n\nEen volwassen eik is een wereld op zich. Honderden soorten insecten leven op de bladeren, onder de schors en in het hout. Vogels maken er hun nest en vleermuizen gebruiken holtes om te slapen. Op dode takken groeien paddenstoelen en mossen.\n\nOok als een eik is afgestorven, blijft hij belangrijk. Kevers, schimmels en bacteriën breken het hout langzaam af, zodat voedingsstoffen terugkeren in de bodem. Daar profiteren nieuwe bomen weer van. In een gezond bos is de dood van een boom dus het begin van nieuw leven.",
+  "questions": [
+   {
+    "question": "Hoe helpt de gaai bij het planten van eiken?",
+    "options": [
+     "Door eikels te verstoppen en er een aantal te vergeten",
+     "Door takken te breken",
+     "Door zaden uit te spugen",
+     "Door gaten te graven"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom bouwt een jonge eik eerst een lange penwortel?",
+    "options": [
+     "Om sneller hoog te worden",
+     "Om droge periodes goed te doorstaan",
+     "Om insecten te weren",
+     "Om eikels op te slaan"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat gebeurt er met een dode eik?",
+    "options": [
+     "Hij is niet meer van belang",
+     "Hij wordt afgebroken en voedt de bodem",
+     "Hij wordt vanzelf een steen",
+     "Hij groeit weer aan"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-geld-uit-het-niets",
+  "title": "Geld uit het niets",
+  "text": "Veel mensen denken dat al het geld door de centrale bank wordt gedrukt. Maar het meeste geld bestaat helemaal niet uit munten en biljetten. Het bestaat als getallen op bankrekeningen. En het grootste deel daarvan wordt gemaakt door gewone banken, op het moment dat ze een lening verstrekken.\n\nStel dat je een lening van tienduizend euro krijgt voor een auto. De bank haalt dat geld niet uit een kluis, maar zet het bedrag op je rekening. Op dat moment is er nieuw geld ontstaan. Als je de lening terugbetaalt, verdwijnt dat geld weer.\n\nBanken kunnen dit niet onbeperkt doen. Ze moeten een deel eigen vermogen aanhouden en zich aan regels houden. Ook de rente speelt een rol. Als de centrale bank de rente verhoogt, wordt lenen duurder en lenen mensen en bedrijven minder. Dan komt er minder nieuw geld bij. Verlaagt de centrale bank de rente, dan gebeurt het omgekeerde.\n\nZo probeert de centrale bank de prijzen stabiel te houden. Komt er te veel geld bij, dan kunnen prijzen snel stijgen. Dat heet inflatie. Geld is dus minder tastbaar dan het lijkt: het is vooral een afspraak waarop we met elkaar vertrouwen.",
+  "questions": [
+   {
+    "question": "Wie maakt het grootste deel van het geld?",
+    "options": [
+     "De centrale bank",
+     "Gewone banken, bij het verstrekken van leningen",
+     "De overheid",
+     "Winkels"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat gebeurt er met geld als een lening wordt terugbetaald?",
+    "options": [
+     "Het verdwijnt weer",
+     "Het gaat naar de centrale bank",
+     "Het wordt verbrand",
+     "Het wordt goud"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat gebeurt er als de centrale bank de rente verhoogt?",
+    "options": [
+     "Lenen wordt goedkoper",
+     "Lenen wordt duurder en er komt minder nieuw geld bij",
+     "De prijzen stijgen direct",
+     "Banken sluiten"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "economie"
+ },
+ {
+  "id": "x-het-verhaal-van-de-nachtwacht",
+  "title": "Het verhaal van de Nachtwacht",
+  "text": "De Nachtwacht is misschien het beroemdste schilderij van Nederland. Rembrandt van Rijn maakte het in 1642 in opdracht van een groep schutters uit Amsterdam. Schutters waren burgers die hun stad moesten verdedigen, maar in de zeventiende eeuw waren ze vooral een soort club van welgestelde mannen.\n\nIn die tijd was het gewoon om schuttersstukken te maken waarop alle leden netjes naast elkaar stonden. Rembrandt deed het anders. Hij schilderde de groep in beweging, alsof ze net vertrekken. Kapitein Frans Banninck Cocq geeft een bevel, er wordt een trom geslagen en een hond blaft. Het licht valt dramatisch op een paar figuren, terwijl anderen in de schaduw staan.\n\nDe naam Nachtwacht kreeg het schilderij pas veel later. Door een laag vernis die donker werd, leek het alsof het tafereel zich 's nachts afspeelde. Eigenlijk is het gewoon dag.\n\nHet schilderij heeft veel meegemaakt. In de achttiende eeuw werd het aan de randen ingekort om het in een zaal te laten passen. Later werd het meerdere keren beschadigd en weer hersteld. Tegenwoordig hangt het in het Rijksmuseum, waar restauratoren het met de modernste technieken onderzoeken.",
+  "questions": [
+   {
+    "question": "Wat maakte het schilderij anders dan andere schuttersstukken?",
+    "options": [
+     "De groep staat in beweging",
+     "Het is heel klein",
+     "Er staan alleen vrouwen op",
+     "Het is zwart-wit"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom kreeg het de naam Nachtwacht?",
+    "options": [
+     "Omdat het 's nachts werd geschilderd",
+     "Omdat een donker geworden vernislaag het op nacht deed lijken",
+     "Omdat de schutters 's nachts werkten",
+     "Omdat Rembrandt dat wilde"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat gebeurde er in de achttiende eeuw met het schilderij?",
+    "options": [
+     "Het werd gestolen",
+     "Het werd aan de randen ingekort",
+     "Het werd overgeschilderd",
+     "Het ging naar Parijs"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "cultuur"
+ },
+ {
+  "id": "x-waarom-katten-spinnen",
+  "title": "Waarom katten spinnen",
+  "text": "Een kat die tevreden op schoot ligt, maakt vaak een zacht, trillend geluid: spinnen. Veel mensen zien het als een teken van geluk. Dat klopt vaak, maar niet altijd.\n\nHoe het geluid precies ontstaat, is lang een raadsel geweest. Tegenwoordig denken onderzoekers dat het komt door snelle bewegingen van de spieren rond het strottenhoofd. Die spieren trillen zo'n vijfentwintig tot honderdvijftig keer per seconde, zowel bij het in- als uitademen.\n\nKittens spinnen al als ze een paar dagen oud zijn, terwijl ze drinken bij hun moeder. Zo laten ze weten dat alles goed gaat. Ook volwassen katten spinnen als ze zich prettig voelen. Maar katten spinnen soms ook als ze gewond, ziek of gestrest zijn. Misschien helpt het hen om zichzelf te kalmeren.\n\nEr is zelfs een theorie dat het spinnen helpt bij herstel. De trillingen hebben een frequentie waarvan bekend is dat die de groei van botten en weefsel kan stimuleren. Dat is nog niet bewezen, maar het is een intrigerend idee. Wie een spinnende kat aait, voelt zich trouwens vaak zelf ook rustiger. Het geluid lijkt dus goed voor kat en mens.",
+  "questions": [
+   {
+    "question": "Waardoor ontstaat het spinnen volgens onderzoekers?",
+    "options": [
+     "Door de staart",
+     "Door snelle bewegingen van de spieren rond het strottenhoofd",
+     "Door de maag",
+     "Door de poten"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wanneer spinnen kittens al?",
+    "options": [
+     "Pas na een jaar",
+     "Een paar dagen na de geboorte, tijdens het drinken",
+     "Alleen in de winter",
+     "Nooit"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Spinnen katten alleen als ze blij zijn?",
+    "options": [
+     "Ja, altijd",
+     "Nee, ook als ze gewond of gestrest zijn",
+     "Alleen als ze eten",
+     "Alleen 's nachts"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "dieren"
+ },
+ {
+  "id": "x-muziek-en-het-geheugen",
+  "title": "Muziek en het geheugen",
+  "text": "Heb je ooit een liedje gehoord en je meteen herinnerd waar je was toen je het voor het eerst hoorde? Muziek en herinneringen zijn sterk met elkaar verbonden. Dat komt doordat muziek veel delen van de hersenen tegelijk aan het werk zet: gebieden voor geluid, beweging, gevoel en geheugen.\n\nDaardoor kan muziek helpen bij het leren. Denk aan het alfabetlied dat veel kinderen gebruiken. Een melodie en een ritme geven de hersenen houvast, zodat informatie makkelijker blijft hangen.\n\nMaar muziek tijdens het leren werkt niet voor iedereen. Rustige muziek zonder tekst kan helpen om te focussen, vooral in een rumoerige omgeving. Muziek met veel tekst kan juist afleiden, omdat je hersenen de woorden in het liedje proberen te verwerken terwijl je ook je boek leest. Probeer dus eens hoe het voor jou werkt.\n\nBijzonder is dat muziek ook bij mensen met geheugenproblemen nog veel kan doen. Mensen met dementie die bijna niets meer herkennen, kunnen soms nog liedjes van vroeger meezingen. Muziek lijkt in het brein een plek te hebben die lang bewaard blijft.",
+  "questions": [
+   {
+    "question": "Waarom helpt een melodie bij onthouden?",
+    "options": [
+     "Omdat het de hersenen houvast geeft",
+     "Omdat muziek slaperig maakt",
+     "Omdat het de ogen rust geeft",
+     "Omdat het sneller lezen geeft"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Welke muziek kan juist afleiden bij het leren?",
+    "options": [
+     "Rustige muziek zonder tekst",
+     "Muziek met veel tekst",
+     "Natuurgeluiden",
+     "Stilte"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat kunnen mensen met dementie soms nog wel?",
+    "options": [
+     "Nieuwe talen leren",
+     "Liedjes van vroeger meezingen",
+     "Autorijden",
+     "Rekenen"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "psychologie"
+ },
+ {
+  "id": "x-de-eerste-vlucht-naar-de-maan",
+  "title": "De eerste vlucht naar de maan",
+  "text": "Op 20 juli 1969 keken honderden miljoenen mensen naar hun televisie. De Amerikaanse Apollo 11 was geland op de maan. Astronaut Neil Armstrong zette als eerste mens een voet op het maanoppervlak, gevolgd door Buzz Aldrin. Hun collega Michael Collins bleef in een baan rond de maan in het moederschip.\n\nDe reis was het resultaat van jarenlange concurrentie tussen de Verenigde Staten en de Sovjet-Unie. Beide landen wilden laten zien dat hun techniek de beste was. De Sovjet-Unie had eerder de eerste satelliet en de eerste mens in de ruimte gelanceerd. De Amerikaanse president Kennedy beloofde daarop dat Amerika voor het einde van de jaren zestig een mens op de maan zou zetten.\n\nDe computers aan boord waren veel minder krachtig dan een moderne telefoon. Tijdens de landing gaf de computer foutmeldingen en moest Armstrong zelf een veilige plek zoeken. Toen ze landden, was er nog maar weinig brandstof over.\n\nDe astronauten bleven ruim twee uur buiten. Ze plantten een vlag, verzamelden stenen en zetten meetinstrumenten neer. Hun voetafdrukken staan er waarschijnlijk nog steeds, omdat er op de maan geen wind is.",
+  "questions": [
+   {
+    "question": "Wie bleef in het moederschip rond de maan?",
+    "options": [
+     "Neil Armstrong",
+     "Buzz Aldrin",
+     "Michael Collins",
+     "John Kennedy"
+    ],
+    "answer": 2
+   },
+   {
+    "question": "Wat gebeurde er tijdens de landing?",
+    "options": [
+     "De motor viel uit",
+     "De computer gaf foutmeldingen en Armstrong zocht zelf een plek",
+     "Er brak een raam",
+     "Het contact met de aarde viel weg"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom staan de voetafdrukken er waarschijnlijk nog?",
+    "options": [
+     "Omdat ze zijn ingemetseld",
+     "Omdat er op de maan geen wind is",
+     "Omdat ze bevroren zijn",
+     "Omdat niemand er meer komt"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "ruimtevaart"
+ },
+ {
+  "id": "x-wat-een-algoritme-is",
+  "title": "Wat een algoritme is",
+  "text": "Het woord algoritme klinkt ingewikkeld, maar je gebruikt er elke dag een paar. Een algoritme is simpelweg een reeks stappen om een probleem op te lossen. Een recept om pannenkoeken te bakken is eigenlijk ook een algoritme: eerst meel, dan melk en eieren, dan roeren, dan bakken.\n\nComputers werken met algoritmes die mensen hebben bedacht. Een zoekmachine gebruikt een algoritme om uit miljarden webpagina's de meest bruikbare te kiezen. Een navigatie-app berekent met een algoritme de snelste route.\n\nSociale media gebruiken algoritmes om te bepalen wat jij in je tijdlijn ziet. Ze houden bij waar je op klikt, wat je leuk vindt en hoelang je naar een video kijkt. Op basis daarvan krijg je meer van hetzelfde te zien. Dat kan handig zijn, maar het heeft ook een keerzijde. Je ziet steeds vaker dingen die je al vindt, en minder van andere meningen of onderwerpen.\n\nHet helpt om daar bewust mee om te gaan. Volg eens accounts die je aan het denken zetten, of zoek zelf naar nieuws in plaats van alleen te kijken wat voorbijkomt. Zo bepaal jij mee wat je ziet, en niet alleen het algoritme.",
+  "questions": [
+   {
+    "question": "Wat is een algoritme volgens de tekst?",
+    "options": [
+     "Een soort computervirus",
+     "Een reeks stappen om een probleem op te lossen",
+     "Een programmeertaal",
+     "Een wiskundige formule voor geld"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waar baseren sociale media hun keuze op?",
+    "options": [
+     "Op wat je aanklikt, leuk vindt en hoelang je kijkt",
+     "Op je rapportcijfers",
+     "Op het weer",
+     "Op willekeur"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Welke keerzijde noemt de tekst?",
+    "options": [
+     "Je telefoon wordt trager",
+     "Je ziet steeds meer van hetzelfde en minder andere meningen",
+     "Je krijgt minder berichten",
+     "Je account wordt gehackt"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "techniek"
+ },
+ {
+  "id": "x-de-waddenzee-bij-eb-en-vloed",
+  "title": "De Waddenzee bij eb en vloed",
+  "text": "Twee keer per dag verandert de Waddenzee van gedaante. Bij eb trekt het water zich terug en komen enorme zandplaten en slikvelden droog te liggen. Bij vloed stroomt het water weer terug. Dit ritme van eb en vloed ontstaat door de aantrekkingskracht van de maan en, in mindere mate, de zon.\n\nDe drooggevallen wadplaten lijken misschien leeg, maar ze zitten vol leven. In de modder leven wormen, schelpdieren en garnaaltjes, soms duizenden per vierkante meter. Voor vogels is dat een gedekte tafel. Elk jaar stoppen miljoenen trekvogels op de Wadden om aan te sterken op hun reis tussen het hoge noorden en Afrika.\n\nOok zeehonden gebruiken de platen. Bij laagwater liggen ze er te rusten en zogen de moeders hun jongen. Wie een zeehond ziet, moet afstand houden, omdat een verstoorde moeder haar jong kan achterlaten.\n\nWadlopen is een populaire manier om het gebied te ontdekken. Onder begeleiding van een gids loop je bij eb over de bodem van de zee. Zonder gids is dat gevaarlijk, want het water komt sneller terug dan je denkt. Sinds 2009 staat de Waddenzee op de Werelderfgoedlijst van UNESCO.",
+  "questions": [
+   {
+    "question": "Waardoor ontstaan eb en vloed?",
+    "options": [
+     "Door de wind",
+     "Door de aantrekkingskracht van de maan en de zon",
+     "Door rivieren",
+     "Door schepen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom zijn de Wadden belangrijk voor trekvogels?",
+    "options": [
+     "Ze kunnen er aansterken met voedsel uit de wadbodem",
+     "Ze broeden er in de winter",
+     "Ze worden er gevoerd door mensen",
+     "Er zijn geen roofdieren"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom moet je afstand houden van een zeehond?",
+    "options": [
+     "Omdat hij bijt",
+     "Omdat een verstoorde moeder haar jong kan achterlaten",
+     "Omdat het verboden is om te fotograferen",
+     "Omdat hij ziek kan zijn"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-waarom-we-kleuren-anders-zien",
+  "title": "Waarom we kleuren anders zien",
+  "text": "Kleur zit niet in een voorwerp zelf, maar ontstaat in onze hersenen. Een rode appel ziet er rood uit omdat hij vooral rood licht terugkaatst en de andere kleuren opneemt. Dat teruggekaatste licht valt in je oog op het netvlies, waar speciale cellen zitten: kegeltjes.\n\nDe meeste mensen hebben drie soorten kegeltjes. Die reageren elk vooral op een deel van het licht: rood, groen of blauw. Uit de combinatie van signalen berekenen je hersenen welke kleur je ziet. Zo kunnen we miljoenen kleurschakeringen onderscheiden.\n\nBij ongeveer acht procent van de mannen en een half procent van de vrouwen werkt een van de kegeltjes anders. Zij zijn kleurenblind, al is dat woord misleidend. De meesten zien wel kleuren, maar kunnen rood en groen moeilijk uit elkaar houden. Dat komt vaker voor bij mannen, omdat de eigenschap op het X-chromosoom ligt.\n\nOok de omgeving beïnvloedt hoe we kleur zien. Een grijs vlak op een rode achtergrond lijkt groenig, op een blauwe achtergrond eerder geel. Onze hersenen corrigeren voortdurend voor licht en omgeving. Daarom kunnen twee mensen over dezelfde jurk of hetzelfde vlak echt iets anders zien.",
+  "questions": [
+   {
+    "question": "Waar ontstaat kleur volgens de tekst?",
+    "options": [
+     "In het voorwerp",
+     "In onze hersenen",
+     "In de lucht",
+     "In de lens van het oog"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoeveel soorten kegeltjes hebben de meeste mensen?",
+    "options": [
+     "Eén",
+     "Twee",
+     "Drie",
+     "Vijf"
+    ],
+    "answer": 2
+   },
+   {
+    "question": "Waarom is kleurenblindheid vaker bij mannen?",
+    "options": [
+     "Omdat mannen minder licht zien",
+     "Omdat de eigenschap op het X-chromosoom ligt",
+     "Omdat mannen vaker buiten werken",
+     "Omdat vrouwen meer kegeltjes hebben"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "lichaam"
+ },
+ {
+  "id": "x-de-opkomst-van-de-elektrische-auto",
+  "title": "De opkomst van de elektrische auto",
+  "text": "Het klinkt als iets nieuws, maar de elektrische auto is ouder dan de benzineauto. Rond 1900 reden er in steden als New York en Amsterdam al elektrische taxi's rond. Ze waren stil en schoon, maar hun batterijen waren zwaar en hadden weinig bereik. Toen benzine goedkoop werd en de startmotor werd uitgevonden, verdween de elektrische auto grotendeels.\n\nPas rond 2010 kwam hij terug. Betere batterijen, vooral lithium-ionbatterijen zoals in telefoons, maakten grotere afstanden mogelijk. Ook de zorg om klimaat en luchtkwaliteit speelde een rol. Elektrische auto's stoten zelf geen uitlaatgassen uit, wat vooral in steden de lucht schoner maakt.\n\nHelemaal zonder nadelen zijn ze niet. Voor de batterijen zijn grondstoffen nodig, zoals lithium en kobalt, die op sommige plekken onder slechte omstandigheden worden gewonnen. Ook is het milieuvoordeel groter als de stroom waarmee je laadt duurzaam is opgewekt.\n\nIn Nederland rijden inmiddels honderdduizenden elektrische auto's. Laadpalen verschijnen in steeds meer straten. De vraag is niet meer of de elektrische auto blijft, maar hoe snel hij de brandstofauto vervangt.",
+  "questions": [
+   {
+    "question": "Wanneer reden er al elektrische taxi's?",
+    "options": [
+     "Rond 1900",
+     "Rond 1950",
+     "Rond 1980",
+     "Pas na 2010"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waardoor kwam de elektrische auto rond 2010 terug?",
+    "options": [
+     "Door betere batterijen en zorg om klimaat",
+     "Door een verbod op fietsen",
+     "Door goedkopere benzine",
+     "Door minder wegen"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wanneer is het milieuvoordeel volgens de tekst groter?",
+    "options": [
+     "Als je vaak snel rijdt",
+     "Als de laadstroom duurzaam is opgewekt",
+     "Als de auto groot is",
+     "Als je 's nachts rijdt"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "techniek"
+ },
+ {
+  "id": "x-hoe-vaccins-werken",
+  "title": "Hoe vaccins werken",
+  "text": "Je afweersysteem is een leerling. Als het een ziekteverwekker tegenkomt, zoals een virus of bacterie, moet het leren hoe het die kan herkennen en bestrijden. Dat kost tijd, en in die tijd kun je flink ziek worden. Een vaccin geeft het afweersysteem een voorsprong.\n\nEen vaccin bevat een onschadelijk stukje van de ziekteverwekker, een verzwakte of gedode versie, of een recept waarmee je eigen cellen tijdelijk een herkenbaar eiwit maken. Het afweersysteem ziet dat, reageert erop en maakt antistoffen. Ook worden er geheugencellen aangemaakt. Komt de echte ziekteverwekker later langs, dan herkent het lichaam hem meteen en kan het veel sneller reageren.\n\nNa een vaccinatie kun je je een dag wat grieperig voelen of een pijnlijke arm hebben. Dat is een teken dat het afweersysteem aan het werk is.\n\nVaccins beschermen niet alleen de persoon die gevaccineerd is. Als genoeg mensen beschermd zijn, kan een ziekte zich moeilijk verspreiden. Daardoor zijn ook baby's en mensen die niet gevaccineerd kunnen worden beter beschermd. Dankzij vaccins zijn ziektes als pokken uitgeroeid en is polio in de meeste landen verdwenen.",
+  "questions": [
+   {
+    "question": "Wat maakt het afweersysteem na een vaccin aan?",
+    "options": [
+     "Antistoffen en geheugencellen",
+     "Nieuwe botten",
+     "Extra rode bloedcellen",
+     "Vet"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat betekent een pijnlijke arm na een vaccinatie volgens de tekst?",
+    "options": [
+     "Dat het vaccin niet werkt",
+     "Dat het afweersysteem aan het werk is",
+     "Dat je ernstig ziek wordt",
+     "Dat de prik verkeerd was"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Welke ziekte is volgens de tekst uitgeroeid?",
+    "options": [
+     "Griep",
+     "Pokken",
+     "Verkoudheid",
+     "Mazelen"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "gezondheid"
+ },
+ {
+  "id": "x-het-wonder-van-de-spinnenzijde",
+  "title": "Het wonder van de spinnenzijde",
+  "text": "Spinnenzijde is een van de sterkste natuurlijke materialen op aarde. Gewicht voor gewicht is sommige spinnenzijde sterker dan staal, en tegelijk kan hij flink uitrekken zonder te breken. Wetenschappers zijn er al jaren door gefascineerd.\n\nEen spin maakt zijde in klieren in haar achterlijf. Daar zit de zijde als een vloeibare eiwitpap. Terwijl de spin de draad naar buiten trekt, veranderen de eiwitten van vorm en wordt de draad vast. Veel spinnen kunnen verschillende soorten draad maken: een stevige draad voor het frame van het web, een kleverige draad om prooien te vangen en een zachte draad voor de eicocon.\n\nEen web bouwen kost een spin veel energie. Sommige soorten eten daarom hun oude web op, zodat de eiwitten opnieuw gebruikt kunnen worden.\n\nMensen proberen spinnenzijde na te maken. Spinnen zelf houden is lastig, omdat ze elkaar opeten als ze te dicht op elkaar zitten. Daarom werken onderzoekers met bacteriën of gisten die de eiwitten van spinnenzijde aanmaken. Zo hopen ze sterk en licht materiaal te maken voor bijvoorbeeld hechtdraad in ziekenhuizen of lichte kleding.",
+  "questions": [
+   {
+    "question": "Waarom eten sommige spinnen hun oude web op?",
+    "options": [
+     "Omdat het lekker is",
+     "Om de eiwitten opnieuw te gebruiken",
+     "Om vijanden te misleiden",
+     "Omdat het web kapot is gegaan door regen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom is spinnen houden voor zijde lastig?",
+    "options": [
+     "Ze maken te weinig zijde",
+     "Ze eten elkaar op als ze te dicht op elkaar zitten",
+     "Ze leven maar een week",
+     "Ze kunnen niet binnen leven"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoe proberen onderzoekers spinnenzijde na te maken?",
+    "options": [
+     "Met bacteriën of gisten die de eiwitten aanmaken",
+     "Met plastic",
+     "Met zijderupsen alleen",
+     "Met metaaldraad"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-waarom-sommige-dingen-blijven-hangen",
+  "title": "Waarom sommige dingen blijven hangen",
+  "text": "Waarom onthoud je het ene moment voor altijd en ben je het andere na een dag vergeten? Het geheugen werkt niet als een videocamera die alles opneemt. Het bewaart vooral wat betekenis heeft, wat emotie oproept of wat je vaker tegenkomt.\n\nAl in de negentiende eeuw onderzocht de Duitse psycholoog Hermann Ebbinghaus hoe snel we vergeten. Hij leerde zichzelf lijsten met betekenisloze lettergrepen en testte hoeveel hij na verloop van tijd nog wist. Het grootste deel was binnen een dag verdwenen. Dit patroon heet de vergeetcurve.\n\nHet goede nieuws: je kunt die curve afvlakken. Herhaling helpt, vooral als je de herhalingen spreidt. Wie vandaag leert, morgen even herhaalt en over een week nog eens, onthoudt veel meer dan wie alles in één avond probeert te stampen.\n\nNog krachtiger is jezelf overhoren. Door actief iets terug te halen uit je geheugen, versterk je de verbinding. Dat werkt beter dan dezelfde tekst steeds opnieuw lezen. Ook helpt het om nieuwe informatie te koppelen aan wat je al weet. Een verhaal of een voorbeeld blijft beter hangen dan een losse feitenlijst.",
+  "questions": [
+   {
+    "question": "Wat onderzocht Hermann Ebbinghaus?",
+    "options": [
+     "Hoe snel we vergeten",
+     "Hoe snel we lezen",
+     "Hoe dromen werken",
+     "Hoe kinderen praten"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat helpt volgens de tekst het best tegen vergeten?",
+    "options": [
+     "Alles in één avond leren",
+     "Gespreide herhaling en jezelf overhoren",
+     "Harder lezen",
+     "Minder slapen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom werkt jezelf overhoren goed?",
+    "options": [
+     "Omdat het sneller is",
+     "Omdat actief terughalen de verbinding versterkt",
+     "Omdat je dan minder hoeft te lezen",
+     "Omdat het leuker is"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "leren"
+ },
+ {
+  "id": "x-de-geschiedenis-van-de-spijkerbroek",
+  "title": "De geschiedenis van de spijkerbroek",
+  "text": "De spijkerbroek begon als werkkleding. In 1873 kregen kleermaker Jacob Davis en handelaar Levi Strauss in de Verenigde Staten een patent op een broek van stevige katoenen stof met koperen klinknagels op de zwakke plekken, zoals de hoeken van de zakken. Mijnwerkers en boeren waren er blij mee, want gewone broeken scheurden snel.\n\nDe stof, denim, werd blauw geverfd met indigo. Die verf dringt maar gedeeltelijk in de draad. Daardoor slijt de kleur langzaam en krijgt elke broek na verloop van tijd zijn eigen uiterlijk.\n\nIn de jaren vijftig werd de spijkerbroek een symbool van jeugd en rebellie. Filmsterren droegen hem, en jongeren trokken hem aan om zich af te zetten tegen hun ouders. Op sommige scholen was de broek zelfs verboden.\n\nTegenwoordig draagt vrijwel iedereen weleens een spijkerbroek. De keerzijde is dat het maken ervan veel water en chemicaliën kost, vooral voor het katoen en het verven. Daarom zijn er fabrikanten die werken met gerecycled katoen of minder water. Ook helpt het om je broek minder vaak te wassen: hij gaat dan langer mee.",
+  "questions": [
+   {
+    "question": "Waarvoor dienden de koperen klinknagels?",
+    "options": [
+     "Als versiering",
+     "Om zwakke plekken te versterken",
+     "Om de broek zwaarder te maken",
+     "Om de kleur vast te houden"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom krijgt elke spijkerbroek na verloop van tijd zijn eigen uiterlijk?",
+    "options": [
+     "Omdat indigo maar gedeeltelijk in de draad dringt en langzaam slijt",
+     "Omdat elke broek met de hand wordt beschilderd",
+     "Omdat de stof krimpt",
+     "Omdat er verschillende knopen op zitten"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat werd de spijkerbroek in de jaren vijftig?",
+    "options": [
+     "Een symbool van jeugd en rebellie",
+     "Verplichte schoolkleding",
+     "Kleding voor bruiloften",
+     "Een sportbroek"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "cultuur"
+ },
+ {
+  "id": "x-hoe-een-stad-warmer-wordt",
+  "title": "Hoe een stad warmer wordt",
+  "text": "Op een zomerse dag kan het in het centrum van een grote stad een paar graden warmer zijn dan op het platteland ernaast. Dit verschijnsel heet het hitte-eilandeffect. Het ontstaat doordat steden anders zijn gebouwd dan de natuur.\n\nAsfalt, beton en baksteen nemen overdag veel warmte op en geven die 's nachts langzaam weer af. Daardoor koelt de stad 's nachts minder af. Er is ook minder groen, en planten zorgen juist voor verkoeling doordat ze water verdampen. Daarbij komt de warmte van auto's, airco's en fabrieken.\n\nVoor mensen kan dat gevaarlijk zijn. Tijdens een hittegolf slapen stadsbewoners slechter, en vooral ouderen en zieken lopen gezondheidsrisico's.\n\nSteden nemen daarom maatregelen. Ze planten bomen, die schaduw geven en de lucht koelen. Groene daken met planten nemen regenwater op en houden gebouwen koeler. Stenen pleinen worden vervangen door gras of plantenbakken, en er komt meer water in de stad, zoals fonteinen en vijvers. Ook lichte kleuren op daken en wegen helpen, omdat ze zonlicht terugkaatsen in plaats van opnemen. Zo wordt de stad niet alleen koeler, maar ook prettiger om in te wonen.",
+  "questions": [
+   {
+    "question": "Hoe heet het verschijnsel dat steden warmer zijn?",
+    "options": [
+     "Broeikaseffect",
+     "Hitte-eilandeffect",
+     "Zomereffect",
+     "Stadsklimaatcrisis"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom koelt een stad 's nachts minder af?",
+    "options": [
+     "Omdat asfalt en beton de opgenomen warmte langzaam afgeven",
+     "Omdat er minder wind is op het platteland",
+     "Omdat de zon langer schijnt",
+     "Omdat er meer water is"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom helpen lichte kleuren op daken?",
+    "options": [
+     "Ze trekken vogels aan",
+     "Ze kaatsen zonlicht terug",
+     "Ze houden regen tegen",
+     "Ze zijn goedkoper"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "milieu"
+ },
+ {
+  "id": "x-hoe-een-nieuwtje-viraal-gaat",
+  "title": "Hoe een nieuwtje viraal gaat",
+  "text": "Soms gaat een video of bericht binnen een paar uur de hele wereld over. Dat heet viraal gaan, naar de manier waarop een virus zich verspreidt. Iemand deelt het met vrienden, die delen het weer met hun vrienden, en zo groeit het bereik razendsnel.\n\nWat maakt dat iets viraal gaat? Onderzoekers zien een paar patronen. Berichten die sterke gevoelens oproepen, zoals verbazing, boosheid of vrolijkheid, worden vaker gedeeld dan neutrale berichten. Ook korte, makkelijk te begrijpen boodschappen hebben meer kans.\n\nDat heeft een keerzijde. Nepnieuws verspreidt zich vaak sneller dan echt nieuws, juist omdat het is gemaakt om te schokken. Een foto kan uit zijn verband zijn gehaald, of een citaat kan nooit zo zijn gezegd.\n\nVoordat je iets deelt, kun je een paar vragen stellen. Wie heeft dit gemaakt? Kan ik het ergens anders terugvinden, bijvoorbeeld bij een betrouwbare nieuwssite? Word ik vooral boos of bang van dit bericht? Als dat laatste zo is, is extra voorzichtigheid verstandig. Door even te wachten voor je op delen drukt, help je mee om het internet een betrouwbaardere plek te maken.",
+  "questions": [
+   {
+    "question": "Welke berichten worden vaker gedeeld?",
+    "options": [
+     "Berichten die sterke gevoelens oproepen",
+     "Lange, neutrale berichten",
+     "Berichten zonder plaatjes",
+     "Berichten van overheden"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom verspreidt nepnieuws zich vaak snel?",
+    "options": [
+     "Omdat het gemaakt is om te schokken",
+     "Omdat het langer is",
+     "Omdat het altijd waar is",
+     "Omdat het betaald wordt door scholen"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat raadt de tekst aan voordat je iets deelt?",
+    "options": [
+     "Het meteen doorsturen",
+     "Een paar vragen stellen en even wachten",
+     "Het bericht langer maken",
+     "Alleen delen met onbekenden"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "media"
+ },
+ {
+  "id": "x-de-oudste-bomen-ter-wereld",
+  "title": "De oudste bomen ter wereld",
+  "text": "In de bergen van Californië staan bomen die al leefden toen in Egypte de piramides werden gebouwd. Het zijn Pinus longaeva, dennen die meer dan vierduizend jaar oud kunnen worden. Ze groeien op een droge, winderige plek waar weinig andere planten overleven.\n\nJuist die zware omstandigheden helpen ze om zo oud te worden. Ze groeien heel langzaam, waardoor hun hout extreem stevig en vol hars zit. Insecten en schimmels krijgen er nauwelijks vat op. Soms is maar een smalle strook van de stam nog levend, terwijl de rest al lang dood is. Zo kan de boom overleven op heel weinig.\n\nWetenschappers bepalen de leeftijd door jaarringen te tellen. Daarvoor boren ze een dun staafje uit de stam, zonder de boom te beschadigen. Uit de breedte van de ringen kunnen ze ook aflezen hoe het klimaat vroeger was: brede ringen betekenen goede jaren, smalle ringen droge of koude jaren.\n\nDe precieze locatie van de oudste boom wordt geheimgehouden. Zo willen beheerders voorkomen dat bezoekers de boom beschadigen of er een stukje van meenemen.",
+  "questions": [
+   {
+    "question": "Hoe oud kunnen deze dennen worden?",
+    "options": [
+     "Ongeveer tweehonderd jaar",
+     "Meer dan vierduizend jaar",
+     "Precies duizend jaar",
+     "Honderd jaar"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom helpt langzaam groeien de boom?",
+    "options": [
+     "Het hout wordt extreem stevig en vol hars",
+     "De boom wordt groter",
+     "De boom krijgt meer bladeren",
+     "De boom verliest zijn schors"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom wordt de locatie van de oudste boom geheimgehouden?",
+    "options": [
+     "Om te voorkomen dat bezoekers hem beschadigen",
+     "Omdat hij in een militair gebied staat",
+     "Omdat hij niet echt bestaat",
+     "Omdat hij verplaatst wordt"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-een-dag-zonder-telefoon",
+  "title": "Een dag zonder telefoon",
+  "text": "Gemiddeld pakken mensen hun telefoon tientallen keren per dag op. Vaak zonder duidelijke reden: even kijken of er iets nieuws is. Wat gebeurt er als je een dag zonder doet?\n\nMensen die het proberen, beschrijven de eerste uren als onwennig. Ze grijpen steeds naar hun zak en voelen soms een trilling die er niet is. Dat heet fantoomtrillen. Het laat zien hoe sterk de gewoonte is ingesleten.\n\nNa een tijdje verandert er iets. Veel mensen merken dat ze meer opletten in hun omgeving. Ze kijken om zich heen in de trein, maken een praatje of verzinnen zelf iets als ze zich vervelen. Verveling blijkt een nuttige toestand: het geeft ruimte aan dagdromen, en uit dagdromen ontstaan vaak nieuwe ideeën.\n\nOok de concentratie verbetert. Elke melding onderbreekt je gedachten, en na een onderbreking duurt het even voor je weer helemaal bij je taak bent. Zonder die onderbrekingen lukt diep werk beter.\n\nEen hele dag offline is voor de meeste mensen niet praktisch. Maar kleine stappen helpen ook: meldingen uitzetten, de telefoon niet mee naar de slaapkamer nemen of bewust momenten zonder scherm plannen.",
+  "questions": [
+   {
+    "question": "Wat is fantoomtrillen?",
+    "options": [
+     "Een telefoon die kapot is",
+     "Een trilling voelen die er niet is",
+     "Een nieuw soort beltoon",
+     "Een app voor meditatie"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom is verveling volgens de tekst nuttig?",
+    "options": [
+     "Het geeft ruimte aan dagdromen en nieuwe ideeën",
+     "Het maakt je slaperig",
+     "Het is goed voor je ogen",
+     "Het versnelt je leestempo"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Welke kleine stap wordt genoemd?",
+    "options": [
+     "Een nieuwe telefoon kopen",
+     "Meldingen uitzetten",
+     "Meer apps installeren",
+     "De telefoon altijd in je hand houden"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "psychologie"
+ },
+ {
+  "id": "x-de-romeinen-aan-de-rijn",
+  "title": "De Romeinen aan de Rijn",
+  "text": "Tweeduizend jaar geleden liep de noordgrens van het Romeinse Rijk dwars door Nederland. Die grens heette de limes en volgde grotendeels de loop van de Rijn. Ten zuiden ervan lag het rijk, ten noorden woonden volkeren die niet onder Romeins gezag stonden, zoals de Friezen.\n\nLangs de rivier bouwden de Romeinen een reeks forten en wachttorens. Op plekken als Utrecht, Nijmegen en Valkenburg in Zuid-Holland lagen legerplaatsen. Rond die forten ontstonden dorpen waar handelaren, ambachtslieden en families van soldaten woonden. Nijmegen geldt daardoor als een van de oudste steden van Nederland.\n\nDe Romeinen brachten veel nieuws mee. Ze legden wegen aan, bouwden badhuizen en introduceerden gewassen en producten zoals wijn en olijfolie. Ook het schrift en munten raakten hier bekender.\n\nArcheologen vinden nog altijd resten uit die tijd. Bij graafwerkzaamheden komen scheepswrakken, munten, aardewerk en fundamenten tevoorschijn. Sinds 2021 staat de Neder-Germaanse limes op de Werelderfgoedlijst. Wie door steden langs de Rijn loopt, wandelt dus letterlijk over de resten van een oude grens.",
+  "questions": [
+   {
+    "question": "Welke rivier volgde de Romeinse grens in Nederland grotendeels?",
+    "options": [
+     "De Maas",
+     "De Rijn",
+     "De IJssel",
+     "De Schelde"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Welke stad geldt als een van de oudste van Nederland?",
+    "options": [
+     "Amsterdam",
+     "Nijmegen",
+     "Groningen",
+     "Almere"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat brachten de Romeinen onder andere mee?",
+    "options": [
+     "Aardappelen en tomaten",
+     "Wegen, badhuizen en producten zoals wijn",
+     "Treinen",
+     "Windmolens"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "geschiedenis"
+ },
+ {
+  "id": "x-hoe-een-aardbeving-ontstaat",
+  "title": "Hoe een aardbeving ontstaat",
+  "text": "De buitenste laag van de aarde is geen stevig geheel, maar bestaat uit grote platen. Die platen drijven heel langzaam op een laag heet, stroperig gesteente eronder. Ze bewegen maar een paar centimeter per jaar, ongeveer zo snel als je nagels groeien.\n\nWaar platen langs elkaar schuiven, tegen elkaar botsen of van elkaar af bewegen, ontstaat spanning. De randen haken in elkaar vast. Jarenlang bouwt de spanning zich op, tot het gesteente plotseling breekt of verschuift. Die schok zendt trillingen door de aarde: een aardbeving.\n\nDe kracht van een aardbeving wordt uitgedrukt op een schaal. Elke stap op die schaal staat voor een veel grotere hoeveelheid vrijgekomen energie. Een beving van kracht zeven is daardoor veel zwaarder dan een van kracht zes.\n\nAardbevingen komen vooral voor langs de randen van platen, zoals in Japan, Indonesië, Turkije en langs de westkust van Amerika. In Groningen ontstaan ook bevingen, maar die hebben een andere oorzaak: door de gaswinning is de bodem in beweging gekomen. Voorspellen wanneer een aardbeving komt, is nog altijd niet mogelijk. Daarom richten landen zich op stevige bouw en goede waarschuwingssystemen.",
+  "questions": [
+   {
+    "question": "Hoe snel bewegen de aardplaten ongeveer?",
+    "options": [
+     "Een paar meter per dag",
+     "Een paar centimeter per jaar",
+     "Een kilometer per jaar",
+     "Ze bewegen niet"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat is de oorzaak van de bevingen in Groningen?",
+    "options": [
+     "Botsende aardplaten",
+     "De gaswinning",
+     "Vulkanen",
+     "Zware vrachtwagens"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Kunnen aardbevingen voorspeld worden?",
+    "options": [
+     "Ja, tot op de minuut",
+     "Nee, dat is nog niet mogelijk",
+     "Alleen in Japan",
+     "Alleen 's winters"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-de-kunst-van-het-luisteren",
+  "title": "De kunst van het luisteren",
+  "text": "De meeste mensen denken dat ze goed kunnen luisteren. Toch zijn we tijdens een gesprek vaak vooral bezig met wat we zelf willen zeggen. We wachten op een pauze om ons eigen verhaal te vertellen, of we denken al na over een oplossing voordat de ander is uitgepraat.\n\nEcht luisteren vraagt aandacht. Het begint met stil zijn en de ander de ruimte geven. Kijk iemand aan, leg je telefoon weg en laat merken dat je volgt, bijvoorbeeld door te knikken of kort te reageren.\n\nEen krachtig hulpmiddel is samenvatten. Door in je eigen woorden te herhalen wat je hebt gehoord, laat je zien dat je het begrijpt. En als je het verkeerd hebt begrepen, kan de ander dat meteen verbeteren. Ook open vragen helpen, zoals: hoe voelde dat voor je, of wat bedoel je precies?\n\nWat je beter kunt laten, is meteen advies geven. Vaak wil iemand eerst gehoord worden voordat hij of zij openstaat voor oplossingen. Wie zich begrepen voelt, vertelt meer en voelt zich serieus genomen. Goed luisteren maakt relaties sterker, op het werk, in vriendschappen en in families.",
+  "questions": [
+   {
+    "question": "Waar zijn we tijdens een gesprek vaak mee bezig?",
+    "options": [
+     "Met wat we zelf willen zeggen",
+     "Met stil zijn",
+     "Met samenvatten",
+     "Met open vragen"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom is samenvatten nuttig?",
+    "options": [
+     "Omdat het gesprek dan korter wordt",
+     "Omdat je laat zien dat je het begrijpt en fouten meteen verbeterd kunnen worden",
+     "Omdat je dan niet hoeft te luisteren",
+     "Omdat het beleefd klinkt"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat kun je volgens de tekst beter laten?",
+    "options": [
+     "Knikken",
+     "Meteen advies geven",
+     "Open vragen stellen",
+     "De telefoon wegleggen"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "communicatie"
+ },
+ {
+  "id": "x-het-nut-van-fouten-maken",
+  "title": "Het nut van fouten maken",
+  "text": "Niemand maakt graag fouten. Op school krijg je er een lager cijfer voor, en op het werk kan een fout vervelende gevolgen hebben. Toch zijn fouten een van de beste manieren om te leren.\n\nAls je een fout maakt en daarna het goede antwoord ziet, onthoud je dat antwoord vaak beter dan als je het meteen goed had. Onderzoekers denken dat dit komt doordat de verrassing je aandacht scherpt. Je hersenen merken: hier klopte mijn verwachting niet, dit is belangrijk.\n\nVoorwaarde is wel dat je van de fout leert. Wie snel doorgaat en er niet naar kijkt, heeft er weinig aan. Beter is het om te vragen: wat ging er mis, en wat doe ik de volgende keer anders?\n\nIn sommige beroepen is dit uitgegroeid tot een vaste werkwijze. In de luchtvaart melden piloten en monteurs fouten en bijna-ongelukken, zonder dat ze direct gestraft worden. Zo kan iedereen ervan leren, en is vliegen steeds veiliger geworden. Ook ziekenhuizen gebruiken zulke systemen. Een omgeving waarin fouten besproken mogen worden, maakt mensen en organisaties uiteindelijk beter.",
+  "questions": [
+   {
+    "question": "Waarom onthoud je een antwoord beter na een fout?",
+    "options": [
+     "Omdat de verrassing je aandacht scherpt",
+     "Omdat je dan meer tijd hebt",
+     "Omdat fouten niet tellen",
+     "Omdat je het opschrijft"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat is volgens de tekst de voorwaarde om van fouten te leren?",
+    "options": [
+     "Snel doorgaan",
+     "Kijken wat er misging en wat je anders doet",
+     "Nooit meer dezelfde taak doen",
+     "Iemand anders de schuld geven"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Welk voorbeeld noemt de tekst?",
+    "options": [
+     "De luchtvaart",
+     "De landbouw",
+     "De bouw",
+     "Het onderwijs"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "leren"
+ },
+ {
+  "id": "x-de-reis-van-een-pakketje",
+  "title": "De reis van een pakketje",
+  "text": "Je bestelt 's avonds laat een boek, en de volgende dag ligt het al op de mat. Achter die snelheid zit een ingewikkeld systeem dat dag en nacht draait.\n\nNa je bestelling gaat er direct een signaal naar een groot magazijn. Daar staan honderdduizenden producten op vaste plekken. Medewerkers of robots halen het boek op en brengen het naar een inpakstation. Het pakketje krijgt een label met een streepjescode en gaat op een transportband.\n\nVervolgens rijdt een vrachtwagen het pakket naar een sorteercentrum van een bezorgbedrijf. Daar lezen scanners de streepjescode en sturen machines het pakket automatisch naar de juiste plek, op basis van de postcode. In één nacht worden er zo honderdduizenden pakketten gesorteerd.\n\nVroeg in de ochtend worden de pakketten in bestelbusjes geladen, in de volgorde van de route. Software berekent de slimste route, zodat de bezorger zo weinig mogelijk kilometers maakt.\n\nHet gemak heeft een prijs. Al die vrachtwagens en busjes zorgen voor drukte en uitstoot, en retourzendingen maken de keten nog langer. Daarom proberen bedrijven pakketten te bundelen en elektrisch te bezorgen.",
+  "questions": [
+   {
+    "question": "Hoe weten de machines in het sorteercentrum waar een pakket heen moet?",
+    "options": [
+     "Door de kleur van de doos",
+     "Door de streepjescode en de postcode",
+     "Door het gewicht",
+     "Door de naam van de afzender"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom worden de pakketten in een vaste volgorde in de bus geladen?",
+    "options": [
+     "In de volgorde van de route",
+     "Op alfabet",
+     "Op grootte",
+     "Willekeurig"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Welke keerzijde noemt de tekst?",
+    "options": [
+     "Pakketten gaan vaak kapot",
+     "Drukte en uitstoot door al het vervoer",
+     "Boeken worden duurder",
+     "Bezorgers werken te weinig"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "economie"
+ },
+ {
+  "id": "x-voetbal-en-wetenschap",
+  "title": "Voetbal en wetenschap",
+  "text": "Een vrije trap die met een boog om de muur heen in de kruising verdwijnt, lijkt magie. Toch zit er natuurkunde achter. Als een speler de bal aan de zijkant raakt, gaat hij draaien. Een draaiende bal sleept lucht mee. Aan de ene kant stroomt de lucht daardoor sneller langs de bal dan aan de andere kant, en ontstaat er een drukverschil. Dat duwt de bal opzij. Dit heet het Magnuseffect.\n\nOok in de training speelt wetenschap een steeds grotere rol. Profclubs laten spelers vestjes met sensoren dragen die bijhouden hoeveel kilometers ze lopen, hoe vaak ze sprinten en hoe hoog hun hartslag is. Zo kunnen trainers zien wie moe is en wie een blessure dreigt te krijgen.\n\nVideoanalyse helpt om tactiek te verbeteren. Analisten bekijken wedstrijden terug en tellen bijvoorbeeld hoe vaak een tegenstander over links aanvalt. Daarop past de trainer zijn plan aan.\n\nZelfs slaap en voeding worden bijgehouden. Topspelers krijgen een voedingsplan en leren hoe ze na een wedstrijd het best herstellen. Talent blijft belangrijk, maar kleine verbeteringen in details maken op het hoogste niveau vaak het verschil.",
+  "questions": [
+   {
+    "question": "Hoe heet het effect waardoor een draaiende bal een boog maakt?",
+    "options": [
+     "Het Newtoneffect",
+     "Het Magnuseffect",
+     "Het Dopplereffect",
+     "Het Bernoullispel"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat meten de vestjes met sensoren?",
+    "options": [
+     "Afstand, sprints en hartslag",
+     "Alleen de snelheid van de bal",
+     "Het weer",
+     "De stemming van het publiek"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat maakt volgens de tekst op het hoogste niveau vaak het verschil?",
+    "options": [
+     "Alleen talent",
+     "Kleine verbeteringen in details",
+     "Dure schoenen",
+     "Het aantal fans"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "sport"
+ },
+ {
+  "id": "x-hoe-een-idee-een-bedrijf-wordt",
+  "title": "Hoe een idee een bedrijf wordt",
+  "text": "Veel bekende bedrijven begonnen klein. Een paar vrienden in een studentenkamer, of iemand die in de garage aan een product sleutelde. Hoe wordt zo'n idee een echt bedrijf?\n\nDe eerste stap is een probleem vinden dat mensen echt hebben. Een goed idee lost iets op of maakt iets makkelijker. Veel starters bouwen daarom eerst een eenvoudige versie van hun product en laten die aan mogelijke klanten zien. Zo leren ze snel wat werkt en wat niet, zonder veel geld uit te geven.\n\nDaarna komt de vraag: wie gaat ervoor betalen, en hoeveel? Zonder inkomsten houdt een bedrijf het niet lang vol. Soms zoeken ondernemers investeerders die geld inleggen in ruil voor een deel van het bedrijf.\n\nDe meeste nieuwe bedrijven overleven de eerste jaren niet. Dat klinkt somber, maar veel ondernemers zien het anders. Ze leren van wat misging en beginnen opnieuw, met meer ervaring.\n\nJe hoeft niet te wachten tot je volwassen bent om te oefenen. Een webwinkeltje, zelfgemaakte producten verkopen op een markt of een oppasdienst beginnen: het zijn allemaal manieren om te ontdekken of ondernemen bij je past.",
+  "questions": [
+   {
+    "question": "Wat is volgens de tekst de eerste stap?",
+    "options": [
+     "Een kantoor huren",
+     "Een probleem vinden dat mensen echt hebben",
+     "Veel geld lenen",
+     "Een logo ontwerpen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom bouwen starters eerst een eenvoudige versie?",
+    "options": [
+     "Om snel te leren wat werkt zonder veel geld uit te geven",
+     "Omdat het verplicht is",
+     "Om het te verkopen aan grote bedrijven",
+     "Omdat ze niet beter kunnen"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat doen investeerders volgens de tekst?",
+    "options": [
+     "Ze kopen alle producten op",
+     "Ze leggen geld in voor een deel van het bedrijf",
+     "Ze geven gratis advies",
+     "Ze doen het werk"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "economie"
+ },
+ {
+  "id": "x-de-elfstedentocht",
+  "title": "De Elfstedentocht",
+  "text": "Weinig sportevenementen maken zoveel los als de Elfstedentocht. Het is een schaatstocht van bijna tweehonderd kilometer langs de elf Friese steden, over natuurijs. Vertrek en finish liggen in Leeuwarden. Onderweg moeten de deelnemers bij elke stad een stempel halen op hun stempelkaart.\n\nDe eerste officiële tocht werd in 1909 verreden. Omdat het ijs overal dik genoeg moet zijn, kan de tocht alleen doorgaan na een lange, strenge vorstperiode. Dat gebeurt maar zelden. De laatste Elfstedentocht was in 1997. Sindsdien is het nooit meer koud genoeg geweest.\n\nDe beroemdste editie is die van 1963. Het vroor die dag streng en er stond een ijskoude oostenwind. Van de ongeveer tienduizend deelnemers haalden er maar een paar honderd de finish. Veel schaatsers liepen bevriezingsverschijnselen op. De winnaar, Reinier Paping, werd een nationale held.\n\nAls er sprake is van een tocht, raakt het hele land in de ban. De vereniging die de tocht organiseert, stuurt mensen het ijs op om de dikte te meten. Dat moet op elk punt van de route minstens vijftien centimeter zijn. Door de klimaatverandering vragen velen zich af of er ooit nog een Elfstedentocht komt.",
+  "questions": [
+   {
+    "question": "Waar liggen start en finish van de Elfstedentocht?",
+    "options": [
+     "In Sneek",
+     "In Leeuwarden",
+     "In Harlingen",
+     "In Dokkum"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom kan de tocht maar zelden doorgaan?",
+    "options": [
+     "Omdat het te duur is",
+     "Omdat het ijs overal dik genoeg moet zijn na een lange vorstperiode",
+     "Omdat er te weinig schaatsers zijn",
+     "Omdat het verboden is"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat maakte de tocht van 1963 zo beroemd?",
+    "options": [
+     "Er deed niemand mee",
+     "De extreme kou waardoor maar weinig mensen finishten",
+     "Hij werd in de zomer verreden",
+     "Hij was maar tien kilometer lang"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "sport"
+ },
+ {
+  "id": "x-hoe-een-sluis-werkt",
+  "title": "Hoe een sluis werkt",
+  "text": "In een land vol water, zoals Nederland, liggen rivieren en kanalen niet overal op dezelfde hoogte. Toch moeten schepen van het ene water naar het andere kunnen varen. Daarvoor is de sluis bedacht.\n\nEen sluis is een bak met aan beide kanten deuren. Stel dat een schip van laag naar hoog water wil. Eerst gaan de deuren aan de lage kant open, en het schip vaart de sluiskolk in. Daarna sluiten die deuren. Vervolgens laat de sluiswachter water van de hoge kant binnenstromen, via kleine openingen in de deuren of in de muur. Het water in de kolk stijgt, en het schip stijgt mee. Als het water even hoog staat als aan de hoge kant, gaan de andere deuren open en vaart het schip verder.\n\nWie van hoog naar laag vaart, doorloopt hetzelfde proces andersom. Het water loopt dan weg uit de kolk, en het schip zakt mee naar beneden.\n\nSluizen bestaan al eeuwen. In Nederland zijn er honderden, van kleine sluisjes voor plezierbootjes tot enorme zeesluizen bij IJmuiden, waar grote containerschepen doorheen passen. De nieuwe zeesluis daar behoort tot de grootste van de wereld.",
+  "questions": [
+   {
+    "question": "Waarvoor dient een sluis?",
+    "options": [
+     "Om schepen tussen water van verschillende hoogte te laten varen",
+     "Om vis te vangen",
+     "Om water te zuiveren",
+     "Om stroom op te wekken"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat gebeurt er als het water in de kolk stijgt?",
+    "options": [
+     "Het schip zinkt",
+     "Het schip stijgt mee",
+     "De deuren breken",
+     "Het schip draait om"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waar ligt volgens de tekst een van de grootste zeesluizen ter wereld?",
+    "options": [
+     "Bij IJmuiden",
+     "Bij Maastricht",
+     "Bij Groningen",
+     "Bij Den Helder"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "techniek"
+ },
+ {
+  "id": "x-waarom-je-honger-krijgt",
+  "title": "Waarom je honger krijgt",
+  "text": "Honger voelt als een simpel signaal: je maag knort, dus je moet eten. Maar achter dat gevoel zit een ingewikkeld samenspel tussen je maag, je darmen en je hersenen.\n\nAls je maag leeg is, maakt hij het hormoon ghreline aan. Dat hormoon reist via het bloed naar de hersenen en geeft daar het signaal: tijd om te eten. Na een maaltijd daalt de hoeveelheid ghreline. Tegelijk maakt je vetweefsel leptine aan, een hormoon dat zegt dat er genoeg reserves zijn. Ook je darmen sturen verzadigingssignalen zodra het eten binnenkomt.\n\nDie signalen hebben wel tijd nodig. Het duurt ongeveer twintig minuten voordat je hersenen doorhebben dat je vol zit. Wie snel eet, eet daardoor vaak meer dan nodig.\n\nHonger wordt ook beïnvloed door gewoontes en omgeving. Als je elke dag om twaalf uur luncht, krijg je rond dat tijdstip vanzelf trek. De geur van vers brood of het zien van lekker eten kan ook trek opwekken, zelfs als je net hebt gegeten. En bij slaaptekort maakt het lichaam meer ghreline aan. Een goede nachtrust helpt dus ook bij een gezond eetpatroon.",
+  "questions": [
+   {
+    "question": "Welk hormoon geeft het signaal om te eten?",
+    "options": [
+     "Leptine",
+     "Ghreline",
+     "Insuline",
+     "Adrenaline"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoe lang duurt het ongeveer voordat je hersenen merken dat je vol zit?",
+    "options": [
+     "Twee minuten",
+     "Twintig minuten",
+     "Twee uur",
+     "Een dag"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat gebeurt er bij slaaptekort?",
+    "options": [
+     "Je maakt meer ghreline aan",
+     "Je krijgt minder honger",
+     "Je maag krimpt",
+     "Er gebeurt niets"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "lichaam"
+ },
+ {
+  "id": "x-de-eerste-foto",
+  "title": "De eerste foto",
+  "text": "De oudste bewaarde foto van een landschap werd rond 1826 gemaakt door de Fransman Joseph Nicéphore Niépce. Vanuit een raam van zijn huis legde hij het uitzicht op daken en een schuur vast. Daarvoor had hij een metalen plaat met een lichtgevoelig laagje in een camera gezet. De belichtingstijd was enorm: waarschijnlijk vele uren, misschien zelfs dagen.\n\nNiépce werkte later samen met Louis Daguerre. Na de dood van Niépce ontwikkelde Daguerre een betere methode, die hij in 1839 bekendmaakte: de daguerreotypie. De belichtingstijd daalde naar enkele minuten. Daarmee werden portretten mogelijk, al moesten mensen wel lang stilzitten. Soms kregen ze een steun voor hun hoofd, zodat ze niet bewogen.\n\nIn dezelfde tijd ontwikkelde de Engelsman William Henry Fox Talbot een methode met papier en negatieven. Van één negatief kon je daardoor meerdere afdrukken maken. Dat principe bleef meer dan honderd jaar de basis van de fotografie.\n\nTegenwoordig maken mensen elke dag miljarden foto's met hun telefoon, in een fractie van een seconde. De uren van Niépce zijn teruggebracht tot een duizendste van een seconde.",
+  "questions": [
+   {
+    "question": "Wat was er zo lastig aan de eerste foto?",
+    "options": [
+     "De belichtingstijd was enorm lang",
+     "Er was geen camera",
+     "Hij was gekleurd",
+     "Hij werd in een uur gemaakt"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom kregen mensen bij portretten soms een steun voor het hoofd?",
+    "options": [
+     "Omdat ze moe waren",
+     "Zodat ze tijdens de lange belichting niet bewogen",
+     "Om ze langer te laten lijken",
+     "Voor de sier"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat was het voordeel van de methode van Fox Talbot?",
+    "options": [
+     "Hij werkte zonder licht",
+     "Van één negatief kon je meerdere afdrukken maken",
+     "Hij was in kleur",
+     "Hij was goedkoper dan papier"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "techniek"
+ },
+ {
+  "id": "x-de-stille-kracht-van-de-regenworm",
+  "title": "De stille kracht van de regenworm",
+  "text": "Een regenworm lijkt een onopvallend beestje, maar voor de bodem is hij onmisbaar. Charles Darwin, bekend van de evolutietheorie, schreef er zelfs een heel boek over. Hij noemde wormen een van de belangrijkste dieren in de geschiedenis van de aarde.\n\nRegenwormen graven gangen door de grond. Daardoor komt er lucht in de bodem en kan regenwater makkelijker wegzakken. Plantenwortels groeien gemakkelijker door de losse grond. In een gezond weiland kunnen honderden wormen per vierkante meter leven.\n\nWormen eten dode bladeren en ander plantenafval. Ze trekken bladeren hun gang in en verteren ze samen met grond. Wat ze uitscheiden, heet wormenpoep of wormhumus. Die is rijk aan voedingsstoffen die planten goed kunnen opnemen. Zo zijn wormen een soort natuurlijke composteerders.\n\nWormen hebben geen ogen, maar voelen licht en trillingen via hun huid. Ze ademen ook door hun huid, die daarom vochtig moet blijven. Na een flinke regenbui zie je ze vaak bovengronds. Waarom ze dat doen, is niet helemaal duidelijk. Misschien reizen ze makkelijker over natte grond naar een nieuwe plek. Wie een gezonde tuin wil, doet er goed aan zijn wormen te koesteren.",
+  "questions": [
+   {
+    "question": "Wie schreef een heel boek over regenwormen?",
+    "options": [
+     "Isaac Newton",
+     "Charles Darwin",
+     "Albert Einstein",
+     "Marie Curie"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom zijn de gangen van wormen goed voor de bodem?",
+    "options": [
+     "Er komt lucht in en water zakt makkelijker weg",
+     "Ze houden mollen weg",
+     "Ze maken de grond harder",
+     "Ze trekken vogels aan"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Hoe ademen regenwormen?",
+    "options": [
+     "Met longen",
+     "Door hun huid",
+     "Met kieuwen",
+     "Via hun mond"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-een-brief-door-de-eeuwen-heen",
+  "title": "Een brief door de eeuwen heen",
+  "text": "Vroeger was een brief versturen een hele onderneming. In de middeleeuwen hadden alleen vorsten, kloosters en rijke kooplieden eigen boden die brieven te voet of te paard bezorgden. Gewone mensen gaven een brief mee aan een reiziger en hoopten dat die aankwam.\n\nIn de zeventiende eeuw ontstonden in de Republiek vaste verbindingen met trekschuiten, boten die door paarden langs de vaart werden getrokken. Ze voeren volgens een dienstregeling tussen steden, en namen ook post mee. Zo werd het versturen van brieven betrouwbaarder.\n\nEen grote verandering kwam in 1840 in Engeland met de eerste postzegel: de Penny Black. Daarvoor betaalde vaak de ontvanger, en de prijs hing af van de afstand. Met de postzegel betaalde de afzender vooraf één vast bedrag. Andere landen volgden snel. In Nederland verscheen de eerste postzegel in 1852.\n\nIn de twintigste eeuw schreven mensen meer brieven dan ooit. Tegenwoordig versturen we vooral berichten en e-mails, en neemt het aantal brieven sterk af. Toch is een handgeschreven kaart nog altijd iets bijzonders. Juist omdat het moeite kost, voelt het persoonlijk.",
+  "questions": [
+   {
+    "question": "Wat waren trekschuiten?",
+    "options": [
+     "Boten die door paarden langs de vaart werden getrokken",
+     "Postkoetsen",
+     "Zeilschepen naar Indië",
+     "Treinen"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat veranderde er door de postzegel?",
+    "options": [
+     "De ontvanger betaalde voortaan",
+     "De afzender betaalde vooraf één vast bedrag",
+     "Brieven werden gratis",
+     "Brieven mochten alleen nog per trein"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wanneer verscheen de eerste Nederlandse postzegel?",
+    "options": [
+     "In 1640",
+     "In 1840",
+     "In 1852",
+     "In 1952"
+    ],
+    "answer": 2
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "geschiedenis"
+ },
+ {
+  "id": "x-waarom-ijs-glad-is",
+  "title": "Waarom ijs glad is",
+  "text": "Iedereen weet dat ijs glad is, maar waarom precies, heeft wetenschappers lang beziggehouden. Lange tijd was de gangbare verklaring dat de druk van een schaats het ijs laat smelten, waardoor je op een laagje water glijdt. Maar berekeningen lieten zien dat die druk veel te klein is om ijs flink te laten smelten, zeker bij strenge vorst.\n\nEen andere verklaring is wrijving. Als je over ijs glijdt, ontstaat er door de beweging warmte, en die warmte laat een heel dun laagje ijs smelten. Dat verklaart waarom een bewegende schaats beter glijdt dan een stilstaande.\n\nMaar er is meer. Onderzoek laat zien dat de bovenste laag van ijs zich anders gedraagt dan het ijs eronder. De watermoleculen aan het oppervlak zitten minder vast en kunnen bewegen, zelfs ver onder het vriespunt. Dat maakt het oppervlak van zichzelf al glibberig.\n\nDe temperatuur doet ertoe. Rond een paar graden onder nul is ijs het gladst, wat schaatsers graag horen. Bij extreme kou wordt ijs juist stroever, bijna als zand. Poolreizigers merken dat hun sleeën dan zwaar trekken. Iets alledaags als glad ijs blijkt dus verrassend ingewikkeld.",
+  "questions": [
+   {
+    "question": "Waarom klopt de oude verklaring met druk niet helemaal?",
+    "options": [
+     "De druk van een schaats is veel te klein",
+     "Schaatsen zijn te licht",
+     "IJs smelt nooit",
+     "Er is geen druk"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat is er bijzonder aan de bovenste laag van ijs?",
+    "options": [
+     "Die is harder",
+     "De watermoleculen zitten minder vast en kunnen bewegen",
+     "Die bevat zout",
+     "Die is altijd nat"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoe is ijs bij extreme kou?",
+    "options": [
+     "Gladder dan ooit",
+     "Stroever, bijna als zand",
+     "Vloeibaar",
+     "Doorzichtiger"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-hoe-een-orkest-samenspeelt",
+  "title": "Hoe een orkest samenspeelt",
+  "text": "Een symfonieorkest telt vaak tachtig tot honderd muzikanten. Hoe zorg je dat al die mensen precies tegelijk spelen? Een belangrijke rol is weggelegd voor de dirigent.\n\nMet een stokje of met de handen geeft de dirigent de maat aan, zodat iedereen hetzelfde tempo volgt. Maar het werk gaat veel verder. Tijdens repetities bepaalt de dirigent hoe een stuk moet klinken: waar het zachter wordt, waar het spannender moet en welke instrumenten meer op de voorgrond treden. Tijdens het concert brengt hij of zij die ideeën met gebaren en gezichtsuitdrukkingen over.\n\nDe muzikanten luisteren ook voortdurend naar elkaar. De eerste violist, de concertmeester, heeft een speciale taak. Hij of zij stemt het orkest, geeft de strijkers aanwijzingen en speelt vaak de solopartijen voor viool.\n\nDe opstelling is niet willekeurig. De strijkers zitten meestal vooraan, de houtblazers en koperblazers daarachter en het slagwerk helemaal achterin. Zo klinkt het geheel in balans, omdat de luide instrumenten verder van het publiek staan. Een goed orkest klinkt als één instrument, terwijl het uit honderd mensen bestaat.",
+  "questions": [
+   {
+    "question": "Wie stemt het orkest?",
+    "options": [
+     "De dirigent",
+     "De concertmeester",
+     "De slagwerker",
+     "Het publiek"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom staat het slagwerk helemaal achterin?",
+    "options": [
+     "Omdat het zwaar is",
+     "Zodat het geheel in balans klinkt",
+     "Omdat het later begint",
+     "Omdat het niet mooi is"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat doet de dirigent tijdens repetities?",
+    "options": [
+     "Hij bepaalt hoe een stuk moet klinken",
+     "Hij speelt viool",
+     "Hij verkoopt kaartjes",
+     "Hij stemt de instrumenten"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "cultuur"
+ },
+ {
+  "id": "x-de-molens-van-kinderdijk",
+  "title": "De molens van Kinderdijk",
+  "text": "Bij het dorp Kinderdijk, niet ver van Rotterdam, staan negentien windmolens in lange rijen langs het water. Het is een van de bekendste plekken van Nederland en staat sinds 1997 op de Werelderfgoedlijst van UNESCO. Maar de molens zijn niet gebouwd om mooi te zijn. Ze moesten het land droog houden.\n\nHet gebied ligt lager dan de rivieren eromheen. Regenwater en kwelwater, dat van onderen omhoog komt, hoopten zich op in de polders. De molens, die rond 1740 werden gebouwd, pompten dat water omhoog naar een hoger gelegen boezem. Van daaruit kon het naar de rivier stromen.\n\nEen molenaar woonde met zijn gezin in de molen. Hij moest de wieken in de wind zetten, de zeilen spannen of oprollen bij harde wind en de molen onderhouden. Het was zwaar en soms gevaarlijk werk, dag en nacht als dat nodig was.\n\nTegenwoordig doen grote gemalen het pompwerk. De molens zijn niet meer nodig, maar ze worden nog wel onderhouden en draaien regelmatig. In sommige molens wonen nog steeds molenaars. Jaarlijks komen honderdduizenden bezoekers kijken hoe Nederlanders vroeger met hun handen en de wind tegen het water vochten.",
+  "questions": [
+   {
+    "question": "Waarom werden de molens van Kinderdijk gebouwd?",
+    "options": [
+     "Om graan te malen",
+     "Om het land droog te houden",
+     "Als toeristische attractie",
+     "Om hout te zagen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waar pompten de molens het water naartoe?",
+    "options": [
+     "Naar een hoger gelegen boezem",
+     "Naar zee",
+     "Naar een waterput",
+     "Naar de kelder"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wie doen het pompwerk tegenwoordig?",
+    "options": [
+     "De molens",
+     "Grote gemalen",
+     "Vrijwilligers met emmers",
+     "Boten"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "geschiedenis"
+ },
+ {
+  "id": "x-het-leven-op-een-koraalrif",
+  "title": "Het leven op een koraalrif",
+  "text": "Koraalriffen beslaan maar een klein deel van de oceaanbodem, maar er leeft ongeveer een kwart van alle soorten zeedieren. Ze worden daarom wel de regenwouden van de zee genoemd.\n\nKoraal lijkt op steen of een plant, maar het bestaat uit kolonies van piepkleine dieren: poliepen. Elke poliep bouwt een kalkskelet om zich heen. Over honderden en duizenden jaren groeien die skeletten uit tot enorme riffen. Het Groot Barrièrerif bij Australië is zelfs vanuit de ruimte te zien.\n\nIn de poliepen leven algen. Die algen maken met zonlicht voedsel, waar het koraal van meeprofiteert. In ruil krijgen de algen een veilige plek. Deze samenwerking verklaart waarom de meeste riffen in helder, ondiep en warm water liggen.\n\nDie samenwerking is ook kwetsbaar. Als het zeewater te warm wordt, stoten de poliepen de algen uit. Het koraal verliest dan zijn kleur en wordt wit. Dat heet koraalverbleking. Blijft het water te lang te warm, dan sterft het koraal. Door de opwarming van de oceanen gebeurt dit steeds vaker. Onderzoekers proberen koraal te kweken dat beter tegen warmte kan, maar het beschermen van de riffen begint bij het beperken van de opwarming.",
+  "questions": [
+   {
+    "question": "Waaruit bestaat koraal?",
+    "options": [
+     "Uit steen",
+     "Uit kolonies van piepkleine dieren",
+     "Uit zeewier",
+     "Uit zand"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat hebben de algen en het koraal aan elkaar?",
+    "options": [
+     "Niets",
+     "Het koraal krijgt voedsel, de algen een veilige plek",
+     "De algen eten het koraal op",
+     "Ze vechten om licht"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat gebeurt er bij koraalverbleking?",
+    "options": [
+     "Het koraal wordt groter",
+     "De poliepen stoten de algen uit en het koraal wordt wit",
+     "Het water wordt helderder",
+     "Er komen meer vissen"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-skateboarden-op-de-spelen",
+  "title": "Skateboarden op de Spelen",
+  "text": "Skateboarden begon in de jaren vijftig en zestig in Californië. Surfers wilden ook kunnen oefenen als er geen golven waren, en zetten wieltjes onder een plank. Wat als tijdverdrijf begon, groeide uit tot een wereldwijde sport met een eigen cultuur, muziek en kleding.\n\nIn de jaren zeventig ontdekten skaters lege zwembaden. Door de ronde wanden konden ze snelheid maken en sprongen uitvoeren. Later kwamen er speciale skateparken met hellingen en bakken. Een beroemde truc is de ollie, waarbij de skater met board en al de lucht in springt zonder het board met de handen vast te houden.\n\nLang werd skateboarden gezien als iets voor dwarse jongeren. Op veel pleinen was het verboden. Dat veranderde langzaam. In 2021, tijdens de Spelen in Tokio, was skateboarden voor het eerst een olympische sport. Opvallend was hoe jong veel deelnemers waren: sommige medaillewinnaars waren nog geen veertien jaar.\n\nWie wil beginnen, hoeft geen dure spullen te kopen. Een simpel board, goede schoenen en een helm zijn genoeg. Vallen hoort erbij. De meeste skaters zeggen dat je de sport pas echt leert door na elke val weer op te staan.",
+  "questions": [
+   {
+    "question": "Waarom zetten surfers wieltjes onder een plank?",
+    "options": [
+     "Om naar school te gaan",
+     "Om te oefenen als er geen golven waren",
+     "Om sneller te lopen",
+     "Voor een wedstrijd"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat is een ollie?",
+    "options": [
+     "Een soort helm",
+     "Een sprong met het board zonder het vast te houden",
+     "Een skatepark",
+     "Een merk schoenen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wanneer was skateboarden voor het eerst een olympische sport?",
+    "options": [
+     "In 1972",
+     "In 2000",
+     "In 2021",
+     "Nog nooit"
+    ],
+    "answer": 2
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "sport"
+ },
+ {
+  "id": "x-een-goede-presentatie-geven",
+  "title": "Een goede presentatie geven",
+  "text": "Voor veel mensen is een presentatie geven eng. Je staat voor de klas, iedereen kijkt naar je en je wilt niet vastlopen. Gelukkig kun je presenteren leren, net als fietsen.\n\nBegin bij de kern. Wat wil je dat je publiek na afloop onthoudt? Probeer dat in één zin te zeggen. Bouw je verhaal daaromheen op, met een duidelijk begin, midden en einde. Een verrassende vraag, een kort verhaal of een opvallend feit is een sterke opening.\n\nGebruik je dia's als steun, niet als spiekbrief. Weinig tekst en een goede afbeelding werken beter dan een dia vol zinnen. Als je publiek de tekst moet lezen, luisteren ze niet meer naar jou.\n\nOefenen is het belangrijkste. Doe je presentatie een paar keer hardop, bijvoorbeeld voor een spiegel of voor iemand thuis. Zo merk je waar je hapert en hoelang het duurt.\n\nZenuwen zijn normaal. Ze betekenen dat je het belangrijk vindt. Adem rustig in voordat je begint, kijk een paar vriendelijke gezichten aan en praat iets langzamer dan je gewend bent. Vergeet je even wat je wilde zeggen, neem dan een korte pauze. Het publiek merkt dat veel minder dan jij denkt.",
+  "questions": [
+   {
+    "question": "Waarmee moet je volgens de tekst beginnen bij het voorbereiden?",
+    "options": [
+     "Met de dia's",
+     "Met de kern van je boodschap",
+     "Met het einde",
+     "Met grappen"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom zijn dia's vol tekst geen goed idee?",
+    "options": [
+     "Omdat het publiek dan leest en niet meer luistert",
+     "Omdat het te lang duurt om te maken",
+     "Omdat de docent dat niet wil",
+     "Omdat het er slordig uitziet"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat betekenen zenuwen volgens de tekst?",
+    "options": [
+     "Dat je slecht bent voorbereid",
+     "Dat je het belangrijk vindt",
+     "Dat je moet stoppen",
+     "Dat het publiek je niet mag"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "communicatie"
+ },
+ {
+  "id": "x-de-opkomst-van-de-sneaker",
+  "title": "De opkomst van de sneaker",
+  "text": "Sneakers zijn tegenwoordig overal: op school, op het werk en zelfs op rode lopers. Maar ze begonnen als eenvoudige sportschoenen. Rond 1900 kwamen er schoenen met een rubberen zool op de markt. Omdat je er zo zachtjes mee liep, noemden Engelstaligen ze sneakers, van het werkwoord sneak, sluipen.\n\nIn de twintigste eeuw werden ze vooral gebruikt bij sporten als basketbal en tennis. Bekende sporters kregen hun eigen modellen. Vanaf de jaren tachtig groeide de sneaker uit tot een modeverschijnsel. Hiphopartiesten droegen ze op het podium en in hun videoclips, en jongeren wilden dezelfde schoenen.\n\nTegenwoordig is er een hele wereld van verzamelaars. Sommige modellen worden in kleine aantallen uitgebracht. Mensen staan dan urenlang in de rij, of proberen online een paar te bemachtigen. Zeldzame exemplaren worden later doorverkocht voor veel meer dan de oorspronkelijke prijs.\n\nDe keerzijde is dat sneakers vaak gemaakt worden van plastics en lijm, en moeilijk te recyclen zijn. Ook zijn de werkomstandigheden in sommige fabrieken slecht. Daarom zoeken merken naar duurzamere materialen, en kiezen sommige mensen bewust voor schoenen die langer meegaan.",
+  "questions": [
+   {
+    "question": "Waar komt de naam sneaker vandaan?",
+    "options": [
+     "Van een merknaam",
+     "Van het Engelse werkwoord voor sluipen",
+     "Van een sporter",
+     "Van het woord snel"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wie maakten sneakers in de jaren tachtig populair als mode?",
+    "options": [
+     "Hiphopartiesten",
+     "Politici",
+     "Boeren",
+     "Wetenschappers"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Welk nadeel van sneakers noemt de tekst?",
+    "options": [
+     "Ze zijn te licht",
+     "Ze zijn moeilijk te recyclen",
+     "Ze zijn altijd wit",
+     "Ze passen slecht"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "cultuur"
+ },
+ {
+  "id": "x-de-uitvinding-van-de-boekdrukkunst",
+  "title": "De uitvinding van de boekdrukkunst",
+  "text": "Voor de vijftiende eeuw werden boeken in Europa met de hand overgeschreven. Monniken en schrijvers deden soms maanden over één exemplaar. Boeken waren daardoor zeldzaam en duur, en alleen weinig mensen konden lezen.\n\nRond 1450 veranderde dat. In de Duitse stad Mainz ontwikkelde Johannes Gutenberg een drukpers met losse letters van metaal. Elke letter was een klein blokje dat je in rijen kon zetten tot een pagina. Die pagina werd ingeïnkt en op papier gedrukt. Daarna kon je de letters opnieuw gebruiken voor een volgende pagina. Het bekendste boek dat hij drukte, is de Gutenbergbijbel.\n\nDe uitvinding verspreidde zich razendsnel. Binnen vijftig jaar stonden er in honderden Europese steden drukpersen, ook in de Nederlanden. Boeken werden goedkoper, en ideeën konden zich veel sneller verspreiden dan ooit. Wetenschappers deelden hun ontdekkingen, en pamfletten brachten nieuws en meningen onder de mensen.\n\nDaardoor wordt de boekdrukkunst gezien als een van de belangrijkste uitvindingen in de geschiedenis. Ze legde de basis voor de verspreiding van kennis, voor kranten en uiteindelijk voor het onderwijs zoals wij dat kennen.",
+  "questions": [
+   {
+    "question": "Hoe werden boeken vóór Gutenberg in Europa gemaakt?",
+    "options": [
+     "Met een drukpers",
+     "Met de hand overgeschreven",
+     "Met een typemachine",
+     "Met houtblokken per boek"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat was het slimme aan Gutenbergs losse letters?",
+    "options": [
+     "Ze waren van goud",
+     "Ze konden steeds opnieuw worden gebruikt",
+     "Ze waren heel groot",
+     "Ze gaven kleur"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat was een belangrijk gevolg van de boekdrukkunst?",
+    "options": [
+     "Boeken werden duurder",
+     "Ideeën konden zich veel sneller verspreiden",
+     "Minder mensen gingen lezen",
+     "Monniken kregen meer werk"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "geschiedenis"
+ },
+ {
+  "id": "x-waarom-bruggen-niet-instorten",
+  "title": "Waarom bruggen niet instorten",
+  "text": "Een brug moet zijn eigen gewicht dragen, plus alles wat eroverheen gaat: auto's, treinen, mensen en soms een harde storm. Ingenieurs gebruiken verschillende vormen om die krachten veilig naar de grond af te voeren.\n\nDe eenvoudigste brug is een balk op twee steunpunten. Als er gewicht op komt, buigt de balk een beetje door. De bovenkant wordt dan samengedrukt en de onderkant uitgerekt. Voor langere afstanden is dat niet genoeg.\n\nEen boogbrug werkt anders. De boog duwt het gewicht naar opzij en naar beneden, naar de oevers. Stenen zijn sterk als ze worden samengedrukt, daarom konden de Romeinen al bruggen van steen bouwen die er nog steeds staan.\n\nHangbruggen, zoals de Golden Gate Bridge, hebben enorme kabels die over hoge torens lopen en aan beide kanten stevig verankerd zijn. Het wegdek hangt aan die kabels. Een variant daarop is de tuibrug, waarbij de kabels schuin vanaf de pijlers naar het wegdek lopen, zoals bij de Erasmusbrug in Rotterdam.\n\nIngenieurs houden ook rekening met wind en trillingen. Een beroemd voorbeeld van wat er mis kan gaan, is een brug in Amerika die in 1940 door de wind zo ging slingeren dat hij instortte. Sindsdien worden bruggen uitgebreid getest in windtunnels.",
+  "questions": [
+   {
+    "question": "Wat doet een boog met het gewicht?",
+    "options": [
+     "Hij duwt het naar opzij en naar beneden, naar de oevers",
+     "Hij laat het in het water vallen",
+     "Hij maakt het lichter",
+     "Hij verplaatst het naar de kabels"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Welke brug in Rotterdam wordt genoemd als tuibrug?",
+    "options": [
+     "De Willemsbrug",
+     "De Erasmusbrug",
+     "De Van Brienenoordbrug",
+     "De Magere Brug"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom worden bruggen tegenwoordig in windtunnels getest?",
+    "options": [
+     "Omdat een brug ooit door wind ging slingeren en instortte",
+     "Om te kijken hoe mooi ze zijn",
+     "Om de kleur te bepalen",
+     "Omdat het goedkoop is"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 4,
+  "collection": "kort",
+  "topic": "techniek"
+ },
+ {
+  "id": "x-de-aardappel-verovert-europa",
+  "title": "De aardappel verovert Europa",
+  "text": "De aardappel komt oorspronkelijk uit de Andes in Zuid-Amerika. Daar werd hij al duizenden jaren geteeld door de inheemse bevolking, in honderden soorten en kleuren. In de zestiende eeuw namen Spaanse ontdekkingsreizigers hem mee naar Europa.\n\nIn het begin vertrouwden veel Europeanen de knol niet. Hij groeide onder de grond en was familie van giftige planten. Sommige mensen dachten dat je er ziek van werd. De aardappel werd daarom eerst vooral gebruikt als veevoer of als sierplant in tuinen.\n\nDat veranderde in de achttiende eeuw. Regeringen zagen dat de aardappel veel voedsel opleverde op een klein stukje grond en goed groeide in een koel klimaat. In Pruisen liet koning Frederik de Grote boeren verplicht aardappels verbouwen. In Frankrijk zou een apotheker bewakers bij zijn aardappelveld hebben gezet, zodat mensen nieuwsgierig werden en er stiekem van gingen stelen.\n\nDe aardappel werd een volksvoedsel en hielp om hongersnoden te voorkomen. Maar afhankelijkheid had ook een keerzijde. Toen in de negentiende eeuw een plantenziekte de oogsten verwoestte, leidde dat in Ierland tot een verschrikkelijke hongersnood. Tegenwoordig is de aardappel een van de belangrijkste gewassen ter wereld.",
+  "questions": [
+   {
+    "question": "Waar komt de aardappel oorspronkelijk vandaan?",
+    "options": [
+     "Uit Ierland",
+     "Uit de Andes in Zuid-Amerika",
+     "Uit China",
+     "Uit Nederland"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom vertrouwden veel Europeanen de aardappel eerst niet?",
+    "options": [
+     "Hij was te duur",
+     "Hij groeide onder de grond en was familie van giftige planten",
+     "Hij smaakte naar vis",
+     "Hij was blauw"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat gebeurde er in Ierland in de negentiende eeuw?",
+    "options": [
+     "Een grote aardappeloogst",
+     "Een hongersnood door een plantenziekte",
+     "De aardappel werd verboden",
+     "De eerste friet werd gebakken"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "eten"
+ },
+ {
+  "id": "x-het-slimme-brein-van-een-kraai",
+  "title": "Het slimme brein van een kraai",
+  "text": "Kraaien zien er gewoon uit, maar het zijn een van de slimste dieren die we kennen. Hun hersenen zijn in verhouding tot hun lichaam groot, en ze kunnen dingen die lang alleen van mensapen werden verwacht.\n\nNieuw-Caledonische kraaien maken zelf gereedschap. Ze buigen takjes tot haakjes waarmee ze insecten uit gaten vissen. In experimenten lossen kraaien puzzels op waarbij ze meerdere stappen moeten zetten, zoals eerst een stokje pakken om daarmee een langer stokje te bereiken.\n\nKraaien herkennen ook gezichten. Onderzoekers in Amerika droegen een masker terwijl ze kraaien vingen om ze te ringen. Jaren later begonnen kraaien nog steeds te krassen en te duiken zodra iemand met dat masker verscheen. Zelfs kraaien die het vangen niet zelf hadden meegemaakt, deden mee. Ze hadden het blijkbaar van elkaar geleerd.\n\nIn steden maken kraaien slim gebruik van mensen. Sommige laten noten op de weg vallen, zodat auto's ze kraken. Anderen wachten bij het stoplicht tot het verkeer stilstaat om de noot veilig op te pikken. Wie de volgende keer een kraai ziet, kijkt misschien toch met andere ogen.",
+  "questions": [
+   {
+    "question": "Wat maken Nieuw-Caledonische kraaien?",
+    "options": [
+     "Nesten van plastic",
+     "Gereedschap, zoals haakjes van takjes",
+     "Muziek",
+     "Holen in de grond"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat bleek uit het experiment met het masker?",
+    "options": [
+     "Kraaien herkennen gezichten en leren van elkaar",
+     "Kraaien zijn kleurenblind",
+     "Kraaien houden van maskers",
+     "Kraaien vergeten snel"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Hoe gebruiken sommige stadskraaien auto's?",
+    "options": [
+     "Ze rijden mee",
+     "Ze laten auto's hun noten kraken",
+     "Ze slapen onder auto's",
+     "Ze vermijden de weg"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "dieren"
+ },
+ {
+  "id": "x-helpen-maakt-gelukkig",
+  "title": "Helpen maakt gelukkig",
+  "text": "Wie iets voor een ander doet, helpt niet alleen die ander. Onderzoek laat zien dat helpen ook de helper zelf goeddoet. Mensen die vrijwilligerswerk doen, zeggen gemiddeld dat ze tevredener zijn met hun leven en zich minder eenzaam voelen.\n\nIn een bekend experiment kregen deelnemers een klein geldbedrag. De helft moest het aan zichzelf uitgeven, de andere helft aan iemand anders. Aan het einde van de dag voelden de mensen die het geld aan een ander hadden gegeven zich gelukkiger. Het bedrag maakte daarbij weinig uit.\n\nWaarom werkt dat zo? Helpen geeft een gevoel van betekenis. Je merkt dat je ertoe doet. Ook brengt het je in contact met anderen, en sociale contacten zijn een van de belangrijkste bronnen van geluk. In de hersenen worden bij het helpen dezelfde gebieden actief als bij het ontvangen van een beloning.\n\nHet hoeft niet groot te zijn. Boodschappen doen voor een oudere buur, iemand de weg wijzen of een collega helpen met een klus telt ook. Wel is het belangrijk dat het vrijwillig is. Helpen omdat het moet, levert minder op dan helpen omdat je het zelf wilt.",
+  "questions": [
+   {
+    "question": "Wat bleek uit het experiment met het geld?",
+    "options": [
+     "Wie het aan een ander gaf, voelde zich gelukkiger",
+     "Wie het zelf uitgaf, voelde zich gelukkiger",
+     "Er was geen verschil",
+     "Een groter bedrag maakte veel gelukkiger"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waarom maakt helpen volgens de tekst gelukkig?",
+    "options": [
+     "Het geeft betekenis en brengt je in contact met anderen",
+     "Omdat je er geld voor krijgt",
+     "Omdat het moet",
+     "Omdat het moe maakt"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Wat is volgens de tekst belangrijk bij helpen?",
+    "options": [
+     "Dat het groot is",
+     "Dat het vrijwillig is",
+     "Dat anderen het zien",
+     "Dat het lang duurt"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "psychologie"
+ },
+ {
+  "id": "x-hoe-een-supermarkt-je-verleidt",
+  "title": "Hoe een supermarkt je verleidt",
+  "text": "Je loopt de supermarkt in voor brood en melk, en je komt naar buiten met een volle tas. Dat is geen toeval. Supermarkten zijn slim ingericht om je langer te laten blijven en meer te laten kopen.\n\nBij de ingang liggen vaak groente, fruit en bloemen. Die frisse kleuren geven een goed gevoel, en je begint je boodschappen met iets gezonds. Dat maakt het makkelijker om later iets lekkers in je mandje te leggen. Producten die bijna iedereen nodig heeft, zoals brood, melk en eieren, liggen vaak achterin of juist verspreid. Zo loop je langs veel andere schappen.\n\nOok de plaats in het schap doet ertoe. Duurdere merken liggen meestal op ooghoogte, waar je als eerste kijkt. Goedkopere varianten vind je vaak onderin. Snoep ligt bij de kassa, precies waar je moet wachten en waar kinderen op ooghoogte meekijken.\n\nZelfs muziek en geur worden ingezet. Rustige muziek zorgt ervoor dat mensen langzamer lopen, en de geur van vers brood maakt trek. Wie minder impulsaankopen wil doen, kan helpen door een boodschappenlijstje te maken en niet met honger naar de winkel te gaan.",
+  "questions": [
+   {
+    "question": "Waarom liggen brood en melk vaak achterin?",
+    "options": [
+     "Omdat ze koud moeten blijven",
+     "Zodat je langs veel andere schappen loopt",
+     "Omdat ze zwaar zijn",
+     "Omdat ze weinig verkocht worden"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waar liggen duurdere merken meestal?",
+    "options": [
+     "Onderin het schap",
+     "Op ooghoogte",
+     "Bij de uitgang",
+     "Buiten de winkel"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat helpt tegen impulsaankopen?",
+    "options": [
+     "Met honger boodschappen doen",
+     "Een boodschappenlijstje maken",
+     "Harde muziek luisteren",
+     "Zo lang mogelijk rondlopen"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "economie"
+ },
+ {
+  "id": "x-leven-in-het-ruimtestation",
+  "title": "Leven in het ruimtestation",
+  "text": "Op ongeveer vierhonderd kilometer boven de aarde draait het Internationaal Ruimtestation rond, het ISS. Het gaat zo snel dat het elke anderhalf uur een rondje om de aarde maakt. De astronauten aan boord zien daardoor zo'n zestien zonsopkomsten per dag.\n\nIn het station lijkt alles te zweven. Dat komt niet doordat er geen zwaartekracht is, maar doordat het station voortdurend om de aarde heen valt. Voor de bemanning betekent dat een leven zonder boven en onder. Ze slapen in een slaapzak die aan de wand vastzit, zodat ze niet door het station drijven.\n\nGewichtloosheid is niet goed voor het lichaam. Spieren en botten worden zwakker, omdat ze geen gewicht hoeven te dragen. Daarom sporten astronauten elke dag ongeveer twee uur, op een loopband met elastieken banden en op speciale fitnessapparaten.\n\nDe astronauten doen experimenten die op aarde niet mogelijk zijn. Ze onderzoeken hoe planten groeien zonder zwaartekracht, hoe vlammen zich gedragen en wat een lang verblijf in de ruimte met het menselijk lichaam doet. Die kennis is nodig voor verre reizen in de toekomst, bijvoorbeeld naar Mars.",
+  "questions": [
+   {
+    "question": "Hoe vaak zien astronauten ongeveer een zonsopkomst per dag?",
+    "options": [
+     "Eén keer",
+     "Zestien keer",
+     "Honderd keer",
+     "Nooit"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom lijkt alles in het ISS te zweven?",
+    "options": [
+     "Omdat er geen zwaartekracht is",
+     "Omdat het station voortdurend om de aarde heen valt",
+     "Omdat er geen lucht is",
+     "Door magneten"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom sporten astronauten elke dag?",
+    "options": [
+     "Omdat ze zich vervelen",
+     "Omdat spieren en botten anders zwakker worden",
+     "Voor een wedstrijd",
+     "Om warm te blijven"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "ruimtevaart"
+ },
+ {
+  "id": "x-waarom-we-huilen",
+  "title": "Waarom we huilen",
+  "text": "Mensen zijn voor zover bekend de enige dieren die huilen van emotie. Andere dieren maken wel traanvocht aan om hun ogen schoon en vochtig te houden, maar tranen van verdriet of ontroering lijken iets typisch menselijks.\n\nEr zijn drie soorten tranen. Basistranen houden je ogen voortdurend vochtig. Reflextranen ontstaan als er iets in je oog komt, of als je een ui snijdt. En dan zijn er emotionele tranen, die komen bij verdriet, pijn, blijdschap of ontroering.\n\nWaarom we emotioneel huilen, is niet helemaal duidelijk. Een belangrijke verklaring is dat huilen een signaal is naar anderen. Tranen laten zien dat je het moeilijk hebt, en ze roepen bij anderen vaak de neiging op om te troosten of te helpen. Zo versterkt huilen de band tussen mensen.\n\nVeel mensen zeggen dat ze zich na een huilbui opgelucht voelen. Dat klopt vaak, vooral als er iemand is die steun biedt. Huilen in je eentje voelt niet altijd zo bevrijdend. Hoe vaak iemand huilt, verschilt sterk en hangt ook af van opvoeding en cultuur. Het is in ieder geval geen teken van zwakte, maar een normale reactie van lichaam en geest.",
+  "questions": [
+   {
+    "question": "Hoeveel soorten tranen noemt de tekst?",
+    "options": [
+     "Eén",
+     "Twee",
+     "Drie",
+     "Vijf"
+    ],
+    "answer": 2
+   },
+   {
+    "question": "Wat is een belangrijke verklaring voor emotioneel huilen?",
+    "options": [
+     "Het houdt de ogen schoon",
+     "Het is een signaal naar anderen",
+     "Het maakt je sterker",
+     "Het beschermt tegen uien"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wanneer voelt huilen volgens de tekst vaak het meest opluchtend?",
+    "options": [
+     "Als er iemand is die steun biedt",
+     "Als je alleen bent",
+     "Als je een ui snijdt",
+     "In de ochtend"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "lichaam"
+ },
+ {
+  "id": "x-moestuinieren-op-het-balkon",
+  "title": "Moestuinieren op het balkon",
+  "text": "Je hebt geen grote tuin nodig om je eigen groente te kweken. Op een balkon of vensterbank kun je al verrassend veel oogsten. Belangrijk is vooral hoeveel zon er komt. De meeste groenten hebben minstens zes uur zonlicht per dag nodig.\n\nBegin met planten die makkelijk groeien. Kruiden als basilicum, peterselie en bieslook doen het goed in potten. Ook sla, radijsjes en snijbiet zijn geschikt voor beginners. Radijsjes kun je soms al na een maand oogsten. Wie meer zon heeft, kan tomaten of paprika's proberen.\n\nGebruik potten met gaten in de bodem, zodat overtollig water kan weglopen. Wortels die in water blijven staan, gaan rotten. Vul de potten met goede potgrond en geef regelmatig water, vooral in de zomer. Planten in potten drogen sneller uit dan planten in de volle grond.\n\nMoestuinieren heeft meer voordelen dan alleen verse groente. Het is ontspannend om bezig te zijn met planten, en je leert hoe voedsel groeit. Bovendien trekken bloeiende planten bijen en vlinders aan, ook midden in de stad. Een klein balkon kan zo een stukje natuur worden.",
+  "questions": [
+   {
+    "question": "Hoeveel zonlicht hebben de meeste groenten per dag nodig?",
+    "options": [
+     "Eén uur",
+     "Minstens zes uur",
+     "Geen",
+     "Twaalf uur, 's nachts"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom hebben potten gaten in de bodem nodig?",
+    "options": [
+     "Zodat overtollig water kan weglopen",
+     "Voor de sier",
+     "Zodat wormen erin kunnen",
+     "Om de pot lichter te maken"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Welke groente kun je soms al na een maand oogsten?",
+    "options": [
+     "Tomaten",
+     "Radijsjes",
+     "Paprika's",
+     "Aardappelen"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "volwassen",
+  "level": 3,
+  "collection": "kort",
+  "topic": "natuur"
+ },
+ {
+  "id": "x-waarom-je-stem-verandert",
+  "title": "Waarom je stem verandert",
+  "text": "Tijdens de puberteit verandert bij veel jongeren de stem. Bij jongens gebeurt dat meestal duidelijk hoorbaar: de stem wordt lager en slaat soms ineens over. Maar ook bij meisjes verandert de stem, al is het verschil kleiner.\n\nJe stem ontstaat in je strottenhoofd, dat je bij jongens vaak kunt zien als een bobbel in de hals: de adamsappel. In het strottenhoofd zitten twee stembanden. Als je praat, trillen ze doordat er lucht langs stroomt. Hoe langer en dikker de stembanden, hoe langzamer ze trillen en hoe lager de stem klinkt.\n\nIn de puberteit zorgen hormonen ervoor dat het strottenhoofd groeit en de stembanden langer en dikker worden. Bij jongens gebeurt dat sterker dan bij meisjes. Omdat de groei niet altijd gelijkmatig gaat, weten de spieren tijdelijk niet precies hoe ze de nieuwe stembanden moeten aansturen. Daardoor slaat de stem af en toe over.\n\nDie periode duurt meestal een paar maanden tot een jaar. Daarna vindt de stem een nieuw evenwicht. Zangers moeten in die tijd voorzichtig zijn en hun stem niet forceren. Maar voor iedereen geldt: het is een normaal onderdeel van opgroeien.",
+  "questions": [
+   {
+    "question": "Waar ontstaat je stem?",
+    "options": [
+     "In je longen",
+     "In je strottenhoofd",
+     "In je neus",
+     "In je mond"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom klinkt een stem lager?",
+    "options": [
+     "Door kortere stembanden",
+     "Door langere en dikkere stembanden die langzamer trillen",
+     "Door harder praten",
+     "Door meer lucht"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Waarom slaat de stem soms over?",
+    "options": [
+     "Omdat de spieren tijdelijk niet precies weten hoe ze de nieuwe stembanden moeten aansturen",
+     "Omdat je verkouden bent",
+     "Omdat je te veel praat",
+     "Omdat je adamsappel verdwijnt"
+    ],
+    "answer": 0
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "lichaam"
+ },
+ {
+  "id": "x-zelf-een-podcast-maken",
+  "title": "Zelf een podcast maken",
+  "text": "Een podcast maken is makkelijker dan je denkt. Je hebt geen studio nodig om te beginnen. Een telefoon met een goede microfoon of een eenvoudige losse microfoon is genoeg. Wel is het slim om op te nemen in een ruimte met veel zachte spullen, zoals een slaapkamer met gordijnen en een bed. Harde muren laten het geluid weerkaatsen, waardoor het hol klinkt.\n\nBedenk eerst waar je podcast over gaat. Kies een onderwerp waar je veel vanaf weet of waar je nieuwsgierig naar bent, zoals games, sport, boeken of dingen die je op school meemaakt. Een podcast met een duidelijk thema is makkelijker te volgen.\n\nMaak een korte opzet voordat je gaat opnemen. Je hoeft niet alles uit te schrijven, maar een lijstje met onderwerpen of vragen helpt om niet af te dwalen. Met een vriend of vriendin praten is vaak levendiger dan in je eentje.\n\nNa het opnemen kun je de opname bewerken met gratis programma's. Knip stiltes en versprekingen eruit, en zet er eventueel een muziekje onder. Let op dat je alleen muziek gebruikt die je mag gebruiken. Het belangrijkste is oefenen: elke aflevering wordt beter dan de vorige.",
+  "questions": [
+   {
+    "question": "Waarom is een slaapkamer met gordijnen een goede plek om op te nemen?",
+    "options": [
+     "Omdat het er warm is",
+     "Omdat zachte spullen voorkomen dat het geluid weerkaatst",
+     "Omdat het er stil is 's nachts",
+     "Omdat daar wifi is"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wat helpt om tijdens het opnemen niet af te dwalen?",
+    "options": [
+     "Een lijstje met onderwerpen of vragen",
+     "Harde muziek",
+     "Heel snel praten",
+     "Niets voorbereiden"
+    ],
+    "answer": 0
+   },
+   {
+    "question": "Waar moet je op letten bij muziek in je podcast?",
+    "options": [
+     "Dat het heel hard is",
+     "Dat je alleen muziek gebruikt die je mag gebruiken",
+     "Dat het altijd klassiek is",
+     "Dat het langer dan een uur duurt"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "media"
+ },
+ {
+  "id": "x-de-geschiedenis-van-de-strip",
+  "title": "De geschiedenis van de strip",
+  "text": "Verhalen vertellen met plaatjes is eeuwenoud. Denk aan rotstekeningen of het beroemde tapijt van Bayeux, waarop een veldslag in een lange reeks beelden te zien is. Maar de strip zoals we die nu kennen, ontstond in de negentiende eeuw, toen kranten en tijdschriften grappige tekeningen met tekst begonnen af te drukken.\n\nRond 1900 kwamen in Amerikaanse kranten de eerste stripverhalen met tekstballonnen. Ze werden enorm populair. In Europa ontwikkelde de strip zich op een eigen manier. De Belgische tekenaar Hergé maakte vanaf 1929 de avonturen van Kuifje, met zijn herkenbare heldere lijnen. In Nederland werden onder meer Tom Poes en Olivier B. Bommel van Marten Toonder bekend, en later Suske en Wiske uit België.\n\nIn Japan groeide een eigen stripcultuur: manga. Mangaverhalen worden van rechts naar links gelezen en verschijnen vaak eerst in dikke weekbladen. Veel bekende animatieseries zijn gebaseerd op manga.\n\nLang werden strips gezien als iets voor kinderen. Tegenwoordig zijn er ook graphic novels voor volwassenen, over geschiedenis, oorlog of persoonlijke ervaringen. Strips blijken een krachtige manier om verhalen te vertellen, juist omdat beeld en tekst elkaar versterken.",
+  "questions": [
+   {
+    "question": "Wanneer kwamen de eerste stripverhalen met tekstballonnen?",
+    "options": [
+     "Rond 1500",
+     "Rond 1900",
+     "Rond 1980",
+     "In 2010"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Wie tekende Kuifje?",
+    "options": [
+     "Marten Toonder",
+     "Hergé",
+     "Willy Vandersteen",
+     "Walt Disney"
+    ],
+    "answer": 1
+   },
+   {
+    "question": "Hoe worden mangaverhalen gelezen?",
+    "options": [
+     "Van links naar rechts",
+     "Van rechts naar links",
+     "Van onder naar boven",
+     "Alleen hardop"
+    ],
+    "answer": 1
+   }
+  ],
+  "audience": "teens",
+  "level": 3,
+  "collection": "kort",
+  "topic": "cultuur"
+ }
+]

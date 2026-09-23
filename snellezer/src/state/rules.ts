@@ -55,8 +55,11 @@ export function adjustTempo(state: Pick<AppState, 'targetWpm' | 'tempoStreak' | 
 }
 
 /** Kies de tekst die je het langst niet (of nog nooit) hebt gelezen. */
-export function pickPassage<P extends Passage>(pool: readonly P[], sessions: readonly SessionResult[], seed = 0): P {
-  if (!pool.length) throw new Error('Lege tekstpool');
+export function pickPassage<P extends Passage>(allPool: readonly P[], sessions: readonly SessionResult[], seed = 0, skip: readonly string[] = []): P {
+  if (!allPool.length) throw new Error('Lege tekstpool');
+  // Teksten die je net hebt overgeslagen komen pas terug als er niets anders meer is.
+  const rest = allPool.filter(p => !skip.includes(p.id));
+  const pool = rest.length ? rest : allPool;
   const last = new Map<string, number>();
   sessions.forEach((s, i) => { if (s.passageId) last.set(s.passageId, i); });
   const start = ((seed % pool.length) + pool.length) % pool.length;

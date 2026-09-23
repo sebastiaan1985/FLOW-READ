@@ -10,14 +10,14 @@ Stand: 22 september 2026, branch `design-snellezer`.
 | Curriculum | 28 lessen in 4 weken (`src/data/lessons.ts`), hermetingen op dag 7, 14, 21 en 28, eindmeting tegen dag 1. Na dag 28 herhaal je de lessen |
 | Oefeningen | 20 oefeningen, waaronder Innerlijke stem (metronoom, tel-methode, neuriën) en Skimmen & previewing. Chunks, fixatie, vooruit lezen en woord voor woord hebben elk een eigen weergave. Lange teksten groeien mee van Starter via Gevorderd naar Expert |
 | Dyslexie Leeslab | 7 lessen: horen en herkennen (met voorlezen), letters scherp zien, klankgroepen, woorden bouwen, zin en betekenis, lange woorden en vloeiend herkennen. Met 8 van de 10 goed opent de volgende les; fout gelezen woorden komen terug in een herhaalset. Daarnaast lettertype, afstand, kleurfilter en achtergrond |
-| Inhoud | 170+ teksten: 58 korte teksten voor volwassenen en tieners, 30 lange teksten, 30 vaste meetteksten en 33 kinderteksten, allemaal met begripsvragen. Een tekst komt pas terug als je de rest hebt gelezen |
+| Inhoud | 241 teksten: 121 korte teksten voor volwassenen en tieners, 30 lange teksten (10 per niveau), 30 vaste meetteksten en 60 kinderteksten, allemaal met begripsvragen. Een tekst komt pas terug als je de rest hebt gelezen. Met Andere tekst wissel je tijdens een oefening van tekst; de ronde begint dan opnieuw en telt niet mee |
 | Eerlijk meten | Te snelle metingen worden geweigerd. Volledige XP, lessen en records pas vanaf 67% begrip. Herlezen op dezelfde dag levert minder op. Het doeltempo gaat omlaag onder 70% begrip en omhoog na twee keer minstens 80% |
 | Voortgang | Effectief leestempo (tempo × begrip) met je nulmeting als stippellijn, en meetmomenten |
 | Gewoonte | Reeks met één rustdag per week, daguitdaging, tip van de dag, 12 mijlpalen, een persoonlijke top 3 van technieken (vanaf week 4), deel je groei, een installatiehint voor het beginscherm en een dagelijkse herinnering (alleen in de app) |
 | Eigen tekst | Plakken, .txt-bestand of een link (alleen openbare https-pagina's), met eigen begripsvragen. Op Android kun je een artikel via Delen rechtstreeks naar de geïnstalleerde webapp sturen |
 | Toegankelijkheid | Dyslexie Leeslab, reduce-motion en labels op alle bediening |
 | Privacy | Geen account en geen tracking; alles blijft op het apparaat. Privacyverklaring in de app en op `/privacy.html` |
-| Kwaliteit | Typecheck schoon, 24 unit tests, CI op elke wijziging, en in de browser doorlopen: onboarding, begintest, een volledige lesdag, dag 3–26 en de kindermodus |
+| Kwaliteit | Typecheck schoon, 26 unit tests, CI op elke wijziging, en in de browser doorlopen: onboarding, begintest, een volledige lesdag, dag 3–26 en de kindermodus |
 
 ## Web — publiceren
 
@@ -34,6 +34,8 @@ Stand: 22 september 2026, branch `design-snellezer`.
    - na één bezoek opent de app ook in vliegtuigmodus.
 
 Pas je iets aan in de privacytekst of de iconen, draai dan eerst `npm run web:extras`. Die opdracht vult `public/` opnieuw.
+
+Nieuwe teksten schrijf je in `scripts/extra/*.json`. Daarna controleert en bundelt `node scripts/add-texts.mjs` ze in `src/data/library-extra.json`. Het script weigert dubbele titels, ontbrekende antwoorden en te korte teksten.
 
 ## iPhone en Android — publiceren
 
