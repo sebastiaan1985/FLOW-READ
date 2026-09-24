@@ -6,11 +6,6 @@
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FCFCF9"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "nl.slimwerken.snellezer",
@@ -37,7 +32,7 @@
       "package": "nl.slimwerken.snellezer",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#0B6E63"
+        "backgroundColor": "#086961"
       },
       "versionCode": 1,
       "blockedPermissions": [
@@ -59,6 +54,14 @@
       "lang": "nl"
     },
     "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 112,
+          "backgroundColor": "#FCFCF9"
+        }
+      ],
       "expo-font",
       "expo-document-picker",
       [

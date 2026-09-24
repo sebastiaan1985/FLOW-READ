@@ -1,26 +1,30 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {AccessibilityInfo, Animated, Easing, Platform, Pressable, StyleSheet, View} from 'react-native';
-import {colors, fonts, ui} from '../design';
+import {brand, fonts, ui} from '../design';
 
 const native = Platform.OS !== 'web';
-// Het logo, 2,6 keer zo groot als in de kopregel: drie leesregels, de middelste geel.
-const LINES = [{width: 49, color: colors.bg, opacity: .45}, {width: 52, color: colors.sun, opacity: 1}, {width: 31, color: colors.bg, opacity: .45}];
-const DOT = 10;
+const SIZE = 112; // even groot als het beeldmerk op het opstartscherm (app.json: imageWidth)
+const EMPTY_TILE = require('../../assets/brand/tegel-leeg.png');
+const MARK = require('../../assets/brand/s.png');
 
 /** Speelt één keer per keer dat de app opstart. */
 let played = false;
 
 /**
- * Het logo "leest" zichzelf: de drie regels schuiven na elkaar in beeld, zoals je ogen over een regel gaan,
- * een lichtpuntje glijdt over de gele regel en dan verschijnt het woord. Tikken slaat het over; met
- * "beweging verminderen" blijft er alleen een korte overgang over. De app laadt er gewoon onder door.
+ * De opening: de S draait als een lint de tegel in, er glijdt een glans over en het woordmerk komt eronder,
+ * met de gele punt als laatste. In de app staat het logo al op het opstartscherm; daar maakt de S vanuit
+ * rust één draai, zodat de overgang naadloos is. Tikken slaat over; met "beweging verminderen" blijft er
+ * alleen een korte overgang over. De app laadt er gewoon onder door.
  */
 export function IntroAnimation({ready}: {ready: boolean}) {
   const [visible, setVisible] = useState(!played);
-  const lines = useRef(LINES.map(() => new Animated.Value(0))).current;
-  const dot = useRef(new Animated.Value(0)).current;
+  const fromSplash = native;
+  const tile = useRef(new Animated.Value(fromSplash ? 1 : 0)).current;   // tegel verschijnt
+  const twist = useRef(new Animated.Value(fromSplash ? 1 : 0)).current;  // S draait in
+  const spin = useRef(new Animated.Value(0)).current;                    // extra draai vanaf het opstartscherm
+  const shine = useRef(new Animated.Value(0)).current;
   const word = useRef(new Animated.Value(0)).current;
-  const period = useRef(new Animated.Value(0)).current;
+  const dot = useRef(new Animated.Value(0)).current;
   const fade = useRef(new Animated.Value(1)).current;
   const running = useRef<Animated.CompositeAnimation | null>(null);
 
@@ -32,20 +36,19 @@ export function IntroAnimation({ready}: {ready: boolean}) {
     let cancelled = false;
     AccessibilityInfo.isReduceMotionEnabled().catch(() => false).then(reduce => {
       if (cancelled) return;
+      const t = (v: Animated.Value, duration: number, easing = Easing.out(Easing.cubic), toValue = 1) => Animated.timing(v, {toValue, duration, easing, useNativeDriver: native});
       if (reduce) {
-        [...lines, dot, word, period].forEach(v => v.setValue(1));
-        running.current = Animated.sequence([Animated.delay(350), Animated.timing(fade, {toValue: 0, duration: 250, useNativeDriver: native})]);
+        [tile, twist, word, dot].forEach(v => v.setValue(1));
+        running.current = Animated.sequence([Animated.delay(400), t(fade, 250, Easing.linear, 0)]);
       } else {
-        const ease = Easing.out(Easing.cubic);
         running.current = Animated.sequence([
-          Animated.stagger(120, lines.map(v => Animated.timing(v, {toValue: 1, duration: 280, easing: ease, useNativeDriver: native}))),
-          Animated.parallel([
-            Animated.timing(dot, {toValue: 1, duration: 420, easing: Easing.inOut(Easing.quad), useNativeDriver: native}),
-            Animated.sequence([Animated.delay(120), Animated.timing(word, {toValue: 1, duration: 320, easing: ease, useNativeDriver: native})]),
-          ]),
-          Animated.timing(period, {toValue: 1, duration: 160, easing: ease, useNativeDriver: native}),
-          Animated.delay(180),
-          Animated.timing(fade, {toValue: 0, duration: 300, easing: Easing.in(Easing.quad), useNativeDriver: native}),
+          fromSplash
+            ? t(spin, 720, Easing.inOut(Easing.cubic))
+            : Animated.parallel([t(tile, 420, Easing.out(Easing.back(1.5))), Animated.sequence([Animated.delay(140), t(twist, 520)])]),
+          Animated.parallel([t(shine, 460, Easing.inOut(Easing.quad)), Animated.sequence([Animated.delay(60), t(word, 320)])]),
+          t(dot, 240, Easing.out(Easing.back(2.5))),
+          Animated.delay(170),
+          t(fade, 280, Easing.in(Easing.quad), 0),
         ]);
       }
       running.current.start(({finished}) => { if (finished) finish(); });
@@ -54,21 +57,23 @@ export function IntroAnimation({ready}: {ready: boolean}) {
   }, [ready, visible]);
 
   if (!visible) return null;
-  // Een regel groeit vanaf links: schalen rond het midden en tegelijk opschuiven.
-  const grow = (v: Animated.Value, w: number) => ({transform: [{translateX: v.interpolate({inputRange: [0, 1], outputRange: [-w / 2, 0]})}, {scaleX: v.interpolate({inputRange: [0, 1], outputRange: [0.001, 1]})}]});
+  const range = (v: Animated.Value, out: [number, number] | [string, string]) => v.interpolate({inputRange: [0, 1], outputRange: out as any});
   return (
     <Animated.View style={[st.overlay, {opacity: fade}]} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
       <Pressable onPress={skip} accessibilityLabel="Sla de opening over" style={st.fill}>
-        <Animated.View style={[st.row, {transform: [{scale: fade.interpolate({inputRange: [0, 1], outputRange: [.96, 1]})}]}]}>
-          <View style={st.logo}>
-            {LINES.map((l, i) => <View key={i} style={{width: l.width, height: 8}}>
-              <Animated.View style={[{width: l.width, height: 8, borderRadius: 4, backgroundColor: l.color, opacity: l.opacity}, grow(lines[i], l.width)]}/>
-              {i === 1 && <Animated.View style={[st.dot, {opacity: dot.interpolate({inputRange: [0, .1, .85, 1], outputRange: [0, 1, 1, 0]}), transform: [{translateX: dot.interpolate({inputRange: [0, 1], outputRange: [-2, l.width - DOT + 2]})}]}]}/>}
-            </View>)}
+        <Animated.View style={{width: SIZE, height: SIZE, opacity: tile.interpolate({inputRange: [0, .4, 1], outputRange: [0, 1, 1]}), transform: [{scale: range(tile, [.55, 1])}]}}>
+          <Animated.Image source={EMPTY_TILE} style={st.layer}/>
+          <Animated.Image source={MARK} style={[st.layer, {
+            opacity: twist.interpolate({inputRange: [0, .35, 1], outputRange: [0, 1, 1]}),
+            transform: [{perspective: 700}, {rotateY: range(twist, ['-100deg', '0deg'])}, {rotateY: range(spin, ['0deg', '360deg'])}, {rotate: range(twist, ['-22deg', '0deg'])}, {scale: range(twist, [.6, 1])}],
+          }]}/>
+          <View style={st.shineClip} pointerEvents="none">
+            <Animated.View style={[st.shine, {opacity: shine.interpolate({inputRange: [0, .15, .85, 1], outputRange: [0, 1, 1, 0]}), transform: [{translateX: range(shine, [-SIZE, SIZE * 1.2])}, {rotate: '20deg'}]}]}/>
           </View>
-          <Animated.Text style={[st.word, {opacity: word, transform: [{translateY: word.interpolate({inputRange: [0, 1], outputRange: [10, 0]})}]}]}>
-            snellezer<Animated.Text style={{color: colors.accent, opacity: period}}>.</Animated.Text>
-          </Animated.Text>
+        </Animated.View>
+        <Animated.View style={[st.wordRow, {opacity: word, transform: [{translateY: range(word, [12, 0])}]}]}>
+          <Animated.Text style={st.word}>snellezer</Animated.Text>
+          <Animated.Text style={[st.word, {color: brand.dot, opacity: dot, transform: [{translateY: range(dot, [-16, 0])}, {scale: range(dot, [.4, 1])}]}]}>.</Animated.Text>
         </Animated.View>
       </Pressable>
     </Animated.View>
@@ -78,8 +83,10 @@ export function IntroAnimation({ready}: {ready: boolean}) {
 const st = StyleSheet.create({
   overlay: {position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: ui.page, zIndex: 100},
   fill: {flex: 1, alignItems: 'center', justifyContent: 'center'},
-  row: {alignItems: 'center', gap: 22},
-  logo: {width: 88, height: 88, borderRadius: 28, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center', gap: 10},
-  dot: {position: 'absolute', top: -1, width: DOT, height: DOT, borderRadius: DOT / 2, backgroundColor: colors.bg, shadowColor: colors.sun, shadowOpacity: .9, shadowRadius: 6, shadowOffset: {width: 0, height: 0}},
-  word: {fontFamily: fonts.strong, fontSize: 40, letterSpacing: -1, color: colors.ink},
+  layer: {position: 'absolute', top: 0, left: 0, width: SIZE, height: SIZE},
+  shineClip: {position: 'absolute', top: 0, left: 0, width: SIZE, height: SIZE, borderRadius: SIZE * .24, overflow: 'hidden'},
+  shine: {position: 'absolute', top: -SIZE * .3, left: 0, width: SIZE * .28, height: SIZE * 1.6, backgroundColor: 'rgba(255,255,255,.22)'},
+  // Het woordmerk hangt onder de tegel, zodat de tegel precies in het midden blijft (net als op het opstartscherm).
+  wordRow: {position: 'absolute', top: '50%', marginTop: SIZE / 2 + 22, flexDirection: 'row'},
+  word: {fontFamily: fonts.heading, fontSize: 40, letterSpacing: -1.2, color: brand.ink},
 });

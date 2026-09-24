@@ -13,10 +13,13 @@ fs.mkdirSync(path.join(pub, 'icons'), {recursive: true});
 const BG = '#FCFCF9', ACCENT = '#0B6E63', INK = '#17251F', MUTED = '#5E6B64';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-// Iconen. Het app-icoon heeft een volle achtergrond, dus het is ook bruikbaar als maskable icoon.
-const svg = fs.readFileSync(path.join(root, 'assets/app-icon/icon-chunk.svg'), 'utf8').replace('rx="24"', 'rx="0"');
-for (const [name, size] of [['icon-192', 192], ['icon-512', 512], ['maskable-512', 512], ['apple-touch-icon', 180]])
-  await sharp(Buffer.from(svg)).resize(size, size).flatten({background: ACCENT}).png().toFile(path.join(pub, 'icons', name + '.png'));
+// Iconen uit het logo (zie scripts/brand-assets.mjs). Het app-icoon heeft een volle groene achtergrond;
+// het maskable icoon houdt de S binnen de veilige zone, omdat Android het rond of druppelvormig bijsnijdt.
+const LOGO_GREEN = '#086961';
+for (const [name, size] of [['icon-192', 192], ['icon-512', 512], ['apple-touch-icon', 180]])
+  await sharp(path.join(root, 'assets/icon.png')).resize(size, size).png().toFile(path.join(pub, 'icons', name + '.png'));
+const mark = await sharp(path.join(root, 'assets/brand/s.png')).resize(384, 384).toBuffer();
+await sharp({create: {width: 512, height: 512, channels: 4, background: LOGO_GREEN}}).composite([{input: mark, left: 64, top: 64}]).flatten({background: LOGO_GREEN}).png().toFile(path.join(pub, 'icons', 'maskable-512.png'));
 
 fs.writeFileSync(path.join(pub, 'manifest.webmanifest'), JSON.stringify({
   name: app.web.name, short_name: app.web.shortName, description: 'Leer in 28 dagen sneller lezen, met behoud van begrip.',
