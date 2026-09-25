@@ -50,9 +50,9 @@
       {
         "question": "Wat was de VOC?",
         "options": [
-          "Het eerste beursgenoteerde bedrijf ter wereld",
-          "Een militaire organisatie",
-          "Een politieke partij"
+          "Het eerste bedrijf met aandelen",
+          "Een leger dat vocht op zee",
+          "Een partij in de Staten-Generaal"
         ],
         "answer": 0
       },
@@ -60,8 +60,8 @@
         "question": "Waarom hadden herenhuizen in Amsterdam smalle gevels?",
         "options": [
           "Omdat de grond te duur was",
-          "Omdat er belasting werd geheven over de gevelbreedte",
-          "Vanwege de windkracht"
+          "Omdat er belasting op de breedte was",
+          "Omdat smalle gevels beter tegen wind kunnen"
         ],
         "answer": 1
       },
@@ -102,9 +102,9 @@
       {
         "question": "Wat is de varroamijt?",
         "options": [
-          "Een soort bij",
-          "Een bedreiging voor bijenkolonies",
-          "Een plantenziekte"
+          "Een zeldzame soort wilde bij",
+          "Een bedreiging voor bijenvolken",
+          "Een ziekte van fruitbomen"
         ],
         "answer": 1
       },
@@ -240,9 +240,9 @@
       {
         "question": "Waar hebben onderzoekers microplastics in het menselijk lichaam gevonden?",
         "options": [
-          "Alleen in de maag",
-          "Alleen op de huid",
-          "In bloed, longweefsel en placenta"
+          "Alleen in de maag en darmen",
+          "Alleen op de buitenkant van de huid",
+          "In bloed, longen en placenta"
         ],
         "answer": 2
       },
@@ -326,9 +326,9 @@
       {
         "question": "Wat is een filterbubble?",
         "options": [
-          "Een soort internetfilter voor kinderen",
+          "Een internetfilter voor kinderen",
           "Een manier om spam te blokkeren",
-          "Een situatie waarbij mensen alleen bevestigende informatie ontvangen"
+          "Alleen informatie zien die je al vindt"
         ],
         "answer": 2
       },
@@ -351,17 +351,17 @@
       {
         "question": "Welke hersengebieden worden actief bij het horen van muziek?",
         "options": [
-          "Gebieden voor emotie, geheugen, beweging en taal",
-          "Alleen het geheugengebied",
-          "Alleen het emotiegebied"
+          "Voor emotie, geheugen, beweging en taal",
+          "Alleen het gebied voor het geheugen",
+          "Alleen het gebied voor emoties"
         ],
         "answer": 0
       },
       {
         "question": "Welk voordeel heeft muziekles voor kinderen?",
         "options": [
-          "Snellere motorische ontwikkeling",
-          "Beter geheugen en hogere wiskundige prestaties",
+          "Een snellere motorische ontwikkeling",
+          "Een beter geheugen en beter rekenen",
           "Betere sociale vaardigheden"
         ],
         "answer": 1
@@ -369,17 +369,17 @@
       {
         "question": "Hoe helpt muziek bij mensen met de ziekte van Parkinson?",
         "options": [
-          "Muziek vervangt medicatie",
-          "Muziek verbetert het geheugen",
-          "Ritmische muziek kan de motoriek verbeteren"
+          "Muziek kan de medicatie vervangen",
+          "Muziek verbetert vooral het geheugen",
+          "Ritmische muziek helpt bij bewegen"
         ],
         "answer": 2
       },
       {
         "question": "Welke muziek verstoort de concentratie het minst?",
         "options": [
-          "Instrumentale muziek of muziek in een onbekende taal",
-          "Klassieke muziek altijd",
+          "Muziek zonder tekst die je begrijpt",
+          "Altijd klassieke muziek",
           "Muziek met bekende teksten"
         ],
         "answer": 0

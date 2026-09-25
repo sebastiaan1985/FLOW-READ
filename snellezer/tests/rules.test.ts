@@ -169,3 +169,9 @@ test('growth is explained in plain words, tempo and comprehension apart',()=>{
   assert.match(growthSentence({wpm:200,comprehension:60},{wpm:180,comprehension:80})!,/rustiger.*goede ruil/);
   assert.match(growthSentence({wpm:200,comprehension:80},{wpm:202,comprehension:82})!,/ongeveer gelijk/);
 });
+test('in practice texts the right answer rarely stands out by its length',()=>{
+  const read=(f:string)=>JSON.parse(readFileSync(new URL('../src/data/'+f,import.meta.url),'utf8')) as Passage[];
+  const qs=[...read('passages.json'),...read('children.json'),...read('library.json'),...read('library-extra.json')].filter(p=>p.collection!=='meting').flatMap(p=>p.questions);
+  const obvious=qs.filter(q=>{const L=q.options.map(o=>o.length);return L[q.answer]-Math.max(...L.filter((_,i)=>i!==q.answer))>=12;}).length;
+  assert.ok(obvious/qs.length<=0.03,`${obvious} van ${qs.length} goede antwoorden zijn duidelijk langer dan elke andere keuze`);
+});

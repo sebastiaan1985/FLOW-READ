@@ -68,10 +68,10 @@
 [
 "Wat is de hoofdgedachte?",
 [
-"Zout wordt in zee gegooid",
-"Zouten uit het land hopen zich in zee op door verdamping",
-"Regenwater is zout",
-"Alle zeeën zijn even zout"
+"Zout wordt door schepen in zee gegooid",
+"Zout uit het land hoopt zich op in zee",
+"Regenwater is eigenlijk al zout",
+"Alle zeeën zijn precies even zout"
 ],
 1
 ]
@@ -137,19 +137,19 @@
 "Waarvoor dient de omvormer?",
 [
 "Om de panelen schoon te houden",
-"Om gelijkstroom geschikt te maken voor het huishouden",
-"Om de panelen te draaien",
-"Om warmte te maken"
+"Om stroom geschikt te maken voor thuis",
+"Om de panelen naar de zon te draaien",
+"Om er warm water mee te maken"
 ],
 1
 ],
 [
 "Welk nadeel noemt de tekst?",
 [
-"Panelen maken veel lawaai",
-"De meeste stroom ontstaat overdag, terwijl veel mensen 's avonds stroom gebruiken",
-"Panelen werken niet in de zomer",
-"Panelen gaan maar een jaar mee"
+"De panelen maken veel lawaai",
+"Stroom komt overdag, verbruik is 's avonds",
+"De panelen werken niet in de zomer",
+"De panelen gaan maar een jaar mee"
 ],
 1
 ]
@@ -204,10 +204,10 @@
 [
 "Hoe helpt de gaai bij het planten van eiken?",
 [
-"Door eikels te verstoppen en er een aantal te vergeten",
-"Door takken te breken",
-"Door zaden uit te spugen",
-"Door gaten te graven"
+"Hij verstopt eikels en vergeet er wat",
+"Hij breekt takken van oude eiken",
+"Hij spuugt zaden uit op de grond",
+"Hij graaft gaten voor nieuwe bomen"
 ],
 0
 ],
@@ -243,10 +243,10 @@
 [
 "Wie maakt het grootste deel van het geld?",
 [
-"De centrale bank",
-"Gewone banken, bij het verstrekken van leningen",
-"De overheid",
-"Winkels"
+"De centrale bank in Frankfurt",
+"Gewone banken, bij het lenen",
+"De overheid in Den Haag",
+"Winkels bij elke verkoop"
 ],
 1
 ],
@@ -263,10 +263,10 @@
 [
 "Wat gebeurt er als de centrale bank de rente verhoogt?",
 [
-"Lenen wordt goedkoper",
-"Lenen wordt duurder en er komt minder nieuw geld bij",
-"De prijzen stijgen direct",
-"Banken sluiten"
+"Lenen wordt dan juist goedkoper",
+"Lenen wordt duurder, er komt minder geld bij",
+"De prijzen in winkels stijgen direct",
+"Veel banken moeten meteen sluiten"
 ],
 1
 ]
@@ -293,9 +293,9 @@
 "Waarom kreeg het de naam Nachtwacht?",
 [
 "Omdat het 's nachts werd geschilderd",
-"Omdat een donker geworden vernislaag het op nacht deed lijken",
+"Omdat donker vernis het op nacht liet lijken",
 "Omdat de schutters 's nachts werkten",
-"Omdat Rembrandt dat wilde"
+"Omdat Rembrandt die naam zelf koos"
 ],
 1
 ],
@@ -321,30 +321,30 @@
 [
 "Waardoor ontstaat het spinnen volgens onderzoekers?",
 [
-"Door de staart",
-"Door snelle bewegingen van de spieren rond het strottenhoofd",
-"Door de maag",
-"Door de poten"
+"Door zwiepen met de staart",
+"Door trillende spieren rond de keel",
+"Door geluiden uit de maag",
+"Door het bewegen van de poten"
 ],
 1
 ],
 [
 "Wanneer spinnen kittens al?",
 [
-"Pas na een jaar",
-"Een paar dagen na de geboorte, tijdens het drinken",
-"Alleen in de winter",
-"Nooit"
+"Pas als ze een jaar oud zijn",
+"Al een paar dagen na de geboorte",
+"Alleen in de koude winter",
+"Kittens spinnen helemaal nooit"
 ],
 1
 ],
 [
 "Spinnen katten alleen als ze blij zijn?",
 [
-"Ja, altijd",
-"Nee, ook als ze gewond of gestrest zijn",
-"Alleen als ze eten",
-"Alleen 's nachts"
+"Ja, spinnen betekent altijd blij",
+"Nee, ook bij pijn of stress",
+"Alleen als ze aan het eten zijn",
+"Alleen 's nachts in hun mand"
 ],
 1
 ]
@@ -409,9 +409,9 @@
 [
 "Wat gebeurde er tijdens de landing?",
 [
-"De motor viel uit",
-"De computer gaf foutmeldingen en Armstrong zocht zelf een plek",
-"Er brak een raam",
+"De motor viel ineens helemaal uit",
+"Foutmeldingen, Armstrong landde zelf",
+"Er brak een raam van de module",
 "Het contact met de aarde viel weg"
 ],
 1
@@ -438,9 +438,9 @@
 [
 "Wat is een algoritme volgens de tekst?",
 [
-"Een soort computervirus",
-"Een reeks stappen om een probleem op te lossen",
-"Een programmeertaal",
+"Een soort gevaarlijk computervirus",
+"Stappen om een probleem op te lossen",
+"Een taal om mee te programmeren",
 "Een wiskundige formule voor geld"
 ],
 1
@@ -448,20 +448,20 @@
 [
 "Waar baseren sociale media hun keuze op?",
 [
-"Op wat je aanklikt, leuk vindt en hoelang je kijkt",
-"Op je rapportcijfers",
-"Op het weer",
-"Op willekeur"
+"Op wat je aanklikt en bekijkt",
+"Op je cijfers op het rapport",
+"Op het weer bij jou in de buurt",
+"Op puur toeval, zonder patroon"
 ],
 0
 ],
 [
 "Welke keerzijde noemt de tekst?",
 [
-"Je telefoon wordt trager",
-"Je ziet steeds meer van hetzelfde en minder andere meningen",
-"Je krijgt minder berichten",
-"Je account wordt gehackt"
+"Je telefoon wordt er trager van",
+"Je ziet steeds meer van hetzelfde",
+"Je krijgt minder berichten binnen",
+"Je account wordt sneller gehackt"
 ],
 1
 ]

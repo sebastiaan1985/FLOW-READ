@@ -49,19 +49,19 @@
 "Waar komen de gisten in zuurdesem vandaan?",
 [
 "Uit een zakje uit de winkel",
-"Van nature van het graan en uit de lucht",
-"Uit melk",
-"Uit suiker"
+"Van het graan en uit de lucht",
+"Uit melk die zuur is geworden",
+"Uit suiker die je toevoegt"
 ],
 1
 ],
 [
 "Waardoor krijgt zuurdesembrood zijn zure smaak?",
 [
-"Door azijn",
-"Door de zuren die bacteriën maken",
-"Door citroensap",
-"Door lang bakken"
+"Door een scheut azijn",
+"Door zuren van bacteriën",
+"Door een beetje citroensap",
+"Door heel lang te bakken"
 ],
 1
 ],
@@ -136,10 +136,10 @@
 [
 "Wat was het nadeel van de hoge bi?",
 [
-"Hij was te langzaam",
+"Hij was te langzaam voor de weg",
 "Hij was gevaarlijk door de hoogte",
-"Hij was te duur",
-"Hij had geen zadel"
+"Hij was veel te duur om te kopen",
+"Hij had geen goed zadel"
 ],
 1
 ],
@@ -147,9 +147,9 @@
 "Wat was nieuw aan de veiligheidsfiets?",
 [
 "Twee even grote wielen en een ketting",
-"Een groot voorwiel",
-"Houten wielen",
-"Een motor"
+"Een extra groot voorwiel voor snelheid",
+"Stevige wielen van hout",
+"Een kleine motor voor de heuvels"
 ],
 0
 ]
@@ -175,20 +175,20 @@
 [
 "Waar worden de bonen meestal gebrand?",
 [
-"Op de plantage",
+"Op de plantage zelf",
 "Aan boord van het schip",
-"In het land waar de koffie wordt gedronken",
-"In Ethiopië"
+"In het land waar men ze drinkt",
+"Altijd in Ethiopië"
 ],
 2
 ],
 [
 "Waarom is koffie voor boeren vaak een onzeker bestaan?",
 [
-"Omdat koffie snel bederft",
-"Omdat de prijs sterk schommelt en het weer een oogst kan verwoesten",
-"Omdat niemand koffie wil kopen",
-"Omdat koffie maar eens in de tien jaar groeit"
+"Omdat koffie heel snel bederft",
+"Wisselende prijzen en weer bedreigen de oogst",
+"Omdat bijna niemand koffie wil kopen",
+"Omdat de plant maar zelden vruchten geeft"
 ],
 1
 ]
@@ -214,9 +214,9 @@
 [
 "Waarom moet een vliegtuig hard over de startbaan rijden?",
 [
-"Omdat lift alleen bij voldoende snelheid ontstaat",
-"Om de motoren op te warmen",
-"Om brandstof te besparen",
+"Lift ontstaat pas bij genoeg snelheid",
+"Om de motoren goed op te warmen",
+"Om zo brandstof te besparen",
 "Om de passagiers te laten wennen"
 ],
 0
@@ -224,10 +224,10 @@
 [
 "Waarvoor gebruikt de piloot kleppen bij het landen?",
 [
-"Om sneller te gaan",
-"Om genoeg lift te houden bij lage snelheid",
+"Om sneller te kunnen dalen",
+"Om lift te houden bij lage snelheid",
 "Om de motoren uit te zetten",
-"Om het geluid te dempen"
+"Om het lawaai te dempen"
 ],
 1
 ]
@@ -302,10 +302,10 @@
 [
 "Waarom is de carrière van een e-sporter vaak kort?",
 [
-"Omdat spellen verboden worden",
-"Omdat de reactiesnelheid afneemt en jongere spelers doorstromen",
-"Omdat de prijzen laag zijn",
-"Omdat stadions sluiten"
+"Omdat hun spellen worden verboden",
+"Reacties worden trager, jongeren komen op",
+"Omdat het prijzengeld erg laag is",
+"Omdat de stadions steeds sluiten"
 ],
 1
 ]

@@ -63,9 +63,9 @@
    {
     "question": "Hoe gaat de sneeuwman op reis?",
     "options": [
-     "Met de trein",
-     "Als water naar de rivier",
-     "Op een vogel"
+     "Met de trein naar zee",
+     "Als water in de rivier",
+     "Op de rug van een vogel"
     ],
     "answer": 1
    }
@@ -83,9 +83,9 @@
    {
     "question": "Waarom heeft de giraf een lange nek?",
     "options": [
-     "Om te zwemmen",
-     "Om bij hoge blaadjes te kunnen",
-     "Om te zingen"
+     "Om beter te zwemmen",
+     "Om bij hoge blaadjes te komen",
+     "Om mooi te kunnen zingen"
     ],
     "answer": 1
    },
@@ -121,7 +121,7 @@
    {
     "question": "Wat groeit er in opa's moestuin?",
     "options": [
-     "Bananen",
+     "Bananen en kiwi's",
      "Wortels, bonen en aardbeien",
      "Appels en peren"
     ],
@@ -168,9 +168,9 @@
    {
     "question": "Waarom hoor je een uil bijna niet als hij vliegt?",
     "options": [
-     "Omdat hij klein is",
-     "Omdat zijn veren zacht zijn aan de randen",
-     "Omdat hij langzaam vliegt"
+     "Omdat hij heel klein is",
+     "Zijn veren zijn zacht aan de rand",
+     "Omdat hij heel langzaam vliegt"
     ],
     "answer": 1
    },
@@ -312,8 +312,8 @@
     "question": "Waarom eet de egel veel in de herfst?",
     "options": [
      "Om dik te worden voor de winter",
-     "Omdat hij jarig is",
-     "Omdat het koud is"
+     "Omdat hij morgen jarig is",
+     "Omdat het buiten zo koud is"
     ],
     "answer": 0
    },
@@ -425,9 +425,9 @@
    {
     "question": "Welke kleur heeft Pip?",
     "options": [
-     "Zwart",
+     "Helemaal zwart",
      "Bruin met een witte vlek",
-     "Wit"
+     "Helemaal wit"
     ],
     "answer": 1
    },
@@ -501,10 +501,10 @@
    {
     "question": "Waarom dachten de kinderen dat Kees een geheim had?",
     "options": [
-     "Omdat hij nooit sliep",
-     "Omdat hij elke ochtend zand aan zijn laarzen had",
-     "Omdat hij een schat had",
-     "Omdat hij niet praatte"
+     "Omdat hij 's nachts nooit sliep",
+     "Omdat er zand aan zijn laarzen zat",
+     "Omdat hij een schat had gevonden",
+     "Omdat hij nooit met iemand praatte"
     ],
     "answer": 1
    },
@@ -542,30 +542,30 @@
    {
     "question": "Wat is bijzonder aan het patroon van elke zebra?",
     "options": [
-     "Het is altijd hetzelfde",
+     "Het is bij elke zebra hetzelfde",
      "Het is uniek, zoals een vingerafdruk",
-     "Het verandert elke week",
-     "Het is alleen zwart"
+     "Het verandert elke week een beetje",
+     "Het is alleen zwart, zonder wit"
     ],
     "answer": 1
    },
    {
     "question": "Wat bleek uit de proef met de paarden?",
     "options": [
-     "Er landden minder vliegen op gestreepte jassen",
-     "Paarden houden van strepen",
-     "De jassen waren te warm",
-     "Vliegen houden van strepen"
+     "Minder vliegen op gestreepte jassen",
+     "Paarden houden erg van strepen",
+     "De jassen waren veel te warm",
+     "Vliegen komen juist af op strepen"
     ],
     "answer": 0
    },
    {
     "question": "Wat is de conclusie van de tekst?",
     "options": [
-     "Strepen hebben geen nut",
-     "Strepen hebben misschien meerdere voordelen tegelijk",
-     "Strepen zijn alleen mooi",
-     "Zebra's verven hun strepen"
+     "Strepen hebben helemaal geen nut",
+     "Strepen helpen misschien op meer manieren",
+     "Strepen zijn alleen maar mooi",
+     "Zebra's kleuren hun strepen zelf"
     ],
     "answer": 1
    }
@@ -603,9 +603,9 @@
    {
     "question": "Wat veranderde er bij Tim?",
     "options": [
-     "Hij stak voor het eerst zijn vinger op bij rekenen",
+     "Hij stak zijn vinger op bij rekenen",
      "Hij ging naar een andere school",
-     "Hij werd boos",
+     "Hij werd erg boos op de juf",
      "Hij stopte met stenen verzamelen"
     ],
     "answer": 0
@@ -644,10 +644,10 @@
    {
     "question": "Hoe kunnen wetenschappers mensen op tijd waarschuwen?",
     "options": [
-     "Door kleine aardbevingen en veranderingen in de grond te meten",
-     "Door naar de lucht te kijken",
-     "Door de lava aan te raken",
-     "Door te raden"
+     "Door trillingen in de grond te meten",
+     "Door goed naar de lucht te kijken",
+     "Door de hete lava aan te raken",
+     "Door gewoon een gok te wagen"
     ],
     "answer": 0
    }
@@ -685,10 +685,10 @@
    {
     "question": "Wat zat er in de kist?",
     "options": [
-     "Snoep en speelgoed",
-     "Een verrekijker, een kompas en een kaart",
-     "Oude kleren",
-     "Een puppy"
+     "Snoep en speelgoed voor iedereen",
+     "Een verrekijker, kompas en kaart",
+     "Oude kleren van de kapitein",
+     "Een klein puppy in een mand"
     ],
     "answer": 1
    }
@@ -747,20 +747,20 @@
    {
     "question": "Waar vond Lina het katje?",
     "options": [
-     "In de tuin",
+     "In de tuin achter het huis",
      "Onder de bank bij de bushalte",
-     "Op school",
-     "In een boom"
+     "Op het schoolplein bij de poort",
+     "Hoog in een boom in het park"
     ],
     "answer": 1
    },
    {
     "question": "Waarom keek de dierenarts of het katje een chip had?",
     "options": [
-     "Om te kijken of het van iemand anders was",
-     "Om te zien hoe oud het was",
-     "Om het te wegen",
-     "Om het een naam te geven"
+     "Om te zien of het een baasje had",
+     "Om te zien hoe oud het katje was",
+     "Om het katje goed te wegen",
+     "Om het katje een naam te geven"
     ],
     "answer": 0
    },
@@ -798,10 +798,10 @@
    {
     "question": "Wat deed een schildknaap?",
     "options": [
-     "Hij kookte in het kasteel",
-     "Hij hielp een ridder met zijn wapenrusting en paard",
-     "Hij bouwde kastelen",
-     "Hij schreef boeken"
+     "Hij kookte in de keuken van het kasteel",
+     "Hij hielp een ridder met zijn spullen",
+     "Hij bouwde muren voor de kastelen",
+     "Hij schreef boeken over de koning"
     ],
     "answer": 1
    },
@@ -830,9 +830,9 @@
     "question": "Wat kon de sensor van de robot?",
     "options": [
      "Voelen of er iets in de weg stond",
-     "Praten",
-     "Licht geven",
-     "Foto's maken"
+     "Praten met de kinderen in de klas",
+     "Licht geven in het donker",
+     "Foto's maken van de hele klas"
     ],
     "answer": 0
    },
@@ -890,10 +890,10 @@
    {
     "question": "Waarom is het smelten van het ijs een probleem voor ijsberen?",
     "options": [
-     "Omdat ze het ijs nodig hebben om op zeehonden te jagen",
-     "Omdat ze niet kunnen zwemmen",
-     "Omdat ze het koud krijgen",
-     "Omdat ze ijs eten"
+     "Ze hebben het ijs nodig om te jagen",
+     "Omdat ze eigenlijk niet kunnen zwemmen",
+     "Omdat ze het dan te koud krijgen",
+     "Omdat ze het ijs graag opeten"
     ],
     "answer": 0
    }
@@ -993,10 +993,10 @@
    {
     "question": "Hoe voelde Esra zich op weg naar school?",
     "options": [
-     "Blij en rustig",
+     "Blij en helemaal rustig",
      "Zenuwachtig, met vlinders in haar buik",
-     "Boos",
-     "Moe"
+     "Heel boos op haar moeder",
+     "Moe van de korte nacht"
     ],
     "answer": 1
    },
@@ -1004,9 +1004,9 @@
     "question": "Waarom vroeg Fleur of Esra mee wilde doen in de pauze?",
     "options": [
      "Ze hadden nog iemand nodig om te draaien",
-     "Omdat de juf het zei",
-     "Omdat het regende",
-     "Omdat Esra een bal had"
+     "Omdat de juf dat had gevraagd",
+     "Omdat het buiten hard regende",
+     "Omdat Esra een nieuwe bal had"
     ],
     "answer": 0
    },
@@ -1034,9 +1034,9 @@
    {
     "question": "Hoe bewegen pantoffeldiertjes vooruit?",
     "options": [
-     "Met vinnen",
-     "Met duizenden kleine haartjes",
-     "Met pootjes",
+     "Met kleine vinnen",
+     "Met heel veel haartjes",
+     "Met korte pootjes",
      "Met de wind mee"
     ],
     "answer": 1
@@ -1054,10 +1054,10 @@
    {
     "question": "Waarom zijn deze kleine wezens belangrijk?",
     "options": [
-     "Ze maken de sloot vies",
+     "Ze maken het water in de sloot vies",
      "Ze zijn voedsel voor visjes en larven",
-     "Ze maken geluid",
-     "Ze houden het water warm"
+     "Ze maken geluid dat je kunt horen",
+     "Ze houden het water in de sloot warm"
     ],
     "answer": 1
    }
@@ -1085,9 +1085,9 @@
    {
     "question": "Hoeveel kan een kameel in een paar minuten drinken?",
     "options": [
-     "Een emmer",
-     "Een glas",
-     "Tien liter",
+     "Een grote emmer",
+     "Een klein glas",
+     "Ongeveer tien liter",
      "Meer dan honderd liter"
     ],
     "answer": 3
@@ -1095,10 +1095,10 @@
    {
     "question": "Waarom heeft een kameel brede voeten?",
     "options": [
-     "Om hard te rennen",
-     "Om te graven",
-     "Om te zwemmen",
-     "Om niet weg te zakken in het zand"
+     "Om heel hard te kunnen rennen",
+     "Om diepe gaten te graven",
+     "Om beter te kunnen zwemmen",
+     "Om niet weg te zakken in zand"
     ],
     "answer": 3
    }
@@ -1136,10 +1136,10 @@
    {
     "question": "Wat betekent een Trojaans paard nu nog?",
     "options": [
-     "Een groot feest",
-     "Een speelgoedpaard",
-     "Een snel paard",
-     "Een list waarbij iets onschuldigs een gevaar verbergt"
+     "Een groot feest in de stad",
+     "Een speelgoedpaard van hout",
+     "Een heel snel renpaard",
+     "Een list die een gevaar verbergt"
     ],
     "answer": 3
    }
@@ -1157,10 +1157,10 @@
    {
     "question": "Waarom moet een uil zijn kop draaien?",
     "options": [
-     "Omdat hij wil slapen",
-     "Omdat hij moe is",
-     "Omdat hij slecht ziet",
-     "Omdat zijn ogen niet kunnen bewegen"
+     "Omdat hij wil gaan slapen",
+     "Omdat hij moe is van het jagen",
+     "Omdat hij in het donker slecht ziet",
+     "Omdat zijn ogen niet bewegen"
     ],
     "answer": 3
    },
@@ -1178,9 +1178,9 @@
     "question": "Waarom zitten de oren van sommige uilen niet op dezelfde hoogte?",
     "options": [
      "Om er mooier uit te zien",
-     "Om precies te horen waar een muis ritselt",
-     "Dat is een ziekte",
-     "Om beter te vliegen"
+     "Om te horen waar een muis ritselt",
+     "Dat komt door een ziekte",
+     "Om beter te kunnen vliegen"
     ],
     "answer": 1
    }
@@ -1198,9 +1198,9 @@
    {
     "question": "Waarom gaat een heteluchtballon omhoog?",
     "options": [
-     "Omdat hij van papier is",
-     "Omdat de wind hem duwt",
-     "Omdat warme lucht lichter is dan koude lucht",
+     "Omdat hij van dun papier is",
+     "Omdat de wind hem omhoog duwt",
+     "Warme lucht is lichter dan koude",
      "Omdat er een motor in zit"
     ],
     "answer": 2
@@ -1218,10 +1218,10 @@
    {
     "question": "Hoe lang vlogen de eerste mensen?",
     "options": [
-     "Twee uur",
+     "Ongeveer twee uur",
      "Ongeveer vijfentwintig minuten",
-     "Een hele dag",
-     "Vijf minuten"
+     "Een hele dag lang",
+     "Maar vijf minuten"
     ],
     "answer": 1
    }
@@ -1290,10 +1290,10 @@
    {
     "question": "Hoe vonden Isa en Yusuf de fiets?",
     "options": [
-     "Door een briefje",
-     "Door een camera",
+     "Door een briefje op de deur",
+     "Door de beelden van een camera",
      "Door de politie te bellen",
-     "Door een spoor van rode verfschilfertjes te volgen"
+     "Door rode verfschilfers te volgen"
     ],
     "answer": 3
    },
@@ -1341,10 +1341,10 @@
    {
     "question": "Wat deed de merel toen hij werd vrijgelaten?",
     "options": [
-     "Hij ging slapen",
-     "Hij bleef bij Noor",
-     "Hij vloog op een tak en begon te zingen",
-     "Hij vloog meteen weg"
+     "Hij ging in het gras slapen",
+     "Hij bleef dicht bij Noor",
+     "Hij ging op een tak zingen",
+     "Hij vloog meteen ver weg"
     ],
     "answer": 2
    }
@@ -1382,10 +1382,10 @@
    {
     "question": "Waarom loopt een ijsbeer meestal rustig?",
     "options": [
-     "Omdat het ijs glad is",
-     "Omdat hij lui is",
-     "Omdat hij slecht ziet",
-     "Omdat hij snel oververhit raakt als hij rent"
+     "Omdat het ijs zo glad is",
+     "Omdat hij gewoon lui is",
+     "Omdat hij slecht kan zien",
+     "Omdat hij snel te warm wordt"
     ],
     "answer": 3
    }
@@ -1536,20 +1536,20 @@
    {
     "question": "Waarmee schreven kinderen vroeger volgens meester Hans?",
     "options": [
-     "Met krijt",
+     "Met stukjes krijt op een bord",
      "Met kroontjespennen en inkt",
-     "Met een laptop",
-     "Met een balpen"
+     "Met een laptop op hun tafel",
+     "Met een balpen in een schrift"
     ],
     "answer": 1
    },
    {
     "question": "Wat vond meester Hans het leukste aan lesgeven?",
     "options": [
-     "De vakanties",
+     "De lange zomervakanties",
      "De koffie in de pauze",
-     "Het moment dat een kind iets moeilijks snapte",
-     "Het nakijken"
+     "Als een kind iets moeilijks snapte",
+     "Het nakijken van toetsen"
     ],
     "answer": 2
    }
@@ -1611,17 +1611,17 @@
      "Het dier moet in de zon liggen",
      "Het dier moet worden opgegeten",
      "Het moet gaan sneeuwen",
-     "Het dier moet worden bedekt met modder of zand"
+     "Het moet onder modder of zand komen"
     ],
     "answer": 3
    },
    {
     "question": "Waardoor verandert bot in steen?",
     "options": [
-     "Door mineralen die de plaats van het bot innemen",
-     "Door de zon",
-     "Door de kou",
-     "Door vuur"
+     "Mineralen nemen de plaats van bot in",
+     "Door de hitte van de zon",
+     "Door de kou van de winter",
+     "Door het vuur van vulkanen"
     ],
     "answer": 0
    },
@@ -1692,7 +1692,7 @@
     "options": [
      "Omdat ze honger hebben",
      "Omdat ze ziek zijn",
-     "Om iets te laten zien, zoals boosheid of angst",
+     "Om te laten zien hoe ze zich voelen",
      "Om zich altijd te verstoppen"
     ],
     "answer": 2
@@ -1710,10 +1710,10 @@
    {
     "question": "Wat zit er in de huid van een kameleon?",
     "options": [
-     "Kleine lampjes",
-     "Verf",
-     "Water",
-     "Cellen met piepkleine kristallen"
+     "Kleine lampjes die aan gaan",
+     "Verf die ze zelf maken",
+     "Water dat van kleur verandert",
+     "Cellen met kleine kristallen"
     ],
     "answer": 3
    }
@@ -1731,10 +1731,10 @@
    {
     "question": "Waarom staan de pakken klaar met de broek over de laarzen?",
     "options": [
-     "Omdat ze nat zijn",
-     "Zodat ze zich razendsnel kunnen aankleden",
-     "Omdat er geen kast is",
-     "Omdat het mooi staat"
+     "Omdat de pakken nog nat zijn",
+     "Zodat ze zich snel kunnen aankleden",
+     "Omdat er geen kast voor is",
+     "Omdat het er mooi uitziet"
     ],
     "answer": 1
    },
@@ -1751,10 +1751,10 @@
    {
     "question": "Waarom is een rookmelder belangrijk?",
     "options": [
-     "Omdat hij het vuur blust",
+     "Omdat hij zelf het vuur blust",
      "Omdat hij de brandweer belt",
-     "Omdat hij licht geeft",
-     "Omdat je bij brand vaak niet wakker wordt van de rook"
+     "Omdat hij licht geeft in het donker",
+     "Omdat je van rook niet wakker wordt"
     ],
     "answer": 3
    }
@@ -1814,7 +1814,7 @@
     "question": "Waarom zinkt een steen?",
     "options": [
      "Omdat hij koud is",
-     "Omdat hij zwaarder is dan dezelfde hoeveelheid water",
+     "Hij is zwaarder dan evenveel water",
      "Omdat hij hard is",
      "Omdat hij rond is"
     ],
@@ -2167,9 +2167,9 @@
    {
     "question": "Waarom laat de boom zijn bladeren los?",
     "options": [
-     "Ze kosten in de winter alleen maar water",
-     "De wind trekt ze eraf",
-     "Ze zijn te zwaar"
+     "Ze kosten in de winter alleen water",
+     "De wind trekt ze er hard af",
+     "Ze zijn te zwaar voor de takken"
     ],
     "answer": 0
    },
@@ -2352,19 +2352,19 @@
     "question": "Waar komen de gisten in zuurdesem vandaan?",
     "options": [
      "Uit een zakje uit de winkel",
-     "Van nature van het graan en uit de lucht",
-     "Uit melk",
-     "Uit suiker"
+     "Van het graan en uit de lucht",
+     "Uit melk die zuur is geworden",
+     "Uit suiker die je toevoegt"
     ],
     "answer": 1
    },
    {
     "question": "Waardoor krijgt zuurdesembrood zijn zure smaak?",
     "options": [
-     "Door azijn",
-     "Door de zuren die bacteriën maken",
-     "Door citroensap",
-     "Door lang bakken"
+     "Door een scheut azijn",
+     "Door zuren van bacteriën",
+     "Door een beetje citroensap",
+     "Door heel lang te bakken"
     ],
     "answer": 1
    },
@@ -2443,10 +2443,10 @@
    {
     "question": "Wat was het nadeel van de hoge bi?",
     "options": [
-     "Hij was te langzaam",
+     "Hij was te langzaam voor de weg",
      "Hij was gevaarlijk door de hoogte",
-     "Hij was te duur",
-     "Hij had geen zadel"
+     "Hij was veel te duur om te kopen",
+     "Hij had geen goed zadel"
     ],
     "answer": 1
    },
@@ -2454,9 +2454,9 @@
     "question": "Wat was nieuw aan de veiligheidsfiets?",
     "options": [
      "Twee even grote wielen en een ketting",
-     "Een groot voorwiel",
-     "Houten wielen",
-     "Een motor"
+     "Een extra groot voorwiel voor snelheid",
+     "Stevige wielen van hout",
+     "Een kleine motor voor de heuvels"
     ],
     "answer": 0
    }
@@ -2484,20 +2484,20 @@
    {
     "question": "Waar worden de bonen meestal gebrand?",
     "options": [
-     "Op de plantage",
+     "Op de plantage zelf",
      "Aan boord van het schip",
-     "In het land waar de koffie wordt gedronken",
-     "In Ethiopië"
+     "In het land waar men ze drinkt",
+     "Altijd in Ethiopië"
     ],
     "answer": 2
    },
    {
     "question": "Waarom is koffie voor boeren vaak een onzeker bestaan?",
     "options": [
-     "Omdat koffie snel bederft",
-     "Omdat de prijs sterk schommelt en het weer een oogst kan verwoesten",
-     "Omdat niemand koffie wil kopen",
-     "Omdat koffie maar eens in de tien jaar groeit"
+     "Omdat koffie heel snel bederft",
+     "Wisselende prijzen en weer bedreigen de oogst",
+     "Omdat bijna niemand koffie wil kopen",
+     "Omdat de plant maar zelden vruchten geeft"
     ],
     "answer": 1
    }
@@ -2525,9 +2525,9 @@
    {
     "question": "Waarom moet een vliegtuig hard over de startbaan rijden?",
     "options": [
-     "Omdat lift alleen bij voldoende snelheid ontstaat",
-     "Om de motoren op te warmen",
-     "Om brandstof te besparen",
+     "Lift ontstaat pas bij genoeg snelheid",
+     "Om de motoren goed op te warmen",
+     "Om zo brandstof te besparen",
      "Om de passagiers te laten wennen"
     ],
     "answer": 0
@@ -2535,10 +2535,10 @@
    {
     "question": "Waarvoor gebruikt de piloot kleppen bij het landen?",
     "options": [
-     "Om sneller te gaan",
-     "Om genoeg lift te houden bij lage snelheid",
+     "Om sneller te kunnen dalen",
+     "Om lift te houden bij lage snelheid",
      "Om de motoren uit te zetten",
-     "Om het geluid te dempen"
+     "Om het lawaai te dempen"
     ],
     "answer": 1
    }
@@ -2617,10 +2617,10 @@
    {
     "question": "Waarom is de carrière van een e-sporter vaak kort?",
     "options": [
-     "Omdat spellen verboden worden",
-     "Omdat de reactiesnelheid afneemt en jongere spelers doorstromen",
-     "Omdat de prijzen laag zijn",
-     "Omdat stadions sluiten"
+     "Omdat hun spellen worden verboden",
+     "Reacties worden trager, jongeren komen op",
+     "Omdat het prijzengeld erg laag is",
+     "Omdat de stadions steeds sluiten"
     ],
     "answer": 1
    }
@@ -2699,10 +2699,10 @@
    {
     "question": "Wat is de hoofdgedachte?",
     "options": [
-     "Zout wordt in zee gegooid",
-     "Zouten uit het land hopen zich in zee op door verdamping",
-     "Regenwater is zout",
-     "Alle zeeën zijn even zout"
+     "Zout wordt door schepen in zee gegooid",
+     "Zout uit het land hoopt zich op in zee",
+     "Regenwater is eigenlijk al zout",
+     "Alle zeeën zijn precies even zout"
     ],
     "answer": 1
    }
@@ -2772,19 +2772,19 @@
     "question": "Waarvoor dient de omvormer?",
     "options": [
      "Om de panelen schoon te houden",
-     "Om gelijkstroom geschikt te maken voor het huishouden",
-     "Om de panelen te draaien",
-     "Om warmte te maken"
+     "Om stroom geschikt te maken voor thuis",
+     "Om de panelen naar de zon te draaien",
+     "Om er warm water mee te maken"
     ],
     "answer": 1
    },
    {
     "question": "Welk nadeel noemt de tekst?",
     "options": [
-     "Panelen maken veel lawaai",
-     "De meeste stroom ontstaat overdag, terwijl veel mensen 's avonds stroom gebruiken",
-     "Panelen werken niet in de zomer",
-     "Panelen gaan maar een jaar mee"
+     "De panelen maken veel lawaai",
+     "Stroom komt overdag, verbruik is 's avonds",
+     "De panelen werken niet in de zomer",
+     "De panelen gaan maar een jaar mee"
     ],
     "answer": 1
    }
@@ -2843,10 +2843,10 @@
    {
     "question": "Hoe helpt de gaai bij het planten van eiken?",
     "options": [
-     "Door eikels te verstoppen en er een aantal te vergeten",
-     "Door takken te breken",
-     "Door zaden uit te spugen",
-     "Door gaten te graven"
+     "Hij verstopt eikels en vergeet er wat",
+     "Hij breekt takken van oude eiken",
+     "Hij spuugt zaden uit op de grond",
+     "Hij graaft gaten voor nieuwe bomen"
     ],
     "answer": 0
    },
@@ -2884,10 +2884,10 @@
    {
     "question": "Wie maakt het grootste deel van het geld?",
     "options": [
-     "De centrale bank",
-     "Gewone banken, bij het verstrekken van leningen",
-     "De overheid",
-     "Winkels"
+     "De centrale bank in Frankfurt",
+     "Gewone banken, bij het lenen",
+     "De overheid in Den Haag",
+     "Winkels bij elke verkoop"
     ],
     "answer": 1
    },
@@ -2904,10 +2904,10 @@
    {
     "question": "Wat gebeurt er als de centrale bank de rente verhoogt?",
     "options": [
-     "Lenen wordt goedkoper",
-     "Lenen wordt duurder en er komt minder nieuw geld bij",
-     "De prijzen stijgen direct",
-     "Banken sluiten"
+     "Lenen wordt dan juist goedkoper",
+     "Lenen wordt duurder, er komt minder geld bij",
+     "De prijzen in winkels stijgen direct",
+     "Veel banken moeten meteen sluiten"
     ],
     "answer": 1
    }
@@ -2936,9 +2936,9 @@
     "question": "Waarom kreeg het de naam Nachtwacht?",
     "options": [
      "Omdat het 's nachts werd geschilderd",
-     "Omdat een donker geworden vernislaag het op nacht deed lijken",
+     "Omdat donker vernis het op nacht liet lijken",
      "Omdat de schutters 's nachts werkten",
-     "Omdat Rembrandt dat wilde"
+     "Omdat Rembrandt die naam zelf koos"
     ],
     "answer": 1
    },
@@ -2966,30 +2966,30 @@
    {
     "question": "Waardoor ontstaat het spinnen volgens onderzoekers?",
     "options": [
-     "Door de staart",
-     "Door snelle bewegingen van de spieren rond het strottenhoofd",
-     "Door de maag",
-     "Door de poten"
+     "Door zwiepen met de staart",
+     "Door trillende spieren rond de keel",
+     "Door geluiden uit de maag",
+     "Door het bewegen van de poten"
     ],
     "answer": 1
    },
    {
     "question": "Wanneer spinnen kittens al?",
     "options": [
-     "Pas na een jaar",
-     "Een paar dagen na de geboorte, tijdens het drinken",
-     "Alleen in de winter",
-     "Nooit"
+     "Pas als ze een jaar oud zijn",
+     "Al een paar dagen na de geboorte",
+     "Alleen in de koude winter",
+     "Kittens spinnen helemaal nooit"
     ],
     "answer": 1
    },
    {
     "question": "Spinnen katten alleen als ze blij zijn?",
     "options": [
-     "Ja, altijd",
-     "Nee, ook als ze gewond of gestrest zijn",
-     "Alleen als ze eten",
-     "Alleen 's nachts"
+     "Ja, spinnen betekent altijd blij",
+     "Nee, ook bij pijn of stress",
+     "Alleen als ze aan het eten zijn",
+     "Alleen 's nachts in hun mand"
     ],
     "answer": 1
    }
@@ -3058,9 +3058,9 @@
    {
     "question": "Wat gebeurde er tijdens de landing?",
     "options": [
-     "De motor viel uit",
-     "De computer gaf foutmeldingen en Armstrong zocht zelf een plek",
-     "Er brak een raam",
+     "De motor viel ineens helemaal uit",
+     "Foutmeldingen, Armstrong landde zelf",
+     "Er brak een raam van de module",
      "Het contact met de aarde viel weg"
     ],
     "answer": 1
@@ -3089,9 +3089,9 @@
    {
     "question": "Wat is een algoritme volgens de tekst?",
     "options": [
-     "Een soort computervirus",
-     "Een reeks stappen om een probleem op te lossen",
-     "Een programmeertaal",
+     "Een soort gevaarlijk computervirus",
+     "Stappen om een probleem op te lossen",
+     "Een taal om mee te programmeren",
      "Een wiskundige formule voor geld"
     ],
     "answer": 1
@@ -3099,20 +3099,20 @@
    {
     "question": "Waar baseren sociale media hun keuze op?",
     "options": [
-     "Op wat je aanklikt, leuk vindt en hoelang je kijkt",
-     "Op je rapportcijfers",
-     "Op het weer",
-     "Op willekeur"
+     "Op wat je aanklikt en bekijkt",
+     "Op je cijfers op het rapport",
+     "Op het weer bij jou in de buurt",
+     "Op puur toeval, zonder patroon"
     ],
     "answer": 0
    },
    {
     "question": "Welke keerzijde noemt de tekst?",
     "options": [
-     "Je telefoon wordt trager",
-     "Je ziet steeds meer van hetzelfde en minder andere meningen",
-     "Je krijgt minder berichten",
-     "Je account wordt gehackt"
+     "Je telefoon wordt er trager van",
+     "Je ziet steeds meer van hetzelfde",
+     "Je krijgt minder berichten binnen",
+     "Je account wordt sneller gehackt"
     ],
     "answer": 1
    }
@@ -3130,20 +3130,20 @@
    {
     "question": "Waardoor ontstaan eb en vloed?",
     "options": [
-     "Door de wind",
-     "Door de aantrekkingskracht van de maan en de zon",
-     "Door rivieren",
-     "Door schepen"
+     "Door de wind boven zee",
+     "Door de aantrekking van maan en zon",
+     "Door het water uit rivieren",
+     "Door de golven van schepen"
     ],
     "answer": 1
    },
    {
     "question": "Waarom zijn de Wadden belangrijk voor trekvogels?",
     "options": [
-     "Ze kunnen er aansterken met voedsel uit de wadbodem",
-     "Ze broeden er in de winter",
+     "Ze eten er voedsel uit de wadbodem",
+     "Ze broeden er midden in de winter",
      "Ze worden er gevoerd door mensen",
-     "Er zijn geen roofdieren"
+     "Er leven geen roofdieren in de buurt"
     ],
     "answer": 0
    },
@@ -3222,20 +3222,20 @@
    {
     "question": "Waardoor kwam de elektrische auto rond 2010 terug?",
     "options": [
-     "Door betere batterijen en zorg om klimaat",
-     "Door een verbod op fietsen",
-     "Door goedkopere benzine",
-     "Door minder wegen"
+     "Betere batterijen en zorg om het klimaat",
+     "Een verbod op fietsen in de stad",
+     "Een daling van de benzineprijs",
+     "Minder wegen voor gewone auto's"
     ],
     "answer": 0
    },
    {
     "question": "Wanneer is het milieuvoordeel volgens de tekst groter?",
     "options": [
-     "Als je vaak snel rijdt",
-     "Als de laadstroom duurzaam is opgewekt",
-     "Als de auto groot is",
-     "Als je 's nachts rijdt"
+     "Als je vaak snel over de snelweg rijdt",
+     "Als de laadstroom duurzaam is",
+     "Als de auto heel groot en zwaar is",
+     "Als je vooral 's nachts rijdt"
     ],
     "answer": 1
    }
@@ -3263,10 +3263,10 @@
    {
     "question": "Wat betekent een pijnlijke arm na een vaccinatie volgens de tekst?",
     "options": [
-     "Dat het vaccin niet werkt",
-     "Dat het afweersysteem aan het werk is",
-     "Dat je ernstig ziek wordt",
-     "Dat de prik verkeerd was"
+     "Dat het vaccin niet goed werkt",
+     "Dat je afweer aan het werk is",
+     "Dat je ernstig ziek gaat worden",
+     "Dat de prik verkeerd is gezet"
     ],
     "answer": 1
    },
@@ -3304,9 +3304,9 @@
    {
     "question": "Waarom is spinnen houden voor zijde lastig?",
     "options": [
-     "Ze maken te weinig zijde",
-     "Ze eten elkaar op als ze te dicht op elkaar zitten",
-     "Ze leven maar een week",
+     "Ze maken veel te weinig zijde",
+     "Ze eten elkaar op als het te vol is",
+     "Ze leven maar een week of twee",
      "Ze kunnen niet binnen leven"
     ],
     "answer": 1
@@ -3314,10 +3314,10 @@
    {
     "question": "Hoe proberen onderzoekers spinnenzijde na te maken?",
     "options": [
-     "Met bacteriën of gisten die de eiwitten aanmaken",
-     "Met plastic",
-     "Met zijderupsen alleen",
-     "Met metaaldraad"
+     "Met microben die de eiwitten maken",
+     "Met gewoon plastic uit de fabriek",
+     "Alleen met hulp van zijderupsen",
+     "Met heel dun metaaldraad"
     ],
     "answer": 0
    }
@@ -3345,10 +3345,10 @@
    {
     "question": "Wat helpt volgens de tekst het best tegen vergeten?",
     "options": [
-     "Alles in één avond leren",
-     "Gespreide herhaling en jezelf overhoren",
-     "Harder lezen",
-     "Minder slapen"
+     "Alles in één lange avond leren",
+     "Gespreid herhalen en jezelf overhoren",
+     "Harder en sneller lezen",
+     "Minder slapen, meer leren"
     ],
     "answer": 1
    },
@@ -3386,10 +3386,10 @@
    {
     "question": "Waarom krijgt elke spijkerbroek na verloop van tijd zijn eigen uiterlijk?",
     "options": [
-     "Omdat indigo maar gedeeltelijk in de draad dringt en langzaam slijt",
-     "Omdat elke broek met de hand wordt beschilderd",
-     "Omdat de stof krimpt",
-     "Omdat er verschillende knopen op zitten"
+     "Indigo zit in het buitenste van de draad",
+     "Elke broek wordt met de hand beschilderd",
+     "De stof krimpt bij elke wasbeurt",
+     "Er zitten steeds andere knopen op"
     ],
     "answer": 0
    },
@@ -3427,10 +3427,10 @@
    {
     "question": "Waarom koelt een stad 's nachts minder af?",
     "options": [
-     "Omdat asfalt en beton de opgenomen warmte langzaam afgeven",
-     "Omdat er minder wind is op het platteland",
-     "Omdat de zon langer schijnt",
-     "Omdat er meer water is"
+     "Asfalt en beton geven warmte traag af",
+     "Er waait in de stad meer wind dan buiten",
+     "De zon schijnt in de stad langer door",
+     "Er is in de stad veel meer water"
     ],
     "answer": 0
    },
@@ -3459,9 +3459,9 @@
     "question": "Welke berichten worden vaker gedeeld?",
     "options": [
      "Berichten die sterke gevoelens oproepen",
-     "Lange, neutrale berichten",
-     "Berichten zonder plaatjes",
-     "Berichten van overheden"
+     "Lange, zakelijke en neutrale berichten",
+     "Berichten zonder plaatjes of filmpjes",
+     "Berichten die van de overheid komen"
     ],
     "answer": 0
    },
@@ -3478,10 +3478,10 @@
    {
     "question": "Wat raadt de tekst aan voordat je iets deelt?",
     "options": [
-     "Het meteen doorsturen",
+     "Het meteen doorsturen naar iedereen",
      "Een paar vragen stellen en even wachten",
-     "Het bericht langer maken",
-     "Alleen delen met onbekenden"
+     "Het bericht eerst langer maken",
+     "Het alleen delen met onbekenden"
     ],
     "answer": 1
    }
@@ -3509,10 +3509,10 @@
    {
     "question": "Waarom helpt langzaam groeien de boom?",
     "options": [
-     "Het hout wordt extreem stevig en vol hars",
-     "De boom wordt groter",
-     "De boom krijgt meer bladeren",
-     "De boom verliest zijn schors"
+     "Het hout wordt heel stevig en vol hars",
+     "De boom wordt daardoor veel groter",
+     "De boom krijgt veel meer bladeren",
+     "De boom raakt zijn dikke schors kwijt"
     ],
     "answer": 0
    },
@@ -3550,10 +3550,10 @@
    {
     "question": "Waarom is verveling volgens de tekst nuttig?",
     "options": [
-     "Het geeft ruimte aan dagdromen en nieuwe ideeën",
-     "Het maakt je slaperig",
+     "Het geeft ruimte aan dagdromen",
+     "Het maakt je lekker slaperig",
      "Het is goed voor je ogen",
-     "Het versnelt je leestempo"
+     "Het maakt je sneller in lezen"
     ],
     "answer": 0
    },
@@ -3601,10 +3601,10 @@
    {
     "question": "Wat brachten de Romeinen onder andere mee?",
     "options": [
-     "Aardappelen en tomaten",
-     "Wegen, badhuizen en producten zoals wijn",
-     "Treinen",
-     "Windmolens"
+     "Aardappelen en tomaten uit Amerika",
+     "Wegen, badhuizen en wijn",
+     "De eerste treinen en spoorlijnen",
+     "Windmolens om graan te malen"
     ],
     "answer": 1
    }
@@ -3664,9 +3664,9 @@
     "question": "Waar zijn we tijdens een gesprek vaak mee bezig?",
     "options": [
      "Met wat we zelf willen zeggen",
-     "Met stil zijn",
-     "Met samenvatten",
-     "Met open vragen"
+     "Met zo lang mogelijk stil zijn",
+     "Met samenvatten wat de ander zei",
+     "Met het stellen van open vragen"
     ],
     "answer": 0
    },
@@ -3674,9 +3674,9 @@
     "question": "Waarom is samenvatten nuttig?",
     "options": [
      "Omdat het gesprek dan korter wordt",
-     "Omdat je laat zien dat je het begrijpt en fouten meteen verbeterd kunnen worden",
-     "Omdat je dan niet hoeft te luisteren",
-     "Omdat het beleefd klinkt"
+     "Je toont dat je het snapt en fouten vallen op",
+     "Omdat je dan niet meer hoeft te luisteren",
+     "Omdat het netjes en beleefd klinkt"
     ],
     "answer": 1
    },
@@ -3704,19 +3704,19 @@
    {
     "question": "Waarom onthoud je een antwoord beter na een fout?",
     "options": [
-     "Omdat de verrassing je aandacht scherpt",
-     "Omdat je dan meer tijd hebt",
-     "Omdat fouten niet tellen",
-     "Omdat je het opschrijft"
+     "De verrassing scherpt je aandacht",
+     "Omdat je dan meer tijd krijgt",
+     "Omdat fouten niet meetellen",
+     "Omdat je het meteen opschrijft"
     ],
     "answer": 0
    },
    {
     "question": "Wat is volgens de tekst de voorwaarde om van fouten te leren?",
     "options": [
-     "Snel doorgaan",
-     "Kijken wat er misging en wat je anders doet",
-     "Nooit meer dezelfde taak doen",
+     "Zo snel mogelijk doorgaan",
+     "Kijken wat misging en wat je anders doet",
+     "Die taak nooit meer opnieuw doen",
      "Iemand anders de schuld geven"
     ],
     "answer": 1
@@ -3756,19 +3756,19 @@
     "question": "Waarom worden de pakketten in een vaste volgorde in de bus geladen?",
     "options": [
      "In de volgorde van de route",
-     "Op alfabet",
-     "Op grootte",
-     "Willekeurig"
+     "Op alfabet, van A tot Z",
+     "Op grootte, groot onderop",
+     "Willekeurig, zoals ze binnenkomen"
     ],
     "answer": 0
    },
    {
     "question": "Welke keerzijde noemt de tekst?",
     "options": [
-     "Pakketten gaan vaak kapot",
+     "Pakketten gaan vaak kapot onderweg",
      "Drukte en uitstoot door al het vervoer",
-     "Boeken worden duurder",
-     "Bezorgers werken te weinig"
+     "Boeken worden er duurder door",
+     "Bezorgers werken eigenlijk te weinig"
     ],
     "answer": 1
    }
@@ -3806,10 +3806,10 @@
    {
     "question": "Wat maakt volgens de tekst op het hoogste niveau vaak het verschil?",
     "options": [
-     "Alleen talent",
+     "Alleen aangeboren talent",
      "Kleine verbeteringen in details",
-     "Dure schoenen",
-     "Het aantal fans"
+     "Dure schoenen en kleding",
+     "Het aantal fans op de tribune"
     ],
     "answer": 1
    }
@@ -3827,30 +3827,30 @@
    {
     "question": "Wat is volgens de tekst de eerste stap?",
     "options": [
-     "Een kantoor huren",
-     "Een probleem vinden dat mensen echt hebben",
-     "Veel geld lenen",
-     "Een logo ontwerpen"
+     "Een mooi kantoor huren",
+     "Een echt probleem van mensen vinden",
+     "Zoveel mogelijk geld lenen",
+     "Een pakkend logo ontwerpen"
     ],
     "answer": 1
    },
    {
     "question": "Waarom bouwen starters eerst een eenvoudige versie?",
     "options": [
-     "Om snel te leren wat werkt zonder veel geld uit te geven",
-     "Omdat het verplicht is",
-     "Om het te verkopen aan grote bedrijven",
-     "Omdat ze niet beter kunnen"
+     "Om snel en goedkoop te leren wat werkt",
+     "Omdat dat wettelijk verplicht is",
+     "Om het snel aan een groot bedrijf te verkopen",
+     "Omdat ze het niet beter kunnen"
     ],
     "answer": 0
    },
    {
     "question": "Wat doen investeerders volgens de tekst?",
     "options": [
-     "Ze kopen alle producten op",
-     "Ze leggen geld in voor een deel van het bedrijf",
-     "Ze geven gratis advies",
-     "Ze doen het werk"
+     "Ze kopen alle producten van het bedrijf op",
+     "Ze leggen geld in voor een deel ervan",
+     "Ze geven alleen gratis advies",
+     "Ze doen zelf het meeste werk"
     ],
     "answer": 1
    }
@@ -3878,18 +3878,18 @@
    {
     "question": "Waarom kan de tocht maar zelden doorgaan?",
     "options": [
-     "Omdat het te duur is",
-     "Omdat het ijs overal dik genoeg moet zijn na een lange vorstperiode",
+     "Omdat het organiseren te duur is",
+     "Het ijs moet overal dik genoeg zijn",
      "Omdat er te weinig schaatsers zijn",
-     "Omdat het verboden is"
+     "Omdat de tocht wettelijk verboden is"
     ],
     "answer": 1
    },
    {
     "question": "Wat maakte de tocht van 1963 zo beroemd?",
     "options": [
-     "Er deed niemand mee",
-     "De extreme kou waardoor maar weinig mensen finishten",
+     "Er deed bijna niemand mee",
+     "Door de kou haalden weinigen de finish",
      "Hij werd in de zomer verreden",
      "Hij was maar tien kilometer lang"
     ],
@@ -3909,10 +3909,10 @@
    {
     "question": "Waarvoor dient een sluis?",
     "options": [
-     "Om schepen tussen water van verschillende hoogte te laten varen",
-     "Om vis te vangen",
-     "Om water te zuiveren",
-     "Om stroom op te wekken"
+     "Schepen laten varen tussen hoog en laag water",
+     "Vis vangen in de rivier",
+     "Het water zuiveren voor de stad",
+     "Stroom opwekken met stromend water"
     ],
     "answer": 0
    },
@@ -4001,20 +4001,20 @@
    {
     "question": "Waarom kregen mensen bij portretten soms een steun voor het hoofd?",
     "options": [
-     "Omdat ze moe waren",
-     "Zodat ze tijdens de lange belichting niet bewogen",
-     "Om ze langer te laten lijken",
-     "Voor de sier"
+     "Omdat ze na het poseren moe waren",
+     "Zodat ze niet bewogen tijdens de opname",
+     "Om ze op de foto langer te laten lijken",
+     "Gewoon als versiering in de studio"
     ],
     "answer": 1
    },
    {
     "question": "Wat was het voordeel van de methode van Fox Talbot?",
     "options": [
-     "Hij werkte zonder licht",
-     "Van één negatief kon je meerdere afdrukken maken",
-     "Hij was in kleur",
-     "Hij was goedkoper dan papier"
+     "Zijn methode werkte zonder licht",
+     "Van één negatief kon je veel afdrukken",
+     "Zijn foto's waren al in kleur",
+     "Zijn methode was goedkoper dan papier"
     ],
     "answer": 1
    }
@@ -4042,10 +4042,10 @@
    {
     "question": "Waarom zijn de gangen van wormen goed voor de bodem?",
     "options": [
-     "Er komt lucht in en water zakt makkelijker weg",
-     "Ze houden mollen weg",
-     "Ze maken de grond harder",
-     "Ze trekken vogels aan"
+     "Er komt lucht in en water zakt weg",
+     "Ze houden de mollen op afstand",
+     "Ze maken de grond steviger en harder",
+     "Ze trekken vogels naar de tuin"
     ],
     "answer": 0
    },
@@ -4073,10 +4073,10 @@
    {
     "question": "Wat waren trekschuiten?",
     "options": [
-     "Boten die door paarden langs de vaart werden getrokken",
-     "Postkoetsen",
-     "Zeilschepen naar Indië",
-     "Treinen"
+     "Boten die door paarden werden getrokken",
+     "Koetsen die de post rondbrachten",
+     "Zeilschepen die naar Indië voeren",
+     "De eerste treinen tussen steden"
     ],
     "answer": 0
    },
@@ -4114,20 +4114,20 @@
    {
     "question": "Waarom klopt de oude verklaring met druk niet helemaal?",
     "options": [
-     "De druk van een schaats is veel te klein",
-     "Schaatsen zijn te licht",
-     "IJs smelt nooit",
-     "Er is geen druk"
+     "De druk van een schaats is te klein",
+     "Schaatsen zijn daarvoor te licht",
+     "IJs smelt eigenlijk nooit",
+     "Er is helemaal geen druk"
     ],
     "answer": 0
    },
    {
     "question": "Wat is er bijzonder aan de bovenste laag van ijs?",
     "options": [
-     "Die is harder",
-     "De watermoleculen zitten minder vast en kunnen bewegen",
-     "Die bevat zout",
-     "Die is altijd nat"
+     "Die laag is veel harder",
+     "De moleculen zitten er losser",
+     "Die laag bevat veel zout",
+     "Die laag is altijd kletsnat"
     ],
     "answer": 1
    },
@@ -4175,10 +4175,10 @@
    {
     "question": "Wat doet de dirigent tijdens repetities?",
     "options": [
-     "Hij bepaalt hoe een stuk moet klinken",
-     "Hij speelt viool",
-     "Hij verkoopt kaartjes",
-     "Hij stemt de instrumenten"
+     "Hij bepaalt hoe een stuk klinkt",
+     "Hij speelt zelf de eerste viool",
+     "Hij verkoopt de kaartjes",
+     "Hij stemt alle instrumenten"
     ],
     "answer": 0
    }
@@ -4207,9 +4207,9 @@
     "question": "Waar pompten de molens het water naartoe?",
     "options": [
      "Naar een hoger gelegen boezem",
-     "Naar zee",
-     "Naar een waterput",
-     "Naar de kelder"
+     "Rechtstreeks naar de zee",
+     "Naar een diepe waterput",
+     "Naar de kelder van de molen"
     ],
     "answer": 0
    },
@@ -4237,30 +4237,30 @@
    {
     "question": "Waaruit bestaat koraal?",
     "options": [
-     "Uit steen",
-     "Uit kolonies van piepkleine dieren",
-     "Uit zeewier",
-     "Uit zand"
+     "Uit een soort harde steen",
+     "Uit kolonies van kleine dieren",
+     "Uit zeewier dat verhardt",
+     "Uit samengeperst zand"
     ],
     "answer": 1
    },
    {
     "question": "Wat hebben de algen en het koraal aan elkaar?",
     "options": [
-     "Niets",
-     "Het koraal krijgt voedsel, de algen een veilige plek",
-     "De algen eten het koraal op",
-     "Ze vechten om licht"
+     "Helemaal niets, ze leven los",
+     "Voedsel voor het koraal, een plek voor algen",
+     "De algen eten het koraal langzaam op",
+     "Ze vechten met elkaar om het licht"
     ],
     "answer": 1
    },
    {
     "question": "Wat gebeurt er bij koraalverbleking?",
     "options": [
-     "Het koraal wordt groter",
-     "De poliepen stoten de algen uit en het koraal wordt wit",
-     "Het water wordt helderder",
-     "Er komen meer vissen"
+     "Het koraal groeit juist sneller",
+     "De algen verdwijnen, het koraal wordt wit",
+     "Het water wordt veel helderder",
+     "Er komen meer vissen op af"
     ],
     "answer": 1
    }
@@ -4278,20 +4278,20 @@
    {
     "question": "Waarom zetten surfers wieltjes onder een plank?",
     "options": [
-     "Om naar school te gaan",
+     "Om ermee naar school te gaan",
      "Om te oefenen als er geen golven waren",
-     "Om sneller te lopen",
-     "Voor een wedstrijd"
+     "Om sneller te kunnen lopen",
+     "Voor een wedstrijd op straat"
     ],
     "answer": 1
    },
    {
     "question": "Wat is een ollie?",
     "options": [
-     "Een soort helm",
-     "Een sprong met het board zonder het vast te houden",
-     "Een skatepark",
-     "Een merk schoenen"
+     "Een soort helm voor skaters",
+     "Een sprong met het board",
+     "Een bekend skatepark",
+     "Een merk skateschoenen"
     ],
     "answer": 1
    },
@@ -4319,10 +4319,10 @@
    {
     "question": "Waarmee moet je volgens de tekst beginnen bij het voorbereiden?",
     "options": [
-     "Met de dia's",
+     "Met het maken van de dia's",
      "Met de kern van je boodschap",
-     "Met het einde",
-     "Met grappen"
+     "Met het einde van je verhaal",
+     "Met een paar goede grappen"
     ],
     "answer": 1
    },
@@ -4360,10 +4360,10 @@
    {
     "question": "Waar komt de naam sneaker vandaan?",
     "options": [
-     "Van een merknaam",
-     "Van het Engelse werkwoord voor sluipen",
-     "Van een sporter",
-     "Van het woord snel"
+     "Van een bekende merknaam",
+     "Van het Engelse woord voor sluipen",
+     "Van een beroemde sporter",
+     "Van het Nederlandse woord snel"
     ],
     "answer": 1
    },
@@ -4411,18 +4411,18 @@
    {
     "question": "Wat was het slimme aan Gutenbergs losse letters?",
     "options": [
-     "Ze waren van goud",
-     "Ze konden steeds opnieuw worden gebruikt",
+     "Ze waren gemaakt van goud",
+     "Je kon ze opnieuw gebruiken",
      "Ze waren heel groot",
-     "Ze gaven kleur"
+     "Ze drukten in kleur"
     ],
     "answer": 1
    },
    {
     "question": "Wat was een belangrijk gevolg van de boekdrukkunst?",
     "options": [
-     "Boeken werden duurder",
-     "Ideeën konden zich veel sneller verspreiden",
+     "Boeken werden juist duurder",
+     "Ideeën verspreidden zich sneller",
      "Minder mensen gingen lezen",
      "Monniken kregen meer werk"
     ],
@@ -4442,10 +4442,10 @@
    {
     "question": "Wat doet een boog met het gewicht?",
     "options": [
-     "Hij duwt het naar opzij en naar beneden, naar de oevers",
+     "Hij duwt het naar de oevers",
      "Hij laat het in het water vallen",
-     "Hij maakt het lichter",
-     "Hij verplaatst het naar de kabels"
+     "Hij maakt het gewicht lichter",
+     "Hij brengt het naar de kabels"
     ],
     "answer": 0
    },
@@ -4462,10 +4462,10 @@
    {
     "question": "Waarom worden bruggen tegenwoordig in windtunnels getest?",
     "options": [
-     "Omdat een brug ooit door wind ging slingeren en instortte",
+     "Een brug stortte ooit in door wind",
      "Om te kijken hoe mooi ze zijn",
-     "Om de kleur te bepalen",
-     "Omdat het goedkoop is"
+     "Om de beste kleur te bepalen",
+     "Omdat testen daar goedkoop is"
     ],
     "answer": 0
    }
@@ -4483,20 +4483,20 @@
    {
     "question": "Waar komt de aardappel oorspronkelijk vandaan?",
     "options": [
-     "Uit Ierland",
+     "Uit het westen van Ierland",
      "Uit de Andes in Zuid-Amerika",
-     "Uit China",
-     "Uit Nederland"
+     "Uit het zuiden van China",
+     "Uit het noorden van Nederland"
     ],
     "answer": 1
    },
    {
     "question": "Waarom vertrouwden veel Europeanen de aardappel eerst niet?",
     "options": [
-     "Hij was te duur",
-     "Hij groeide onder de grond en was familie van giftige planten",
-     "Hij smaakte naar vis",
-     "Hij was blauw"
+     "Hij was te duur voor gewone mensen",
+     "Hij groeide onder de grond, als giftige familie",
+     "Hij smaakte volgens velen naar vis",
+     "Hij was vroeger helemaal blauw"
     ],
     "answer": 1
    },
@@ -4524,20 +4524,20 @@
    {
     "question": "Wat maken Nieuw-Caledonische kraaien?",
     "options": [
-     "Nesten van plastic",
-     "Gereedschap, zoals haakjes van takjes",
-     "Muziek",
-     "Holen in de grond"
+     "Nesten van stukjes plastic",
+     "Gereedschap, zoals haakjes",
+     "Muziek met hun snavel",
+     "Holen diep in de grond"
     ],
     "answer": 1
    },
    {
     "question": "Wat bleek uit het experiment met het masker?",
     "options": [
-     "Kraaien herkennen gezichten en leren van elkaar",
+     "Kraaien herkennen gezichten",
      "Kraaien zijn kleurenblind",
      "Kraaien houden van maskers",
-     "Kraaien vergeten snel"
+     "Kraaien vergeten heel snel"
     ],
     "answer": 0
    },
@@ -4575,10 +4575,10 @@
    {
     "question": "Waarom maakt helpen volgens de tekst gelukkig?",
     "options": [
-     "Het geeft betekenis en brengt je in contact met anderen",
+     "Het geeft betekenis en contact",
      "Omdat je er geld voor krijgt",
-     "Omdat het moet",
-     "Omdat het moe maakt"
+     "Omdat het nu eenmaal moet",
+     "Omdat het je lekker moe maakt"
     ],
     "answer": 0
    },
@@ -4657,20 +4657,20 @@
    {
     "question": "Waarom lijkt alles in het ISS te zweven?",
     "options": [
-     "Omdat er geen zwaartekracht is",
-     "Omdat het station voortdurend om de aarde heen valt",
-     "Omdat er geen lucht is",
-     "Door magneten"
+     "Er is daar geen zwaartekracht",
+     "Het station valt steeds om de aarde",
+     "Er is daar geen lucht",
+     "Door sterke magneten aan boord"
     ],
     "answer": 1
    },
    {
     "question": "Waarom sporten astronauten elke dag?",
     "options": [
-     "Omdat ze zich vervelen",
-     "Omdat spieren en botten anders zwakker worden",
-     "Voor een wedstrijd",
-     "Om warm te blijven"
+     "Omdat ze zich anders vervelen",
+     "Anders worden spieren en botten zwakker",
+     "Voor een wedstrijd met de aarde",
+     "Om warm te blijven in de ruimte"
     ],
     "answer": 1
    }
@@ -4708,10 +4708,10 @@
    {
     "question": "Wanneer voelt huilen volgens de tekst vaak het meest opluchtend?",
     "options": [
-     "Als er iemand is die steun biedt",
-     "Als je alleen bent",
-     "Als je een ui snijdt",
-     "In de ochtend"
+     "Als er iemand is die je steunt",
+     "Als je helemaal alleen bent",
+     "Als je een ui aan het snijden bent",
+     "Vooral vroeg in de ochtend"
     ],
     "answer": 0
    }
@@ -4781,19 +4781,19 @@
     "question": "Waarom klinkt een stem lager?",
     "options": [
      "Door kortere stembanden",
-     "Door langere en dikkere stembanden die langzamer trillen",
-     "Door harder praten",
-     "Door meer lucht"
+     "Door langere, dikkere stembanden",
+     "Door harder te praten",
+     "Door meer lucht in je longen"
     ],
     "answer": 1
    },
    {
     "question": "Waarom slaat de stem soms over?",
     "options": [
-     "Omdat de spieren tijdelijk niet precies weten hoe ze de nieuwe stembanden moeten aansturen",
-     "Omdat je verkouden bent",
-     "Omdat je te veel praat",
-     "Omdat je adamsappel verdwijnt"
+     "Je spieren moeten nieuwe stembanden leren sturen",
+     "Omdat je vaak verkouden bent",
+     "Omdat je te veel en te hard praat",
+     "Omdat je adamsappel weer verdwijnt"
     ],
     "answer": 0
    }
@@ -4811,30 +4811,30 @@
    {
     "question": "Waarom is een slaapkamer met gordijnen een goede plek om op te nemen?",
     "options": [
-     "Omdat het er warm is",
-     "Omdat zachte spullen voorkomen dat het geluid weerkaatst",
-     "Omdat het er stil is 's nachts",
-     "Omdat daar wifi is"
+     "Omdat het er lekker warm is",
+     "Zachte spullen dempen de echo",
+     "Omdat het er 's nachts stil is",
+     "Omdat de wifi daar het best is"
     ],
     "answer": 1
    },
    {
     "question": "Wat helpt om tijdens het opnemen niet af te dwalen?",
     "options": [
-     "Een lijstje met onderwerpen of vragen",
-     "Harde muziek",
-     "Heel snel praten",
-     "Niets voorbereiden"
+     "Een lijstje met onderwerpen",
+     "Harde muziek op de achtergrond",
+     "Heel snel achter elkaar praten",
+     "Helemaal niets voorbereiden"
     ],
     "answer": 0
    },
    {
     "question": "Waar moet je op letten bij muziek in je podcast?",
     "options": [
-     "Dat het heel hard is",
-     "Dat je alleen muziek gebruikt die je mag gebruiken",
-     "Dat het altijd klassiek is",
-     "Dat het langer dan een uur duurt"
+     "Dat de muziek heel hard staat",
+     "Dat je de muziek mag gebruiken",
+     "Dat het altijd klassieke muziek is",
+     "Dat het nummer langer dan een uur duurt"
     ],
     "answer": 1
    }
@@ -4913,10 +4913,10 @@
    {
     "question": "Waarvoor bedacht James Dewar het principe?",
     "options": [
-     "Om soep warm te houden",
-     "Om gassen koud te houden in zijn laboratorium",
+     "Om soep urenlang warm te houden",
+     "Om gassen koud te houden",
      "Om melk te bewaren op reis",
-     "Om ijs te maken"
+     "Om ijs te maken voor thuis"
     ],
     "answer": 1
    }
@@ -4986,9 +4986,9 @@
     "question": "Waarom maken je ogen traanvocht aan?",
     "options": [
      "Om de prikkelende stof weg te spoelen",
-     "Om de ui te proeven",
-     "Omdat je moe wordt",
-     "Omdat het licht te fel is"
+     "Om de smaak van de ui te proeven",
+     "Omdat je moe wordt van het snijden",
+     "Omdat het licht in de keuken te fel is"
     ],
     "answer": 0
    },
@@ -5057,19 +5057,19 @@
    {
     "question": "Waarom verdween de gloeilamp uit de winkels?",
     "options": [
-     "Hij gaf te weinig licht",
-     "Hij bevatte kwik",
-     "Hij zette de meeste energie om in warmte",
-     "Hij was te duur"
+     "Hij gaf veel te weinig licht",
+     "Er zat een beetje kwik in",
+     "Hij maakte vooral warmte",
+     "Hij was veel te duur"
     ],
     "answer": 2
    },
    {
     "question": "Hoe maakt een led licht?",
     "options": [
-     "Er wordt gas verwarmd",
+     "Er wordt een gas verwarmd",
      "Er brandt een klein vlammetje",
-     "Er komt direct licht vrij uit een halfgeleider",
+     "Een halfgeleider geeft licht",
      "Een draadje gaat gloeien"
     ],
     "answer": 2
@@ -5119,9 +5119,9 @@
     "question": "Hoe lang adviseren artsen je handen te wassen?",
     "options": [
      "Ongeveer twintig seconden",
-     "Vijf minuten",
-     "Twee minuten",
-     "Vijf seconden"
+     "Ongeveer vijf minuten",
+     "Ongeveer twee minuten",
+     "Maar vijf seconden"
     ],
     "answer": 0
    }
@@ -5222,8 +5222,8 @@
     "question": "Waarom wijst een kompasnaald naar het noorden?",
     "options": [
      "Door de stand van de zon",
-     "Door de wind",
-     "Door het magnetisch veld van de aarde",
+     "Door de richting van de wind",
+     "Door het magnetisch veld",
      "Door de zwaartekracht"
     ],
     "answer": 2
@@ -5262,10 +5262,10 @@
    {
     "question": "Wat was het doel van de bibliotheek?",
     "options": [
-     "Schepen repareren",
-     "Boeken verkopen",
-     "Alle kennis op één plek verzamelen",
-     "Koningen begraven"
+     "Schepen in de haven repareren",
+     "Boeken verkopen aan reizigers",
+     "Alle kennis verzamelen",
+     "Koningen een graf geven"
     ],
     "answer": 2
    },
@@ -5405,10 +5405,10 @@
    {
     "question": "Wat denken onderzoekers over de rode kleur?",
     "options": [
-     "Die is een ziekte",
-     "Die beschermt het blad tegen fel licht",
-     "Die komt door vorst",
-     "Die lokt vogels"
+     "Die ontstaat door een ziekte",
+     "Die beschermt tegen fel licht",
+     "Die ontstaat door nachtvorst",
+     "Die lokt vogels naar de boom"
     ],
     "answer": 1
    }
@@ -5426,10 +5426,10 @@
    {
     "question": "Waarom is een slinger een goede tijdmeter?",
     "options": [
-     "Een zwaai duurt steeds ongeveer even lang",
+     "Een zwaai duurt steeds even lang",
      "Hij loopt op zonne-energie",
-     "Hij maakt geen geluid",
-     "Hij is heel zwaar"
+     "Hij maakt helemaal geen geluid",
+     "Hij is heel zwaar en stevig"
     ],
     "answer": 0
    },
@@ -5447,9 +5447,9 @@
     "question": "Waarom werkte de slingerklok niet goed op zee?",
     "options": [
      "Door het zoute water",
-     "Door het schommelen van het schip",
-     "Door de wind",
-     "Door de kou"
+     "Door het schommelen",
+     "Door de harde wind",
+     "Door de kou op zee"
     ],
     "answer": 1
    }
@@ -5488,9 +5488,9 @@
     "question": "Wat gebeurt er als kaas langer rijpt?",
     "options": [
      "Hij verliest zijn korst",
-     "Hij wordt zachter",
-     "Hij wordt wit",
-     "Hij wordt harder en sterker van smaak"
+     "Hij wordt zachter en milder",
+     "Hij wordt helemaal wit",
+     "Hij wordt harder en sterker"
     ],
     "answer": 3
    }
@@ -5529,9 +5529,9 @@
     "question": "Wat laat de proef met het doorzichtige vel zien?",
     "options": [
      "Dat je in een spiegel niet kunt lezen",
-     "Dat spiegelschrift ontstaat door het vel om te draaien",
-     "Dat spiegels woorden wissen",
-     "Dat glas licht breekt"
+     "Dat spiegelschrift komt door omdraaien",
+     "Dat een spiegel woorden laat verdwijnen",
+     "Dat glas het licht altijd breekt"
     ],
     "answer": 1
    }
@@ -5550,9 +5550,9 @@
     "question": "Wat is een tronie?",
     "options": [
      "Een stilleven met bloemen",
-     "Een landschap",
-     "Een zelfportret",
-     "Een studie van een gezicht met een bijzondere uitdrukking"
+     "Een weids landschap",
+     "Een zelfportret van de schilder",
+     "Een studie van een gezicht"
     ],
     "answer": 3
    },
@@ -5571,7 +5571,7 @@
     "options": [
      "Dat er twee meisjes op stonden",
      "Dat het meisje een ketting droeg",
-     "Dat er een groen gordijn achter het meisje was",
+     "Dat er een groen gordijn achter zat",
      "Dat het schilderij nep was"
     ],
     "answer": 2
@@ -5600,10 +5600,10 @@
    {
     "question": "Waarom krijg je bij slaaptekort vaker trek in zoet eten?",
     "options": [
-     "Omdat je meer beweegt",
-     "Omdat hormonen voor honger uit balans raken",
-     "Omdat je minder drinkt",
-     "Omdat je lichaam kouder wordt"
+     "Omdat je dan meer beweegt",
+     "Hongerhormonen raken uit balans",
+     "Omdat je dan minder drinkt",
+     "Omdat je lichaam afkoelt"
     ],
     "answer": 1
    },
@@ -5631,20 +5631,20 @@
    {
     "question": "Waarvoor werd de QR-code oorspronkelijk bedacht?",
     "options": [
-     "Voor menukaarten",
-     "Voor treinkaartjes",
-     "Om auto-onderdelen in fabrieken te volgen",
-     "Voor betalingen"
+     "Voor menukaarten in restaurants",
+     "Voor kaartjes in de trein",
+     "Om auto-onderdelen te volgen",
+     "Voor betalingen in winkels"
     ],
     "answer": 2
    },
    {
     "question": "Waarvoor dienen de drie grote vierkanten in de hoeken?",
     "options": [
-     "Om de kleur te bepalen",
-     "Om de code mooier te maken",
-     "Om het webadres op te slaan",
-     "Om te laten zien hoe de code gedraaid ligt"
+     "Om de kleur van de code te bepalen",
+     "Om de code er mooier uit te laten zien",
+     "Om het webadres in op te slaan",
+     "Om te tonen hoe de code gedraaid ligt"
     ],
     "answer": 3
    },
@@ -5673,9 +5673,9 @@
     "question": "Waar begint een sneeuwvlok?",
     "options": [
      "Op een stofdeeltje in een wolk",
-     "Op de grond",
-     "In de zee",
-     "In een ijskast"
+     "Op de koude grond",
+     "In het water van de zee",
+     "In de vriezer van een ijskast"
     ],
     "answer": 0
    },
@@ -5723,9 +5723,9 @@
    {
     "question": "Waar waren sommige mensen bang voor?",
     "options": [
-     "Dat het lichaam niet tegen de snelheid kon",
-     "Dat de trein te duur was",
-     "Dat de trein zou zinken",
+     "Dat het lichaam de snelheid niet aankon",
+     "Dat de trein veel te duur zou zijn",
+     "Dat de trein in het water zou zinken",
      "Dat paarden zouden verdwijnen"
     ],
     "answer": 0
@@ -5733,10 +5733,10 @@
    {
     "question": "Waarom moest de tijd in het land gelijk worden?",
     "options": [
-     "Voor de scholen",
-     "Voor de dienstregeling van de treinen",
-     "Voor de kerken",
-     "Voor de boeren"
+     "Voor de lestijden op scholen",
+     "Voor de dienstregeling van de trein",
+     "Voor de diensten in de kerken",
+     "Voor het werk van de boeren"
     ],
     "answer": 1
    }
@@ -5764,9 +5764,9 @@
    {
     "question": "Wat gebeurt er in de generator?",
     "options": [
-     "Zonlicht wordt opgevangen",
-     "Er wordt gas verbrand",
-     "Magneten draaien langs koperen spoelen",
+     "Zonlicht wordt er opgevangen",
+     "Er wordt aardgas verbrand",
+     "Magneten draaien langs spoelen",
      "Er wordt water verwarmd"
     ],
     "answer": 2
@@ -5796,9 +5796,9 @@
     "question": "Wat is het ankereffect?",
     "options": [
      "Dat we altijd voor korting kiezen",
-     "Dat het eerste getal onze volgende schattingen beïnvloedt",
+     "Het eerste getal kleurt je schatting",
      "Dat we dure dingen mooier vinden",
-     "Dat we getallen snel vergeten"
+     "Dat we getallen heel snel vergeten"
     ],
     "answer": 1
    },
@@ -5815,10 +5815,10 @@
    {
     "question": "Hoe kun je je volgens de tekst beschermen?",
     "options": [
-     "Altijd het duurste kiezen",
-     "Nooit korting accepteren",
-     "Snel beslissen",
-     "Vooraf bedenken wat iets voor jou waard is"
+     "Altijd het duurste product kiezen",
+     "Nooit een korting accepteren",
+     "Zo snel mogelijk beslissen",
+     "Vooraf bepalen wat iets waard is"
     ],
     "answer": 3
    }
@@ -5836,10 +5836,10 @@
    {
     "question": "Wat doet adenosine?",
     "options": [
-     "Het maakt je hongerig",
-     "Het maakt je blij",
-     "Het geeft het signaal dat je moet rusten",
-     "Het verwarmt je lichaam"
+     "Het geeft je trek in eten",
+     "Het maakt je vrolijk en blij",
+     "Het laat weten dat je moet rusten",
+     "Het houdt je lichaam warm"
     ],
     "answer": 2
    },
@@ -5887,9 +5887,9 @@
    {
     "question": "Waarom helpt een papieren boek het geheugen?",
     "options": [
-     "De letters zijn groter",
-     "Het is zwaarder",
-     "Het ruikt lekker",
+     "De letters zijn veel groter",
+     "Het boek is zwaarder in je hand",
+     "Papier ruikt lekker",
      "Je weet waar iets op de pagina stond"
     ],
     "answer": 3
@@ -5959,10 +5959,10 @@
    {
     "question": "Wat merkte Percy Spencer op?",
     "options": [
-     "Zijn lamp ging flikkeren",
-     "Een chocoladereep in zijn zak was gesmolten",
-     "Zijn radar ging stuk",
-     "Zijn koffie werd koud"
+     "Zijn lamp begon te flikkeren",
+     "Een reep chocola in zijn zak smolt",
+     "Zijn radarapparaat ging stuk",
+     "Zijn koffie werd snel koud"
     ],
     "answer": 1
    },
@@ -6020,10 +6020,10 @@
    {
     "question": "Wat betekent het als je de kern niet kunt navertellen?",
     "options": [
-     "Dat de tekst slecht is",
-     "Dat je te langzaam leest",
-     "Dat het een nuttig signaal is om terug te gaan",
-     "Dat je moet stoppen met lezen"
+     "Dat de tekst gewoon slecht is",
+     "Dat je veel te langzaam leest",
+     "Dat je beter even terug kunt gaan",
+     "Dat je beter kunt stoppen met lezen"
     ],
     "answer": 2
    }
@@ -6041,10 +6041,10 @@
    {
     "question": "Waarom werkten kooplieden samen in de Hanze?",
     "options": [
-     "Om een nieuwe taal te maken",
+     "Om samen een nieuwe taal te maken",
      "Om samen een leger op te richten",
-     "Om de kerk te steunen",
-     "Om elkaar te beschermen en betere afspraken te maken"
+     "Om de kerk met geld te steunen",
+     "Om elkaar te beschermen en te steunen"
     ],
     "answer": 3
    },
@@ -6133,10 +6133,10 @@
    {
     "question": "Waardoor klopt het hart uit zichzelf?",
     "options": [
-     "Doordat je ademt",
+     "Doordat je ademhaalt",
      "Door het eten dat je eet",
-     "Door een elektrisch signaal uit een groep cellen",
-     "Door de hersenen"
+     "Door signalen uit eigen cellen",
+     "Door opdrachten van je hersenen"
     ],
     "answer": 2
    },
@@ -6164,9 +6164,9 @@
    {
     "question": "Wat is bijzonder aan het recyclen van glas?",
     "options": [
-     "Het verandert van kleur",
+     "Het verandert steeds van kleur",
      "Het wordt steeds sterker",
-     "Het kan eindeloos zonder kwaliteitsverlies",
+     "Het kan eindeloos opnieuw",
      "Het kan maar één keer"
     ],
     "answer": 2
@@ -6174,10 +6174,10 @@
    {
     "question": "Wat doen camera's in het verwerkingsbedrijf?",
     "options": [
-     "Ze tellen de flessen",
+     "Ze tellen alle flessen",
      "Ze meten de temperatuur",
      "Ze maken foto's voor reclame",
-     "Ze herkennen stukjes die er niet in horen"
+     "Ze zien wat er niet in hoort"
     ],
     "answer": 3
    },
@@ -6225,10 +6225,10 @@
    {
     "question": "Waarom werken korte sessies vaak beter?",
     "options": [
-     "Omdat het goedkoper is",
-     "Omdat lange sessies saai zijn",
-     "Omdat je dan meer pauze hebt",
-     "Omdat doelgericht oefenen volle aandacht vraagt"
+     "Omdat korte sessies goedkoper zijn",
+     "Omdat lange sessies saai worden",
+     "Omdat je dan vaker pauze hebt",
+     "Omdat gericht oefenen veel aandacht vraagt"
     ],
     "answer": 3
    }
@@ -6298,9 +6298,9 @@
     "question": "Waarop werd de meter gebaseerd?",
     "options": [
      "Op de hoogte van een kerktoren",
-     "Op de voet van de koning",
-     "Op de lengte van een schip",
-     "Op de afstand van de Noordpool tot de evenaar"
+     "Op de lengte van de voet van de koning",
+     "Op de lengte van een groot schip",
+     "Op de afstand van pool tot evenaar"
     ],
     "answer": 3
    },
@@ -6338,20 +6338,20 @@
    {
     "question": "Waarom is de kennis van de matriarch belangrijk?",
     "options": [
-     "Ze weet waar water is, ook in droge tijden",
-     "Ze kan het snelst rennen",
-     "Ze kan het weer voorspellen",
-     "Ze kan jagers verjagen"
+     "Ze weet waar water is, ook bij droogte",
+     "Ze kan van alle olifanten het snelst rennen",
+     "Ze kan het weer dagen vooruit voorspellen",
+     "Ze kan jagers makkelijk verjagen"
     ],
     "answer": 0
    },
    {
     "question": "Wat doen olifanten bij de botten van soortgenoten?",
     "options": [
-     "Ze begraven ze",
-     "Ze eten ervan",
+     "Ze begraven ze onder takken",
+     "Ze eten er stukjes van",
      "Ze ruiken eraan en raken ze aan",
-     "Ze lopen snel door"
+     "Ze lopen er snel langs"
     ],
     "answer": 2
    }
@@ -6389,10 +6389,10 @@
    {
     "question": "Waarom voelt één rij voor meerdere kassa's eerlijker?",
     "options": [
-     "Omdat de kassa's goedkoper zijn",
-     "Omdat je minder hoeft te lopen",
-     "Omdat het sneller gaat",
-     "Omdat niemand die later komt eerder wordt geholpen"
+     "Omdat de kassa's dan goedkoper zijn",
+     "Omdat je dan minder hoeft te lopen",
+     "Omdat het voor iedereen sneller gaat",
+     "Niemand die later komt, gaat voor"
     ],
     "answer": 3
    }
@@ -6411,19 +6411,19 @@
     "question": "Hoe vind je het gat in de binnenband?",
     "options": [
      "Door hem tegen het licht te houden",
-     "Door hem door water te halen en naar belletjes te kijken",
+     "Door hem in water te houden",
      "Door hem heel hard op te pompen",
-     "Door te luisteren"
+     "Door goed te luisteren naar gesis"
     ],
     "answer": 1
    },
    {
     "question": "Wat moet je doen voordat je de plakker aandrukt?",
     "options": [
-     "De band helemaal oppompen",
-     "Het ventiel vervangen",
-     "De solutie laten drogen tot hij niet meer glanst",
-     "De plakker nat maken"
+     "De band eerst helemaal oppompen",
+     "Het ventiel vervangen door een nieuw",
+     "De solutie even laten drogen",
+     "De plakker eerst nat maken"
     ],
     "answer": 2
    },
@@ -6452,9 +6452,9 @@
     "question": "Wat viel Bluma Zeigarnik op in het café?",
     "options": [
      "De ober vergat betaalde bestellingen",
-     "De koffie was koud",
-     "De ober schreef alles op",
-     "Er was geen ober"
+     "De koffie in het café was koud",
+     "De ober schreef alles zorgvuldig op",
+     "Er was die dag geen ober aan het werk"
     ],
     "answer": 0
    },
@@ -6512,10 +6512,10 @@
    {
     "question": "Wat is een waarschuwingsteken?",
     "options": [
-     "Het gaat regenen",
-     "Er komt harde wind",
-     "Vogels gaan zingen",
-     "De zee trekt zich eerst ver terug"
+     "Het begint hard te regenen",
+     "Er komt ineens harde wind",
+     "Vogels gaan luid zingen",
+     "De zee trekt zich ver terug"
     ],
     "answer": 3
    }
@@ -6553,10 +6553,10 @@
    {
     "question": "Hoe wordt er tegenwoordig naar de VOC gekeken?",
     "options": [
-     "Alleen als een succes",
+     "Alleen als een groot succes",
      "Alleen als een mislukking",
-     "Het wordt vergeten",
-     "Genuanceerder, als bron van rijkdom en onrecht"
+     "Het wordt meestal vergeten",
+     "Als bron van rijkdom en onrecht"
     ],
     "answer": 3
    }
@@ -6574,20 +6574,20 @@
    {
     "question": "Hoe lang is een ideaal dutje volgens de tekst?",
     "options": [
-     "Vijf minuten",
-     "Een uur",
+     "Ongeveer vijf minuten",
+     "Ongeveer een uur",
      "Tien tot twintig minuten",
-     "Twee uur"
+     "Ongeveer twee uur"
     ],
     "answer": 2
    },
    {
     "question": "Wat is slaapdronkenheid?",
     "options": [
-     "Slapen na alcohol",
-     "Praten in je slaap",
-     "Je suf voelen na wakker worden uit diepe slaap",
-     "Niet kunnen slapen"
+     "Slaperig worden van alcohol",
+     "Hardop praten in je slaap",
+     "Suf zijn na diepe slaap",
+     "Helemaal niet kunnen slapen"
     ],
     "answer": 2
    },
@@ -6595,9 +6595,9 @@
     "question": "Waarom drinken sommigen koffie vlak voor een dutje?",
     "options": [
      "Om sneller in slaap te vallen",
-     "Omdat de cafeïne gaat werken als je wakker wordt",
-     "Omdat het lekker is",
-     "Om minder te dromen"
+     "Cafeïne werkt pas als je ontwaakt",
+     "Omdat koffie gewoon lekker is",
+     "Om minder te dromen tijdens het dutje"
     ],
     "answer": 1
    }
@@ -6615,10 +6615,10 @@
    {
     "question": "Wat vormt bloedplaatjes bij een wond?",
     "options": [
-     "Een litteken",
-     "Pus",
-     "Een prop die het bloeden stopt",
-     "Nieuwe huid"
+     "Een litteken op de huid",
+     "Pus tegen bacteriën",
+     "Een prop tegen het bloeden",
+     "Nieuwe huid over de wond"
     ],
     "answer": 2
    },
@@ -6656,10 +6656,10 @@
    {
     "question": "Hoe werd eten vroeger vaak bewaard?",
     "options": [
-     "Door het te drogen, te roken of te zouten",
-     "In de kelder bij de kachel",
-     "In plastic zakjes",
-     "In de vriezer"
+     "Door drogen, roken of zouten",
+     "In de kelder naast de kachel",
+     "In afgesloten plastic zakjes",
+     "In een grote vriezer"
     ],
     "answer": 0
    },
@@ -6676,10 +6676,10 @@
    {
     "question": "Waarom voelt de achterkant van een koelkast warm?",
     "options": [
-     "Omdat het gas daar zijn warmte afgeeft",
-     "Omdat de motor daar brandt",
-     "Omdat daar de lamp zit",
-     "Omdat hij kapot is"
+     "Het gas geeft daar warmte af",
+     "De motor brandt daar een beetje",
+     "Daar zit het lampje van de koelkast",
+     "Omdat de koelkast stuk is"
     ],
     "answer": 0
    }
@@ -6697,10 +6697,10 @@
    {
     "question": "Hoe koelt zweten je af?",
     "options": [
-     "Doordat verdampend zweet warmte afvoert",
-     "Doordat je sneller ademt",
+     "Verdampend zweet voert warmte af",
+     "Doordat je sneller gaat ademen",
      "Doordat je huid rood wordt",
-     "Doordat zweet koud is"
+     "Doordat zweet zelf koud is"
     ],
     "answer": 0
    },
@@ -6738,10 +6738,10 @@
    {
     "question": "Waarmee is de vorm van een goed getrimd zeil te vergelijken?",
     "options": [
-     "Met de vleugel van een vliegtuig",
+     "Met een vliegtuigvleugel",
      "Met een parachute",
-     "Met een vlag",
-     "Met een ballon"
+     "Met een wapperende vlag",
+     "Met een opgeblazen ballon"
     ],
     "answer": 0
    },
@@ -6799,7 +6799,7 @@
    {
     "question": "Wanneer werkt de truc het best?",
     "options": [
-     "Als je alleen de belangrijkste zinnen hardop zegt",
+     "Alleen de kern hardop zeggen",
      "Als je heel hard praat",
      "Als je alles hardop leest",
      "Als je het met iemand anders doet"
@@ -6861,10 +6861,10 @@
    {
     "question": "Wat doet melatonine?",
     "options": [
-     "Het houdt je wakker",
+     "Het houdt je 's avonds wakker",
      "Het maakt je spieren sterker",
-     "Het maakt je hongerig",
-     "Het vertelt je lichaam dat het tijd is om te slapen"
+     "Het geeft je trek in eten",
+     "Het zegt dat het slaaptijd is"
     ],
     "answer": 3
    },
@@ -6922,10 +6922,10 @@
    {
     "question": "Waarom worden gewone spelers soms uitgenodigd?",
     "options": [
-     "Om te laten zien waar het spel te moeilijk of saai is",
-     "Om de code te schrijven",
-     "Om het spel te kopen",
-     "Om reclame te maken"
+     "Om te zien waar het spel te moeilijk is",
+     "Om een deel van de code te schrijven",
+     "Om het spel alvast te kopen",
+     "Om reclame te maken bij vrienden"
     ],
     "answer": 0
    }
@@ -6953,20 +6953,20 @@
    {
     "question": "Wat kun je doen om een bericht te controleren?",
     "options": [
-     "Het aan een vriend vragen",
-     "Alleen de titel lezen",
-     "Kijken of andere betrouwbare media het ook melden",
-     "Het meteen delen"
+     "Het eerst aan een vriend vragen",
+     "Alleen de titel goed lezen",
+     "Kijken of andere media het melden",
+     "Het meteen met iedereen delen"
     ],
     "answer": 2
    },
    {
     "question": "Hoe kun je nagaan waar een foto eerder verscheen?",
     "options": [
-     "Met een omgekeerde zoekopdracht naar de afbeelding",
-     "Door de kleuren te bekijken",
-     "Door hem te vergroten",
-     "Door hem af te drukken"
+     "Omgekeerd zoeken op de afbeelding",
+     "Door de kleuren goed te bekijken",
+     "Door de foto flink te vergroten",
+     "Door de foto af te drukken"
     ],
     "answer": 0
    }
@@ -7035,10 +7035,10 @@
    {
     "question": "Waarom klinkt je stem voor jezelf dieper?",
     "options": [
-     "Omdat de route door je hoofd vooral lage tonen doorlaat",
-     "Omdat je harder praat",
-     "Omdat opnames kapot zijn",
-     "Omdat je oren groter zijn"
+     "Je hoofd laat vooral lage tonen door",
+     "Omdat je zelf harder praat",
+     "Omdat opnames altijd vervormen",
+     "Omdat je oren groter zijn dan je denkt"
     ],
     "answer": 0
    },
@@ -7086,10 +7086,10 @@
    {
     "question": "Waarom werden emoji's rond 2010 wereldwijd populair?",
     "options": [
-     "Ze werden opgenomen in een internationale standaard",
-     "Ze kwamen in een film",
-     "Ze werden gratis",
-     "Er kwamen kleuren bij"
+     "Ze kwamen in een internationale standaard",
+     "Ze speelden de hoofdrol in een film",
+     "Ze werden ineens helemaal gratis",
+     "Er kwamen voor het eerst kleuren bij"
     ],
     "answer": 0
    }
@@ -7107,30 +7107,30 @@
    {
     "question": "Wat deden de acteurs in het experiment?",
     "options": [
-     "Ze gaven het goede antwoord",
-     "Ze zeiden niets",
-     "Ze gaven expres hetzelfde foute antwoord",
-     "Ze liepen weg"
+     "Ze gaven allemaal het goede antwoord",
+     "Ze zeiden helemaal niets",
+     "Ze gaven expres een fout antwoord",
+     "Ze liepen halverwege weg"
     ],
     "answer": 2
    },
    {
     "question": "Wat gebeurde er als één persoon in de groep het juiste antwoord gaf?",
     "options": [
-     "Veel meer mensen durfden hun eigen mening te geven",
-     "Niemand veranderde",
-     "De proefpersoon werd boos",
-     "Het experiment stopte"
+     "Meer mensen gaven hun eigen mening",
+     "Niemand veranderde van mening",
+     "De proefpersoon werd boos op de rest",
+     "Het experiment werd meteen gestopt"
     ],
     "answer": 0
    },
    {
     "question": "Wat is volgens de tekst een positieve kant van groepsdruk?",
     "options": [
-     "Je hoeft niet na te denken",
-     "Je krijgt altijd gelijk",
-     "Een groep kan je aansporen om te sporten of studeren",
-     "Je maakt meer vrienden"
+     "Je hoeft zelf niet meer na te denken",
+     "Je krijgt in een groep altijd gelijk",
+     "Een groep kan je aansporen",
+     "Je maakt er automatisch meer vrienden"
     ],
     "answer": 2
    }
@@ -7189,20 +7189,20 @@
    {
     "question": "Waar is het Voynich-manuscript naar genoemd?",
     "options": [
-     "Naar een plant",
-     "Naar de schrijver",
-     "Naar een stad",
-     "Naar een boekhandelaar die het kocht"
+     "Naar een zeldzame plant",
+     "Naar de schrijver van het boek",
+     "Naar een stad in Italië",
+     "Naar de boekhandelaar"
     ],
     "answer": 3
    },
    {
     "question": "Wat staat er onder meer in het boek?",
     "options": [
-     "Foto's van steden",
+     "Foto's van oude steden",
      "Recepten met uitleg",
-     "Onbekende planten en sterrenkaarten",
-     "Een woordenboek"
+     "Onbekende planten en sterren",
+     "Een woordenboek van de taal"
     ],
     "answer": 2
    },
@@ -7230,10 +7230,10 @@
    {
     "question": "Wat meet een capacitief scherm?",
     "options": [
-     "Druk",
-     "Warmte",
-     "Licht",
-     "Veranderingen in een elektrisch veld"
+     "De druk van je vinger",
+     "De warmte van je vinger",
+     "Het licht om je heen",
+     "Een elektrisch veld"
     ],
     "answer": 3
    },
@@ -7250,10 +7250,10 @@
    {
     "question": "Waarom doet een nat scherm soms vreemd?",
     "options": [
-     "Omdat water de chip kapotmaakt",
-     "Omdat het glas zacht wordt",
-     "Omdat het licht breekt",
-     "Omdat druppels worden aangezien voor een vinger"
+     "Water maakt de chip kapot",
+     "Het glas wordt zacht als het nat is",
+     "Het licht breekt in de druppels",
+     "Druppels lijken op een vinger"
     ],
     "answer": 3
    }
@@ -7272,9 +7272,9 @@
     "question": "Waarom is Mars rood?",
     "options": [
      "Door rode planten",
-     "Door roest in het stof en gesteente",
-     "Door lava",
-     "Door de zon"
+     "Door roest in het stof",
+     "Door hete lava",
+     "Door het licht van de zon"
     ],
     "answer": 1
    },
@@ -7322,10 +7322,10 @@
    {
     "question": "Waarom zijn energiedrankjes minder geschikt voor tieners?",
     "options": [
-     "Omdat ze te duur zijn",
-     "Omdat ze alcohol bevatten",
-     "Omdat een jonger lichaam gevoeliger is voor cafeïne",
-     "Omdat ze niet lekker zijn"
+     "Omdat ze te duur zijn voor jongeren",
+     "Omdat er alcohol in zit",
+     "Een jong lichaam is gevoeliger",
+     "Omdat ze eigenlijk niet lekker zijn"
     ],
     "answer": 2
    },
@@ -7363,10 +7363,10 @@
    {
     "question": "Hoe bepaalt het programma wat het aanbeveelt?",
     "options": [
-     "Door te loten",
+     "Door te loten uit alle series",
      "Door te kijken wat het nieuwst is",
-     "Door te vragen wat je wilt",
-     "Door je te vergelijken met gebruikers die hetzelfde keken"
+     "Door je steeds te vragen wat je wilt",
+     "Door je te vergelijken met anderen"
     ],
     "answer": 3
    },
@@ -7435,29 +7435,29 @@
    {
     "question": "Waarom is een zwart gat zwart?",
     "options": [
-     "Omdat het ver weg is",
-     "Omdat zelfs licht niet kan ontsnappen",
-     "Omdat het koud is",
-     "Omdat het leeg is"
+     "Omdat het heel ver weg is",
+     "Zelfs licht kan niet ontsnappen",
+     "Omdat het er ijskoud is",
+     "Omdat het vanbinnen leeg is"
     ],
     "answer": 1
    },
    {
     "question": "Wat is de waarnemingshorizon?",
     "options": [
-     "Een ring van sterren",
-     "Een telescoop",
-     "De rand van het heelal",
-     "De grens waarna niets meer terugkomt"
+     "Een ring van sterren eromheen",
+     "Een grote telescoop in de ruimte",
+     "De buitenste rand van het heelal",
+     "De grens waarna niets terugkomt"
     ],
     "answer": 3
    },
    {
     "question": "Wat is er te zien op de eerste foto van een zwart gat?",
     "options": [
-     "Niets",
+     "Helemaal niets",
      "Een felle witte ster",
-     "Een zwarte vlek met een ring van heet gas",
+     "Een zwarte vlek met een ring",
      "Een blauwe planeet"
     ],
     "answer": 2
@@ -7476,20 +7476,20 @@
    {
     "question": "Waarom wilden gitaristen in bigbands een luidere gitaar?",
     "options": [
-     "Omdat het publiek dat vroeg",
-     "Omdat de gitaar niet te horen was boven de andere instrumenten",
+     "Omdat het publiek erom vroeg",
+     "Ze waren niet te horen boven de rest",
      "Omdat hun zalen te klein waren",
-     "Omdat ze solo wilden spelen"
+     "Omdat ze vaker solo wilden spelen"
     ],
     "answer": 1
    },
    {
     "question": "Wat doet een element of pickup?",
     "options": [
-     "Het zet trillingen van de snaar om in een elektrisch signaal",
-     "Het stemt de gitaar",
+     "Het zet trillingen om in stroom",
+     "Het stemt de gitaar vanzelf",
      "Het maakt de snaren sterker",
-     "Het versterkt het hout"
+     "Het versterkt het hout van de gitaar"
     ],
     "answer": 0
    },
@@ -7497,9 +7497,9 @@
     "question": "Wat werd de basis van de rockmuziek?",
     "options": [
      "Zachte akoestische gitaren",
-     "Klassieke orkesten",
-     "Vervorming van een te hard staande versterker",
-     "Pianomuziek"
+     "Grote klassieke orkesten",
+     "Vervorming van een versterker",
+     "Muziek op de piano"
     ],
     "answer": 2
    }
@@ -7518,9 +7518,9 @@
     "question": "Wat doet insuline?",
     "options": [
      "Het maakt eten zoeter",
-     "Het geeft je energie",
-     "Het zorgt dat suiker uit je bloed in je cellen komt",
-     "Het laat je slapen"
+     "Het geeft je meteen energie",
+     "Het brengt suiker naar je cellen",
+     "Het zorgt dat je gaat slapen"
     ],
     "answer": 2
    },
@@ -7537,10 +7537,10 @@
    {
     "question": "Wat helpt volgens de tekst?",
     "options": [
-     "Zoet combineren met iets dat langzaam verteert",
-     "Niets drinken",
-     "Alleen zoet eten",
-     "Heel snel eten"
+     "Zoet met iets langzaams combineren",
+     "Een tijdje helemaal niets drinken",
+     "Alleen nog zoete dingen eten",
+     "Zo snel mogelijk eten"
     ],
     "answer": 0
    }
@@ -7568,19 +7568,19 @@
    {
     "question": "Wat doen macrofagen met de inkt?",
     "options": [
-     "Ze kleuren hem anders",
-     "Ze slokken hem op en blijven op dezelfde plek",
-     "Ze breken hem helemaal af",
-     "Ze sturen hem naar buiten"
+     "Ze geven de inkt een andere kleur",
+     "Ze slokken hem op en blijven liggen",
+     "Ze breken de inkt helemaal af",
+     "Ze sturen de inkt naar buiten"
     ],
     "answer": 1
    },
    {
     "question": "Wat doet een laserbehandeling?",
     "options": [
-     "De inkt in kleinere stukjes breken",
-     "De huid verwijderen",
-     "De huid kleuren",
+     "De inkt in kleine stukjes breken",
+     "De bovenste huid verwijderen",
+     "De huid een andere kleur geven",
      "Nieuwe inkt toevoegen"
     ],
     "answer": 0
@@ -7609,9 +7609,9 @@
    {
     "question": "Waarom klopt je hart sneller?",
     "options": [
-     "Omdat je honger hebt",
+     "Omdat je honger krijgt",
      "Omdat je ziek wordt",
-     "Om spieren en hersenen meer zuurstof te geven",
+     "Voor meer zuurstof in je spieren",
      "Omdat je het koud hebt"
     ],
     "answer": 2
@@ -7650,19 +7650,19 @@
    {
     "question": "Waarvan zouden de muren kunnen worden gebouwd?",
     "options": [
-     "Van glas",
-     "Van hout",
-     "Van samengeperst maanstof",
-     "Van ijs"
+     "Van dik glas",
+     "Van hout van de aarde",
+     "Van geperst maanstof",
+     "Van bevroren ijs"
     ],
     "answer": 2
    },
    {
     "question": "Waar ligt ijs op de maan?",
     "options": [
-     "In kraters bij de polen waar nooit zon komt",
+     "In kraters bij de polen",
      "Aan de voorkant van de maan",
-     "In de zee",
+     "In een grote zee op de maan",
      "Overal aan het oppervlak"
     ],
     "answer": 0
@@ -7681,9 +7681,9 @@
    {
     "question": "Wat is een oorwurm?",
     "options": [
-     "Een insect in je oor",
-     "Een stukje muziek dat in je hoofd blijft hangen",
-     "Een geluid in je oor",
+     "Een klein insect in je oor",
+     "Muziek die in je hoofd blijft",
+     "Een piepend geluid in je oor",
      "Een soort koptelefoon"
     ],
     "answer": 1
@@ -7691,10 +7691,10 @@
    {
     "question": "Wanneer komen oorwormen vaker voor?",
     "options": [
-     "Als je slaapt",
+     "Als je diep slaapt",
      "Als je heel veel praat",
      "Als je een moeilijke toets maakt",
-     "Als je iets doet waarbij je weinig hoeft na te denken"
+     "Bij werk waar je weinig bij denkt"
     ],
     "answer": 3
    },
