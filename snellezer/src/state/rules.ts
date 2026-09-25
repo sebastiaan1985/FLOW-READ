@@ -48,14 +48,28 @@ export function passed(complete: boolean, comprehension: number | null): boolean
  * Het doeltempo beweegt twee kanten op:
  * onder 70% begrip een stap terug, na twee keer op rij minstens 80% een kleine stap vooruit.
  */
-export function adjustTempo(state: Pick<AppState, 'targetWpm' | 'tempoStreak' | 'kidsMode'>, comprehension: number | null) {
-  if (comprehension === null) return {targetWpm: state.targetWpm, tempoStreak: state.tempoStreak};
+export type TempoReason = 'begrip-laag' | 'begrip-hoog' | 'afdwalen' | null;
+/**
+ * Past het oefentempo stil aan. Onder 70% begrip, of als je bij de aandachtchecks vaker afdwaalde dan meelas,
+ * gaat het een stap omlaag. Na twee keer minstens 80% begrip een stap omhoog.
+ */
+export function adjustTempo(state: Pick<AppState, 'targetWpm' | 'tempoStreak' | 'kidsMode'>, comprehension: number | null, focus?: {asked: number; wandered: number}): {targetWpm: number; tempoStreak: number; reason: TempoReason} {
   const floor = state.kidsMode ? 60 : 80;
-  if (comprehension < 70) return {targetWpm: Math.max(floor, Math.round(state.targetWpm * .9)), tempoStreak: 0};
-  if (comprehension < 80) return {targetWpm: state.targetWpm, tempoStreak: 0};
+  const down = {targetWpm: Math.max(floor, Math.round(state.targetWpm * .9)), tempoStreak: 0};
+  if (focus && focus.asked >= 2 && focus.wandered * 2 > focus.asked) return {...down, reason: 'afdwalen'};
+  if (comprehension === null) return {targetWpm: state.targetWpm, tempoStreak: state.tempoStreak, reason: null};
+  if (comprehension < 70) return {...down, reason: 'begrip-laag'};
+  if (comprehension < 80) return {targetWpm: state.targetWpm, tempoStreak: 0, reason: null};
   const streak = state.tempoStreak + 1;
-  if (streak >= 2) return {targetWpm: Math.min(state.kidsMode ? 300 : 800, Math.round(state.targetWpm * 1.05)), tempoStreak: 0};
-  return {targetWpm: state.targetWpm, tempoStreak: streak};
+  if (streak >= 2) return {targetWpm: Math.min(state.kidsMode ? 300 : 800, Math.round(state.targetWpm * 1.05)), tempoStreak: 0, reason: 'begrip-hoog'};
+  return {targetWpm: state.targetWpm, tempoStreak: streak, reason: null};
+}
+/** Eén zin over wat de app met je tempo deed, en waarom. */
+export function tempoNote(reason: TempoReason, from: number, to: number): string | null {
+  if (!reason || from === to) return null;
+  if (reason === 'afdwalen') return `Je dwaalde vaker af dan je meelas. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut, zodat je aandacht het beter bijhoudt.`;
+  if (reason === 'begrip-laag') return `Je begreep minder dan 70% van de tekst. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut, zodat er meer ruimte is voor de inhoud.`;
+  return `Twee keer achter elkaar begreep je minstens 80%. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut.`;
 }
 
 /** Kies de tekst die je het langst niet (of nog nooit) hebt gelezen. */
@@ -143,13 +157,14 @@ export function longLevel(sessions: readonly SessionResult[], levelOf: (passageI
 }
 
 /** Leesvormen waarin je een boek kunt lezen. Woord voor woord zit er bewust niet bij: bij lange tekst zakt het begrip, omdat je niet terug kunt kijken. */
-export const BOOK_DAILY_MODES = ['chunks', 'forward', 'fixation', 'reading', 'paper'];
+export const BOOK_DAILY_MODES = ['chunks', 'forward', 'fixation', 'reading', 'paper', 'flow'];
 /** De leesvorm waarin je de techniek van vandaag toepast op je eigen boek. */
 export function bookModeFor(lesson: {exerciseId: string; support: string} | null): string {
   if (!lesson) return 'chunks';
   const pick = [lesson.exerciseId, lesson.support].find(id => BOOK_DAILY_MODES.includes(id));
   if (pick) return pick;
-  return lesson.exerciseId === 'rsvp' || lesson.support === 'innerstem' ? 'reading' : 'chunks';
+  // Woord voor woord past niet bij een boek; daar lees je een gewone bladzijde met een zacht ritme.
+  return lesson.exerciseId === 'rsvp' || lesson.support === 'innerstem' ? 'flow' : 'chunks';
 }
 
 /**

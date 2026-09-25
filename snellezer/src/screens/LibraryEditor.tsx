@@ -17,6 +17,7 @@ import {createId} from '../state/AppProvider';
 export const READING_MODES = [
   {id:'chunks',title:'Woordgroepen',description:'Meerdere woorden in één blik',icon:'text'},
   {id:'rsvp',title:'Woord voor woord',description:'Eén vaste plek voor je blik',icon:'zap'},
+  {id:'flow',title:'Rustig ritme',description:'Een gewone bladzijde met een zacht tempo',icon:'leaf'},
   {id:'forward',title:'Vooruit lezen',description:'Volg de gemarkeerde woorden',icon:'arrow'},
   {id:'fixation',title:'Fixatie',description:'Lees rond een vast middelpunt',icon:'target'},
   {id:'reading',title:'Leestest',description:'Meet je eigen leestempo',icon:'book'},

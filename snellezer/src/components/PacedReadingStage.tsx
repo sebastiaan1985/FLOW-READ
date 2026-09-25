@@ -13,7 +13,7 @@ export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:
   const size=settings.enabled?settings.fontSize+8:wide?42:30;
   const current=words.slice(cursor,cursor+chunk);
   // Een woordgroep lees je in één blik, dus hij past altijd op één regel: bij een lange groep wordt de letter kleiner.
-  const screen=useWindowDimensions().width;
+  const {width:screen,height:screenHeight}=useWindowDimensions();
   const room=Math.min(screen,940)-(wide?60:44)-24;
   const fit=Math.max(18,Math.min(size,room/(Math.max(1,current.join(' ').length)*.56)));
   if(mode==='fixation') {
@@ -26,6 +26,17 @@ export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:
       </View>)}</View>
       <T variant="caption" style={{textAlign:'center'}}>Regel {Math.floor(row.rowStart/(chunk*2))+1} van {Math.ceil(words.length/(chunk*2))}</T>
     </View>;
+  }
+  if(mode==='flow') {
+    // Een gewone bladzijde. De markering is zacht en gewoon van gewicht; wat je las blijft staan, iets lichter.
+    const body=settings.enabled?settings.fontSize:wide?23:20;
+    const lines=Math.max(5,Math.floor((screenHeight-(wide?300:340))/(body*1.8))),perLine=room/(body*.52*6.4);
+    const pageSize=Math.max(20,Math.floor(lines*perLine*.95)),pageStart=Math.floor(cursor/pageSize)*pageSize;
+    const page=words.slice(pageStart,pageStart+pageSize);
+    return <View style={{width:'100%',gap:16}}><Text style={{fontFamily:settings.enabled&&settings.font==='dyslexic'?fonts.dyslexic:fonts.body,fontSize:body,lineHeight:body*1.8,color:ink}}>{page.map((word,i)=>{
+      const index=pageStart+i,active=index>=cursor&&index<cursor+chunk;
+      return <Text key={index} style={{opacity:index<cursor?.5:1,backgroundColor:active?(dark?'#1F3A33':'#E3EFE8'):'transparent',borderRadius:4}}>{word}{i<page.length-1?' ':''}</Text>;
+    })}</Text></View>;
   }
   if(mode==='forward') {
     const pageSize=chunk*8,pageStart=Math.floor(cursor/pageSize)*pageSize;

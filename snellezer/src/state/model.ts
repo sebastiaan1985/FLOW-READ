@@ -36,14 +36,15 @@ export function deriveStats(state:AppState,now=new Date()) {
 export function appendSession(state:AppState,session:SessionResult):AppState {
  if(state.sessions.some(s=>s.id===session.id))return state;
  const clean={...session,wpm:Math.max(0,Math.round(session.wpm)),words:Math.max(0,Math.round(session.words)),durationSeconds:Math.max(0,session.durationSeconds),xp:Math.max(0,Math.round(session.xp))};
- return {...state,sessions:[...state.sessions,clean],...adjustTempo(state,clean.comprehension)};
+ const {reason:_,...tempo}=adjustTempo(state,clean.comprehension,clean.probes?{asked:clean.probes,wandered:clean.wandered??0}:undefined);
+ return {...state,sessions:[...state.sessions,clean],...tempo};
 }
 const validQuestion=(q:any):q is Question=>q&&typeof q.question==='string'&&Array.isArray(q.options)&&q.options.length>=2&&q.options.every((o:any)=>typeof o==='string')&&Number.isInteger(q.answer)&&q.answer>=0&&q.answer<q.options.length;
 export function hydrate(raw:string|null):AppState {
  if(!raw)return initialState;
  const x=JSON.parse(raw);
  if(!x||typeof x!=='object')throw new Error('Invalid state');
- const sessions=Array.isArray(x.sessions)?x.sessions.filter((s:any)=>s&&typeof s.id==='string'&&typeof s.exerciseId==='string'&&Number.isFinite(s.wpm)&&Number.isFinite(s.words)&&Number.isFinite(s.xp)&&Number.isFinite(s.durationSeconds)&&!isNaN(Date.parse(s.date))&&(s.comprehension===null||Number.isFinite(s.comprehension))&&(s.lessonDay===undefined||Number.isInteger(s.lessonDay))):[];
+ const sessions=Array.isArray(x.sessions)?x.sessions.filter((s:any)=>s&&typeof s.id==='string'&&typeof s.exerciseId==='string'&&Number.isFinite(s.wpm)&&Number.isFinite(s.words)&&Number.isFinite(s.xp)&&Number.isFinite(s.durationSeconds)&&!isNaN(Date.parse(s.date))&&(s.comprehension===null||Number.isFinite(s.comprehension))&&(s.lessonDay===undefined||Number.isInteger(s.lessonDay))&&(s.probes===undefined||Number.isInteger(s.probes))):[];
  const texts=Array.isArray(x.texts)?x.texts.filter((t:any)=>t&&typeof t.id==='string'&&typeof t.title==='string'&&typeof t.text==='string').map((t:any)=>{const questions=Array.isArray(t.questions)?t.questions.filter(validQuestion):[];const {questions:_,...rest}=t;return questions.length?{...rest,questions}:rest;}):[];
  const reminder=x.reminder&&typeof x.reminder==='object'&&Number.isInteger(x.reminder.hour)&&x.reminder.hour>=0&&x.reminder.hour<24&&Number.isInteger(x.reminder.minute)&&x.reminder.minute>=0&&x.reminder.minute<60?{enabled:!!x.reminder.enabled,hour:x.reminder.hour,minute:x.reminder.minute}:initialState.reminder;
  const lab=x.leeslab&&typeof x.leeslab==='object'?x.leeslab:{};const lessons:AppState['leeslab']['lessons']={};if(lab.lessons&&typeof lab.lessons==='object')for(const [k,v] of Object.entries(lab.lessons as Record<string,any>))if(v&&Number.isFinite(v.best))lessons[k]={best:Math.max(0,Math.min(100,v.best)),mastered:!!v.mastered};

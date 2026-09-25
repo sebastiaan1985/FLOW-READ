@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {growthSentence,shuffleQuestions,adjustTempo,baselineAccepted,BOOK_DAILY_MODES,bookModeFor,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
+import {tempoNote,growthSentence,shuffleQuestions,adjustTempo,baselineAccepted,BOOK_DAILY_MODES,bookModeFor,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
 import {LESSONS,lessonForDay,RETEST_DAYS} from '../src/data/lessons.ts';
 import type {Passage,SessionResult} from '../src/types.ts';
 const s=(over:Partial<SessionResult>):SessionResult=>({id:Math.random().toString(36),exerciseId:'reading',skill:'begrip',wpm:200,comprehension:100,words:150,durationSeconds:45,date:'2026-09-20T10:00:00',xp:30,...over});
@@ -33,11 +33,19 @@ test('effective speed multiplies speed by comprehension',()=>{
 });
 test('tempo drops under 70% and rises after two sessions of at least 80%',()=>{
   const base={targetWpm:200,tempoStreak:0,kidsMode:false};
-  assert.deepEqual(adjustTempo(base,60),{targetWpm:180,tempoStreak:0});
-  const one=adjustTempo(base,85);assert.deepEqual(one,{targetWpm:200,tempoStreak:1});
-  assert.deepEqual(adjustTempo({...base,...one},90),{targetWpm:210,tempoStreak:0});
-  assert.deepEqual(adjustTempo({...base,...one},75),{targetWpm:200,tempoStreak:0});
-  assert.deepEqual(adjustTempo(base,null),{targetWpm:200,tempoStreak:0});
+  assert.deepEqual(adjustTempo(base,60),{targetWpm:180,tempoStreak:0,reason:'begrip-laag'});
+  const one=adjustTempo(base,85);assert.deepEqual(one,{targetWpm:200,tempoStreak:1,reason:null});
+  assert.deepEqual(adjustTempo({...base,tempoStreak:one.tempoStreak},90),{targetWpm:210,tempoStreak:0,reason:'begrip-hoog'});
+  assert.deepEqual(adjustTempo({...base,tempoStreak:one.tempoStreak},75),{targetWpm:200,tempoStreak:0,reason:null});
+  assert.deepEqual(adjustTempo(base,null),{targetWpm:200,tempoStreak:0,reason:null});
+});
+test('wandering off more often than not lowers the tempo, and says why',()=>{
+  const base={targetWpm:300,tempoStreak:1,kidsMode:false};
+  assert.deepEqual(adjustTempo(base,90,{asked:3,wandered:2}),{targetWpm:270,tempoStreak:0,reason:'afdwalen'});
+  assert.equal(adjustTempo(base,90,{asked:3,wandered:1}).reason,'begrip-hoog');
+  assert.equal(adjustTempo(base,null,{asked:1,wandered:1}).reason,null); // one check is too little to act on
+  assert.match(tempoNote('afdwalen',300,270)!,/dwaalde vaker af.*300 naar 270/);
+  assert.equal(tempoNote(null,300,300),null);
 });
 test('passages rotate: unseen first, then the least recently read',()=>{
   const pool:Passage[]=['a','b','c'].map(id=>({id,title:id,text:id,questions:[]}));
@@ -133,8 +141,8 @@ test('a baseline with too little comprehension gets one calmer retry',()=>{
 test('the daily book step uses today’s technique, but never word-by-word for a whole book',()=>{
   assert.equal(bookModeFor(lessonForDay(8)),'chunks');
   assert.equal(bookModeFor(lessonForDay(5)),'paper');
-  assert.equal(bookModeFor(lessonForDay(2)),'reading');   // rsvp + inner voice → own tempo
-  assert.equal(bookModeFor(lessonForDay(15)),'reading');  // tempo push is rsvp
+  assert.equal(bookModeFor(lessonForDay(2)),'flow');      // rsvp + inner voice → a normal page with a gentle rhythm
+  assert.equal(bookModeFor(lessonForDay(15)),'reading');  // tempo push day: its own support is a measured read
   for(const l of LESSONS)assert.ok(BOOK_DAILY_MODES.includes(bookModeFor(l)),`dag ${l.day}`);
   assert.equal(bookModeFor(null),'chunks');
 });
