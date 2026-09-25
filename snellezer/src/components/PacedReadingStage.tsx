@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,StyleSheet} from 'react-native';
+import {View,Text,useWindowDimensions} from 'react-native';
 import {T} from './UI';
 import {ReadingText} from './ReadingText';
 import {colors,fonts,ui,themed,readingIsDark,readingInk,readingAccent} from '../design';
@@ -12,6 +12,10 @@ export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:
   const accent=readingAccent(settings);
   const size=settings.enabled?settings.fontSize+8:wide?42:30;
   const current=words.slice(cursor,cursor+chunk);
+  // Een woordgroep lees je in één blik, dus hij past altijd op één regel: bij een lange groep wordt de letter kleiner.
+  const screen=useWindowDimensions().width;
+  const room=Math.min(screen,940)-(wide?60:44)-24;
+  const fit=Math.max(18,Math.min(size,room/(Math.max(1,current.join(' ').length)*.56)));
   if(mode==='fixation') {
     const row=fixationWindow(words,cursor,chunk);
     return <View style={{width:'100%',gap:26}}>
@@ -31,13 +35,13 @@ export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:
       return <Text key={index} style={{color:index<cursor?'transparent':active?accent:ink,backgroundColor:active?(dark?'#253C30':'#E7F0EB'):'transparent',fontFamily:active?fonts.strong:fonts.body}}>{word} </Text>;
     })}</Text></View>;
   }
-  if(mode==='chunks')return <View style={{width:'100%',alignItems:'center',gap:28}}><T variant="caption">Neem de hele woordgroep in één blik op.</T><Text style={{fontFamily:fonts.body,fontSize:size,lineHeight:size*1.6,textAlign:'center',color:ink}}>{current.map((word,i)=><Text key={i} style={i===Math.floor(current.length/2)?{color:accent,fontFamily:fonts.strong}:undefined}>{i?' ':''}{word}</Text>)}</Text><View style={styles.marker}/></View>;
+  if(mode==='chunks')return <View style={{width:'100%',alignItems:'center',gap:28}}><T variant="caption">Neem de hele woordgroep in één blik op.</T><Text numberOfLines={1} style={{fontFamily:fonts.body,fontSize:fit,lineHeight:fit*1.6,textAlign:'center',color:ink}}>{current.map((word,i)=><Text key={i} style={i===Math.floor(current.length/2)?{color:accent,fontFamily:fonts.strong}:undefined}>{i?' ':''}{word}</Text>)}</Text><View style={styles.marker}/></View>;
   // A fixed center column keeps the recognition letter still as words change.
   const word=current[0]||'',letters=Array.from(word),pivot=recognitionIndex(word);
   return <View style={{width:'100%',gap:22,alignItems:'center'}}><View style={styles.marker}/>{chunk===1?<View style={{flexDirection:'row',width:'100%',alignItems:'center',minHeight:80}}>
     <Text numberOfLines={1} adjustsFontSizeToFit style={{flex:1,textAlign:'right',fontFamily:fonts.body,fontSize:size,color:ink}}>{letters.slice(0,pivot).join('')}</Text>
     <Text style={{fontFamily:fonts.strong,fontSize:size,color:accent}}>{letters[pivot]||''}</Text>
     <Text numberOfLines={1} adjustsFontSizeToFit style={{flex:1,textAlign:'left',fontFamily:fonts.body,fontSize:size,color:ink}}>{letters.slice(pivot+1).join('')}</Text>
-  </View>:<ReadingText text={current.join(' ')} settings={settings} style={{fontSize:size,lineHeight:size*1.6,textAlign:'center',color:accent}}/>}<View style={styles.marker}/><T variant="caption">{chunk===1?'Houd je blik bij de gekleurde letter.':'Houd je blik in het midden van de woordgroep.'}</T></View>;
+  </View>:<ReadingText text={current.join(' ')} settings={settings} style={{fontSize:fit,lineHeight:fit*1.6,textAlign:'center',color:accent}}/>}<View style={styles.marker}/><T variant="caption">{chunk===1?'Houd je blik bij de gekleurde letter.':'Houd je blik in het midden van de woordgroep.'}</T></View>;
 }
 const styles=themed(()=>({marker:{width:2,height:16,borderRadius:2,backgroundColor:'#9AAA9F'}}));
