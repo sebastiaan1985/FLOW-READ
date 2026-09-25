@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {AccessibilityInfo, Animated, Easing, Platform, Pressable, StyleSheet, View} from 'react-native';
-import {brand, fonts, ui} from '../design';
+import {brand, fonts, ui,themed} from '../design';
 
 const native = Platform.OS !== 'web';
 const SIZE = 112; // even groot als het beeldmerk op het opstartscherm (app.json: imageWidth)
@@ -80,7 +80,7 @@ export function IntroAnimation({ready}: {ready: boolean}) {
   );
 }
 
-const st = StyleSheet.create({
+const st = themed(()=>({
   overlay: {position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: ui.page, zIndex: 100},
   fill: {flex: 1, alignItems: 'center', justifyContent: 'center'},
   layer: {position: 'absolute', top: 0, left: 0, width: SIZE, height: SIZE},
@@ -89,4 +89,4 @@ const st = StyleSheet.create({
   // Het woordmerk hangt onder de tegel, zodat de tegel precies in het midden blijft (net als op het opstartscherm).
   wordRow: {position: 'absolute', top: '50%', marginTop: SIZE / 2 + 22, flexDirection: 'row'},
   word: {fontFamily: fonts.heading, fontSize: 40, letterSpacing: -1.2, color: brand.ink},
-});
+}));

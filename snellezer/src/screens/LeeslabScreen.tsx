@@ -4,7 +4,7 @@ import * as Speech from 'expo-speech';
 import {BackHeader, Button, Card, Icon, IconButton, Pill, ProgressBar, Row, Screen, T} from '../components/UI';
 import {Illustration} from '../components/Illustration';
 import {ReadingText} from '../components/ReadingText';
-import {colors, fonts, ui} from '../design';
+import {colors, fonts, ui,themed} from '../design';
 import {useApp} from '../state/AppProvider';
 import {buildLabRounds, huntHit, LAB_LESSONS, LAB_MASTERY, LAB_ROUNDS, type LabData} from '../state/leeslab';
 import labData from '../data/leeslab.json';
@@ -102,8 +102,8 @@ export function LeeslabScreen({lessonId, onClose}: {lessonId: string; onClose: (
   </Screen>;
 }
 
-const s = StyleSheet.create({
+const s = themed(()=>({
   listen:{width:88, height:88, borderRadius:44, backgroundColor:ui.forestSoft, alignItems:'center', justifyContent:'center'},
   letter:{minWidth:52, height:64, paddingHorizontal:10, borderRadius:16, borderWidth:1, borderColor:ui.line, backgroundColor:colors.surface, alignItems:'center', justifyContent:'center'},
   slot:{minWidth:72, height:56, paddingHorizontal:12, borderRadius:14, borderWidth:1, borderStyle:'dashed', borderColor:ui.line, alignItems:'center', justifyContent:'center'},
-});
+}));

@@ -7722,52 +7722,52 @@
    {
     "question": "Waarom hield de verklaring van toeval geen stand?",
     "options": [
-     "Europeanen waren er eerder",
-     "Er waren geen kano's",
-     "De eilanden lagen dicht bij elkaar",
-     "De eilanden werden in een duidelijke volgorde bewoond, vaak tegen de wind in"
+     "Europese schepen waren er al veel eerder geweest",
+     "De eilanden werden op volgorde bewoond, tegen de wind in",
+     "De eilanden lagen zo dicht bij elkaar dat je ze kon zien",
+     "Kano's waren te klein om zo ver af te drijven"
     ],
-    "answer": 3
+    "answer": 1
    },
    {
     "question": "Hoe gebruikte een navigator de sterren?",
     "options": [
-     "Hij telde ze",
-     "Hij keek alleen naar de maan",
+     "Hij telde hoeveel sterren er elke nacht te zien waren",
+     "Hij volgde vooral de maan en keek zelden naar sterren",
      "Hij kende de plek waar ze opkwamen en ondergingen",
-     "Hij tekende ze op een kaart"
+     "Hij tekende ze nauwkeurig op een kaart van de hemel"
     ],
     "answer": 2
    },
    {
     "question": "Waarom gingen sommige navigators liggen?",
     "options": [
-     "Om naar vogels te kijken",
      "Om de beweging van de golven beter te voelen",
-     "Om te slapen",
-     "Om uit de wind te blijven"
+     "Om de zeevogels boven de kano beter te zien",
+     "Om 's nachts even te slapen tussen twee wachten",
+     "Om uit de wind te blijven tijdens lange tochten"
     ],
-    "answer": 1
+    "answer": 0
    },
    {
     "question": "Wat bewees de tocht van 1976?",
     "options": [
-     "Dat Tahiti onbewoond was",
-     "Dat kano's niet zeewaardig zijn",
-     "Dat een kompas onmisbaar is",
-     "Dat de oude methode nog werkte"
+     "Dat Tahiti vroeger helemaal onbewoond was",
+     "Dat nagebouwde kano's helemaal niet zeewaardig zijn",
+     "Dat een kompas op open zee onmisbaar is",
+     "Dat de oude methode zonder instrumenten werkte"
     ],
     "answer": 3
    },
    {
     "question": "Wat betekent de opleving volgens de tekst voor jonge Polynesiërs?",
     "options": [
-     "Een manier om te laten zien dat hun geschiedenis ouder is dan de komst van Europeanen",
-     "Vooral een nieuwe sport",
-     "Een manier om toeristen te trekken",
-     "Een vervanging van moderne schepen"
+     "Vooral een nieuwe sport die ze in het weekend beoefenen",
+     "Een manier om meer toeristen naar de verre eilanden te trekken",
+     "Een bewijs dat hun geschiedenis niet begon bij Europeanen",
+     "Een goedkope vervanging van moderne vrachtschepen"
     ],
-    "answer": 0
+    "answer": 2
    }
   ],
   "audience": "volwassen",
@@ -7783,52 +7783,52 @@
    {
     "question": "Wat is de planningsdrogreden?",
     "options": [
-     "Onderschatten hoe lang iets duurt",
-     "Alleen plannen voor korte klussen",
-     "Te veel plannen maken",
-     "Plannen aan anderen overlaten"
+     "Onderschatten hoe lang iets gaat duren",
+     "Alleen plannen maken voor korte klussen",
+     "Zoveel plannen maken dat je niet begint",
+     "Het plannen steeds aan anderen overlaten"
     ],
     "answer": 0
    },
    {
     "question": "Wat bleek uit het experiment met studenten?",
     "options": [
-     "Studenten plannen beter dan werknemers",
-     "De studenten gaven geen datum op",
-     "Bijna iedereen was op tijd klaar",
-     "Ook de pessimistische datum werd vaak niet gehaald"
+     "Studenten bleken beter te plannen dan werknemers",
+     "De meeste studenten gaven geen datum op",
+     "Bijna iedereen was ruim op tijd klaar",
+     "Zelfs de pessimistische datum werd vaak gemist"
     ],
     "answer": 3
    },
    {
     "question": "Waarom schatten we anderen realistischer in?",
     "options": [
-     "We kennen hun plannen beter",
-     "We zien van een afstand de tegenvallers wel",
-     "Anderen werken sneller",
-     "We willen anderen niet teleurstellen"
+     "We kennen hun plannen beter dan die van onszelf",
+     "Van een afstand zien we hun tegenvallers wel",
+     "Anderen werken meestal sneller dan wijzelf",
+     "We willen anderen liever niet teleurstellen"
     ],
     "answer": 1
    },
    {
     "question": "Wat houdt de vuistregel in?",
     "options": [
-     "Altijd een week extra rekenen",
-     "Nooit een deadline afspreken",
-     "Je schatting verhogen op basis van hoe je eerdere schattingen uitvielen",
-     "Een ander laten plannen"
+     "Standaard een hele week extra rekenen",
+     "Nooit meer een harde deadline met iemand afspreken",
+     "Een collega de planning laten maken",
+     "Schatten op basis van eerdere misrekeningen"
     ],
-    "answer": 2
+    "answer": 3
    },
    {
     "question": "Welke houding raadt de tekst aan?",
     "options": [
-     "Plannen vanuit hoe vergelijkbare klussen echt verliepen",
-     "Optimistisch blijven, dan lukt het wel",
-     "Plannen helemaal loslaten",
-     "Alleen grote projecten plannen"
+     "Optimistisch blijven, dan lukt het meestal wel",
+     "Plannen vanuit hoe vergelijkbare klussen verliepen",
+     "Het plannen helemaal loslaten en er gewoon aan beginnen",
+     "Alleen grote projecten nauwkeurig plannen"
     ],
-    "answer": 0
+    "answer": 1
    }
   ],
   "audience": "volwassen",
@@ -7844,50 +7844,50 @@
    {
     "question": "Wat is de functie van cement in beton?",
     "options": [
-     "Het is het bindmiddel dat zand en grind aan elkaar kit",
-     "Het houdt water buiten",
-     "Het geeft beton een grijze kleur",
-     "Het maakt beton lichter"
+     "Het houdt het regenwater buiten de muur",
+     "Het kit zand en grind aan elkaar vast",
+     "Het geeft beton zijn grijze kleur",
+     "Het maakt beton een stuk lichter"
     ],
-    "answer": 0
+    "answer": 1
    },
    {
     "question": "Hoe herstelt Romeins beton zichzelf?",
     "options": [
-     "Door regelmatig onderhoud",
-     "Door stalen staven",
-     "Kalkbrokjes lossen op in water en vullen scheurtjes",
-     "Door de vulkanische as te laten smelten"
+     "Door regelmatig onderhoud door bouwers",
+     "Door stalen staven die het geheel samenhouden",
+     "Kalkbrokjes lossen op en vullen scheurtjes",
+     "De vulkanische as smelt in de zomerhitte"
     ],
     "answer": 2
    },
    {
     "question": "Waarom gaat modern gewapend beton kapot?",
     "options": [
-     "Het cement lost op in regen",
-     "Het staal roest en drukt het beton van binnenuit kapot",
-     "Het zet uit in de zon",
-     "Het is te zwaar"
+     "Het staal roest en drukt het beton open",
+     "Het cement lost langzaam op in de regen",
+     "Het zet te sterk uit in de hete zon",
+     "Het wordt op den duur te zwaar voor zichzelf"
     ],
-    "answer": 1
+    "answer": 0
    },
    {
     "question": "Waarom stoot cement veel koolstofdioxide uit?",
     "options": [
-     "Door het water dat verdampt",
+     "Door het water dat tijdens het uitharden verdampt",
+     "Door het grind dat in de groeve wordt gewonnen",
      "Door de brandstof en de verhitte kalksteen zelf",
-     "Door het grind",
-     "Door het transport"
+     "Vooral door het transport naar de bouwplaats"
     ],
-    "answer": 1
+    "answer": 2
    },
    {
     "question": "Wat is de slotgedachte van de tekst?",
     "options": [
-     "Romeins beton is overal beter",
-     "Het meest duurzame beton is beton dat je niet hoeft te storten",
-     "Beton moet worden verboden",
-     "De luchtvaart vervuilt meer dan beton"
+     "Romeins beton is in alle opzichten beter",
+     "Het duurzaamste beton is beton dat je niet stort",
+     "Beton moet zo snel mogelijk overal worden verboden",
+     "De luchtvaart vervuilt veel meer dan beton"
     ],
     "answer": 1
    }
@@ -7906,9 +7906,9 @@
     "question": "Waarom was plaatselijke tijd lang geen probleem?",
     "options": [
      "Reizen duurde zo lang dat minuten niet uitmaakten",
-     "Iedereen gebruikte al de tijd van Greenwich",
-     "Steden lagen dicht bij elkaar",
-     "Er waren nog geen klokken"
+     "Iedereen gebruikte toen al de tijd van Greenwich",
+     "Steden lagen zo dicht bij elkaar dat het niet opviel",
+     "Er hingen in de meeste steden nog geen klokken"
     ],
     "answer": 0
    },
@@ -7916,19 +7916,19 @@
     "question": "Wat deden de Amerikaanse spoorwegen in 1883?",
     "options": [
      "Ze voerden één tijd in voor het hele land",
-     "Ze namen de Franse tijd over",
+     "Ze namen de tijd van Parijs over",
      "Ze verdeelden het land in vier tijdstroken",
-     "Ze schaften de dienstregeling af"
+     "Ze schaften de vaste dienstregeling af"
     ],
     "answer": 2
    },
    {
     "question": "Waarom werd Greenwich het nulpunt?",
     "options": [
-     "Omdat Frankrijk dat voorstelde",
-     "Omdat het precies in het midden van Europa ligt",
-     "Omdat de meeste scheepvaart al met Greenwich werkte",
-     "Omdat Engeland het hoogste bod deed"
+     "Omdat Frankrijk dat op de conferentie voorstelde",
+     "Omdat Greenwich precies midden in Europa ligt",
+     "Omdat de meeste scheepvaart er al mee werkte",
+     "Omdat Engeland het hoogste bedrag bood"
     ],
     "answer": 2
    },
@@ -7937,7 +7937,7 @@
     "options": [
      "Door de Duitse bezetting in 1940",
      "Door een besluit van de spoorwegen",
-     "Door een referendum",
+     "Door een referendum onder de kiezers",
      "Door de conferentie in Washington"
     ],
     "answer": 0
@@ -7945,10 +7945,10 @@
    {
     "question": "Wat is de slotgedachte van de tekst?",
     "options": [
-     "De tijd op je scherm is een afspraak, geen natuurwet",
+     "De tijd op je scherm is een afspraak",
      "De zon bepaalt nog altijd onze tijd",
-     "Tijdzones moeten worden afgeschaft",
-     "Frankrijk had gelijk"
+     "Tijdzones kunnen beter worden afgeschaft",
+     "Frankrijk had destijds gelijk"
     ],
     "answer": 0
    }
@@ -7967,51 +7967,51 @@
     "question": "Waar luistert een ervaren koorzanger vooral naar?",
     "options": [
      "Naar de mensen om zich heen",
-     "Naar de dirigent alleen",
-     "Naar een opname",
-     "Naar zijn eigen stem"
+     "Alleen naar de dirigent",
+     "Naar een opname van het stuk",
+     "Vooral naar zijn eigen stem"
     ],
     "answer": 0
    },
    {
     "question": "Waarom besteden dirigenten tijd aan klinkers?",
     "options": [
-     "Omdat verschillende klinkers het koor rommelig laten klinken",
-     "Omdat het publiek de tekst niet kent",
-     "Om de zangers te laten rusten",
-     "Om het tempo te verhogen"
+     "Verschillende klinkers laten het koor rommelig klinken",
+     "Het publiek kent de tekst van de liederen meestal niet",
+     "Zo kunnen de zangers even rusten tussen de stukken",
+     "Zo kan het koor het tempo gemakkelijker verhogen"
     ],
     "answer": 0
    },
    {
     "question": "Wat is gespreid ademen?",
     "options": [
-     "Zo min mogelijk ademen",
-     "Op verschillende momenten ongemerkt adem halen",
-     "Door de neus ademen",
-     "Alleen ademen tussen twee liederen"
+     "Zo min mogelijk ademen tijdens een lied",
+     "Op verschillende momenten ongemerkt ademen",
+     "Alleen door de neus ademen tijdens het zingen",
+     "Pas ademen tussen twee liederen in"
     ],
     "answer": 1
    },
    {
     "question": "Wat ontdekten de Zweedse onderzoekers?",
     "options": [
-     "De hartslag van zangers ging gelijk lopen",
-     "Zingen maakt mensen moe",
-     "Solisten ademen sneller",
+     "Zingen in een koor maakt de meeste mensen snel moe",
+     "Solisten ademen sneller dan koorzangers",
+     "De hartslag van de zangers ging gelijk lopen",
      "Koorzangers hebben een lagere bloeddruk"
     ],
-    "answer": 0
+    "answer": 2
    },
    {
     "question": "Wat bedoelen dirigenten met de zwakste luisteraar?",
     "options": [
-     "Wie het slechtst hoort, moet stoppen",
-     "Luisteren is minder belangrijk dan een goede stem",
-     "Het samen klinken hangt meer af van luisteren dan van de mooiste stem",
-     "Het publiek moet beter luisteren"
+     "Wie het slechtst hoort, kan beter helemaal stoppen met zingen",
+     "Een goede stem is belangrijker dan goed luisteren",
+     "Het publiek moet stiller zijn tijdens een optreden",
+     "Samen klinken hangt meer af van luisteren dan van stem"
     ],
-    "answer": 2
+    "answer": 3
    }
   ],
   "audience": "volwassen",
@@ -8028,49 +8028,49 @@
     "question": "Waarom is het tol-effect geen volledige verklaring?",
     "options": [
      "Het effect is te klein bij gewone snelheden",
-     "Wielen draaien de verkeerde kant op",
-     "Fietsen hebben geen draaiende delen",
-     "Het werkt alleen in bochten"
+     "De wielen draaien de verkeerde kant op",
+     "Een fiets heeft te weinig draaiende delen",
+     "Het effect werkt eigenlijk alleen in scherpe bochten"
     ],
     "answer": 0
    },
    {
     "question": "Wat bewees de vreemde fiets uit het onderzoek van 2011?",
     "options": [
-     "Dat fietsen zonder berijder altijd omvallen",
-     "Dat alleen de banden belangrijk zijn",
-     "Dat een fiets ook zonder tol-effect en schuine vork overeind blijft",
-     "Dat fietsen sneller moeten rijden"
+     "Dat een fiets zonder berijder altijd meteen omvalt",
+     "Dat alleen de banden bepalen of een fiets blijft staan",
+     "Dat een fiets ook zonder tol-effect overeind blijft",
+     "Dat fietsen veel sneller moeten rijden om stabiel te zijn"
     ],
     "answer": 2
    },
    {
     "question": "Waarom slinger je als je langzaam fietst?",
     "options": [
-     "Omdat het tol-effect dan sterker is",
+     "Omdat het tol-effect bij een lage snelheid juist sterker is",
      "Omdat je bij lage snelheid grotere stuurbewegingen nodig hebt",
-     "Omdat je moe bent",
-     "Omdat de banden te zacht zijn"
+     "Omdat je benen bij langzaam trappen veel sneller moe worden",
+     "Omdat de banden bij lage snelheid zachter aanvoelen"
     ],
     "answer": 1
    },
    {
     "question": "Wat doe je als je naar rechts wilt afslaan?",
     "options": [
-     "Je stuurt meteen naar rechts",
-     "Je leunt naar links",
-     "Je remt eerst af",
-     "Je stuurt eerst heel even naar links"
+     "Je stuurt meteen stevig naar rechts",
+     "Je leunt eerst naar links",
+     "Je remt eerst flink af",
+     "Je stuurt eerst even naar links"
     ],
     "answer": 3
    },
    {
     "question": "Wat is de hoofdgedachte van de tekst?",
     "options": [
-     "Motorrijders fietsen beter",
-     "Achter een eenvoudige fiets zit ingewikkelde natuurkunde",
-     "Fietsen is gevaarlijk",
-     "Kinderen moeten natuurkunde leren"
+     "Motorrijders zijn betere fietsers dan anderen",
+     "Achter een simpele fiets zit ingewikkelde natuurkunde",
+     "Fietsen is gevaarlijker dan de meeste mensen denken",
+     "Kinderen moeten eerst natuurkunde leren voor ze fietsen"
     ],
     "answer": 1
    }
@@ -8088,52 +8088,52 @@
    {
     "question": "Wat was het grootste nadeel van vervoer voor de container?",
     "options": [
-     "Schepen waren te klein",
+     "De schepen waren nog veel te klein",
      "Vracht mocht niet over zee",
-     "Er waren geen havens",
-     "Laden en lossen duurde lang en was duur"
+     "Er waren te weinig havens",
+     "Laden en lossen was traag en duur"
     ],
     "answer": 3
    },
    {
     "question": "Wat was het idee van Malcom McLean?",
     "options": [
-     "Vracht per vliegtuig vervoeren",
-     "Havenarbeiders beter betalen",
-     "Grotere schepen bouwen",
-     "Niet de lading verplaatsen, maar de doos"
+     "Vracht voortaan vooral per vliegtuig vervoeren",
+     "Havenarbeiders veel beter betalen",
+     "Niet de lading verplaatsen, maar de doos",
+     "Veel grotere vrachtschepen bouwen"
     ],
-    "answer": 3
+    "answer": 2
    },
    {
     "question": "Waarom brak de container pas later door?",
     "options": [
-     "Havens weigerden mee te werken",
-     "Staal was te duur",
+     "De havens weigerden eerst om mee te werken",
+     "Staal was in die tijd veel te duur",
      "Er waren eerst geen gezamenlijke maten",
-     "Vrachtwagens waren te zwak"
+     "Vrachtwagens waren nog te zwak"
     ],
     "answer": 2
    },
    {
     "question": "Wat gebeurde er met de haven van Rotterdam?",
     "options": [
-     "Die bleef in het centrum",
+     "Die bleef midden in het centrum liggen",
      "Die verschoof steeds verder richting zee",
-     "Die werd gesloten",
-     "Die werd een woonwijk"
+     "Die werd voorgoed gesloten voor grote schepen",
+     "Die werd omgebouwd tot een woonwijk"
     ],
     "answer": 1
    },
    {
     "question": "Wat laat het voorval in het Suezkanaal volgens de tekst zien?",
     "options": [
-     "Hoe afhankelijk we zijn van een systeem dat werkt zolang alles volgens plan gaat",
-     "Dat koffie duurder wordt",
-     "Dat containers te groot zijn",
-     "Dat het kanaal moet worden verbreed"
+     "Dat koffie en andere producten steeds maar duurder worden",
+     "Dat de containers van nu eigenlijk te groot zijn",
+     "Hoe afhankelijk we zijn van een systeem dat soms hapert",
+     "Dat het kanaal snel moet worden verbreed en verdiept"
     ],
-    "answer": 0
+    "answer": 2
    }
   ],
   "audience": "volwassen",
@@ -8159,30 +8159,30 @@
    {
     "question": "Wat moesten deelnemers in het Britse experiment eerst doen?",
     "options": [
-     "Een wandeling maken",
-     "Een puzzel oplossen",
+     "Een korte wandeling maken",
+     "Een moeilijke puzzel oplossen",
      "Telefoonnummers overschrijven",
-     "Een film kijken"
+     "Een spannende film kijken"
     ],
     "answer": 2
    },
    {
     "question": "Waarom bedacht de verveelde groep meer ideeën?",
     "options": [
-     "Ze kregen een beloning",
-     "Hun gedachten gingen dwalen en legden verbanden",
-     "Ze hadden meer tijd",
-     "Ze werkten samen"
+     "Ze kregen een beloning voor elk idee",
+     "Hun gedachten dwaalden en legden verbanden",
+     "Ze kregen veel meer tijd dan de andere groep",
+     "Ze mochten met elkaar samenwerken aan de opdracht"
     ],
     "answer": 1
    },
    {
     "question": "Wat is volgens de tekst het probleem van de telefoon?",
     "options": [
-     "Hij drukt het signaal weg voordat het iets kan doen",
-     "Hij geeft te weinig informatie",
-     "Hij is te duur",
-     "Hij maakt mensen creatiever"
+     "Hij drukt het signaal weg voor het iets doet",
+     "Hij geeft ons eigenlijk te weinig informatie",
+     "Hij kost te veel geld voor wat hij oplevert",
+     "Hij maakt mensen juist te creatief en onrustig"
     ],
     "answer": 0
    },
@@ -8190,9 +8190,9 @@
     "question": "Welk onderscheid maakt de tekst?",
     "options": [
      "Tussen verveling bij volwassenen en bij dieren",
-     "Tussen korte momenten van leegte en langdurige verveling",
-     "Tussen ochtend en avond",
-     "Tussen werk en school"
+     "Tussen korte leegte en langdurige verveling",
+     "Tussen verveling in de ochtend en in de avond",
+     "Tussen verveling op het werk en op school"
     ],
     "answer": 1
    }
@@ -8210,30 +8210,30 @@
    {
     "question": "Wat is het kameleoneffect?",
     "options": [
-     "Je aanpassen aan het weer",
-     "Van kleur verschieten als je je schaamt",
+     "Je gedrag aanpassen aan het weer van de dag",
+     "Van kleur verschieten als je je ergens erg voor schaamt",
      "Onbewust de houding en gebaren van een ander overnemen",
-     "Bewust iemand na-apen"
+     "Bewust iemand na-apen om hem belachelijk te maken"
     ],
     "answer": 2
    },
    {
     "question": "Wat gebeurde er als de onderzoeker de deelnemer nadeed?",
     "options": [
-     "De deelnemer werd boos",
-     "De deelnemer merkte het meteen",
+     "De deelnemer werd er boos om",
+     "De deelnemer merkte het meteen op en stopte",
      "De deelnemer vond het gesprek prettiger",
-     "Er veranderde niets"
+     "Er veranderde helemaal niets aan het gesprek"
     ],
     "answer": 2
    },
    {
     "question": "Wat gebeurde er bij de serveersters die de bestelling herhaalden?",
     "options": [
-     "Gasten bestelden meer",
-     "Ze kregen een duidelijk hogere fooi",
-     "Ze kregen minder fooi",
-     "Gasten klaagden"
+     "Gasten bestelden meer eten",
+     "Ze kregen een hogere fooi",
+     "Ze kregen juist minder fooi",
+     "Gasten klaagden vaker"
     ],
     "answer": 1
    },
@@ -8241,19 +8241,19 @@
     "question": "Wanneer keert het effect om?",
     "options": [
      "Als de ander merkt dat je hem kopieert",
-     "Als je te zacht praat",
-     "Als je elkaar al lang kent",
-     "Als het gesprek kort is"
+     "Als je tijdens het gesprek te zacht praat",
+     "Als je elkaar al heel lang goed kent",
+     "Als het gesprek maar een paar minuten duurt"
     ],
     "answer": 0
    },
    {
     "question": "Wat raden communicatietrainers volgens de tekst aan?",
     "options": [
-     "Zoveel mogelijk nadoen",
-     "Goed luisteren in plaats van trucjes gebruiken",
-     "Nooit iemand aankijken",
-     "Altijd achterover leunen"
+     "Zoveel mogelijk van de ander bewust nadoen",
+     "Goed luisteren in plaats van trucjes",
+     "De ander juist nooit aankijken",
+     "Altijd ontspannen achterover leunen"
     ],
     "answer": 1
    }
@@ -8271,20 +8271,20 @@
    {
     "question": "Waardoor zien we in Nederland weinig sterren?",
     "options": [
-     "Door de ligging aan zee",
-     "Door luchtvervuiling",
-     "Door de vele wolken",
-     "Door kunstlicht dat in de lucht wordt verstrooid"
+     "Door de ligging van het hele land aan zee",
+     "Door luchtvervuiling van fabrieken",
+     "Door de vele wolken boven het land",
+     "Door kunstlicht dat de lucht verlicht"
     ],
     "answer": 3
    },
    {
     "question": "Wat moeten telers tegenwoordig doen?",
     "options": [
-     "Blauw licht gebruiken",
+     "Overstappen op blauw licht in de kas",
      "Hun kassen grotendeels afschermen",
-     "Hun kassen 's nachts sluiten",
-     "Alleen overdag belichten"
+     "Hun kassen 's nachts helemaal sluiten",
+     "Alleen nog overdag bijbelichten"
     ],
     "answer": 1
    },
@@ -8292,9 +8292,9 @@
     "question": "Hoe reageren vleermuizen op licht?",
     "options": [
      "Sommige soorten jagen bij lampen, andere mijden licht",
-     "Ze vermijden het allemaal",
-     "Ze worden er blind van",
-     "Ze merken er niets van"
+     "Alle soorten vermijden licht zoveel mogelijk",
+     "Ze worden blind als ze te lang in het felle licht vliegen",
+     "Ze merken er niets van omdat ze niet kunnen zien"
     ],
     "answer": 0
    },
@@ -8303,18 +8303,18 @@
     "options": [
      "Het verhoogt de aanmaak",
      "Het remt de aanmaak",
-     "Het zet melatonine om in suiker",
-     "Het heeft geen invloed"
+     "Het zet het om in suiker",
+     "Het heeft er geen invloed op"
     ],
     "answer": 1
    },
    {
     "question": "Waarom noemt de tekst lichtvervuiling makkelijker op te lossen?",
     "options": [
-     "Omdat er weinig lampen zijn",
-     "Omdat dieren eraan wennen",
-     "Omdat de overheid het verbiedt",
-     "Omdat het probleem weg is zodra je een lamp uitzet"
+     "Omdat er in Nederland maar weinig lampen zijn",
+     "Omdat dieren er na een tijdje aan wennen",
+     "Omdat de overheid felle lampen al verbiedt",
+     "Omdat het probleem weg is als de lamp uitgaat"
     ],
     "answer": 3
    }

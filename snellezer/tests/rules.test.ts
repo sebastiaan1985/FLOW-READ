@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {adjustTempo,baselineAccepted,BOOK_DAILY_MODES,bookModeFor,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
+import {shuffleQuestions,adjustTempo,baselineAccepted,BOOK_DAILY_MODES,bookModeFor,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
 import {LESSONS,lessonForDay,RETEST_DAYS} from '../src/data/lessons.ts';
 import type {Passage,SessionResult} from '../src/types.ts';
 const s=(over:Partial<SessionResult>):SessionResult=>({id:Math.random().toString(36),exerciseId:'reading',skill:'begrip',wpm:200,comprehension:100,words:150,durationSeconds:45,date:'2026-09-20T10:00:00',xp:30,...over});
@@ -137,4 +137,19 @@ test('the daily book step uses today’s technique, but never word-by-word for a
   assert.equal(bookModeFor(lessonForDay(15)),'reading');  // tempo push is rsvp
   for(const l of LESSONS)assert.ok(BOOK_DAILY_MODES.includes(bookModeFor(l)),`dag ${l.day}`);
   assert.equal(bookModeFor(null),'chunks');
+});
+
+test('in a measurement the right answer does not give itself away by its length',()=>{
+  const read=(f:string)=>JSON.parse(readFileSync(new URL('../src/data/'+f,import.meta.url),'utf8')) as Passage[];
+  const qs=[...read('library.json'),...read('library-extra.json')].filter(p=>p.collection==='meting').flatMap(p=>p.questions);
+  const longest=qs.filter(q=>{const L=q.options.map(o=>o.length);const rest=L.filter((_,i)=>i!==q.answer);return L[q.answer]>Math.max(...rest)*1.1;}).length;
+  assert.ok(longest/qs.length<=0.1,`goede antwoord is ${longest} van ${qs.length} keer duidelijk het langst`);
+  for(const q of qs){const others=q.options.filter((_,i)=>i!==q.answer).map(o=>o.length);const avg=others.reduce((a,b)=>a+b,0)/others.length;assert.ok(q.options[q.answer].length<=avg*1.4,q.question);}
+});
+test('answer options are shuffled per text, and the right answer moves along',()=>{
+  const p:Passage={id:'x-test',title:'t',text:'t',questions:Array.from({length:40},(_,i)=>({question:'v'+i,options:['a'+i,'b'+i,'c'+i,'d'+i],answer:0}))};
+  const out=shuffleQuestions(p);
+  out.questions.forEach((q,i)=>assert.equal(q.options[q.answer],'a'+i));
+  assert.ok(new Set(out.questions.map(q=>q.answer)).size===4,'het goede antwoord staat niet steeds op dezelfde plek');
+  assert.deepEqual(shuffleQuestions(p),out,'dezelfde tekst toont dezelfde volgorde');
 });

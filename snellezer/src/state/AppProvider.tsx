@@ -7,6 +7,7 @@ import {pathProgress,lessonPlanIds,effectiveWpm} from './rules';
 import {finishLab} from './leeslab';
 import type {BookMeta} from './books';
 import {deleteBookContent} from './bookStore';
+import {rememberAppearance} from './appearance';
 import {lessonForDay,type Lesson} from '../data/lessons';
 export {dateKey,shiftDay} from './model';
 const STORAGE='snellezer.v1';
@@ -28,6 +29,7 @@ function useStore(){
  setReminder:(reminder:AppState['reminder'])=>setState(s=>({...s,reminder})),
  setTopTechniques:(topTechniques:string[])=>setState(s=>({...s,topTechniques:topTechniques.slice(0,3)})),
  dismissInstallHint:()=>setState(s=>({...s,installHintDismissed:true})),
+ setAppearance:(appearance:AppState['appearance'])=>{rememberAppearance(appearance);setState(s=>({...s,appearance}));},
  addBook:(meta:BookMeta)=>setState(s=>({...s,books:[...s.books.filter(b=>b.id!==meta.id),meta]})),
  /** Zet de bladwijzer: na het lezen vooruit, of naar een gekozen hoofdstuk. */
  setBookPosition:(id:string,position:number,readWords:number)=>setState(s=>({...s,books:s.books.map(b=>b.id===id?{...b,position:Math.max(0,Math.min(b.paragraphs,position)),readWords:Math.max(0,Math.min(b.words,readWords)),lastReadAt:new Date().toISOString()}:b)})),

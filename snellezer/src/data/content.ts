@@ -1,3 +1,4 @@
+import {colors} from '../theme';
 import type { Exercise, Passage, SkillId } from '../types';
 import passages from './passages.json';
 import children from './children.json';
@@ -15,10 +16,10 @@ export const TEST_PASSAGES: Passage[] = LIBRARY.filter(p=>p.collection==='meting
 export const CHILD_PASSAGES: Passage[] = [...(children as Passage[]), ...LIBRARY.filter(p=>p.audience==='kids6-9'||p.audience==='kids9-12')];
 export const WORD_GAME_ITEMS = words;
 export const SKILLS: {id:SkillId;title:string;subtitle:string;illustration:string;tint:string}[] = [
- {id:'snelheid',title:'Snelheid',subtitle:'Vind jouw leestempo',illustration:'snelheid',tint:'#FFF4DF'},
- {id:'begrip',title:'Begrip',subtitle:'Neem meer mee uit je tekst',illustration:'begrip',tint:'#E9F6EF'},
- {id:'blikveld',title:'Blikveld',subtitle:'Ontdek het grotere geheel',illustration:'blikveld',tint:'#E8F2FD'},
- {id:'focus',title:'Focus & rust',subtitle:'Lees met volle aandacht',illustration:'focus',tint:'#F1EDFD'},
+ {id:'snelheid',title:'Snelheid',subtitle:'Vind jouw leestempo',illustration:'snelheid',get tint(){return colors.tintSun;}},
+ {id:'begrip',title:'Begrip',subtitle:'Neem meer mee uit je tekst',illustration:'begrip',get tint(){return colors.tintSage;}},
+ {id:'blikveld',title:'Blikveld',subtitle:'Ontdek het grotere geheel',illustration:'blikveld',get tint(){return colors.tintSky;}},
+ {id:'focus',title:'Focus & rust',subtitle:'Lees met volle aandacht',illustration:'focus',get tint(){return colors.tintLilac;}},
 ];
 export const EXERCISES: Exercise[] = [
  {id:'rsvp',title:'Woord voor woord',subtitle:'Eén woord. Alle aandacht.',description:'Woorden verschijnen één voor één op dezelfde plek. Kies een comfortabel tempo. Na de tekst kijken we wat je hebt onthouden.',skill:'snelheid',mode:'rsvp',minutes:2,icon:'zap'},

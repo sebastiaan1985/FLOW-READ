@@ -2,14 +2,14 @@ import React from 'react';
 import {View,Text,StyleSheet} from 'react-native';
 import {T} from './UI';
 import {ReadingText} from './ReadingText';
-import {colors,fonts,ui} from '../design';
+import {colors,fonts,ui,themed,readingIsDark,readingInk,readingAccent} from '../design';
 import type {ReadingSettings,ExerciseMode} from '../types';
 import {fixationWindow,recognitionIndex} from './trainingModel';
 
 export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:ExerciseMode;words:string[];cursor:number;chunk:number;settings:ReadingSettings;wide:boolean}) {
-  const dark=settings.enabled&&settings.background==='dark';
-  const ink=dark?colors.bg:colors.ink;
-  const accent=dark?colors.sage:colors.accent;
+  const dark=readingIsDark(settings);
+  const ink=readingInk(settings);
+  const accent=readingAccent(settings);
   const size=settings.enabled?settings.fontSize+8:wide?42:30;
   const current=words.slice(cursor,cursor+chunk);
   if(mode==='fixation') {
@@ -28,7 +28,7 @@ export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:
     const page=words.slice(pageStart,pageStart+pageSize);
     return <View style={{width:'100%',gap:20}}><T variant="caption" style={{textAlign:'center'}}>Blijf bij de markering. Gelezen woorden verdwijnen.</T><Text style={{fontFamily:fonts.body,fontSize:wide?27:22,lineHeight:wide?52:42,color:ink}}>{page.map((word,i)=>{
       const index=pageStart+i,active=index>=cursor&&index<cursor+chunk;
-      return <Text key={index} style={{color:index<cursor?'transparent':active?accent:ink,backgroundColor:active?(dark?'#253C30':ui.forestSoft):'transparent',fontFamily:active?fonts.strong:fonts.body}}>{word} </Text>;
+      return <Text key={index} style={{color:index<cursor?'transparent':active?accent:ink,backgroundColor:active?(dark?'#253C30':'#E7F0EB'):'transparent',fontFamily:active?fonts.strong:fonts.body}}>{word} </Text>;
     })}</Text></View>;
   }
   if(mode==='chunks')return <View style={{width:'100%',alignItems:'center',gap:28}}><T variant="caption">Neem de hele woordgroep in één blik op.</T><Text style={{fontFamily:fonts.body,fontSize:size,lineHeight:size*1.6,textAlign:'center',color:ink}}>{current.map((word,i)=><Text key={i} style={i===Math.floor(current.length/2)?{color:accent,fontFamily:fonts.strong}:undefined}>{i?' ':''}{word}</Text>)}</Text><View style={styles.marker}/></View>;
@@ -40,4 +40,4 @@ export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:
     <Text numberOfLines={1} adjustsFontSizeToFit style={{flex:1,textAlign:'left',fontFamily:fonts.body,fontSize:size,color:ink}}>{letters.slice(pivot+1).join('')}</Text>
   </View>:<ReadingText text={current.join(' ')} settings={settings} style={{fontSize:size,lineHeight:size*1.6,textAlign:'center',color:accent}}/>}<View style={styles.marker}/><T variant="caption">{chunk===1?'Houd je blik bij de gekleurde letter.':'Houd je blik in het midden van de woordgroep.'}</T></View>;
 }
-const styles=StyleSheet.create({marker:{width:2,height:16,borderRadius:2,backgroundColor:'#9AAA9F'}});
+const styles=themed(()=>({marker:{width:2,height:16,borderRadius:2,backgroundColor:'#9AAA9F'}}));

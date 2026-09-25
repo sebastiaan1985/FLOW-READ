@@ -151,3 +151,18 @@ export function bookModeFor(lesson: {exerciseId: string; support: string} | null
   if (pick) return pick;
   return lesson.exerciseId === 'rsvp' || lesson.support === 'innerstem' ? 'reading' : 'chunks';
 }
+
+/**
+ * Husselt de antwoorden van elke vraag, vast per tekst (dezelfde tekst toont dezelfde volgorde),
+ * zodat de plek van het goede antwoord niets verraadt.
+ */
+export function shuffleQuestions(passage: Passage): Passage {
+  let h = 2166136261;
+  for (const c of passage.id) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  const random = () => { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; };
+  return {...passage, questions: passage.questions.map(q => {
+    const order = q.options.map((_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+    return {...q, options: order.map(i => q.options[i]), answer: order.indexOf(q.answer)};
+  })};
+}
