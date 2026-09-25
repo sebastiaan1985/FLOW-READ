@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {shuffleQuestions,adjustTempo,baselineAccepted,BOOK_DAILY_MODES,bookModeFor,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
+import {growthSentence,shuffleQuestions,adjustTempo,baselineAccepted,BOOK_DAILY_MODES,bookModeFor,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
 import {LESSONS,lessonForDay,RETEST_DAYS} from '../src/data/lessons.ts';
 import type {Passage,SessionResult} from '../src/types.ts';
 const s=(over:Partial<SessionResult>):SessionResult=>({id:Math.random().toString(36),exerciseId:'reading',skill:'begrip',wpm:200,comprehension:100,words:150,durationSeconds:45,date:'2026-09-20T10:00:00',xp:30,...over});
@@ -152,4 +152,12 @@ test('answer options are shuffled per text, and the right answer moves along',()
   out.questions.forEach((q,i)=>assert.equal(q.options[q.answer],'a'+i));
   assert.ok(new Set(out.questions.map(q=>q.answer)).size===4,'het goede antwoord staat niet steeds op dezelfde plek');
   assert.deepEqual(shuffleQuestions(p),out,'dezelfde tekst toont dezelfde volgorde');
+});
+
+test('growth is explained in plain words, tempo and comprehension apart',()=>{
+  assert.equal(growthSentence(null,{wpm:250,comprehension:80}),null);
+  assert.match(growthSentence({wpm:200,comprehension:80},{wpm:230,comprehension:80})!,/15% sneller.*hetzelfde begrip/);
+  assert.match(growthSentence({wpm:200,comprehension:80},{wpm:260,comprehension:40})!,/begrip is flink gedaald/);
+  assert.match(growthSentence({wpm:200,comprehension:60},{wpm:180,comprehension:80})!,/rustiger.*goede ruil/);
+  assert.match(growthSentence({wpm:200,comprehension:80},{wpm:202,comprehension:82})!,/ongeveer gelijk/);
 });

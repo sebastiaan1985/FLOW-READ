@@ -166,3 +166,18 @@ export function shuffleQuestions(passage: Passage): Passage {
     return {...q, options: order.map(i => q.options[i]), answer: order.indexOf(q.answer)};
   })};
 }
+
+/**
+ * Wat je groei betekent, in gewone taal: tempo en begrip los bekeken, vergeleken met je begintest.
+ * Geeft null zolang er nog niets te vergelijken is.
+ */
+export function growthSentence(baseline: {wpm: number; comprehension: number} | null, latest: {wpm: number; comprehension: number} | null): string | null {
+  if (!baseline || !latest || baseline.wpm <= 0) return null;
+  const tempo = Math.round((latest.wpm - baseline.wpm) / baseline.wpm * 100);
+  const grip = latest.comprehension - baseline.comprehension;
+  const gripText = Math.abs(grip) < 10 ? 'met ongeveer hetzelfde begrip' : grip > 0 ? `en je begrijpt ${grip} procentpunt meer` : `maar je begrijpt ${-grip} procentpunt minder`;
+  if (tempo >= 5 && grip <= -20) return `Je leest ${tempo}% sneller dan bij je begintest, maar je begrip is flink gedaald. Een iets rustiger tempo levert je nu meer op.`;
+  if (tempo >= 5) return `Je leest ${tempo}% sneller dan bij je begintest, ${gripText}.`;
+  if (tempo <= -5) return grip >= 10 ? `Je leest wat rustiger dan bij je begintest en begrijpt ${grip} procentpunt meer. Dat is een goede ruil.` : `Je leest ${-tempo}% langzamer dan bij je begintest. Dat gebeurt vaker op een drukke dag; kijk wat de volgende meting doet.`;
+  return grip >= 10 ? `Je tempo is gelijk gebleven en je begrijpt ${grip} procentpunt meer.` : `Je tempo en begrip zijn ongeveer gelijk aan je begintest. Groei komt meestal na een paar weken oefenen.`;
+}
