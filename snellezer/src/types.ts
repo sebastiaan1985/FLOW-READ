@@ -11,8 +11,8 @@ export type SessionResult = { id: string; exerciseId: string; skill: SkillId; wp
 export type SavedText = { id: string; title: string; text: string; createdAt: string; questions?: Question[] };
 /** Licht, donker, of volgen wat het apparaat doet. */
 export type Appearance = 'auto' | 'light' | 'dark';
-export type AppState = { profile: Profile; settings: ReadingSettings; sessions: SessionResult[]; texts: SavedText[]; targetWpm: number; kidsMode: boolean; baseline: { wpm: number; comprehension: number } | null; tempoStreak: number; reminder: { enabled: boolean; hour: number; minute: number }; leeslab: { lessons: Record<string, { best: number; mastered: boolean }>; review: string[] }; topTechniques: string[]; installHintDismissed: boolean; appearance: Appearance; books: import('./state/books').BookMeta[]; };
+export type AppState = { profile: Profile; settings: ReadingSettings; sessions: SessionResult[]; texts: SavedText[]; targetWpm: number; kidsMode: boolean; baseline: { wpm: number; comprehension: number } | null; tempoStreak: number; reminder: { enabled: boolean; hour: number; minute: number }; topTechniques: string[]; installHintDismissed: boolean; appearance: Appearance; books: import('./state/books').BookMeta[]; };
 /** Een stuk uit een boek: vanaf welke alinea, en het cumulatieve aantal woorden per alinea. */
 export type BookPortion = { id: string; from: number; ends: number[]; startWords: number };
 export type TrainingRequest = { exerciseId: string; daily?: boolean; baseline?: boolean; text?: SavedText; book?: BookPortion };
-export type AppActions = { onStart: (request: TrainingRequest) => void; onTab: (tab: TabId) => void; onLibrary: () => void; onSettings: () => void; onProfile: () => void; onPrivacy: () => void; onLab: (lessonId: string) => void; onBook: (bookId: string, mode?: string) => void; };
+export type AppActions = { onStart: (request: TrainingRequest) => void; onTab: (tab: TabId) => void; onLibrary: () => void; onSettings: () => void; onProfile: () => void; onPrivacy: () => void; onBook: (bookId: string, mode?: string) => void; };
