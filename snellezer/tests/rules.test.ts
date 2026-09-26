@@ -83,23 +83,7 @@ test('article import only fetches public https pages',()=>{
   assert.equal(articleUrlProblem('https://nos.nl/artikel/123'),null);
   for(const bad of ['http://nos.nl','https://localhost/x','https://192.168.1.10/','https://10.0.0.1','https://[::1]/','https://user:pw@site.nl','https://intranet/','ftp://site.nl','geen link','https://172.20.1.1'])assert.ok(articleUrlProblem(bad),bad);
 });
-import {buildLabRounds,finishLab,huntHit,labUnlocked,LAB_LESSONS,emptyLabProgress} from '../src/state/leeslab.ts';
 import {readFileSync} from 'node:fs';
-const labData=JSON.parse(readFileSync(new URL('../src/data/leeslab.json',import.meta.url),'utf8'));
-test('every Leeslab lesson has ten valid rounds',()=>{
-  for(const lesson of LAB_LESSONS){const rounds=buildLabRounds(lesson,labData,[],42);assert.equal(rounds.length,10,lesson.id);
-    for(const r of rounds){if(r.kind==='choose'){assert.ok(r.options.includes(r.answer));assert.equal(new Set(r.options).size,r.options.length);}
-      if(r.kind==='hunt'){assert.notEqual(r.word,r.wrong);assert.ok(huntHit(r,r.start));assert.ok(!huntHit(r,r.start+r.length));}
-      if(r.kind==='build'){assert.equal(r.parts.join(''),r.word);assert.notDeepEqual(r.shuffled,r.parts);}}}
-});
-test('Leeslab: 80% masters a lesson once, mistakes come back first',()=>{
-  const res=(n:number)=>Array.from({length:10},(_,i)=>({key:'listen:w'+i,correct:i<n}));
-  const low=finishLab(emptyLabProgress(),'horen',res(7));assert.equal(low.mastered,false);assert.equal(low.progress.review.length,3);assert.equal(labUnlocked(1,low.progress),false);
-  const ok=finishLab(low.progress,'horen',res(8));assert.equal(ok.firstMastery,true);assert.equal(labUnlocked(1,ok.progress),true);
-  assert.equal(finishLab(ok.progress,'horen',res(10)).firstMastery,false);
-  const lesson=LAB_LESSONS[0];const review=['listen:'+labData.words[5].word];
-  assert.equal(buildLabRounds(lesson,labData,review,1)[0].key,review[0]);
-});
 import {longLevel} from '../src/state/rules.ts';
 test('long texts move up after 80% and down under 67% on the current level',()=>{
   const lv=(id:string)=>Number(id.slice(1));

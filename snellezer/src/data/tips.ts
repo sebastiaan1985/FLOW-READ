@@ -7,7 +7,7 @@ export type Tip = {
   icon: string;
   /** De oefening waarin je deze tip meteen kunt toepassen. */
   exerciseId?: string;
-  /** Of de tip naar het Dyslexie Leeslab wijst in plaats van naar een oefening. */
+  /** Of de tip naar de leesinstellingen wijst in plaats van naar een oefening. */
   settings?: boolean;
 };
 
@@ -27,7 +27,7 @@ export const TIPS: Tip[] = [
  {id:'vijanden',title:'Waar je tijd echt heen gaat',body:'Afdwalen, onnodig teruglezen en elke tekst even langzaam lezen. Dat zijn de grootste tijdvreters. Je binnenstem hoort daar niet bij: die helpt je begrijpen. Laat hem lichter meelopen, maar zet hem niet uit.',icon:'help'},
  {id:'advies',title:'Vijftien minuten is genoeg',body:'Vijftien tot twintig minuten per dag werkt beter dan een uur in het weekend. Wissel af tussen tempo, blikveld en gewoon lezen. En test je begrip, altijd.',icon:'clock'},
  {id:'consistentie',title:'Vaak en kort wint',body:'Je leesritme verandert door herhaling, niet door lange sessies. Vijf minuten per dag brengt je verder dan een uur per week.',icon:'flame'},
- {id:'lettertype',title:'Een lettertype dat rust geeft',body:'Ronde, duidelijke letters schelen meer dan je denkt, zeker bij dyslexie. In het Dyslexie Leeslab stel je het lettertype in voor de hele app.',icon:'sparkles',settings:true},
+ {id:'lettertype',title:'Een lettertype dat rust geeft',body:'Ronde, duidelijke letters schelen meer dan je denkt, zeker bij dyslexie. In de leesinstellingen stel je het lettertype in voor de hele app.',icon:'sparkles',settings:true},
  {id:'bionic',title:'Bionisch lezen',body:'Als het eerste deel van elk woord dik staat, herkent je brein het woord eerder dan je het hebt uitgelezen. Probeer het een week en kijk of het voor jou werkt.',icon:'zap',settings:true},
  {id:'contrast',title:'Kleur en contrast',body:'Een warme crèmekleurige achtergrond vermindert de witruis waardoor letters lijken te springen. Kost niets, en voor sommige lezers scheelt het enorm.',icon:'leaf',settings:true},
  {id:'spel',title:'Maak er een spel van',body:'Punten, rondes en een score houden je bezig terwijl je traint. Dat is geen truc: plezier zorgt dat je morgen terugkomt, en dat is precies wat je nodig hebt.',icon:'star',exerciseId:'wordflash'},

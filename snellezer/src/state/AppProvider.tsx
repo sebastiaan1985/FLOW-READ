@@ -4,7 +4,6 @@ import type {AppState,Exercise,Profile,ReadingSettings,SavedText,SessionResult} 
 import {getExercise} from '../data/content';
 import {initialState,deriveStats,appendSession,hydrate,dateKey} from './model';
 import {pathProgress,lessonPlanIds,effectiveWpm} from './rules';
-import {finishLab} from './leeslab';
 import type {BookMeta} from './books';
 import {deleteBookContent} from './bookStore';
 import {rememberAppearance} from './appearance';
@@ -34,8 +33,6 @@ function useStore(){
  /** Zet de bladwijzer: na het lezen vooruit, of naar een gekozen hoofdstuk. */
  setBookPosition:(id:string,position:number,readWords:number)=>setState(s=>({...s,books:s.books.map(b=>b.id===id?{...b,position:Math.max(0,Math.min(b.paragraphs,position)),readWords:Math.max(0,Math.min(b.words,readWords)),lastReadAt:new Date().toISOString()}:b)})),
  deleteBook:(id:string)=>{setState(s=>({...s,books:s.books.filter(b=>b.id!==id)}));deleteBookContent(id);},
- /** Rondt een Leeslab-les af: voortgang, herhaalset en één keer XP bij de eerste beheersing. */
- finishLabLesson:(lessonId:string,results:{key:string;correct:boolean}[],durationSeconds:number)=>{const outcome=finishLab(stateRef.current.leeslab,lessonId,results);const session:SessionResult={id:createId(),exerciseId:'leeslab',skill:'focus',wpm:0,comprehension:null,words:results.length,durationSeconds,date:new Date().toISOString(),xp:outcome.firstMastery?30:5};setState(s=>appendSession({...s,leeslab:finishLab(s.leeslab,lessonId,results).progress},session));return outcome;},
  resetProgress:()=>setState(s=>({...s,sessions:[],baseline:null,tempoStreak:0,targetWpm:s.kidsMode?130:200})),
  };
 }

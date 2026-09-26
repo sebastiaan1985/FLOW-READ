@@ -28,7 +28,7 @@ Je eigen observatie klopt aan beide kanten: dit ziet er véél beter uit dan de 
 
 - **De rust.** Wit, één diepgroen accent, ruime typografie, geen emoji, geen geschreeuw. Precies goed voor een leesproduct.
 - **De eerlijkheid van het model.** `appendSession` is idempotent, rustoefeningen verzinnen geen leessnelheid, het ingestelde oefentempo wordt expliciet níét als gemeten snelheid verkocht, en bij begrip < 70% gaat het tempo automatisch omlaag. Dat is een zeldzaam volwassen fundament — daar bouwen we op door.
-- **Toegankelijkheid.** Dyslexie Leeslab (font, overlay, letterafstand, bionic, lettergrepen), reduce-motion, pauze bij achtergrond, labels op knoppen.
+- **Toegankelijkheid.** Leesinstellingen (dyslexiefont, overlay, letterafstand, bionic, lettergrepen), reduce-motion, pauze bij achtergrond, labels op knoppen.
 - **De vier vaardigheden** (Snelheid, Begrip, Blikveld, Focus) zijn een goede kapstok.
 
 ---
