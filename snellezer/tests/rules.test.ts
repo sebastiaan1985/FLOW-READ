@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {adjustTempo,baselineAccepted,BOOK_DAILY_MODES,bookModeFor,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
+import {tempoNote,growthSentence,shuffleQuestions,adjustTempo,baselineAccepted,BOOK_DAILY_MODES,bookModeFor,effectiveWpm,lessonFeedback,lessonPlanIds,passed,pathProgress,pickPassage,readingRejection,repeatFactor,xpFor} from '../src/state/rules.ts';
 import {LESSONS,lessonForDay,RETEST_DAYS} from '../src/data/lessons.ts';
 import type {Passage,SessionResult} from '../src/types.ts';
 const s=(over:Partial<SessionResult>):SessionResult=>({id:Math.random().toString(36),exerciseId:'reading',skill:'begrip',wpm:200,comprehension:100,words:150,durationSeconds:45,date:'2026-09-20T10:00:00',xp:30,...over});
@@ -33,11 +33,19 @@ test('effective speed multiplies speed by comprehension',()=>{
 });
 test('tempo drops under 70% and rises after two sessions of at least 80%',()=>{
   const base={targetWpm:200,tempoStreak:0,kidsMode:false};
-  assert.deepEqual(adjustTempo(base,60),{targetWpm:180,tempoStreak:0});
-  const one=adjustTempo(base,85);assert.deepEqual(one,{targetWpm:200,tempoStreak:1});
-  assert.deepEqual(adjustTempo({...base,...one},90),{targetWpm:210,tempoStreak:0});
-  assert.deepEqual(adjustTempo({...base,...one},75),{targetWpm:200,tempoStreak:0});
-  assert.deepEqual(adjustTempo(base,null),{targetWpm:200,tempoStreak:0});
+  assert.deepEqual(adjustTempo(base,60),{targetWpm:180,tempoStreak:0,reason:'begrip-laag'});
+  const one=adjustTempo(base,85);assert.deepEqual(one,{targetWpm:200,tempoStreak:1,reason:null});
+  assert.deepEqual(adjustTempo({...base,tempoStreak:one.tempoStreak},90),{targetWpm:210,tempoStreak:0,reason:'begrip-hoog'});
+  assert.deepEqual(adjustTempo({...base,tempoStreak:one.tempoStreak},75),{targetWpm:200,tempoStreak:0,reason:null});
+  assert.deepEqual(adjustTempo(base,null),{targetWpm:200,tempoStreak:0,reason:null});
+});
+test('wandering off more often than not lowers the tempo, and says why',()=>{
+  const base={targetWpm:300,tempoStreak:1,kidsMode:false};
+  assert.deepEqual(adjustTempo(base,90,{asked:3,wandered:2}),{targetWpm:270,tempoStreak:0,reason:'afdwalen'});
+  assert.equal(adjustTempo(base,90,{asked:3,wandered:1}).reason,'begrip-hoog');
+  assert.equal(adjustTempo(base,null,{asked:1,wandered:1}).reason,null); // one check is too little to act on
+  assert.match(tempoNote('afdwalen',300,270)!,/dwaalde vaker af.*300 naar 270/);
+  assert.equal(tempoNote(null,300,300),null);
 });
 test('passages rotate: unseen first, then the least recently read',()=>{
   const pool:Passage[]=['a','b','c'].map(id=>({id,title:id,text:id,questions:[]}));
@@ -133,8 +141,37 @@ test('a baseline with too little comprehension gets one calmer retry',()=>{
 test('the daily book step uses today’s technique, but never word-by-word for a whole book',()=>{
   assert.equal(bookModeFor(lessonForDay(8)),'chunks');
   assert.equal(bookModeFor(lessonForDay(5)),'paper');
-  assert.equal(bookModeFor(lessonForDay(2)),'reading');   // rsvp + inner voice → own tempo
-  assert.equal(bookModeFor(lessonForDay(15)),'reading');  // tempo push is rsvp
+  assert.equal(bookModeFor(lessonForDay(2)),'flow');      // rsvp + inner voice → a normal page with a gentle rhythm
+  assert.equal(bookModeFor(lessonForDay(15)),'reading');  // tempo push day: its own support is a measured read
   for(const l of LESSONS)assert.ok(BOOK_DAILY_MODES.includes(bookModeFor(l)),`dag ${l.day}`);
   assert.equal(bookModeFor(null),'chunks');
+});
+
+test('in a measurement the right answer does not give itself away by its length',()=>{
+  const read=(f:string)=>JSON.parse(readFileSync(new URL('../src/data/'+f,import.meta.url),'utf8')) as Passage[];
+  const qs=[...read('library.json'),...read('library-extra.json')].filter(p=>p.collection==='meting').flatMap(p=>p.questions);
+  const longest=qs.filter(q=>{const L=q.options.map(o=>o.length);const rest=L.filter((_,i)=>i!==q.answer);return L[q.answer]>Math.max(...rest)*1.1;}).length;
+  assert.ok(longest/qs.length<=0.1,`goede antwoord is ${longest} van ${qs.length} keer duidelijk het langst`);
+  for(const q of qs){const others=q.options.filter((_,i)=>i!==q.answer).map(o=>o.length);const avg=others.reduce((a,b)=>a+b,0)/others.length;assert.ok(q.options[q.answer].length<=avg*1.4,q.question);}
+});
+test('answer options are shuffled per text, and the right answer moves along',()=>{
+  const p:Passage={id:'x-test',title:'t',text:'t',questions:Array.from({length:40},(_,i)=>({question:'v'+i,options:['a'+i,'b'+i,'c'+i,'d'+i],answer:0}))};
+  const out=shuffleQuestions(p);
+  out.questions.forEach((q,i)=>assert.equal(q.options[q.answer],'a'+i));
+  assert.ok(new Set(out.questions.map(q=>q.answer)).size===4,'het goede antwoord staat niet steeds op dezelfde plek');
+  assert.deepEqual(shuffleQuestions(p),out,'dezelfde tekst toont dezelfde volgorde');
+});
+
+test('growth is explained in plain words, tempo and comprehension apart',()=>{
+  assert.equal(growthSentence(null,{wpm:250,comprehension:80}),null);
+  assert.match(growthSentence({wpm:200,comprehension:80},{wpm:230,comprehension:80})!,/15% sneller.*hetzelfde begrip/);
+  assert.match(growthSentence({wpm:200,comprehension:80},{wpm:260,comprehension:40})!,/begrip is flink gedaald/);
+  assert.match(growthSentence({wpm:200,comprehension:60},{wpm:180,comprehension:80})!,/rustiger.*goede ruil/);
+  assert.match(growthSentence({wpm:200,comprehension:80},{wpm:202,comprehension:82})!,/ongeveer gelijk/);
+});
+test('in practice texts the right answer rarely stands out by its length',()=>{
+  const read=(f:string)=>JSON.parse(readFileSync(new URL('../src/data/'+f,import.meta.url),'utf8')) as Passage[];
+  const qs=[...read('passages.json'),...read('children.json'),...read('library.json'),...read('library-extra.json')].filter(p=>p.collection!=='meting').flatMap(p=>p.questions);
+  const obvious=qs.filter(q=>{const L=q.options.map(o=>o.length);return L[q.answer]-Math.max(...L.filter((_,i)=>i!==q.answer))>=12;}).length;
+  assert.ok(obvious/qs.length<=0.03,`${obvious} van ${qs.length} goede antwoorden zijn duidelijk langer dan elke andere keuze`);
 });

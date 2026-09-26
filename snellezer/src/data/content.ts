@@ -1,3 +1,4 @@
+import {colors} from '../theme';
 import type { Exercise, Passage, SkillId } from '../types';
 import passages from './passages.json';
 import children from './children.json';
@@ -15,14 +16,15 @@ export const TEST_PASSAGES: Passage[] = LIBRARY.filter(p=>p.collection==='meting
 export const CHILD_PASSAGES: Passage[] = [...(children as Passage[]), ...LIBRARY.filter(p=>p.audience==='kids6-9'||p.audience==='kids9-12')];
 export const WORD_GAME_ITEMS = words;
 export const SKILLS: {id:SkillId;title:string;subtitle:string;illustration:string;tint:string}[] = [
- {id:'snelheid',title:'Snelheid',subtitle:'Vind jouw leestempo',illustration:'snelheid',tint:'#FFF4DF'},
- {id:'begrip',title:'Begrip',subtitle:'Neem meer mee uit je tekst',illustration:'begrip',tint:'#E9F6EF'},
- {id:'blikveld',title:'Blikveld',subtitle:'Ontdek het grotere geheel',illustration:'blikveld',tint:'#E8F2FD'},
- {id:'focus',title:'Focus & rust',subtitle:'Lees met volle aandacht',illustration:'focus',tint:'#F1EDFD'},
+ {id:'snelheid',title:'Snelheid',subtitle:'Vind jouw leestempo',illustration:'snelheid',get tint(){return colors.tintSun;}},
+ {id:'begrip',title:'Begrip',subtitle:'Neem meer mee uit je tekst',illustration:'begrip',get tint(){return colors.tintSage;}},
+ {id:'blikveld',title:'Blikveld',subtitle:'Ontdek het grotere geheel',illustration:'blikveld',get tint(){return colors.tintSky;}},
+ {id:'focus',title:'Focus & rust',subtitle:'Lees met volle aandacht',illustration:'focus',get tint(){return colors.tintLilac;}},
 ];
 export const EXERCISES: Exercise[] = [
  {id:'rsvp',title:'Woord voor woord',subtitle:'Eén woord. Alle aandacht.',description:'Woorden verschijnen één voor één op dezelfde plek. Kies een comfortabel tempo. Na de tekst kijken we wat je hebt onthouden.',skill:'snelheid',mode:'rsvp',minutes:2,icon:'zap'},
  {id:'chunks',title:'Lezen in chunks',subtitle:'Geef woorden de ruimte',description:'Lees meerdere woorden tegelijk. Je stelt zelf in hoeveel. Houd je blik rond het midden — begrip is belangrijker dan een hoog tempo.',skill:'snelheid',mode:'chunks',minutes:3,icon:'text'},
+ {id:'flow',title:'Rustig ritme',subtitle:'Gewoon lezen, met een zacht ritme',description:'Je leest een gewone bladzijde. Een zachte markering loopt per zinsdeel mee op jouw tempo, als een rustige hand onder de regel. Wat je gelezen hebt blijft staan.',skill:'snelheid',mode:'flow',minutes:3,icon:'leaf'},
  {id:'forward',title:'Vooruit lezen',subtitle:'Blijf rustig in beweging',description:'Lees mee met de gemarkeerde woordgroep. Eerdere groepen verdwijnen. Pas je tempo aan als je de draad kwijtraakt.',skill:'snelheid',mode:'forward',minutes:2,icon:'arrow'},
  {id:'fixation',title:'Fixatie-training',subtitle:'Een rustig anker voor je blik',description:'Richt je blik op het midden. Er verschijnt steeds een korte woordgroep rond je fixatiepunt.',skill:'snelheid',mode:'fixation',minutes:2,icon:'target'},
  {id:'reading',title:'Leestest',subtitle:'Jouw tempo, jouw begrip',description:'Lees de tekst op je eigen tempo. Tik op klaar wanneer je alles hebt gelezen. Daarna beantwoord je een paar vragen.',skill:'begrip',mode:'reading',minutes:3,icon:'book'},

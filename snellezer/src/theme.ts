@@ -37,20 +37,33 @@ export const colors = {
   tintLilac: '#F1EDFD',
 } as const;
 
-export const darkColors = {
-  bg: '#0E1518',
-  bgReading: '#0B1113',
-  surface: '#182126',
-  border: '#243036',
-  borderStrong: '#2C3940',
-  ink: '#F2F6F7',
-  inkMuted: '#9AA7AE',
-  inkDim: '#6D7A81',
-  accent: '#0B6E63',
-  accentPressed: '#0E8677',
-  onAccent: '#FFFFFF',
-  progress: '#34B98B',
-} as const;
+/** Donker thema: dezelfde rollen, rustig en warm-donker. Het accent wordt lichter, zodat het ook als tekst leesbaar blijft. */
+export const darkColors: Record<keyof typeof colors, string> = {
+  bg: '#131C1F',
+  bgReading: '#0F1719',
+  surface: '#1B2629',
+  border: '#253236',
+  borderStrong: '#2C3A3E',
+  ink: '#EEF3F1',
+  inkMuted: '#A6B3AE',
+  inkDim: '#7F8C87',
+  accent: '#57C7B3',
+  accentPressed: '#46B3A0',
+  onAccent: '#06221E',
+  progress: '#57C7B3',
+  coral: '#FF8A6B',
+  sun: '#FFC861',
+  sunDeep: '#FFB43D',
+  sky: '#8EC5F5',
+  sage: '#9BD4B8',
+  lilac: '#B9A8F2',
+  tintCoral: '#3A2824',
+  tintSun: '#342C1D',
+  tintSky: '#1C2A37',
+  tintSage: '#1B2E27',
+  tintLilac: '#27233A',
+};
+export const lightColors: Record<keyof typeof colors, string> = {...colors};
 
 export const spacing = {
   xs: 5,
@@ -111,4 +124,4 @@ export const skills = {
   begrip: { tint: colors.tintSage, illustration: 'begrip', label: 'Begrip' },
   blikveld: { tint: colors.tintSky, illustration: 'blikveld', label: 'Blikveld' },
   focus: { tint: colors.tintLilac, illustration: 'focus', label: 'Focus & rust' },
-} as const;
+};

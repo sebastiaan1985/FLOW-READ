@@ -1,6 +1,6 @@
 import React,{useEffect,useRef,useState} from 'react';
 import {View,StyleSheet,Animated,LayoutChangeEvent} from 'react-native';
-import {colors,ui} from '../design';
+import {colors,ui,themed} from '../design';
 
 export type EyeMode='lr'|'zigzag'|'expand'|'sprint';
 export const EYE_MODES:{value:EyeMode;label:string}[]=[
@@ -56,9 +56,9 @@ export function EyeStage({mode,speed,paused,reduceMotion}:{mode:EyeMode;speed:nu
   );
 }
 
-const st=StyleSheet.create({
+const st=themed(()=>({
   stage:{height:HEIGHT,width:'100%',borderRadius:24,backgroundColor:ui.subtle,overflow:'hidden'},
   line:{position:'absolute',left:PAD,right:PAD,flexDirection:'row',gap:10,alignItems:'center'},
   block:{height:7,borderRadius:4,backgroundColor:ui.track},
   dot:{position:'absolute',left:0,top:0,width:DOT,height:DOT,borderRadius:DOT/2,backgroundColor:colors.accent},
-});
+}));

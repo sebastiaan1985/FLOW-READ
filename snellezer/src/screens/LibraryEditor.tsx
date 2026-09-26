@@ -4,7 +4,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import {File} from 'expo-file-system';
 import {BackHeader, Button, Card, Icon, IconButton, Pill, ProgressBar, Row, Screen, SectionHeading, T} from '../components/UI';
 import {Illustration} from '../components/Illustration';
-import {colors, fonts, ui} from '../design';
+import {colors, fonts, ui,themed} from '../design';
 import {useApp} from '../state/AppProvider';
 import type {AppActions, Question} from '../types';
 import {articleUrlProblem} from '../state/url';
@@ -17,6 +17,7 @@ import {createId} from '../state/AppProvider';
 export const READING_MODES = [
   {id:'chunks',title:'Woordgroepen',description:'Meerdere woorden in één blik',icon:'text'},
   {id:'rsvp',title:'Woord voor woord',description:'Eén vaste plek voor je blik',icon:'zap'},
+  {id:'flow',title:'Rustig ritme',description:'Een gewone bladzijde met een zacht tempo',icon:'leaf'},
   {id:'forward',title:'Vooruit lezen',description:'Volg de gemarkeerde woorden',icon:'arrow'},
   {id:'fixation',title:'Fixatie',description:'Lees rond een vast middelpunt',icon:'target'},
   {id:'reading',title:'Leestest',description:'Meet je eigen leestempo',icon:'book'},
@@ -173,7 +174,7 @@ export function LibraryEditor({actions,initial,onBack=()=>actions.onTab('today')
     {state.texts.length===0?<Card style={{alignItems:'center',gap:12,padding:32}}><Icon name="book" size={34} color={colors.accent}/><T variant="heading" style={{fontSize:23}}>Je volgende goede tekst begint hier.</T><T variant="caption" style={{textAlign:'center'}}>Bewaar een tekst hierboven en lees hem later opnieuw, in elke leesvorm.</T></Card>:state.texts.map(saved=><Card key={saved.id} style={{gap:17}}><Row><View style={{flex:1,gap:7}}><T variant="heading" style={{fontSize:23}}>{saved.title}</T><T variant="caption">{saved.text.trim().split(/\s+/).length.toLocaleString('nl-NL')} woorden · {saved.questions?.length?`${saved.questions.length} begripsvragen`:'Zonder begripsvragen'}</T></View><IconButton name="trash" label={`Verwijder ${saved.title}`} onPress={()=>setConfirm(saved.id)}/></Row><T numberOfLines={3} color={ui.muted}>{saved.text}</T>{confirm===saved.id?<View style={styles.urlBox}><T variant="label">Deze tekst definitief verwijderen?</T><T variant="caption">Je afgeronde leessessies blijven bewaard.</T><Row style={{flexWrap:'wrap'}}><Button title="Toch bewaren" onPress={()=>setConfirm(null)} style={{flexGrow:1}}/><Button title="Verwijder tekst" secondary onPress={()=>{deleteText(saved.id);setConfirm(null);}} style={{flexGrow:1}}/></Row></View>:<Button title={`Lees met ${selected.title.toLocaleLowerCase('nl')}`} icon="play" secondary onPress={()=>actions.onStart({exerciseId:mode,text:saved})}/>}</Card>)}
   </Screen>;
 }
-const styles=StyleSheet.create({
+const styles=themed(()=>({
   modeGrid:{flexDirection:'row',flexWrap:'wrap',gap:10},mode:{minHeight:132,borderRadius:19,borderWidth:1,padding:15,gap:9},
   input:{fontFamily:fonts.body,fontSize:16,padding:16,borderRadius:16,borderWidth:1,borderColor:ui.line,backgroundColor:ui.subtle,color:colors.ink,minHeight:54},
   source:{minHeight:44,paddingHorizontal:15,paddingVertical:10,borderRadius:20,flexDirection:'row',alignItems:'center',gap:7,backgroundColor:colors.surface},
@@ -181,4 +182,4 @@ const styles=StyleSheet.create({
   answerMark:{width:44,height:44,borderRadius:22,borderWidth:1,borderColor:ui.line,alignItems:'center',justifyContent:'center'},
   bookIcon:{width:42,height:42,borderRadius:14,backgroundColor:ui.forestSoft,alignItems:'center',justifyContent:'center'},
   feedback:{padding:15,backgroundColor:'#FFF1EA',borderRadius:16,flexDirection:'row',gap:10,alignItems:'flex-start'},
-});
+}));

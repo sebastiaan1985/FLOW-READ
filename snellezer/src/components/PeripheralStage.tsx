@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {View,StyleSheet,LayoutChangeEvent} from 'react-native';
 import {T} from './UI';
-import {colors,fonts,ui} from '../design';
+import {colors,fonts,ui,themed} from '../design';
 
 const BOX=150;   // breedte van het vak waarin een woord gecentreerd staat
 const STAGE=300; // hoogte van het speelveld
@@ -34,9 +34,9 @@ export function PeripheralStage({left,right,spread,visible,dark}:{left:string;ri
   );
 }
 
-const st=StyleSheet.create({
+const st=themed(()=>({
   stage:{height:STAGE,width:'100%',alignItems:'center',justifyContent:'center'},
   slot:{position:'absolute',left:'50%',top:'50%',width:BOX,alignItems:'center'},
   fixation:{width:44,height:44,alignItems:'center',justifyContent:'center'},
   dot:{width:10,height:10,borderRadius:5},
-});
+}));

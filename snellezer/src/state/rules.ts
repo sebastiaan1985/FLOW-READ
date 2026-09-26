@@ -48,14 +48,28 @@ export function passed(complete: boolean, comprehension: number | null): boolean
  * Het doeltempo beweegt twee kanten op:
  * onder 70% begrip een stap terug, na twee keer op rij minstens 80% een kleine stap vooruit.
  */
-export function adjustTempo(state: Pick<AppState, 'targetWpm' | 'tempoStreak' | 'kidsMode'>, comprehension: number | null) {
-  if (comprehension === null) return {targetWpm: state.targetWpm, tempoStreak: state.tempoStreak};
+export type TempoReason = 'begrip-laag' | 'begrip-hoog' | 'afdwalen' | null;
+/**
+ * Past het oefentempo stil aan. Onder 70% begrip, of als je bij de aandachtchecks vaker afdwaalde dan meelas,
+ * gaat het een stap omlaag. Na twee keer minstens 80% begrip een stap omhoog.
+ */
+export function adjustTempo(state: Pick<AppState, 'targetWpm' | 'tempoStreak' | 'kidsMode'>, comprehension: number | null, focus?: {asked: number; wandered: number}): {targetWpm: number; tempoStreak: number; reason: TempoReason} {
   const floor = state.kidsMode ? 60 : 80;
-  if (comprehension < 70) return {targetWpm: Math.max(floor, Math.round(state.targetWpm * .9)), tempoStreak: 0};
-  if (comprehension < 80) return {targetWpm: state.targetWpm, tempoStreak: 0};
+  const down = {targetWpm: Math.max(floor, Math.round(state.targetWpm * .9)), tempoStreak: 0};
+  if (focus && focus.asked >= 2 && focus.wandered * 2 > focus.asked) return {...down, reason: 'afdwalen'};
+  if (comprehension === null) return {targetWpm: state.targetWpm, tempoStreak: state.tempoStreak, reason: null};
+  if (comprehension < 70) return {...down, reason: 'begrip-laag'};
+  if (comprehension < 80) return {targetWpm: state.targetWpm, tempoStreak: 0, reason: null};
   const streak = state.tempoStreak + 1;
-  if (streak >= 2) return {targetWpm: Math.min(state.kidsMode ? 300 : 800, Math.round(state.targetWpm * 1.05)), tempoStreak: 0};
-  return {targetWpm: state.targetWpm, tempoStreak: streak};
+  if (streak >= 2) return {targetWpm: Math.min(state.kidsMode ? 300 : 800, Math.round(state.targetWpm * 1.05)), tempoStreak: 0, reason: 'begrip-hoog'};
+  return {targetWpm: state.targetWpm, tempoStreak: streak, reason: null};
+}
+/** Eén zin over wat de app met je tempo deed, en waarom. */
+export function tempoNote(reason: TempoReason, from: number, to: number): string | null {
+  if (!reason || from === to) return null;
+  if (reason === 'afdwalen') return `Je dwaalde vaker af dan je meelas. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut, zodat je aandacht het beter bijhoudt.`;
+  if (reason === 'begrip-laag') return `Je begreep minder dan 70% van de tekst. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut, zodat er meer ruimte is voor de inhoud.`;
+  return `Twee keer achter elkaar begreep je minstens 80%. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut.`;
 }
 
 /** Kies de tekst die je het langst niet (of nog nooit) hebt gelezen. */
@@ -143,11 +157,42 @@ export function longLevel(sessions: readonly SessionResult[], levelOf: (passageI
 }
 
 /** Leesvormen waarin je een boek kunt lezen. Woord voor woord zit er bewust niet bij: bij lange tekst zakt het begrip, omdat je niet terug kunt kijken. */
-export const BOOK_DAILY_MODES = ['chunks', 'forward', 'fixation', 'reading', 'paper'];
+export const BOOK_DAILY_MODES = ['chunks', 'forward', 'fixation', 'reading', 'paper', 'flow'];
 /** De leesvorm waarin je de techniek van vandaag toepast op je eigen boek. */
 export function bookModeFor(lesson: {exerciseId: string; support: string} | null): string {
   if (!lesson) return 'chunks';
   const pick = [lesson.exerciseId, lesson.support].find(id => BOOK_DAILY_MODES.includes(id));
   if (pick) return pick;
-  return lesson.exerciseId === 'rsvp' || lesson.support === 'innerstem' ? 'reading' : 'chunks';
+  // Woord voor woord past niet bij een boek; daar lees je een gewone bladzijde met een zacht ritme.
+  return lesson.exerciseId === 'rsvp' || lesson.support === 'innerstem' ? 'flow' : 'chunks';
+}
+
+/**
+ * Husselt de antwoorden van elke vraag, vast per tekst (dezelfde tekst toont dezelfde volgorde),
+ * zodat de plek van het goede antwoord niets verraadt.
+ */
+export function shuffleQuestions(passage: Passage): Passage {
+  let h = 2166136261;
+  for (const c of passage.id) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  const random = () => { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; };
+  return {...passage, questions: passage.questions.map(q => {
+    const order = q.options.map((_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+    return {...q, options: order.map(i => q.options[i]), answer: order.indexOf(q.answer)};
+  })};
+}
+
+/**
+ * Wat je groei betekent, in gewone taal: tempo en begrip los bekeken, vergeleken met je begintest.
+ * Geeft null zolang er nog niets te vergelijken is.
+ */
+export function growthSentence(baseline: {wpm: number; comprehension: number} | null, latest: {wpm: number; comprehension: number} | null): string | null {
+  if (!baseline || !latest || baseline.wpm <= 0) return null;
+  const tempo = Math.round((latest.wpm - baseline.wpm) / baseline.wpm * 100);
+  const grip = latest.comprehension - baseline.comprehension;
+  const gripText = Math.abs(grip) < 10 ? 'met ongeveer hetzelfde begrip' : grip > 0 ? `en je begrijpt ${grip} procentpunt meer` : `maar je begrijpt ${-grip} procentpunt minder`;
+  if (tempo >= 5 && grip <= -20) return `Je leest ${tempo}% sneller dan bij je begintest, maar je begrip is flink gedaald. Een iets rustiger tempo levert je nu meer op.`;
+  if (tempo >= 5) return `Je leest ${tempo}% sneller dan bij je begintest, ${gripText}.`;
+  if (tempo <= -5) return grip >= 10 ? `Je leest wat rustiger dan bij je begintest en begrijpt ${grip} procentpunt meer. Dat is een goede ruil.` : `Je leest ${-tempo}% langzamer dan bij je begintest. Dat gebeurt vaker op een drukke dag; kijk wat de volgende meting doet.`;
+  return grip >= 10 ? `Je tempo is gelijk gebleven en je begrijpt ${grip} procentpunt meer.` : `Je tempo en begrip zijn ongeveer gelijk aan je begintest. Groei komt meestal na een paar weken oefenen.`;
 }

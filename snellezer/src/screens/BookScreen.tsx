@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {ActivityIndicator, Pressable, StyleSheet, View} from 'react-native';
 import {BackHeader, Button, Card, Choice, Icon, Pill, ProgressBar, Row, Screen, SectionHeading, T} from '../components/UI';
-import {colors, ui} from '../design';
+import {colors, ui,themed} from '../design';
 import {useApp} from '../state/AppProvider';
 import {bookProgress, chapterAt, nextPortion, wordsBefore, type BookContent} from '../state/books';
 import {loadBookContent} from '../state/bookStore';
@@ -88,7 +88,7 @@ export function BookScreen({bookId, initialMode, actions, onBack}: {bookId: stri
   </Screen>;
 }
 
-const s = StyleSheet.create({
+const s = themed(()=>({
   preview: {padding: 16, gap: 8, borderRadius: 18, backgroundColor: ui.subtle},
   chapter: {flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12, borderRadius: 14, minHeight: 44},
-});
+}));
