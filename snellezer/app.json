@@ -82,6 +82,9 @@
       "expo-apple-authentication"
     ],
     "description": "Leer in 28 dagen sneller lezen, met behoud van begrip. Inloggen met Apple of Google kan, hoeft niet; alles blijft op je apparaat.",
-    "scheme": "snellezer"
+    "scheme": [
+      "snellezer",
+      "nl.slimwerken.snellezer"
+    ]
   }
 }
