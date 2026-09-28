@@ -1,6 +1,6 @@
 import React,{createContext,useContext,useEffect,useMemo,useRef,useState,ReactNode} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type {AppState,Exercise,Profile,ReadingSettings,SavedText,SessionResult} from '../types';
+import type {Account,AppState,Exercise,Profile,ReadingSettings,SavedText,SessionResult} from '../types';
 import {getExercise} from '../data/content';
 import {initialState,deriveStats,appendSession,hydrate,dateKey} from './model';
 import {pathProgress,lessonPlanIds,effectiveWpm} from './rules';
@@ -18,6 +18,11 @@ function useStore(){
  const stats=useMemo(()=>deriveStats(state),[state]);const stateRef=useRef(state);stateRef.current=state;
  return {state,ready,storageError,stats,
  updateProfile:(partial:Partial<Profile>)=>setState(s=>({...s,profile:{...s.profile,...partial}})),
+ /** Inloggen: het account blijft op dit apparaat. Een lege naam vullen we met de voornaam van het account. */
+ signIn:(account:Account)=>setState(s=>({...s,account,accountChoiceMade:true,profile:{...s.profile,name:s.profile.name||account.name?.split(' ')[0]||''}})),
+ skipSignIn:()=>setState(s=>({...s,accountChoiceMade:true})),
+ signOut:()=>setState(s=>({...s,account:null,accountChoiceMade:true})),
+ showSignIn:()=>setState(s=>({...s,accountChoiceMade:false})),
  updateSettings:(partial:Partial<ReadingSettings>)=>setState(s=>({...s,settings:{...s.settings,...partial}})),
  setKidsMode:(kidsMode:boolean)=>setState(s=>({...s,kidsMode,targetWpm:kidsMode?Math.min(s.targetWpm,130):s.targetWpm})),
  setTargetWpm:(targetWpm:number)=>setState(s=>({...s,targetWpm:Math.max(60,Math.min(800,targetWpm))})),

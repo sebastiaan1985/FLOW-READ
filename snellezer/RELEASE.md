@@ -62,7 +62,7 @@ Voor alleen zelf testen op je iPhone is er Expo Go: `npx expo start` en de QR-co
 ## Storeformulieren
 
 - **Apple, privacylabel:** "Data Not Collected". Er is geen tracking, dus App Tracking Transparency is niet nodig.
-- **Google Play, gegevensveiligheid:** er worden geen gegevens verzameld of gedeeld. Er is geen account, dus een verwijderpagina voor accounts is niet nodig.
+- **Google Play, gegevensveiligheid:** er worden geen gegevens verzameld of gedeeld. Inloggen met Apple of Google is optioneel en het account (ID, voornaam, e-mail) blijft alleen op het apparaat; er is geen serveraccount, dus een verwijderpagina voor accounts is niet nodig. Uitloggen in Jouw leesplek wist het account.
 - **Privacy-URL:** `https://<jouw-domein>/privacy.html`.
 - **Leeftijd:** 4+ / PEGI 3. Er zijn geen aankopen en geen advertenties.
 - **Teksten, screenshots en feature graphic:** staan klaar in `store/` (zie `store/STORE.md`): naam, subtitel, trefwoorden, korte en lange beschrijving, 7 screenshots voor iPhone 6,7" (1290 × 2796) en Android (1080 × 1920), met en zonder kop, en de Google Play feature graphic (1024 × 500).
