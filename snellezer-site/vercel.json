@@ -3,5 +3,6 @@
   "framework": null,
   "installCommand": "echo 'Geen installatie nodig'",
   "buildCommand": "echo 'Geen build nodig: de site is één HTML-bestand'",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "cleanUrls": true
 }

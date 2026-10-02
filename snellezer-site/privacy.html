@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#143E35">
+<title>Privacy en AI · Snellezer</title>
+<meta name="description" content="Hoe Snellezer omgaat met je e-mailadres op de aanmeldlijst, en hoe we AI hebben gebruikt bij het maken van de app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Figtree:wght@400;600&display=swap">
+<style>
+:root{
+  --page:#FCFCF9; --paper:#FFFFFF; --soft:#F2F5F1; --line:#E3E8E2;
+  --ink:#0F1A20; --muted:#55615B; --accent:#0B6E63; --mint:#E7F0EB;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0E1518; --paper:#131C1F; --soft:#172125; --line:#243034;
+    --ink:#EEF3F1; --muted:#A6B3AE; --accent:#57C7B3; --mint:#1A302A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#0E1518; --paper:#131C1F; --soft:#172125; --line:#243034;
+  --ink:#EEF3F1; --muted:#A6B3AE; --accent:#57C7B3; --mint:#1A302A;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:400 17px/1.65 Figtree,"Segoe UI",system-ui,sans-serif;padding:0 16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:28px 0 72px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:40px}
+.brand{font:700 22px/1 Outfit,system-ui,sans-serif;letter-spacing:-.03em;text-decoration:none;color:var(--ink)}
+.brand span{color:#FDC64B}
+.back{color:var(--accent);font-weight:600;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+h1,h2{font-family:Outfit,system-ui,sans-serif;letter-spacing:-.025em;line-height:1.1;margin:0}
+h1{font-size:clamp(34px,6vw,48px)}
+h2{font-size:24px;margin-top:44px}
+p,ul{margin:14px 0 0}
+ul{padding-left:22px}
+li+li{margin-top:6px}
+a{color:var(--accent)}
+.lead{color:var(--muted);font-size:19px;margin-top:16px}
+.meta{color:var(--muted);font-size:14px;margin-top:10px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:20px 22px;margin-top:18px}
+.ai{background:var(--mint);border:0}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 8px;border-bottom:1px solid var(--line)}
+th{font-weight:600;white-space:nowrap}
+.scroll{overflow-x:auto}
+footer{margin-top:56px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/">snellezer<span>.</span></a>
+    <a class="back" href="/">← Terug naar de site</a>
+  </header>
+
+  <main>
+    <h1>Privacy en AI</h1>
+    <p class="lead">Kort gezegd: we vragen alleen je e-mailadres, gebruiken het alleen om je te laten weten wanneer Snellezer er is, en verkopen of delen het niet. Hieronder staat het precies.</p>
+    <p class="meta">Laatst bijgewerkt: 2 oktober 2026</p>
+
+    <h2>Wie wij zijn</h2>
+    <p>Snellezer wordt gemaakt door Elev8 Solutions, gevestigd in Almelo. Wij zijn verantwoordelijk voor de verwerking van je gegevens op deze website. Vragen? Mail naar <a href="mailto:info@elev8solutions.nl">info@elev8solutions.nl</a>.</p>
+    <p>Deze verklaring gaat over deze website en de aanmeldlijst. Voor de app zelf staat een eigen privacyverklaring in de app.</p>
+
+    <h2>Wat we bewaren als je je aanmeldt</h2>
+    <div class="scroll">
+      <table>
+        <tr><th>Gegeven</th><th>Waarom</th></tr>
+        <tr><td>Je e-mailadres</td><td>Om je één bericht te sturen als Snellezer in de App Store en Google Play staat.</td></tr>
+        <tr><td>Of je testlezer wilt zijn</td><td>Om je, als je dat aanvinkt, ook uit te nodigen voor de testversie.</td></tr>
+        <tr><td>Je score van de leestest (optioneel)</td><td>Alleen als je de korte test op deze site deed: je tempo in woorden per minuut en je begrip in procenten. Zo zien we hoe testlezers starten.</td></tr>
+        <tr><td>Datum en tijd van aanmelden</td><td>Om te weten wanneer je je aanmeldde en de lijst op tijd op te ruimen.</td></tr>
+      </table>
+    </div>
+    <p>We vragen niet je naam, je adres of je telefoonnummer. We sturen geen nieuwsbrief en verkopen je adres nooit.</p>
+
+    <h2>Op welke grond</h2>
+    <p>We verwerken je gegevens omdat je daar zelf toestemming voor geeft door je aan te melden (artikel 6, lid 1, onder a van de AVG). Je kunt die toestemming altijd intrekken: mail ons en we halen je adres van de lijst.</p>
+
+    <h2>Hoe lang we het bewaren</h2>
+    <p>We bewaren je gegevens tot uiterlijk drie maanden na de lancering van de app. Ben je testlezer, dan bewaren we je adres tot de testperiode voorbij is. Meld je je eerder af, dan verwijderen we je gegevens binnen dertig dagen.</p>
+
+    <h2>Waar je gegevens staan</h2>
+    <ul>
+      <li><b>Supabase</b> bewaart de aanmeldlijst, op servers in de Europese Unie (Ierland). Bezoekers van de site kunnen zich alleen aanmelden; de lijst lezen kan niemand behalve wij.</li>
+      <li><b>Vercel</b> host deze website. Zoals bij elke website verwerkt de host technische gegevens, zoals je IP-adres, om de pagina te kunnen tonen en te beveiligen.</li>
+      <li><b>Google Fonts</b> levert de lettertypen van deze site. Daarbij ziet Google je IP-adres.</li>
+    </ul>
+    <p>Met deze partijen gelden verwerkersafspraken volgens hun eigen voorwaarden. Gebruiken we straks een dienst om de lanceringsmail te versturen, dan vermelden we die hier voordat we iets versturen.</p>
+
+    <h2>Cookies en de leestest</h2>
+    <p>Deze site plaatst geen cookies, gebruikt geen advertenties en meet niet wie er langskomt. De korte leestest draait helemaal in je eigen browser. Je score blijft op je apparaat, tenzij je je aanmeldt; dan sturen we hem mee zoals hierboven beschreven.</p>
+
+    <h2>Je rechten</h2>
+    <p>Je mag je gegevens inzien, laten verbeteren of laten verwijderen, en je toestemming intrekken. Mail naar <a href="mailto:info@elev8solutions.nl">info@elev8solutions.nl</a>; we reageren binnen een maand. Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de <a href="https://autoriteitpersoonsgegevens.nl" rel="noopener">Autoriteit Persoonsgegevens</a>.</p>
+
+    <h2 id="ai">Hoe we AI hebben gebruikt</h2>
+    <div class="card ai">
+      <p style="margin:0">We willen open zijn over hoe Snellezer is gemaakt. Bij het bouwen van de app en deze website hebben we AI gebruikt als hulpmiddel.</p>
+    </div>
+    <ul>
+      <li><b>Waarvoor:</b> bij het ontwerp, bij het schrijven en testen van de programmacode, en bij het opstellen van oefenteksten, begripsvragen en uitleg. We gebruikten daarvoor Claude van Anthropic.</li>
+      <li><b>Wie er verantwoordelijk is:</b> wij. AI deed voorstellen; wij kozen wat erin kwam en blijven verantwoordelijk voor de inhoud. Zie je een fout in een tekst of vraag, laat het ons weten, dan passen we het aan.</li>
+      <li><b>Wat de app zelf doet:</b> in de app zit geen AI. Er is geen chatbot, en de app laat geen AI over jou beslissen. Je tempo past zich aan volgens vaste, vooraf bedachte regels, bijvoorbeeld: begreep je de tekst goed, dan mag het tempo iets omhoog.</li>
+      <li><b>Je gegevens en AI:</b> we sturen jouw gegevens, je teksten of je resultaten niet naar AI-diensten, en we gebruiken ze niet om AI te trainen.</li>
+    </ul>
+    <p>Omdat de app zelf geen AI-systeem bevat, valt hij naar ons beste weten niet onder de verplichtingen voor AI-systemen uit de Europese AI-verordening. We vermelden het gebruik van AI toch, omdat we vinden dat je mag weten hoe de app tot stand is gekomen.</p>
+
+    <h2>Wijzigingen</h2>
+    <p>Verandert er iets in hoe we met je gegevens omgaan, bijvoorbeeld omdat we een maildienst gaan gebruiken, dan passen we deze pagina aan en zetten we de datum bovenaan bij.</p>
+  </main>
+
+  <footer>Snellezer · Elev8 Solutions · <a href="/">Terug naar de site</a></footer>
+</div>
+</body>
+</html>
