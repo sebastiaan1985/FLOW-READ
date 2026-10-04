@@ -63,9 +63,8 @@ export function SignInScreen() {
                 onPress={apple}
               />
             )}
-            {googleConfigured(Platform.OS)
-              ? <GoogleButton busy={busy} setBusy={setBusy} setNote={setNote} onAccount={a => {feel.done(); signIn(a);}}/>
-              : <ProviderButton label="Doorgaan met Google" onPress={() => setNote('Inloggen met Google is nog niet ingesteld in deze versie. Ga voorlopig verder zonder account; je kunt later altijd inloggen.')}/>}
+            {/* Zonder client-ID tonen we geen Google-knop: een knop die niets doet, keurt Apple af. */}
+            {googleConfigured(Platform.OS) && <GoogleButton busy={busy} setBusy={setBusy} setNote={setNote} onAccount={a => {feel.done(); signIn(a);}}/>}
             {!!note && <T variant="caption" accessibilityRole="alert" style={{textAlign: 'center', color: '#8A3B12'}}>{note}</T>}
             <Pressable accessibilityRole="button" onPress={() => {feel.tap(); skipSignIn();}} style={({pressed}) => [s.skip, {opacity: pressed ? 0.6 : 1}]}>
               <T variant="label" color={brand.ink}>Doorgaan zonder account</T>
