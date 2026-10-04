@@ -1,6 +1,6 @@
 import React,{createContext,useContext,useEffect,useMemo,useRef,useState,ReactNode} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type {AppState,Exercise,Profile,ReadingSettings,SavedText,SessionResult} from '../types';
+import type {Account,AppState,Exercise,Profile,ReadingSettings,SavedText,SessionResult} from '../types';
 import {getExercise} from '../data/content';
 import {initialState,deriveStats,appendSession,hydrate,dateKey} from './model';
 import {pathProgress,lessonPlanIds,effectiveWpm} from './rules';
@@ -18,6 +18,12 @@ function useStore(){
  const stats=useMemo(()=>deriveStats(state),[state]);const stateRef=useRef(state);stateRef.current=state;
  return {state,ready,storageError,stats,
  updateProfile:(partial:Partial<Profile>)=>setState(s=>({...s,profile:{...s.profile,...partial}})),
+ /** Inloggen: het account blijft op dit apparaat. Een lege naam vullen we met de voornaam van het account. */
+ signIn:(account:Account)=>setState(s=>({...s,account,accountChoiceMade:true,profile:{...s.profile,name:s.profile.name||account.name?.split(' ')[0]||''}})),
+ skipSignIn:()=>setState(s=>({...s,accountChoiceMade:true})),
+ signOut:()=>setState(s=>({...s,account:null,accountChoiceMade:true})),
+ showSignIn:()=>setState(s=>({...s,accountChoiceMade:false})),
+ setTestMode:(testMode:boolean)=>setState(s=>({...s,testMode})),
  updateSettings:(partial:Partial<ReadingSettings>)=>setState(s=>({...s,settings:{...s.settings,...partial}})),
  setKidsMode:(kidsMode:boolean)=>setState(s=>({...s,kidsMode,targetWpm:kidsMode?Math.min(s.targetWpm,130):s.targetWpm})),
  setTargetWpm:(targetWpm:number)=>setState(s=>({...s,targetWpm:Math.max(60,Math.min(800,targetWpm))})),
@@ -40,8 +46,10 @@ const Context=createContext<ReturnType<typeof useStore>|null>(null);
 export function AppProvider({children}:{children:ReactNode}){return <Context.Provider value={useStore()}>{children}</Context.Provider>;}
 export function useApp(){const c=useContext(Context);if(!c)throw new Error('AppProvider missing');return c;}
 /** Vandaag in de leerweg: de les, de drie oefeningen en of de les al gehaald is. Kinderen krijgen een eigen, speelse dagtraining. */
-export function dailyLesson(state:AppState,now=new Date()):{lesson:Lesson|null;plan:Exercise[];day:number;doneToday:boolean;finished:boolean}{
+export function dailyLesson(state:AppState,now=new Date(),dayOverride?:number):{lesson:Lesson|null;plan:Exercise[];day:number;doneToday:boolean;finished:boolean}{
  const progress=pathProgress(state.sessions,now);
+ // Testmodus: een gekozen lesdag openen, los van de kalender.
+ if(dayOverride){const l=lessonForDay(dayOverride);return {lesson:l,plan:lessonPlanIds(l).map(getExercise),day:l.day,doneToday:false,finished:progress.finished};}
  if(state.kidsMode)return {lesson:null,plan:['sprint','wordflash','relax'].map(getExercise),day:progress.day,doneToday:progress.doneToday,finished:progress.finished};
  // Na dag 28 herhaal je de lessen, zodat er altijd een les van vandaag is.
  const reviewDay=2+(new Set(state.sessions.map(s=>dateKey(s.date))).size%27);

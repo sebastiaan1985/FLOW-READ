@@ -159,3 +159,15 @@ test('in practice texts the right answer rarely stands out by its length',()=>{
   const obvious=qs.filter(q=>{const L=q.options.map(o=>o.length);return L[q.answer]-Math.max(...L.filter((_,i)=>i!==q.answer))>=12;}).length;
   assert.ok(obvious/qs.length<=0.03,`${obvious} van ${qs.length} goede antwoorden zijn duidelijk langer dan elke andere keuze`);
 });
+import {accountFromGoogleToken,cleanAccount,googleConfigured} from '../src/state/auth.ts';
+test('sign-in: reads a Google ID token locally and keeps only what we need',()=>{
+  const b64=(o:object)=>Buffer.from(JSON.stringify(o)).toString('base64url');
+  const token=`${b64({alg:'RS256'})}.${b64({sub:'123',given_name:'Ella',name:'Ella de Vries',email:'ella@example.com',picture:'https://x'})}.sig`;
+  assert.deepEqual(accountFromGoogleToken(token),{provider:'google',id:'123',name:'Ella',email:'ella@example.com'});
+  assert.equal(accountFromGoogleToken('kapot'),null);
+  assert.equal(accountFromGoogleToken(`${b64({})}.${b64({email:'x@y.nl'})}.s`),null);
+  assert.equal(cleanAccount({provider:'facebook',id:'1'}),null);
+  assert.deepEqual(cleanAccount({provider:'apple',id:'a',name:'  ',email:undefined,extra:1}),{provider:'apple',id:'a',name:undefined,email:undefined});
+  assert.equal(googleConfigured('ios',{iosClientId:undefined,androidClientId:'a',webClientId:'w'}),false);
+  assert.equal(googleConfigured('web',{iosClientId:undefined,androidClientId:undefined,webClientId:'w'}),true);
+});
