@@ -30,6 +30,12 @@ Project `hmxrwvxfmhsfgfubcpwb` (EU). Tabel `public.waitlist` voor het aanmeldfor
 - **Testmodus**: 7× tikken op de voettekst van *Jouw leesplek*, of `?test=1` in de webversie. Dan staan alle 28 lessen open (knop *Start* per les) en kun je de leerweg resetten.
 - Inloggen (`src/screens/SignInScreen.tsx`, `src/state/auth.ts`): Apple op iOS; Google alleen als `EXPO_PUBLIC_GOOGLE_*_CLIENT_ID` gezet is. Account blijft lokaal. Zie `snellezer/AUTH.md`.
 - Teksten toevoegen: `scripts/extra/*.json` + `node scripts/add-texts.mjs`.
+- Tempo: één besluit `decideTempo` in `src/state/rules.ts` (grenzen in `TEMPO`); de melding én de volgende oefening gebruiken dat besluit. Tempo-push: `pushPlan` past de sprint aan op het gemeten effect.
+- Tekstbibliotheek: `textPool`/`libraryFor` in `src/data/content.ts`; tekstkiezer `src/components/TextPicker.tsx` in elke oefening met tekst. Eigen teksten zonder vragen krijgen invulvragen (`src/state/questions.ts`).
+- Voortgang en beloningen: `src/state/progress.ts` (dag 1 tegenover dag 28, records met begrip, levels, reeksniveaus, bonus-XP); vieringen in `src/components/Celebration.tsx`; uitdagingen in `src/data/challenges.ts`.
+- Oogtraining: `src/components/EyeStage.tsx` (patronen, versnellen, focuswissel) en `RelaxStage.tsx` (20/20/20, palming). Perifeer zien: `PeripheralStage.tsx` + fixeren/flitsen/vragen in `TrainingScreen.tsx`.
+- Oefenvoorkeuren (flitstijd, afstand, leestijd 1–100, streefdoel) staan in `state.prefs`; gevierde mijlpalen in `state.celebrated`.
+- Specificatie: *Snellezer Master Ontwikkelinstructies v1.1* (aangeleverd door de gebruiker); de traceability-lijst R01–R51 staat in de PR van oktober 2026.
 
 ## Controleren voor elke push (in `snellezer/`)
 
@@ -46,3 +52,4 @@ npm run build:web
 - De leespagina in Rustig ritme vult maar ongeveer half het scherm.
 - Store-materiaal: privacyverklaring voor de app als URL, screenshots, beschrijving, leeftijdsclassificatie.
 - Officiële store-badges op site en in de explainer-video zodra de app live is.
+- Abonnement (~€2/maand) en *Aankopen herstellen*: gegevenslaag staat klaar in `src/state/entitlement.ts`, store-koppeling volgt als de accounts er zijn (zie `snellezer/RELEASE.md`).

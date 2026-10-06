@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextProps, View, ViewStyle, StyleProp } from 'react-native';
+import { PanResponder, Pressable, ScrollView, StyleSheet, Text, TextProps, View, ViewStyle, StyleProp } from 'react-native';
 import * as Icons from 'lucide-react-native';
 import { colors, fonts, metrics, radius, textStyles, ui ,themed} from '../design';
 import { feel } from '../state/feedback';
@@ -18,7 +18,7 @@ export function Screen({children,style,scroll=true,footer}:{children:ReactNode;s
 export function Pill({label,icon,color=colors.accent,background=ui.forestSoft}:{label:string;icon?:string;color?:string;background?:string}){return <View style={[s.pill,{backgroundColor:background}]}>{icon&&<Icon name={icon} color={color} size={14}/>}<T variant="caption" color={color} style={{fontFamily:fonts.strong,fontSize:12}}>{label}</T></View>;}
 export function BackHeader({title,onBack,right}:{title:string;onBack:()=>void;right?:ReactNode}){return <View style={[s.row,{marginBottom:24}]}><IconButton name="back" onPress={onBack} label="Terug"/><T variant="heading" style={{flex:1,marginLeft:10,fontSize:22}}>{title}</T>{right}</View>;}
 export function Row({children,style}:{children:ReactNode;style?:StyleProp<ViewStyle>}){return <View style={[s.row,style]}>{children}</View>;}
-const s=themed(()=>({button:{minHeight:metrics.buttonHeight,borderRadius:radius.pill,paddingHorizontal:24,paddingVertical:14,flexDirection:'row',gap:12,alignItems:'center',justifyContent:'center'},iconButton:{width:44,height:44,borderRadius:22,backgroundColor:colors.surface,alignItems:'center',justifyContent:'center'},card:{backgroundColor:colors.bg,borderWidth:1,borderColor:ui.line,borderRadius:radius.hero,padding:metrics.cardPadding},row:{flexDirection:'row',alignItems:'center',gap:10},track:{height:6,backgroundColor:ui.track,borderRadius:99,overflow:'hidden'},screen:{width:'100%',maxWidth:metrics.maxWidth,alignSelf:'center',padding:metrics.padding,paddingBottom:40,gap:24},footer:{borderTopWidth:1,borderTopColor:ui.line,backgroundColor:ui.page,paddingHorizontal:metrics.padding,paddingTop:12,paddingBottom:14},footerInner:{width:'100%',maxWidth:metrics.maxWidth,alignSelf:'center',gap:8},pill:{alignSelf:'flex-start',flexDirection:'row',alignItems:'center',gap:6,borderRadius:99,paddingHorizontal:11,paddingVertical:6}}));
+const s=themed(()=>({button:{minHeight:metrics.buttonHeight,borderRadius:radius.pill,paddingHorizontal:24,paddingVertical:14,flexDirection:'row',gap:12,alignItems:'center',justifyContent:'center'},iconButton:{width:44,height:44,borderRadius:22,backgroundColor:colors.surface,alignItems:'center',justifyContent:'center'},card:{backgroundColor:colors.bg,borderWidth:1,borderColor:ui.line,borderRadius:radius.hero,padding:metrics.cardPadding},row:{flexDirection:'row',alignItems:'center',gap:10},track:{height:6,backgroundColor:ui.track,borderRadius:99,overflow:'hidden'},screen:{width:'100%',maxWidth:metrics.maxWidth,alignSelf:'center',padding:metrics.padding,paddingBottom:40,gap:24},footer:{borderTopWidth:1,borderTopColor:ui.line,backgroundColor:ui.page,paddingHorizontal:metrics.padding,paddingTop:12,paddingBottom:14},footerInner:{width:'100%',maxWidth:metrics.maxWidth,alignSelf:'center',gap:8},pill:{alignSelf:'flex-start',flexDirection:'row',alignItems:'center',gap:6,borderRadius:99,paddingHorizontal:11,paddingVertical:6},sliderTrack:{height:8,borderRadius:99,backgroundColor:ui.track,overflow:'hidden'},sliderThumb:{position:'absolute',top:8,width:28,height:28,borderRadius:14,backgroundColor:colors.bg,borderWidth:3,borderColor:colors.accent}}));
 
 /** Instelbare waarde met − en +, in de stijl van de tempokiezer. */
 export function Stepper({label,value,unit,min,max,step,onChange,format,icon}:{label:string;value:number;unit:string;min:number;max:number;step:number;onChange:(v:number)=>void;format?:(v:number)=>string;icon?:string}){
@@ -37,6 +37,50 @@ export function Stepper({label,value,unit,min,max,step,onChange,format,icon}:{la
         </View>
         <IconButton name="plus" label={`${label} verhogen`} onPress={()=>onChange(Math.min(max,value+step))}/>
       </View>
+    </View>
+  );
+}
+
+/**
+ * Schuifregelaar: slepen of tikken op de baan, met − en + voor precieze stappen en voor schermlezers.
+ * De gekozen waarde staat tijdens het slepen groot in beeld.
+ */
+export function Slider({label,value,min,max,step,onChange,unit,format,hint}:{label:string;value:number;min:number;max:number;step:number;onChange:(v:number)=>void;unit:string;format?:(v:number)=>string;hint?:string}){
+  const [width,setWidth]=React.useState(0);
+  const [drag,setDrag]=React.useState<number|null>(null);
+  const shown=drag??value;
+  const latest=React.useRef({width,min,max,step,onChange});latest.current={width,min,max,step,onChange};
+  const valueAt=(x:number)=>{const {width:w,min:lo,max:hi,step:st}=latest.current;const ratio=Math.max(0,Math.min(1,x/Math.max(1,w)));return Math.max(lo,Math.min(hi,Math.round((lo+ratio*(hi-lo))/st)*st));};
+  // Positie = waar je de baan aanraakte plus hoe ver je sindsdien sleepte.
+  const start=React.useRef(0);const last=React.useRef(value);
+  const responder=React.useRef(PanResponder.create({
+    onStartShouldSetPanResponder:()=>true,onMoveShouldSetPanResponder:()=>true,onPanResponderTerminationRequest:()=>false,
+    onPanResponderGrant:e=>{start.current=e.nativeEvent.locationX;last.current=valueAt(start.current);setDrag(last.current);},
+    onPanResponderMove:(_,g)=>{last.current=valueAt(start.current+g.dx);setDrag(last.current);},
+    onPanResponderRelease:()=>{setDrag(null);latest.current.onChange(last.current);feel.tap();},
+    onPanResponderTerminate:()=>{setDrag(null);latest.current.onChange(last.current);},
+  })).current;
+  const ratio=(shown-min)/Math.max(1,max-min);
+  const text=format?format(shown):String(shown);
+  return (
+    <View style={{gap:10}}>
+      <View style={{flexDirection:'row',alignItems:'baseline',gap:10}}>
+        <T variant="label" style={{flex:1}}>{label}</T>
+        <T variant="stat" style={{fontSize:26,lineHeight:32}}>{text}</T><T variant="caption">{unit}</T>
+      </View>
+      <View style={{flexDirection:'row',alignItems:'center',gap:12}}>
+        <IconButton name="minus" label={`${label} verlagen`} onPress={()=>onChange(Math.max(min,Math.round((value-step)/step)*step))}/>
+        <View onLayout={e=>setWidth(e.nativeEvent.layout.width)} {...responder.panHandlers}
+          accessible accessibilityRole="adjustable" accessibilityLabel={label} accessibilityValue={{min,max,now:value,text:`${text} ${unit}`}}
+          onAccessibilityAction={e=>{if(e.nativeEvent.actionName==='increment')onChange(Math.min(max,value+step));if(e.nativeEvent.actionName==='decrement')onChange(Math.max(min,value-step));}}
+          accessibilityActions={[{name:'increment'},{name:'decrement'}]}
+          style={{flex:1,height:44,justifyContent:'center'}}>
+          <View pointerEvents="none" style={s.sliderTrack}><View style={{width:`${ratio*100}%`,height:'100%',backgroundColor:colors.accent,borderRadius:99}}/></View>
+          <View pointerEvents="none" style={[s.sliderThumb,{left:Math.max(0,ratio*width-14)}]}/>
+        </View>
+        <IconButton name="plus" label={`${label} verhogen`} onPress={()=>onChange(Math.min(max,Math.round((value+step)/step)*step))}/>
+      </View>
+      {!!hint&&<T variant="caption">{hint}</T>}
     </View>
   );
 }

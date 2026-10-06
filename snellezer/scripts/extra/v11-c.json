@@ -1,0 +1,548 @@
+[
+{
+"t": "De laatste bus naar huis",
+"a": "volwassen",
+"l": 2,
+"o": "verhaal",
+"x": "Het was bijna middernacht toen Mira het station uit rende. De laatste bus stond nog aan de overkant, met draaiende motor en open deuren. Ze stak over, zwaaide met haar arm en sprong naar binnen op het moment dat de deuren dichtgingen.\n\nDe chauffeur keek haar aan in de spiegel en glimlachte. Op het nippertje, zei hij. Mira knikte buiten adem en liet zich op een stoel vallen. Behalve zij zat er alleen een oude man in de bus, met een kooi op zijn schoot. In de kooi zat een grijze duif.\n\nNa een paar haltes kon Mira haar nieuwsgierigheid niet meer bedwingen. Ze vroeg waar hij met de duif naartoe ging. De man vertelde dat het een postduif was. Morgenvroeg zou een vriend hem honderden kilometers verderop loslaten, en dan vloog hij vanzelf terug naar huis.\n\nHoe weet hij de weg, vroeg Mira. De man haalde zijn schouders op. Niemand weet het precies, zei hij. Maar hij vindt hem altijd.\n\nToen Mira uitstapte, keek ze nog even om. Ze dacht aan de duif, en aan haar eigen weg naar huis, die ze in het donker zonder nadenken liep.",
+"q": [
+[
+"Waarom rende Mira het station uit?",
+[
+"Ze was te laat voor haar werk",
+"Ze wilde de laatste bus nog halen",
+"Ze zocht een vriend",
+"Het begon te regenen"
+],
+1
+],
+[
+"Wat had de oude man bij zich?",
+[
+"Een koffer vol boeken",
+"Een kooi met een postduif",
+"Een hond aan de lijn",
+"Een grote bos bloemen"
+],
+1
+],
+[
+"Wat zei de man over hoe de duif de weg vindt?",
+[
+"Dat hij onderweg een kaart gebruikt",
+"Niemand weet het, maar hij vindt hem altijd",
+"Dat hij steeds de bus achterna vliegt",
+"Dat hij de zon daarvoor niet nodig heeft"
+],
+1
+]
+]
+},
+{
+"t": "Zo plant je een boom die het overleeft",
+"a": "volwassen",
+"l": 2,
+"o": "natuur",
+"x": "Een boom planten lijkt simpel: gat graven, boom erin, aarde erop. Toch gaat het vaak mis. Met deze stappen geef je je boom de beste start.\n\nKies eerst de goede plek. Kijk hoe groot de boom over twintig jaar wordt en zorg voor genoeg ruimte voor kruin en wortels. Plant hem niet te dicht bij je huis of bij leidingen.\n\nPlant bij voorkeur in de herfst of vroege winter, als de boom in rust is en de grond nog niet bevroren. Dan kunnen de wortels zich rustig vestigen voor het voorjaar begint.\n\nGraaf een gat dat twee keer zo breed is als de kluit, maar niet dieper. Een veelgemaakte fout is te diep planten. De plek waar de stam overgaat in de wortels hoort net boven de grond te blijven.\n\nZet de boom recht, vul het gat met aarde en druk die stevig aan. Geef daarna flink water, ook als het regent. Een jonge boom heeft de eerste jaren in droge periodes extra water nodig.\n\nZet tot slot een paal naast de boom en bind hem losjes vast. Zo blijft hij staan bij harde wind, terwijl hij nog een beetje kan bewegen. Die beweging maakt de stam juist sterker.",
+"q": [
+[
+"Wanneer kun je volgens de tekst het best een boom planten?",
+[
+"Midden in de zomer",
+"In de herfst of vroege winter",
+"Als de grond bevroren is",
+"Alleen in mei"
+],
+1
+],
+[
+"Wat is een veelgemaakte fout volgens de tekst?",
+[
+"Te ondiep planten",
+"Te veel ruimte laten",
+"Te diep planten",
+"Te weinig aarde gebruiken"
+],
+2
+],
+[
+"Waarom bind je de boom losjes vast?",
+[
+"Zo kan hij bewegen en wordt de stam sterker",
+"Zo gaan er geen vogels op de takken zitten",
+"Zo groeit de boom veel sneller omhoog",
+"Zo kan niemand de jonge boom stelen"
+],
+0
+]
+]
+},
+{
+"t": "Een gesprek met een bijenhouder",
+"a": "volwassen",
+"l": 2,
+"o": "dieren",
+"x": "Hans houdt al dertig jaar bijen achter zijn huis. Wij vroegen hem wat hem na al die jaren nog steeds verbaast.\n\nHoe bent u ooit begonnen? Mijn buurman had bijen en ik keek altijd over de schutting mee. Op een dag vroeg hij of ik wilde helpen. Daarna was ik verkocht.\n\nWat maakt bijen zo bijzonder? Een bijenvolk werkt als één groot lichaam. Er is geen baas die zegt wat er moet gebeuren. De koningin legt eieren, maar ze bestuurt niets. Toch weet elke bij precies wat ze moet doen: schoonmaken, larven voeren, de ingang bewaken of nectar halen.\n\nWordt u weleens gestoken? Natuurlijk, dat hoort erbij. Maar bijen steken alleen als ze zich bedreigd voelen. Wie rustig beweegt, heeft weinig te vrezen.\n\nWat is het moeilijkste aan bijen houden? Het weer. Na een natte zomer is er weinig nectar en moeten de bijen soms worden bijgevoerd. En er zijn ziektes en parasieten die je goed in de gaten moet houden.\n\nEn wat verbaast u nog steeds? Dat zo'n klein diertje kan dansen om de weg naar bloemen door te geven. Ik heb het duizend keer gezien en ik vind het nog steeds een wonder.",
+"q": [
+[
+"Hoe is Hans met bijen houden begonnen?",
+[
+"Hij las er een boek over",
+"Zijn buurman vroeg of hij wilde helpen",
+"Hij kreeg een bijenkast cadeau",
+"Hij volgde een cursus op school"
+],
+1
+],
+[
+"Wat zegt Hans over de koningin?",
+[
+"Zij bestuurt het hele volk",
+"Zij legt eieren, maar bestuurt niets",
+"Zij haalt de meeste nectar",
+"Zij bewaakt de ingang"
+],
+1
+],
+[
+"Wat vindt Hans het moeilijkste aan bijen houden?",
+[
+"Het weer, ziektes en parasieten",
+"De honing verkopen",
+"De bijen tellen",
+"De kasten schilderen"
+],
+0
+]
+]
+},
+{
+"t": "Pleidooi voor de papieren krant",
+"a": "volwassen",
+"l": 3,
+"o": "media",
+"x": "Ik weet het: niemand leest meer een papieren krant. Het nieuws staat sneller op je telefoon, het is gratis of goedkoop, en het past in je broekzak. Toch wil ik een lans breken voor de krant op papier.\n\nEen krant is af. Wie hem uit heeft, is klaar. Op je telefoon komt er altijd nog een bericht, nog een update en nog een video. Je scrolt door tot je merkt dat er een half uur voorbij is en je je niets meer herinnert van wat je las.\n\nEen krant laat je ook dingen lezen waar je niet naar zocht. Je bladert naar de sportpagina en blijft hangen bij een stuk over een dorp in de Achterhoek of een recensie van een boek waar je nog nooit van hoorde. Op internet bepalen algoritmes en je eigen zoekgedrag wat je ziet, en dat is vaak meer van hetzelfde.\n\nEn ja, een krant leest rustiger. Er knippert niets, er springt niets in beeld en er trilt niets in je hand.\n\nIk ben niet tegen nieuws op een scherm. Maar op zondagochtend, met koffie en een krant op tafel, lees ik anders. Langzamer, en met meer plezier.",
+"q": [
+[
+"Wat bedoelt de schrijver met een krant is af?",
+[
+"De krant is altijd te laat",
+"Als je hem uit hebt, ben je klaar",
+"De krant is van slechte kwaliteit",
+"De krant bestaat niet meer"
+],
+1
+],
+[
+"Welk voordeel van de krant noemt de schrijver nog meer?",
+[
+"Je leest dingen waar je niet naar zocht",
+"Je kunt er video's in kijken",
+"Hij is altijd gratis",
+"Hij wordt elk uur bijgewerkt"
+],
+0
+],
+[
+"Wat is de mening van de schrijver over nieuws op een scherm?",
+[
+"Hij is er fel en principieel tegen",
+"Niet tegen, maar papier leest rustiger",
+"Hij leest helemaal nooit nieuws",
+"Hij vindt een scherm beter dan papier"
+],
+1
+]
+]
+},
+{
+"t": "Het recept van oma",
+"a": "volwassen",
+"l": 1,
+"o": "verhaal",
+"x": "Toen oma overleed, vond Lotte in de keukenla een schriftje met recepten. De bladzijden waren vlekkerig en de inkt was op sommige plekken bijna verdwenen. Op de eerste bladzijde stond in sierlijke letters: appeltaart.\n\nLotte had die taart honderd keer gegeten. Ze wist hoe hij rook en hoe de korst knapte als je er een vork in zette. Maar ze had hem nooit zelf gebakken.\n\nHet recept was kort. Een pond bloem, een half pond boter, suiker, kaneel en appels. Bij de baktijd stond alleen: tot hij goed is.\n\nLotte moest lachen. Dat was precies oma. Die keek nooit op de klok, maar wist altijd wanneer iets klaar was.\n\nDe eerste taart werd te donker. De tweede was van binnen nog nat. Bij de derde zette Lotte de oven iets lager en bleef ze ernaast zitten. Ze rook, keek en wachtte. Toen de geur door de hele keuken hing, wist ze het ineens. Hij was goed.\n\nZe sneed een stuk af, ging aan de keukentafel zitten en proefde. Het smaakte bijna als vroeger. Bijna. Volgende keer zou het misschien helemaal lukken.",
+"q": [
+[
+"Wat vond Lotte in de keukenla?",
+[
+"Een oude foto",
+"Een schriftje met recepten",
+"Een brief van oma",
+"Een taartvorm"
+],
+1
+],
+[
+"Wat stond er in het recept bij de baktijd?",
+[
+"Precies een uur",
+"Veertig minuten",
+"Tot hij goed is",
+"Op de hoogste stand"
+],
+2
+],
+[
+"Hoe wist Lotte bij de derde taart dat hij klaar was?",
+[
+"Aan het geluid van de wekker",
+"Aan de geur in de keuken",
+"Aan wat haar buurvrouw zei",
+"Aan de tijd in het recept"
+],
+1
+]
+]
+},
+{
+"t": "Zo schrijf je een duidelijke mail",
+"a": "volwassen",
+"l": 2,
+"o": "communicatie",
+"x": "Veel mails worden niet gelezen, half gelezen of verkeerd begrepen. Met een paar eenvoudige regels voorkom je dat.\n\nBegin met een duidelijke onderwerpregel. Niet: vraag. Maar: kun je vrijdag de offerte nakijken? De ontvanger weet dan al voor het openen wat je wilt.\n\nZet je belangrijkste punt bovenaan. Veel mensen schrijven eerst een lange inleiding en komen pas aan het eind bij hun vraag. Draai het om. Wie maar de eerste twee zinnen leest, moet al weten waar het om gaat.\n\nHoud het kort. Eén mail, één onderwerp. Heb je meerdere vragen? Zet ze dan in een genummerd lijstje, zodat de ander ze één voor één kan beantwoorden.\n\nWees concreet over wat je verwacht. Wil je een antwoord, een besluit of alleen dat iemand op de hoogte is? En wanneer? Een duidelijke deadline helpt de ander om prioriteiten te stellen.\n\nLees je mail tot slot nog één keer na voor je hem verstuurt. Klopt de toon? Staat de bijlage er echt bij? Die tien seconden besparen vaak een tweede mail met excuses.",
+"q": [
+[
+"Wat is volgens de tekst een goede onderwerpregel?",
+[
+"Een vraag van mij",
+"Offerte vrijdag nakijken?",
+"Belangrijk, lezen!!!",
+"Hallo, even iets"
+],
+1
+],
+[
+"Waar hoort je belangrijkste punt?",
+[
+"Helemaal onderaan",
+"In de bijlage",
+"Bovenaan",
+"In de onderwerpregel alleen"
+],
+2
+],
+[
+"Wat raadt de tekst aan bij meerdere vragen?",
+[
+"Meerdere mails sturen",
+"Een genummerd lijstje maken",
+"Ze allemaal in één lange zin zetten",
+"De vragen weglaten"
+],
+1
+]
+]
+},
+{
+"t": "De vuurtorenwachter van Schiermonnikoog",
+"a": "volwassen",
+"l": 2,
+"o": "geschiedenis",
+"x": "Lang voordat schepen satellietnavigatie hadden, was een vuurtoren voor zeelieden van levensbelang. Het licht waarschuwde voor ondiepe zandbanken en wees de weg naar een veilige haven.\n\nOp veel eilanden woonde vroeger een vuurtorenwachter met zijn gezin. Zijn werk was eenvoudig om te beschrijven, maar zwaar om vol te houden. Elke avond moest de lamp branden, elke nacht moest hij blijven werken. In de tijd van olielampen moest het glas regelmatig worden schoongepoetst, want roet maakte het licht zwakker. Bij storm klom de wachter de trappen op om te controleren of alles in orde was.\n\nHet leven op een vuurtoren was vaak eenzaam. Bezoek kwam zelden, zeker in de winter, en de dichtstbijzijnde winkel lag soms uren lopen verderop. Kinderen groeiden op met het geluid van de zee en het draaiende licht boven hun bed.\n\nTegenwoordig werken bijna alle vuurtorens automatisch. Een computer zet het licht aan en uit, en storingen worden op afstand gemeld. Veel vuurtorens zijn nu museum of uitkijkpunt. Wie de trappen beklimt, krijgt een uitzicht dat de wachters ooit elke dag zagen.",
+"q": [
+[
+"Waarvoor waarschuwde het licht van een vuurtoren?",
+[
+"Voor storm in de stad",
+"Voor ondiepe zandbanken",
+"Voor andere vuurtorens",
+"Voor vliegtuigen"
+],
+1
+],
+[
+"Waarom moest het glas in de tijd van olielampen vaak worden gepoetst?",
+[
+"Omdat roet het licht zwakker maakte",
+"Omdat vogels ertegenaan vlogen",
+"Omdat het anders kapot ging",
+"Omdat het verplicht was op zondag"
+],
+0
+],
+[
+"Hoe werken de meeste vuurtorens tegenwoordig?",
+[
+"Met een wachter die er woont",
+"Automatisch, met een computer",
+"Alleen overdag",
+"Op zonne-energie en zonder licht"
+],
+1
+]
+]
+},
+{
+"t": "Mijn eerste marathon",
+"a": "volwassen",
+"l": 2,
+"o": "sport",
+"x": "Een jaar geleden kon ik nog geen vijf kilometer achter elkaar hardlopen. Afgelopen zondag liep ik mijn eerste marathon. Ik schrijf dit niet om op te scheppen, maar omdat ik iets heb geleerd over doelen.\n\nIk begon met een schema van drie keer per week. Het eerste rondje was afschuwelijk. Na tien minuten wilde ik al stoppen. Maar ik had mezelf één regel gegeven: ik ga altijd de deur uit, ook als ik maar één kilometer loop. Meestal werd het daarna toch meer.\n\nHet geheim zat niet in grote stappen, maar in kleine. Elke week liep ik iets verder dan de week ervoor. Nooit veel, maar wel steeds. Na een paar maanden liep ik tien kilometer zonder het te merken.\n\nDe marathon zelf was zwaar. Rond kilometer dertig deed alles pijn en vroeg ik me af waarom ik dit mezelf aandeed. Toen dacht ik aan al die ochtenden dat ik toch de deur uit was gegaan. Die ochtenden droegen me naar de finish.\n\nWat ik heb geleerd: een groot doel bereik je niet in één keer. Je bereikt het met een gewoonte die je volhoudt.",
+"q": [
+[
+"Welke regel had de schrijver zichzelf gegeven?",
+[
+"Altijd minstens tien kilometer lopen",
+"Altijd de deur uit, al is het één kilometer",
+"Alleen lopen als het mooi weer is",
+"Elke dag van de week gaan lopen"
+],
+1
+],
+[
+"Waar zat volgens de schrijver het geheim?",
+[
+"In dure schoenen met extra demping",
+"In kleine stappen die hij volhield",
+"In een streng en speciaal dieet",
+"In één lange en zware training"
+],
+1
+],
+[
+"Wat droeg de schrijver volgens hem naar de finish?",
+[
+"Het juichende publiek langs de weg",
+"Een energiedrankje bij kilometer dertig",
+"Alle ochtenden dat hij toch liep",
+"Zijn trainer die naast hem fietste"
+],
+2
+]
+]
+},
+{
+"t": "Waarom een kat spint",
+"a": "volwassen",
+"l": 2,
+"o": "dieren",
+"x": "Een tevreden kat op schoot laat een zacht, ronkend geluid horen. Iedereen kent het spinnen, maar hoe het precies werkt en waarom katten het doen, is nog niet helemaal opgehelderd.\n\nWaarschijnlijk ontstaat het geluid in het strottenhoofd. Spieren daar trillen snel, zowel bij het in- als uitademen. Daardoor kan een kat urenlang spinnen zonder te stoppen.\n\nDe meeste mensen denken dat een spinnende kat altijd blij is. Vaak klopt dat. Maar katten spinnen ook als ze gestrest, ziek of gewond zijn. Moederkatten spinnen tijdens de bevalling, en kittens spinnen al als ze een paar dagen oud zijn. Spinnen lijkt dus ook een manier om zichzelf of anderen gerust te stellen.\n\nSommige katten hebben een speciaal spinsel als ze eten willen. Daar zit een hoger, bijna huilend geluid in verweven, dat mensen moeilijk kunnen negeren. Het lijkt op het huilen van een baby.\n\nEr is ook een interessante theorie dat het trillen van spinnen helpt bij het herstel van botten en spieren. Dat is nog niet bewezen, maar het zou verklaren waarom katten ook spinnen als ze pijn hebben.",
+"q": [
+[
+"Waar ontstaat het geluid van spinnen waarschijnlijk?",
+[
+"In de maag",
+"In het strottenhoofd",
+"In de staart",
+"In de oren"
+],
+1
+],
+[
+"Wanneer spinnen katten volgens de tekst nog meer?",
+[
+"Alleen als ze slapen",
+"Ook als ze gestrest, ziek of gewond zijn",
+"Alleen als ze eten",
+"Alleen bij mensen die ze kennen"
+],
+1
+],
+[
+"Waar lijkt het speciale spinsel om eten op?",
+[
+"Het huilen van een baby",
+"Het fluiten van een vogel",
+"Het blaffen van een hond",
+"Het zoemen van een bij"
+],
+0
+]
+]
+},
+{
+"t": "Het verloren notitieboekje",
+"a": "volwassen",
+"l": 2,
+"o": "verhaal",
+"x": "Op een bankje in het park vond Ahmed een notitieboekje. Het was blauw, met een elastiekje eromheen. Er stond geen naam op.\n\nHij twijfelde. Het voelde verkeerd om erin te kijken, maar hoe moest hij anders weten van wie het was? Hij sloeg de eerste bladzijde open. Er stonden tekeningen in: bomen, een hond, de kiosk in het park. Daaronder korte zinnen. Dinsdag, regen. Hond van de buren weer los. De eendjes zijn groot geworden.\n\nAhmed bladerde verder. Elke bladzijde was een dag in het park, getekend en beschreven door iemand die hier blijkbaar elke dag kwam. Op de laatste beschreven bladzijde stond: morgen weer om tien uur, bij de vijver.\n\nDe volgende ochtend om tien uur stond Ahmed bij de vijver. Een oudere vrouw liep zoekend langs de bankjes en keek onder elke struik. Toen ze het blauwe boekje in zijn hand zag, lichtte haar gezicht op.\n\nZe bedankte hem wel drie keer. Daarna sloeg ze een nieuwe bladzijde open en begon te tekenen. Ahmed keek over haar schouder. Het was een jongen op een bankje, met een blauw boekje in zijn hand.",
+"q": [
+[
+"Wat stond er in het notitieboekje?",
+[
+"Telefoonnummers en adressen van vrienden",
+"Tekeningen en zinnen over dagen in het park",
+"Een dagboek over verre reizen",
+"Boodschappenlijstjes voor de hele week"
+],
+1
+],
+[
+"Hoe wist Ahmed waar hij de eigenaar kon vinden?",
+[
+"Er stond een adres voorin het boekje",
+"Dat stond op de laatste beschreven bladzijde",
+"Een parkwachter vertelde het hem",
+"Hij zag de vrouw toevallig lopen"
+],
+1
+],
+[
+"Wat tekende de vrouw op de nieuwe bladzijde?",
+[
+"De vijver met de jonge eendjes",
+"De kiosk in het midden van het park",
+"Een jongen met een blauw boekje",
+"De loslopende hond van de buren"
+],
+2
+]
+]
+},
+{
+"t": "Zo ruim je je kast in een uur op",
+"a": "volwassen",
+"l": 1,
+"o": "wonen",
+"x": "Een volle kast waar je niets meer in kunt vinden, kent bijna iedereen. Met deze aanpak ben je in een uur klaar.\n\nZet een timer op een uur. Een deadline helpt om niet te blijven twijfelen.\n\nHaal eerst alles uit de kast en leg het op je bed. Dat voelt als een grote stap, maar zo zie je pas echt wat je hebt.\n\nMaak drie stapels: houden, weggeven en weggooien. Pak elk ding één keer op en beslis meteen. Twijfel je? Stel jezelf de vraag of je het het afgelopen jaar hebt gedragen of gebruikt. Zo niet, dan is de kans groot dat je het ook komend jaar niet gebruikt.\n\nZet de spullen die je houdt terug, met wat je het vaakst gebruikt vooraan en op ooghoogte. Spullen voor een ander seizoen kunnen achterin of hoog.\n\nDoe de stapel om weg te geven meteen in een tas en zet die bij de voordeur. Zo voorkom je dat de spullen alsnog terug in de kast belanden.\n\nGefeliciteerd. Je kast is overzichtelijk, en je hebt er waarschijnlijk iemand anders blij mee gemaakt.",
+"q": [
+[
+"Waarom raadt de tekst een timer aan?",
+[
+"Een deadline helpt tegen twijfelen",
+"De kast gaat anders kapot",
+"Je wordt er sneller moe van",
+"Het klinkt gewoon een stuk leuker"
+],
+0
+],
+[
+"Welke drie stapels maak je?",
+[
+"Groot, middel en klein",
+"Houden, weggeven en weggooien",
+"Zomer, winter en lente",
+"Nieuw, oud en kapot"
+],
+1
+],
+[
+"Wat doe je met de stapel om weg te geven?",
+[
+"Terug in de kast leggen",
+"Onder je bed schuiven",
+"In een tas bij de voordeur zetten",
+"Nog een jaar bewaren"
+],
+2
+]
+]
+},
+{
+"t": "Wat een vrijwilliger in het hospice leert",
+"a": "volwassen",
+"l": 3,
+"o": "maatschappij",
+"x": "Elke dinsdagmiddag gaat Ellen naar het hospice in haar dorp. Daar verblijven mensen in hun laatste levensfase. Ellen is vrijwilliger. Ze zet koffie, maakt een praatje, leest voor of zit gewoon even naast iemand.\n\nToen ze begon, was ze bang dat het werk zwaar en verdrietig zou zijn. Dat is het soms ook. Maar ze heeft gemerkt dat er in het hospice ook veel wordt gelachen. Mensen vertellen over vroeger, over hun kinderen en over de reizen die ze hebben gemaakt.\n\nHet belangrijkste wat Ellen heeft geleerd, is luisteren. Niet om meteen iets terug te zeggen of een oplossing te bedenken, maar echt luisteren. Veel mensen willen geen advies. Ze willen dat iemand er is.\n\nOok heeft ze geleerd dat kleine dingen groot kunnen zijn. Een bewoner die nog één keer zijn lievelingssoep wilde proeven. Een vrouw die vroeg of Ellen het raam open wilde zetten, zodat ze de vogels kon horen.\n\nEllen zegt dat ze er zelf rijker van is geworden. Ze maakt zich minder druk om kleine ergernissen. En ze belt haar moeder vaker dan vroeger.",
+"q": [
+[
+"Wat doet Ellen in het hospice?",
+[
+"Ze werkt er als verpleegkundige",
+"Koffie zetten, praten of voorlezen",
+"Ze is de directeur van het hospice",
+"Ze kookt elke dag alle maaltijden"
+],
+1
+],
+[
+"Wat heeft Ellen volgens de tekst vooral geleerd?",
+[
+"Hoe je medicijnen geeft",
+"Echt luisteren",
+"Hoe je een hospice bestuurt",
+"Hoe je snel werkt"
+],
+1
+],
+[
+"Welk voorbeeld van een klein ding noemt de tekst?",
+[
+"Iemand die nog één keer zijn lievelingssoep wilde",
+"Een nieuwe televisie voor in de huiskamer",
+"Een uitstapje met alle bewoners naar zee",
+"Een groot verjaardagsfeest met een band"
+],
+0
+]
+]
+},
+{
+"t": "De uitvinding van de rits",
+"a": "volwassen",
+"l": 3,
+"o": "techniek",
+"x": "De rits zit op je jas, je tas en je spijkerbroek, en je denkt er zelden over na. Toch duurde het tientallen jaren voordat iemand een rits bedacht die echt goed werkte.\n\nRond het einde van de negentiende eeuw kwamen verschillende uitvinders met sluitingen van haakjes en oogjes die je met een schuifje kon dichtmaken. Ze werkten slecht. Ze sprongen open, haakten vast of gingen snel kapot. Mensen bleven liever knopen en veters gebruiken.\n\nPas in het begin van de twintigste eeuw ontwierp een ingenieur een verbeterde versie met kleine tandjes die precies in elkaar grepen. Een schuifje drukt de tandjes van beide kanten tegen elkaar, en trekt ze bij het openen weer uit elkaar. Dat principe gebruiken we nog steeds.\n\nEerst werd de rits vooral gebruikt voor laarzen en tabakszakjes. Pas later kwam hij in kleding. Sommige mensen vonden dat in het begin maar onfatsoenlijk, omdat je kleren zo wel heel snel konden uitgaan.\n\nTegenwoordig worden er per jaar miljarden ritsen gemaakt. Een klein, slim idee dat bijna iedereen elke dag gebruikt.",
+"q": [
+[
+"Wat was het probleem met de eerste sluitingen met haakjes?",
+[
+"Ze waren voor gewone mensen te duur",
+"Ze sprongen open of gingen snel kapot",
+"Ze waren veel te zwaar voor kleding",
+"Ze maakten te veel lawaai bij het dichtdoen"
+],
+1
+],
+[
+"Hoe werkt het principe van de rits?",
+[
+"Een schuifje drukt tandjes in elkaar",
+"Twee magneten trekken elkaar aan",
+"Een touwtje wordt strak getrokken",
+"Er zit lijm tussen de twee kanten"
+],
+0
+],
+[
+"Waarvoor werd de rits eerst vooral gebruikt?",
+[
+"Voor jurken",
+"Voor laarzen en tabakszakjes",
+"Voor tenten",
+"Voor ruimtepakken"
+],
+1
+]
+]
+},
+{
+"t": "Zondagochtend op de markt",
+"a": "volwassen",
+"l": 1,
+"o": "verhaal",
+"x": "Elke zondag om acht uur zet Joop zijn kraam op. Hij verkoopt kaas, al veertig jaar, op dezelfde plek op het plein. Hij kent zijn vaste klanten bij naam en weet welke kaas ze willen.\n\nMevrouw De Vries neemt altijd jong belegen, een plak van een pond. De man met de hond vraagt om oude kaas met komijn. En de twee studenten van de overkant komen pas tegen sluitingstijd, omdat Joop dan de laatste stukjes goedkoper verkoopt.\n\nJoop houdt van de markt. Van het geroep van de visboer, de geur van verse broodjes en het geklets van de mensen. Maar hij merkt ook dat er minder kramen zijn dan vroeger. Veel mensen doen hun boodschappen nu online of in de supermarkt.\n\nToch komen er ook nieuwe klanten. Jonge ouders met kinderwagens, die het leuk vinden om te proeven. Joop snijdt dan een klein blokje af en houdt het voor de kinderen omhoog. Meestal komen ze de week erna terug.\n\nOm één uur pakt hij zijn kraam weer in. Moe, maar tevreden. Volgende week staat hij er weer.",
+"q": [
+[
+"Wat verkoopt Joop?",
+[
+"Vis",
+"Groente",
+"Kaas",
+"Brood"
+],
+2
+],
+[
+"Waarom komen de studenten pas tegen sluitingstijd?",
+[
+"Dan zijn ze pas net wakker",
+"Dan zijn de laatste stukjes goedkoper",
+"Dan is het rustiger op de markt",
+"Dan hebben ze geen college meer"
+],
+1
+],
+[
+"Wat doet Joop voor kinderen?",
+[
+"Hij geeft ze een rode ballon",
+"Hij laat ze een blokje kaas proeven",
+"Hij laat ze helpen met inpakken",
+"Hij geeft ze allemaal een sticker"
+],
+1
+]
+]
+}
+]

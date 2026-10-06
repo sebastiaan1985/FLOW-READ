@@ -67,12 +67,19 @@ Voor alleen zelf testen op je iPhone is er Expo Go: `npx expo start` en de QR-co
 - **Leeftijd:** 4+ / PEGI 3. Er zijn geen aankopen en geen advertenties.
 - **Teksten, screenshots en feature graphic:** staan klaar in `store/` (zie `store/STORE.md`): naam, subtitel, trefwoorden, korte en lange beschrijving, 7 screenshots voor iPhone 6,7" (1290 × 2796) en Android (1080 × 1920), met en zonder kop, en de Google Play feature graphic (1024 × 500).
 
+## Abonnement (voorbereid, nog niet actief)
+
+- **Richting:** een abonnement van ongeveer € 2 per maand via de App Store en Google Play. Productcodes staan in `src/state/entitlement.ts` (`snellezer.maand` / `snellezer_maand`); pas ze aan als je de producten aanmaakt.
+- **Gescheiden van de leesgegevens:** de abonnementsstatus staat onder een eigen sleutel (`snellezer.entitlement`), los van teksten, boeken en voortgang (`snellezer.v1`). Voortgang wissen raakt het abonnement niet, en een verlopen abonnement wist niets.
+- **Nog te bouwen zodra de accounts er zijn:** de store-koppeling (bijvoorbeeld `react-native-iap` of RevenueCat, vraagt een nieuwe EAS-build), een knop *Aankopen herstellen* in Jouw leesplek (verplicht voor Apple), en wat er onder het abonnement valt. Tot die tijd toont de app niets over betalen, zodat er niets wordt beloofd wat nog niet werkt.
+- **Storeformulieren:** pas bij het aanzetten van het abonnement "geen aankopen" aan.
+
 ## Wat bewust (nog) niet in de MVP zit
 
 - **Accounts en synchronisatie tussen apparaten.** De Supabase-backend van `main` is ervoor klaar, maar dan zijn accountverwijdering in de app en een nieuwe privacyverklaring verplicht.
 - **Een kindversie van de 28 lessen.** De kindermodus heeft een eigen speelse dagtraining en 33 teksten.
 - **Meerdere profielen met avatars en het kinderavontuur** (werelden, sterren, levels). De app is voor één lezer per apparaat.
-- **Confetti, emoji en de verrassingsbonus.** Die passen niet bij het rustige ontwerp.
+- **Emoji en de verrassingsbonus.** Vieringen zijn er sinds versie 1.1 wel (confetti, sterren, ballonnen, vuurwerk), maar kort, zonder blokkeren en uit bij "beweging verminderen".
 
 Wel overgenomen uit `main`, zonder account:
 - de doneerlink naar Stichting Lezen & Schrijven;
