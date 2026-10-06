@@ -1,0 +1,587 @@
+[
+{
+"t": "Het dilemma van de gevangene",
+"a": "volwassen",
+"l": 4,
+"o": "psychologie",
+"x": "Twee verdachten worden apart verhoord. Ieder krijgt hetzelfde aanbod. Als jij bekent en de ander zwijgt, ga je vrijuit en krijgt de ander een zware straf. Als jullie allebei zwijgen, krijgen jullie allebei een lichte straf. Als jullie allebei bekennen, volgt voor beiden een middelzware straf.\n\nDit gedachte-experiment heet het dilemma van de gevangene, en het laat iets vreemds zien. Voor ieder afzonderlijk lijkt bekennen de slimste keuze, wat de ander ook doet. Maar als beiden zo redeneren, eindigen ze slechter dan wanneer ze allebei hadden gezwegen.\n\nHet dilemma duikt overal op waar eigenbelang en gezamenlijk belang botsen. Denk aan landen die afspraken maken over uitstoot, of aan bedrijven die elkaar beconcurreren met steeds lagere prijzen.\n\nInteressant wordt het als het spel vaker wordt gespeeld. Dan loont samenwerking ineens wel. Een bekende strategie is: begin met samenwerken en doe daarna wat de ander de vorige keer deed. Die eenvoudige regel bleek in computertoernooien verrassend succesvol. Vertrouwen ontstaat blijkbaar niet uit één keuze, maar uit een geschiedenis van keuzes.",
+"q": [
+[
+"Wat gebeurt er als beide verdachten bekennen?",
+[
+"Ze gaan allebei vrijuit",
+"Ze krijgen allebei een middelzware straf",
+"Ze krijgen allebei een lichte straf",
+"Eén van hen krijgt een beloning"
+],
+1
+],
+[
+"Waar duikt het dilemma volgens de tekst ook op?",
+[
+"Alleen in rechtszaken over diefstal",
+"Bij afspraken tussen landen over uitstoot",
+"Alleen bij spelletjes van kinderen",
+"Bij het voorspellen van het weer"
+],
+1
+],
+[
+"Welke strategie bleek succesvol als het spel vaker wordt gespeeld?",
+[
+"Altijd bekennen, wat er ook gebeurt",
+"Elke ronde willekeurig kiezen",
+"Eerst samenwerken, dan de ander nadoen",
+"Nooit samenwerken met de ander"
+],
+2
+]
+]
+},
+{
+"t": "Inflatie zonder ingewikkelde woorden",
+"a": "volwassen",
+"l": 3,
+"o": "economie",
+"x": "Als je boodschappen elk jaar wat duurder worden, heet dat inflatie. Je kunt met hetzelfde bedrag minder kopen dan eerst. Maar waarom stijgen prijzen eigenlijk?\n\nSoms komt het doordat iets schaarser wordt. Als olie of gas duurder wordt, worden transport, verwarming en productie duurder. Bedrijven rekenen die hogere kosten door in hun prijzen. Dat zie je terug in bijna alles wat je koopt.\n\nSoms komt het juist doordat mensen veel willen kopen. Als er veel geld rondgaat en iedereen tegelijk een fiets, een vakantie of een huis wil, kunnen verkopers hun prijzen verhogen.\n\nEen beetje inflatie is normaal. Centrale banken in Europa streven naar ongeveer twee procent per jaar. Bij een hogere inflatie verhogen ze vaak de rente. Lenen wordt dan duurder en sparen aantrekkelijker, waardoor mensen minder uitgeven en de prijzen minder hard stijgen.\n\nVoor je spaargeld is inflatie vervelend. Staat je geld op een rekening met weinig rente, dan wordt het elk jaar een beetje minder waard, ook al blijft het bedrag hetzelfde.",
+"q": [
+[
+"Wat betekent inflatie volgens de tekst?",
+[
+"Prijzen dalen elk jaar",
+"Je kunt met hetzelfde bedrag minder kopen",
+"De rente is altijd nul",
+"Lonen stijgen sneller dan prijzen"
+],
+1
+],
+[
+"Naar welke inflatie streven centrale banken in Europa ongeveer?",
+[
+"Nul procent",
+"Twee procent",
+"Tien procent",
+"Twintig procent"
+],
+1
+],
+[
+"Wat doen centrale banken vaak bij hoge inflatie?",
+[
+"Ze verlagen de rente",
+"Ze drukken meer geld",
+"Ze verhogen de rente",
+"Ze sluiten de banken"
+],
+2
+]
+]
+},
+{
+"t": "Waarom we slecht zijn in kansen inschatten",
+"a": "volwassen",
+"l": 4,
+"o": "psychologie",
+"x": "Veel mensen zijn banger voor een vliegtuigongeluk dan voor een auto-ongeluk, terwijl de kans op dat laatste veel groter is. Ons gevoel over risico wijkt vaak flink af van de cijfers.\n\nEen belangrijke oorzaak is dat we kansen inschatten aan de hand van wat makkelijk in ons opkomt. Een vliegtuigramp haalt het nieuws wereldwijd en blijft hangen. De vele kleine ongelukken op de weg zijn zo gewoon dat ze nauwelijks opvallen. Wat we vaak horen of zien, lijkt ons waarschijnlijker dan het is.\n\nOok controle speelt mee. Achter het stuur heb je het gevoel dat je zelf invloed hebt. In een vliegtuig ben je volledig afhankelijk van anderen. Risico's die we niet zelf kunnen sturen, voelen groter.\n\nDaarnaast zijn we slecht met kleine en grote getallen. Een kans van één op een miljoen en één op tienduizend voelen allebei als heel klein, terwijl de ene honderd keer zo groot is als de andere.\n\nWie dat weet, kan bewuster kiezen. Bij een belangrijke beslissing loont het om even na te gaan: voel ik dit, of weet ik dit?",
+"q": [
+[
+"Waarom lijkt een vliegtuigramp waarschijnlijker dan hij is?",
+[
+"Vliegen wordt elk jaar gevaarlijker",
+"Een ramp haalt het nieuws en blijft hangen",
+"Piloten hebben steeds minder ervaring",
+"Er zijn meer vliegtuigen dan auto's"
+],
+1
+],
+[
+"Welke rol speelt controle volgens de tekst?",
+[
+"Wat we niet sturen, voelt riskanter",
+"Controle maakt risico's altijd kleiner",
+"Controle speelt hierbij geen enkele rol",
+"Wie controle heeft, maakt meer fouten"
+],
+0
+],
+[
+"Hoeveel keer groter is een kans van één op tienduizend dan één op een miljoen?",
+[
+"Tien keer",
+"Duizend keer",
+"Honderd keer",
+"Even groot"
+],
+2
+]
+]
+},
+{
+"t": "Hoe een algoritme je tijdlijn kiest",
+"a": "volwassen",
+"l": 4,
+"o": "media",
+"x": "Op sociale media zie je zelden alles wat je vrienden en de accounts die je volgt plaatsen. Een algoritme kiest wat er bovenaan je tijdlijn komt. Maar hoe maakt het die keuze?\n\nEen algoritme is in de kern een set regels die een voorspelling doet. Het probeert te schatten hoe groot de kans is dat jij op een bericht reageert, het deelt of er lang naar kijkt. Daarvoor gebruikt het wat je eerder deed: welke berichten je bekeek, waar je bleef hangen en wat je oversloeg.\n\nDe berichten met de hoogste voorspelde score komen bovenaan. Dat klinkt handig, en vaak is het dat ook. Maar het heeft een keerzijde. Berichten die sterke emoties oproepen, zoals verontwaardiging, krijgen vaak veel reacties. Daardoor kunnen juist die berichten vaker in beeld komen.\n\nBovendien leert het algoritme van jou. Kijk je vaak naar één soort onderwerp, dan krijg je daar meer van. Zo kan je tijdlijn een smalle kijk op de wereld geven.\n\nVeel apps laten je inmiddels kiezen voor een tijdlijn op volgorde van tijd. Wie dat probeert, ziet hoe anders het beeld kan zijn.",
+"q": [
+[
+"Wat probeert het algoritme te voorspellen?",
+[
+"Hoe laat je vanavond gaat slapen",
+"Of je op een bericht zult reageren",
+"Welk merk telefoon je gebruikt",
+"Hoeveel vrienden je in totaal hebt"
+],
+1
+],
+[
+"Waarom komen berichten met sterke emoties vaak in beeld?",
+[
+"Omdat ze korter zijn",
+"Omdat ze veel reacties krijgen",
+"Omdat ze door de overheid worden gekozen",
+"Omdat ze altijd waar zijn"
+],
+1
+],
+[
+"Welk alternatief bieden veel apps inmiddels?",
+[
+"Een tijdlijn zonder plaatjes",
+"Een tijdlijn op volgorde van tijd",
+"Een tijdlijn met alleen reclame",
+"Een tijdlijn zonder tekst"
+],
+1
+]
+]
+},
+{
+"t": "Wat een goede uitleg goed maakt",
+"a": "volwassen",
+"l": 3,
+"o": "leren",
+"x": "Iedereen heeft weleens een uitleg gehad die nergens op sloeg, en een uitleg waarna alles ineens klopte. Wat is het verschil?\n\nEen goede uitleg begint bij wat de luisteraar al weet. Nieuwe kennis hecht zich aan oude kennis, zoals een nieuw stuk aan een puzzel. Wie te ver vooruit begint, laat de ander zonder aanknopingspunt achter.\n\nDaarnaast werkt een concreet voorbeeld beter dan een abstracte regel. Zeg niet alleen dat een hefboom kracht vergroot, maar laat zien hoe je met een lange stok een zware steen optilt. Het voorbeeld maakt de regel tastbaar, en daarna begrijp je de regel beter.\n\nOok de volgorde telt. Geef eerst het grote plaatje en daarna de details. Wie weet waar het verhaal naartoe gaat, kan de losse stukjes beter plaatsen.\n\nTot slot: een goede uitleger controleert of het is aangekomen. Niet met de vraag of iets duidelijk is, want daar zegt bijna iedereen ja op. Beter is het om de ander iets te laten uitleggen of toepassen. Dan blijkt vanzelf wat er is blijven hangen.",
+"q": [
+[
+"Waarom begint een goede uitleg bij wat de luisteraar al weet?",
+[
+"Omdat nieuwe kennis zich hecht aan oude kennis",
+"Omdat dat korter is",
+"Omdat de luisteraar anders boos wordt",
+"Omdat dat zo in de wet staat"
+],
+0
+],
+[
+"Wat werkt volgens de tekst beter dan een abstracte regel?",
+[
+"Een lange tekst",
+"Een concreet voorbeeld",
+"Een moeilijk woord",
+"Een strenge toon"
+],
+1
+],
+[
+"Hoe controleer je volgens de tekst het best of een uitleg is aangekomen?",
+[
+"Vragen of alles duidelijk is geworden",
+"Een week wachten en dan opnieuw vragen",
+"De ander het laten uitleggen of toepassen",
+"Alles nog een keer langzaam herhalen"
+],
+2
+]
+]
+},
+{
+"t": "De stad van vijftien minuten",
+"a": "volwassen",
+"l": 4,
+"o": "wonen",
+"x": "Stel je een stad voor waarin je binnen een kwartier lopen of fietsen bij je werk, de supermarkt, de school, de huisarts en een park bent. Dat idee heet de stad van vijftien minuten, en het staat in veel steden op de agenda.\n\nDe gedachte erachter is eenvoudig. Als dagelijkse voorzieningen dichtbij zijn, heb je minder vaak een auto nodig. Dat scheelt verkeer, lawaai en uitstoot. Mensen bewegen meer en komen elkaar vaker tegen op straat, wat de band in een buurt kan versterken.\n\nIn de praktijk is het lastiger. Veel wijken zijn ooit gebouwd om alleen te wonen, met winkels en werk ver weg. Daar voorzieningen toevoegen kost ruimte en geld. Ook werken veel mensen niet in hun eigen buurt, en dat verandert niet zomaar.\n\nCritici waarschuwen bovendien dat populaire buurten met veel voorzieningen duurder worden, waardoor mensen met minder geld er moeilijker kunnen wonen.\n\nToch passen steden het idee in kleine stappen toe: een school die na schooltijd openstaat voor de buurt, een straat die autoluw wordt of een leegstaand pand dat een buurthuis wordt.",
+"q": [
+[
+"Wat is het idee van de stad van vijftien minuten?",
+[
+"Elke rit duurt hooguit vijftien minuten met de auto",
+"Alles voor elke dag ligt een kwartier lopen of fietsen weg",
+"Winkels zijn elke dag maar vijftien minuten open",
+"Bussen rijden er elke vijftien minuten langs"
+],
+1
+],
+[
+"Welke kritiek noemt de tekst?",
+[
+"Populaire buurten worden duurder",
+"Mensen gaan veel te veel fietsen",
+"Parken worden onnodig groot",
+"Scholen worden te klein voor de wijk"
+],
+0
+],
+[
+"Welk klein voorbeeld van toepassing noemt de tekst?",
+[
+"Een nieuwe snelweg dwars door de wijk",
+"Een school die 's avonds open is voor de buurt",
+"Een groter vliegveld aan de rand van de stad",
+"Een parkeergarage onder elk park"
+],
+1
+]
+]
+},
+{
+"t": "Waarom zout ijs laat smelten",
+"a": "volwassen",
+"l": 3,
+"o": "wetenschap",
+"x": "In de winter strooit de gemeente zout op de weg. Het ijs smelt, ook als het buiten nog vriest. Hoe kan dat?\n\nZuiver water bevriest bij nul graden. Maar water met zout erin bevriest pas bij een lagere temperatuur. De zoutdeeltjes zitten de watermoleculen in de weg wanneer die zich willen ordenen tot ijskristallen. Het water moet dan verder afkoelen voordat het toch bevriest.\n\nAls je zout op ijs strooit, lost een beetje zout op in het dunne laagje water dat bijna altijd op ijs ligt. Dat zoute water bevriest niet bij min een of min twee graden. Het ijs eromheen smelt daardoor verder, en er ontstaat steeds meer zout water.\n\nDat werkt niet bij elke temperatuur. Bij strenge vorst, ver onder de min tien graden, helpt gewoon strooizout nauwelijks nog. Dan wordt soms een ander soort zout gebruikt, of zand om de weg stroef te maken.\n\nHetzelfde principe wordt in de keuken gebruikt. Wie vroeger zelf ijs maakte, zette de bak in een mengsel van ijs en zout. Dat mengsel wordt kouder dan gewoon ijs, waardoor het roomijs sneller bevriest.",
+"q": [
+[
+"Waarom bevriest zout water bij een lagere temperatuur?",
+[
+"Zout maakt het water een stuk warmer",
+"Zout hindert water bij het vormen van ijs",
+"Zout water is zwaarder dan gewoon water",
+"Zout water verdampt veel sneller"
+],
+1
+],
+[
+"Wanneer helpt gewoon strooizout nauwelijks nog?",
+[
+"Bij strenge vorst, onder min tien",
+"Bij regen die op het ijs valt",
+"Bij een temperatuur van min één",
+"Als het ijs maar heel dun is"
+],
+0
+],
+[
+"Waarvoor werd het mengsel van ijs en zout vroeger gebruikt?",
+[
+"Om soep warm te houden",
+"Om roomijs te maken",
+"Om brood te bakken",
+"Om de vloer schoon te maken"
+],
+1
+]
+]
+},
+{
+"t": "De onzichtbare arbeid van moderatoren",
+"a": "volwassen",
+"l": 4,
+"o": "media",
+"x": "Achter elk groot sociaal netwerk werken mensen die je nooit ziet. Ze heten moderatoren, en hun taak is om berichten te beoordelen die zijn gemeld als ongepast, gewelddadig of illegaal.\n\nVeel van dat werk wordt eerst door software gedaan. Systemen herkennen bijvoorbeeld bekende beelden of verdachte woorden. Maar software mist vaak de context. Is een foto van een oorlog nieuws of propaganda? Is een grap kwetsend of juist liefdevol bedoeld? Voor zulke afwegingen zijn mensen nodig.\n\nDat werk is zwaar. Moderatoren zien soms honderden berichten per dag, waarvan een deel schokkend is. Onderzoek en verhalen van moderatoren laten zien dat dit kan leiden tot stress, slaapproblemen en somberheid. Bovendien moeten ze snel beslissen, vaak binnen enkele seconden per bericht.\n\nEr is daarom steeds meer aandacht voor hun omstandigheden: betere begeleiding, kortere diensten met schokkende beelden en hulp van psychologen.\n\nWie scrolt door een redelijk schone tijdlijn, ziet het resultaat van hun werk. Het is goed om te beseffen dat daar mensen achter zitten.",
+"q": [
+[
+"Waarom zijn mensen nodig naast software?",
+[
+"Software is veel te duur",
+"Software mist vaak de context",
+"Mensen zijn sneller dan software",
+"Software mag geen berichten lezen"
+],
+1
+],
+[
+"Welke gevolgen van het werk noemt de tekst?",
+[
+"Stress, slecht slapen en somberheid",
+"Een hoger salaris en bonussen",
+"Betere ogen en een scherpe blik",
+"Meer vrije tijd en lange vakanties"
+],
+0
+],
+[
+"Welke verbetering noemt de tekst?",
+[
+"Langere diensten met meer berichten",
+"Minder pauzes tijdens het werk",
+"Hulp van psychologen en begeleiding",
+"Meer berichten per dag beoordelen"
+],
+2
+]
+]
+},
+{
+"t": "Wat bomen in de stad doen",
+"a": "volwassen",
+"l": 3,
+"o": "natuur",
+"x": "Een boom in de straat lijkt vooral mooi. Maar stadsbomen doen veel meer dan er goed uitzien.\n\nOp een hete zomerdag kan het onder een boom een paar graden koeler aanvoelen dan in de volle zon op de stoep. De boom geeft schaduw en verdampt water via zijn bladeren, wat de lucht eromheen afkoelt. In steden, waar steen en asfalt veel warmte vasthouden, maakt dat een groot verschil.\n\nBomen helpen ook bij hevige regen. Hun bladeren vangen een deel van het water op, en hun wortels zorgen dat water makkelijker de grond in zakt. Daardoor lopen straten minder snel onder.\n\nDaarnaast vangen bladeren fijnstof op, bieden bomen een plek aan vogels en insecten, en blijkt uit onderzoek dat mensen zich in groene straten vaak prettiger voelen.\n\nToch hebben stadsbomen het zwaar. Ze staan vaak in een kleine plantvak tussen kabels en leidingen, en krijgen weinig water. Een jonge boom heeft jaren nodig om groot te worden. Daarom kiezen steeds meer gemeenten voor grotere plantvakken en soorten die tegen droogte en hitte kunnen.",
+"q": [
+[
+"Waarom is het onder een boom koeler?",
+[
+"Ze maken zelf een koele wind",
+"Ze geven schaduw en verdampen water",
+"Ze trekken kou uit de grond omhoog",
+"Ze houden de zon tegen met hun wortels"
+],
+1
+],
+[
+"Hoe helpen bomen bij hevige regen?",
+[
+"Ze vangen water op en laten het wegzakken",
+"Ze houden de regenwolken boven de stad tegen",
+"Ze laten het water juist sneller stromen",
+"Ze maken de straat eromheen waterdicht"
+],
+0
+],
+[
+"Waarom hebben stadsbomen het zwaar?",
+[
+"Ze krijgen juist veel te veel water",
+"Ze staan krap en krijgen weinig water",
+"Ze worden veel te groot voor de straat",
+"Er zitten te veel vogels in hun takken"
+],
+1
+]
+]
+},
+{
+"t": "Hoe een vaccin wordt getest",
+"a": "volwassen",
+"l": 4,
+"o": "gezondheid",
+"x": "Voordat een nieuw vaccin bij de huisarts ligt, heeft het een lange weg afgelegd. Die weg bestaat uit verschillende fasen, elk met een eigen doel.\n\nEerst wordt het middel getest in het laboratorium en bij dieren. Pas als dat veilig lijkt, volgen de proeven bij mensen. In fase één krijgt een kleine groep gezonde vrijwilligers het vaccin. Onderzoekers kijken vooral of het veilig is en welke dosis passend is.\n\nIn fase twee doen honderden mensen mee. Nu wordt gekeken of het lichaam de gewenste afweer aanmaakt en welke bijwerkingen vaker voorkomen. In fase drie gaat het om duizenden of soms tienduizenden deelnemers. De helft krijgt het vaccin, de andere helft een nepmiddel. Niemand weet wie wat krijgt, ook de onderzoekers niet. Zo kan men eerlijk vergelijken hoe vaak mensen in beide groepen ziek worden.\n\nPas daarna beoordeelt een onafhankelijke instantie of het vaccin wordt toegelaten. En ook na toelating blijft men bijwerkingen volgen, want zeldzame bijwerkingen worden pas zichtbaar als miljoenen mensen een middel hebben gekregen.",
+"q": [
+[
+"Waar ligt in fase één vooral de nadruk op?",
+[
+"Op de prijs",
+"Op veiligheid en de juiste dosis",
+"Op het aantal verkochte doses",
+"Op de verpakking"
+],
+1
+],
+[
+"Waarom weet in fase drie niemand wie het echte vaccin krijgt?",
+[
+"Om eerlijk te kunnen vergelijken",
+"Omdat het vaccin nog geen naam heeft",
+"Omdat dat goedkoper is",
+"Om tijd te besparen"
+],
+0
+],
+[
+"Waarom blijft men ook na toelating bijwerkingen volgen?",
+[
+"Omdat de wet dat soms nog vergeet",
+"Zeldzame bijwerkingen zie je pas bij veel mensen",
+"Omdat het vaccin na toelating verandert",
+"Omdat artsen er nieuwsgierig naar zijn"
+],
+1
+]
+]
+},
+{
+"t": "Wat stilte met je hoofd doet",
+"a": "volwassen",
+"l": 3,
+"o": "psychologie",
+"x": "In een gewone dag is het zelden helemaal stil. Verkeer, muziek, gesprekken en meldingen van je telefoon vullen bijna elk moment. Steeds meer mensen zoeken daarom bewust stilte op, bijvoorbeeld in een kloosterweekend of tijdens een wandeling zonder oordopjes.\n\nWat doet stilte eigenlijk? Lawaai zet je lichaam licht op scherp. Je hartslag en bloeddruk kunnen stijgen, ook als je het geluid nauwelijks bewust hoort. Langdurige blootstelling aan verkeerslawaai wordt in verband gebracht met slaapproblemen en een hoger risico op hart- en vaatziekten.\n\nStilte geeft je zenuwstelsel juist de kans om te ontspannen. Veel mensen merken bovendien dat hun gedachten in stilte vanzelf gaan ordenen. Ideeën die tussen alle prikkels door niet opkwamen, komen ineens wel.\n\nDat betekent niet dat stilte altijd prettig voelt. Wie gewend is aan constant geluid, kan stilte in het begin onrustig vinden. Begin daarom klein: tien minuten zonder muziek in de trein, of de radio uit tijdens het koken. Wie dat volhoudt, merkt vaak dat stilte geen leegte is, maar ruimte.",
+"q": [
+[
+"Wat kan lawaai met je lichaam doen, ook als je het nauwelijks hoort?",
+[
+"Je hartslag en bloeddruk kunnen stijgen",
+"Je wordt er altijd slaperig van",
+"Je ogen worden beter",
+"Je spieren worden sterker"
+],
+0
+],
+[
+"Wat merken veel mensen in stilte?",
+[
+"Dat ze meer honger krijgen",
+"Dat hun gedachten zich ordenen",
+"Dat ze slechter gaan horen",
+"Dat ze sneller gaan praten"
+],
+1
+],
+[
+"Hoe raadt de tekst aan om met stilte te beginnen?",
+[
+"Met een maand in een stil klooster",
+"Klein, zoals tien minuten zonder muziek",
+"Met elke nacht oordoppen in bed",
+"Door nooit meer muziek te luisteren"
+],
+1
+]
+]
+},
+{
+"t": "De geschiedenis van de wachtrij",
+"a": "volwassen",
+"l": 3,
+"o": "geschiedenis",
+"x": "Netjes in de rij staan lijkt vanzelfsprekend, maar het is een gewoonte die mensen in de loop van de tijd hebben aangeleerd.\n\nIn drukke steden van vroeger verdrongen mensen elkaar vaak bij een kraam of een loket. Wie het sterkst duwde, was als eerste aan de beurt. Toen steden groeiden en steeds meer mensen tegelijk iets nodig hadden, zoals brood in tijden van schaarste of een kaartje voor de trein, werd de rij een manier om de chaos te ordenen.\n\nEen rij is eigenlijk een stilzwijgende afspraak: wie eerst komt, wordt eerst geholpen. Die regel voelt eerlijk, en daarom ergeren mensen zich zo aan voordringers. Onderzoek laat zien dat mensen in een rij vaak eerder iemand aanspreken die voordringt dan dat ze zelf een paar plekken achteruit gaan.\n\nTegenwoordig wachten we steeds vaker zonder echte rij. We trekken een nummertje, staan in een digitale wachtrij voor concertkaarten of horen dat we de zevende beller zijn. Het principe is hetzelfde gebleven: de eerste is het eerst aan de beurt.",
+"q": [
+[
+"Hoe ging het vaak toe in drukke steden van vroeger?",
+[
+"Iedereen wachtte netjes op zijn beurt",
+"Wie het hardst duwde, ging voor",
+"Er waren altijd nummertjes te trekken",
+"Er waren nog geen kramen of loketten"
+],
+1
+],
+[
+"Welke stilzwijgende afspraak zit achter een rij?",
+[
+"Wie het meest betaalt, gaat voor",
+"Wie eerst komt, wordt eerst geholpen",
+"Ouderen gaan altijd voor",
+"Kinderen wachten achteraan"
+],
+1
+],
+[
+"Welk modern voorbeeld van wachten noemt de tekst?",
+[
+"Een digitale wachtrij voor concertkaarten",
+"Een rij bij een bakker in de middeleeuwen",
+"Een wachtrij van koetsen",
+"Een rij paarden"
+],
+0
+]
+]
+},
+{
+"t": "Waarom je een taal sneller leert in gesprek",
+"a": "volwassen",
+"l": 3,
+"o": "taal",
+"x": "Wie een nieuwe taal leert, begint vaak met woordenlijstjes en grammaticaregels. Dat is nuttig, maar veel mensen merken dat ze pas echt vooruitgaan als ze de taal gaan gebruiken.\n\nIn een gesprek gebeurt iets bijzonders. Je moet woorden ophalen uit je geheugen, op het moment zelf. Dat ophalen versterkt het geheugen veel meer dan het nog een keer lezen van een lijstje. Bovendien hoor je hoe woorden echt worden uitgesproken en in welke situaties ze worden gebruikt.\n\nFouten maken hoort daarbij. Wie een verkeerd woord gebruikt en daarna het goede woord hoort, onthoudt dat vaak beter dan iemand die het nooit fout deed. De verrassing helpt het geheugen.\n\nVoor veel lerenden is spreken spannend. Het helpt om klein te beginnen, bijvoorbeeld met iets bestellen in een café of met een taalmaatje die dezelfde taal leert. Ook hardop praten tegen jezelf telt: beschrijf wat je doet terwijl je kookt of fietst.\n\nGrammatica en woordjes blijven belangrijk. Maar ze worden pas echt van jou als je ze gebruikt.",
+"q": [
+[
+"Waarom helpt een gesprek volgens de tekst bij het leren van een taal?",
+[
+"Omdat je woorden op het moment zelf moet ophalen",
+"Omdat gesprekken kort zijn",
+"Omdat je dan geen grammatica nodig hebt",
+"Omdat je minder fouten maakt"
+],
+0
+],
+[
+"Wat zegt de tekst over fouten maken?",
+[
+"Je kunt ze beter altijd vermijden",
+"Ze horen erbij en helpen onthouden",
+"Ze maken je voorgoed onzeker",
+"Ze komen alleen bij kinderen voor"
+],
+1
+],
+[
+"Welke oefening noemt de tekst voor wie spreken spannend vindt?",
+[
+"Alleen nog films kijken met ondertitels",
+"Hardop vertellen wat je aan het doen bent",
+"Een woordenboek helemaal uit je hoofd leren",
+"Nooit meer iets opschrijven in die taal"
+],
+1
+]
+]
+},
+{
+"t": "Wat er gebeurt als je een e-mail verstuurt",
+"a": "volwassen",
+"l": 4,
+"o": "techniek",
+"x": "Je klikt op versturen en binnen een paar seconden staat je bericht in de inbox van iemand aan de andere kant van de wereld. Achter die eenvoudige klik zit een hele reis.\n\nEerst gaat je bericht naar de server van je eigen e-mailprovider. Die bekijkt het adres van de ontvanger, vooral het deel na het apenstaartje. Via een soort telefoonboek van het internet zoekt de server op welke computer de mail voor dat domein in ontvangst neemt.\n\nDaarna wordt het bericht verstuurd, opgedeeld in kleine pakketjes. Die pakketjes reizen via kabels, soms onder de oceaan door, en via knooppunten die ze steeds een stap dichter bij hun bestemming brengen. Ze hoeven niet allemaal dezelfde route te nemen. Aan de andere kant worden ze weer in de goede volgorde gezet.\n\nDe server van de ontvanger controleert vervolgens of het bericht te vertrouwen is. Is het afzenderadres echt? Lijkt het op spam? Pas daarna komt het in de inbox, of juist in de map met ongewenste mail.\n\nDat alles gebeurt meestal binnen een paar seconden, zonder dat je er iets van merkt.",
+"q": [
+[
+"Welk deel van het e-mailadres gebruikt de server om de bestemming te vinden?",
+[
+"Het deel voor het apenstaartje",
+"Het deel na het apenstaartje",
+"De onderwerpregel",
+"De bijlage"
+],
+1
+],
+[
+"Hoe reist een e-mail over het internet?",
+[
+"In één groot stuk via de telefoonlijn",
+"In pakketjes die eigen routes nemen",
+"Alleen via satellieten in de ruimte",
+"Per post, als uitgeprinte brief"
+],
+1
+],
+[
+"Wat controleert de server van de ontvanger?",
+[
+"Of het bericht te vertrouwen is",
+"Of de afzender vandaag jarig is",
+"Hoeveel woorden het bericht telt",
+"Welke kleur de tekst heeft"
+],
+0
+]
+]
+},
+{
+"t": "Het nut van saaie routines",
+"a": "volwassen",
+"l": 2,
+"o": "psychologie",
+"x": "Elke ochtend dezelfde volgorde: opstaan, douchen, ontbijten, tanden poetsen. Het klinkt saai, maar routines maken je dag juist lichter.\n\nElke keuze kost een beetje mentale energie. Wat trek ik aan, wat eet ik, wanneer ga ik sporten? Wie al die keuzes elke dag opnieuw maakt, raakt sneller vermoeid. Een routine neemt die keuzes van je over. Je hoeft er niet meer over na te denken, en je houdt energie over voor dingen die er wel toe doen.\n\nRoutines geven ook rust. Wie weet wat er komt, voelt minder spanning. Dat zie je goed bij kinderen, die vaak beter slapen met een vast ritueel voor het slapengaan. Bij volwassenen werkt het niet anders.\n\nDe kunst is om routines bewust te kiezen. Een gewoonte om elke avond tot laat op je telefoon te kijken, is ook een routine, maar niet een die je helpt.\n\nWie een nieuwe gewoonte wil opbouwen, kan die het best koppelen aan iets wat al vastligt. Bijvoorbeeld: na het tandenpoetsen lees ik tien minuten. Zo wordt lezen vanzelf een deel van de dag.",
+"q": [
+[
+"Waarom maken routines je dag volgens de tekst lichter?",
+[
+"Ze nemen keuzes over en sparen energie",
+"Je hoeft dan veel minder te werken",
+"Routines zijn altijd leuk en gezellig",
+"Je kunt dan elke dag langer slapen"
+],
+0
+],
+[
+"Welk voorbeeld van rust door routine noemt de tekst?",
+[
+"Volwassenen die elke dag sporten",
+"Kinderen met een vast slaapritueel",
+"Dieren die in een dierentuin leven",
+"Collega's die elke week vergaderen"
+],
+1
+],
+[
+"Hoe bouw je volgens de tekst het best een nieuwe gewoonte op?",
+[
+"Door hem te koppelen aan iets wat al vastligt",
+"Door hem elke dag op een ander moment te doen",
+"Door er een beloning aan te koppelen van honderd euro",
+"Door hem alleen in het weekend te doen"
+],
+0
+]
+]
+}
+]

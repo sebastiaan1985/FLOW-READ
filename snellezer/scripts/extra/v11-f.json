@@ -1,0 +1,782 @@
+[
+{
+"t": "Lina en de verdwenen schaar",
+"a": "kids6-9",
+"l": 1,
+"o": "verhaal",
+"x": "Lina wil knutselen. Ze heeft papier en lijm. Maar waar is de schaar?\n\nZe kijkt in de la. Geen schaar. Ze kijkt onder de bank. Daar ligt een sok, maar geen schaar.\n\nDan hoort ze haar kleine broertje lachen. Hij zit in de gang. Hij knipt een papieren hoed!\n\nLina lacht ook. Samen maken ze nog een hoed. Een voor Lina en een voor de kat.",
+"q": [
+[
+"Wat wil Lina doen?",
+[
+"Koken",
+"Knutselen",
+"Fietsen",
+"Slapen"
+],
+1
+],
+[
+"Wat vindt Lina onder de bank?",
+[
+"Een sok",
+"De schaar",
+"Een boek",
+"Een bal"
+],
+0
+],
+[
+"Wie heeft de schaar?",
+[
+"De kat",
+"Haar moeder",
+"Haar kleine broertje",
+"Haar oma"
+],
+2
+]
+]
+},
+{
+"t": "De slak die wilde rennen",
+"a": "kids6-9",
+"l": 1,
+"o": "verhaal",
+"x": "Er was eens een slak die Sjors heette. Sjors wilde rennen, net als de konijnen in de wei.\n\nHij deed zijn best. Hij kroop zo snel hij kon. Maar de konijnen waren al lang weg.\n\nToen begon het te regenen. De konijnen schoten hun hol in. Sjors bleef gewoon buiten. Hij vond regen heerlijk.\n\nHij gleed over het natte gras, langs de bloemen en de paddenstoelen. Ik ben niet snel, dacht Sjors. Maar ik zie wel alles.",
+"q": [
+[
+"Wat wilde Sjors?",
+[
+"Vliegen",
+"Rennen",
+"Zwemmen",
+"Slapen"
+],
+1
+],
+[
+"Wat deden de konijnen toen het ging regenen?",
+[
+"Ze bleven buiten",
+"Ze schoten hun hol in",
+"Ze gingen zwemmen",
+"Ze gingen bij Sjors staan"
+],
+1
+],
+[
+"Wat dacht Sjors aan het eind?",
+[
+"Ik ben de snelste van de wei",
+"Ik ben niet snel, maar ik zie alles",
+"Ik wil liever een konijn zijn",
+"Ik hou helemaal niet van regen"
+],
+1
+]
+]
+},
+{
+"t": "Waarom de zee zout is",
+"a": "kids6-9",
+"l": 2,
+"o": "natuur",
+"x": "Als je in de zee zwemt en water binnenkrijgt, proef je het meteen: de zee is zout. Hoe komt dat?\n\nRegen valt op de bergen en de rotsen. Het water spoelt kleine stukjes zout uit de stenen. Rivieren nemen dat zout mee naar de zee.\n\nIn de zee verdampt het water door de zon. Het water gaat omhoog en wordt weer wolken. Maar het zout gaat niet mee. Dat blijft achter in de zee.\n\nZo komt er al heel lang steeds een beetje zout bij. Daarom is de zee zout, en een rivier niet.",
+"q": [
+[
+"Waar komt het zout in de zee vandaan?",
+[
+"Uit de wolken boven zee",
+"Uit stenen, via de rivieren",
+"Uit de vissen in de zee",
+"Uit de warme zon"
+],
+1
+],
+[
+"Wat gebeurt er met het zout als zeewater verdampt?",
+[
+"Het gaat mee de lucht in",
+"Het blijft achter in de zee",
+"Het verdwijnt",
+"Het wordt suiker"
+],
+1
+],
+[
+"Welk water is niet zout volgens de tekst?",
+[
+"De zee",
+"Een rivier",
+"De oceaan",
+"Een golf"
+],
+1
+]
+]
+},
+{
+"t": "Opa's oude fiets",
+"a": "kids6-9",
+"l": 1,
+"o": "verhaal",
+"x": "In de schuur van opa staat een oude fiets. Hij is groen en een beetje roestig.\n\nMag ik erop, vraagt Noor. Opa lacht. Hij is te groot voor jou, zegt hij. Maar we kunnen hem samen opknappen.\n\nZe pompen de banden op. Ze maken de ketting schoon met een doekje. Noor mag de bel poetsen tot hij glimt.\n\nDan stapt opa op. Hij fietst een rondje door de tuin. Noor rent erachteraan. Ring ring, doet de bel. Het klinkt als nieuw.",
+"q": [
+[
+"Welke kleur heeft de fiets?",
+[
+"Rood",
+"Blauw",
+"Groen",
+"Geel"
+],
+2
+],
+[
+"Wat mag Noor poetsen?",
+[
+"De bel",
+"Het zadel",
+"De lamp",
+"Het stuur"
+],
+0
+],
+[
+"Wie fietst er aan het eind een rondje?",
+[
+"Noor",
+"Opa",
+"Oma",
+"De buurman"
+],
+1
+]
+]
+},
+{
+"t": "Hoe een spin een web maakt",
+"a": "kids6-9",
+"l": 2,
+"o": "dieren",
+"x": "Een spinnenweb ziet er heel ingewikkeld uit. Toch maakt een spin het helemaal zelf, vaak in minder dan een uur.\n\nDe spin heeft kleine klieren achter op haar lijf. Daaruit komt een vloeistof die in de lucht een draad wordt. Die draad is dunner dan een haar, maar heel sterk.\n\nEerst maakt de spin een paar lange draden als een frame. Daarna spint ze draden van het midden naar buiten, zoals de spaken van een wiel. Tot slot loopt ze in rondjes en maakt ze een plakkerige spiraal.\n\nAls er een vlieg in het web vliegt, voelt de spin het trillen. Dan weet ze dat er eten is.",
+"q": [
+[
+"Waar komt de draad van een spin vandaan?",
+[
+"Uit haar mond, als spuug",
+"Uit klieren achter op haar lijf",
+"Uit haar acht poten",
+"Uit een boom in de buurt"
+],
+1
+],
+[
+"Wat maakt de spin als laatste?",
+[
+"Een stevig frame",
+"Spaken als van een wiel",
+"Een plakkerige spiraal",
+"Een zacht nestje"
+],
+2
+],
+[
+"Hoe weet de spin dat er een vlieg in het web zit?",
+[
+"Ze hoort hem zoemen",
+"Ze voelt het trillen",
+"Ze ruikt hem",
+"Ze ziet het meteen"
+],
+1
+]
+]
+},
+{
+"t": "Het verjaardagscadeau",
+"a": "kids6-9",
+"l": 1,
+"o": "verhaal",
+"x": "Morgen is mama jarig. Tim wil haar iets geven, maar hij heeft geen geld.\n\nHij denkt goed na. Dan pakt hij een groot vel papier en zijn stiften. Hij tekent mama, papa, zijn zus en zichzelf. Iedereen lacht op de tekening. Zelfs de hond.\n\nOnderaan schrijft hij: voor de liefste mama.\n\nDe volgende ochtend geeft hij de tekening. Mama kijkt heel lang. Dan geeft ze Tim een dikke knuffel. Dit is het mooiste cadeau, zegt ze. Ze hangt de tekening op de koelkast.",
+"q": [
+[
+"Waarom kan Tim niets kopen?",
+[
+"De winkel is dicht",
+"Hij heeft geen geld",
+"Hij is ziek",
+"Het regent"
+],
+1
+],
+[
+"Wat tekent Tim?",
+[
+"Hun huis met de tuin",
+"Zijn familie en de hond",
+"Een grote verjaardagstaart",
+"Een bos met bloemen"
+],
+1
+],
+[
+"Waar hangt mama de tekening?",
+[
+"In de gang",
+"Op de koelkast",
+"Boven haar bed",
+"Op de voordeur"
+],
+1
+]
+]
+},
+{
+"t": "Waarom katten op hun pootjes landen",
+"a": "kids6-9",
+"l": 2,
+"o": "dieren",
+"x": "Als een kat valt, draait hij zich in de lucht om. Meestal komt hij op zijn pootjes neer. Hoe doet hij dat?\n\nEen kat heeft een heel soepele rug. Als hij valt, kijkt hij eerst waar boven en onder is. Dan draait hij eerst zijn kop, daarna de voorkant van zijn lijf en dan de achterkant.\n\nZijn pootjes buigen als veren als hij landt. Zo vangt hij de klap op.\n\nMaar let op: ook een kat kan zich pijn doen. Laat een kat dus nooit expres vallen.",
+"q": [
+[
+"Wat heeft een kat dat helpt bij het draaien?",
+[
+"Een lange staart alleen",
+"Een heel soepele rug",
+"Grote oren",
+"Scherpe nagels"
+],
+1
+],
+[
+"Wat draait de kat als eerste?",
+[
+"Zijn staart",
+"Zijn kop",
+"Zijn achterpoten",
+"Zijn buik"
+],
+1
+],
+[
+"Wat zegt de tekst aan het eind?",
+[
+"Katten doen zich nooit pijn",
+"Laat een kat nooit expres vallen",
+"Katten houden van vallen",
+"Katten kunnen vliegen"
+],
+1
+]
+]
+},
+{
+"t": "De sneeuwdag",
+"a": "kids6-9",
+"l": 1,
+"o": "verhaal",
+"x": "Als Emma wakker wordt, is alles wit. Het heeft de hele nacht gesneeuwd!\n\nSnel trekt ze haar laarzen en haar muts aan. Buiten is het stil. De sneeuw kraakt onder haar voeten.\n\nSamen met de buurjongen bouwt ze een sneeuwpop. Hij krijgt een wortel als neus en twee steentjes als ogen. Emma geeft hem haar oude sjaal.\n\nDan gooit de buurjongen een sneeuwbal. Emma gooit terug. Ze lachen zo hard dat ze in de sneeuw vallen.\n\nBinnen krijgt ze warme chocolademelk. Haar wangen zijn rood. Wat een mooie dag.",
+"q": [
+[
+"Wat ziet Emma als ze wakker wordt?",
+[
+"Het regent hard",
+"Alles is wit",
+"Een regenboog",
+"Een storm"
+],
+1
+],
+[
+"Wat krijgt de sneeuwpop als neus?",
+[
+"Een steentje",
+"Een wortel",
+"Een tak",
+"Een knoop"
+],
+1
+],
+[
+"Wat krijgt Emma binnen?",
+[
+"Soep",
+"Warme chocolademelk",
+"Thee",
+"Limonade"
+],
+1
+]
+]
+},
+{
+"t": "Het geheim van de oude kaart",
+"a": "kids9-12",
+"l": 2,
+"o": "verhaal",
+"x": "Op zolder bij oma vond Daan een oude kaart. Het papier was geel en gekreukt. Er stonden bomen op getekend, een beekje en een groot kruis bij een rare steen.\n\nDaan wist meteen waar het was. Het bos achter oma's huis had precies zo'n beekje. Samen met zijn zus Fenna ging hij op pad.\n\nZe volgden het beekje tot ze bij een grote steen kwamen die eruitzag als een slapende hond. Daar moest het zijn. Ze groeven met hun handen in de zachte grond. Na een tijdje voelde Fenna iets hards.\n\nHet was een blikken trommel. Erin zaten knikkers, een zakmes en een briefje. Op het briefje stond: verstopt door Wim, tien jaar oud.\n\nThuis lieten ze het aan oma zien. Ze begon te lachen. Wim, zei ze, dat is jullie opa. Die trommel heeft hij zestig jaar geleden begraven. Hij heeft hem nooit meer teruggevonden.",
+"q": [
+[
+"Waar vond Daan de kaart?",
+[
+"In de schuur",
+"Op zolder bij oma",
+"In het bos",
+"Op school"
+],
+1
+],
+[
+"Waar leek de grote steen op?",
+[
+"Een slapende hond",
+"Een kat",
+"Een huis",
+"Een boot"
+],
+0
+],
+[
+"Wie was Wim?",
+[
+"De buurman",
+"De opa van Daan en Fenna",
+"Een schatzoeker",
+"De boswachter"
+],
+1
+]
+]
+},
+{
+"t": "Hoe een regenboog ontstaat",
+"a": "kids9-12",
+"l": 2,
+"o": "natuur",
+"x": "Na een regenbui, als de zon weer gaat schijnen, zie je soms een prachtige regenboog. Maar hoe komt die er eigenlijk?\n\nZonlicht lijkt wit, maar het bestaat uit alle kleuren door elkaar. Als zonlicht in een regendruppel komt, buigt het een beetje af. Elke kleur buigt net een beetje anders. Rood buigt het minst en violet het meest. Daardoor worden de kleuren uit elkaar gehaald, zoals bij een prisma.\n\nHet licht kaatst binnenin de druppel terug en komt er aan de voorkant weer uit. Miljoenen druppels doen dat tegelijk, en zo zie je een grote boog van kleuren.\n\nJe ziet een regenboog alleen als de zon achter je staat en de regen voor je. Daarom zie je hem vaak in de namiddag, als de zon lager staat.\n\nSoms zie je zelfs twee regenbogen. De tweede is zwakker, en de kleuren staan dan in omgekeerde volgorde.",
+"q": [
+[
+"Waaruit bestaat wit zonlicht?",
+[
+"Alleen uit geel licht",
+"Uit alle kleuren door elkaar",
+"Uit rood en blauw",
+"Uit warmte"
+],
+1
+],
+[
+"Waar moet de zon staan om een regenboog te zien?",
+[
+"Achter je",
+"Voor je",
+"Recht boven je",
+"Onder de horizon"
+],
+0
+],
+[
+"Wat is er bijzonder aan de tweede regenboog?",
+[
+"Hij is veel feller dan de eerste",
+"De kleuren staan omgekeerd",
+"Hij is helemaal wit van kleur",
+"Hij staat onder de eerste boog"
+],
+1
+]
+]
+},
+{
+"t": "Waarom dinosaurussen verdwenen",
+"a": "kids9-12",
+"l": 2,
+"o": "geschiedenis",
+"x": "Miljoenen jaren lang leefden er dinosaurussen op aarde. Sommige waren zo groot als een huis, andere zo klein als een kip. Ongeveer zesenzestig miljoen jaar geleden verdwenen de meeste soorten ineens. Wat is er gebeurd?\n\nDe meeste wetenschappers denken dat een enorme rots uit de ruimte, een meteoriet, op aarde insloeg. Die was ongeveer tien kilometer breed. De inslag was zo krachtig dat er een gigantische krater ontstond, in het huidige Mexico.\n\nDoor de inslag kwam er heel veel stof en rook in de lucht. Dat hield het zonlicht maandenlang tegen. Het werd koud en donker, en planten konden niet meer groeien. Zonder planten hadden planteneters geen eten meer, en daarna ook de vleeseters niet.\n\nNiet alle dieren stierven uit. Kleine dieren die weinig eten nodig hadden, overleefden. En wist je dat vogels eigenlijk afstammen van dinosaurussen? Elke duif in de stad is dus een verre familie van de T. rex.",
+"q": [
+[
+"Wat denken de meeste wetenschappers dat er gebeurde?",
+[
+"Een grote overstroming",
+"Een meteoriet sloeg in op aarde",
+"Alle vulkanen barstten tegelijk uit",
+"De dinosaurussen werden ziek"
+],
+1
+],
+[
+"Waarom konden planten niet meer groeien?",
+[
+"Stof en rook hielden de zon tegen",
+"Het werd op aarde veel te heet",
+"De planten werden allemaal opgegeten",
+"Het bleef maandenlang regenen"
+],
+0
+],
+[
+"Welke dieren stammen volgens de tekst af van dinosaurussen?",
+[
+"Katten",
+"Vogels",
+"Vissen",
+"Paarden"
+],
+1
+]
+]
+},
+{
+"t": "Een dag als dierenverzorger",
+"a": "kids9-12",
+"l": 2,
+"o": "dieren",
+"x": "Jesse werkt in een dierentuin. Zijn dag begint om half acht, lang voordat de bezoekers komen.\n\nEerst loopt hij langs alle verblijven om te kijken of alle dieren gezond zijn. Hij let op of ze normaal bewegen en of ze goed eten. Daarna maakt hij het eten klaar. De apen krijgen groente en fruit, maar het eten wordt verstopt in dozen en takken. Zo moeten ze zoeken, net als in het wild. Dat houdt ze bezig.\n\nRond tien uur maakt Jesse de verblijven schoon. Dat is zwaar werk, met een kruiwagen en een bezem. Daarna is er tijd voor training. De olifant leert bijvoorbeeld om zijn poot op een blok te leggen. Dan kan de dierenarts zijn voet makkelijk controleren, zonder dat de olifant bang wordt.\n\nIn de middag geeft Jesse soms een praatje voor bezoekers. Hij vertelt over de dieren en waarom het belangrijk is om ze in het wild te beschermen.\n\nHet mooiste vindt hij dat geen dag hetzelfde is.",
+"q": [
+[
+"Waarom verstopt Jesse het eten van de apen?",
+[
+"Zodat de bezoekers het eten niet zien",
+"Dan moeten ze zoeken, net als in het wild",
+"Omdat het eten anders snel bederft",
+"Omdat de apen dat grappig vinden"
+],
+1
+],
+[
+"Waarom leert de olifant zijn poot op een blok te leggen?",
+[
+"Voor een kunstje voor de bezoekers",
+"Zodat de dierenarts zijn voet kan zien",
+"Om zijn poten sterker te maken",
+"Om te leren dansen op muziek"
+],
+1
+],
+[
+"Wat vindt Jesse het mooiste aan zijn werk?",
+[
+"Dat hij veel verdient",
+"Dat geen dag hetzelfde is",
+"Dat hij vroeg vrij is",
+"Dat hij nooit hoeft schoon te maken"
+],
+1
+]
+]
+},
+{
+"t": "Waarom je niet kunt kietelen bij jezelf",
+"a": "kids9-12",
+"l": 2,
+"o": "lichaam",
+"x": "Probeer het maar eens: kietel jezelf onder je voet. Grote kans dat je niet gaat lachen. Maar als iemand anders het doet, lig je dubbel. Hoe kan dat?\n\nJe brein is heel goed in voorspellen. Als jij je eigen hand beweegt, weet je brein precies wat er gaat gebeuren. Het weet waar je vingers komen en hoe hard ze drukken. Daardoor is er geen verrassing, en reageert je lichaam veel minder.\n\nAls een ander je kietelt, weet je brein niet precies wanneer en waar de vingers komen. Die onzekerheid maakt het kietelen zo sterk.\n\nWetenschappers hebben dit getest met een robot. Mensen bedienden zelf een robotarm die hun hand kietelde. Als de robot precies deed wat zij deden, voelden ze bijna niets. Maar toen de robot met een kleine vertraging reageerde, begon het wel te kietelen. De vertraging maakte het onvoorspelbaar.\n\nDus als je ooit gekieteld wordt en het niet wilt: probeer je hand op de hand van de ander te leggen. Dan kan je brein meevoorspellen.",
+"q": [
+[
+"Waarom kun je jezelf niet goed kietelen?",
+[
+"Je huid wordt dan helemaal gevoelloos",
+"Je brein voorspelt precies wat er gebeurt",
+"Je vingers zijn daarvoor te koud",
+"Je bent op dat moment te moe"
+],
+1
+],
+[
+"Wat gebeurde er toen de robot met een vertraging reageerde?",
+[
+"Mensen voelden niets",
+"Het begon wel te kietelen",
+"De robot ging kapot",
+"Mensen vielen in slaap"
+],
+1
+],
+[
+"Welke tip geeft de tekst als je niet gekieteld wilt worden?",
+[
+"Zo snel mogelijk wegrennen",
+"Je hand op die van de ander leggen",
+"Je ogen stevig dichtdoen",
+"Heel hard gaan lachen"
+],
+1
+]
+]
+},
+{
+"t": "De eerste schaatswedstrijd van Mila",
+"a": "kids9-12",
+"l": 2,
+"o": "sport",
+"x": "Mila had het hele jaar getraind. Elke zaterdagochtend stond ze om zeven uur op de ijsbaan. Nu was het eindelijk zover: haar eerste echte wedstrijd.\n\nIn de kleedkamer trilden haar handen zo erg dat ze haar veters bijna niet kon strikken. Haar trainer ging naast haar zitten. Weet je wat ik altijd doe als ik zenuwachtig ben, vroeg ze. Ik adem vier tellen in en zes tellen uit. Probeer maar.\n\nMila probeerde het. Na een paar keer werd ze rustiger.\n\nOp de baan stond ze naast een meisje dat veel groter was dan zij. Het startschot klonk. Mila zette af en schaatste zo hard ze kon. In de laatste bocht gleed ze bijna uit, maar ze herstelde zich.\n\nZe werd vierde. Geen medaille. Toch keek haar trainer heel blij. Je hebt je eigen tijd met vier seconden verbeterd, zei ze. Dat is jouw overwinning.\n\nMila keek naar het bord met de tijden. Vier seconden sneller. Ze glimlachte. Volgend jaar, dacht ze, gaat ze voor nog eens vier.",
+"q": [
+[
+"Welke ademtruc leerde de trainer Mila?",
+[
+"Vier tellen in, zes tellen uit",
+"Heel snel achter elkaar ademen",
+"Je adem een tijd inhouden",
+"Alleen door je mond ademen"
+],
+0
+],
+[
+"Welke plaats haalde Mila?",
+[
+"Eerste",
+"Tweede",
+"Vierde",
+"Laatste"
+],
+2
+],
+[
+"Waarom was de trainer toch blij?",
+[
+"Mila had een gouden medaille gewonnen",
+"Mila was vier seconden sneller dan ooit",
+"Het grote meisje naast Mila was gevallen",
+"De wedstrijd was heel kort geweest"
+],
+1
+]
+]
+},
+{
+"t": "Hoe een tunnel onder water wordt gebouwd",
+"a": "kids9-12",
+"l": 3,
+"o": "techniek",
+"x": "In Nederland rijden auto's en treinen op veel plekken onder rivieren en kanalen door. Maar hoe bouw je een tunnel onder water zonder dat alles onderloopt?\n\nEen veelgebruikte manier is de zinktunnel. Eerst worden er enorme betonnen buizen gemaakt in een droog bouwdok, een soort grote put naast het water. Elke buis is zo lang als een voetbalveld. De uiteinden worden dichtgemaakt met tijdelijke wanden, zodat de buis blijft drijven.\n\nOndertussen wordt op de bodem van de rivier een geul gegraven. Dan laten ze het bouwdok vollopen, en sleepboten trekken de drijvende buizen naar de juiste plek. Daar worden ze langzaam afgezonken, door ze vol te laten lopen met water in speciale tanks.\n\nDuikers en meetapparaten zorgen dat elke buis precies tegen de vorige komt. Daarna worden de tussenwanden weggehaald en is er een lange, droge tunnel.\n\nTot slot wordt de geul weer dichtgegooid met zand, zodat de tunnel veilig op de bodem ligt en schepen er gewoon overheen kunnen varen.",
+"q": [
+[
+"Waar worden de betonnen buizen gemaakt?",
+[
+"Op de bodem van de rivier",
+"In een droog bouwdok naast het water",
+"In een fabriek in het buitenland",
+"Op een schip"
+],
+1
+],
+[
+"Waarom blijven de buizen eerst drijven?",
+[
+"Ze zijn gemaakt van licht hout",
+"De uiteinden zijn tijdelijk dichtgemaakt",
+"Ze zijn eigenlijk heel klein",
+"Er wordt lucht omheen geblazen"
+],
+1
+],
+[
+"Wat gebeurt er als laatste?",
+[
+"De buizen worden in kleur geverfd",
+"De geul wordt dichtgegooid met zand",
+"De hele tunnel wordt opgetild",
+"Er wordt een brug overheen gebouwd"
+],
+1
+]
+]
+},
+{
+"t": "De vos en de kraai",
+"a": "kids9-12",
+"l": 1,
+"o": "verhaal",
+"x": "Een kraai had een groot stuk kaas gevonden. Ze vloog ermee naar een hoge tak om het rustig op te eten.\n\nOnder de boom kwam een vos voorbij. Hij rook de kaas en kreeg meteen honger. Maar de kraai zat te hoog. Hoe kwam hij aan dat stuk kaas?\n\nDe vos keek omhoog en zei: Wat bent u een prachtige vogel. Uw veren glanzen als zwarte zijde. Als uw stem net zo mooi is als uw veren, dan bent u de koningin van het bos.\n\nDe kraai voelde zich gevleid. Ze wilde laten horen hoe mooi ze kon zingen. Ze opende haar snavel en riep kraa. Plof, daar viel de kaas naar beneden.\n\nDe vos pakte de kaas en liep tevreden weg. Over zijn schouder riep hij nog: onthoud dit, lieve kraai. Wie naar mooie praatjes luistert, raakt soms zijn kaas kwijt.\n\nDit verhaal is al meer dan tweeduizend jaar oud. Het wordt een fabel genoemd: een kort verhaal met dieren dat een les wil leren.",
+"q": [
+[
+"Waar zat de kraai met de kaas?",
+[
+"Op het gras",
+"Op een hoge tak",
+"In een nest op de grond",
+"Op een dak"
+],
+1
+],
+[
+"Waarom liet de kraai de kaas vallen?",
+[
+"Ze was ineens bang voor de vos",
+"Ze wilde laten horen hoe ze zong",
+"Ze vond de kaas toch niet lekker",
+"Het waaide te hard op de tak"
+],
+1
+],
+[
+"Wat is een fabel volgens de tekst?",
+[
+"Een lied over vogels in het bos",
+"Een kort dierenverhaal met een les",
+"Een lang boek over het bos",
+"Een soort kaas uit Frankrijk"
+],
+1
+]
+]
+},
+{
+"t": "Wat een astronaut eet",
+"a": "kids9-12",
+"l": 2,
+"o": "ruimte",
+"x": "Als je in de ruimte bent, kun je niet even naar de supermarkt. Al het eten moet worden meegenomen. En het moet heel lang goed blijven.\n\nVroeger aten astronauten vooral eten uit tubes, een beetje zoals tandpasta. Dat was niet erg lekker. Tegenwoordig is het eten veel beter. Er zijn soepen, pasta, vlees, groente en zelfs toetjes.\n\nVeel eten is gedroogd. Dan weegt het minder en blijft het langer goed. Astronauten spuiten er water bij en warmen het op in een speciale oven.\n\nZout en peper worden vloeibaar gemaakt. Gewone korreltjes zouden wegzweven en in de ogen of de apparaten terechtkomen. Om dezelfde reden eten ze liever tortilla's dan brood, want brood kruimelt.\n\nIn de ruimte proeven mensen trouwens minder goed. Het vocht in je lichaam zakt niet naar beneden, waardoor je hoofd een beetje opgezwollen raakt, net als bij een verkoudheid. Daarom houden veel astronauten van pittig eten met veel saus.",
+"q": [
+[
+"Waarom is veel ruimte-eten gedroogd?",
+[
+"Het smaakt dan veel lekkerder",
+"Het weegt minder en blijft lang goed",
+"Er is in de ruimte geen water",
+"Astronauten willen dat zelf zo"
+],
+1
+],
+[
+"Waarom worden zout en peper vloeibaar gemaakt?",
+[
+"Omdat korreltjes zouden wegzweven",
+"Omdat het dan zouter is",
+"Omdat het goedkoper is",
+"Omdat het dan niet bederft"
+],
+0
+],
+[
+"Waarom houden veel astronauten van pittig eten?",
+[
+"Ze proeven in de ruimte minder",
+"Pittig eten houdt ze warm",
+"Pittig eten is veel gezonder",
+"Er is niets anders aan boord"
+],
+0
+]
+]
+},
+{
+"t": "Het mysterie van de verdwenen koekjes",
+"a": "kids9-12",
+"l": 1,
+"o": "verhaal",
+"x": "Op vrijdagmiddag bakte papa koekjes. Hij legde ze op een bord in de keuken om af te koelen. Toen hij na een uurtje terugkwam, waren er nog maar drie over.\n\nWie heeft de koekjes opgegeten, riep papa. Iedereen keek elkaar aan. Niemand had het gedaan, zei iedereen.\n\nLars besloot detective te spelen. Hij pakte een vergrootglas en zocht naar sporen. Op de vloer vond hij kruimels. Ze liepen van de keuken naar de gang en dan naar de trap.\n\nHij volgde het kruimelspoor naar boven. Het eindigde bij de deur van zijn zusje Roos. Maar Roos was de hele middag op hockey geweest.\n\nToen hoorde Lars iets onder het bed. Hij keek eronder. Daar lag Bobby, hun hond, met een koekje tussen zijn poten en kruimels rond zijn snuit.\n\nZaak opgelost, riep Lars. Papa moest lachen. Bobby kreeg geen koekjes meer, maar wel een wandeling. En de rest van de familie at de laatste drie samen op.",
+"q": [
+[
+"Hoeveel koekjes waren er nog over?",
+[
+"Geen",
+"Drie",
+"Tien",
+"Eén"
+],
+1
+],
+[
+"Waar eindigde het kruimelspoor?",
+[
+"Bij de voordeur",
+"Bij de deur van Roos",
+"In de tuin",
+"Bij de bank"
+],
+1
+],
+[
+"Wie had de koekjes opgegeten?",
+[
+"Roos",
+"Papa",
+"Bobby de hond",
+"Lars"
+],
+2
+]
+]
+},
+{
+"t": "Waarom bladeren groen zijn",
+"a": "kids9-12",
+"l": 2,
+"o": "natuur",
+"x": "In de lente en de zomer zijn de bomen groen. Dat komt door een stofje in de bladeren dat bladgroen heet.\n\nBladgroen is heel belangrijk voor een plant. Het vangt zonlicht op. Met de energie van dat licht maakt de plant zijn eigen voedsel. Daarvoor gebruikt hij ook water uit de grond en een gas uit de lucht. Daarbij komt zuurstof vrij, het gas dat wij inademen.\n\nWaarom groen? Zonlicht bestaat uit allerlei kleuren. Bladgroen gebruikt vooral het rode en blauwe licht. Het groene licht wordt teruggekaatst. Dat teruggekaatste licht komt in je ogen, en daarom zie je de bladeren als groen.\n\nIn de herfst maakt de boom geen nieuw bladgroen meer. Het groen verdwijnt langzaam. Dan worden andere kleuren zichtbaar die er al die tijd al zaten: geel en oranje. Daarom kleurt het bos in de herfst zo mooi.",
+"q": [
+[
+"Wat doet bladgroen?",
+[
+"Het vangt licht om voedsel te maken",
+"Het houdt het regenwater tegen",
+"Het maakt de bladeren zacht",
+"Het lokt vogels naar de boom"
+],
+0
+],
+[
+"Welk licht wordt teruggekaatst door bladgroen?",
+[
+"Rood licht",
+"Blauw licht",
+"Groen licht",
+"Geen licht"
+],
+2
+],
+[
+"Waarom kleuren bladeren in de herfst geel en oranje?",
+[
+"De wind verft de bladeren in de herfst",
+"Het groen verdwijnt en andere kleuren blijven",
+"Het wordt buiten veel kouder",
+"De zon wordt in de herfst geel"
+],
+1
+]
+]
+},
+{
+"t": "De uitvinding van het spel Monopoly",
+"a": "kids9-12",
+"l": 3,
+"o": "geschiedenis",
+"x": "Bijna iedereen kent het spel waarin je straten koopt, huizen bouwt en huur ontvangt van je tegenspelers. Maar wist je dat het oorspronkelijke spel juist bedoeld was om iets te laten zien wat níet eerlijk is?\n\nIn het begin van de twintigste eeuw bedacht de Amerikaanse Lizzie Magie een bordspel. Zij vond het oneerlijk dat landeigenaren steeds rijker werden, alleen omdat ze grond bezaten, terwijl huurders steeds armer werden. Met haar spel wilde ze laten zien hoe dat werkt.\n\nHaar spel had twee soorten regels. In de ene versie werkten spelers samen en werd iedereen beter van nieuwe rijkdom. In de andere versie probeerde je de anderen failliet te laten gaan. Die tweede versie bleek het populairst.\n\nJaren later werd het spel aangepast en verkocht door een groot bedrijf. Lizzie Magie kreeg er weinig voor, en lange tijd wist bijna niemand dat zij de bedenker was.\n\nDe volgende keer dat je speelt, kun je eraan denken: het spel waarin je zoveel mogelijk wilt bezitten, begon als een waarschuwing.",
+"q": [
+[
+"Wat wilde Lizzie Magie met haar spel laten zien?",
+[
+"Hoe je zo snel mogelijk rijk wordt",
+"Dat rijk worden door grondbezit oneerlijk is",
+"Hoe je een hele stad opbouwt",
+"Hoe je goed met geld leert rekenen"
+],
+1
+],
+[
+"Welke versie van haar spel was het populairst?",
+[
+"De versie waarin iedereen samenwerkte",
+"De versie waarin je anderen failliet maakt",
+"Een versie helemaal zonder geld",
+"Een versie speciaal voor kinderen"
+],
+1
+],
+[
+"Wat zegt de tekst over Lizzie Magie na de verkoop door een groot bedrijf?",
+[
+"Ze werd er heel rijk van",
+"Ze kreeg weinig en werd vergeten",
+"Ze werd directeur van het bedrijf",
+"Ze maakte nog tien andere spellen"
+],
+1
+]
+]
+}
+]

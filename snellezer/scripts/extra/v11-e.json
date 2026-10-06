@@ -1,0 +1,626 @@
+[
+{
+"t": "Het schip van Theseus",
+"a": "volwassen",
+"l": 5,
+"o": "filosofie",
+"x": "In een oud Grieks gedachte-experiment wordt het schip van de held Theseus in de haven bewaard. Telkens als een plank verrot, wordt hij vervangen door een nieuwe. Na vele jaren is geen enkele oorspronkelijke plank meer over. Is het dan nog hetzelfde schip?\n\nDe vraag wordt nog lastiger als je je voorstelt dat iemand alle oude planken heeft bewaard en er een tweede schip van bouwt. Welk van de twee is dan het echte schip van Theseus: het schip dat ononderbroken in de haven lag, of het schip dat uit de oorspronkelijke delen bestaat?\n\nFilosofen gebruiken dit raadsel om na te denken over identiteit. Wat maakt iets door de tijd heen tot hetzelfde ding? Is dat het materiaal, de vorm, de functie of de geschiedenis?\n\nDe vraag is minder abstract dan hij lijkt. De cellen in je lichaam worden voortdurend vervangen, en je herinneringen en overtuigingen veranderen met de jaren. Toch beschouw je jezelf als dezelfde persoon als tien jaar geleden. Ook een voetbalclub of een land blijft dezelfde naam dragen, terwijl spelers en inwoners komen en gaan.\n\nEen eenduidig antwoord bestaat niet. Maar het raadsel laat zien dat identiteit misschien minder in de onderdelen zit dan in de samenhang en het verhaal dat ze samen vormen.",
+"q": [
+[
+"Wat gebeurt er in het gedachte-experiment met het schip?",
+[
+"Het zinkt tijdens een storm",
+"Alle planken worden vervangen",
+"Het wordt aan een koning verkocht",
+"Het vaart naar een nieuw land"
+],
+1
+],
+[
+"Waarover denken filosofen met dit raadsel na?",
+[
+"Over hoe je schepen bouwt",
+"Over identiteit door de tijd",
+"Over de daden van Griekse helden",
+"Over de soorten hout in schepen"
+],
+1
+],
+[
+"Welk voorbeeld uit het dagelijks leven noemt de tekst?",
+[
+"Je lichaamscellen die worden vervangen",
+"Een auto die in de wasstraat staat",
+"Een huis dat een nieuwe kleur krijgt",
+"Een boek dat twee keer wordt gelezen"
+],
+0
+]
+]
+},
+{
+"t": "Het weer van morgen voorspellen",
+"a": "volwassen",
+"l": 4,
+"o": "wetenschap",
+"x": "Een weersverwachting lijkt een gok, maar er zit een enorme hoeveelheid rekenwerk achter. Elke dag worden wereldwijd miljoenen metingen verzameld: van weerstations, ballonnen, schepen, vliegtuigen en satellieten. Temperatuur, luchtdruk, vochtigheid en wind vormen samen een momentopname van de atmosfeer.\n\nDie metingen gaan naar supercomputers. Die verdelen de atmosfeer in een driedimensionaal raster van blokjes, en berekenen met natuurkundige wetten hoe lucht, warmte en water zich tussen die blokjes zullen verplaatsen. Stap voor stap rekenen ze zo de toekomst uit.\n\nHet probleem is dat het weer chaotisch is. Een kleine meetfout of een onnauwkeurigheid in het model groeit met de tijd uit tot een groot verschil. Daarom draaien weerdiensten een model vaak tientallen keren met iets verschillende beginwaarden. Lopen die uitkomsten weinig uiteen, dan is de verwachting betrouwbaar. Lopen ze ver uiteen, dan is er veel onzekerheid.\n\nVoor de komende twee à drie dagen zijn verwachtingen tegenwoordig goed. Na ongeveer een week wordt het lastig, en verder dan twee weken vooruit is een gedetailleerde voorspelling vrijwel niet mogelijk.",
+"q": [
+[
+"Hoe verdelen supercomputers de atmosfeer?",
+[
+"In landen en provincies",
+"In een raster van blokjes",
+"In vier seizoenen",
+"In soorten wolken"
+],
+1
+],
+[
+"Waarom draaien weerdiensten een model vaak tientallen keren?",
+[
+"Om tijd te winnen bij het rekenen",
+"Om te zien hoe ver uitkomsten uiteenlopen",
+"Omdat computers vaak vastlopen",
+"Om de mooiste uitkomst uit te kiezen"
+],
+1
+],
+[
+"Tot hoe ver vooruit is een gedetailleerde voorspelling volgens de tekst vrijwel niet meer mogelijk?",
+[
+"Verder dan twee dagen",
+"Verder dan twee weken",
+"Verder dan een jaar",
+"Verder dan een uur"
+],
+1
+]
+]
+},
+{
+"t": "Een rustige avond",
+"a": "volwassen",
+"l": 1,
+"o": "verhaal",
+"x": "Het regent zachtjes tegen het raam. Anouk zet een kop thee en gaat in haar stoel bij het raam zitten. Haar telefoon ligt in de keuken. Vanavond wil ze even niets.\n\nOp straat lopen een paar mensen met paraplu's. Een man fietst voorbij met een capuchon diep over zijn hoofd. In het huis aan de overkant gaat een lamp aan.\n\nAnouk pakt het boek dat al weken op tafel ligt. Ze leest een bladzijde, en nog een. Na een tijdje merkt ze dat ze niet meer op de regen let. Ze zit helemaal in het verhaal.\n\nDe thee wordt koud. Het maakt niet uit. Buiten wordt het donker, en de straatlantaarns gaan aan.\n\nOm tien uur legt Anouk het boek weg. Ze heeft vijftig bladzijden gelezen. Dat had ze in tijden niet gedaan. Ze voelt zich rustig en een beetje trots.\n\nMorgen leest ze verder, denkt ze. Zelfde stoel, zelfde tijd. Misschien met een nieuwe kop thee. Een warme, deze keer.",
+"q": [
+[
+"Waar ligt Anouks telefoon?",
+[
+"Op tafel",
+"In de keuken",
+"In haar tas",
+"Naast het boek"
+],
+1
+],
+[
+"Hoeveel bladzijden leest Anouk?",
+[
+"Tien",
+"Vijftig",
+"Honderd",
+"Twee"
+],
+1
+],
+[
+"Wat neemt Anouk zich voor?",
+[
+"Morgen verder lezen, op dezelfde plek",
+"Nooit meer een boek openslaan",
+"Morgen een nieuw boek gaan kopen",
+"Morgen de hele avond naar buiten"
+],
+0
+]
+]
+},
+{
+"t": "Waarom we vergeten waarom we een kamer in liepen",
+"a": "volwassen",
+"l": 3,
+"o": "psychologie",
+"x": "Je loopt naar de slaapkamer om iets te pakken, en eenmaal daar weet je niet meer wat. Het overkomt iedereen, en het heeft een naam gekregen: het deureffect.\n\nOnderzoekers ontdekten dat het doorlopen van een deur ons geheugen als het ware opdeelt in hoofdstukken. Ons brein gebruikt zulke overgangen om ervaringen te ordenen. Wat in de vorige ruimte gebeurde, wordt een afgesloten gebeurtenis, en die is daarna minder makkelijk op te halen.\n\nIn experimenten vergaten mensen vaker wat ze bij zich droegen als ze door een deur waren gelopen, dan wanneer ze dezelfde afstand in één ruimte hadden afgelegd. Ook in een virtuele omgeving op een computer trad het effect op.\n\nEr is een simpele oplossing. Ga terug naar de plek waar je het idee kreeg. Vaak schiet het je dan weer te binnen, omdat de omgeving je geheugen helpt.\n\nOf zeg hardop wat je gaat doen voordat je opstaat. Ik ga de oplader halen. Woorden blijven beter hangen dan een vaag voornemen. Zo kom je niet met lege handen terug.",
+"q": [
+[
+"Hoe heet het verschijnsel uit de tekst?",
+[
+"Het deureffect",
+"Het kamereffect",
+"Het trapeffect",
+"Het vergeeteffect"
+],
+0
+],
+[
+"Waarom vergeten we volgens onderzoekers iets na het doorlopen van een deur?",
+[
+"Deuren leiden ons af met hun kleur",
+"Het brein deelt ervaringen op bij een deur",
+"Het licht in de kamer is anders",
+"We gaan bij een deur sneller lopen"
+],
+1
+],
+[
+"Welke oplossing noemt de tekst?",
+[
+"Alle deuren in huis openlaten",
+"Teruggaan naar waar je het bedacht",
+"Langzamer door het huis lopen",
+"Een andere kamer binnenlopen"
+],
+1
+]
+]
+},
+{
+"t": "Wat een notaris eigenlijk doet",
+"a": "volwassen",
+"l": 4,
+"o": "maatschappij",
+"x": "Bij het kopen van een huis, het oprichten van een bedrijf of het opstellen van een testament kom je hem tegen: de notaris. Maar wat doet die precies?\n\nEen notaris is een jurist met een bijzondere positie. Hij wordt door de overheid benoemd en moet onpartijdig zijn. Hij werkt dus niet voor de koper of de verkoper, maar zorgt dat een afspraak voor alle partijen juist en zorgvuldig wordt vastgelegd.\n\nDat vastleggen gebeurt in een akte. Een notariële akte heeft een sterke bewijskracht: wat erin staat, geldt in principe als waar, tenzij het tegendeel wordt bewezen. Daarom zijn sommige zaken alleen geldig als ze via een notaris lopen, zoals de overdracht van een huis.\n\nBij een huiskoop controleert de notaris bijvoorbeeld of de verkoper echt eigenaar is, of er nog schulden op het huis rusten en of het geld correct wordt overgemaakt. Daarna laat hij de overdracht inschrijven in een openbaar register.\n\nDe notaris heeft ook een uitlegtaak. Hij moet ervoor zorgen dat je begrijpt wat je tekent. Twijfel je over een bepaling, dan mag en moet je het vragen.",
+"q": [
+[
+"Waarom moet een notaris onpartijdig zijn?",
+[
+"Hij is benoemd en werkt voor alle partijen",
+"Hij krijgt voor zijn werk geen salaris",
+"Hij heeft nooit rechten gestudeerd",
+"Hij werkt alleen voor de koper"
+],
+0
+],
+[
+"Wat is bijzonder aan een notariële akte?",
+[
+"Hij is altijd gratis",
+"Hij heeft een sterke bewijskracht",
+"Hij is alleen digitaal",
+"Hij is na een jaar ongeldig"
+],
+1
+],
+[
+"Wat controleert de notaris bij een huiskoop?",
+[
+"Of de koper de juiste verf kiest",
+"Wie eigenaar is en of er schulden zijn",
+"Of de tuin goed is onderhouden",
+"Of de buren het met de koop eens zijn"
+],
+1
+]
+]
+},
+{
+"t": "Het geluid van een stad",
+"a": "volwassen",
+"l": 3,
+"o": "maatschappij",
+"x": "Doe je ogen dicht in een stad en luister. Je hoort verkeer, stemmen, een tram, misschien een vogel. Samen vormen ze het geluidslandschap van een plek, en dat zegt veel over hoe het is om er te leven.\n\nLange tijd keken stadsplanners vooral naar hoeveel geluid er was. Hoe hoger het aantal decibellen, hoe slechter. Tegenwoordig wordt er ook gekeken naar welk geluid er is. Het ruisen van een fontein of het geroezemoes op een terras kan net zo luid zijn als verkeer, maar mensen ervaren het heel anders.\n\nSommige steden ontwerpen daarom bewust met geluid. Ze plaatsen een fontein op een plein om verkeerslawaai te maskeren, planten bomen die vogels aantrekken of maken autoluwe straten waar je weer voetstappen en gesprekken hoort.\n\nOok stilte wordt gewaardeerd. In verschillende steden zijn stille plekken aangewezen, zoals een binnentuin of een begraafplaats, waar je even aan de herrie kunt ontsnappen.\n\nWie de volgende keer door de stad loopt, kan eens bewust luisteren. Welke geluiden vind je prettig, en welke zou je liever kwijt zijn?",
+"q": [
+[
+"Waar keken stadsplanners lange tijd vooral naar?",
+[
+"Naar welk geluid er was",
+"Naar hoeveel geluid er was",
+"Naar de kleur van gebouwen",
+"Naar het aantal bomen"
+],
+1
+],
+[
+"Waarom plaatsen sommige steden een fontein op een plein?",
+[
+"Om verkeerslawaai te maskeren",
+"Om water te besparen",
+"Om duiven weg te jagen",
+"Om de temperatuur te meten"
+],
+0
+],
+[
+"Welke voorbeelden van stille plekken noemt de tekst?",
+[
+"Een station en een markt",
+"Een binnentuin en een begraafplaats",
+"Een snelweg en een vliegveld",
+"Een stadion en een winkelcentrum"
+],
+1
+]
+]
+},
+{
+"t": "Hoe een boek wordt vertaald",
+"a": "volwassen",
+"l": 3,
+"o": "taal",
+"x": "Veel boeken die je leest, zijn oorspronkelijk in een andere taal geschreven. Een vertaler zorgt dat ze in het Nederlands net zo goed lezen als in het origineel. Dat is veel meer dan woorden opzoeken in een woordenboek.\n\nEen goede vertaling klinkt alsof het boek in het Nederlands is geschreven. Daarvoor moet de vertaler niet alleen begrijpen wat er staat, maar ook hoe het klinkt. Is de toon grappig, droog, plechtig of juist schurend? Zinnen worden soms helemaal omgebouwd om in het Nederlands hetzelfde effect te hebben.\n\nWoordgrappen zijn berucht. Een grap die in het Engels werkt door een dubbelzinnig woord, werkt letterlijk vertaald niet meer. De vertaler moet dan een nieuwe grap bedenken die hetzelfde doet. Ook dialect, straattaal en verwijzingen naar een cultuur die Nederlandse lezers niet kennen, vragen om creatieve keuzes.\n\nVertalers werken vaak maanden aan een roman en overleggen soms met de schrijver over twijfelgevallen. Toch staat hun naam meestal klein op de binnenkant van het boek. Terwijl je, als je het boek mooi vond, eigenlijk ook hun werk mooi vond.",
+"q": [
+[
+"Wanneer is een vertaling volgens de tekst goed?",
+[
+"Als elk woord letterlijk is vertaald",
+"Als het leest als een Nederlands boek",
+"Als het korter is dan het origineel",
+"Als er geen enkele grap in staat"
+],
+1
+],
+[
+"Wat moet een vertaler doen met een woordgrap die niet werkt?",
+[
+"Hem weglaten zonder iets te zeggen",
+"Een nieuwe grap bedenken die hetzelfde doet",
+"Hem in het Engels laten staan",
+"Een voetnoot schrijven"
+],
+1
+],
+[
+"Waar staat de naam van de vertaler meestal?",
+[
+"Groot op de voorkant",
+"Klein, aan de binnenkant",
+"Op de rug van het boek",
+"Nergens in het boek"
+],
+1
+]
+]
+},
+{
+"t": "Waarom een sluis water niet laat weglopen",
+"a": "volwassen",
+"l": 2,
+"o": "techniek",
+"x": "In Nederland liggen veel kanalen en rivieren op verschillende hoogtes. Toch kunnen schepen van het ene water naar het andere varen. Dat lukt dankzij de sluis.\n\nEen sluis is een kolk tussen twee deuren. Stel dat een schip van laag naar hoog water wil. Het vaart de kolk binnen via de lage kant, en de deur achter het schip gaat dicht. Dan laat de sluiswachter via kleine openingen water binnenstromen vanaf de hoge kant. Het water in de kolk stijgt, en het schip stijgt mee. Als het water even hoog staat als aan de hoge kant, gaat de voorste deur open en vaart het schip verder.\n\nVan hoog naar laag gaat het precies andersom: het water wordt uit de kolk weggelaten tot het schip op de lage stand ligt.\n\nHet slimme is dat er nooit een open verbinding is tussen hoog en laag water. Er is altijd minstens één deur dicht. Zo stroomt het hoge water niet zomaar weg.\n\nDe eerste sluizen met twee deuren werden al eeuwen geleden gebouwd. Het principe is sindsdien nauwelijks veranderd.",
+"q": [
+[
+"Wat is een sluis volgens de tekst?",
+[
+"Een brug over een kanaal",
+"Een kolk tussen twee deuren",
+"Een pomp die water wegpompt",
+"Een dijk langs een rivier"
+],
+1
+],
+[
+"Hoe komt een schip van laag naar hoog water?",
+[
+"Een kraan tilt het schip omhoog",
+"Water stroomt de kolk in en tilt het schip",
+"Het schip vaart een helling op",
+"Het schip wacht op vloed"
+],
+1
+],
+[
+"Waarom stroomt het hoge water niet zomaar weg?",
+[
+"Er is altijd minstens één deur dicht",
+"Het water in de sluis is bevroren",
+"De sluis is daarvoor te klein",
+"Er ligt zand op de bodem"
+],
+0
+]
+]
+},
+{
+"t": "Wat de boer in de winter doet",
+"a": "volwassen",
+"l": 1,
+"o": "natuur",
+"x": "Veel mensen denken dat een boer in de winter weinig te doen heeft. De velden zijn leeg en er groeit bijna niets. Toch is het voor de meeste boeren een drukke tijd.\n\nOp een melkveebedrijf gaat het werk gewoon door. De koeien staan binnen en moeten elke dag worden gevoerd en gemolken. De stal moet schoon blijven. In de winter worden ook veel kalfjes geboren, en die hebben extra zorg nodig.\n\nAkkerbouwers, die bijvoorbeeld aardappelen of graan telen, hebben op het land minder werk. Zij gebruiken de winter om hun machines te repareren en schoon te maken. Ook maken ze plannen voor het nieuwe seizoen. Welke gewassen komen waar? Hoeveel zaad is er nodig?\n\nEn dan is er de administratie. Rekeningen, regels en formulieren nemen een steeds groter deel van het werk in. Die klusjes bewaren veel boeren voor de donkere maanden.\n\nAls het voorjaar komt, moet alles klaar zijn. Dan gaat het snel: ploegen, zaaien en poten. De winter is dus geen vakantie, maar een voorbereiding.",
+"q": [
+[
+"Waarom gaat het werk op een melkveebedrijf in de winter gewoon door?",
+[
+"De koeien moeten gevoerd en gemolken",
+"Omdat er in de winter wordt geoogst",
+"Omdat er in de winter wordt gezaaid",
+"Omdat de koeien dan buiten staan"
+],
+0
+],
+[
+"Wat doen akkerbouwers in de winter onder andere?",
+[
+"Graan oogsten op het land",
+"Machines repareren en plannen maken",
+"Op vakantie gaan naar de zon",
+"Nieuwe koeien kopen op de markt"
+],
+1
+],
+[
+"Wat is volgens de tekst de winter voor een boer?",
+[
+"Een vakantie",
+"Een voorbereiding",
+"De drukste oogsttijd",
+"Een tijd zonder werk"
+],
+1
+]
+]
+},
+{
+"t": "De grens van wat computers kunnen berekenen",
+"a": "volwassen",
+"l": 5,
+"o": "techniek",
+"x": "Computers worden elk jaar sneller, en het lijkt alsof ze uiteindelijk alles kunnen uitrekenen. Toch zijn er problemen waar zelfs de snelste computer ter wereld niet uitkomt.\n\nEen bekend voorbeeld is het probleem van de handelsreiziger. Een reiziger moet een aantal steden bezoeken en wil de kortste route vinden. Met vijf steden is dat eenvoudig: je probeert alle routes. Maar het aantal mogelijke routes groeit explosief met elke stad die erbij komt. Bij twintig steden zijn het er al zoveel dat alle routes uitproberen niet meer te doen is, en bij honderd steden is het getal groter dan het aantal atomen in het heelal.\n\nWiskundigen hebben voor zulke problemen geen snelle methode gevonden die altijd het beste antwoord geeft. Of zo'n methode bestaat, is een van de grootste onopgeloste vragen in de informatica.\n\nIn de praktijk gebruiken bedrijven slimme benaderingen. Ze vinden niet de allerbeste route, maar wel een die bijna net zo goed is, in een fractie van de tijd. Pakketbezorgers en vliegmaatschappijen plannen zo dagelijks hun routes.\n\nHet laat zien dat rekenkracht niet alles is. Soms is het slimmer om tevreden te zijn met een goed antwoord dan te zoeken naar het perfecte.",
+"q": [
+[
+"Waarom is het probleem van de handelsreiziger lastig bij veel steden?",
+[
+"Omdat steden ver uit elkaar liggen",
+"Omdat het aantal mogelijke routes explosief groeit",
+"Omdat computers geen kaarten kunnen lezen",
+"Omdat reizigers niet willen rijden"
+],
+1
+],
+[
+"Wat is volgens de tekst een van de grootste onopgeloste vragen in de informatica?",
+[
+"Of er een snelle methode bestaat die altijd werkt",
+"Hoe snel computers in de toekomst worden",
+"Hoeveel atomen er in het heelal zijn",
+"Welke stad de mooiste route heeft"
+],
+0
+],
+[
+"Wat doen bedrijven in de praktijk?",
+[
+"Ze proberen alle mogelijke routes",
+"Ze zoeken een route die bijna even goed is",
+"Ze laten de reiziger zelf kiezen",
+"Ze rijden altijd dezelfde vaste route"
+],
+1
+]
+]
+},
+{
+"t": "Hoe je een plant uit stek kweekt",
+"a": "volwassen",
+"l": 1,
+"o": "natuur",
+"x": "Je hoeft niet altijd een nieuwe plant te kopen. Van veel kamerplanten kun je zelf een nieuwe kweken met een stekje. Zo doe je dat.\n\nKnip met een schone schaar een stukje van de plant af, net onder een knoop. Een knoop is de plek waar een blad aan de stengel vastzit. Het stekje moet ongeveer tien centimeter lang zijn en een paar blaadjes hebben.\n\nHaal de onderste blaadjes weg. Die zouden anders in het water gaan rotten.\n\nZet het stekje in een glas water, met de knoop onder water. Zet het glas op een lichte plek, maar niet in de felle zon. Ververs het water elke paar dagen.\n\nNa een paar weken zie je kleine witte worteltjes groeien. Wacht tot ze een paar centimeter lang zijn. Zet het stekje dan in een potje met aarde en geef het water.\n\nNiet elke plant werkt even goed, maar planten als de klimop, de pothos en de vrouwentong zijn makkelijk. Een leuk extraatje: een zelfgekweekt stekje is een mooi cadeau voor een vriend.",
+"q": [
+[
+"Waar knip je het stekje af?",
+[
+"Net onder een knoop",
+"Bij de wortels",
+"Midden op een blad",
+"Bovenaan de bloem"
+],
+0
+],
+[
+"Waarom haal je de onderste blaadjes weg?",
+[
+"Omdat ze anders in het water gaan rotten",
+"Omdat ze lelijk zijn",
+"Omdat ze giftig zijn",
+"Omdat de plant dan sneller bloeit"
+],
+0
+],
+[
+"Wanneer zet je het stekje in een potje met aarde?",
+[
+"Meteen nadat je het stekje hebt geknipt",
+"Als de worteltjes een paar centimeter zijn",
+"Pas na een heel jaar in het water",
+"Als het onderste blad geel wordt"
+],
+1
+]
+]
+},
+{
+"t": "Wat mieren ons leren over verkeer",
+"a": "volwassen",
+"l": 3,
+"o": "dieren",
+"x": "Op een drukke mierenroute lopen duizenden mieren heen en weer, en toch ontstaan er bijna nooit files. Verkeerskundigen kijken daarom met interesse naar mieren.\n\nMieren hebben geen haast om elkaar in te halen. Ze lopen ongeveer even snel, en als het drukker wordt, gaan ze niet langzamer lopen, zoals auto's doen. Bij auto's zorgt één bestuurder die remt vaak voor een kettingreactie, waardoor verderop een file ontstaat. Bij mieren gebeurt dat nauwelijks.\n\nDaarnaast volgen mieren geursporen die anderen hebben achtergelaten. Een route die veel wordt gebruikt, ruikt sterker en trekt nog meer mieren aan. Wordt een pad te vol, dan gaan sommige mieren een andere route zoeken. Zo verdeelt het verkeer zich vanzelf.\n\nOok zijn de belangen anders. Een mier werkt voor de hele kolonie, niet voor zichzelf. Er is geen reden om voor te dringen.\n\nIngenieurs gebruiken ideeën uit het gedrag van mieren voor computerprogramma's die routes berekenen. En ook zelfrijdende auto's die met elkaar communiceren en hun snelheid op elkaar afstemmen, doen iets wat mieren al heel lang doen.",
+"q": [
+[
+"Wat doen mieren niet als het drukker wordt, in tegenstelling tot auto's?",
+[
+"Langzamer lopen",
+"Geurspoken volgen",
+"Een andere route zoeken",
+"Samenwerken"
+],
+0
+],
+[
+"Wat gebeurt er als een mierenpad te vol wordt?",
+[
+"Alle mieren stoppen",
+"Sommige mieren zoeken een andere route",
+"De mieren gaan terug naar het nest",
+"De mieren gaan sneller lopen"
+],
+1
+],
+[
+"Waarom dringen mieren volgens de tekst niet voor?",
+[
+"Ze zijn daar gewoon te klein voor",
+"Ze werken voor de kolonie, niet voor zichzelf",
+"Ze zijn blind en zien elkaar niet",
+"Er zijn strenge regels voor mieren"
+],
+1
+]
+]
+},
+{
+"t": "Recht op vergeten worden",
+"a": "volwassen",
+"l": 5,
+"o": "maatschappij",
+"x": "Wie je naam intypt in een zoekmachine, vindt soms berichten van jaren geleden. Een oud krantenartikel, een gênante foto of een faillissement dat allang is afgehandeld. Moet zulke informatie voor altijd vindbaar blijven?\n\nIn Europa bestaat sinds een uitspraak van het Europese Hof van Justitie in 2014 het zogeheten recht op vergeten worden. Burgers kunnen een zoekmachine vragen bepaalde resultaten bij een zoekopdracht op hun naam niet meer te tonen. De informatie zelf verdwijnt daarmee niet van internet, maar is minder makkelijk te vinden.\n\nEen verzoek wordt niet automatisch toegewezen. De zoekmachine moet afwegen tussen het belang van de persoon en het belang van het publiek om de informatie te kunnen vinden. Oude, irrelevante of onjuiste informatie over een gewone burger wordt eerder verwijderd dan informatie over een politicus of een bestuurder in functie.\n\nCritici vinden dat bedrijven zo een rol krijgen die eigenlijk bij een rechter hoort. Voorstanders wijzen erop dat mensen kunnen veranderen en recht hebben op een nieuwe kans.\n\nHet debat laat zien hoe ingewikkeld het is om oude waarden als privacy en vrijheid van informatie te vertalen naar een wereld waarin niets meer vanzelf vergeten wordt.",
+"q": [
+[
+"Wat gebeurt er met de informatie bij een toegewezen verzoek?",
+[
+"Ze verdwijnt helemaal van internet",
+"Ze is minder makkelijk te vinden",
+"Ze wordt in een krant gepubliceerd",
+"Ze wordt aan de politie gegeven"
+],
+1
+],
+[
+"Welke informatie wordt volgens de tekst eerder verwijderd?",
+[
+"Informatie over een politicus in functie",
+"Oude of onjuiste informatie over een burger",
+"Alle informatie over grote bedrijven",
+"Nieuwsberichten van deze week"
+],
+1
+],
+[
+"Wat is de kritiek die de tekst noemt?",
+[
+"Bedrijven krijgen de rol van een rechter",
+"Zoekmachines zijn veel te langzaam",
+"Burgers hebben te weinig rechten",
+"Informatie verdwijnt veel te snel"
+],
+0
+]
+]
+},
+{
+"t": "Fietsen in de regen",
+"a": "volwassen",
+"l": 1,
+"o": "verhaal",
+"x": "Het regende hard toen Bram op zijn fiets stapte. Hij had geen regenjas, alleen een dunne trui. Na honderd meter was hij al nat.\n\nEerst baalde hij. Het water liep in zijn nek en zijn schoenen werden zwaar. Bij elke plas spatte het water omhoog.\n\nMaar halverwege gebeurde er iets vreemds. Hij kon niet natter worden dan hij al was. Dus waarom zou hij nog balen? Bram begon te lachen. Hij reed expres door een grote plas en hoorde het water spetteren.\n\nEen vrouw onder een paraplu bij het stoplicht keek hem verbaasd aan. Bram zwaaide naar haar. Ze lachte terug.\n\nThuis trok hij droge kleren aan en maakte warme chocolademelk. Door het raam zag hij de regen nog steeds vallen.\n\nHij dacht aan de rit. Het was koud en nat geweest, en toch was het een van de leukste ritjes van de week. Soms, dacht Bram, gaat het niet om wat er gebeurt, maar om hoe je ernaar kijkt.",
+"q": [
+[
+"Wat had Bram aan toen hij vertrok?",
+[
+"Een regenjas",
+"Een dunne trui",
+"Een winterjas",
+"Een poncho"
+],
+1
+],
+[
+"Waarom stopte Bram halverwege met balen?",
+[
+"Het hield ineens op met regenen",
+"Natter dan nat kon hij niet worden",
+"Hij vond onderweg een paraplu",
+"Hij was al bijna thuis"
+],
+1
+],
+[
+"Wat dacht Bram aan het eind?",
+[
+"Dat hij nooit meer fietst in de regen",
+"Dat het gaat om hoe je ergens naar kijkt",
+"Dat hij een auto wil",
+"Dat de vrouw hem uitlachte"
+],
+1
+]
+]
+},
+{
+"t": "Waarom kunst duur kan zijn",
+"a": "volwassen",
+"l": 4,
+"o": "kunst",
+"x": "Een schilderij van een bekende kunstenaar wordt geveild voor tientallen miljoenen. Een ander doek, dat er voor een leek niet heel anders uitziet, brengt een paar honderd euro op. Waar zit dat verschil?\n\nDe prijs van kunst wordt maar voor een klein deel bepaald door het materiaal of het werk dat erin zit. Veel belangrijker zijn zeldzaamheid, herkomst en reputatie. Van een overleden meester komen er geen nieuwe werken meer bij. Elk schilderij dat in een museum belandt, verdwijnt bovendien van de markt. Daardoor wordt het aanbod steeds kleiner.\n\nDe herkomst, ook wel provenance genoemd, telt mee. Een werk dat in de collectie van een beroemde verzamelaar heeft gehangen of in belangrijke tentoonstellingen te zien was, wordt hoger gewaardeerd.\n\nDaarnaast spelen galeries, critici en musea een grote rol. Als zij een kunstenaar belangrijk vinden, stijgt de waarde van zijn werk. Kunst is daarmee ook een kwestie van overeenstemming: iets is veel waard omdat genoeg invloedrijke mensen dat vinden.\n\nVoor sommige kopers is kunst bovendien een belegging. Dat drijft de prijzen van de bekendste namen nog verder op, terwijl veel goede kunstenaars nauwelijks van hun werk kunnen leven.",
+"q": [
+[
+"Waardoor wordt de prijs van kunst volgens de tekst vooral bepaald?",
+[
+"Het materiaal van het doek",
+"Zeldzaamheid, herkomst en naam",
+"De grootte van het schilderij",
+"Het aantal gebruikte kleuren"
+],
+1
+],
+[
+"Wat betekent provenance?",
+[
+"De herkomst van een kunstwerk",
+"De lijst van een schilderij",
+"De handtekening van de kunstenaar",
+"De prijs op een veiling"
+],
+0
+],
+[
+"Wat zegt de tekst over kunst als belegging?",
+[
+"De prijzen van kunst gaan omlaag",
+"De bekendste namen worden nog duurder",
+"Alle kunstenaars verdienen meer",
+"Handel in kunst wordt verboden"
+],
+1
+]
+]
+},
+{
+"t": "De eerste schooldag van een juf",
+"a": "volwassen",
+"l": 2,
+"o": "verhaal",
+"x": "Esra had vier jaar gestudeerd om juf te worden, maar op haar eerste schooldag voelde ze zich weer een leerling. Ze stond om half acht in het lege klaslokaal en keek naar de rijen tafeltjes.\n\nOp elk tafeltje had ze een kaartje gelegd met een naam. Ze had de namen thuis hardop geoefend, zodat ze niemand verkeerd zou noemen. Toch was ze zenuwachtig.\n\nOm half negen kwamen de kinderen binnen. Sommigen stoven lachend naar binnen, anderen bleven verlegen bij de deur staan. Een meisje met vlechten hield de hand van haar vader stevig vast.\n\nEsra ging op haar hurken zitten. Ze vroeg het meisje hoe haar knuffel heette. Een konijn, fluisterde het meisje. Het heet Pluis. Esra gaf Pluis een hand. Het meisje begon te giechelen en liet de hand van haar vader los.\n\nAan het eind van de dag was Esra moe, maar ook opgelucht. Niet alles was volgens plan gegaan. De rekenles was te lang geweest en de lijm was op. Maar alle kinderen waren met een glimlach naar huis gegaan. En zij ook.",
+"q": [
+[
+"Wat had Esra op elk tafeltje gelegd?",
+[
+"Een snoepje in een zakje",
+"Een kaartje met een naam",
+"Een nieuw geslepen potlood",
+"Een tekening van de juf"
+],
+1
+],
+[
+"Hoe kreeg Esra het verlegen meisje aan het lachen?",
+[
+"Ze gaf haar een sticker",
+"Ze gaf de knuffel van het meisje een hand",
+"Ze zong een liedje",
+"Ze liet haar als eerste naar binnen gaan"
+],
+1
+],
+[
+"Wat ging er volgens de tekst niet volgens plan?",
+[
+"De kinderen kwamen allemaal te laat",
+"Het rekenen duurde te lang en de lijm was op",
+"Esra vergat alle namen van de kinderen",
+"Het regende door het dak de klas in"
+],
+1
+]
+]
+}
+]
