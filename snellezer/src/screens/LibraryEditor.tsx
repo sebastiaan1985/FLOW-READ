@@ -7,7 +7,7 @@ import {Illustration} from '../components/Illustration';
 import {colors, fonts, ui,themed} from '../design';
 import {useApp} from '../state/AppProvider';
 import type {AppActions, Question} from '../types';
-import {articleUrlProblem} from '../state/url';
+import {fetchArticle,ArticleError} from '../state/article';
 import {BookError, buildBook, bookProgress, MAX_BOOK_BYTES, parseEpub} from '../state/books';
 import {saveBookContent} from '../state/bookStore';
 import {parsePdf} from '../state/pdfWeb';
@@ -24,21 +24,6 @@ export const READING_MODES = [
   {id:'paper',title:'Leesgids',description:'Een gids langs elke regel',icon:'eye'},
 ] as const;
 const emptyQuestion = ():Question => ({question:'',options:['','',''],answer:0});
-
-function extractArticle(html:string) {
-  if (typeof DOMParser !== 'undefined') {
-    const doc = new DOMParser().parseFromString(html,'text/html');
-    const pageTitle = doc.querySelector('h1')?.textContent || doc.title;
-    doc.querySelectorAll('script,style,nav,header,footer,aside,form,noscript,svg,iframe,button').forEach(node=>node.remove());
-    const article = doc.querySelector('article') || doc.querySelector('main') || doc.body;
-    const blocks = Array.from(article.querySelectorAll('h1,h2,h3,p,li,blockquote')).map(node=>node.textContent?.trim()).filter(Boolean);
-    return {title:pageTitle.trim(),text:(blocks.length?blocks.join('\n\n'):article.textContent||'').trim()};
-  }
-  const title = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] || '';
-  const body = html.match(/<article[^>]*>([\s\S]*?)<\/article>/i)?.[1] || html.match(/<main[^>]*>([\s\S]*?)<\/main>/i)?.[1] || html;
-  const text = body.replace(/<(script|style|nav|header|footer|aside|noscript)[^>]*>[\s\S]*?<\/\1>/gi,'').replace(/<\/(p|div|h[1-6]|li|blockquote)>|<br\s*\/?\s*>/gi,'\n\n').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Math.min(0x10ffff,Number(n)))).replace(/[ \t]+/g,' ').replace(/\n\s*\n+/g,'\n\n').trim();
-  return {title,text};
-}
 
 export function LibraryEditor({actions,initial,onBack=()=>actions.onTab('today')}:{actions:AppActions;initial?:{title:string;text:string;url:string};onBack?:()=>void}) {
   const {state,saveText,deleteText,addBook} = useApp();
@@ -122,27 +107,13 @@ export function LibraryEditor({actions,initial,onBack=()=>actions.onTab('today')
   const importUrl = async() => {
     if(importing.current)return;
     setError('');setNotice('');
-    const problem=articleUrlProblem(url);
-    if(problem){setError(problem);return;}
-    const address=new URL(url.trim());
     importing.current=true;setBusy('url');
-    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
     try {
-      const response=await fetch(address.href,{signal:controller.signal,credentials:'omit',redirect:'follow'});
-      if(response.url&&articleUrlProblem(response.url)){setError('Deze link stuurt door naar een adres dat niet wordt opgehaald.');return;}
-      if(!response.ok)throw new Error('fetch');
-      const type=response.headers.get('content-type')||'';
-      if(!/text\/(html|plain)|application\/xhtml\+xml/i.test(type)){setError('Deze link levert geen leesbare webpagina of tekst op. Kopieer de tekst en plak hem hieronder.');return;}
-      if(Number(response.headers.get('content-length')||0)>2000000){setError('Deze pagina is te groot om te importeren. Plak alleen het artikel hieronder.');return;}
-      const content=await response.text();
-      if(content.length>2000000){setError('Deze pagina is te groot om te importeren. Plak alleen het artikel hieronder.');return;}
-      const article=/text\/plain/i.test(type)?{title:address.hostname,text:content}:extractArticle(content);
-      if(article.text.trim().split(/\s+/).length<10){setError('Op deze pagina is te weinig artikeltekst gevonden. Kopieer het artikel en plak het hieronder.');return;}
-      if(article.text.length>100000){setError('Het artikel is te lang. Plak een deel van maximaal 100.000 tekens hieronder.');return;}
-      setTitle(article.title.slice(0,100));setText(article.text);setQuestions([]);
+      const article=await fetchArticle(url);
+      setTitle(article.title);setText(article.text);setQuestions([]);
       setNotice('Artikel geladen. Controleer de tekst: menu’s of bijschriften kunnen zijn meegekomen.');
-    }catch{setError(Platform.OS==='web'?'Deze website laat direct ophalen mogelijk niet toe (CORS), is niet bereikbaar of reageert te langzaam. Kopieer de artikeltekst en plak die hieronder.':'Deze pagina kon niet worden opgehaald. Kopieer de artikeltekst en plak die hieronder.');}
-    finally{clearTimeout(timeout);importing.current=false;setBusy(null);}
+    }catch(e){setError(e instanceof ArticleError?e.message:'Deze pagina kon niet worden opgehaald. Kopieer de artikeltekst en plak die hieronder.');}
+    finally{importing.current=false;setBusy(null);}
   };
 
   return <Screen style={{maxWidth:900}}>{nativePdf.element}
@@ -160,7 +131,7 @@ export function LibraryEditor({actions,initial,onBack=()=>actions.onTab('today')
       <View style={{gap:7}}><Row style={{justifyContent:'space-between'}}><T variant="label">Begripsvragen</T><Pill label="OPTIONEEL"/></Row><T variant="caption">Voeg je eigen vragen toe om na het lezen tekstbegrip te oefenen. Markeer bij elke vraag het juiste antwoord.</T></View>
       {questions.map((question,index)=><View key={index} style={styles.question}><Row><T variant="label" style={{flex:1}}>Vraag {index+1}</T><IconButton name="trash" label={`Verwijder vraag ${index+1}`} onPress={()=>setQuestions(previous=>previous.filter((_,i)=>i!==index))}/></Row><TextInput accessibilityLabel={`Vraag ${index+1}`} placeholder="Wat wil je over deze tekst vragen?" placeholderTextColor={ui.dim} value={question.question} onChangeText={value=>changeQuestion(index,{question:value})} style={styles.input} multiline maxLength={300}/>{question.options.map((option,answerIndex)=><Row key={answerIndex} style={{alignItems:'center'}}><Pressable accessibilityRole="radio" accessibilityState={{checked:question.answer===answerIndex}} accessibilityLabel={`Antwoord ${answerIndex+1} is juist voor vraag ${index+1}`} onPress={()=>changeQuestion(index,{answer:answerIndex})} style={[styles.answerMark,{backgroundColor:question.answer===answerIndex?colors.accent:colors.bg}]}>{question.answer===answerIndex?<Icon name="check" size={19} color={colors.bg}/>:<T variant="caption">{String.fromCharCode(65+answerIndex)}</T>}</Pressable><TextInput accessibilityLabel={`Vraag ${index+1}, antwoord ${answerIndex+1}`} placeholder={`Antwoord ${String.fromCharCode(65+answerIndex)}`} placeholderTextColor={ui.dim} value={option} onChangeText={value=>changeQuestion(index,{options:question.options.map((existing,i)=>i===answerIndex?value:existing)})} maxLength={200} style={[styles.input,{flex:1}]}/></Row>)}</View>)}
       {questions.length<8&&<Button title={questions.length?'Nog een vraag toevoegen':'Begripsvraag toevoegen'} secondary icon="plus" onPress={()=>setQuestions(previous=>[...previous,emptyQuestion()])}/>}
-      <T variant="caption">{questions.length?'Zelfgemaakte vragen helpen bij het oefenen. Je kunt de antwoorden natuurlijk al kennen.':'Zonder vragen tonen we na deze tekst geen begripsscore.'}</T>
+      <T variant="caption">{questions.length?'Zelfgemaakte vragen helpen bij het oefenen. Je kunt de antwoorden natuurlijk al kennen.':'Zonder eigen vragen maakt de app na het lezen een paar invulvragen uit zinnen van je tekst. Zo meet je toch je begrip.'}</T>
       {!!error&&<View style={styles.feedback}><Icon name="info" size={18} color={ui.error}/><T color={ui.error} variant="caption" accessibilityRole="alert" style={{flex:1}}>{error}</T></View>}
       {!!notice&&<View style={[styles.feedback,{backgroundColor:ui.forestSoft}]}><Icon name="checkcircle" color={colors.accent} size={18}/><T variant="caption" accessibilityLiveRegion="polite" style={{flex:1}}>{notice}</T></View>}
       <Button title={`Bewaar & start ${selected.title.toLocaleLowerCase('nl')}`} icon="arrow" onPress={()=>save(true)} disabled={!text.trim()||!!busy}/>

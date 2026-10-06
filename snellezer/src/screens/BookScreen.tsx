@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {ActivityIndicator, Pressable, StyleSheet, View} from 'react-native';
-import {BackHeader, Button, Card, Choice, Icon, Pill, ProgressBar, Row, Screen, SectionHeading, T} from '../components/UI';
+import {BackHeader, Button, Card, Choice, Icon, Pill, ProgressBar, Row, Screen, SectionHeading, Slider, T} from '../components/UI';
 import {colors, ui,themed} from '../design';
 import {useApp} from '../state/AppProvider';
 import {bookProgress, chapterAt, nextPortion, wordsBefore, type BookContent} from '../state/books';
@@ -8,7 +8,6 @@ import {loadBookContent} from '../state/bookStore';
 import {READING_MODES} from './LibraryEditor';
 import type {AppActions} from '../types';
 
-const MINUTES = [5, 10, 15, 20];
 function timeLeft(words: number, wpm: number) {
   const minutes = words / Math.max(60, wpm);
   if (minutes < 60) return `${Math.max(1, Math.round(minutes))} min`;
@@ -17,11 +16,13 @@ function timeLeft(words: number, wpm: number) {
 
 /** Een boek of PDF lezen in porties, met een bladwijzer die na elke sessie opschuift. */
 export function BookScreen({bookId, initialMode, actions, onBack}: {bookId: string; initialMode?: string; actions: AppActions; onBack: () => void}) {
-  const {state, setBookPosition, deleteBook} = useApp();
+  const {state, setBookPosition, deleteBook, updatePrefs} = useApp();
   const meta = state.books.find(b => b.id === bookId);
   const [content, setContent] = useState<BookContent | null | undefined>(undefined);
   const [mode, setMode] = useState<string>(initialMode ?? 'chunks');
-  const [minutes, setMinutes] = useState(10);
+  // De leestijd van de vorige keer staat weer klaar.
+  const minutes = state.prefs.readMinutes;
+  const setMinutes = (m: number) => updatePrefs({readMinutes: m});
   const [confirm, setConfirm] = useState(false);
   const [showChapters, setShowChapters] = useState(false);
   useEffect(() => { loadBookContent(bookId).then(setContent); }, [bookId]);
@@ -62,7 +63,7 @@ export function BookScreen({bookId, initialMode, actions, onBack}: {bookId: stri
     : <Card style={{gap: 18}}>
       <SectionHeading title="Verder lezen"/>
       <Choice label="Leesvorm" value={mode} options={READING_MODES.map(m => ({value: m.id, label: m.title}))} onChange={setMode}/>
-      <Choice label="Hoe lang wil je lezen?" value={String(minutes)} options={MINUTES.map(m => ({value: String(m), label: `${m} min`}))} onChange={v => setMinutes(Number(v))}/>
+      <Slider label="Hoe lang wil je lezen?" value={minutes} min={1} max={100} step={1} unit={minutes === 1 ? 'minuut' : 'minuten'} onChange={setMinutes} hint={`Ongeveer ${(state.targetWpm * minutes).toLocaleString('nl-NL')} woorden op jouw oefentempo.`}/>
       {portion && <View style={s.preview}><T variant="caption">Je begint bij</T><T numberOfLines={3} style={{fontSize: 15, lineHeight: 23}}>{content.paragraphs[portion.from]}</T><T variant="caption">{portion.ends[portion.ends.length - 1].toLocaleString('nl-NL')} woorden in deze sessie</T></View>}
       <T variant="caption">Je bladwijzer schuift op tot waar je bent gekomen, ook als je eerder stopt.</T>
     </Card>}

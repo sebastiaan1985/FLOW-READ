@@ -1,12 +1,16 @@
-import React from 'react';
+import React,{useMemo} from 'react';
 import {View,Text,useWindowDimensions} from 'react-native';
 import {T} from './UI';
 import {ReadingText} from './ReadingText';
 import {colors,fonts,ui,themed,readingIsDark,readingInk,readingAccent} from '../design';
 import type {ReadingSettings,ExerciseMode} from '../types';
-import {fixationWindow,recognitionIndex} from './trainingModel';
+import {fixationWindow,recognitionIndex,phraseLength} from './trainingModel';
 
-export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:ExerciseMode;words:string[];cursor:number;chunk:number;settings:ReadingSettings;wide:boolean}) {
+/**
+ * Het leesvlak van de tempo-oefeningen. Het tekent alleen opnieuw als de woorden of de plek veranderen,
+ * niet bij elke tik van de klok, zodat woordgroepen zonder haperen wisselen.
+ */
+export const PacedReadingStage=React.memo(function PacedReadingStage({mode,words,cursor,chunk,settings,wide,groupTarget}:{mode:ExerciseMode;words:string[];cursor:number;chunk:number;settings:ReadingSettings;wide:boolean;groupTarget?:number}) {
   const dark=readingIsDark(settings);
   const ink=readingInk(settings);
   const accent=readingAccent(settings);
@@ -15,7 +19,9 @@ export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:
   // Een woordgroep lees je in één blik, dus hij past altijd op één regel: bij een lange groep wordt de letter kleiner.
   const {width:screen,height:screenHeight}=useWindowDimensions();
   const room=Math.min(screen,940)-(wide?60:44)-24;
-  const fit=Math.max(18,Math.min(size,room/(Math.max(1,current.join(' ').length)*.56)));
+  // Eén vaste lettergrootte voor de hele tekst: berekend op de langste woordgroep, zodat de letters niet per groep verspringen.
+  const longest=useMemo(()=>{if(mode!=='chunks')return 0;let max=0;for(let i=0;i<words.length;){const n=Math.max(1,phraseLength(words,i,groupTarget??chunk));max=Math.max(max,words.slice(i,i+n).join(' ').length);i+=n;}return max;},[words,mode,groupTarget]);
+  const fit=Math.max(18,Math.min(size,room/(Math.max(1,mode==='chunks'?longest:current.join(' ').length)*.56)));
   if(mode==='fixation') {
     const row=fixationWindow(words,cursor,chunk);
     return <View style={{width:'100%',gap:26}}>
@@ -54,5 +60,6 @@ export function PacedReadingStage({mode,words,cursor,chunk,settings,wide}:{mode:
     <Text style={{fontFamily:fonts.strong,fontSize:size,color:accent}}>{letters[pivot]||''}</Text>
     <Text numberOfLines={1} adjustsFontSizeToFit style={{flex:1,textAlign:'left',fontFamily:fonts.body,fontSize:size,color:ink}}>{letters.slice(pivot+1).join('')}</Text>
   </View>:<ReadingText text={current.join(' ')} settings={settings} style={{fontSize:fit,lineHeight:fit*1.6,textAlign:'center',color:accent}}/>}<View style={styles.marker}/><T variant="caption">{chunk===1?'Houd je blik bij de gekleurde letter.':'Houd je blik in het midden van de woordgroep.'}</T></View>;
-}
+});
+
 const styles=themed(()=>({marker:{width:2,height:16,borderRadius:2,backgroundColor:'#9AAA9F'}}));

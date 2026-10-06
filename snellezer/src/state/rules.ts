@@ -45,31 +45,83 @@ export function passed(complete: boolean, comprehension: number | null): boolean
 }
 
 /**
- * Het doeltempo beweegt twee kanten op:
- * onder 70% begrip een stap terug, na twee keer op rij minstens 80% een kleine stap vooruit.
+ * Alle knoppen van de tempomotor op één plek. Onder `gate` begrip gaat het oefentempo een stap terug,
+ * na `riseAfter` keer op rij minstens `rise` begrip een kleine stap vooruit.
  */
-export type TempoReason = 'begrip-laag' | 'begrip-hoog' | 'afdwalen' | null;
+export const TEMPO = {gate: 70, rise: 80, riseAfter: 2, down: .9, up: 1.05, min: 60, max: 800, floor: {adult: 80, kids: 60}, ceiling: {adult: 800, kids: 300}} as const;
+export type TempoReason = 'begrip-laag' | 'begrip-hoog' | 'afdwalen' | 'eigen-keuze' | null;
+/** Een besluit over het oefentempo. De melding na een oefening én het tempo van de volgende oefening lezen allebei dit besluit. */
+export type TempoDecision = {from: number; to: number; tempoStreak: number; reason: TempoReason};
+export const clampWpm = (wpm: number) => Math.max(TEMPO.min, Math.min(TEMPO.max, Math.round(wpm)));
+/** Het begintempo na een nulmeting: je gemeten tempo, binnen redelijke grenzen. */
+export function baselineTarget(wpm: number, kids: boolean) { return Math.max(kids ? TEMPO.floor.kids : TEMPO.floor.adult, Math.min(600, Math.round(wpm))); }
 /**
- * Past het oefentempo stil aan. Onder 70% begrip, of als je bij de aandachtchecks vaker afdwaalde dan meelas,
- * gaat het een stap omlaag. Na twee keer minstens 80% begrip een stap omhoog.
+ * Beslist wat het oefentempo na een sessie wordt. Onder 70% begrip, of als je bij de aandachtchecks vaker afdwaalde
+ * dan meelas, gaat het een stap omlaag. Na twee keer minstens 80% begrip een stap omhoog.
+ * `chosen` is een tempo dat je deze sessie zelf hebt ingesteld: dat wordt het vertrekpunt.
  */
-export function adjustTempo(state: Pick<AppState, 'targetWpm' | 'tempoStreak' | 'kidsMode'>, comprehension: number | null, focus?: {asked: number; wandered: number}): {targetWpm: number; tempoStreak: number; reason: TempoReason} {
-  const floor = state.kidsMode ? 60 : 80;
-  const down = {targetWpm: Math.max(floor, Math.round(state.targetWpm * .9)), tempoStreak: 0};
+export function decideTempo(state: Pick<AppState, 'targetWpm' | 'tempoStreak' | 'kidsMode'>, comprehension: number | null, focus?: {asked: number; wandered: number}, chosen?: number): TempoDecision {
+  const from = state.targetWpm, base = chosen ? clampWpm(chosen) : from;
+  const floor = state.kidsMode ? TEMPO.floor.kids : TEMPO.floor.adult, ceiling = state.kidsMode ? TEMPO.ceiling.kids : TEMPO.ceiling.adult;
+  const down = {from, to: Math.max(floor, Math.round(base * TEMPO.down)), tempoStreak: 0};
+  const stay = (reason: TempoReason, tempoStreak: number) => ({from, to: base, tempoStreak, reason: base !== from ? reason ?? 'eigen-keuze' : reason});
   if (focus && focus.asked >= 2 && focus.wandered * 2 > focus.asked) return {...down, reason: 'afdwalen'};
-  if (comprehension === null) return {targetWpm: state.targetWpm, tempoStreak: state.tempoStreak, reason: null};
-  if (comprehension < 70) return {...down, reason: 'begrip-laag'};
-  if (comprehension < 80) return {targetWpm: state.targetWpm, tempoStreak: 0, reason: null};
+  if (comprehension === null) return stay(null, chosen ? 0 : state.tempoStreak);
+  if (comprehension < TEMPO.gate) return {...down, reason: 'begrip-laag'};
+  if (comprehension < TEMPO.rise) return stay(null, 0);
   const streak = state.tempoStreak + 1;
-  if (streak >= 2) return {targetWpm: Math.min(state.kidsMode ? 300 : 800, Math.round(state.targetWpm * 1.05)), tempoStreak: 0, reason: 'begrip-hoog'};
-  return {targetWpm: state.targetWpm, tempoStreak: streak, reason: null};
+  if (streak >= TEMPO.riseAfter) return {from, to: Math.min(ceiling, Math.round(base * TEMPO.up)), tempoStreak: 0, reason: 'begrip-hoog'};
+  return stay(null, streak);
 }
-/** Eén zin over wat de app met je tempo deed, en waarom. */
-export function tempoNote(reason: TempoReason, from: number, to: number): string | null {
+/** Een besluit dat niets verandert, voor sessies die het tempo niet horen te sturen (zoals een tempo-push). */
+export const keepTempo = (state: Pick<AppState, 'targetWpm' | 'tempoStreak'>, to = state.targetWpm): TempoDecision => ({from: state.targetWpm, to, tempoStreak: state.tempoStreak, reason: null});
+/** Oud aanroeppunt: hetzelfde besluit, in de vorm die de toestand gebruikt. */
+export function adjustTempo(state: Pick<AppState, 'targetWpm' | 'tempoStreak' | 'kidsMode'>, comprehension: number | null, focus?: {asked: number; wandered: number}): {targetWpm: number; tempoStreak: number; reason: TempoReason} {
+  const d = decideTempo(state, comprehension, focus);
+  return {targetWpm: d.to, tempoStreak: d.tempoStreak, reason: d.reason};
+}
+/** Eén zin over wat de app met je tempo deed, en waarom. Leest hetzelfde besluit dat de volgende oefening gebruikt. */
+export function tempoNote(decision: TempoDecision | TempoReason, fromArg?: number, toArg?: number): string | null {
+  const {reason, from, to} = typeof decision === 'object' && decision !== null ? decision : {reason: decision, from: fromArg ?? 0, to: toArg ?? 0};
   if (!reason || from === to) return null;
   if (reason === 'afdwalen') return `Je dwaalde vaker af dan je meelas. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut, zodat je aandacht het beter bijhoudt.`;
-  if (reason === 'begrip-laag') return `Je begreep minder dan 70% van de tekst. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut, zodat er meer ruimte is voor de inhoud.`;
-  return `Twee keer achter elkaar begreep je minstens 80%. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut.`;
+  if (reason === 'begrip-laag') return `Je begreep minder dan ${TEMPO.gate}% van de tekst. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut, zodat er meer ruimte is voor de inhoud.`;
+  if (reason === 'eigen-keuze') return `Je koos zelf een tempo. Je oefentempo is nu ${to} woorden per minuut (was ${from}).`;
+  return `${TEMPO.riseAfter === 2 ? 'Twee keer' : `${TEMPO.riseAfter} keer`} achter elkaar begreep je minstens ${TEMPO.rise}%. Je oefentempo gaat daarom van ${from} naar ${to} woorden per minuut.`;
+}
+
+/**
+ * Tempo-push: eerst een korte sprint boven je oefentempo, daarna terug naar een beheersbaar tempo.
+ * We kijken of het werkt door de eerstvolgende eigen meting op dezelfde dag te vergelijken met je metingen ervoor.
+ */
+export const PUSH = {factor: 1.3, gentle: 1.15, light: 1.1, strong: 1.35, sprintShare: .4, lift: 1.03} as const;
+const median = (values: number[]) => { if (!values.length) return 0; const v = [...values].sort((a, b) => a - b), m = Math.floor(v.length / 2); return v.length % 2 ? v[m] : Math.round((v[m - 1] + v[m]) / 2); };
+export {median};
+/** Per tempo-push: hoeveel procent je effectieve tempo erna verschilde van je metingen ervoor, en of je begrip hield. */
+export function pushEffects(sessions: readonly SessionResult[]): {gain: number; kept: boolean}[] {
+  const out: {gain: number; kept: boolean}[] = [];
+  sessions.forEach((s, i) => {
+    if (!s.pushWpm) return;
+    const after = sessions.slice(i + 1).find(x => MEASURED_EXERCISES.includes(x.exerciseId) && x.comprehension !== null && dateKey(x.date) === dateKey(s.date));
+    const before = sessions.slice(0, i).filter(x => MEASURED_EXERCISES.includes(x.exerciseId) && x.comprehension !== null).slice(-3).map(x => effectiveWpm(x.wpm, x.comprehension));
+    if (!after || !before.length) return;
+    const ref = median(before);
+    if (!ref) return;
+    out.push({gain: Math.round((effectiveWpm(after.wpm, after.comprehension) - ref) / ref * 100), kept: (after.comprehension ?? 0) >= TEMPO.gate});
+  });
+  return out;
+}
+/**
+ * Hoe hard de volgende push mag. Helpt het (sneller én begrip gehouden), dan iets steviger en kom je iets boven je oude
+ * tempo terug. Helpt het twee keer niet, dan zachter; drie keer niet, dan alleen nog licht en niet meer als extra oefening.
+ */
+export function pushPlan(sessions: readonly SessionResult[]): {factor: number; lift: number; extra: boolean; note: string | null} {
+  const recent = pushEffects(sessions).slice(-3);
+  const helps = (e: {gain: number; kept: boolean}) => e.gain > 0 && e.kept;
+  if (recent.length >= 3 && !recent.some(helps)) return {factor: PUSH.light, lift: 1, extra: false, note: 'De tempo-push leverde je de laatste keren geen winst op. We houden hem licht en zetten hem minder vaak in.'};
+  if (recent.length >= 2 && !recent.slice(-2).some(helps)) return {factor: PUSH.gentle, lift: 1, extra: true, note: 'De vorige pushes hielpen nog niet. Deze sprint is iets rustiger.'};
+  if (recent.length >= 2 && recent.slice(-2).every(helps)) return {factor: PUSH.strong, lift: PUSH.lift, extra: true, note: 'De vorige pushes hielpen je: je las daarna sneller met begrip. Deze sprint is iets steviger.'};
+  return {factor: PUSH.factor, lift: recent.length && helps(recent[recent.length - 1]) ? PUSH.lift : 1, extra: true, note: null};
 }
 
 /** Kies de tekst die je het langst niet (of nog nooit) hebt gelezen. */
@@ -112,10 +164,11 @@ export function pathProgress(sessions: readonly SessionResult[], now = new Date(
   return {day: Math.min(28, max + 1), doneToday: false, completed, finished: max >= 28};
 }
 
-/** De drie oefeningen van een lesdag: de techniek, een toepassing, en rust. */
-export function lessonPlanIds(lesson: Lesson): string[] {
+/** De drie oefeningen van een lesdag: de techniek, een toepassing, en rust. Helpt de tempo-push je niet, dan vervalt hij als extra oefening. */
+export function lessonPlanIds(lesson: Lesson, sessions: readonly SessionResult[] = []): string[] {
   const closing = lesson.support === 'relax' ? 'rhythm' : 'relax';
-  return [...new Set([lesson.exerciseId, lesson.support, closing])];
+  const support = lesson.support === 'push' && !pushPlan(sessions).extra ? 'chunks' : lesson.support;
+  return [...new Set([lesson.exerciseId, support, closing])];
 }
 
 /** Terugkoppeling die de uitslag aan de techniek van vandaag koppelt. */
